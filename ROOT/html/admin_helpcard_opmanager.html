@@ -1,0 +1,31 @@
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p><span class="helpheading"><strong>Integrate with OpManager </strong></span></p><br>
+<p>Integrate ServiceDesk Plus with ManageEngine OpManager and monitor your network effectively. OpManager is a network and data center infrastructure management software that helps large enterprises, service providers and SMEs manage their data centers and IT infrastructure efficiently and cost effectively. Automated workflows, intelligent alerting engines, configurable discovery rules, and extendable templates enable IT teams to setup a 24x7 monitoring system within hours of installation. If you have installed both these products, you just have to provide the details of the computer where OpManager is installed along with its port number.</p>
+
+<p><strong>Set Up the Integration</strong></p>
+<ol>
+  <li>Enter the URL where the application is currently hosted.</li>
+  <li>Click <strong>Test Connection and Save</strong> to check for an established connection between ServiceDesk Plus and OpManager in their respective ports</li>
+</ol>
+<br>
+
+<p>After the settings are saved, ServiceDesk Plus will try to establish a connection with the OpManager server. Once the connection is established, using the jump to link we can switch over OpManager server.</p>
+</p><p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+<div id="integ-https">
+<p><span class="helpheading"><strong>Integrating with Other ME Products (running in HTTPS mode)</strong></span></p>
+<ol>
+  <li>Download the <strong>.zip</strong> file from the link given below and extract it to "<em>ManageEngine\ServiceDesk"</em>:</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><a class="wb-bw" href="https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip" target="_blank">https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip</a> </p>
+  <p style="margin-left: 50px;"><strong>For Windows:</strong> <a class="wb-bw" href="https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip" target="_blank">https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip</a> </p>
+  <li>Connect to the command prompt. Go to "<em>ManageEngine\ServiceDesk"</em> and run the batch file with following format:</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>On running the command, you will receive an exception <strong>PKIX</strong> and then it will ask you to enter a value. Provide value 1 which will generate a file named <strong>jssecacerts</strong> under <em>"ManageEngine\ServiceDesk"</em>.</p>
+  </li>
+  <li>Copy the <strong>jssecacerts</strong> file under "<em>ManageEngine\ServiceDesk\jre\lib\security"</em> folder and then restart the ServiceDesk Plus application.</li>
+</ol><br>
+</div>

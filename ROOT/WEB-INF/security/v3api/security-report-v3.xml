@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true">
+        <throttles name="ReportAPI" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="300" lock-period="5M"/>
+            </throttles>
+        <!-- Query Report API-->
+        <url path="/api/v3/reports" roles="CreateQueryReport" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/reports/(\d+)" roles="ViewReports" method="get" >
+            <throttles name="reports_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/reports/(_?)execute_query" roles="CreateQueryReport" method="post" path-regex="true">
+            <throttles name="report_query_execute" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="100" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="query_api" type="JSONObject" max-len="100000"/>
+        </url>
+        <url path="/api/v3/reports/(\d+)/(_?)execute" roles="CreateQueryReport" method="get" path-regex="true">
+            <throttles name="query_reports_execute" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="100" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reports/(_?)query_reports" roles="CreateQueryReport" method="get" path-regex="true"/>
+        <url path="/api/v3/reports/_links" roles="CreateQueryReport" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="2500"/>
+        </url>
+        <url path="/api/v3/reports/_total_count" roles="CreateQueryReport" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!-- Schedule Report API-->
+        <url path="/api/v3/scheduled_reports" roles="ViewReports" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/scheduled_reports/(\d+)" roles="ViewReports" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/scheduled_reports/(_?)metainfo" roles="ViewReports" method="get"/>
+
+        <url path="/api/v3/scheduled_reports/_links" roles="ViewReports" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="2500"/>
+        </url>
+        <url path="/api/v3/scheduled_reports/_total_count" roles="ViewReports" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/scheduled_reports" roles="ViewReports" method="post">
+            <param name="input_data" template="scheduled_report" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/scheduled_reports/(\d+)" roles="ViewReports" method="delete"></url>
+
+        <url path="/api/v3/scheduled_reports/(\d+)" roles="ViewReports" method="put">
+            <param name="input_data" template="scheduled_report" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+</security>

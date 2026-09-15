@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <urls api="true" authentication="required" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_sync_rule" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!-- Asset Sync Rule URL start -->
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_sync_rules">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_sync_rule" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_sync_rules/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_sync_rule" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_sync_rules">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_sync_rules/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_sync_rules/(source_module|destination_module|sub_module)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_sync_rules">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_sync_rules/(\d+)"/>
+
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_sync_rules/_reorder">
+            <param max-len="-1" type="JSONObject" template="reorder_sync_rule" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_sync_rules/(\d+)/_run_through_filter"/>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_sync_rules/_metainfo">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/asset_sync_rules/_get_records_for_history">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_sync_rules/_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_sync_rules/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/asset_sync_rules/_get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- Asset Sync Rule URL end -->
+        <!-- Asset Sync Rule through Asset Module URL start -->
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_sync_rule" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_sync_rule" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_sync_rule" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(destination_module|source_module|field_mapping|field_relationship)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(\d+)/(destination_module|source_module|field_mapping|field_relationship)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(\d+)"/>
+
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(\d+)/_run_through_filter"/>
+        <url method="get" roles="SDAdmin" path="/api/v3/ci_types/(\d+)/asset_sync_rules/_metainfo">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(\d+)/_metainfo" roles="SDAdmin" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/asset_sync_rules/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- Asset Sync Rule through Asset Module URL end -->
+        <!-- Asset Sync Rule History URL start -->
+        <url path="/common/ViewHistory.jsp" method="get" operation-param="module" operation-value="asset_sync_rules" roles="SDAdmin">
+            <throttles name="asset_sync_rules_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" regex="asset_sync_rules_history" description="NOT_AUTH_KEY" />
+            <param name="id" type="long" range=">=1" allow-invalid="false" />
+            <param name="entity_key" type="String" max-len="50" description="NOT_AUTH_KEY" />
+            <param name="search_filter" type="String"/>
+            <param name="admin_entity" type="boolean"/>
+            <param name="is_date_filter" type="boolean"/>
+            <param name="skip_filter_options" type="String"/>
+            <param name="skip_operation_names" type="String"/>
+        </url>
+        <!-- Asset Sync Rule History URL end -->
+    </urls>
+
+</security>

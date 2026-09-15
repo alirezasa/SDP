@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true" roles="SDAdmin" >
+        <throttles name="custom_module_apis" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/_total_count" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections" method="post" description="FGR_APPLIED" >
+            <param name="input_data" template="layout_section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(\d+)" method="put" description="FGR_APPLIED" >
+            <param name="input_data" template="layout_section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(\d+)" method="delete" description="FGR_APPLIED"/>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(\d+)" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections" method="put" description="FGR_APPLIED">
+            <param name="input_data" template="layout_section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections" method="delete" description="FGR_APPLIED" >
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(_?)allowed_values_for_fields" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(\d+)/(_?)allowed_values_for_fields" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(\d+)/(entity)/(\d+)" method="get" description="FGR_APPLIED" />
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(entity)" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(\d+)/(entity)" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(entity)/(\d+)" method="get" description="FGR_APPLIED" />
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/(\d+)/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/layouts/(\d+)/sections/_total_count" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules" method="post" description="FGR_APPLIED" >
+            <param name="input_data" template="custom_module" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)" method="put" description="FGR_APPLIED" >
+            <param name="input_data" template="custom_module" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)" method="delete" description="FGR_APPLIED" />
+        <url path="/api/v3/custom_modules" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules" method="put" description="FGR_APPLIED" >
+            <param name="input_data" template="custom_module" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules" method="delete" description="FGR_APPLIED" >
+            <param name="ids" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/custom_modules/images" method="post" description="FGR_APPLIED" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/images" method="put" description="FGR_APPLIED" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+
+        <url path="/api/v3/custom_modules/(_?)allowed_values_for_fields" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/(_?)allowed_values_for_fields" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/(parent|status|category|fields|associated_roles)/(\d+)" method="get" description="FGR_APPLIED" />
+        <url path="/api/v3/custom_modules/(parent|status|category|fields|associated_roles)" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/(parent|status|category|fields|associated_roles)" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(parent|status|category|fields|associated_roles)/(\d+)" method="get" description="FGR_APPLIED" />
+        <url path="/api/v3/custom_modules/(\d+)/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/_total_count" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/(_?)history" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/sections" method="post" description="FGR_APPLIED" >
+            <param name="input_data" template="section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/sections/(\d+)" method="put" description="FGR_APPLIED" >
+            <param name="input_data" template="section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/sections/(\d+)" method="delete" description="FGR_APPLIED" />
+        <url path="/api/v3/sections/(\d+)" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/sections" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/sections" method="put" description="FGR_APPLIED">
+            <param name="input_data" template="section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/sections" method="delete" description="FGR_APPLIED" >
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/sections/(_?)allowed_values_for_fields" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/sections/(\d+)/(_?)allowed_values_for_fields" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/sections/(\d+)/(entity)/(\d+)" method="get" description="FGR_APPLIED" />
+        <url path="/api/v3/sections/(entity)" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/sections/(\d+)/(entity)" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/sections/(entity)/(\d+)" method="get" description="FGR_APPLIED" />
+        <url path="/api/v3/sections/(\d+)/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/sections/_links" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/sections/_total_count" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_modules/(\d+)/permission" roles="" method="post" description="FGR_APPLIED" >
+            <param name="input_data" template="custom_permission" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission/(\d+)" roles="" method="put" description="FGR_APPLIED" >
+            <param name="input_data" template="custom_permission" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission/(\d+)" roles="" method="delete" description="FGR_APPLIED" />
+        <url path="/api/v3/custom_modules/(\d+)/permission/(\d+)" roles="" method="get" description="FGR_APPLIED" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission" roles="" method="put" description="FGR_APPLIED">
+            <param name="input_data" template="custom_permission" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission" roles="" method="delete" description="FGR_APPLIED">
+            <param name="ids" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission/(_?)allowed_values_for_fields" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission/(\d+)/(_?)allowed_values_for_fields" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission/(\d+)/_links" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission/_links" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/permission/_total_count" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+    </urls>
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles name="custom_module_apis" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/custom_modules/(_?)history" method="get" roles="SDAdmin,HelpdeskConfig,SDSiteAdmin,SDSpaceAdmin" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(_?)metainfo" method="get" roles="SDAdmin,HelpdeskConfig,SDSiteAdmin,SDSpaceAdmin" >
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/(_?)metainfo" method="get" roles="SDAdmin,HelpdeskConfig,SDSiteAdmin,SDSpaceAdmin" >
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(_?)new_form" method="get" roles="SDAdmin,HelpdeskConfig,SDSiteAdmin,SDSpaceAdmin" >
+            <param name="input_data" template="cm_new_form" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/(_?)new_form" method="get" roles="SDAdmin,HelpdeskConfig,SDSiteAdmin,SDSpaceAdmin" />
+        <url path="/api/v3/custom_modules/(_?)get_configurations" method="get" roles="SDOrgAdmin,SDAdmin,HelpdeskConfig,SDSiteAdmin,SDSpaceAdmin" user_type="all"/>
+        <url path="/api/v3/custom_modules/(_?)get_modules" user_type="all" method="get"  description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." />
+        <url path="/api/v3/custom_modules/(\d+)" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done.">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/images/(\d+)" method="get" description="FGR_APPLIED">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param regex="50x50|120x120" name="res"/>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true" />
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/images/(\d+)" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param regex="50x50|120x120" name="res"/>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true" />
+        </url>
+
+        <url path="/api/v3/custom_modules/(\d+)/sub_entities/(\d+)" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/sub_entities" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/sub_entities/(\d+)/_links" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/sub_entities/_links" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/custom_modules/(\d+)/sub_entities/_total_count" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(_?)get_performed_by_for_history" method="get" description="FGR_APPLIED">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/custom_modules/(_?)get_records_for_history" method="get" description="FGR_APPLIED">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+</security>

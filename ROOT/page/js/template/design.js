@@ -1,0 +1,1 @@
+!function(){var n=Handlebars.template;(Handlebars.templates=Handlebars.templates||{}).design=n({compiler:[7,">= 4.0.0"],main:function(n,e,a,l,d){return'<div paneltabholder="config" class="zc-pb-mb-panel-holder" id="zc-pb-mb-config-holder">\n  <div id="zc-pb-mb-content-holder" class="zc-pb-mb-panel-builder-container">\n     \n  </div>\n\n</div>\n'},useData:!0})}();

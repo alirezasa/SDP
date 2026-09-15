@@ -1,0 +1,36 @@
+﻿<p>Można również importować użytkowników z serwera LDAP i używać autentykacji LDAP. Włączając autentykację LDAP, użytkownik może używać swojego loginu i hasła używanego do uwierzytelniania przez LDAP. Domyślnie, autentykacja LDAP jest wyłączona. </p>
+
+<p>&nbsp;</p>
+
+<p><strong><u>Nota</u></strong> : Upewnij się, przed włączaniem autentykacji LDAP, że zaimportowałeś użytkowników. Autentykacja LDAP wspiera zarówno użytkowników Linuxowych jak i Windowsowych, dlatego po włączeniu autentykacji LDAP, autentykacja AD zostanie automatycznie wyłączona.</p>
+
+<p>&nbsp;</p>
+
+<p>Aby zaiportować użytkowników z Nowej Domeny</p>
+
+<ol style="list-style: decimal;" type=1>
+	<li>Naciśnij przycisk <strong>Dodaj Nową Domenę</strong> w polu Kontrolery Domeny. Otworzy to formularz dodawania Nowego Kontrolera Domeny.</li>
+	<li>Określ Kontroler Domeny, którego będą zaimportowani użytkownicy. Nazwę kontrolera domeny wpisz w pole tekstowe <strong style="margin-left: 30px;">Kontroler Domeny</strong>. Np.: ldap://&lt;nazwa serwera&gt;:&lt;numer portu&gt;. Portem domyślnym jest 389.</li>
+	<li>Wprowawdź <strong>Nazwę użytkownika</strong> 
+	
+	razem z Jednostką Organizacyjną (OU) w podanym polu tekstowym. Np, CN:kuba, CN=Users, DC=nazwa domeny, DC=com.</li>
+	<li>Wprowadź <strong>Hasło</strong> w odpowiednie pole.</li>
+	<li>Wprowadź <strong>Base DN</strong>, króre reperezentuje odpowiednio, CN = Users, DC =nazwa domeny, DC = com.</li>
+	<li>W pole Search Filter, wprowadź kryteria, po których chcesz wyszukiwać w domenie np, mail=* zaimportuje użytkowników z parametrem mail w określonej domenie.</li>
+	<li>Wybierz <strong>Typ serwera LDAP</strong> z listy rozwiajanej. Np. OpenLDAP.</li>
+</ol>
+
+<p style="margin-left: 40px;"><strong><u>Nota</u></strong>: Jeśli wybrałeś Typ serwera LDAP jak, Microsoft Active Directory, Novell eDirectory lub OpenLDA, pola Atrybuty Etykiety Logowania, Atrybuty Etykiedy Mail i Atrybut Etykiety Nazwy Głównej pojawią się z opcją nie do edycji.</p>
+
+<ol start=8 style="list-style: decimal;" type=1>
+	<li>Jeśli Typ serwera LDAP jest <strong>Inne</strong> wtedy musisz określić <strong>Atrybuty Etykiety Logowania</strong>,<strong>Atrybuty Etykiedy Mail</strong> w odpowiednich polach.</li>
+		<li><strong>Atrybut Etykiety Nazwy Głównej</strong> jest podobny do Base DN.</li>
+	
+		<li>Naciśnij przycisk <strong>Zapisz</strong>, aby zapisać kontroler domeny. Jeśli chcesz zapisać i zaimportować użytkowników, naciśnij przycisk <strong>Zapisz i Importuj</strong></li>
+</ol>
+
+<p>Możesz również zaimportować użytkowników z istniejącej domeny, klikacją <strong>Importuj teraz</strong> w odpowiadającym Kontrolerze Domeny. Importując te same dane ponownie, istniejące dane zostaną nadpisane. Włącz autentykację LDAP zaznaczając pole.</p>
+<p>Naciśnij przycisk <strong>Zapisz</strong>.
+
+Użytkownicy mogą się teraz logować do aplikacji używając ich poświadczeń w LDAP.
+</p>

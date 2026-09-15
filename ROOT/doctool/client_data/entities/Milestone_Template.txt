@@ -1,0 +1,227 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/milestone_template/{id}",
+      "desc": "This API call is used for fetching the details of an already existing milestone template.",
+      "disp_desc": "Get milestone template",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"fields_required\":[\"status\",\"priority\",\"estimated_hours\",\"description\",\"comments\",\"created_by\",\"created_time\"]}"
+      },
+      "output": {
+        "sample": "{\"milestone_template\": {\"milestone_index\": -1, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"id\": 3, \"estimated_hours\": 24, \"title\": \"Milestone template feature\", \"status\": {\"id\": 3, \"name\": \"Onhold\"}, \"priority\": {\"id\": 1, \"name\": \"Low\"}, \"description\": \"Creating a new template for checking out the milestone template feature.\", \"created_time\": {\"display_value\": \"Nov 20, 2015 04:33 PM\", \"value\": 1448017420890 }, \"comments\": \"New milestone template is added\", \"project_template\": {\"id\": 601, \"name\": \"Testing Project Template version 2.0\"} }, \"response_status\": {\"id\": \"3\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Milestone Template details has been fetched successfully\", \"statuscode\": \"8002\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/milestone_template",
+      "desc": "This is the API call for adding a new milestone template.",
+      "disp_desc": "Add milestone template",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"milestone_template\": {\"project_template\": {\"id\": \"601\"}, \"title\": \"Milestone template feature\", \"estimated_hours\": \"24\", \"description\": \"Creating a new template for checking out the milestone template feature.\", \"comments\": \"New milestone template is added\", \"status\": {\"id\": \"3\"}, \"priority\": {\"id\": \"1\"} } }",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"milestone_template\": {\"milestone_index\": -1, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"id\": 3, \"estimated_hours\": 24, \"title\": \"Milestone template feature\", \"status\": {\"id\": 3, \"name\": \"Onhold\"}, \"priority\": {\"id\": 1, \"name\": \"Low\"}, \"description\": \"Creating a new template for checking out the milestone template feature.\", \"created_time\": {\"display_value\": \"Nov 20, 2015 04:33 PM\", \"value\": 1448017420890 }, \"comments\": \"New milestone template is added\", \"project_template\": {\"id\": 601, \"name\": \"Testing Project Template version 2.0\"} }, \"response_status\": {\"id\": \"3\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"New Milestone Template has been created successfully\", \"statuscode\": \"8002\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/milestone_template/{id}",
+      "desc": "This is the API call for editing the Milestone template.",
+      "disp_desc": "Edit milestone template",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"milestone_template\": {\"title\": \"Milestone template feature version 2.0\", \"estimated_hours\": \"204\", \"description\": \"Creating a new template for checking out the milestone template feature.version 2.0\", \"comments\": \"New milestone template is added, Tested\", \"status\": {\"id\": \"2\"}, \"priority\": {\"id\": \"2\"} } }",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"milestone_template\": {\"milestone_index\": -1, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"id\": 3, \"estimated_hours\": 204, \"title\": \"Milestone template feature version 2.0\", \"status\": {\"id\": 2, \"name\": \"Closed\"}, \"priority\": {\"id\": 2, \"name\": \"Normal\"}, \"description\": \"Creating a new template for checking out the milestone template feature.version 2.0\", \"created_time\": {\"display_value\": \"Nov 20, 2015 04:33 PM\", \"value\": 1448017420890 }, \"comments\": \"New milestone template is added, Tested\", \"project_template\": {\"id\": 601, \"name\": \"Testing Project Template version 2.0\"} }, \"response_status\": {\"id\": \"3\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Milestone Template details have been updated successfully\", \"statuscode\": \"8002\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/milestone_template/{id}",
+      "desc": "This is the API call for deleting the milestone template",
+      "disp_desc": "Delete milestone template",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\": {\"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Milestone Template has been deleted Successfully [2]\", \"statuscode\": \"8002\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/milestone_template",
+      "desc": "It provides the API call for fetching the details of all the milestone templates saved in the application.",
+      "disp_desc": "Get all milestone templates",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"milestone_template\":{\"project_template\":{\"id\": \"601\"} },\"list_info\":{\"row_count\":\"5\",\"fields_required\":\"[get_all]\",\"start_index\":\"1\",\"end_index\":\"4\",\"search_fields\":{\"title\":\"like this\",\"priority\":\"1\"},\"sort_field\":\"title\",\"sort_order\":\"A\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"milestone_template\": [{\"id\": \"1\", \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"title\": \"A\", \"estimated_hours\": \"11\", \"status\": {\"id\": 3, \"name\": \"Onhold\"}, \"priority\": null, \"description\": null, \"comments\": null, \"project_template\": {\"id\": 901, \"name\": \"Test Template Feature Create from Project\"} }, {\"id\": \"2\", \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"title\": \"B\", \"estimated_hours\": \"221\", \"status\": {\"id\": 2, \"name\": \"Closed\"}, \"priority\": {\"id\": 1, \"name\": \"Low\"}, \"description\": null, \"comments\": null, \"project_template\": {\"id\": 901, \"name\": \"Test Template Feature Create from Project\"} }, {\"id\": \"3\", \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"title\": \"Milestone template feature version 2.0\", \"estimated_hours\": \"204\", \"status\": {\"id\": 2, \"name\": \"Closed\"}, \"priority\": {\"id\": 2, \"name\": \"Normal\"}, \"description\": \"Creating a new template for checking out the milestone template feature.version 2.0\", \"comments\": \"New milestone template is added, Tested\", \"project_template\": {\"id\": 601, \"name\": \"Testing Project Template version 2.0\"} } ], \"response_status\": {\"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"List view fetched successfully\", \"statuscode\": \"200\"} ] }, \"list_info\": {\"end_index\": \"3\", \"start_index\": \"1\", \"page_number\": \"1\", \"fields_required\": [\"get_all\"], \"row_count\": \"10\", \"sort_field\": \"-\", \"total_count\": \"3\", \"search_fields\": {} } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/milestone_template_newform",
+      "desc": "This API call is used for getting the allowed values list for adding a new milestone template.",
+      "disp_desc": "Get allowed values",
+      "workflow": "",
+      "output": {
+        "sample": "{\"allowed_values\": {\"status\": [{\"id\": 1, \"name\": \"Open\"}, {\"id\": 2, \"name\": \"Closed\"}, {\"id\": 3, \"name\": \"Onhold\"}, {\"id\": 4, \"name\": \"Canceled\"} ], \"priority\": [{\"id\": 1, \"name\": \"Low\"}, {\"id\": 2, \"name\": \"Normal\"}, {\"id\": 3, \"name\": \"Medium\"}, {\"id\": 4, \"name\": \"High\"} ] }, \"response_status\": {\"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Allowed values fetched successfully.\", \"statuscode\": \"200\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "column": "MilestoneTemplate:MILESTONETEMPLATEID",
+      "desc": "It stores the unique identifier for the milestone template.",
+      "graphView": "",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "project_template",
+      "type": "Object",
+      "column": "MilestoneTemplate:PROJECTTEMPLATEID",
+      "desc": "It stores the corresponding project template id, under which the milestone template is saved.",
+      "graphView": "",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "title",
+      "type": "String",
+      "column": "MilestoneTemplate:TITLE",
+      "desc": "It stores the title of the milestone template. This will be mapped to the title of the corresponding milestone when the project template is set.",
+      "graphView": "",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "column": "MilestoneTemplate:DESCRIPTION",
+      "desc": "It stores the description of the milestone template. It will be mapped to the corresponding description of the milestone when the project template is set.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "comments",
+      "type": "String",
+      "column": "MilestoneTemplate:COMMENTS",
+      "desc": "It stores the corresponding comments for the milestone template. It will be mapped to the milestone comments when the project template is set.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "estimated_hours",
+      "type": "Number",
+      "column": "MilestoneTemplate:ESTIMATEDHOURS",
+      "desc": "It stores the estimated hours of the milestone template. This will be mapped to the corresponding estimated hours field of the milestone when the project template is set.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "column": "MilestoneTemplate:STATUSID",
+      "desc": "It contains the status of the milestone template, It will be mapped to the status of the corresponding milestone when the project template is set",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "priority",
+      "type": "Object",
+      "column": "MilestoneTemplate:PRIORITYID",
+      "desc": "It contains the priority of the milestone template, It will be mapped to the priority of the corresponding milestone when the project template is set",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "column": "MilestoneTemplate:CREATEDBY",
+      "desc": "It contains the creator of the milestone template, It will not be mapped to any field when the project template is set.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "errorcodes": [
+    {
+      "code": "8002",
+      "desc": "Success",
+      "inOP": "true"
+    },
+    {
+      "code": "8003",
+      "desc": "Error",
+      "inOP": "true"
+    },
+    {
+      "code": "8008",
+      "desc": "ID Error",
+      "inOP": "true"
+    },
+    {
+      "code": "8009",
+      "desc": "Duplicate value Error",
+      "inOP": "true"
+    }
+  ],
+  "isReleased": "true",
+  "lastModified": 1466491461000,
+  "Additional Elements": []
+}

@@ -1,0 +1,348 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the sla",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Name of the sla",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "A brief description about the sla",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "order",
+      "type": "Number",
+      "desc": "Order of execution of the sla. The first matched sla will be applied. All other slas below the order of the applied sla will be ignored",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Site to which the sla belongs to. SLAs are site specific",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "is_service_sla",
+      "type": "Boolean",
+      "desc": "Indicates whether the SLA is an incident SLA or service request SLA",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "ignore_operational_hours",
+      "type": "Boolean",
+      "desc": "Indicates whether the request needs to be resolved irrespective of the working hours and holidays",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "ignore_holidays",
+      "type": "Boolean",
+      "desc": "Indicates whether the request needs to be resolved irrespective of holidays",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOD": "true"
+    },
+    {
+      "name": "ignore_weekends",
+      "type": "Boolean",
+      "desc": "Indicates whether the request needs to be resolved irrespective of the weekends",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOD": "true"
+    },
+    {
+      "name": "rules",
+      "type": "Array of Objects",
+      "desc": "SLA Rules is where you can define the rules and set matching criteria based on the incoming request. The due by time of a request governed by a SLA is calculated based on the SLA terms.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOD": "true"
+    },
+    {
+      "name": "response_escalation_configuration",
+      "type": "Array of Objects",
+      "desc": "The request can be escalated to other technicians if the request is not responded within the specified time. There is only one level of escalation if the response time elapses.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "resolution_escalation_configuration",
+      "type": "Array of Objects",
+      "desc": "The request can be escalated to other technicians if the request is not resolved within the specified time.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "rule_match_type",
+      "type": "String",
+      "desc": "Indicated whether 'all' rules should be matched or 'any' rules needs to be matched for the sla to be applied",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true"
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/sla"
+      ],
+      "desc": "This operation lets you add a SLA",
+      "disp_desc": "Add a sla",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"sla\":{\"name\":\"High SLA\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"A service-level agreement (SLA) is a part of a standardized service contract where a service is formally defined.\",\"rule_match_type\":\"any/all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10330000011223\",\"name\":\"Hardware\"}]}],\"first_response_time\":{\"days\":\"3\",\"hours\":\"6\",\"minutes\":\"0\"},\"resolution_time\":{\"days\":\"5\",\"hours\":\"7\",\"minutes\":\"30\"},\"ignore_operational_hours\":true,\"ignore_holidays\":false,\"ignore_weekends\":false,\"response_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}],\"resolution_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"sla\":{\"id\":\"10000000028834\",\"name\":\"High SLA\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"A service-level agreement (SLA) is a part of a standardized service contract where a service is formally defined.\",\"order\":\"3\",\"rule_match_type\":\"any/all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10330000011223\",\"name\":\"Hardware\"}]}],\"first_response_time\":{\"days\":\"3\",\"hours\":\"6\",\"minutes\":\"0\"},\"resolution_time\":{\"days\":\"5\",\"hours\":\"7\",\"minutes\":\"30\"},\"ignore_operational_hours\":true,\"ignore_holidays\":false,\"ignore_weekends\":false,\"response_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}],\"resolution_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/slas/{sla_id}"
+      ],
+      "desc": "This method lets you update details of a SLA",
+      "disp_desc": "Update a sla",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"sla\":{\"name\":\"High SLA\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"A service-level agreement (SLA) is a part of a standardized service contract where a service is formally defined.\",\"rule_match_type\":\"any/all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10330000011223\",\"name\":\"Hardware\"}]}],\"first_response_time\":{\"days\":\"3\",\"hours\":\"6\",\"minutes\":\"0\"},\"resolution_time\":{\"days\":\"5\",\"hours\":\"7\",\"minutes\":\"30\"},\"ignore_operational_hours\":true,\"ignore_holidays\":false,\"ignore_weekends\":false,\"response_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}],\"resolution_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"sla\":{\"id\":\"10000000028834\",\"name\":\"High SLA\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"A service-level agreement (SLA) is a part of a standardized service contract where a service is formally defined.\",\"order\":\"3\",\"rule_match_type\":\"any/all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10330000011223\",\"name\":\"Hardware\"}]}],\"first_response_time\":{\"days\":\"3\",\"hours\":\"6\",\"minutes\":\"0\"},\"resolution_time\":{\"days\":\"5\",\"hours\":\"7\",\"minutes\":\"30\"},\"ignore_operational_hours\":true,\"ignore_holidays\":false,\"ignore_weekends\":false,\"response_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}],\"resolution_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": "/api/v3/slas/{sla_id}",
+      "desc": "This operation lets you delete a SLA",
+      "disp_desc": "Delete a sla",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"SLA deleted successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/slas/{sla_id}"
+      ],
+      "desc": "This operation fetches details of a sla",
+      "disp_desc": "View a sla",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"sla\":{\"id\":\"10000000028834\",\"name\":\"High SLA\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"A service-level agreement (SLA) is a part of a standardized service contract where a service is formally defined.\",\"order\":\"3\",\"rule_match_type\":\"any/all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10330000011223\",\"name\":\"Hardware\"}]}],\"first_response_time\":{\"days\":\"3\",\"hours\":\"6\",\"minutes\":\"0\"},\"resolution_time\":{\"days\":\"5\",\"hours\":\"7\",\"minutes\":\"30\"},\"ignore_operational_hours\":true,\"ignore_holidays\":false,\"ignore_weekends\":false,\"response_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}],\"resolution_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/slas/"
+      ],
+      "desc": "",
+      "disp_desc": "View all slas",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":2,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"slas\":[{\"id\":\"10000000028834\",\"name\":\"High SLA\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"A service-level agreement (SLA) is a part of a standardized service contract where a service is formally defined.\",\"order\":\"3\",\"rule_match_type\":\"any/all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10330000011223\",\"name\":\"Hardware\"}]}],\"first_response_time\":{\"days\":\"3\",\"hours\":\"6\",\"minutes\":\"0\"},\"resolution_time\":{\"days\":\"5\",\"hours\":\"7\",\"minutes\":\"30\"},\"ignore_operational_hours\":true,\"ignore_holidays\":false,\"ignore_weekends\":false,\"response_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}],\"resolution_escalation_configuration\":[{\"escalation_level\":\"1\",\"technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"type\":\"before/after\",\"interval_days\":\"2\",\"hours\":\"11\",\"minutes\":\"30\",\"group\":{\"id\":\"10000000029946\",\"name\":\"Hardware Problems\"},\"technician\":{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"},\"priority\":{\"id\":\"10000000028335\",\"name\":\"High\"},\"level\":{\"id\":\"10000000011193\",\"name\":\"Tier 1\"}}]}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/sla"
+      ],
+      "desc": "This operation lets you rearrange the order of execution of slas",
+      "disp_desc": "Organise slas",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"sla_order\":[{\"id\":\"10000000028834\",\"order\":\"1\"},{\"id\":\"10000000028812\",\"order\":\"2\"},{\"id\":\"10000000028831\",\"order\":\"3\"}]}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"sla_order\":[{\"id\":\"10000000028834\",\"order\":\"1\"},{\"id\":\"10000000028812\",\"order\":\"2\"},{\"id\":\"10000000028831\",\"order\":\"3\"}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [],
+  "path": "/slas",
+  "handler": "SLAHandler",
+  "bean": "CriteriaRuleBeanObject",
+  "isReleased": "true",
+  "lastModified": 1474020240000,
+  "Additional Elements": [],
+  "subsections": {
+    "first_response_time": {
+      "desc": "The time within which the request should be responded in terms of days, hours, and minutes.",
+      "inOD": "true",
+      "attributes": [
+        {
+          "name": "days",
+          "type": "Number",
+          "desc": "Days within which the request should be responded",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOD": "true"
+        },
+        {
+          "name": "hours",
+          "type": "Number",
+          "desc": "Hours within which the request should be responded",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOD": "true"
+        },
+        {
+          "name": "minutes",
+          "type": "Number",
+          "desc": "Minutes within which the request should be responded",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOD": "true"
+        }
+      ]
+    },
+    "resolution_time": {
+      "desc": "The time within which the request should be resolved in terms of days, hours, and minutes.",
+      "inOD": "true",
+      "attributes": [
+        {
+          "name": "days",
+          "type": "Number",
+          "desc": "Days within which the request should be resolved",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOD": "true"
+        },
+        {
+          "name": "hours",
+          "type": "Number",
+          "desc": "Hours within which the request should be resolved",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOD": "true"
+        },
+        {
+          "name": "minutes",
+          "type": "Number",
+          "desc": "Minutes within which the request should be resolved",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOD": "true"
+        }
+      ]
+    }
+  }
+}

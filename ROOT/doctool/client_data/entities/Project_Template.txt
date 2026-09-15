@@ -1,0 +1,313 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template/{id}",
+      "desc": "Get details of the project template added.This API call is used for fetching the details of an already added project template.",
+      "disp_desc": "Get project template",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"fields_required\":[\"status\",\"priority\",\"estimated_hours\",\"project_type\",\"site\",\"estimated_cost\",\"description\",\"comments\",\"created_by\",\"created_time\"]}"
+      },
+      "output": {
+        "sample": "{\"response_status\": {\"id\": \"1\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Project Template details has been successfully fetched\", \"statuscode\": \"8002\"} ] }, \"project_template\": {\"site\": null, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"estimated_hours\": 24, \"status\": {\"id\": 3, \"name\": \"Onhold\"}, \"project_type\": {\"id\": 1, \"name\": \"Business\"}, \"id\": 1, \"title\": \"Project template feature\", \"description\": \"Creating a new template for checking out the project template feature.\", \"priority\": {\"id\": 1, \"name\": \"Low\"}, \"name\": \"Testing Project Template\", \"estimated_cost\": 100000, \"created_time\": {\"display_value\": \"Nov 20, 2015 10:15 AM\", \"value\": 1447994702254 }, \"comments\": \"New project template is added\"} }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template",
+      "desc": "This is the API call for adding a new project template to the application.",
+      "disp_desc": "Add project template",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"project_template\":{\"name\":\"Testing Project Template\",\"title\":\"Project template feature\",\"estimated_hours\":\"24\",\"estimated_cost\":\"100000\",\"description\":\"Creating a new template for checking out the project template feature.\",\"comments\":\"New project template is added\",\"status\":{\"id\":\"3\"},\"priority\":{\"id\":\"1\"},\"project_type\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\": {\"id\": \"1\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"New Project Template has been successfully added\", \"statuscode\": \"8002\"} ] }, \"project_template\": {\"site\": null, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"estimated_hours\": 24, \"status\": {\"id\": 3, \"name\": \"Onhold\"}, \"project_type\": {\"id\": 1, \"name\": \"Business\"}, \"id\": 1, \"title\": \"Project template feature\", \"description\": \"Creating a new template for checking out the project template feature.\", \"priority\": {\"id\": 1, \"name\": \"Low\"}, \"name\": \"Testing Project Template\", \"estimated_cost\": 100000, \"created_time\": {\"display_value\": \"Nov 20, 2015 10:15 AM\", \"value\": 1447994702254 }, \"comments\": \"New project template is added\"} }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template/{id}",
+      "desc": "This API call is used for editing/updating an already existing project template.",
+      "disp_desc": "Edit project template",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"project_template\":{\"name\":\"Testing Project Template version 2.0\",\"title\":\"Project template feature version 2.0\",\"estimated_hours\":\"48\",\"estimated_cost\":\"500\",\"description\":\"Creating a new template for checking out the project template feature. Testing version 2.0 edit\",\"comments\":\"New project template is added,or is it ? \",\"status\":{\"id\":\"1\"},\"priority\":{\"id\":\"2\"},\"project_type\":{\"id\":\"4\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\": {\"id\": \"601\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Project Template has been successfully updated\", \"statuscode\": \"8002\"} ] }, \"project_template\": {\"site\": null, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"estimated_hours\": 48, \"status\": {\"id\": 1, \"name\": \"Open\"}, \"project_type\": {\"id\": 4, \"name\": \"Research\"}, \"id\": 601, \"title\": \"Project template feature version 2.0\", \"description\": \"Creating a new template for checking out the project template feature. Testing version 2.0 edit\", \"priority\": {\"id\": 2, \"name\": \"Normal\"}, \"name\": \"Testing Project Template version 2.0\", \"estimated_cost\": 500, \"created_time\": {\"display_value\": \"Nov 20, 2015 12:18 PM\", \"value\": 1448002104795 }, \"comments\": \"New project template is added,or is it ?\"} }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template/{id}",
+      "desc": "This API call is used for deleting an already existing project template",
+      "disp_desc": "Delete project template",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\": {\"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Project Template has been successfully deleted [1]\", \"statuscode\": \"8002\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template",
+      "desc": "This API call is used to fetch all the project templates saved in the application. This call will be used for the list view in the UI",
+      "disp_desc": "Get all project templates",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"5\",\"fields_required\":\"[get_all]\",\"start_index\":\"1\",\"end_index\":\"4\",\"search_fields\":{\"title\":\"like this\",\"priority\":\"1\"},\"sort_field\":\"title\",\"sort_order\":\"A\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\": {\"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"List view fetched successfully\", \"statuscode\": \"200\"} ] }, \"list_info\": {\"end_index\": \"1\", \"start_index\": \"1\", \"page_number\": \"1\", \"fields_required\": [\"get_all\"], \"row_count\": \"10\", \"sort_field\": \"-\", \"total_count\": \"1\", \"search_fields\": {} }, \"project_template\": [{\"id\": \"601\", \"site\": null, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"title\": \"Project template feature version 2.0\", \"estimated_hours\": \"48\", \"status\": {\"id\": 1, \"name\": \"Open\"}, \"priority\": {\"id\": 2, \"name\": \"Normal\"}, \"description\": \"Creating a new template for checking out the project template feature. Testing version 2.0 edit\", \"name\": \"Testing Project Template version 2.0\", \"estimated_cost\": \"500.0\", \"project_type\": {\"id\": 4, \"name\": \"Research\"}, \"comments\": \"New project template is added,or is it ?\"} ] }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template_newform",
+      "desc": "This API call is used for getting allowed values for adding a new Project template.",
+      "disp_desc": "Get allowed values",
+      "workflow": "",
+      "output": {
+        "sample": "{\"allowed_values\": {\"site\": [{\"id\": 0, \"name\": \"Not associated to any site\"} ], \"status\": [{\"id\": 1, \"name\": \"Open\"}, {\"id\": 2, \"name\": \"Closed\"}, {\"id\": 3, \"name\": \"Onhold\"}, {\"id\": 4, \"name\": \"Canceled\"} ], \"priority\": [{\"id\": 1, \"name\": \"Low\"}, {\"id\": 2, \"name\": \"Normal\"}, {\"id\": 3, \"name\": \"Medium\"}, {\"id\": 4, \"name\": \"High\"} ], \"project_type\": [{\"id\": 1, \"name\": \"Business\"}, {\"id\": 2, \"name\": \"Infrastructure\"}, {\"id\": 3, \"name\": \"Maintenance\"}, {\"id\": 4, \"name\": \"Research\"} ] }, \"response_status\": {\"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Allowed values fetched successfully.\", \"statuscode\": \"200\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template/{id}/project_template_overview",
+      "desc": "This API call gives the overview of the entire project template along with associated milestones and tasks",
+      "disp_desc": "Get Overview map",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"fields_required\":[\"status\",\"priority\",\"estimated_hours\",\"project_type\",\"site\",\"estimated_cost\",\"description\",\"comments\",\"created_by\",\"created_time\"]}"
+      },
+      "output": {
+        "sample": "{\"response_status\": {\"id\": \"901\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Project Template details has been successfully fetched\", \"statuscode\": \"8002\"} ] }, \"project_template\": {\"site\": null, \"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"estimated_hours\": 99, \"status\": {\"id\": 3, \"name\": \"Onhold\"}, \"project_type\": {\"id\": 4, \"name\": \"Research\"}, \"id\": 901, \"title\": \"Project X\", \"milestone_template\": [{\"id\": 1, \"title\": \"A\", \"task_template\": [{\"id\": 301, \"title\": \"Change the phone number mapping 1\", \"priority\": {\"id\": 3, \"name\": \"Medium\"}, \"description\": \"To change the phone number mapping&lt;br /&gt;&lt;br /&gt;User name :&lt;br /&gt;User ID :&lt;br /&gt;Current Location :&lt;br /&gt;New Location :&lt;br /&gt;\"} ] }, {\"id\": 2, \"title\": \"B\", \"task_template\": [], \"priority\": {\"id\": 1, \"name\": \"Low\"} } ], \"task_template\": [{\"id\": 302, \"title\": \"Setting up user location 22\", \"description\": \"To set up user location for the new joinee with chair, desk, lock and key. To set up telephone connection:\"} ], \"description\": \"Secret Project\", \"priority\": {\"id\": 4, \"name\": \"High\"}, \"name\": \"Test Template Feature Create from Project\", \"estimated_cost\": 123.45, \"created_time\": {\"display_value\": \"Nov 20, 2015 03:20 PM\", \"value\": 1448013051521 } } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project_template/{id}/create_project_from_template",
+      "desc": "This is the API call for setting the project template as a new project. This API call will return the ID of the newly created project after setting it.",
+      "disp_desc": "Create project from template",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\": {\"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"Project template successfully set with Project ID 1\", \"statuscode\": \"8002\"} ] } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": "/sdpapiv2/project/{id}/create_template_from_project",
+      "desc": "This API call is used for creating a project template from an existing project. All associated milestones and tasks will be saved as a template using this API call.",
+      "disp_desc": "Create template from project",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"project_template\":{\"name\":\"Test Template Feature Create from Project\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\": {\"id\": \"901\", \"status\": \"Success\", \"messages\": [{\"type\": \"Success\", \"message\": \"New Project Template has been successfully added\", \"statuscode\": \"8002\"} ] }, \"project_template\": {\"created_by\": {\"id\": 3, \"name\": \"administrator\"}, \"site\": null, \"id\": 901, \"estimated_hours\": 99, \"title\": \"Project X\", \"status\": {\"id\": 3, \"name\": \"Onhold\"}, \"priority\": {\"id\": 4, \"name\": \"High\"}, \"description\": \"Secret Project\", \"name\": \"Test Template Feature Create from Project\", \"estimated_cost\": 123.45, \"created_time\": {\"display_value\": \"Nov 20, 2015 03:20 PM\", \"value\": 1448013051521 }, \"project_type\": {\"id\": 4, \"name\": \"Research\"} } }"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "column": "ProjectTemplate:PROJECTTEMPLATEID",
+      "desc": "Project Template ID. It is the unique identifier for the template.",
+      "graphView": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "column": "ProjectTemplate:TEMPLATENAME",
+      "desc": "Project template Name. This will be shown in the drop down list for choosing the project template to be set into the project.",
+      "graphView": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "title",
+      "type": "String",
+      "column": "ProjectTemplate:TITLE",
+      "desc": "Project template Title. This will be mapped to the project title when set as a project.",
+      "graphView": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "column": "ProjectTemplate:DESCRIPTION",
+      "desc": "Project template description. It will be mapped to the project description when set as a project",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "column": "ProjectTemplate:STATUSID",
+      "desc": "Project status for the template. This will be mapped to the project status when set as a project.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "priority",
+      "type": "Object",
+      "column": "ProjectTemplate:PRIORITYID",
+      "desc": "Project priority. It will be mapped to the project priority when set as project.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "estimated_hours",
+      "type": "Number",
+      "column": "ProjectTemplate:ESTIMATEDHOURS",
+      "desc": "Estimated hours for the project. It will be mapped to the Estimated hours field in projects when set as a project.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "project_type",
+      "type": "Object",
+      "column": "ProjectTemplate:PROJECTTYPEID",
+      "desc": "Project type. It will be mapped to the corresponding project type field when set as a project. ",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "column": "ProjectTemplate:SITEID",
+      "desc": "Project site. It will be mapped to the project site field when set as a project.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "estimated_cost",
+      "type": "Number",
+      "column": "ProjectTemplate:ESTIMATEDCOST",
+      "desc": "Estimated cost for the project. This field will be mapped to the estimated cost field of projects when set.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "comments",
+      "type": "String",
+      "column": "ProjectTemplate:COMMENTS",
+      "desc": "Project template comments. It will add comments to the project when set.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "column": "ProjectTemplate:CREATEDBY",
+      "desc": "Project template creator. It stores the user id of the project template creator.",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "column": "",
+      "desc": "It is used to view the created time of the project template.",
+      "graphView": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "errorcodes": [
+    {
+      "code": "8002",
+      "desc": "Success",
+      "inOP": "true"
+    },
+    {
+      "code": "8003",
+      "desc": "Error",
+      "inOP": "true"
+    },
+    {
+      "code": "8007",
+      "desc": "ID Error",
+      "inOP": "true"
+    },
+    {
+      "code": "8009",
+      "desc": "Duplicate value Error",
+      "inOP": "true"
+    }
+  ],
+  "isReleased": "true",
+  "lastModified": 1466491461000,
+  "Additional Elements": []
+}

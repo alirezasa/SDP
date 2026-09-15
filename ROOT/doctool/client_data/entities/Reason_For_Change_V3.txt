@@ -1,0 +1,136 @@
+{
+  "operations": [
+    {
+      
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": "/api/v3/reasons_for_change",
+      "desc": "You can add a new Reason for Change here.",
+      "disp_desc": "Add a Reason for Change",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{\"reason_for_change\":{\"description\":\"Introducing new services based on organizational needs\",\"name\":\"New services\",\"inactive\":false}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"reason_for_change\":{\"id\":\"1\",\"description\":\"Introducing new services based on organizational needs\",\"name\":\"New services\",\"inactive\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/reasons_for_change/{id}",
+      "desc": "You can view the details of a specific Change Request here.",
+      "disp_desc": "View a Reason for Change",
+      "workflow": "",
+      "output": {
+        "sample": "{\"reason_for_change\":{\"id\":\"1\",\"description\":\"Introducing new services based on organizational needs\",\"name\":\"New services\",\"inactive\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/reasons_for_change",
+      "desc": "You can get the details of all available Change Requests here.",
+      "disp_desc": "View All Reason for Change",
+      "workflow": "",
+        "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },    
+      "output": {
+        "sample": "{\"reasons_for_change\":[{\"id\":\"6\",\"description\":\"Applying updates on security based applications like Anti Virus, Firewall etc\",\"name\":\"Anti virus,firewall upgrades\",\"inactive\":false},{\"id\":\"1\",\"description\":\"Introducing new services based on organizational needs\",\"name\":\"New services\",\"inactive\":false},{\"id\":\"5\",\"description\":\"Applying patches for various applications\",\"name\":\"Patch updates\",\"inactive\":false},{\"id\":\"3\",\"description\":\"Enhancements and changes in services to improve productivity\",\"name\":\"Productivity improvements\",\"inactive\":false},{\"id\":\"2\",\"description\":\"Applying standards on Security Compliance for various applications\",\"name\":\"Security compliance\",\"inactive\":false},{\"id\":\"4\",\"description\":\"Upgrading existing servies based on new technology\",\"name\":\"Upgrades based on technology changes\",\"inactive\":false}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":6,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/reasons_for_change/{id}",
+      "desc": "You can edit the changes here.",
+      "disp_desc": "Update a Reason for Change",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"reason_for_change\":{\"id\":\"1\",\"description\":\"Introducing new services based on organizational needs\",\"name\":\"New services\",\"inactive\":false}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"reason_for_change\":{\"id\":\"1\",\"description\":\"Introducing new services based on organizational needs\",\"name\":\"New services\",\"inactive\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/reasons_for_change/{id}",
+      "desc": "You can delete the changes here.",
+      "disp_desc": "Delete a Reason for Change",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "REASONFORCHANGEDETAILS:ID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "name",
+    "type": "String",
+    "desc": "The name of the Reason For Change",
+    "graphView": "",
+    "column": "REASONFORCHANGEDETAILS:NAME",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "description",
+    "type": "String",
+    "desc": "The description of the Reason For Change",
+    "graphView": "",
+    "column": "REASONFORCHANGEDETAILS:DESCRIPTION",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "inactive",
+    "type": "Boolean",
+    "desc": "Denotes whether the Reason For Change is marked as not for further usage",
+    "graphView": "",
+    "column": "REASONFORCHANGEDETAILS:ISDELEETD",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  }
+],
+  "isReleased": "false"
+}
+

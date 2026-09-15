@@ -1,0 +1,60 @@
+<!--$Id$-->
+<!-- Security authentication for ESM framework related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" method="get">
+		<url path="/ESM.do" user_type="all"   operation-param="type" operation-value="home"  roles="SDOrgAdmin"/>
+		<url path="/ESM.do" operation-param="type" operation-value="portal" user_type="all" roles="Common_Role">
+			<param name="searchText" type="String" max-len="1000" allow-empty="false"/>
+			<param name="selectedModules" regex="(announcement|project|solution|request|,)+"/>
+			<param name="selectedPortal" type="long"/>
+			<!-- Below params are applicable only for demo server -->
+                        <param name="username" type="String" regex="demo|guest"/>
+                        <param name="password" type="String" regex="demo|guest"/>
+		</url>
+
+		<url path="/ESM.do"  operation-param="type" operation-value="departments" user_type="all" roles="SDOrgAdmin" description="The url is used in ESM Directoroy. So mentioned user type all">
+			<!--
+			//TODO
+			<param name="viewType" regex="details|list|add|edit"/>
+			<param name="userId" regex="null|[0-9]+"/>
+			<param name="changeTo" regex="addeletedusers" />
+			-->
+		</url>
+		<url path="/ESM.do" operation-param="type" operation-value="departments-udf" user_type="all" roles="SDOrgAdmin" description="The url is used in ESM Directoroy. So mentioned user type all">
+		</url>
+		<url path="/ESM.do" operation-param="type" operation-value="instances" user_type="all" roles="SDOrgAdmin"/>
+		<url path="/ESM.do" operation-param="type" operation-value="portal_customization" user_type="all" roles="SDOrgAdmin"/>
+		<url path="/ESM.do" operation-param="type" operation-value="applicationsettings" user_type="all" roles="SDOrgAdmin" method="GET"/>
+		<url path="/ESM.do" operation-param="type" operation-value="backup-schedule" user_type="all" roles="SDOrgAdmin" method="GET"/>
+		<url path="/ESM.do" operation-param="type" operation-value="privacysettings" user_type="all" roles="SDOrgAdmin" method="GET"/>
+		<url path="/ESM.do" operation-param="type" operation-value="notification-roles" user_type="all" roles="SDOrgAdmin"/>
+		<url path="/ESM.do" operation-param="type" operation-value="esmEmail" user_type="all" roles="SDOrgAdmin" method="GET"/>
+		
+		<!--throttles key="url.path+url.dynamic_key" name="esm_common_throttle" scope="APPSERVER" window="ROLLING">
+             		<throttle duration="1m" lock-period="5m" threshold="60"/>
+         	</throttles-->
+         	<!-- removed unnecessary urls tag for merging with msp sec xmls -->
+		<!-- /urls>
+		<urls authentication="required" method="get" -->
+		<url path="/instancesettings.do" roles="SDAdmin"/>
+		<url path="/mdh/ESMNotificationRule.jsp" roles="SDOrgAdmin" user_type="all"/>
+		<url path="/mdh/ESM.jsp" user_type="all" roles="SDOrgAdmin"/>
+		<url path="/mdh/ESMHome.jsp" roles="SDOrgAdmin" user_type="all"/>
+		<url path="/mdh/ESMInstances.jsp" roles="SDOrgAdmin" user_type="all"/>
+		<url path="/mdh/ESMPortalCustomization.jsp" roles="SDOrgAdmin" user_type="all"/>
+		<url path="/mdh/ESMDirectory.jsp" roles="SDOrgAdmin" user_type="all"/>
+		<url path="/mdh/InstanceSettings.jsp" roles="SDAdmin"/>
+		<!--throttles key="url.path+url.dynamic_key" name="esm_common_throttle" scope="APPSERVER" window="ROLLING">
+             		<throttle duration="1m" lock-period="5m" threshold="60"/>
+         	</throttles>
+</urls>
+	<urls disable-extraparam="true" authentication="required" method="get"-->
+		<url path="/ESM.do" operation-param="type" operation-value="fosconfiguration" user_type="all" roles="SDOrgAdmin" />
+		<url path="/ESM.do" operation-param="type" operation-value="fosreplication" user_type="all" roles="SDOrgAdmin"/>
+		
+		<throttles key="url.path+url.dynamic_key" name="esm_common_throttle" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+             		<throttle duration="1m" lock-period="5m" threshold="60"/>
+         	</throttles>
+	</urls>
+	
+</security>

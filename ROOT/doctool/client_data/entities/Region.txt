@@ -1,0 +1,224 @@
+{
+	"attributes": [{
+		"name": "id",
+		"type": "Number",
+		"desc": "Unique identifier used to identify the region.",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"isMandatory": "true",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "name",
+		"type": "String",
+		"desc": "Name of the region",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "description",
+		"type": "String",
+		"desc": "Relevant information about the activities of the branch operation situated in the region.",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "role_associations",
+		"type": "Array of Objects",
+		"desc": "Associated user of Region's Organization role",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}],
+	"operations": [{
+		"name": "",
+		"method": "POST",
+		"moduleName" : "Common",
+		"path": "/api/v3/regions",
+		"desc": "This operation lets you add a region.",
+		"disp_desc": "Add a Region",
+		"workflow": "",
+		"input": {
+			"name": "INPUT_DATA",
+			"sample": "{\"region\": {\"name\": \"USA\",\"description\": \"USA region description\"}}"
+		},
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"},\"region\": {\"name\": \"USA\",\"description\": \"USA region description\",\"id\": \"1201\",\"role_associations\": []}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": "/api/v3/regions/{region_id}",
+		"desc": "This operation lets you update a region.",
+		"disp_desc": "Update a Region",
+		"workflow": "",
+		"input": {
+			"name": "INPUT_DATA",
+			"sample": "{\"region\": {\"name\": \"USA updated\",\"description\": \"USA region description updated\"}}"
+		},
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"},\"region\": {\"name\": \"USA updated\",\"description\": \"USA region description updated\",\"id\": \"1201\",\"role_associations\": []}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "DELETE",
+		"moduleName" : "Common",
+		"path": "/api/v3/regions/{region_id}",
+		"desc": "This operation lets you delete a region.",
+		"disp_desc": "Delete a Region",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "GET",
+		"moduleName" : "Common",
+		"path": "/api/v3/regions/{region_id}",
+		"desc": "This operation fetches details of a region.",
+		"disp_desc": "View a Region",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"},\"region\": {\"name\": \"USA\",\"description\": \"USA\",\"id\": \"1\",\"role_associations\": []}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "GET",
+		"moduleName" : "Common",
+		"path": ["/api/v3/regions"],
+		"desc": "This operation fetches all regions.",
+		"disp_desc": "View all Regions",
+		"workflow": "",
+		"output": {
+			"sample": "{\"regions\": [{\"name\": \"USA\",\"description\": \"USA\",\"id\": \"1\"},{\"name\": \"USA12345\",\"description\": \"test description\",\"id\": \"904\"}],\"response_status\": [{\"status_code\": 2000,\"status\": \"success\"}],\"list_info\": {\"has_more_rows\": false,\"start_index\": 1,\"row_count\": 2}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": ["/api/v3/regions/{region_id}"],
+		"desc": "This operation associates user for the Organization roles for a region.",
+		"disp_desc": "Associate user for Organization roles",
+		"workflow": "",
+		"input": {
+			"sample": "{\"region\": {\"role_associations\": [{\"org_role\": {\"id\": \"8\"},\"user\": {\"id\": \"4\"}}, {\"org_role\": {\"id\": \"9\"},\"user\": {\"id\": \"4\"}}]}}"
+		},
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"},\"region\": {\"name\": \"USA\",\"description\": \"USA\",\"id\": \"1\",\"role_associations\": [{\"id\": \"301\",\"org_role\": {\"name\": \"Regional Incharge\",\"id\": \"8\",\"display_name\": \"$REGIONAL_INCHARGE$\"},\"user\": {\"email_id\": null,\"phone\": \"1234455\",\"name\": \"administrator\",\"mobile\": \"1234567890\",\"is_vipuser\": false,\"id\": \"4\",\"department\": null}},{\"id\": \"302\",\"org_role\": {\"name\": \"Regional Manager\",\"id\": \"9\",\"display_name\": \"$REGIONAL_MANAGER$\"},\"user\": {\"email_id\": null,\"phone\": \"1234455\",\"name\": \"administrator\",\"mobile\": \"1234567890\",\"is_vipuser\": false,\"id\": \"4\",\"department\": null}}]}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": ["/api/v3/regions/{region_id}"],
+		"desc": "This operation dissociate user for the Organization roles for a region.",
+		"disp_desc": "Dissociate user for Organization Role",
+		"workflow": "",
+		"input": {
+			"sample": "{\"region\": {\"role_associations\": []}}"
+		},
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"},\"region\": {\"name\": \"USA\",\"description\": \"USA\",\"id\": \"1\",\"role_associations\": []}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": ["/api/v3/regions/{region_id}"],
+		"desc": "This operation update associated user for the Organization roles for a region.",
+		"disp_desc": "Update user and Organization Role's association",
+		"workflow": "",
+		"input": {
+			"sample": "{\"region\": {\"role_associations\": [{\"id\": \"301\",\"org_role\": {\"id\": \"9\"},\"user\": {\"id\": \"5\"}}]}}"
+		},
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"},\"region\": {\"name\": \"USA\",\"description\": \"USA\",\"id\": \"1\",\"role_associations\": [{\"id\": \"301\",\"org_role\": {\"name\": \"Regional Incharge\",\"id\": \"9\",\"display_name\": \"$REGIONAL_INCHARGE$\"},\"user\": {\"email_id\": null,\"phone\": \"1234455\",\"name\": \"Shawn Adams\",\"mobile\": \"1234567890\",\"is_vipuser\": false,\"id\": \"5\",\"department\": null}}]}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": ["/api/v3/regions?ids={region_ids}"],
+		"desc": "This operation update region in bulk.",
+		"disp_desc": "Bulk Edit",
+		"workflow": "",
+		"input": {
+			"sample": "{\"region\": {\"role_associations\": [{\"org_role\": {\"id\": \"9\"},\"user\": {\"id\": \"5\"}}]}}"
+		},
+		"output": {
+			"sample": "{\"regions\":[{\"name\":\"USA\",\"description\":null,\"id\":\"4\",\"role_associations\":[{\"id\":\"1\",\"org_role\":{\"name\":\"Regional Incharge\",\"id\":\"9\",\"display_name\":\"$REGIONAL_INCHARGE$\"},\"user\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"\/images\/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null}}]},{\"name\":\"USA 2\",\"description\":null,\"id\":\"5\",\"role_associations\":[{\"id\":\"2\",\"org_role\":{\"name\":\"Regional Incharge\",\"id\":\"9\",\"display_name\":\"$REGIONAL_INCHARGE$\"},\"user\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"\/images\/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null}}]}],\"response_status\":[{\"status_code\":2000,\"id\":\"4\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"5\",\"status\":\"success\"}]}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "DELETE",
+		"moduleName" : "Common",
+        "path": ["/api/v3/regions?ids={region_ids}"],
+		"desc": "This operation delete region in bulk.",
+		"disp_desc": "Bulk Delete",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"2\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"3\",\"status\":\"success\"}]}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	},{
+        "name": "",
+        "method": "GET",
+		"moduleName" : "Common",
+        "path": ["/api/v3/regions/history"],
+        "desc": "This operation fetches all region history.",
+        "disp_desc": "View region global history",
+        "workflow": "",
+        "output": {
+            "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2},\"history\":[{\"by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"\/images\/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"name\",\"display_name\":\"Name\"},\"previous_value\":\"USA 3\",\"current_value\":\"USA updated\"},{\"field\":{\"name\":\"description\",\"display_name\":\"Description\"},\"previous_value\":\"USA region description\",\"current_value\":\"USA region description updated\"}],\"id\":\"14\",\"time\":{\"display_value\":\"Nov 2, 2021 03:07 AM\",\"date\":\"Nov 2, 2021\",\"time\":\"03:07 AM\",\"value\":\"1635802659507\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"region\":{\"name\":\"USA updated\",\"id\":\"6\"},\"operation\":\"edit\",\"entity\":\"region\",\"user_agent\":\"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/95.0.4638.69 Safari\/537.36\"},{\"by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"\/images\/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"region\"},\"previous_value\":null,\"current_value\":\"USA 3\"}],\"id\":\"13\",\"time\":{\"display_value\":\"Nov 2, 2021 03:07 AM\",\"date\":\"Nov 2, 2021\",\"time\":\"03:07 AM\",\"value\":\"1635802654255\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"region\":{\"name\":\"USA updated\",\"id\":\"6\"},\"operation\":\"add\",\"entity\":\"region\",\"user_agent\":\"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/95.0.4638.69 Safari\/537.36\"}]}"
+        },
+        "inOP": "true",
+        "isReleased": "true"
+    }, {
+        "name": "",
+        "method": "GET",
+		"moduleName" : "Common",
+        "path": "/api/v3/regions/{region_id}/history",
+        "desc": "This operation fetches history of a region.",
+        "disp_desc": "View region history",
+        "workflow": "",
+        "output": {
+            "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2},\"history\":[{\"by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"\/images\/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"name\",\"display_name\":\"Name\"},\"previous_value\":\"USA 3\",\"current_value\":\"USA updated\"},{\"field\":{\"name\":\"description\",\"display_name\":\"Description\"},\"previous_value\":\"USA region description\",\"current_value\":\"USA region description updated\"}],\"id\":\"14\",\"time\":{\"display_value\":\"Nov 2, 2021 03:07 AM\",\"date\":\"Nov 2, 2021\",\"time\":\"03:07 AM\",\"value\":\"1635802659507\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"region\":{\"name\":\"USA updated\",\"id\":\"6\"},\"operation\":\"edit\",\"entity\":\"region\",\"user_agent\":\"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/95.0.4638.69 Safari\/537.36\"},{\"by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"\/images\/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"region\"},\"previous_value\":null,\"current_value\":\"USA 3\"}],\"id\":\"13\",\"time\":{\"display_value\":\"Nov 2, 2021 03:07 AM\",\"date\":\"Nov 2, 2021\",\"time\":\"03:07 AM\",\"value\":\"1635802654255\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"region\":{\"name\":\"USA updated\",\"id\":\"6\"},\"operation\":\"add\",\"entity\":\"region\",\"user_agent\":\"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/95.0.4638.69 Safari\/537.36\"}]}"
+        },
+        "inOP": "true",
+        "isReleased": "true"
+    }
+	],
+	"workflow": [],
+	"write_protect_criteria": [],
+	"path": "/regions",
+	"handler": "CachedEntityHandler",
+	"Additional Elements": [],
+	"isReleased": "true"
+}

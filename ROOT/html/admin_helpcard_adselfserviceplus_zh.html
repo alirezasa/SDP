@@ -1,0 +1,34 @@
+<p><span class="helpheading"><strong>集成ADSelfService Plus</strong></span></p>
+<p>将ServiceDesk Plus与ManageEngine ADSelfService Plus集成，可以帮助AD用户在忘记密码或帐户被锁定的时候，进行自助服务，而不需求助于帮助台的技术员。ManageEngine ADSelfService Plus是完全基于Web的，安全的密码自助管理工具，它可以帮助域用户自助重置密码、解锁帐户、更新自我信息等。如果您已经安装了这两款产品，只需要在此指定运行ADSelfService Plus的计算机名称和Web端口，即可完成集成。</p>
+<p><strong>需要提供的信息:</strong></p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>服务器名称:</strong> 输入安装了<span style="font-weight: bold;">
+  ADSelfService Plus</span>的服务器的名称或IP地址。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>服务器端口:</strong> 输入访问ADSelfService Plus的<span style="font-weight: bold;">端口号</span>。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>协议设置:</strong> 选择访问ADSelfService Plus的<span style="font-weight: bold;">协议</span>，如：http 或 https。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">选中<strong>为技术员启用AD自助服务菜单</strong>选项，该菜单将显示在技术员登录后的页面上，而不管ServiceDesk Plus与ADSelfService Plus的集成状态。选中<strong>为请求人启用AD自助服务页签</strong>选项，将在请求人的页面中显示AD自助服务的页签。注意，该页签只有在完成了ServiceDesk Plus与ADSelfService Plus的集成之后才会显示。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">点击<span style="font-weight: bold;">保存</span>，将保存设置信息，并尝试与ADSelfService Plus 服务器进行链接，一旦连接建立，使用跳转链接，就可以切换到ADSelfService Plus的页面。
+</p>
+
+<br>
+
+<p><span class="helpheading"><strong>集成(运行在HTTPS模式)ME产品</strong></span></p>
+<ol>
+  <li>从以下链接，下载<strong>.zip</strong>文件，并将下载的文件解压到"<em>ManageEngine\ServiceDesk"</em>:</li>
+  <p style="margin-left: 50px;"><strong>对于Linux: </strong>https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip </p>
+  <p style="margin-left: 50px;"><strong>对于Windows:</strong> https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip </p>
+  <li>打开命令行窗口，导航到"<em>ManageEngine\ServiceDesk"</em>目录，以以下格式执行命令：</li>
+  <p style="margin-left: 50px;"><strong>对于Linux: </strong><br>
+    \ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>执行命令后，将会提示一个<strong>PKIX</strong>例外，然后要求您输入一个值，输入1，将在<em>"ManageEngine\ServiceDesk"</em>目录下生成文件名为 <strong>jssecacerts</strong>的文件。</p>
+  </li>
+  <li>将文件<strong>jssecacerts</strong>复制到"<em>ManageEngine\ServiceDesk\jre\lib\security"</em> 目录下，然后重启ServiceDesk Plus 。</li>
+</ol>

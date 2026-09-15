@@ -1,0 +1,99 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)--> <!--(Document created with RoboEditor. )============================--> <!--(==============================================================)-->
+
+<head>
+
+<title>admin_helpcard_email_mailparser</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=UTF-8">
+<meta NAME=CREATED CONTENT="20090929;16355000">
+<meta NAME=CHANGED CONTENT="20090929;17075400">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1162>
+<meta name=layout-width content=1087>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body LANG=en-US DIR=LTR>
+
+<p style="font-weight: bold;">E-mailコマンド</p>
+
+&nbsp;
+
+<!--begin!kadov{{--><br><!--}}end!kadov--><!--kadov_tag{{<implicit_p>}}-->E-mailコマンド機能を使用すれば、ServiceDesk Plus が受信したメールの本文に挿入されているコマンドに応じてフィールドの値を自動で設定したり、指定のオペレーションを実行可能です。 
+ 
+
+<p>E-mail コマンドを設定するには、</p>
+
+<p>1.メールサーバ設定ページから、<b>E-mail コマンド</b>タブをクリックします。<span style="font-weight: medium;">E-mail コマンド</span> 設定ページが表示されます。</p>
+
+<p>2.メールパース機能を有効にするには、<b>E-mailコマンドを有効化</b> オプションをクリックします。このオプションが選択されていない場合、受信メールの件名にパース文字列が含まれていても通常のメールとして処理されます。</p>
+
+<p>3.<b>メールの件名に含めるパース識別子</b>テキストボックスには、パースする電子メールを識別するための文字列を入力します。このテキストが件名に含まれる場合は様々なフィールドをパースします。<!--kadov_tag{{<spaces>}}--><!--kadov_tag{{</spaces>}}-->例えばメールの件名識別子に @SDP@を指定した場合、件名に@SDP@が含まれるメールはパース対象のメールとして識別されます。</p>
+
+<p>4.<b>コマンド・デリミタ</b>にパースで使用する記号を指定します（@@, ##, $$, %%, &amp;&amp; など)。<!--kadov_tag{{<spaces>}}--><!--kadov_tag{{</spaces>}}-->フィールドの値を記号の間に入力すると、リクエスト作成時に値が自動的にフィールドに割り当てられます。コマンド・デリミタが @@ で、このメールから作成されるリクエストの「カテゴリ」フィールドを「プリンタ」として設定したい場合は、メールの本文に @@Category=プリンタ@@ を含める必要があります。</p>
+
+<p>メモ ：</p>
+
+<ul style="list-style: DISC;"
+	type=disc>
+	
+	<li class=kadov-P><p>技術担当者はメールから、リクエストの作成 / 更新 / クローズ / ピックアップを実行することができます。オペレーション文字列では、&quot;Operation = AddRequest&quot;、&quot;Operation = EditRequest&quot;、&quot;Operation = CloseRequest&quot;、&quot;Operation = PickupRequest&quot; が使用されます。</p></li>
+	
+	<li class=kadov-P><p>メール経由でリクエストをピックアップする/クローズする場合は、オペレーション文字列(EditRequest / PickupRequest / CloseRequest) と RequestId が含まれている必要があります。これらの文字列が含まれない場合は、新規リクエストとして処理されます。</p></li>
+	
+	<li class=kadov-P><p>リクエストがメールによって更新された場合、そのメールはリクエストのスレッドとしては残りません（リクエストの表示ページで、「このリクエストのメール」ブロックには表示されません）。そのため、メールの添付ファイルやインラインイメージはリクエストには更新されません。ただし、更新情報はリクエストの「履歴」タブより確認できます。</p></li>
+	
+	<li class=kadov-P><p>メールの本文で指定したフィールドの値がServiceDesk Plusに存在しない場合は、そのフォールドはパースの対象外となります。</p></li>
+	
+	<li class=kadov-P><p>メール本文で特定のフィールドに複数の値が含まれる場合、最後の値がパース対象となりその他の値は無効になります。</p></li>
+	
+	<li class=kadov-P><p>リクエストの件名に &quot;リクエストＩＤ&quot;を含めているリクエストのスレッドメールで、オペレーション文字列（EditRequest) が含まれない場合は、通常メールとして処理されるため、リクエストのスレッドメールとなります。</p></li>
+	
+	<li class=kadov-P><p>メールの送信者は ServiceDesk Plus のログインアカウントを所有している必要があります。<!--kadov_tag{{<spaces>}}--><!--kadov_tag{{</spaces>}}-->各ユーザに割当てられている役割に応じて、パース可能なオペレーションに制限を設けていることが理由です。リクエストに対する各オペレーションの権限は、ServiceDesk Plus の「役割」機能を使用して設定されています。 </p></li>
+	
+	<li class=kadov-P><p>依頼者名がメール本文に指定されていない場合は、メールの送信者が「依頼者」としてみなされます。</p></li>
+	
+	<li class=kadov-P><p>サポートしているパラメータ：</p></li>
+</ul>
+
+<ul style="list-style: lower-alpha;"
+	type=a>
+	
+	<ol style="list-style: lower-alpha;"
+		type=a>
+		
+		<li class=kadov-P><p>メール送信者が依頼者の場合、パースされるフィールドが制限されます。依頼者は、依頼者がWebからのリクエスト作成フォームに表示されるフィールドのみパースが可能です。 </p></li>
+		
+		<li class=kadov-P><p>メールの送信者が技術担当者（技術担当者の役割を持っている）の場合は、技術担当者がリクエスト作成フォームを開いた場合に表示されるフィールドに対してパースが可能です。</p></li>
+		
+		<li class=kadov-P><p>パース可能なフィールドは次の通りです：LEVEL（レベル）, MODE（モード）, PRIORITY（優先度）, URGENCY（緊急度）, IMPACT（インパクト）, IMPACTDETAILS（インパクト情報）, CATEGORY（カテゴリ）, SUBCATEGORY（サブカテゴリ）, ITEM（項目）, GROUP（グループ）, TECHNICIAN（技術担当者）, TECHNICIANEMAIL（技術担当者メールアドレス）, REQUESTER（依頼者）, REQUESTEREMAIL（依頼者メールアドレス）, REQUESTID（リクエストＩＤ）, REQUESTTEMPLATE（リクエストテンプレート), REQUESTTYPE(リクエストタイプ), STATUS(ステータス), SITE(サイト), ASSET(資産), RESOLUTION(回答), 追加フィールド。追加フィールドの場合は、ラベル名を指定してください。</p></li>
+		
+		<li class=kadov-P><p>依頼者または技術担当者がパース可能なフィールドを変更するには、「管理タブ --&gt; ヘルプデスクのカスタマイズ --&gt; リクエストテンプレート --&gt; デフォルトテンプレート」より、フィールドを追加/削除します。</p></li>
+	</ol>
+</ul>
+
+<ul style="list-style: DISC;"
+	type=disc>
+	
+	<li class=kadov-P><p>メール本文にリクエストIDが含まれる場合は、メールの件名に含まれるリクエストIDよりも優先されます。</p></li>
+</ul>
+
+</body>
+
+</html>

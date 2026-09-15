@@ -1,0 +1,133 @@
+{
+  "operations": [
+
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_templates/{template_id}",
+      "desc": "You can view the details of a specific Change template here.",
+      "disp_desc": "View a Change Template",
+      "workflow": "",
+      "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"include\":[\"all_stages\"]}"
+            },
+      "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"total_count\":2,\"get_total_count\":\"true\",\"row_count\":2},\"change_templates\":[{\"inactive\":false,\"comments\":\"This template is used to create general changes\",\"workflow\":{\"name\":\"SDGeneral\",\"id\":\"1\",\"is_emergency\":false},\"createdby\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\",\"department\":null},\"change\":{\"impact\":null,\"change_manager\":null,\"retrospective\":false,\"description\":null,\"change_type\":null,\"title\":\"\",\"priority\":null,\"change_owner\":null,\"site\":null,\"reason_for_change\":null,\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"urgency\":null,\"comment\":\"The above stage/status is set as part of 'Change' creation\",\"risk\":null,\"category\":null,\"subcategory\":null,\"change_requester\":null,\"group\":null,\"status\":{\"internal_name\":\"Requested\",\"prominent\":false,\"stage\":{\"id\":\"1\"},\"action_name\":null,\"name\":\"Requested\",\"id\":\"3\"}},\"name\":\"General Template\",\"id\":\"1\",\"is_default\":true,\"is_emergency\":false},{\"inactive\":false,\"comments\":\"This template is used to create emergency changes\",\"workflow\":{\"name\":\"SDEmergency\",\"id\":\"2\",\"is_emergency\":true},\"createdby\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\",\"department\":null},\"change\":{\"impact\":null,\"change_manager\":null,\"retrospective\":false,\"description\":null,\"change_type\":null,\"title\":\"\",\"priority\":null,\"change_owner\":null,\"site\":null,\"reason_for_change\":null,\"stage\":{\"internal_name\":\"Approval\",\"name\":\"Approval\",\"id\":\"3\"},\"urgency\":null,\"comment\":\"The above stage/status is set as part of 'Change' creation\",\"risk\":null,\"category\":null,\"subcategory\":null,\"change_requester\":null,\"group\":null,\"status\":{\"internal_name\":\"Approval Pending\",\"prominent\":false,\"stage\":{\"id\":\"3\"},\"action_name\":null,\"name\":\"Approval Pending\",\"id\":\"19\"}},\"name\":\"Emergency Template\",\"id\":\"2\",\"is_default\":false,\"is_emergency\":true}]}"},
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_templates",
+      "desc": "You can get the details of all available Change templates here.",
+      "disp_desc": "View all Change Templates",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+      "workflow": "",
+      "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"total_count\":2,\"get_total_count\":\"true\",\"row_count\":2},\"change_templates\":[{\"inactive\":false,\"comments\":\"This template is used to create general changes\",\"workflow\":{\"name\":\"SDGeneral\",\"id\":\"1\",\"is_emergency\":false},\"createdby\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\",\"department\":null},\"change\":{\"impact\":null,\"change_manager\":null,\"retrospective\":false,\"description\":null,\"change_type\":null,\"title\":\"\",\"priority\":null,\"change_owner\":null,\"site\":null,\"reason_for_change\":null,\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"urgency\":null,\"comment\":\"The above stage/status is set as part of 'Change' creation\",\"risk\":null,\"category\":null,\"subcategory\":null,\"change_requester\":null,\"group\":null,\"status\":{\"internal_name\":\"Requested\",\"prominent\":false,\"stage\":{\"id\":\"1\"},\"action_name\":null,\"name\":\"Requested\",\"id\":\"3\"}},\"name\":\"General Template\",\"id\":\"1\",\"is_default\":true,\"is_emergency\":false},{\"inactive\":false,\"comments\":\"This template is used to create emergency changes\",\"workflow\":{\"name\":\"SDEmergency\",\"id\":\"2\",\"is_emergency\":true},\"createdby\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\",\"department\":null},\"change\":{\"impact\":null,\"change_manager\":null,\"retrospective\":false,\"description\":null,\"change_type\":null,\"title\":\"\",\"priority\":null,\"change_owner\":null,\"site\":null,\"reason_for_change\":null,\"stage\":{\"internal_name\":\"Approval\",\"name\":\"Approval\",\"id\":\"3\"},\"urgency\":null,\"comment\":\"The above stage/status is set as part of 'Change' creation\",\"risk\":null,\"category\":null,\"subcategory\":null,\"change_requester\":null,\"group\":null,\"status\":{\"internal_name\":\"Approval Pending\",\"prominent\":false,\"stage\":{\"id\":\"3\"},\"action_name\":null,\"name\":\"Approval Pending\",\"id\":\"19\"}},\"name\":\"Emergency Template\",\"id\":\"2\",\"is_default\":false,\"is_emergency\":true}]}"},
+      "inOP": "true",
+      "isReleased": "true"
+    }
+   
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "ChangeTemplate:TEMPLATEID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+      "name": "inactive",
+      "type": "boolean",
+      "isDefault": "true",
+      "column": "ChangeTemplate:ISDELETED",
+      "desc": "Denotes the inactive of the Change template.",
+      "graphView": "change_template#inactive",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+     {
+      "name": "change",
+      "type": "section",
+      "isDefault": "true",
+      "column": "",
+      "desc": "Denotes the change fields of the Change template.",
+      "graphView": "change_template#change",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+  {
+      "name": "name",
+      "isDefault": "true",
+      "type": "String",
+      "column": "ChangeTemplate:NAME",
+      "desc": "Denotes the name of the Change template.",
+      "graphView": "change_template#name",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_emergency",
+      "isDefault": "true",
+      "type": "boolean",
+      "column": "ChangeTemplate:ISEMERGENCY",
+      "desc": "Denotes the emergency of the Change template.",
+      "graphView": "change_template#emergency",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+   {
+      "name": "is_default",
+      "isDefault": "true",
+      "type": "boolean",
+      "column": "ChangeTemplate:ISDEFAULT",
+      "desc": "Denotes if the Change template is default.",
+      "graphView": "change_template#is_default",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_retrospective",
+      "isDefault": "true",
+      "type": "boolean",
+      "column": "ChangeTplt_DefaultValues:ISRETROSPECTIVE",
+      "desc": "Denotes if the Change template is retrospective.",
+      "graphView": "change_template#is_retrospective",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "layouts",
+      "isDefault": "true",
+      "type": "array",
+      "column": "",
+      "desc": "Denotes the layouts of the Change template.",
+      "graphView": "change_template#layouts",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+ 	{
+      "name": "workflow",   
+      "isDefault": "true",   
+      "type": "String",
+      "column": "ChangeTemplate:WFID",
+      "desc": "Denotes the workflow of the Change template.",
+      "graphView": "change_template#workflow",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+   ],
+  "isReleased": "false"
+}
+

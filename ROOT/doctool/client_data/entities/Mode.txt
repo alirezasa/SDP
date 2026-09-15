@@ -1,0 +1,172 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the mode",
+      "graphView": "",
+      "column": "MODEDEFINITION : MODEID",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Unique name used to identify each mode.",
+      "graphView": "",
+      "column": "MODEDEFINITION : MODENAME",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "A short description about the mode which will help in understanding how the request generated in this mode is tracked in the application.",
+      "graphView": "",
+      "column": "MODEDEFINITION : MODEDESCRIPTION",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "deleted",
+      "type": "Boolean",
+      "desc": "Indicates whether the mode is still in use in the application.",
+      "graphView": "",
+      "column": "MODEDEFINITION : ISDELETED",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_system_config",
+      "type": "Boolean",
+      "desc": "Indicates whether the mode is mandatory in the application",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Common",
+      "path": "/api/v3/modes",
+      "desc": "This operation lets you add a mode.",
+      "disp_desc": "Add Mode",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"mode\":{\"name\":\"E-Mail\",\"description\":\"Request through mail\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"mode\":{\"id\":\"1807997\",\"name\":\"E-Mail\",\"description\":\"Request through mail\",\"deleted\":false}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": "/api/v3/modes/{mode_id}",
+      "desc": "This operation lets you update a mode details.",
+      "disp_desc": "Update Mode",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"mode\":{\"name\":\"E-Mail\",\"description\":\"Request through mail\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"mode\":{\"id\":\"107997\",\"name\":\"E-Mail\",\"description\":\"Request through mail\",\"deleted\":false}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": "/api/v3/modes/{mode_id}",
+      "desc": "This operation lets you to delete a mode.",
+      "disp_desc": "Delete Mode",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": "/api/v3/modes/{mode_id}",
+      "desc": "This operation fetches details of a mode.",
+      "disp_desc": "View Mode",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"mode\":{\"id\":\"107997\",\"name\":\"E-Mail\",\"description\":\"Request through mail\",\"deleted\":false}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/modes"
+      ],
+      "desc": "This operation fetches all modes.",
+      "disp_desc": "View All Modes",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":2,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"modes\":[{\"id\":\"107997\",\"name\":\"E-Mail\",\"description\":\"Request through mail\",\"deleted\":false},{\"id\":\"107998\",\"name\":\"Phone Call\",\"description\":\"Request through phone call\",\"deleted\":false}]}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [
+    {
+      "field": "mandatory",
+      "operator": "=",
+      "value": true
+    }
+  ],
+  "path": "/modes",
+  "handler": "CachedEntityHandler",
+  "syslog_module": "Admin",
+  "cache_key": "ADMIN_CONF.MODE_DO",
+  "entity_group": "Admin",
+  "Additional Elements": [],
+  "isReleased": "true"
+}

@@ -1,0 +1,535 @@
+<!--$Id$--> 
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<!-- SD-94782 caching mechanism issue -->
+	<urls authentication="public" method="get">
+		<!-- Font path - Root font, Editor, Deluge -->
+		<url path="/fonts/Roboto-Bold-webfont.(eot|ttf|woff)" user_type="all" static_files="true" remote_server="true" description="ROLE_NOT_REQUIRED">
+			<param name="build" type="int" range=">0"/>
+		</url>
+		<url path="/fonts/Roboto-Medium-webfont.(eot|ttf|woff)" user_type="all" static_files="true" remote_server="true" description="ROLE_NOT_REQUIRED">
+			<param name="build" type="int" range=">0"/>
+		</url>
+		<url path="/fonts/Roboto-Regular-webfont.(eot|ttf|woff)" user_type="all" static_files="true" remote_server="true" description="ROLE_NOT_REQUIRED">
+			<param name="build" type="int" range=">0"/>
+		</url>
+		<url path="/fonts/sdp-icons.(eot|ttf|woff)" user_type="all" static_files="true" remote_server="true" description="ROLE_NOT_REQUIRED">
+			<param name="build" type="int" range=">0"/>
+		</url>
+		<url path="/fonts/zoho-puvi-regular.(otf|woff2)" user_type="all" static_files="true" remote_server="true" description="ROLE_NOT_REQUIRED">
+			<param name="build" type="int" range=">0"/>
+		</url>
+		<url path="/fonts/zoho-puvi-bold.(otf|woff2)" user_type="all" static_files="true" remote_server="true" description="ROLE_NOT_REQUIRED">
+			<param name="build" type="int" range=">0"/>
+		</url>
+		<url path="/inlineimages/ze/images/ZoFo_RTE.(woff|woff2)" description="No_Throttle_Needed: Static URL;" user_type="all" static_files="true" remote_server="true"></url>
+		<url path="/dre/fonts/dre-fonticons.(ttf|woff)" roles="HelpdeskConfig,SDAdmin" authentication="required" static_files="true" remote_server="true">
+			<param name="78a430" type="String" max-len="0"/>
+		</url>
+		<!--/ Font path - Root font, Editor, Deluge -->
+	</urls>
+	<urls authentication="public" method="get">
+        	<!-- Scripts Directory -->
+        	<url user_type="all" url-type="dynamic" path="^/scripts/[a-zA-Z0-9_.-]+\.(?i)(js)$" description="Static files in scripts root" static_files="true" remote_server="true"/>
+		<url user_type="all" url-type="dynamic" path="^/scripts/(adsf/tfa|adsf|assets|department|dhtmlx_Scheduler/5_3_6/codebase/ext|dhtmlx_Scheduler/5_3_6/codebase|dhtmlx_Scheduler/5_3_6|dhtmlx_Scheduler|i18n|mdm|software|tfa|webhost|wf-rule)/[a-zA-Z0-9_.-]+\.(?i)(js)$" description="Static files in scripts subdirectories" static_files="true" remote_server="true"/>
+		<!-- Style Directory -->
+		<url user_type="all" url-type="dynamic" path="^/style/[a-zA-Z0-9_.-]+\.(?i)(css|png)$" description="Static files in style root" static_files="true" remote_server="true"/>
+		<url user_type="all" url-type="dynamic" path="^/style/(adsf/flat|adsf|imgs_dhx_terrace)/[a-zA-Z0-9_.-]+\.(?i)(css|png)$" description="Static files in style subdirectories" static_files="true" remote_server="true"/>
+		<!-- Images Directory -->
+		<url user_type="all" url-type="dynamic" path="^/images/[a-zA-Z0-9_.-]+\.(?i)(gif|png|svg|jpg|html|JPG|ico)$" description="Static files in images root" static_files="true" remote_server="true"/>
+		<url user_type="all" url-type="dynamic" path="^/images/(adsf/common|adsf|cal|dashboard|generated|icons|reports|shadow|zia/workflow|zia)/[a-zA-Z0-9_.-]+\.(?i)(gif|png|svg|jpg|html|JPG|ico)$" description="Static files in images subdirectories" static_files="true" remote_server="true"/>
+		<!-- Fonts Directory -->
+		<url user_type="all" url-type="dynamic" path="^/fonts/[a-zA-Z0-9_.-]+\.(?i)(woff|eot|woff2|otf|svg)$" description="Static files in fonts directory" static_files="true" remote_server="true"/>
+		<!-- Themes Directory -->
+		<url user_type="all" url-type="dynamic" path="^/themes/(sd/styles|sd)/[a-zA-Z0-9_.-]+\.(?i)(css)$" description="Static files in themes subdirectories" static_files="true" remote_server="true"/>
+		<!-- Components Directory -->
+		<url user_type="all" url-type="dynamic" path="^/components/(codemirror/addon/edit|codemirror/addon/fold|codemirror/addon/hint|codemirror/addon/lint|codemirror/addon/selection|codemirror/lib|codemirror/mode/css|codemirror/mode/htmlmixed|codemirror/mode/javascript|codemirror/mode/powershell|codemirror/mode/python|codemirror/mode/xml|codemirror|javascript/cv_creation|javascript/ember|javascript/viewcreation|javascript)/[a-zA-Z0-9_.-]+\.(?i)(js|css)$" description="Static files in components subdirectories" static_files="true" remote_server="true"/>
+		<!-- Zohocomponents Directory -->
+		<url user_type="all" url-type="dynamic" path="^/zohocomponents/(css|js|locale/js|locale/json|locale|polyfills)/[a-zA-Z0-9_.-]+\.(?i)(js|css)$" description="Static files in zohocomponents subdirectories" static_files="true" remote_server="true"/>
+		<!-- Zia Directory -->
+		<url user_type="all" url-type="dynamic" path="^/zia/(addons/@zia/ziaskills-clientutils/assets/js|addons/@zia/ziaskills-clientutils/assets|addons/@zia/ziaskills-clientutils|addons/@zia/ziaSkillsSdk/assets/css|addons/@zia/ziaSkillsSdk/assets/images|addons/@zia/ziaSkillsSdk/assets/js/i18n|addons/@zia/ziaSkillsSdk/assets/js|addons/@zia/ziaSkillsSdk/assets|addons/@zia/ziaSkillsSdk/bower_components/lyte|addons/@zia/ziaSkillsSdk/bower_components/lyte-dom|addons/@zia/ziaSkillsSdk/bower_components|addons/@zia/ziaSkillsSdk|addons/@zia|addons/@zoho/lyte-ui-component/dist/components/styles|addons/@zoho/lyte-ui-component/dist/components|addons/@zoho/lyte-ui-component/dist/theme/compiledCSS/default/ltr|addons/@zoho/lyte-ui-component/dist/theme/compiledCSS/default|addons/@zoho/lyte-ui-component/dist/theme/compiledCSS|addons/@zoho/lyte-ui-component/dist/theme|addons/@zoho/lyte-ui-component/dist|addons/@zoho/lyte-ui-component|addons/@zoho|addons)/[a-zA-Z0-9_.-]+\.(?i)(js|css|gif|svg)$" description="Static files in zia subdirectories" static_files="true" remote_server="true"/>
+		<!-- Page Directory -->
+		<url user_type="all" url-type="dynamic" path="^/page/(css|fonts|images/pages|images|js/i18n/chart|js/i18n/common|js/i18n/directembed|js/i18n/gauge|js/i18n/panel|js/i18n/snippet|js/i18n/viewer|js/i18n/widget|js/i18n|js/template|js/vue|js)/[a-zA-Z0-9_.-]+\.(?i)(js|woff|eot|woff2|svg|css|otf|png|html)$" description="Static files in page subdirectories" static_files="true" remote_server="true"/>
+		<!-- Dre Directory -->
+		<url user_type="all" url-type="dynamic" path="^/dre/(css|fonts|images|js/latest|js/legacy|js)/[a-zA-Z0-9_.-]+\.(?i)(js|svg|woff|eot|css)$" description="Static files in dre subdirectories" static_files="true" remote_server="true"/>
+		<!-- Ze Directory -->
+		<url user_type="all" url-type="dynamic" path="^/ze/(css|js(/i18n(/[a-z]{2,3})?)?|js)/[a-zA-Z0-9_.-]+\.(?i)(js|css)$" description="Static files in ze subdirectories" static_files="true" remote_server="true"/>
+		<!-- Framework Directory -->
+		<url user_type="all" url-type="dynamic" path="^/framework/(html|javascript/util|javascript)/[a-zA-Z0-9_.-]+\.(?i)(js|html)$" description="Static files in framework subdirectories" static_files="true" remote_server="true"/>
+		<!-- Doctool Directory -->
+        	<url user_type="all" url-type="dynamic" path="^/doctool/(client_data/entities|client_data)/[a-zA-Z0-9_.-]+\.(?i)(txt)$" description="Static files in doctool subdirectories" static_files="true" remote_server="true"/>
+        	<!-- Ember Directory -->
+	        <url user_type="all" url-type="dynamic" path="^/ember/(dist/assets|dist)/[a-zA-Z0-9_.-]+\.(?i)(js|css)$" description="Static files in ember subdirectories" static_files="true" remote_server="true"/>
+
+	        <!-- HTML Directory -->
+	        <url user_type="all" url-type="dynamic" path="^/html/[a-zA-Z0-9_.-]+\.(?i)(html|gif|txt)$" description="Static files in html root" static_files="true" remote_server="true"/>
+	        <url user_type="all" url-type="dynamic" path="^/html/(common/sms_configure|common|doctool|import|optood)/[a-zA-Z0-9_.-]+\.(?i)(html|gif|txt)$" description="Static files in html subdirectories" static_files="true" remote_server="true"/>
+
+	        <!-- Params -->
+	        <param name="[0-9]+" name-regex="true" type="String" max-len="0"/>
+		<param name="build" type="int" range=">0"/>
+		<param name="bN" type="String" max-len="20"/>
+		<param name="hash" type="String" max-len="40"/>
+    	</urls>
+	<!-- Non-login common URLs -->
+	<urls authentication="public" method="get,post,put,delete" user_type="all" remote_server="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="error_page_throttle" >
+			<throttle duration="1m" threshold="15" lock-period="5m"/>
+		</throttles>
+		<url path="/jsp/exceptionerror.jsp" ignore-extraparam="true">
+			<param name ="method" type="String"/>
+			<param name ="module" type="String"/>
+			<param name ="ErrorMsg" type="String"/>
+		</url>
+		<url path="/jsp/pagenotfound.jsp" ignore-extraparam="true">
+			<param name ="method" type="String"/>
+			<param name ="module" type="String"/>
+			<param name ="ErrorMsg" type="String"/>
+		</url>
+		<url path="/jsp/AuthError.jsp" ignore-extraparam="true">
+			<param name ="method" type="String"/>
+			<param name ="module" type="String"/>
+			<param name ="ErrorMsg" type="String"/>
+		</url>
+		<url path="/AuthError.jsp" method="GET">
+			<param name="module" type="String"/>
+		</url>
+		<!-- error-page attribute is set as true for /Error url to allow extra parameters with value as null.-->
+		<url path="/Error" ignore-extraparam="true">
+			<param name ="method" type="String"/>
+			<param name ="module" type="String"/>
+			<param name ="ErrorMsg" type="String"/>
+		</url>
+	</urls>
+
+	<urls authentication="public" method="get">
+		<!-- SD-85770 -->
+	    <throttles name="favicon" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="1M"/>
+            </throttles>
+		<url path="/favicon.ico" method="get" is_esm="true" remote_server="true" user_type="all" static_files="true">
+			<!-- For time stamp number -->
+			<param name="[0-9]+" name-regex="true" type="String" max-len="0" max-occurrences="1"/>
+			<param name="build" type="long"/>
+		</url>
+	</urls>
+
+	<urls authentication="public" method="get">
+		<url path="/servlets/SDServerStatusServlet" user_type="all" method="GET" remote_server="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="serverstartup" dynamic-throttle="true" >
+				<throttle duration="10s" threshold="50" lock-period="5m"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<!-- Other Login related URLs -->
+	<urls authentication="public">
+		<url method="GET" path="/domainServlet/AJaxDomainServlet" operation-param="action" operation-value="searchDomain,searchLocalAuthDomain,isADEnabled,hideLoginDetails" description="Roles are not added because these URL actions will be called in non-login context (in the login screen)" remote_server="true">
+			<param name="timestamp" type="long"/>
+			<param name="search" type="String" secret="true" max-len="250"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="domainservlet_ajaxservlet" dynamic-throttle="true" >
+				<throttle duration="10s" threshold="15" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<!-- Common Throttle for Login Related URLs -->
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="auth_common" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="15" lock-period="2m"/>
+		</throttles>
+	</urls>
+
+	<!-- SAML, OAuth non-login URLs -->
+	<urls authentication="public">
+		<url path="/servlet/OAuthResponseServlet" user_type="all" method="get,post" remote_server="true" description="ROLE_NOT_REQUIRED: OAuth response call during login">
+			<param name="code" type="String" max-len="3000" secret="true"/>
+			<param name="state" type="String" max-len="500" secret="true"/>
+			<param name="scope" type="String" max-len="500"/>
+			<param name="error" type="String" secret="true"/>
+			<param name="error_description" type="String" max-len="500" secret="true"/>
+			<param name="session_state" type="String" max-len="500" secret="true"/>
+
+			<!-- Google specific | authuser: 0, hd: sdtesting.com, prompt: consent-->
+			<param name="authuser" type="String"/>
+			<param name="prompt" type="String"/>
+			<param name="hd" type="String"/>
+		</url>
+		<url path="/servlet/SDOAuthRequestServlet" user_type="all" method="get" remote_server="true" description="ROLE_NOT_REQUIRED: OAuth request call during login">
+			<param name="id" type="String"/>
+			<param name="mode" regex="list|login"/>
+			<param name="test" type="boolean"/>
+		</url>
+		<url path="/api/v3/oauth_providers/images/(\d+)" user_type="all" method="get"/>
+		<url path="/api/v3/oauth_providers/(\d+)/images/(\d+)" user_type="all" method="GET"/>
+
+		<url method="GET" path="/SamlRequestServlet" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: Unauthenticated call">
+			<param name="inTeams" regex="true" />
+			<param name="popupAuth" regex="true" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="saml_request_url" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="50" lock-period="2m"/>
+			</throttles>
+		</url>
+		<url method="POST" path="/SamlResponseServlet" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: Unauthenticated URL which will be called by the IDP with the Login Response">
+			<!-- For around 100 attributes, SAML XML is ~35KB and we can take ~50KB for base64 encoded string. Hence setting 200KB for safety -->
+			<param name="SAMLResponse" type="String"  max-len="200000" secret="true"/>
+			<param name="RelayState" type="String" />
+			<param name="method" type="String" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="saml_response_url" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="50" lock-period="2m"/>
+			</throttles>
+		</url>
+		<!-- This POST url will be called by the External IDP Server and hence, no CSRF token will be found -->
+		<url method="GET,POST" path="/SamlLogoutResponseServlet" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: Unauthenticated URL which will be called by the IDP with the Logout Response. GET/POST method type provided as Okta IDP uses POST call while AD FS,Azure,Onelogin uses GET call for SamlLogoutResponseServlet">
+			<param name="SAMLResponse" type="String"  max-len="200000" secret="true"/>
+			<param name="SAMLRequest" type="String"  max-len="50000" secret="true"/>
+			<param name="Signature" type="String" max-len="1000"/>
+			<param name="SigAlg" type="String" />
+			<param name="RelayState" type="String" />
+			<param name="method" type="String" />
+		</url>
+
+		<!-- Common Throttle for SAML non-login URLs -->
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="saml_non_login" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="15" lock-period="2m"/>
+		</throttles>
+	</urls>
+
+	<!-- Auth API and login related URLs -->
+	<urls authentication="public">
+		<url method="GET" path="/api/v3/app_resources/properties" user_type="all" description="ROLE_NOT_REQUIRED: Unauthenticated call">
+			<param name="is_pre_auth" type="boolean"/>
+		</url>
+		<url method="POST" path="/ids-authn/v1/mfa/authenticate" csrf="false">
+			<param name="txn_id" type="String" max-len="50" min-occurrences="1" secret="true"/>
+			<param name="otp" type="String" max-len="6" secret="true"/>
+			<param name="totp" type="String" max-len="6" secret="true"/>
+			<param name="backup_code" type="String" max-len="14" secret="true"/>
+			<param name="resend" type="boolean"/>
+			<param name="cancel" regex="true"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mfa_authenticate" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+		</url>
+		<url method="GET" path="/api/v3/app_resources/domains" user_type="all" description="ROLE_NOT_REQUIRED: Unauthenticated call">
+			<param name="input_data" type="JSONObject" template="v3_domain_json" max-len="300" min-occurrences="1" secret="true"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="saml_common" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="1m"/>
+			</throttles>
+		</url>
+		<url method="POST" path="/api/v3/app_resources/authenticate" user_type="all" api="true" description="ROLE_NOT_REQUIRED: Unauthenticated call">
+			<param name="input_data" type="JSONObject" template="v3_auth_json" max-len="2500" min-occurrences="1" secret="true"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sdpapi_auth" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+		</url>
+
+		<!-- Common Throttle for Auth API -->
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="auth_api_common" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="15" lock-period="5m"/>
+		</throttles>
+	</urls>
+
+	<!-- TFA non login -->
+	<urls authentication="public" remote_server="true">
+		<url method="POST" path="/RestAPI/TwoFactorAction" operation-param="mTCall" operation-value="sessionInvalidate" api="true">
+			<param name="_" type="long"/>
+		</url>
+
+		<url method="POST" path="/RestAPI/TwoFactorAction" operation-param="mTCall" operation-value="getEnrollmentDetails" api="true">
+			<param name="AUTH_RULE" regex="TFA_GOOGLE_AUTHENTICATOR|TFA_MAIL_AUTHENTICATOR"/>
+			<param name="_" type="long"/>
+		</url>
+
+		<url method="POST" path="/RestAPI/TwoFactorAction" operation-param="mTCall" operation-value="sendSecretCode" api="true">
+			<param name="AUTH_RULE" regex="TFA_MAIL_AUTHENTICATOR"/>
+			<param name="ENROLLMENT_KEY" type="String" secret="true"/>
+			<param name="_" type="long"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TFAEmailOTP" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+		</url>
+
+		<url method="POST" path="/RestAPI/TwoFactorAction" operation-param="mTCall" operation-value="verifySecretCode" api="true">
+			<param name="VERIFY_AUTH" type="JSONObject" template="verify_auth" max-len="-1"/>
+			<param name="_" type="long"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TFAVerifyCode" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+		</url>
+
+		<!-- Common Throttle for TFA non login -->
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="tfa_common" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="15" lock-period="2m"/>
+		</throttles>
+	</urls>
+
+	<!-- Forgot Password related URLs-->
+	<urls authentication="public">
+		<url path="/ResetPassword" method="get" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+			<param name="token" type="String" min-occurrences="1" secret="true"/>
+		</url>
+		<url path="/jsp/ForgotPassword.jsp" method="get" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+			<param name="token" type="String" secret="true"/>
+			<param name="username" type="String" secret="true"/>
+		</url>
+		<url path="/servlet/AuthenticationServlet" method="post" operation-param="action" operation-value="sendPasswordResetLink" remote_server="true">
+			<param name="username" type="String" min-occurrences="1" secret="true"/>
+			<param name="domain" type="String" secret="true"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="forgot_password_send_link" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+		</url>
+		<url path="/servlet/AuthenticationServlet" method="post" operation-param="action" operation-value="resetPassword" remote_server="true">
+			<param name="token" type="String" secret="true"/>
+			<param name="newPwd" type="String" secret="true" max-len="500"/>
+			<param name="confirmNewPwd" type="String" secret="true" max-len="500"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="forgot_password_reset_call" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="5" lock-period="10m" watch-time="1H" violation-limit="2" lock-factor="3"/>
+			</throttles>
+		</url>
+		<url path="/servlet/AuthenticationServlet" method="get" operation-param="action" operation-value="getPwdPolicy" remote_server="true">
+			<param name="token" type="String" secret="true"/>
+		</url>
+		<url path="/servlet/AuthenticationServlet" method="get" operation-param="action" operation-value="checkNewPwd" remote_server="true">
+			<param name="input_data" type="JSONObject" template="check_new_password" max-len="-1"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="forgot_password_check_password" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="2m"/>
+			</throttles>
+		</url>
+		<url path="/servlet/AuthenticationServlet" method="get" operation-param="action" operation-value="isServiceStarted" remote_server="true" description="ROLE_NOT_REQUIRED:Checking whether server is started before Login">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="is_service_started" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="90" lock-period="2m"/>
+			</throttles>
+		</url>
+		<url path="/servlet/AuthenticationServlet" method="post" operation-param="action" operation-value="oauthEndpoint" remote_server="true">
+			<param name="code" type="String" max-len="3000" secret="true"/>
+			<param name="state" type="String" max-len="500" secret="true" min-occurrences="1"/>
+			<param name="scope" type="String" max-len="500"/>
+			<param name="session_state" type="String" max-len="500" secret="true"/>
+			<param name="error" type="String" max-len="500"/>
+			<param name="error_description" type="String" max-len="3000" secret="true"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="oauth_public_throttle" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="15" lock-period="2m"/>
+			</throttles>
+		</url>
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="forgot_password_common" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="10" lock-period="2m"/>
+		</throttles>
+	</urls>
+
+	<!-- This url is used to ADMP for Hand shake key authentication -->
+	<urls authentication="public">
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/servlets/HSKeyAuthenticator" method="post" description="Non login URL" api="true">
+			<param name="HANDSHAKE_KEY" type="String" max-len="250" secret="true"/>
+			<param name="PRODUCT_NAME" type="String" max-len="250"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="hs_key_auth_post" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<urls authentication="public">
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/servlets/ADMPExchangeTicket" method="post" description="ROLE_NOT_REQUIRED:Non login URL" api="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="exch_ticket_post" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<!-- This url is used to DC for Hand shake key authentication -->
+	<urls authentication="public">
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/servlets/SDPAPIUnAuthenticatedServlet" method="post" description="Non login URL" api="true">
+			<param name="HANDSHAKE_KEY" type="String" max-len="250" secret="true"/>
+			<param name="USER_NAME" type="String" max-len="250" secret="true"/>
+			<param name="PRODUCT_NAME" type="String" max-len="250"/>
+			<param name="ACTION" regex="GET_TEMPLATES"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sdp_api_unauth_post" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<!-- This url is used for third party integrations -->
+	<urls authentication="public">
+		<!--Non login URL -USED for MS Outlook Add IN -->
+		<url path="/workorder/SDPOutlookAddIn.jsp" user_type="all" method="get" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+            <param name="et" type="String" max-len="0" description="empty param added by ms"/>
+            <param name="_host_Info" type="String" max-len="1000" description="param added by ms"/>
+            <param name="fromIframe" type="boolean"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="outlookAddIn" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/AppIntegrations" method="post" user_type="all" operation-param="serviceName" operation-value="msTeams" description="ROLE_NOT_REQUIRED: Non-login URL" api="true">
+			<param name="appKey" type="String" max-len="36" secret="true" min-occurrences="1"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="msteams_integ" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="2m"/>
+			</throttles>
+		</url>
+
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/AppIntegrations" method="get" user_type="all" operation-param="serviceName" operation-value="whatsapp" description="ROLE_NOT_REQUIRED: Non-login URL" api="true">
+			<param name="hub.challenge" type="long" max-len="36" range=">0" secret="true"/>
+			<param name="hub.mode" secret="true" regex="subscribe"/>
+			<param name="hub.verify_token" secret="true" regex="sdpTokenVerification"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="whatsapp_integ" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="2m"/>
+			</throttles>
+		</url>
+
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/AppIntegrations" method="post" user_type="all" operation-param="serviceName" operation-value="whatsapp" description="ROLE_NOT_REQUIRED: Non-login URL" api="true">
+			<param name="decodeAccessToken" secret="true" regex="true"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="whatsapp_integ" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="2m"/>
+			</throttles>
+		</url>
+
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/AppIntegrations" method="post" user_type="all" operation-param="serviceName" operation-value="outlookOffice" description="ROLE_NOT_REQUIRED: Non-login URL" api="true">
+			<param name="appKey" type="String" max-len="36" secret="true" min-occurrences="1"/>
+			<param name="method" regex="post"/>
+			<param name="mode" regex="mark_as_resolved|pick_up|add_note|approve|reject|add_resolution"/>
+			<param name="module" regex="request"/>
+			<param name="module_id" type="long"/>
+			<param name="level_number" type="long"/>
+			<param name="approval_id" type="long"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="msoutlook_integ" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="20" lock-period="2m"/>
+			</throttles>
+		</url>
+
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/AppIntegrations" method="post" user_type="all" description="ROLE_NOT_REQUIRED: will be called from outside the SDP used for third party integrations" operation-param="serviceName" operation-value="msCalendar" api="true">
+			<param name="appKey" type="String" max-len="36" secret="true"/>
+			<param name="getAccessToken" type="boolean"/>
+			<param name="validationToken" type="String" max-len="500" description="Length defined based on sample values"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="msCalendar_integ" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="100" lock-period="2m"/>
+			</throttles>
+		</url>
+
+		<!--Non login URL - CSRF=true can't be added -->
+		<url path="/AppIntegrations" method="post" user_type="all" operation-param="serviceName" operation-value="callbackFunctions" api="true" description="ROLE_NOT_REQUIRED: will be called from outside the SDP used for third party integrations">
+			<param name="api_name" regex="^[A-Za-z]\w*$" min-occurrences="1"/>
+			<param name="auth_token" type="String" max-len="500" min-occurrences="1" secret="true"/>
+			<param name="PORTALID" type="long" min-occurrences="1"/>
+			<param name="arguments" template="customfunction_execute_request" type="JSONObject" max-len="-1"/>
+			<paramorstream max-len="30000" name="rawDataContent" type="String"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="callbackFuntions_integ" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="20" lock-period="5M"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<urls authentication="public" method="post" csrf="true" allowed_portals="it" remote_server="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_get" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+		<param name="pageLength" type="long" range=">0" max-occurrences="2"/>
+		<param name="loadingMsg" type="String" allow-empty="false" max-len="100" max-occurrences="2"/>
+		<param name="rowcount" type="String" allow-empty="false" max-len="100" max-occurrences="2"/>
+
+		<url path="/discoveryServlet/RemoteDataServlet" api="true" csrf="false" operation-param="operation" operation-value="PushData" remote_server="false" description="FGR_APPLIED:Roles handled in servlet level, It is a non-login url and used for the purpose of remote server, so api=true is added">
+			<file name="file" max-size="512000" allowed-extensions="zip" content-type-name="zip" allow-empty="false">
+				<filename regex="[0-9a-zA-Z()\[\]{}+_\-\;\#\^\.\$@\?\,\:\'\!\P{InBasicLatin}\s]+" max-len="1000" min-occurrences="1" description="Hostname may end with dot(.), so a filename can have dotdot(..)"/>
+			</file>
+			<param name="siteId" type="long" range=">0"/>
+			<param name="apiKey" secret="true" type="String" allow-empty="false" max-len="500" />
+			<param name="buildnumber" type="long" range=">0" min-occurrences="1"/>
+			<param name="siteName" type="String" max-len="100"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="RemoteDataServlet_PushData" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="3" lock-period="5m"/>
+			</throttles>
+			<request>
+				<headers>
+					<header name="apiKey" type="String" secret="true" max-len="500" />
+				</headers>
+			</request>
+		</url>
+
+		<url path="/discoveryServlet/RemoteDataServlet" api="true" csrf="false" operation-param="operation" operation-value="GetSites" remote_server="false" description="FGR_APPLIED:Roles handled in servlet level, It is a non-login url and used for the purpose of remote server, so api=true is added">
+			<param name="username" secret="true" type="String" max-len="300"/>
+			<param name="apiKey" secret="true" type="String" allow-empty="false" max-len="500" />
+			<param name="logonDomainName" secret="true" type="String" max-len="300"/>
+			<param name="buildnumber" type="long" range=">0" min-occurrences="1"/>
+			<param name="DOMAIN_NAME" secret="true" type="String" max-len="100"/>
+			<param name="test" type="boolean" />
+			<request>
+				<headers>
+					<header name="apiKey" type="String" secret="true" max-len="500" />
+				</headers>
+			</request>
+		</url>
+
+		<url path="/discoveryServlet/RemoteDataServlet" api="true" csrf="false" operation-param="operation" operation-value="getSNMPCentralSyncData" remote_server="false" description="FGR_APPLIED:Roles handled in servlet level, It is a non-login url and used for the purpose of remote server, so api=true is added">
+			<param name="username" secret="true" type="String" max-len="300"/>
+			<param name="logonDomainName" secret="true" type="String" max-len="300"/>
+			<param name="buildnumber" type="long" range=">0" min-occurrences="1"/>
+			<param name="DOMAIN_NAME" secret="true" type="String" max-len="100"/>
+		</url>
+		
+		<url path="/servlets/DCPluginServlet" operation-param="action" operation-value="syncServerInfo" api="true"  csrf="false" remote_server="true">
+            <param name="apiKey" secret="true" type="String" max-len="100"/>
+            <param name="serverName" secret="true" type="String" max-len="200"/>
+            <param name="serverPort" secret="true" type="long" range=">0"/>
+            <param name="serverProtocol" regex="http|https"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DCPluginServlet" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="5m"/>
+			</throttles>
+
+			<!-- SD-111327 -->
+			<request>
+				<headers>
+					<header name="apikey" type="String" secret="true" max-len="250" />
+				</headers>
+			</request>
+
+		</url>		
+
+		<url path="/discoveryServlet/WsDiscoveryServlet" api="true" csrf="false" description="Non-Login url called from Agent/script, so we cannot add roles">
+			<param name="AGENT" type="String" secret="true" max-len="100"/>
+			<param name="agent" type="String" secret="true" max-len="100"/>
+			<!-- <param name="HANDSHAKE_KEY" secret="true" type="String" max-len="200"/> -->
+			<param name="computerName" secret="true" type="String" max-len="200"/>
+			<param name="COMPUTERNAME" secret="true" type="String" max-len="200"/>
+			<param name="deviceName" secret="true" type="String" max-len="200"/>
+			<param name="machineId" secret="true" type="String" max-len="200"/>
+			<param name="siteName" type="String" max-len="200"/>
+			<param name="accountName" type="String" secret="true" max-len="200"/>
+			<param name="serviceTag" secret="true" type="String" max-len="200" />
+			<param name="macAddress" secret="true" type="String" max-len="200" />
+			<param name="agentId" secret="true" type="String" max-len="200"/>
+			<param name="platform" type="String" max-len="200"/>
+			<param name="UDID" secret="true" type="String" max-len="200"/>
+			<inputstream type="String" max-len="-1" secret="true" description="since it is an input stream, max-len is configured as -1. xml data will be sent as stream from script scan."/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="WsDiscoveryServlet" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="1000" lock-period="5m"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<!-- JSON Templates -->
+	<jsontemplates>
+		<jsontemplate name="v3_domain_json" disable-extra-key="true">
+			<key name="username" type="String" max-len="250" secret="true"/>
+			<key name="auth_type" regex="local_auth|ad_auth"/>
+		</jsontemplate>
+
+		<jsontemplate name="v3_auth_json" disable-extra-key="true">
+			<key name="username" type="String" max-len="250" secret="true"/>
+			<key name="domain" type="String" max-len="100" secret="true"/>
+			<key name="password" type="String" max-len="2000" secret="true"/>
+			<key name="auth_type" regex="local_auth|ad_auth|ldap_auth"/>
+            <key name="captcha_text" type="String" max-len="8" secret="true"/>
+		</jsontemplate>
+
+		<jsontemplate name="check_new_password">
+			<key name="newPwd" type="String" max-len="500" secret="true"/>
+			<key name="token" type="String" secret="true"/>
+		</jsontemplate>
+	</jsontemplates>
+</security>

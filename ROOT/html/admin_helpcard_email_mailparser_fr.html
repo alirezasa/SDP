@@ -1,0 +1,99 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)--> <!--(Document created with RoboEditor. )============================--> <!--(==============================================================)-->
+
+<head>
+
+<title>admin_helpcard_email_mailparser</title>
+
+<!--(Meta)==========================================================-->
+
+<meta HTTP-EQUIV=CONTENT-TYPE CONTENT="text/html; charset=windows-1252">
+<meta NAME=CREATED CONTENT="20090929;16355000">
+<meta NAME=CHANGED CONTENT="20090929;17075400">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=1162>
+<meta name=layout-width content=1087>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body LANG=en-US DIR=LTR>
+
+<p style="font-weight: bold;">Commande d'e-mail</p>
+
+&nbsp;
+
+<!--begin!kadov{{--><br><!--}}end!kadov--><!--kadov_tag{{<implicit_p>}}-->La commande d'e-mail permet au technicien de d&eacute;limiter les champs de l'e-mail, en fonction de quoi l'e-mail peut &ecirc;tre analys&eacute;e et les champs correspondants configur&eacute;s. 
+ 
+
+<p>Pour configurer la commande d'e-mail :</p>
+
+<p>1. Dans la page Param&egrave;tres du serveur de messagerie, cliquez sur l'onglet <strong>Commande d'e-mail</strong> L'&eacute;cran de configuration <span style="font-weight: medium;">Commande</span> d'e-mail appara&icirc;t.</p>
+
+<p>2. Cochez <strong>Activer la commande d'e-mail</strong> pour activer la fonction d'analyse de message. Si cette option n'est pas s&eacute;lectionn&eacute;e, l'e-mail entrant sera trait&eacute; de mani&egrave;re classique et en fonction des r&egrave;gles m&eacute;tier &eacute;tablis m&ecirc;me si les e-mails entrants comportent le cha&icirc;ne d'analyse dans l'objet.</p>
+
+<p>3. Dans le champ <strong>L'objet de l'e-mail contient</strong>, saisissez une ligne d'objet valide qui d&eacute;terminera les e-mails &agrave; analyser. Les e-mails comportant ce texte seront analys&eacute;s pour divers champs. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Par ex. : pour l'identificateur d'objet d'e-mail @SDP@, les e-mails dont l'objet est uniquement @SDP@ seront analys&eacute;s.</p>
+
+<p>4. Indiquez un caract&egrave;re sp&eacute;cial (@@, ##, $$, %%, &amp;&amp;, etc) comme <strong>D&eacute;limiteur de</strong><strong> commande</strong>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Les valeurs de champ assign&eacute;es entre ces caract&egrave;res sp&eacute;ciaux sont assign&eacute;s aux champs correspondants lorsque les demandes sont cr&eacute;&eacute;es. Par ex. : si le d&eacute;limiteur de commande est @@ et la description de l'e-mail doit d&eacute;finir le champ Cat&eacute;gorie en Imprimante, la description de l'e-mail doit contenir @@Cat&eacute;gorie=Imprimante@@.</p>
+
+<p>Remarques :</p>
+
+<ul style="list-style: DISC;"
+	type=disc>
+	
+	<li class=kadov-P><p>Une demande peut &ecirc;tre cr&eacute;&eacute; / mise &agrave; jour / cl&ocirc;tur&eacute;e / r&eacute;cup&eacute;r&eacute;e par un technicien par e-mail. Les cha&icirc;nes op&eacute;rationnelles &laquo; Operation = AddRequest &raquo;, &laquo; Operation = EditRequest &raquo;, &laquo; Operation = CloseRequest &raquo;, &laquo; Operation = PickupRequest &raquo; sont utilis&eacute;es dans ce but.</p></li>
+	
+	<li class=kadov-P><p>Pour mettre &agrave; jour, r&eacute;cup&eacute;rer ou cl&ocirc;turer une demande par e-mail, la cha&icirc;ne op&eacute;rationnelle correspondante (EditRequest / PickupRequest / CloseRequest) et RequestId doivent &ecirc;tre pr&eacute;sentes. Dans le cas contraire, l'e-mail sera trait&eacute; de mani&egrave;re classique et comme une nouvelle demande.</p></li>
+	
+	<li class=kadov-P><p>Lorsqu'une demande est mise &agrave; jour par e-mail, la conversation n'y est pas ajout&eacute;e. Ainsi, les pi&egrave;ces jointes et les images en lignes de l'e-mail ne seront pas mises &agrave; jour dans la demande. Les informations de la mise &agrave; jour ne seront toutefois pas ajout&eacute;es &agrave; l'historique.</p></li>
+	
+	<li class=kadov-P><p>Le nom du champ donn&eacute;e dans l'e-mail n'est pas disponible dans ServiceDesk Plus, l'analyse excluera ce champ.</p></li>
+	
+	<li class=kadov-P><p>Si un champ de l'e-mail comporte plus d'une valeur, seule la derni&egrave;re sera prise en compte.</p></li>
+	
+	<li class=kadov-P><p>Les threads de demande dont le sujet contient l'&laquo; IdDemande &raquo; sans cha&icirc;ne op&eacute;rationnelle (EditRequest) sera mise &agrave; jour en tant que conversation classique et aucune nouvelle demande ne sera cr&eacute;&eacute;e.</p></li>
+	
+	<li class=kadov-P><p>L'analyse n&eacute;cessite que l'exp&eacute;diteur de l'e-mail ait les identifiants de connexion pour ServiceDesk Plus. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Cet aspect a une raison : diff&eacute;rentes op&eacute;rations d'analyse qui peuvent &ecirc;tre trait&eacute;es par un utilisateur sont d&eacute;finis par le r&ocirc;le de l'utilisateur. Les autorisations de demande (cl&ocirc;turer / r&eacute;cup&eacute;rer / mettre &agrave; jour une demande, accepter la cl&ocirc;ture d'une demande, etc) sont configur&eacute;es &agrave; l'aide des R&ocirc;les dans ServiceDesk Plus. </p></li>
+	
+	<li class=kadov-P><p>L'exp&eacute;diteur de l'e-mail sera consid&eacute;r&eacute; comme demandeur si le nom du demandeur n'est pas indiqu&eacute; dans l'e-mail.</p></li>
+	
+	<li class=kadov-P><p>Autorisations et param&egrave;tres pris en charge :</p></li>
+</ul>
+
+<ul style="list-style: lower-alpha;"
+	type=a>
+	
+	<ol style="list-style: lower-alpha;"
+		type=a>
+		
+		<li class=kadov-P><p>Si l'exp&eacute;diteur de l'e-mail est un demandeur avec les autorisations correspondantes, les champs &agrave; analyser sont limit&eacute;s. Une demandeur ne peut analyser que les champs qu'il est en mesure d'afficher dans le formulaire de demande &agrave; la cr&eacute;ation d'une demande. </p></li>
+		
+		<li class=kadov-P><p>Si l'exp&eacute;diteur de l'e-mail est un technicien avec les autorisations correspondantes, les champs qui peuvent &ecirc;tre analys&eacute;s sont ceux qu'il peut voir dans le formulaire de demande &agrave; la cr&eacute;ation d'une demande.</p></li>
+		
+		<li class=kadov-P><p>Les champs suivants peuvent &ecirc;tre analys&eacute;s : NIVEAU, MODE, PRIORITE, URGENCE, IMPACT, DETAILSIMPACT, CATEGORIE, SOUS-CATEGORIE, ELEMENT, GROUPE, TECHNICIEN, EMAILTECHNICIEN, DEMANDEUR, EMAILDEMANDEUR, IDDEMANDE, MODELEDEMANDE, TYPEREQUETE, ETAT, SITE, EQUIPEMENT, RESOLUTION et un libell&eacute; de champ suppl&eacute;mentaire (le libell&eacute; de champ indiqu&eacute; dans l'e-mail doit correspondre au libell&eacute; de champ configur&eacute; dans le produit).</p></li>
+		
+		<li class=kadov-P><p>Pour modifier les champs qu'un demandeur ou un technicien peut analyser, rendez-vous dans Admin --&gt; Mod&egrave;les de demande (sous le domaine Assistance), s&eacute;lectionnez le Mod&egrave;le par d&eacute;faut et ajouter / supprimer des champs.</p></li>
+	</ol>
+</ul>
+
+<ul style="list-style: DISC;"
+	type=disc>
+	
+	<li class=kadov-P><p>L'IdDemande pr&eacute;sent dans la description de l'e-mail b&eacute;n&eacute;ficiera d'une priorit&eacute; plus &eacute;lev&eacute;e que l'IdDemande de l'objet de l'e-mail.</p></li>
+</ul>
+
+</body>
+
+</html>

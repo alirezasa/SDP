@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <jsontemplates>
+        <jsontemplate name="asset_module_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" regex="api_name" max-len="50"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="api_plural_name" regex="api_name" max-len="50"/>
+            <key name="display_plural_name" type="String" max-len="250"/>
+            <key name="parent" type="JSONObject" template="asset_module_unique" max-len="-1"/>
+            <key name="category" type="JSONObject" template="entity_category_unique" max-len="300"/>
+            <key name="icon" type="JSONObject" template="image_template" max-len="-1"/>
+            <key name="internal_name" type="String" max-len="250"/>
+            <key name="asset_category" type="JSONObject" template="asset_category_unique" max-len="100"/>
+            <key name="asset_type" type="JSONObject" template="asset_type_unique" max-len="100"/>
+            <key name="api_name" regex="api_name" max-len="50"/>
+            <key name="is_child_allowed" type="boolean" allow-invalid="false"/>
+            <key name="is_deletable" type="boolean" allow-invalid="false"/>
+            <key name="hierarchy_level" type="int" range="1-7   "/>
+        </jsontemplate>
+        <jsontemplate name="asset_module_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" regex="api_name" max-len="50"/>
+            <key name="api_plural_name" regex="api_name" max-len="50"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="display_plural_name" type="String" max-len="250"/>
+            <key name="created_by" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="created_time" type="JSONObject" template="datefield" max-len="500"/>
+            <key name="updated_by" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="updated_time" type="JSONObject" template="datefield" max-len="500"/>
+            <key name="parent" type="JSONObject" template="asset_module_unique" max-len="-1"/>
+            <key name="category" type="JSONObject" template="entity_category_unique" max-len="200"/>
+            <key name="description" type="String" max-len="500" secret="true"/>
+            <key name="is_default" type="boolean" allow-invalid="false"/>
+            <key name="fields" type="JSONArray" array-size="0-200" allow-invalid="false" template="udf_field_unique" max-len="-1"/>
+            <key name="sub_entities" type="JSONArray" array-size="0-15" template="sub_entity_base" max-len="-1"/>
+            <key name="layouts" type="JSONArray" array-size="0-100" template="layout_base" max-len="-1"/>
+            <key name="icon" type="JSONObject" template="image_template" max-len="-1"/>
+            <key name="configurations" type="JSONArray" array-size="0-10" template="entity_configuration_base" max-len="25000"/>
+            <key name="status" type="JSONObject" template="entity_status_unique" max-len="250"/>
+            <key name="internal_name" type="String" max-len="250"/>
+            <key name="entity_type" regex="web_tab|configuration|sub_entity|sub_form" max-len="50"/>
+            <key name="asset_category" type="JSONObject" template="asset_category_unique" max-len="100"/>
+            <key name="asset_type" type="JSONObject" template="asset_type_unique" max-len="100"/>
+            <key name="is_visible" type="boolean" allow-invalid="false"/>
+            <key name="inactive" type="boolean" allow-invalid="false"/>
+            <key name="can_be_referred" type="boolean" allow-invalid="false"/>
+            <key name="parent_product_visibility" type="boolean" allow-invalid="false"/>
+            <key name="child_product_visibility" type="boolean" allow-invalid="false"/>
+            <key name="sibling_product_visibility" type="boolean" allow-invalid="false"/>
+            <key name="api_name" regex="api_name" max-len="50"/>
+            <key name="is_child_allowed" type="boolean" allow-invalid="false"/>
+            <key name="is_deletable" type="boolean" allow-invalid="false"/>
+            <key name="hierarchy_level" type="int" range="1-7"/>
+        </jsontemplate>
+        <jsontemplate name="asset_module">
+            <key name="asset_module" type="JSONObject" template="asset_module_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_module_new_form">
+            <key name="new_form" template="asset_module_new_form_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_module_new_form_base">
+            <key name="parent" template="module_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

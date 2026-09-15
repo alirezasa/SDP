@@ -1,0 +1,146 @@
+{
+  "operations": [
+    {
+      
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_statuses",
+      "desc": "You can add a new Change Status here.",
+      "disp_desc": "Add a Change Status",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{\"change_status\":{\"description\":\"Details requested to proceed further\",\"inactive\":false,\"stage\":{\"id\":\"1\"},\"name\":\"NeedMoreInfo\",\"action_name\":\"NMI\",\"notification_template\":{\"subject\":\"##CH-$ChangeID##:Notification for change of Stage/Status : $StageName - $StatusName\",\"content\":\"<div>Change status has been modified.<br><br><b>User Comments:</b> $StatusComments<br><br>Short info on the change is :<br><br><b>Title:</b> $Title<br><b>Category:</b> $Category<br><b>Sub-Category:</b> $SubCategory<br><b>Item:</b> $Item<br><b>Description:</b> $Description<br><br>Click for details: <a href=\\\"$ChangeLink\\\">$ChangeLink</a><br></div>\",\"notify_to\":{\"xpaths\":[{\"xpath\":\"change.change_manager\"},{\"xpath\":\"change.change_owner\"}]}}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"change_status\":{\"id\":\"1\",\"description\":\"Change has been Accepted\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Accepted\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_statuses/{id}",
+      "desc": "You can view the details of a specific Change Request here.",
+      "disp_desc": "View a Change Status",
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_status\":{\"id\":\"1\",\"description\":\"Change has been Accepted\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Accepted\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_statuses",
+      "desc": "You can get the details of all available Change Requests here.",
+      "disp_desc": "View all Change Statuses",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },      
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_statuses\":[{\"id\":\"1\",\"description\":\"Change has been Accepted\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Accepted\"},{\"id\":\"19\",\"description\":\"Change has been waiting for approval\",\"name\":\"Approval Pending\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Approval Pending\"},{\"id\":\"6\",\"description\":\"Change has been approved in this stage\",\"name\":\"Approved\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Approved\"},{\"id\":\"4\",\"description\":\"Change has been approved\",\"name\":\"Approved\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Approved\"},{\"id\":\"13\",\"description\":\"Change has been rejected\",\"name\":\"Canceled\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Canceled\"},{\"id\":\"24\",\"description\":\"Change has to be completed\",\"name\":\"Close - In Progress\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"In Progress\"},{\"id\":\"12\",\"description\":\"Change has been completed successfully\",\"name\":\"Completed\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Completed\"},{\"id\":\"9\",\"description\":\"Change has been waiting for approval\",\"name\":\"Implementation - Back Out\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Back Out\"},{\"id\":\"8\",\"description\":\"Implementation has been completed\",\"name\":\"Implementation - Completed\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Completed\"},{\"id\":\"20\",\"description\":\"Implementation has been started\",\"name\":\"Implementation - In Progress\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"In Progress\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":true,\"row_count\":10,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_statuses/{id}",
+      "desc": "You can edit the changes here.",
+      "disp_desc": "Update a Change Status",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"change_status\":{\"description\":\"Details requested to proceed further\",\"inactive\":false,\"stage\":{\"id\":\"1\"},\"name\":\"NeedMoreInfo\",\"action_name\":\"NMI\",\"notification_template\":{\"subject\":\"##CH-$ChangeID##:Notification for change of Stage/Status : $StageName - $StatusName\",\"content\":\"<div>Change status has been modified.<br><br><b>User Comments:</b> $StatusComments<br><br>Short info on the change is :<br><br><b>Title:</b> $Title<br><b>Category:</b> $Category<br><b>Sub-Category:</b> $SubCategory<br><b>Item:</b> $Item<br><b>Description:</b> $Description<br><br>Click for details: <a href=\\\"$ChangeLink\\\">$ChangeLink</a><br></div>\",\"notify_to\":{\"xpaths\":[{\"xpath\":\"change.change_manager\"},{\"xpath\":\"change.change_owner\"}]}}}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"change_status\":{\"id\":\"1\",\"description\":\"Change has been Accepted\",\"inactive\":false,\"stage\":{\"id\":1},\"name\":\"Accepted\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_statuses/{id}",
+      "desc": "You can delete the changes here.",
+      "disp_desc": "Delete a Change Status",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+ {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "Change_StatusDefinition:WFSTATUSID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "name",
+    "type": "String",
+    "desc": "The name of the Change Status",
+    "graphView": "",
+    "column": "Change_StatusDefinition:STATUSDISPLAYNAME",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "action_name",
+    "type": "String",
+    "desc": "The action name of the Change Status",
+    "graphView": "",
+    "column": "Change_StatusDefinition:ACTIONNAME",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "description",
+    "type": "String",
+    "desc": "The description of the Change Status",
+    "graphView": "",
+    "column": "Change_StatusDefinition:DESCRIPTION",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+    {
+      "name": "stage",
+      "type": "Object",
+      "column": "Change_StatusDefinition:WFSTAGEID",
+      "desc": "The change stage, the Change Status belongs to",
+      "inOP": "true",
+      "isDefault": "true",
+      "isReleased": "true"
+    }
+    
+  ],
+  "isReleased": "false"
+}
+

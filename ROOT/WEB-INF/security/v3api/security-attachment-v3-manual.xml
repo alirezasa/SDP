@@ -1,0 +1,33 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required"  api="true">
+        <param name="TECHNICIAN_KEY|AUTHTOKEN" type="String" max-len="200" name-regex="true" secret="true" max-occurrences="1"/>
+<!--        Throttle control can’t be applied here, as this endpoint is shared across all modules.
+    Additionally, the data returned is already optimized through caching and ETag mechanisms.-->
+        <url path="/api/v3/[a-z0-9_/]+/attachments/(\d+)/(_?)get_config" method="get" user_type="all" description="this url is applicable for all the logged in users so role check is not needed,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/attachments/(_?)get_config" method="get" user_type="all" description="this url is applicable for all the logged in users so role check is not needed,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/resolution_attachments/(_?)get_config" method="get" user_type="all" description="this url is applicable for all the logged in users so role check is not needed,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/resolution_attachments/(\d+)/(_?)get_config" method="get" user_type="all" description="this url is applicable for all the logged in users so role check is not needed,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]+/attachments/(\d+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]+/attachments/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]+/(\d+)/attachments/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]+/(\d+)/attachments/(\d+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(attach_[a-z0-9_]+)/(\d+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]+/(attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/[a-z0-9_/]+/(attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]+/(\d+)/(attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]/(\d+)/[a-z0-9_/]+/(attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]/[a-z0-9_/]+/(attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+        <url path="/api/v3/[a-z0-9_/]+/(\d+)/[a-z0-9_/]/(\d+)/[a-z0-9_/]+/(\d+)/(attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED,No_Throttle_Needed" />
+
+        <url path="/api/v3/[a-z0-9_/]+/(udf_attach_[a-z0-9_]+)/(\d+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED" />
+        <url path="/api/v3/[a-z0-9_/]+/(udf_attach_[a-z0-9_]+)/(_?)get_config" method="get" user_type="all" description="FGR_APPLIED" />
+
+        <url path="/api/v3/systemlogs/(\d+)/attachments/(\d+)/(_?)download" roles="Common_Role" method="get" user_type="all" description="FGR_APPLIED" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param regex="view" max-len="100" name="mode"/>
+        </url>
+    </urls>
+</security>

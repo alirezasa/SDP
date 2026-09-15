@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>帮助卡 - 自定义计划</title>
+</head>
+<body style="font-family:'Times New Roman'">
+  <p>自定义计划支持您从ServiceDesk Plus访问任意数据并规划周期性的自定义动作，如发送通知、重新打开请求或更新资产信息。您可以在自定义的脚本中设计动作。ServiceDesk Plus的数据可以通过查询报表传递给这些脚本。</p>
+  <p>参考以下要点来创建一个自定义计划：</p>
+  <p><strong>计划明细</strong>：输入一个唯一的<strong>计划名称</strong>以及一个相关的
+    <strong>描述</strong>来解释自定义计划动作的用途。您可以按需启用/禁用自定义计划。
+  </p>
+  <p><strong>执行器</strong>：指定使用脚本指定的动作。您可以使用第三方应用来执行您的脚本，也可以使用内置的Zoho面向对象编程应用——Deluge。</p>
+  <ul>
+  		<li><strong>执行脚本</strong> - 指定包含脚本执行命令的文本文件路径，应将其保存到<strong>[SDP_Home]/integration/custom_scripts/executor_files</strong>目录下，ServiceDesk Plus将从文件中提取要执行的脚本。</li>
+      在文本文件中指定的脚本文件名称，如<strong>py filename.py</strong>，filename.py应保存在<strong>[SDP_Home]/integration/custom_scripts/</strong>文件夹下。
+    </li>
+    <li><strong>自定义自定义函数</strong> - 使用Deluge创建并保存您的脚本，以在自定义计划中使用。从下拉列表中选择相关的脚本，您也可以在这里创建一个自定义计划函数。</li>
+    <a href="https://help.servicedeskplus.com/custom-schedule-function" target="_blank" class="text-link">点击这里</a>了解如何使用自定义计划函数来创建脚本。
+  </ul>
+  <p><strong>参数：</strong>选择所需的查询报表，作为参数传递给脚本。 确保报表已保存在报表页签下的文件夹中，您至多可以关联3个查询报表。</p>
+  <details class="helpdetailstag mb10">
+    <summary class="sb"><span class="detailsarrow top-1"></span>查询报表如何被转换为参数？</summary>
+    <div>
+      <p></p>
+      <p>当计划开始后，关联的计划报表将会生成，其结果将会以JSON文件格式保存到<strong>[SDP_Home]/integration/custom_schedule_reports/</strong>目录下。该JSON文件的路径将会作为参数传递给自定义计划执行器。</p>
+      <p>让我们假设查询报表<strong>违反高级别SLA的请求</strong>包含以下输出：</p>
+      <table align="center" border="1" width="425" bordercolor="#000000" cellpadding="4" cellspacing="0">
+        <tbody>
+          <tr>
+            <th>请求ID</th>
+            <th>主题</th>
+            <th>技术员</th>
+          </tr>
+          <tr align="center">
+            <td>47</td>
+            <td>Unable to fetch mails</td>
+            <td>Heather Graham</td>
+          </tr>
+          <tr align="center">
+            <td>128</td>
+            <td>Cannot connect to MSSQL server</td>
+            <td>Shawn Adams</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>那么该JSON文件的格式将为：</p>
+      <pre>[
+    {
+        "Request ID":"47",
+        "Subject":"Unable to fetch mails",
+        "Technician":"Heather Graham"
+    },
+    {
+        "Request ID":"128",
+        "Subject":"Cannot connect to MSSQL server",
+        "Technician":"Shawn Adams"
+    }
+  ]
+  </pre>
+      <p>在动作执行后，JSON文件将被删除。</p>
+    </div>
+  </details>
+  <p><strong>起始日期 & 时间</strong>：点击日历图标，选择日期和时间来启用自定义计划的执行。如果选择的日期和时间早于自定义计划创建/编辑的时间，那么计划任务将会在保存后立即执行。</p>
+  <p><strong>重复</strong>：从下拉列表中选择自定义计划的执行频率。</p>
+  <p><strong>提示</strong></p>
+  <p>自定义计划列表页面的<strong>结果</strong>列包含有相应动作的最新输出。</p>
+  <p>关于动作执行的详细输出可在快速动作下或社区页签下的<strong>系统日志查看器</strong>查看。</p>
+</body>
+</html>

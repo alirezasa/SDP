@@ -1,0 +1,235 @@
+{
+	"attributes": [
+		{
+			"name": "id",
+			"type": "Number",
+			"desc": "Unique Identifier.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "true",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "vendor_service",
+			"type": "String",
+			"desc": "Vendor Service to be associated.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "true",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "vendor",
+			"type": "String",
+			"desc": "Vendor to be associated.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "true",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "service_price",
+			"type": "Number",
+			"desc": "Price of the service.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "false",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "tax_rate",
+			"type": "Number",
+			"desc": "Tax rate.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "false",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "service_period_years",
+			"type": "Number",
+			"desc": "Service period in years.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "false",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "service_period_months",
+			"type": "Number",
+			"desc": "Service period in months.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "false",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "support_vendor",
+			"type": "Number",
+			"desc": "Support vendor to be associated.",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "false",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "comments",
+			"type": "Number",
+			"desc": "Any comments about the association",
+			"graphView": "",
+			"column": "",
+			"odcolumn": "",
+			"html_type": "",
+			"isMandatory": "false",
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		}
+	],
+	"Additional Elements": [],
+	"operations": [
+		{
+			"name": "",
+			"method": "GET",
+			"moduleName" : "Purchase",
+			"path": [
+				"/api/v3/vendor_service_associations"
+			],
+			"desc": "",
+			"disp_desc": "View all vendor service associations",
+			"workflow": "",
+			"input": {
+				"name": "INPUT_DATA",
+				"sample": "{\"list_info\":{\"start_index\":1,\"row_count\":15,\"sort_order\":\"desc\"}}"
+			},
+			"output": {
+				"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"vendor_service_association\":{\"vendor_service\":{\"name\":\"test\",\"id\":\"301\",\"type\":{\"id\":\"1\"}},\"comments\":\"basic comments\",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"service_period_years\":\"0\",\"support_vendor\":{\"name\":\"newV\",\"currency\":{\"id\":\"2\"},\"id\":\"301\"},\"id\":\"2\",\"service_price\":\"123.00\",\"tax_rate\":\"10.00\",\"service_period_months\":\"0\"}}"
+			},
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "",
+			"method": "GET",
+			"moduleName" : "Purchase",
+			"path": [
+				"/api/v3/vendor_service_associations/{vendor_service_associations_id}"
+			],
+			"desc": "",
+			"disp_desc": "View a vendor service association",
+			"workflow": "",
+			"output": {
+				"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"vendor_service_association\":{\"vendor_service\":{\"name\":\"test\",\"id\":\"301\",\"type\":{\"id\":\"1\"}},\"comments\":\"basic comments\",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"service_period_years\":\"0\",\"support_vendor\":{\"name\":\"newV\",\"currency\":{\"id\":\"2\"},\"id\":\"301\"},\"id\":\"2\",\"service_price\":\"123.00\",\"tax_rate\":\"10.00\",\"service_period_months\":\"0\"}}"
+			},
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "",
+			"method": "POST",
+			"moduleName" : "Purchase",
+			"path": [
+				"/api/v3/vendor_service_associations"
+			],
+			"desc": "",
+			"disp_desc": "Add a service vendor association",
+			"workflow": "",
+			"input": {
+				"name": "INPUT_DATA",
+				"sample": "{\"vendor_service_association\":{\"vendor_service\":{\"id\":\"602\"},\"comments\":\"add service\",\"vendor\":{\"id\":\"302\"},\"service_period_years\":\"10\",\"support_vendor\":{\"id\":\"301\"},\"service_price\":\"123.00\",\"tax_rate\":\"10.00\",\"service_period_months\":\"10\"}}"
+			},
+			"output": {
+				"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"vendor_service_association\":{\"vendor_service\":{\"name\":\"test\",\"id\":\"602\",\"type\":{\"id\":\"1\"}},\"comments\":\"add service\",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"service_period_years\":\"10\",\"support_vendor\":{\"name\":\"newV\",\"currency\":{\"id\":\"2\"},\"id\":\"301\"},\"id\":\"4\",\"service_price\":\"123.00\",\"tax_rate\":\"10.00\",\"service_period_months\":\"10\"}}"
+			},
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "",
+			"method": "PUT",
+			"moduleName" : "Purchase",
+			"path": [
+				"/api/v3/vendor_service_associations/{vendor_service_associations_id}"
+			],
+			"desc": "",
+			"disp_desc": "Update a vendor service association",
+			"workflow": "",
+			"input": {
+				"name": "INPUT_DATA",
+				"sample": "{\"vendor_service_association\":{\"comments\":\"Updated comment\",\"service_period_years\":\"8\",\"support_vendor\":{\"id\":\"302\"},\"service_price\":\"100.00\",\"tax_rate\":\"120.00\",\"service_period_months\":\"9\"}}"
+			},
+			"output": {
+				"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"vendor_service_association\":{\"vendor_service\":{\"name\":\"test\",\"id\":\"301\",\"type\":{\"id\":\"1\"}},\"comments\":\" Updated comments \",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"service_period_years\":\"8\",\"support_vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"id\":\"2\",\"service_price\":\"100.00\",\"tax_rate\":\"120.00\",\"service_period_months\":\"9\"}}"
+			},
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "true",
+			"isReleased": "true"
+		},
+		{
+			"name": "",
+			"method": "DELETE",
+			"moduleName" : "Purchase",
+			"path": [
+				"/api/v3/vendor_service_associations/{vendor_service_associations_id}"
+			],
+			"desc": "",
+			"disp_desc": "Delete a vendor service association",
+			"workflow": "",
+			"output": {
+				"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+			},
+			"inOP": "true",
+			"isAsset": "true",
+			"inOD": "false",
+			"isReleased": "true"
+		}
+	]
+}

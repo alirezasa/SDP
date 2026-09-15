@@ -1,0 +1,203 @@
+<!-- $Id$ -->
+<!-- Security for Space module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+	<urls authentication="required" disable-extraparam="true">
+	
+		<!-- Notification rules for space module -->
+		<url roles="ConfigureSpace" path="/setup/SpaceNotifications.jsp" operation-param="mode" operation-value="view" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Space_Notifications_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+		</url>
+		
+		<url roles="ConfigureSpace" path="/setup/SpaceNotifications.jsp" csrf="true" operation-param="mode" operation-value="update" method="post">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Space_Notifications_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+			<param name="Campus_Edit" regex="on|off"/>
+            <param name="Structure_Edit" regex="on|off"/>
+            <param name="Floor_Edit" regex="on|off"/>
+            <param name="Room_Edit" regex="on|off"/>
+            <param name="mode" regex="update"/>
+        </url>
+		
+		<!-- Space Module Client URLS start-->
+		<url path="/space/Space.jsp" roles="ViewSpace" method="get">
+            <throttles name="space_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>		
+		</url>
+		<url path="/space/SpaceForm.jsp" roles="CreateSpace" method="get" operation-param="mode" operation-value="add">
+			<param name="module" regex="campus|building|nonbuilding|floor|room|facility|roompartition" />
+			<param name="container" regex="space-form-dialog" />
+			<param name="room_id" type="long" />
+			<param name="site_id" type="long" />
+			<param name="templateid" type="long" />
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />
+			<param name="customContainer" regex="true|false" />	
+			<param name="noheader" regex="true|false" />
+            <throttles name="space_form_add_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>
+		<url path="/space/SpaceForm.jsp" roles="ModifySpace" method="get" operation-param="mode" operation-value="edit">
+			<param name="module" regex="campus|building|nonbuilding|floor|room|facility|roompartition" />
+			<param name="id" type="long" />
+			<param name="container" regex="space-form-dialog" />
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />
+			<param name="customContainer" regex="true|false" />	
+			<param name="noheader" regex="true|false" />
+            <throttles name="space_form_edit_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>		
+		<url path="/space/SpaceListView.jsp" roles="ViewSpace" method="get">
+			<param name="mode" regex="list"/> 
+			<param name="module" regex="campus|structure|building|nonbuilding|floor|room|facility|tree|roompartition|space" />
+			<param name="container" regex="StructuresFrame|FloorsFrame|RoomsFrame|RoomPartitionssFrame" />
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+			<param name="room_id" type="long" />
+			<param name="site_id" type="long" />
+			<param name="gsearch" type="String" max-len="5000" secret="true"/>
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />	
+			<param name="customContainer" regex="true|false" />	
+			<param name="noheader" regex="true|false" />
+            <throttles name="space_list_view_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>
+		<url path="/space/SpaceDetails.jsp" roles="ViewSpace" method="get">
+			<param name="mode" regex="details"/> 
+			<param name="module" regex="campus|building|nonbuilding|floor|room|roompartition" />
+			<param name="id" type="long" />
+			<param name="container" regex="space-form-dialog" />
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />	
+			<param name="customContainer" regex="true|false" />		
+			<param name="noheader" regex="true|false" />
+            <throttles name="space_details_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>		
+        <url path="/space/SpaceTree.jsp" roles="ViewSpace" method="get">
+            <throttles name="space_tree_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>		
+		</url>
+		<url path="/ui/space" roles="ViewSpace" method="get" operation-param="mode" operation-value="list">
+			<param name="module" regex="campus|structure|building|nonbuilding|floor|room|facility|tree|roompartition|space" />
+			<param name="container" regex="StructuresFrame|FloorsFrame|RoomsFrame|RoomPartitionssFrame" />
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+			<param name="room_id" type="long" />
+			<param name="site_id" type="long" />
+			<param name="gsearch" type="String" max-len="5000" secret="true"/>
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />
+			<param name="customContainer" regex="true|false" />	
+			<param name="noheader" regex="true|false" />
+            <throttles name="ui_space_list_view_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>
+		<url path="/ui/space" roles="CreateSpace" method="get" operation-param="mode" operation-value="add">
+			<param name="module" regex="campus|building|nonbuilding|floor|room|facility|roompartition" />
+			<param name="container" regex="space-form-dialog" />
+			<param name="room_id" type="long" />
+			<param name="site_id" type="long" />
+			<param name="templateid" type="long" />
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />
+			<param name="customContainer" regex="true|false" />	
+			<param name="noheader" regex="true|false" />
+            <throttles name="ui_space_form_add_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>	
+		<url path="/ui/space" roles="ModifySpace" method="get" operation-param="mode" operation-value="edit">
+			<param name="module" regex="campus|building|nonbuilding|floor|room|facility|roompartition" />
+			<param name="entity_id" type="long" />
+			<param name="container" regex="space-form-dialog" />
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />
+			<param name="customContainer" regex="true|false" />	
+			<param name="noheader" regex="true|false" />
+            <throttles name="ui_space_form_edit_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>	
+		<url path="/ui/space" roles="ViewSpace" method="get" operation-param="mode" operation-value="details">
+			<param name="module" regex="campus|building|nonbuilding|floor|room|roompartition" />
+			<param name="entity_id" type="long" />
+			<param name="container" regex="space-form-dialog" />
+			<param name="fromPage" regex="details|list"/> 
+			<param name="min_preview" regex="true|false" /> 
+			<param name="externalframe" regex="true|false" />
+			<param name="customContainer" regex="true|false" />	
+			<param name="noheader" regex="true|false" />
+            <throttles name="ui_space_details_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>			
+		</url>		
+		<url path="/common/ViewHistory.jsp" roles="ViewSpace" operation-param="module" operation-value="spaces">
+			<throttles key="url.path+url.dynamic_key" name="viewhistory_space_jsp" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" lock-period="5m" threshold="60"/>
+			</throttles>
+			<param name="id" type="long" allow-empty="false"/>
+			<param name="key" regex="space_history_sort_order"/>
+			<param name="sub_module" regex="space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions" />
+		</url>			
+		<!-- Space Module Client URLS end-->
+	</urls>
+	
+	<jsontemplates>
+		<jsontemplate name="space_udf_fields_ref" disable-extra-key="true">
+			<key name-regex="true" name="sline_[a-z0-9_]+" type="String" max-len="250" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="mline_[a-z0-9_]+" type="String" max-len="500" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="multi_[a-z0-9_]+" type="JSONArray" max-len="-1" array-size="0-25" template="IDNameJson" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="pick_[a-z0-9_]+" type="JSONObject" max-len="-1" template="IDNameJson" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="dec_[a-z0-9_]+" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="num_[a-z0-9_]+" type="long" max-len="19" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="date_[a-z0-9_]+" type="JSONObject" template="datefield" max-occurrences="120" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="space_template_get" disable-extra-key="true">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base"/>
+			<key name="module" type="JSONObject" template="IDNameJson"/>
+		</jsontemplate>
+		<jsontemplate name="space_default_template_get" disable-extra-key="true">
+			<key name="module" type="JSONObject" template="IDNameJson"/>
+		</jsontemplate>
+ 	    <jsontemplate name="space_room_layout_template" disable-extra-key="true">
+			<key name="id" type="long" max-occurrences="1"/>
+			<key name="capacity" type="long" max-occurrences="1"/>
+		</jsontemplate>
+         <jsontemplate name="copy_space_template" disable-extra-key="true">                
+	        <key name="copy" type="JSONObject" max-occurrences="1" max-len="-1" template="copy_space_template_data"/>
+	    </jsontemplate>
+	    <jsontemplate name="copy_space_template_data" disable-extra-key="true">
+	        <key name="number_of_spaces" type="int" max-occurrences="1" range="1-10"/>
+	        <key name="name_prefix" regex="sdp_safestring" min-occurrences="1" max-occurrences="1"/>
+	    </jsontemplate>
+		<jsontemplate name="space_instance_cm" disable-extra-key="true">
+			<key name="space_campus|space_building|space_nonbuilding|space_floor|space_room|space_roompartition|space_structure" name-regex="true" template="space_instance_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="space_area_group" disable-extra-key="true">
+			<key name="space_area" type="double" max-occurrences="1"/>
+			<key name="area_unit" template="space_unit_unique" type="JSONObject" max-len="-1" max-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="request_templates_space_get" disable-extra-key="true">
+			<key name="is_service_template" type="boolean" max-occurrences="1"/>
+			<key name="req_temp_search_name" type="String" max-len="250" max-occurrences="1"/>
+		</jsontemplate>
+	</jsontemplates>
+</security>

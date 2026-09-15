@@ -1,0 +1,717 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls method="get"  authentication="required" remote_server="false" rebrand="zmon">
+        <url path="/servlet/AJaxServlet" roles="SDAdmin" operation-param="action" operation-value="checkForO365AccCreds">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_checkForO365AccCreds" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+    </urls>
+    <urls api="true" disable-extraparam="true" authentication="required" remote_server="false" rebrand="zmon">
+    	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="o365" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="70" duration="1m"/>
+        </throttles>
+        <url method="get" roles="ViewInventoryWS" path="/asset/Office365.jsp">
+            <response>
+                <headers>
+                    <header name="Content-Security-Policy" value="script-src 'nonce-${csp_nonce}'"/>
+                </headers>
+            </response>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/ui/software/office365" >
+			<param name="list" type="String" max-len="100" />
+			<param name="user_name" type="String" max-len="100" secret="true"/>
+			<param name="domain_name" type="String" max-len="100" secret="true"/>
+			<param name="domain_id" type="String" max-len="100" secret="true"/>
+			<param name="site_name" type="String" max-len="100" />
+			<param name="site_id" type="String" max-len="100" />				
+		</url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/user/department/site">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_accounts">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+    	</url>
+	    <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(_?)metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/(_?)fetch_graphdata"/>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/(_?)sync_now"/>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+	    <url method="get" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/o365_accounts/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/o365_accounts/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/o365_accounts/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/o365_accounts/(_?)get_records_for_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/o365_accounts/(_?)get_performed_by_for_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_account_domains">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_domain" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/domains">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_domain" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_account_domains/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_domain" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/domains/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_domain" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_domains/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/domains/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_domains/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/domains/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_domains">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/domains">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_account_domains">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_domain" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/domains">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_domain" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+	    <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_domains">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/domains">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_domains/(domain)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/domains/(domain)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_domains/(\d+)/(domain)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/domains/(\d+)/(domain)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_account_license_details">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_detail" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_detail" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_account_license_details/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_detail" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_detail" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_license_details/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_account_license_details">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_detail" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_detail" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_license_details">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/(o365_license_sku)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(o365_license_sku)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/(\d+)/(o365_license_sku)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/(o365_license_sku)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(_?)metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_account_license_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_account_license_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_license_services/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+	    <url method="put" roles="SDAdmin" path="/api/v3/o365_account_license_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_account_license_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_license_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_services/(o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services/(o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services/(o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_services/(\d+)/(o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_account_license_details/(\d+)/o365_account_license_services/(\d+)/(o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/license_details/(\d+)/o365_account_license_services/(\d+)/(o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_license_skus">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_license_sku" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_license_skus/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_license_sku" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_license_skus/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_license_skus/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_license_skus">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+	    <url method="put" roles="SDAdmin" path="/api/v3/o365_license_skus">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_license_sku" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_license_skus">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_service" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_services/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+	    <url method="put" roles="SDAdmin" path="/api/v3/o365_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_users">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_users/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_users/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(_?)metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/(_?)fetch_user_licenses_services_data"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/(_?)fetch_user_licenses_services_data"/>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_users">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_users">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+	    <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(user)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(user)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/(user)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/(user)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(_?)metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_user_licenses">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_user_licenses/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_user_licenses/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+	    <url method="put" roles="SDAdmin" path="/api/v3/o365_user_licenses">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_license" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_user_licenses">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses/(o365_user|o365_account_license_detail)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license/(o365_user|o365_account_license_detail)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(o365_user|o365_account_license_detail)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses/(\d+)/(o365_user|o365_account_license_detail)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/(o365_user|o365_account_license_detail)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/(o365_user|o365_account_license_detail)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_user_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_user_services/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="o365_user_service" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_user_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_services/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_services/(\d+)/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_user_licenses/(\d+)/o365_user_services/(\d+)/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/o365_accounts/(\d+)/users/(\d+)/o365_user_license/(\d+)/o365_user_services/(\d+)/(o365_user_license|o365_service)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <param regex="json" name="format"/>
+    </urls>
+
+
+    <!--Moved O365 Templates from security-template-j-r.xml to security-o365-v3.xml-->
+    <!--O365 Template Start-->
+    <jsontemplates>
+        <jsontemplate name="o365_account_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="tenant_name" type="String" max-len="150"/>
+            <key name="status" template="o365_account_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="start_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="frequency" type="long" range="0-365"/>
+            <key name="last_sync_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="next_sync_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="scan_comments" type="String" max-len="250"/>
+            <key name="domain" type="int" range="0-100"/>
+            <key name="domains" template="o365_account_domain_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="users" template="o365_user_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="license_details" template="o365_account_license_detail_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="tenant_id" type="String" max-len="150"/>
+            <key name="client_id" type="String" max-len="150"/>
+            <key name="client_secret" type="String" secret="true" max-len="500"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account">
+            <key name="o365_account" template="o365_account_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_domain_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_domain_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_domain">
+            <key name="o365_account_domain" template="o365_account_domain_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_license_detail_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="o365_license_sku" template="o365_license_sku_unique" type="JSONObject" max-len="-1"/>
+            <key name="active_units" type="long" range=">=0"/>
+            <key name="consumed_units" type="long" range=">=0"/>
+            <key name="available_units" type="long" range=">=0"/>
+            <key name="warning_units" type="long" range=">=0"/>
+            <key name="suspended_units" type="long" range=">=0"/>
+            <key name="lockedout_units" type="long" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_license_detail_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="o365_license_sku" template="o365_license_sku_unique" type="JSONObject" max-len="-1"/>
+            <key name="active_units" type="long" range=">=0"/>
+            <key name="consumed_units" type="long" range=">=0"/>
+            <key name="available_units" type="long" range=">=0"/>
+            <key name="warning_units" type="long" range=">=0"/>
+            <key name="suspended_units" type="long" range=">=0"/>
+            <key name="lockedout_units" type="long" range=">=0"/>
+            <key name="o365_account_license_services" template="o365_account_license_service_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_license_detail">
+            <key name="o365_account_license_detail" template="o365_account_license_detail_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_license_service_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="o365_service" template="o365_service_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_license_service_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="o365_service" template="o365_service_unique" type="JSONObject" max-len="-1"/>
+            <key name="provisioning_status" type="String" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_license_service">
+            <key name="o365_account_license_service" template="o365_account_license_service_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_account_status_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="o365_license_sku_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="sku_name" type="String" max-len="150"/>
+            <key name="display_name" type="String" max-len="150"/>
+            <key name="o365_skuid" type="String" max-len="150"/>
+        </jsontemplate>
+        <jsontemplate name="o365_license_sku_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="sku_name" type="String" max-len="150"/>
+            <key name="display_name" type="String" max-len="150"/>
+            <key name="o365_skuid" type="String" max-len="150"/>
+        </jsontemplate>
+        <jsontemplate name="o365_license_sku">
+            <key name="o365_license_sku" template="o365_license_sku_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_service_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="description" type="String" max-len="500"  secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="o365_service_base">
+            <key name="id" type="long"  range=">0"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="service_type" type="String" max-len="150"/>
+            <key name="service_plan" type="String" max-len="150"/>
+            <key name="description" type="String" max-len="500"  secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="o365_service">
+            <key name="o365_service" template="o365_service_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_user_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="block_credential" type="boolean" allow-invalid="false"/>
+            <key name="is_licensed" type="boolean" allow-invalid="false"/>
+            <key name="object_id" type="String" max-len="100"/>
+            <key name="office" type="String" max-len="100"/>
+            <key name="preferred_data_location" type="String" max-len="100"/>
+            <key name="preffered_language" type="String" max-len="100"/>
+            <key name="proxy_address" type="String" max-len="500" secret="true" description="cannot add regex for proxy address as it contains any value and not IPAddress and no need of autocomplete as we don't fetch the value from form"/>
+            <key name="sign_in_name" type="String" max-len="100" secret="true"/>
+            <key name="usage_location" type="String" max-len="100" secret="true"/>
+            <key name="user_principal_name" max-len="100" secret="true" regex="emailstring"/>
+            <key name="user_type" type="String" max-len="50" secret="true" description="since it can contain any value we cannot add regex"/>
+            <key name="street" type="String" max-len="100" secret="true"/>
+            <key name="city" type="String" max-len="100" secret="true"/>
+            <key name="postal_code" type="String" max-len="50" secret="true"/>
+            <key name="state" type="String" max-len="100" secret="true"/>
+            <key name="country" type="String" max-len="100" secret="true"/>
+            <key name="user_licenses" type="JSONArray" template="strarray" array-size="0-100" max-len="-1" secret="true" />
+            <key name="user_services_count" type="int" range="0-500"/>
+            <key name="o365_user_license" template="o365_user_license_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="o365_user">
+            <key name="o365_user" template="o365_user_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_user_license_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="o365_user" template="o365_user_base" type="JSONObject" max-len="-1"/>
+            <key name="o365_account_license_detail" template="o365_account_license_detail_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_user_license_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="o365_user" template="o365_user_base" type="JSONObject" max-len="-1"/>
+            <key name="o365_account_license_detail" template="o365_account_license_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="o365_user_services" template="o365_user_service_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="o365_user_license">
+            <key name="o365_user_license" template="o365_user_license_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_user_service_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="o365_user_license" template="o365_user_license_unique" type="JSONObject" max-len="-1"/>
+            <key name="o365_service" template="o365_service_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="o365_user_service">
+            <key name="o365_user_service" template="o365_user_service_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+    </jsontemplates>
+    <!--O365 Template End-->
+</security>

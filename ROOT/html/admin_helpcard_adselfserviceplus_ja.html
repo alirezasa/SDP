@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ServiceDesk Plus - ADSelfService Plus 連携</title>
+</head>
+
+<body>
+<br>
+<strong>ServiceDesk Plus - ADSelfService Plus連携</strong></span>:
+</p>
+<p>ServiceDesk PlusとManageEngine ADSelfService Plusを連携することで、Active Directoryユーザーは簡単に自分のパスワードとアカウントを管理できます。ManageEngine ADSelfService Plusはセキュアでウェブベースのパスワードリセット管理ツールです。このツールによりドメインユーザーはMicrosoft Windows Active Directoryのパスワードセルフサービス、アカウントセルフサービス、自身の情報に対するセルフサービス（電話番号やメールアドレス）を実行できます。ServiceDesk PlusとADSelfService Plusをインストールしている場合は、ADSelfService Plusがインストールされているコンピューターの情報（ポート番号など）を入力する必要があります。</p>
+<p><strong>入力情報:</strong></p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>サーバー名:</strong><span style="font-weight: bold;">ADSelfService Plusがインストールされているサーバー</span>を入力します。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>ポート番号:</strong>ADSelfService Plusサーバーの<span style="font-weight: bold;">ポート番号</span>を入力します。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>プロトコル設定:</strong><span style="font-weight: bold;">プロトコル設定</span>で"http"か"https"を選択します。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong> 技術担当者に</strong>ADSelfServiceメニューを公開するためには"技術担当者にADSelfServiceメニューを有効にする"を選択します。このメニューはServiceDesk PlusとADSelfService Plusの連携有無にかかわらず表示されます。ADSelfService Plusタブを依頼者に公開するには、<strong>"依頼者にADSelfService Plusタブを有効にする"を選択します。</strong>ADSelfService PlusタブはServiceDesk PlusとADSelfService Plusが連携している状態でログインすると表示されます。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"> 
+  設定が保存されると、ServiceDesk PlusとADSelfService Plus間での接続設定が完了します。 一度完了すると、リンクを利用してADSelfService Plusサーバーに遷移できます。 </p>
+
+<br>
+
+<p><span class="helpheading"><strong>その他ManageEngine 製品との連携（HTTPS接続での起動時）</strong></span></p>
+<ol>
+  <li><strong>.zip</strong> file を以下のリンクからダウンロードし、"<em>ManageEngine\ServiceDesk"</em>に展開します。</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong>https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip </p>
+  <p style="margin-left: 50px;"><strong>For Windows:</strong> https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip </p>
+  <li>コマンドプロンプトに接続し、"<em>ManageEngine\ServiceDesk"</em>に進み、以下のようにバッチを実行します。</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>コマンドを実行している際に、<strong>PKIX</strong>例外が発生したら、値を入力してください。値を入力すると、<em>"ManageEngine\ServiceDesk"配下に<strong>jssecacerts</strong>という名称のファイルが生成されます。</em>.</p>
+  </li>
+  <li><strong>jssecacerts</strong>ファイルを"<em>ManageEngine\ServiceDesk\jre\lib\security"</em>フォルダー配下にコピーし、ServiceDesk Plusを再起動します。<br>
+  </li>
+</ol>
+</body>
+</html>

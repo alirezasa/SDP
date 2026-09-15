@@ -1,0 +1,61 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<br>
+<strong>SDP-ADMP 的集成</strong>:
+</p>
+<p align="justify">SDP-ADManager 
+Plus的集成，可以帮助AD的管理员和帮助台的技术员，充分利用这两款产品，来有效地管理其活动目录。利用它们，管理员可以从ServiceDesk 
+Plus来重置AD中的用户密码、在AD中创建/删除/解锁用户，启用/禁用AD中的用户。</p>
+<p align="justify"><strong>在ADMP中ServiceDesk Plus 服务器配置及认证:</strong></p>
+<p align="justify">必须在ADManager Plus中配置以下信息，确保ADMP和SDP能互相通讯。设置步骤为：ADMP &gt;&gt; 管理 &gt;&gt; 
+常规设置 &gt;&gt;ServiceDesk.</p>
+<ul>
+  <li><strong align="justify">服务器明细</strong>: 输入正在运行的SDP的服务器名称、端口号及通讯协议。</li>
+	<li>选中 &#39;启用紧密集成ServiceDesk Plus&#39; 的选项，它将确保这两个产品的集成，并从SDP交换相关的任务。</li>
+  <li><strong>认证明细</strong>: 输入ServiceDesk Plus的登录名称及其相应的密码。点击 
+	&#39;测试连接并保存&#39;，将检查SDP与ADMP之间的通讯连接，并保存所配置的信息。</li>
+</ul>
+<p align="justify">这种集成只适用于在ADMP中被配置为帮助台技术员的SDP中的相应技术员。要将AD中的用户配置为SDP技术员： </p>
+<ul>
+  <li>进入AD委派 &gt;&gt; 帮助台委派 &gt;&gt; 帮助台技术员 &gt;&gt;添加新的技术员</li>
+  <li>然后选择域、AD用户、帮助台角色和组织单位。如果想让该技术员也作为管理员，选中&#39;模拟管理员&#39;选项。然后保存。</li>
+</ul>
+<p align="justify"><strong>注意</strong>: ADMP 和 SDP中的相同技术员的登录名和域名，应保持一致。</p>
+<p align="justify"><strong>在SDP中配置ADManager Plus服务器的信息:</strong></p>
+<ul>
+  <li>输入正在运行的ADMP的服务器名称、端口号和协议。</li>
+	<li>点击测试连接并保存，将测试ADMP和SDP之间的连接，并保存所设置的信息。</li>
+	<li>如要移除已经设置的配置信息，可点击移除按钮。</li>
+</ul>
+<p align="justify">ADManager Plus的动作:将显示可用的动作列表及其描述，点击动作的编辑图标，可编辑相应的动作信息。</p>
+<p align="justify"><strong>关联角色</strong>：可以选择<strong>所有角色</strong>或<strong>选择的角色</strong>。选择所有角色，将为所有技术员提供执行该动作的权限，而选择指定角色时，将显示SDP中的所有可用角色，管理员可以选择指定角色下的技术员，允许该相应的技术员执行该动作。</p>
+<p align="justify"><strong>关联模板</strong>: 
+可以选择所有模板、或者所有事故模板、或者所有服务请求模板、或者选择的模板。当选定选择的模板时，需要指定模板。利用所指定的模板所创建的请求，在请求明细页面中的动作菜单中，将显示该动作。</p>
+<p align="justify"><strong>从SDP中，在ADManager Plus创建用户:</strong></p>
+<p align="justify">根据不同请求模板所启用的动作，技术员在处理SDP的请求时，可以执行相应的动作。 </p>
+<p align="justify">例如: 当在请求明细页面中调用动作&#39;Create user in AD&#39;时，将弹出对话框，要求填写所需的字段（注意：这些字段需要在两个产品中进行精确匹配，建立映射关系），在提供相应的信息之后，点击创建ＡＤ用户，将会在ＡＤ中创建相应的用户。要添加更多字段， </p>
+<ul>
+  <li>打开位于 [ADMP_Home] &gt;&gt; integration &gt;&gt; 
+	resources &gt;&gt; admp &gt;&gt; conf目录下的Admp.xml文件。</li>
+  <li>点击&quot;create_user&quot; 菜单，包含所需要添加的附加字段（字段可以是文本／日期／精选列表类型）。<br></li></ul>
+<p align="justify">注意: 要包含该附加字段，需要预先知道在ADManager 
+Plus中相应附加字段的ID。该ID的值可以在管理员指南中找到。</p>
+<p align="justify"><strong>域配置:</strong></p>
+<p align="justify">对于SDP-ADMP集成，必须知道需要创建用户的域的信息。 <br>
+</p>
+<ul>
+  <li>在SDP中，已有用户的域可以在 管理 
+	&gt;&gt;技术员&gt;&gt; 登录明细 &gt;&gt; 选择域 中进行配置。 </li>
+  <li>在SDP中，可以在 管理 &gt;&gt; 发现 &gt;&gt; Window域扫描 的页面中添加新的域。<br>
+    <br>
+  </li>
+</ul>
+</body>
+</html>

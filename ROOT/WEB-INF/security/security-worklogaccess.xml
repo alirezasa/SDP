@@ -1,0 +1,38 @@
+<!-- $Id$ -->
+<!-- Security authentication for Worklog module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" method="get" user_type="all" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+		<throttles name="worklog_module_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<url path="/ui/worklogs" operation-param="mode" operation-value="list">
+			<param-group name="worklogParams"/>
+			<param name="printPreview" regex="true" allow-empty="false" />
+		</url>
+		<url path="/ui/worklogs" operation-param="mode" operation-value="form">
+			<param-group name="worklogParams"/>
+			<param name="worklogId" type="long" allow-empty="false" />
+			<param name="from" regex="detail|reqResolution|reqTimer" allow-empty="false"/>
+		</url>
+		<url path="/ui/worklogs" operation-param="mode" operation-value="detail">
+			<param-group name="worklogParams"/>
+			<param name="worklogId" type="long" allow-empty="false" min-occurrences="1"/>
+			<param name="from" regex="form" allow-empty="false"/>
+		</url>
+		<url path="/ui/worklogs" operation-param="mode" operation-value="preview" roles="WorkLogConfig"/>
+		<url path="/project/ProjectsTimesheet.jsp">
+			<param name="module" regex="project|milestone" min-occurrences="1" />
+			<param name="moduleId" type="long" min-occurrences="1" />
+		</url>
+	</urls>
+	<param-groups>
+		<param-group name="worklogParams">
+			<param name="grandParent" regex="request|problem|change|project|milestone|release|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" allow-empty="false" />
+			<param name="grandParentId" type="long" allow-empty="false" />
+			<param name="module" regex="request|problem|change|task|release" min-occurrences="1" />
+			<param name="moduleId" type="long" min-occurrences="1" />
+			<param name="projectId" type="long" allow-empty="false" />
+		</param-group>
+	</param-groups>
+</security>

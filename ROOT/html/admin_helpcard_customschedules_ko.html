@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Help Card - Custom Schedules</title>
+</head>
+<body style="font-family:'Times New Roman'">
+  <p>사용자 지정 (예약) 일정을 사용하면 ServiceDesk Plus의 모든 데이터에 액세스하고 알림 보내기, 요청서 다시 열기 또는 자산 세부 정보 업데이트와 같은 주기적 사용자 지정 액션을 예약할 수
+    있습니다. 사용자 정의된 스크립트 파일에서 액션을 지정할 수 있습니다. ServiceDesk Plus 데이터는 쿼리 보고서를 사용하여 이러한 스크립트로 보낼 수 있습니다.</p>
+  <p>아래 포인터를 사용하여 사용자 지정 예약 일정 만들기:</p>
+  <p><strong>일정 세부 정보</strong>: 고유한 <strong>일정 이름</strong>과 관련 <strong>설명</strong>을 입력하여 사용자 정의 일정 액션의 기능을 설명합니다. 원하는 대로
+    사용자 지정 예약 일정을 활성화/비활성화할 수 있습니다.</p>
+  <p><strong>실행기</strong>: 스크립트를 사용하여 실행할 액션을 지정합니다. 타사 응용 프로그램을 사용하여 스크립트를 실행하거나 Zoho의 내장 고유 스크립팅 응용 프로그램인 Deluge를 사용할
+    수 있습니다.
+  </p>
+  <ul>
+    <li><strong>스크립트 실행</strong> - 스크립트가 포함된 텍스트 파일의 이름을 지정하고
+      <strong>[SDP_Home]/integration/custom_scripts/executor_files</strong> 디렉터리에 저장합니다. 애플리케이션은 지정된 파일에서 스크립트를 가져와
+      실행합니다.
+    </li>
+    <li><strong>사용자 지정 기능 실행</strong> - 사용자 지정 일정 기능에서 Deluge를 사용하여 자신의 스크립트를 만들고 저장합니다. 드롭다운에서 관련 스크립트를 선택합니다. 드롭다운에서
+      사용자 지정 일정 기능을 만들 수도 있습니다.</li>
+    <a href="https://help.servicedeskplus.com/custom-schedule-function" target="_blank" class="text-link">여기를 클릭하여</a>
+    사용자 지정 일정 기능을 사용하여 스크립트를 만드는 방법을 배우십시오.
+  </ul>
+  <p><strong>인수:</strong> 데이터가 인수를 전달하는 데 사용되는 쿼리 보고서를 선택합니다. 보고서가 보고서 탭 아래의 폴더에 저장되어 있는지 확인하십시오. 최대 3개의 쿼리 보고서를 연결할 수
+    있습니다.</p>
+  <details class="helpdetailstag mb10">
+    <summary class="sb"><span class="detailsarrow top-1"></span>쿼리 보고서는 인수로 어떻게 변환됩니까?</summary>
+    <div>
+      <p></p>
+      <p>일정이 시작되면 관련 쿼리 보고서가 생성되고 결과는 <strong>[SDP_Home]/integration/custom_schedule_reports/</strong> 아래의 디렉터리에
+        JSON 파일로 저장됩니다. 이 JSON 파일 경로는 Custom Schedule Executor에 인수로 전달됩니다.</p>
+      <p>쿼리 보고서 <strong>높은 우선 순위에 의한 SLA 위반 요청서</strong>가 다음 결과를 제공한다고 가정해 보겠습니다.</p>
+      <table align="center" border="1" width="425" bordercolor="#000000" cellpadding="4" cellspacing="0">
+        <tbody>
+          <tr>
+            <th>Request ID</th>
+            <th>Subject</th>
+            <th>Technician</th>
+          </tr>
+          <tr align="center">
+            <td>47</td>
+            <td>Unable to fetch mails</td>
+            <td>Heather Graham</td>
+          </tr>
+          <tr align="center">
+            <td>128</td>
+            <td>Cannot connect to MSSQL server</td>
+            <td>Shawn Adams</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>결과 JSON은 다음과 같은 양식을 가지게 됩니다:</p>
+      <pre>
+            [
+                {
+                    "Request ID":"47",
+                    "Subject":"Unable to fetch mails",
+                    "Technician":"Heather Graham"
+                },
+                {
+                    "Request ID":"128",
+                    "Subject":"Cannot connect to MSSQL server",
+                    "Technician":"Shawn Adams"
+                }
+            ]
+          </pre>
+      <p>액션이 실행된 후 JSON 파일이 삭제됩니다.</p>
+    </div>
+  </details>
+  <p><strong>시작 날짜 및 시간</strong>: 캘린더 아이콘에서 사용자 정의 일정 실행을 시작할 날짜와 시간을 선택합니다. 선택한 날짜와 시간이 사용자 지정 일정의 생성/수정 시간보다
+    빠른 경우 사용자 지정 일정을 저장한 후 즉시 액션이 실행됩니다.</p>
+  <p><strong>반복</strong>: 드롭다운에서 사용자 지정 일정을 반복할 빈도를 선택합니다.</p>
+  <p><strong>참고 사항</strong></p>
+  <p>사용자 지정 일정 목록 보기의 <strong>결과</strong> 열에는 해당 액션의 최신 출력이 있습니다.</p>
+  <p>실행된 작업의 자세한 결과는 빠른 액션 아래의 <strong>시스템 로그 뷰어</strong> 또는 커뮤니티 탭에서 볼 수 있습니다.</p>
+</body>
+</html>

@@ -1,0 +1,161 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+ "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/roles/{change_to_change_role_id}"
+      ],
+      "desc": "",
+      "disp_desc": "Get Role of a Change",
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_to_change_role\":{\"role\":{\"name\":\"Implementer\",\"id\":\"8\"},\"id\":\"1\",\"user\":{\"email_id\":null,\"name\":\"Heather Graham\",\"is_vipuser\":false,\"id\":\"6\"},\"label_id\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+ "isReleased": "true",
+      "path": "/api/v3/changes/{change_id}/roles",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+      "desc": "",
+      "disp_desc": "Get all Roles of a Change",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":3},\"roles\":[{\"role\":{\"name\":\"Implementer\",\"id\":\"8\"},\"id\":\"2\",\"user\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\"},\"label_id\":null},{\"role\":{\"name\":\"Implementer\",\"id\":\"8\"},\"id\":\"1\",\"user\":{\"email_id\":null,\"name\":\"Heather Graham\",\"is_vipuser\":false,\"id\":\"6\"},\"label_id\":null},{\"role\":{\"name\":\"Implementer\",\"id\":\"8\"},\"id\":\"3\",\"user\":{\"email_id\":null,\"name\":\"Howard Stern\",\"is_vipuser\":false,\"id\":\"8\"},\"label_id\":null}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Change",
+ "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/roles"
+      ],
+      "desc": "",
+      "disp_desc": "Add a Role assignment in a Change",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"change_to_change_role\":{\"role\":{\"id\":\"5\"},\"user\":{\"id\":\"4\"}}}"
+      },
+      "output": {
+        "sample": "{\"change_to_change_role\":{\"role\":{\"name\":\"ChangeApprover\",\"id\":\"5\"},\"id\":\"301\",\"user\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\"},\"label_id\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/roles/{change_to_change_role_id}"
+      ],
+      "desc": "",
+      "disp_desc": "Delete a Role assignment from a Change",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/roles"
+      ],
+      "desc": "",
+      "disp_desc": "Add Role assignments in a Change",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"roles\":[{\"role\":{\"id\":\"5\"},\"user\":{\"id\":\"4\"}},{\"role\":{\"id\":\"5\"},\"user\":{\"id\":\"5\"}}]}"
+      },
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"9998\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"9999\",\"status\":\"success\"}],\"change_to_change_roles\":[{\"role\":{\"name\":\"SharedRole\",\"id\":\"6\"},\"id\":\"9998\",\"user\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\"},\"label_id\":null},{\"role\":{\"name\":\"SharedRole\",\"id\":\"6\"},\"id\":\"9999\",\"user\":{\"email_id\":null,\"name\":\"Shawn Adams\",\"is_vipuser\":false,\"id\":\"5\"},\"label_id\":null}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "long",
+    "desc": "The mapping id between the Change role and change",
+      "graphView": "",
+      "column": "CHANGEROLEUSERMAPPING:ID",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "change",
+      "type": "Object",
+      "desc": "Represents the change id",
+      "graphView": "",
+      "column": "CHANGEROLEUSERMAPPING:CHANGEID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "role",
+      "type": "Object",
+      "desc": "Represents the change role",
+      "graphView": "",
+      "column": "CHANGEROLEUSERMAPPING:ROLEID",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "user",
+      "type": "Object",
+    "desc": "The user id assigned",
+      "graphView": "",
+      "column": "CHANGEROLEUSERMAPPING:USERID",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "label_id",
+      "type": "long",
+    "desc": "The label id used in case of shared role",
+      "graphView": "",
+      "column": "CHANGEROLEUSERMAPPING:LABELID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "lastModified": 1564997324000
+}

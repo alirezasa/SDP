@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+<!-- API calls related to Implementation Assistant Feature -->
+    <urls authentication="required">
+
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_getall" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)" url-type="dynamic" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_get" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="POST" roles="SDAdmin" path="/api/v3/impl_plans" api="true">
+            <param allow-invalid="false" min-occurrences="0" max-len="-1" type="JSONObject" template="impl_plan" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_post" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="PUT" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)" url-type="dynamic" api="true">
+            <param allow-invalid="false" min-occurrences="0" max-len="-1" type="JSONObject" template="impl_plan" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_put" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!-- implplan_answers -->
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/answers" url-type="dynamic" api="true">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_answers_get" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="POST" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/answers" url-type="dynamic" api="true">
+            <param allow-invalid="false" min-occurrences="0" max-len="-1" type="JSONObject" template="impl_answer" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_answers_post" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="PUT" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/answers/(\d+)" url-type="dynamic" api="true">
+            <param allow-invalid="false" min-occurrences="0" max-len="-1" type="JSONObject" template="impl_answer_put" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_answers_put" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        
+        <!-- implplan_json -->
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/slides" url-type="dynamic" api="true">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_slides_get" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/(_?)get_slides" url-type="dynamic" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_slides_getslides" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/(_?)update_last_slide" url-type="dynamic" api="true">
+            <param allow-invalid="false" min-occurrences="0" max-len="-1" type="JSONObject" template="update_last_slide" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_slides_updatelastslide" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/(_?)mark_as_configured" url-type="dynamic" api="true">
+        <param allow-invalid="false" min-occurrences="0" max-len="-1" type="JSONObject" template="impl_markasread" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_plans_slides_markasread" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/(_?)get_questions" url-type="dynamic" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_getquestions" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans/(\d+)/(_?)build_plan" url-type="dynamic" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_buildplan" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="GET" roles="SDAdmin" path="/api/v3/impl_plans/(_?)get_sample_entries_data" url-type="dynamic" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_sample_entries_data" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- Open User profile (for generaluserprof slide )  -->
+        <url path="/ui/home" method="get" roles="SDAdmin" operation-param="action" operation-value="impl_open_profile" description="open profile on redirected to link">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="HomePage_impl_open_profile" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- reset isFirstLogin Status -->
+        <url method="PUT" roles="SDAdmin" path="/api/v3/impl_plans/(_?)reset_login_status" url-type="dynamic" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="impl_reset_login_status" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+    </urls>
+    <jsontemplates>
+        <!-- impl_plan templates (Implementation Assistant) -->
+        <jsontemplate name="impl_plan_base">
+            <key max-len="250" type="String" name="name"/>
+            <key allow-invalid="false" array-size="0-20" max-len="-1" type="JSONArray" template="implmodule_array" name="modules"/>
+            <key max-len="20" type="String" name="status" regex="impl_status"  min-occurrences="0" max-occurrences="1"/>
+            <key max-len="20" range=">=-1" type="long" name="time_taken"/>
+            <key max-len="19" range=">=-1" type="long" name="last_slide"/>
+        </jsontemplate>
+        <jsontemplate name="implmodule_array">
+			<key index="0-99" regex="impl_modules" min-occurrences="0" max-occurrences="1"/>
+		</jsontemplate>
+        <jsontemplate name="impl_plan">
+            <key max-len="-1" type="JSONObject" template="impl_plan_base" name="impl_plan"/>
+        </jsontemplate>
+        <!-- implplan_answer templates -->
+        <jsontemplate name="impl_answer_base">
+            <key name="module" regex="impl_modules" min-occurrences="0" max-occurrences="1"/>
+            <key max-len="-1" type="JSONArray" template="implplan_answer_base" name="module_answers"/>
+        </jsontemplate>
+        <jsontemplate name="implplan_answer_base">
+            <key max-len="20" type="long" range=">=-1" name="question_id"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="strarray" name="answers"/>
+            <key max-len="10" type="String" name="type" regex="impl_questype" />
+            <key max-len="25" type="String" regex="[a-zA-Z0-9-_. ]+" name="quescode"/>
+        </jsontemplate>
+        <jsontemplate name="impl_answer">
+            <key max-len="-1" type="JSONArray" template="impl_answer_base" name="impl_answer"/>
+        </jsontemplate>
+        <jsontemplate name="impl_answer_put">
+            <key max-len="-1" type="JSONObject" template="impl_answer_base" name="impl_answer"/>
+        </jsontemplate>
+        <jsontemplate name="impl_slide">
+            <key max-len="-1" type="JSONArray" template="impl_slide_base" name="impl_slide"/>
+        </jsontemplate>
+        <!-- update last slide -->
+        <jsontemplate name="update_last_slide_base">
+            <key max-len="19" range=">=-1" type="long" name="last_slide"/>
+        </jsontemplate>
+        <jsontemplate name="update_last_slide">
+            <key max-len="-1" type="JSONObject" template="update_last_slide_base" name="update_last_slide"/>
+        </jsontemplate>
+        <!-- mark slide as read -->
+        <jsontemplate name="impl_markasread_base">
+            <key max-len="25" type="String" name="slide_code" regex="[a-zA-Z0-9-_. ]+"/>
+			<key type="boolean" name="is_plan_finished"/>
+        </jsontemplate>
+        <jsontemplate name="impl_markasread">
+            <key max-len="-1" type="JSONObject" template="impl_markasread_base" name="impl_mark_as_configured"/>
+        </jsontemplate>
+    </jsontemplates>
+
+    <regexes>
+        <regex name="impl_modules" value="UserManagement|Requests|Assets|Problems|Purchase|Survey|Releases|CMDB|Contracts|Changes"/>
+        <regex name="impl_status" value="ongoing|completed|inactive"/>
+        <regex name="impl_questype" value="MCQ|MSQ|MAQ"/>
+    </regexes>
+</security>

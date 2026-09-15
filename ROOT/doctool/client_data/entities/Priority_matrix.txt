@@ -1,0 +1,153 @@
+{
+	"handler":"PriorityMatrixHandler",
+	"entity_group": "Admin",
+	"path": "/priority_matrices",
+	"isReleased":"true",
+	"operations":[
+		{
+			"output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priority_matrix\":{\"urgency\":{\"id\":\"1\",\"name\":\"Urgent\"},\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"priority\":{\"id\":\"4\",\"name\":\"High\"}}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"priority_matrix\":{\"urgency\":{\"id\":\"1\",\"name\":\"Urgent\"},\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"priority\":{\"id\":\"4\",\"name\":\"High\"}}}"
+            },
+            "path": "/api/v3/priority_matrices",
+            "method": "POST",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Add entry in Priority Matrix",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation lets you add a priority for an impact and urgency combination"
+		},
+		{
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priority_matrix\":{\"urgency\":{\"id\":\"1\",\"name\":\"Urgent\"},\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"priority\":{\"id\":\"4\",\"name\":\"High\"}}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"priority_matrix\":{\"urgency\":{\"id\":\"1\",\"name\":\"Urgent\"},\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"priority\":{\"id\":\"4\",\"name\":\"High\"}}}"
+            },
+            "path": "/api/v3/priority_matrices",
+            "method": "PUT",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Update entry in Priority Matrix",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation lets you update a priority value for impact and urgency combination"
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"priority_matrix\":{\"urgency\":{\"id\":\"1\",\"name\":\"Urgent\"},\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"priority\":null}}"
+            },
+            "path": "/api/v3/priority_matrices",
+            "method": "DELETE",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Delete entry in Priority Matrix",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation lets you delete a priority value for impact and urgency combination"
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"resolution_template\":{\"id\":\"10001\",\"name\":\"Custom resolution template\",\"description\":\"customized template for tech\",\"inactive\":true}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":1,\"start_index\":1,\"get_total_count\":true}}"
+            },
+            "path": "/api/v3/priority_matrices",
+            "method": "GET",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "View Priority Matrix",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation fetches configured priorities for impact and urgency."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priority_matrix\":{\"allow_override\":false}}"},
+            "path": ["/api/v3/priority_matrices/_allow_override"],
+            "method": "GET",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Get Allow Override Option",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation fetches the configuration to allow override the priority value by user"
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priority_matrix\":{\"allow_override\":false}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"priority_matrix\":{\"allow_override\":false}}"
+            },
+            "path": ["/api/v3/priority_matrices/_allow_override"],
+            "method": "PUT",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Update Allow Override Option",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation updates the configuration to allow override the priority value by user"
+        }
+	],
+	"attributes":[
+		{
+            "html_type": "",
+            "inOP": "true",
+            "column": "PRIORITYMATRIX : URGENCYID",
+            "name":"urgency",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "Urgency value",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "PRIORITYMATRIX : IMPACTID",
+            "name": "impact",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "Impact value",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "PRIORITYMATRIX : PRIORITYID",
+            "name": "priority",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "Priority value",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "allow_override",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Boolean",
+            "desc": "Indicates whether the priority defined in matrix can be overriden"
+        }
+	]
+}

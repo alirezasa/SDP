@@ -1,0 +1,385 @@
+<!-- $Id$ -->
+<!-- Security authentication for Mail Server Settings related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="OauthServlet_Get_Post" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="15" lock-period="5M"/>
+        </throttles>
+        <!-- OauthServlet Starts-->
+        <url path="/servlet/OauthServlet" roles="SDAdmin,SDOrgAdmin" method="get" operation-param="module" operation-value="mail" remote_server="true" user_type="all">
+            <param name="isIncoming" regex="true|false"/>
+            <param name="mailType" regex="javamail|ews|graph"/>
+        </url>
+        <!-- This POST url will be called by the Authorization Server and hence, no CSRF token will be found -->
+        <url path="/servlet/OauthServlet" roles="SDAdmin,SDOrgAdmin" user_type="all" method="post" remote_server="true">
+            <param name="code" type="String" max-len="3000" secret="true"/>
+            <param name="state" type="String" max-len="500" secret="true" min-occurrences="1"/>
+            <param name="scope" type="String" max-len="500"/>
+            <param name="session_state" type="String" max-len="500" secret="true"/>
+            <param name="error" type="String" max-len="500"/>
+            <param name="error_description" type="String" max-len="3000" secret="true"/>
+        </url>
+        <!-- OauthServlet Ends-->
+    </urls>
+
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="Mail_Admin_Actions" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="15" lock-period="5M"/>
+        </throttles>
+        <url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="email" method="GET" remote_server="true"/>
+        <url roles="SDAdmin,SDOrgAdmin" path="/EMailDef.do" operation-param="mode" operation-value="view"  method="GET" remote_server="true" user_type="all">
+            <param name="mailType" regex="incoming|mailparser|outgoing|delimiter"/>
+        </url>
+        <url roles="SDAdmin" path="/EMailDef.do" operation-param="mode" operation-value="updateDelimiters" method="POST" csrf="true" ids-url-id="Email_Delimiter_Update">
+            <param name="mailType" regex="delimiter"/>
+            <param name="basedelimiter" regex="^[!@#$%^&amp;]{1,10}$" max-len="10" min-occurrences="1"/>
+        </url>
+        <url roles="SDAdmin,SDOrgAdmin" path="/EMailDef.do" operation-param="mode" operation-value="add,update,changeProtocol" method="POST" csrf="true" remote_server="true" user_type="all" ids-url-id="Email_Def_Update">
+            <param name="mailType" regex="incoming|mailparser|outgoing"/>
+            <param name="incomingMailOption" regex="ews|javamail|graph"/>
+            <param name="outgoingMailOption" regex="ews|javamail|graph"/>
+            <param name="mailtype" regex="ews|javamail|graph"/>
+            <param name="incomingEwsUrl" regex="(?i)(^.*\/EWS\/Exchange.asmx$)" max-len="250" secret="true"/>
+            <param name="incomingEwsEmailAddress" max-len="5000" regex="^([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2}))\s*([,\n\s]\s*([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2})\s*))*$" secret="true"/>
+            <param name="incomingEwsUsername" type="String" secret="true"/>
+            <param name="incomingEwsPassword" type="String" max-len="500" secret="true"/>
+            <param name="outgoingEwsUrl" regex="(?i)(^.*\/EWS\/Exchange.asmx$)" max-len="250" secret="true"/>
+            <param name="outgoingEwsUsername" type="String" secret="true"/>
+            <param name="outgoingEwsPassword" type="String" max-len="500" secret="true"/>
+            <param name="fetchInterval" type="long" range="1-10080"/>
+            <param name="ewsSendersName" type="String" max-len="250" secret="true"/>
+            <param name="ewsReplyAddress" regex="email" max-len="250" secret="true"/>
+            <param name="changePwd" type="boolean"/>
+            <param name="changePwdSmtp" type="boolean"/>
+            <param name="changeClientSecret" type="boolean"/>
+            <param name="incomingHost" type="String" secret="true"/>
+            <param name="userName" type="String" secret="true"/>
+            <param name="userPwd" type="String" max-len="500" secret="true"/>
+            <param name="toEmail" max-len="50000" regex="^([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2}))\s*([,\n\s]\s*([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2})\s*))*$" secret="true"/>
+            <param name="incomingEmailType" regex="pop3|imap|pop3s|imaps"/>
+            <param name="tlsEnabled" type="boolean"/>
+            <param name="incomingPort" type="long" range="1-65535"/>
+            <param name="enableDebug" regex="on|off"/>
+            <param name="mailDebugPeriodDays" type="long" range="1-30"/>
+            <param name="disableNewRequest" regex="on|off"/>
+            <param name="exceptionList" type="String" max-len="10000" secret="true"/>
+            <param name="editEmailSetting" type="String"/>
+            <param name="addEmailSetting" type="String"/>
+            <param name="outgoingHost" type="String" secret="true"/>
+            <param name="altOutgoingHost" type="String" secret="true"/>
+            <param name="senderName" type="String" max-len="250" secret="true"/>
+            <param name="fromEmail" regex="email" max-len="250" secret="true"/>
+            <param name="outgoingEmailType" regex="smtp|smtps"/>
+            <param name="outgoingTlsEnabled" type="boolean"/>
+            <param name="outgoingPort" type="long" range="1-65535"/>
+            <param name="requireAuthentication" regex="on|off"/>
+            <param name="smtpUserName" type="String" secret="true"/>
+            <param name="smtpPassword" type="String" max-len="500" secret="true"/>
+            <param name="email-test" regex="email" max-len="250" secret="true"/>
+            <param name="parseEnabled" regex="on|off"/>
+            <param name="titleString" type="String" max-len="500"/>
+            <param name="parseDelimiter" type="String" max-len="500"/>
+            <param name="incJavaBasicProxyEnabled" regex="on|off"/>
+            <param name="incJavaOauthProxyEnabled" regex="on|off"/>
+            <param name="incEwsBasicProxyEnabled" regex="on|off"/>
+            <param name="incEwsOauthProxyEnabled" regex="on|off"/>
+            <param name="incGraphOauthProxyEnabled" regex="on|off"/>
+            <param name="outJavaBasicProxyEnabled" regex="on|off"/>
+            <param name="outJavaOauthProxyEnabled" regex="on|off"/>
+            <param name="outEwsBasicProxyEnabled" regex="on|off"/>
+            <param name="outEwsOauthProxyEnabled" regex="on|off"/>
+            <param name="outGraphOauthProxyEnabled" regex="on|off"/>
+            <param name="sampleContent" type="String" max-len="16000" secret="true" description="Sample content of Email Parser which may increase in future"/>
+            <param name="incAuthType" regex="basic|oauth"/>
+            <param name="outAuthType" regex="basic|oauth"/>
+
+            <!-- Incoming Java Oauth-->
+            <param name="incJavaOauthHost" type="String" secret="true"/>
+            <param name="incJavaOauthUsername" type="String" secret="true"/>
+            <param name="incJavaOauthEmail" regex="^([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2}))\s*([,\n\s]\s*([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2})\s*))*$" max-len="50000" secret="true"/>
+            <param name="incJavaOauthProto" regex="imap|imaps"/>
+            <param name="incJavaOauthPort" type="long" range="1-65535"/>
+            <param name="incJavaOauthTls" regex="true|false"/>
+            <param name="incJavaOauthClientId" type="String" max-len="500" secret="true"/>
+            <param name="incJavaOauthClientSecret" type="String" max-len="500" secret="true"/>
+            <param name="incJavaOauthAuthUrl" type="String" max-len="500" secret="true"/>
+            <param name="incJavaOauthTokenUrl" type="String" max-len="500" secret="true"/>
+            <param name="incJavaOauthScope" type="String" max-len="500"/>
+
+
+            <!-- Incoming Ews Oauth-->
+            <param name="incEwsOauthConnectUrl" regex="(?i)(^.*\/EWS\/Exchange.asmx$)" max-len="250" secret="true"/>
+            <param name="incEwsOauthEmail" max-len="5000" regex="^([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2}))\s*([,\n\s]\s*([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2})\s*))*$" secret="true"/>
+            <param name="incEwsOauthUsername" type="String" secret="true"/>
+            <param name="incEwsOauthClientId" type="String" max-len="500" secret="true"/>
+            <param name="incEwsOauthClientSecret" type="String" max-len="500" secret="true"/>
+            <param name="incEwsOauthAuthUrl" type="String" max-len="500" secret="true"/>
+            <param name="incEwsOauthTokenUrl" type="String" max-len="500" secret="true"/>
+            <param name="incEwsOauthScope" type="String" max-len="500"/>
+
+            <!-- Outgoing Java Oauth-->
+            <param name="outJavaOauthHost" type="String" secret="true"/>
+            <param name="outJavaOauthAltHost" type="String" secret="true"/>
+            <param name="outJavaOauthSenderName" type="String" max-len="250" secret="true"/>
+            <param name="outJavaOauthEmail" regex="email" max-len="250" secret="true"/>
+            <param name="outJavaOauthUsername" type="String" secret="true"/>
+            <param name="outJavaOauthProto" regex="smtp|smtps"/>
+            <param name="outJavaOauthPort" type="long" range="1-65535"/>
+            <param name="outJavaOauthTls" regex="true|false"/>
+            <param name="outJavaOauthClientId" type="String" max-len="500" secret="true"/>
+            <param name="outJavaOauthClientSecret" type="String" max-len="500" secret="true"/>
+            <param name="outJavaOauthAuthUrl" type="String" max-len="500" secret="true"/>
+            <param name="outJavaOauthTokenUrl" type="String" max-len="500" secret="true"/>
+            <param name="outJavaOauthScope" type="String" max-len="500"/>
+
+            <!-- Outgoing Ews Oauth-->
+            <param name="outEwsOauthConnectUrl" regex="(?i)(^.*\/EWS\/Exchange.asmx$)" max-len="250" secret="true"/>
+            <param name="outEwsOauthUsername" type="String" secret="true"/>
+            <param name="outEwsOauthEmail" regex="email" max-len="250" secret="true"/>
+            <param name="outEwsOauthSenderName" type="String" max-len="250" secret="true"/>
+            <param name="outEwsOauthClientId" type="String" max-len="500" secret="true"/>
+            <param name="outEwsOauthClientSecret" type="String" max-len="500" secret="true"/>
+            <param name="outEwsOauthAuthUrl" type="String" max-len="500" secret="true"/>
+            <param name="outEwsOauthTokenUrl" type="String" max-len="500" secret="true"/>
+            <param name="outEwsOauthScope" type="String" max-len="500"/>
+
+            <!-- Incoming Graph -->
+            <param name="incGraphEndpoint" type="String" secret="true"/>
+            <param name="incGraphEmail" regex="^([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2}))\s*([,\n\s]\s*([\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2})\s*))*$" max-len="5000" secret="true"/>
+            <param name="incGraphOauthClientId" type="String" max-len="500" secret="true"/>
+            <param name="incGraphOauthClientSecret" type="String" max-len="500" secret="true"/>
+            <param name="incGraphOauthAuthUrl" type="String" max-len="500" secret="true"/>
+            <param name="incGraphOauthTokenUrl" type="String" max-len="500" secret="true"/>
+            <param name="incGraphOauthScope" type="String" max-len="500"/>
+
+            <!-- Outgoing Graph -->
+            <param name="outGraphEndpoint" type="String" secret="true"/>
+            <param name="outGraphEmail" regex="email" max-len="250" secret="true"/>
+            <param name="outGraphOauthClientId" type="String" max-len="500" secret="true"/>
+            <param name="outGraphOauthClientSecret" type="String" max-len="500" secret="true"/>
+            <param name="outGraphOauthAuthUrl" type="String" max-len="500" secret="true"/>
+            <param name="outGraphOauthTokenUrl" type="String" max-len="500" secret="true"/>
+            <param name="outGraphOauthScope" type="String" max-len="500"/>
+
+            <!-- Error folder section -->
+            <param name="errorFolderOption" regex="on|off" />
+            <param name="errorFolderName" type="String" />
+            <param name="errorFolderThreshold" type="long" range="1-1000"/>
+            <param name="errorNotification" regex="on|off" />
+
+            <!-- mail count params -->
+            <param name="pendingMailCount" regex="^(\-)|(\d{0,5})$" />
+            <param name="errorMailsCount" regex="^(\-)|(\d{0,5})$" />
+            <!-- mail custom truststore option-->
+            <param name="incCustomTrustStore" regex="on" />
+            <param name="outCustomTrustStore" regex="on" />
+        </url>
+        <url roles="SDAdmin" path="/FilterDef.do" operation-param="mode" operation-value="edit" method="GET">
+            <param name="filterName" regex="MailFilter|NotifyFilter"/>
+        </url>
+        <url roles="SDAdmin" path="/FilterDef.do" operation-param="mode" operation-value="save" method="POST" csrf="true" ids-url-id="Filter_Def_Update">
+            <param name="save" type="String"/>
+            <param name="filterName" regex="MailFilter|NotifyFilter"/>
+            <param name="selectCriteria" type="long" range="0-5"/>
+            <param name="selectConditions" type="long" range="0-6"/>
+            <param name="hid1" type="String"/>
+            <param name="andor" regex="and|or"/>
+            <param name="operator[0-9]+" name-regex="true" type="String" max-len="10" max-occurrences="20"/>
+            <param name="rowCond[0-9]+" name-regex="true" type="String" max-occurrences="20"/>
+            <param name="rowCondVal[0-9]+" name-regex="true" type="long" range="1-6" max-occurrences="20"/>
+            <param name="rowName[0-9]+" name-regex="true" type="String" max-len="200000" max-occurrences="20" secret="true"/>
+            <param name="rowVal[0-9]+" name-regex="true" type="String" max-len="200000" max-occurrences="20" secret="true"/>
+            <param name="cancel" type="String"/>
+        </url>
+        <url roles="SDAdmin" path="/FilterDef.do" operation-param="mode" operation-value="cancel" method="POST" csrf="true">
+            <param name="save" type="String"/>
+            <param name="filterName" regex="MailFilter|NotifyFilter"/>
+            <param name="selectCriteria" type="long" range="0-5"/>
+            <param name="selectConditions" type="long" range="0-6"/>
+            <param name="hid1" type="String"/>
+            <param name="andor" regex="and|or"/>
+            <param name="operator[0-9]+" name-regex="true" type="String" max-len="10" max-occurrences="20"/>
+            <param name="rowCond[0-9]+" name-regex="true" type="String" max-occurrences="20"/>
+            <param name="rowCondVal[0-9]+" name-regex="true" type="long" range="1-6" max-occurrences="20"/>
+            <param name="rowName[0-9]+" name-regex="true" type="String" max-len="200000" max-occurrences="20" secret="true"/>
+            <param name="rowVal[0-9]+" name-regex="true" type="String" max-len="200000" max-occurrences="20" secret="true"/>
+            <param name="cancel" type="String"/>
+        </url>
+        <url roles="SDAdmin" path="/FetchStatus.do" operation-param="operation" operation-value="start,stop" method="POST" csrf="true">
+            <param name="actionbutton" type="String" min-occurrences="1"/>
+        </url>
+        <url path="/servlet/HdClientUtilServlet" user_type="all" operation-param="command" operation-value="isOutgoingMailConfigured" method="get" description="ROLE_NOT_REQUIRED: which will be accessed by all user while sending notification mails"/>
+    </urls>
+    <urls authentication="required" disable-extraparam="true">
+        <url roles="SDAdmin" path="/servlet/testmail" operation-param="command" operation-value="getPendingCount" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="testmail_getPendingCount" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="15" lock-period="5M"/>
+		</throttles>
+        </url>
+        <url roles="SDAdmin" path="/servlet/testmail" operation-param="command" operation-value="fetchSampleMail" method="get">
+            <param name="mailServer" regex="javamail|ews|graph" min-occurrences="1" />
+            <param name="authType" regex="basic|oauth" min-occurrences="1" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="testmail_fetchSampleMail" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin,SDOrgAdmin" path="/servlet/testmail" operation-param="command" operation-value="sendSampleMail" method="post" csrf="true" remote_server="true" user_type="all">
+            <param name="mailServer" regex="javamail|ews|graph" min-occurrences="1" />
+            <param name="authType" regex="basic|oauth" min-occurrences="1" />
+            <param name="testMailAddress" regex="email" max-len="250" secret="true" min-occurrences="1" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="testmail_sendSampleMail" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin" path="/servlet/testmail" operation-param="command" operation-value="moveMails" method="get">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="testmail_moveMails" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="5" lock-period="5M"/>
+        </throttles>
+        </url>
+        <url roles="SDAdmin" path="/servlet/testmail" operation-param="command" operation-value="getErrorMailZip" method="get">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="testmail_getErrorMailZip" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="5" lock-period="5M"/>
+        </throttles>
+        </url>
+
+        <!-- History API urls -->
+        <url roles="SDAdmin" authentication="required" remote_server="true" path="/common/ViewHistory.jsp" operation-param="module" operation-value="incoming_javamails,incoming_ewsmails,incoming_graphmails,common_mail_properties,spam_filters,email_parsers,delimiters,mail_schedules">
+            <param name="id" type="long" allow-empty="false"/>
+            <param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+            <param name="search_filter" regex="incoming_javamail|incoming_ewsmail|incoming_graphmail|common_mail_property|spam_filter|email_parser|delimiter|mail_schedule"/>
+            <param name="admin_entity" type="boolean"/>
+            <param name="is_date_filter" type="boolean"/>
+            <param name="skip_filter_options" type="String" />
+            <param name="skip_operation_names" type="String" />
+            <param name="module_value" type="String"/>
+            <param name="key" regex="incoming_javamails_history|incoming_ewsmails_history|incoming_graphmails_history|common_mail_properties_history|spam_filters_history|email_parsers_history|delimiters_history|mail_schedules_history" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mail_view_history" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="15" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin,SDOrgAdmin" authentication="required" remote_server="true" user_type="all" path="/common/ViewHistory.jsp" operation-param="module" operation-value="outgoing_javamails,outgoing_ewsmails,outgoing_graphmails">
+            <param name="id" type="long" allow-empty="false"/>
+            <param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+            <param name="search_filter" regex="outgoing_javamail|outgoing_ewsmail|outgoing_graphmail"/>
+            <param name="admin_entity" type="boolean"/>
+            <param name="is_date_filter" type="boolean"/>
+            <param name="skip_filter_options" type="String" />
+            <param name="skip_operation_names" type="String" />
+            <param name="module_value" type="String"/>
+            <param name="key" regex="outgoing_javamails_history|outgoing_ewsmails_history|outgoing_graphmails_history" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mail_view_history" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="15" lock-period="5M"/>
+            </throttles>
+        </url>
+        <!-- History API urls ends-->
+
+    </urls>
+    <!-- History API urls-->
+    <urls roles="SDAdmin" authentication="required">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mail_history" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/incoming_javamails/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/incoming_javamails/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/incoming_ewsmails/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/incoming_ewsmails/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/incoming_graphmails/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/incoming_graphmails/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/common_mail_properties/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/common_mail_properties/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/spam_filters/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/spam_filters/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/email_parsers/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/email_parsers/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/delimiters/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/delimiters/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/mail_schedules/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/mail_schedules/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+    <urls roles="SDAdmin,SDOrgAdmin" authentication="required" user_type="all">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mail_history" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/outgoing_javamails/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/outgoing_javamails/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/outgoing_ewsmails/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/outgoing_ewsmails/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/outgoing_graphmails/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/outgoing_graphmails/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+    <!-- History API urls ends-->
+
+    <urls roles="SDAdmin" authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="email_parser_update" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/email_parsers/(_?)save_email_parser" method="POST">
+            <param name="input_data" template="email_parser" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+    </urls>
+
+</security>

@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true" description="ROLE_NOT_REQUIRED : Since the chat urls will be accessed by all the users">
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/messages/(\d+)/attachments" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="attachments" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/messages/(\d+)/attachments/(_?)download" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param allow-empty="false" regex="ids" name="ids"/>
+        </url>
+
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/messages/(\d+)/attachments/(\d+)/(_?)download" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download_specific" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+        <url user_type="all" method="post" path="/api/v3/chats/(\d+)/messages/(_?)upload" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="75" duration="1m"/>
+            </throttles>
+            <param max-len="250" type="String" name="description"/>
+        </url>
+        <url user_type="all" method="post" path="/api/v3/chats/(\d+)/messages" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_messages" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="75" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/messages/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_info_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/messages" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_info_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)new_group" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_pickup" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="75" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_technician" name="input_data"/>
+        </url>
+        <url method="put" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)pickup" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_pickup" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)transfer" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_transfer" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_technician" name="input_data"/>
+        </url>
+        <url method="put" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)accept_transfer" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_accept_transfer" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)reject_transfer" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_reject_transfer" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put" path="/api/v3/chats/(\d+)/(_?)close" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_close" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put" path="/api/v3/chats/(\d+)/(_?)close_create_request" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_close_create_request" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" user_type="all" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)leave" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_leave_group" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" user_type="all" path="/api/v3/chats/(\d+)/(_?)join" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_join" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" user_type="all" path="/api/v3/chats/(\d+)/(_?)add_member" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_add_member" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="75" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="chat_add_member" name="input_data"/>
+        </url>
+        <url user_type="all" method="put" path="/api/v3/chats/(\d+)/(_?)remove_chat" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_remove_chat" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="75" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)update_title" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_update_title" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_update_title" name="input_data"/>
+        </url>
+        <url method="get" user_type="all" path="/api/v3/chats/(\d+)/(_?)get_members_toadd" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_get_members_toadd" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="user_search_tag" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/chats/(\d+)/(_?)get_members_for_mention" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_get_members_for_mention">
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="user_search_tag" name="input_data"/>
+        </url>
+        <url method="get" description="URL is accessible by all the technicians" path="/api/v3/channels/(_?)technicians" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_technicians_toadd" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="user_list_info" name="input_data"/>
+        </url>
+        <url method="get" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)add_users" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_technicians_toadd" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+         <url method="get" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)add_technicians" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_technicians_toadd" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)get_techs_totransfer" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_get_techs_totransfer" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)transcript" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_transcript" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/members" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_members_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/members/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_members_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url user_type="all" method="post" path="/api/v3/chats/(\d+)/members" url-type="dynamic">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_user" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_members_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url user_type="all" method="post" path="/api/v3/chats">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_create" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="75" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/status">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_status" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(_?)summary">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_summary" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" description="URL is accessible by all the technicians" path="/api/v3/chats/(_?)technicians_list">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_all_techs" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(_?)notified_chats">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_notifications" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/group">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_group" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)check_create_req_role_exists" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="check_create_req" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" description="URL is accessible by all the technicians" path="/api/v3/chats/(\d+)/(_?)get_templates" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_templates" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+        </url>
+        <!-- API CALLS required for pin message -->
+        <url user_type="all" method="post" path="/api/v3/chats/(\d+)/pin_messages" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pin_messages_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="pin_message" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/chats/(\d+)/pin_messages" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pin_messages_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url user_type="all" method="delete" path="/api/v3/chats/(\d+)/pin_messages/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pin_messages_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="75" duration="1m"/>
+            </throttles>
+        </url>
+        <!-- code exists but not used , to update the pin time -->
+        <url user_type="all" method="put" path="/api/v3/chats/(\d+)/pin_messages/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pin_messages_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="update_pin_message" name="input_data"/>
+        </url>
+
+        <!-- **************************************************CHANNELS calls start******************************************************************************** -->
+
+        <url path="/api/v3/channels"  method="get" user_type="all">
+            <throttles name="channel_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)" method="get" user_type="all" url-type="dynamic">
+            <throttles name="channel_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels" method="post" description="URL is accessible by all the technicians">
+            <throttles name="channel_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="channel" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)" user_type="all" method="put" url-type="dynamic">
+            <throttles name="channel_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="channel" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+
+        <url user_type="all" method="get" path="/api/v3/channels/(\d+)/permissions" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="channel_permissions_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/permissions" user_type="all" method="put" url-type="dynamic">
+            <throttles name="channel_permission_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="channel_permissions" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="1000" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/channels/_total_count" method="get" user_type="all">
+            <throttles name="channel_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/users" method="get" user_type="all" url-type="dynamic">
+            <throttles name="channel_get_members" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/users" method="post" description="URL is accessible by all the technicians" url-type="dynamic">
+            <throttles name="channel_user_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="channel_user" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/users/(\d+)" method="put" user_type="all" url-type="dynamic">
+            <throttles name="channel_user_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="channel_user_edit" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/users/(\d+)" method="delete" user_type="all" url-type="dynamic">
+            <throttles name="channel_user_del" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/channels/(\d+)/users" method="delete" user_type="all" url-type="dynamic">
+            <throttles name="channel_user_del" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1250" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/users/_total_count" method="get" user_type="all" url-type="dynamic">
+            <throttles name="channel_users_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/(_?)archive" method="put" user_type="all" url-type="dynamic">
+            <throttles name="channel_archive" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="archive_note" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(_?)archive" method="put" user_type="all">
+            <throttles name="channel_bulk_archive" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1250" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+            <param name="input_data" template="archive_note" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/(_?)trash" method="put" user_type="all" url-type="dynamic">
+            <throttles name="channel_trash" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/channels/(_?)trash" method="put" user_type="all">
+            <throttles name="channel_bulk_trash" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+             <param name="ids" max-len="1250" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/(_?)restore" method="put" user_type="all" url-type="dynamic">
+            <throttles name="channel_restore" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/channels/(_?)restore" method="put" user_type="all">
+            <throttles name="channel_bulk_restore" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1250" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/channels/(\d+)/(_?)join" method="put" user_type="all" url-type="dynamic">
+            <throttles name="channel_join" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/channels/(\d+)/(_?)leave" method="put" user_type="all" url-type="dynamic">
+            <throttles name="channel_leave" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" path="/api/v3/chats/(\d+)/(_?)remove_member" url-type="dynamic" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_remove_member" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_remove_member" name="input_data"/>
+        </url>
+
+        <url method="post" path="/api/v3/channels/images" user_type="all" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="channels_media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="1000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/channels/images/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/channels/(\d+)/images/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/channels/(_?)metainfo" method="get" user_type="all">
+            <throttles name="channel_metainfo_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/channels/(_?)default_permissions" method="get" description="URL is accessible by all the technicians" >
+            <throttles name="channel_default_permissions_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/channels/site_sys_attribute" method="get" description="URL is accessible by all the technicians">
+            <throttles name="channel_sites_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/channels/support_group" method="get" description="URL is accessible by all the technicians">
+            <throttles name="channel_groups_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/channels/department" method="get" description="URL is accessible by all the technicians">
+            <throttles name="channel_department_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/setup/TechnicianListview.jsp" operation-param="apiModule" operation-value="chats" >
+            <throttles name="technician_list_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/chats/(\d+)/add_technicians/(\d+)/images/(\d+)" description="URL is accessible by all the technicians" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" user_type="all" path="/api/v3/chats/(\d+)/add_users/(\d+)/images/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <!-- **************************************************CHANNELS calls end******************************************************************************** -->
+    </urls>
+    <urls authentication="required" disable-extraparam="true" api="true" roles="SDAdmin">
+        <url method="get" path="/api/v3/channels/(_?)get_users">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_users_toadd" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="user_list_info" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/chats/support_groups">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_all_groups" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/chats/sites">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_all_sites" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="put" path="/api/v3/chat_settings">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="update_chat_settings" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="20" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_settings" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/chat_settings">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_chat_settings" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <!-- chat_notifications API calls start -->
+        <url method="put" path="/api/v3/chat_notifications/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_notification_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="20" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="chat_notifications" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/chat_notifications">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_notification_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/chat_notifications/(\d+)" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="chat_notification_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="120" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+<!-- chat_notification calls ends -->
+
+    </urls>
+</security>

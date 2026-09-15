@@ -1,0 +1,95 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>admin_helpcard_agreementudf</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=613>
+<meta name=layout-width content=817>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<p class=helpheading
+	style="margin-top: 0px; margin-bottom: 0px;">Agent Settings</p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+
+<p style="margin-top: 0px; margin-bottom: 0px;">The application requires a dependant Manage Engine scan component, UEM Product Agent to scan Windows, Mac, and Linux machines. Agent Configuration helps you download and deploy Agents for Windows, Mac, and Linux machines.  </p>
+
+<p style="margin-top: 0px; margin-bottom: 0px;">&nbsp;</p>
+<p><strong>Downloading and Deploying Agent</strong></p>
+
+<p style="margin-top: 0px; margin-bottom: 0px;">To download Endpoint Central (formerly Desktop Central), </p>
+<p>Only SDAdmins can deploy the UEM Product Agent. </p>
+<ol style="list-style: disc;"
+	type=disc>
+	
+	<ul style="list-style: disc;"
+		type=disc>
+		
+		<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;"> Select the Agent for Windows/Linux/Mac.</p></li>
+		
+		<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">You will be prompted to Download and Install Endpoint Central (formerly Desktop Central). You can skip this step and proceed with UEM Product integration if you have already installed the UEM Product. </li>
+		
+		<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Click Download and Install. </li>
+		
+		<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Configure the proxy settings by entering Host Name, Port Name, Username, and Password. Click Download and Install. </li>
+		<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Once the installation is complete, you will get an option to download the Agent. Once you have downloaded the Agent, you can proceed with replacing the existing Windows Agents with UEM Product Agents.</li>
+	</ul>
+</ol>
+
+<p style="margin-top: 0px; margin-bottom: 0px;"><span style="font-weight: bold;">Replace the old Windows Agents with UEM Product Agents (Windows only).</p>
+
+<p style="margin-top: 0px; margin-bottom: 0px;">You can replace the Windows Agents with UEM Product Agents by executing the ReplaceAgents.vbs as a GPO in Active Directory. The Agents will be replaced once the machines boot up.</p>
+
+<p style="margin-top: 0px; margin-bottom: 0px;">Follow the below steps to configure a GPO in Active Directory. </p>
+
+<ol style="list-style: decimal;"
+	type=1>
+	
+	<li class=kadov-P><p style="margin-top: 5pt; margin-bottom: 5pt;">Create a network share (e.g,\\MyServer\MyShare).</p></li>
+	
+	<li class=kadov-P><p style="margin-top: 5pt; margin-bottom: 5pt;">Download and extract Windows Agent zip file.</p></li>
+	<li class=kadov-P><p style="margin-top: 5pt; margin-bottom: 5pt;">Save the UEMSAgent.msi and UEMSAgent.mst files in the network share. </p></li>
+	<li class=kadov-P><p style="margin-top: 5pt; margin-bottom: 5pt;">From your Domain Controller, click Start >> run >> enter gpmc.msc and click OK. If gpmc is not installed in your Active Directory, install gpmc and proceed. </p></li>
+	<li class=kadov-P><p style="margin-top: 5pt; margin-bottom: 5pt;">Right-click the domain and select Create and Link a GPO and specify a name for GPO.  </p></li>
+	<li class=kadov-P><p style="margin-top: 5pt; margin-bottom: 5pt;">To install Agents in only a select client computers, follow these steps:</p>
+		<ul style="list-style: disc;"
+		type=disc>
+			<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Select the GPO and click the Scope tab. </p></li>
+			<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Click Add in the Security Filtering section. </p></li>
+			<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Click Object Types in the Select User, Computer, or Group dialog box.</p></li>
+			<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Select the specific computer Object Types and click OK.  </p></li>
+			<li class=kadov-p><p style="margin-top: 5pt; margin-bottom: 5pt;">Specify the computer names, click Check Names and click OK.  </p></li>
+		</ul>
+	</li>
+</ol>
+
+<p style="margin-top: 0px; margin-bottom: 0px;"><span style="font-weight: bold;">Installing UEM Product Agents in Linux and Mac</p>
+<p style="margin-top: 0px; margin-bottom: 0px;">You can install UEM Product Agents in Linux by using the Linux bulk agent installation tool and in Mac by using the Mac Agent installation script and providing the list of machines to be installed in computers.csv. </p>
+
+</body>
+
+</html>

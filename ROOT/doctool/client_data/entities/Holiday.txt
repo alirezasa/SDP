@@ -1,0 +1,171 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the holiday",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "holiday_date",
+      "type": "Date Object",
+      "desc": "Date of the holiday",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "A brief description about the holiday",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Site to which the holiday is associated to",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "is_recurring",
+      "type": "Boolean",
+      "desc": "Indicates whether the holiday repeats every year on the same date or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/holidays"
+      ],
+      "desc": "This operation lets you add a holiday",
+      "disp_desc": "Add a holiday",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"holiday\":{\"id\":\"99999000000025077\",\"holiday_date\":{\"value\":\"1230143400000\",\"display_value\":\"Dec 25, 2008\"},\"description\":\"Diwali\",\"site\":{\"id\":\"99999000000025039\",\"name\":\"Test\"},\"is_recurring\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"holiday\":{\"id\":\"99999000000025077\",\"holiday_date\":{\"value\":\"1230143400000\",\"display_value\":\"Dec 25, 2008\"},\"description\":\"Diwali\",\"site\":{\"id\":\"99999000000025039\",\"name\":\"Test\"},\"is_recurring\":true}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/holidays/{holiday_id}"
+      ],
+      "desc": "This operation lets you update a holiday details",
+      "disp_desc": "Update a holiday",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"holiday\":{\"id\":\"99999000000025077\",\"holiday_date\":{\"value\":\"1230143400000\",\"display_value\":\"Dec 25, 2008\"},\"description\":\"Diwali\",\"site\":{\"id\":\"99999000000025039\",\"name\":\"Test\"},\"is_recurring\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"holiday\":{\"id\":\"99999000000025077\",\"holiday_date\":{\"value\":\"1230143400000\",\"display_value\":\"Dec 25, 2008\"},\"description\":\"Diwali\",\"site\":{\"id\":\"99999000000025039\",\"name\":\"Test\"},\"is_recurring\":true}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/holidays/{holiday_id}"
+      ],
+      "desc": "This operation lets you delete a holiday",
+      "disp_desc": "Delete a holiday",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Holiday deleted successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/holidays/{holiday_id}"
+      ],
+      "desc": "This operation fetches details of a holiday",
+      "disp_desc": "View a holiday",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"holiday\":{\"id\":\"99999000000025077\",\"holiday_date\":{\"value\":\"1230143400000\",\"display_value\":\"Dec 25, 2008\"},\"description\":\"Diwali\",\"site\":{\"id\":\"99999000000025039\",\"name\":\"Test\"},\"is_recurring\":true}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/holidays"
+      ],
+      "desc": "This operation fetches all holidays for the site",
+      "disp_desc": "View all holidays",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":2,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"holidays\":[{\"id\":\"99999000000025077\",\"holiday_date\":{\"value\":\"1230143400000\",\"display_value\":\"Dec 25, 2008\"},\"description\":\"Diwali\",\"site\":{\"id\":\"99999000000025039\",\"name\":\"Test\"},\"is_recurring\":true}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [],
+  "path": "/holidays",
+  "handler": "DefaultEntityHandler",
+  "entity_group": "Admin",
+  "isReleased": "true",
+  "lastModified": 1474011532000,
+  "Additional Elements": []
+}

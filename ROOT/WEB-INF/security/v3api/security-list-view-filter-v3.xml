@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" description="FGR_APPLIED:Roles are not defined as role check will be done at server side" user_type="all">
+
+        <throttles name="list_view_filter" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+
+        <url path="/api/v3/list_view_filters"  method="post" >
+            <param name="input_data" template="list_view_filter" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/list_view_filters/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="list_view_filter_metainfo"/>
+        </url>
+
+        <url path="/api/v3/list_view_filters/(\d+)"  method="put" >
+            <param name="input_data" template="list_view_filter" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/list_view_filters/(\d+)"  method="delete" />
+
+        <url path="/api/v3/list_view_filters/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+            <throttles name="list_view_filter_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/list_view_filters"  method="get" user_type="all">
+            <param name="input_data" template="list_view_filter_get" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/list_view_filters/(_?)show_all"  method="get" >
+            <param name="input_data" template="list_view_filter_get" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+
+        <url path="/api/v3/list_view_filters/(_?)new_form"  method="get" >
+            <param name="input_data" template="list_view_filter_get" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/list_view_filters"  method="put" >
+            <param name="input_data" template="list_view_filter" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/list_view_filters"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        
+        <url path="/api/v3/list_view_filters/(_?)history" method="get" >
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        
+        <url path="/api/v3/list_view_filters/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        
+        <url path="/api/v3/list_view_filters/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/list_view_filters/(\d+)/(_?)enable"  method="put" />
+
+        <url path="/api/v3/list_view_filters/(\d+)/(_?)disable"  method="put" />
+
+
+
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="list_view_filter_metainfo" disable-extra-key="true">
+            <key name="module" regex="list_view_filter_modules"/>
+        </jsontemplate>
+
+    </jsontemplates>
+</security>

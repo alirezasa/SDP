@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SMS Notification Settings</title>
+</head>
+
+<body>
+<p><strong>SMS Notification Settings</strong></p>
+<p>SMS Notification Settings allows you to notify Technicians through SMS. This way, the Technician can be notified on the go, for actions done on  Requests he/she is associated with.</p>
+<table width="803" border="0">
+<div align="center">
+    <table width="704" cellspacing="1" cellpadding="0" border="0" style="width:704px" class="tableComponent whitebgborder">
+      <tbody>
+        <tr>
+          <th width="120">Option</th>
+          <th width="352">Definition</th>
+        </tr>
+        <tr>
+          <td class="evenRow">Send SMS through Mobile Service Provider</td>
+          <td class="evenRow">Message  will be sent to the SMS mail ID of the Technician</td>
+        </tr>
+        <tr>
+          <td class="evenRow">Send SMS through SMS Gateway Provider</td>
+          <td class="evenRow">Message will be sent directly to the mobile number of the Technician</td>
+        </tr>       
+      </tbody>
+      </table>
+</div>
+<br>	  
+<p>Any High priority Request or Change will require the Technician to look into it at the earliest. Servicedesk Plus helps Technicians solve their Requests on the go by sending the Notifications through SMS. </p>
+<p>SDP offers two options for notifying. One, SDP sends SMS by integrating with service providers like Clickatell and Bulk SMS to notify the Technicians directly to their configured mobile number. Users can buy credits from the service providers and send messages till the credits last. Second, SDP sends notifications as e-mail to SMS mail ID of the Technician.</p>
+<p>Choose an SMS provider that you would like to configure. While Clickatell requires Authtoken for Authentication details, Bulk SMS requires Username and Password. <br>
+ Enabling 'Send SMS using unicode characters' checkbox will send notifications using unicode characters. Unicode provides a unique number for every character, regardless of the platform/program/language.</p><br>
+ <p><strong>Custom Vendor settings</strong></p>
+<ul>
+            <li>URL denotes the url of your SMS Gateway Provider. (Ex:http://www.smsserver.com/sendsms)</li>
+            <li>URL parameters are query parameters and they will be dynamically appended to URL.</li>
+            <li>Request headers allow the client and the server to pass additional information with the request or the response</li>
+            <li>Basic authentication is a method for a HTTP user agent to provide a user name and password when making a request</li>
+            <li>Request Payload should have a valid JSON Format and the content type can be
+            
+            <ul>
+            <li>application/json  (Ex:{ "foo" : "bar", "name" : "John"} )</li>
+            <li>application/x-www-form-urlencoded (Ex:foo=bar&name=John)</li>
+            </ul>
+            <li>For message and recipients, please use '${{message}}' and '${{recipients}}'</li>   
+            <li>Response from provider :  please configure the success message so that application can determine whether the SMS has been sent successfully.</li>
+            
+          </ul>
+
+  <strong>Note:</strong>
+    <ul>
+      <li>Configure the Technician Mobile Numbers for sending SMS notifications. Also, ensure to prefix the proper country code in Mobile field.<br/>
+        This is accessible from  Admin &gt;&gt; Users &gt;&gt; Technicians &gt;&gt; Technician Details.</li>
+      <li>SMS Messages can be customized in Notification Rules &gt; SMS Templates.</li>
+      <li>'How to configure' will provide link to sign up for that particular service provider and reveal instructions to do the same.</li>
+    </ul>
+  </li>
+</ul>
+
+</body>
+</html>

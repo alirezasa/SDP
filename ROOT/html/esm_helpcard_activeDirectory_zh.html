@@ -1,0 +1,133 @@
+
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<body>
+<p>通过AD(Active Directory)集成可以将用户信息从AD服务器导入ServiceDesk Plus。<br />
+<br />
+<strong>本地身份验证</strong><br />
+<br />
+密码为导入的用户生成随机密码，或者为用户预定义密码。<br />
+<br />
+<strong>从AD导入用户</strong><br />
+<br />
+导入用户之前，请确保将域（包含用户）添加到IT服务台实例。在Windows域扫描下的IT服务台实例中添加的域将仅在导入窗口中列出。</p>
+
+<ol>
+	<li>单击从AD导入用户。窗口弹出。</li>
+	<li>从下拉框中选择域名。</li>
+	<li>指定域控制器。</li>
+	<li>指定域控制器的登录名和密码。</li>
+</ol>
+
+<p><strong>注意：</strong>如果您已经在Windows域扫描中提供域的域控制器和登录凭据，则选择该域将自动填充域控制器和登录凭据。<br />
+<br />
+导入用户时，您还可以导入详细信息，例如用户的电话，部门，职位，移动电话，地点名称和电子邮件地址。如果您已配置任何用户附加字段，则也可从AD导入相同字段。<br />
+&nbsp;</p>
+
+<ol>
+	<li>选中要从AD导入的字段旁边的复选框。另外，在所选字段旁边，指定在AD中配置的字段名称。<br />
+	例如，如果您选择了&ldquo;电话&rdquo;字段，但在AD服务器中将其配置为&ldquo;电话号码&rdquo;，则在提供的字段中指定电话号码。</li>
+	<li>选中要从AD导入的&ldquo;用户附加字段&rdquo;旁边的复选框。用户附加字段中提供以下字段类型: 文本，数字和日期/时间字段。指定在AD中所选字段旁边配置的字段名称。
+	<table border="1" cellpadding="10" cellspacing="0" style="width: 814px;">
+		<thead>
+			<tr>
+				<td><strong>字段名称</strong></td>
+				<td style="width: 115px;"><strong>字段类型</strong></td>
+				<td style="width: 279px;"><strong>AD中的专有名称（DN）</strong></td>
+				<td style="width: 234px;"><strong>描述</strong></td>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>电子邮件地址</td>
+				<td style="width: 115px;">文本</td>
+				<td style="width: 279px;">邮件</td>
+				<td style="width: 234px;">用户的电子邮件地址</td>
+			</tr>
+			<tr>
+				<td>国家代码</td>
+				<td style="width: 115px;">数字</td>
+				<td style="width: 279px;">国家代码</td>
+				<td style="width: 234px;">用户的国家/地区代码</td>
+			</tr>
+		</tbody>
+	</table>
+	</li>
+</ol>
+
+<ol>
+	<li>如果在AD中更改了与用户/部门关联的地点，则也应将属于该用户/部门的资产移动到新地点。要在每次导入时更新此信息，请选中&ldquo;移动关联的资产&rdquo;复选框。取消选中此复选框不会将资产移动到新地点。</li>
+	<li>单击<strong>立即导入</strong>。显示域控制器的组织单位（OU）。</li>
+	<li>选中OU旁边的复选框。</li>
+	<li>单击<strong>开始导入</strong>。导入所选OU中的用户信息，导入结果显示导入成功和失败的次数。</li>
+	<li>单击<strong>关闭窗口</strong>。</li>
+</ol>
+
+<p>用户从AD导入在ESM目录中的&ldquo;用户&rdquo;下列出。<br />
+<br />
+<strong>注意：</strong></p>
+
+<ol>
+	<li>每次导入时，现有用户数据将被覆盖。</li>
+	<li>数字附加字段最多可包含19位数字。如果您的数值超过19位，请在文本字段中配置该值。</li>
+</ol>
+
+<p><strong>计划AD/LDAP导入</strong><br />
+<br />
+您可以选择定期计划AD或LDAP导入。用户导入计划将根据&ldquo;全局&rdquo;配置条目进行工作，类别为&ldquo; Scheduled_User_Import&rdquo;，参数为&ldquo; EnabledFor&rdquo;，允许的参数值为（默认）AD和LDAP。如果两者都存在，则将完成AD以及LDAP计划导入。如果是AD，则将单独执行AD计划。或者，如果仅是LDAP，则仅完成LDAP计划。<br />
+要计划AD/LDAP导入，</p>
+
+<ul>
+	<li>将鼠标放在&ldquo;导入时间表&rdquo;字段上。</li>
+	<li>单击&ldquo;编辑&rdquo;选项。</li>
+	<li>选择&quot;计划AD/LDAP导入&quot;复选框。</li>
+	<li>在文本框中指定天数。您还可以指定希望计划开始的日期和时间。</li>
+	<li>点击<strong>保存</strong>。</li>
+</ul>
+
+<p>来自应用程序中可用域的用户详细信息将按照指定的时间表定期导入。<br />
+<br />
+<strong>从AD同步已删除的用户</strong><br />
+<br />
+此选项使您可以将AD中已删除的用户同步到应用程序中。导入后同步已删除的用户。同步完成后，将显示从AD删除的用户列表。您可以从列表中删除非技术员。对于非技术员，可以启用自动删除功能，以便从AD删除非技术员时，也会将用户从应用程序中删除。但是，对于技术员，此选项不可用。您可以通过从列表中选择技术员来手动删除它们。</p>
+
+<ol>
+	<li>将鼠标放在&ldquo;同步来自AD的已删除用户&rdquo;字段上，显示&ldquo;编辑&rdquo;选项，单击并启用<strong>从AD同步已删除的用户</strong>。</li>
+	<li>选择删除用户的方式。要自动同步已删除的用户，请选择&ldquo;自动删除...&rdquo;。</li>
+	<li>要停止已删除用户的自动同步并手动删除用户，请选择&ldquo;手动删除...&rdquo;。单击显示在导入结果页面和配置向导顶部的已删除用户链接。该链接将打开已删除用户的列表，您可以从列表中验证和删除用户。</li>
+</ol>
+
+<p><strong>注意：</strong>如果禁用从AD同步已删除的用户选项，则将不同步已删除的用户。删除的用户列表也不会显示。如果您从AD手动导入用户，则删除的用户将不会同步。如果同步删除的用户正在按计划运行，则SDSD管理员将通过响铃通知收到有关删除的用户的通知。<br />
+<br />
+<strong>启用AD身份验证</strong><br />
+<br />
+导入所有用户时，可以通过选中&ldquo;<strong>启用AD身份验证&rdquo;</strong>复选框来允许用户使用其AD凭据访问应用程序。在&ldquo;登录&rdquo;屏幕中，用户可以通过指定其AD登录凭据并从&ldquo;登录到&rdquo;下拉列表中选择&ldquo;域&rdquo;来登录到应用程序。<br />
+<strong>注意：</strong>如果用户不想指定AD凭据，则用户应从&ldquo;登录&rdquo;中选择&ldquo;本地身份验证&rdquo;选项以下拉列表并指定本地凭据。<br />
+<br />
+<strong>启用&ldquo;传递&rdquo;身份验证[单点登录]</strong><br />
+<br />
+&ldquo;传递&rdquo;身份验证或Single Sign-On通过在用户登录Windows系统时省略登录屏幕，提供对应用程序的即时访问。ServiceDesk Plus中的&ldquo;传递&rdquo;身份验证使用NTMLV2，它提供更好的安全性，并通过计算机帐户使用NETLOGON服务来验证凭据。</p>
+
+<ol>
+	<li>将鼠标放在AD身份验证字段上。出现编辑选项，点击编辑。</li>
+	<li>选中&ldquo;启用&ldquo;传递&rdquo;身份验证&rdquo;复选框以启用&ldquo;单点登录&rdquo;。</li>
+	<li>只能为来自特定域/ AD林的用户启用传递身份验证。如果您从两个或多个域中导入了用户，则这些域应该与所选域具有信任关系，或者应该具有父子关系。从下拉列表中选择域名。如果域具有父子关系，请从&ldquo;域名&rdquo;下拉列表中仅选择父域。</li>
+	<li>指定所选域的DNS服务器IP。</li>
+	<li>为了将NTLM安全提供程序用作身份验证服务，将使用特定密码在Active Directory中创建一个计算机帐户。指定&ldquo;计算机帐户&rdquo;的唯一名称和该帐户的&ldquo;密码&rdquo;。</li>
+	<li>Bind String参数必须是特定AD服务器的标准DNS域名或标准DNS主机名。</li>
+	<li>在域控制器的<strong>AD地点和服务</strong>找到映射域控制器的地点名称，然后在文本框中填写（如果启用SSO后发生延迟或超时）。</li>
+	<li>点击<strong>保存</strong>。</li>
+</ol>
+
+<p><strong>注意：</strong><br />
+不能将活动用户帐户指定为计算机帐户。保存详细信息后，将在AD上创建一个新的计算机帐户（借助VB脚本）。如果用户指定了现有的计算机帐户名，则将在AD上为该计算机帐户重置此处指定的密码。用户也可以通过单击&ldquo;重置密码&rdquo;链接来选择重置计算机帐户的密码。</p>
+即使使用ServiceDesk Plus服务器上的VB脚本创建计算机帐户或重置已创建的计算机帐户的密码时出现问题（保存时，该脚本将被自动调用），也会保存此处指定的详细信息，并且用户可以在AD服务器上本地执行脚本，并指定相同的详细信息以创建计算机帐户/重置密码。<br />
+如果计算机帐户创建存在问题，则用户可以指定一个已创建的计算机帐户名称，并使用重置密码脚本重置该计算机帐户的密码。<br />
+<br />
+要了解有关SSO的更多信息，请单击<a href="http://kbase.zohocorp.com/kbase/ServiceDeskPlus/TroubleShooting/file_100009.html" target="_blank">此处</a></p>
+</body>
+</html>

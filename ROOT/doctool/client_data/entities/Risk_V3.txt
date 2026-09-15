@@ -1,0 +1,132 @@
+{
+  "operations": [
+    {
+      
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": "/api/v3/risks",
+      "desc": "You can add a new change here.",
+      "disp_desc": "Add a Risk",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{\"risk\":{\"description\":\"Represents low criticality of a change during implementation.\",\"name\":\"Low\",\"inactive\":false}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"risk\":{\"id\":\"1\",\"description\":\"Represents low criticality of a change during implementation.\",\"name\":\"Low\",\"inactive\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/risks/{id}",
+      "desc": "You can view the details of a specific Change Request here.",
+      "disp_desc": "View a Risk",
+      "workflow": "",
+      "output": {
+        "sample": "{\"risk\":{\"id\":\"1\",\"description\":\"Represents low criticality of a change during implementation.\",\"name\":\"Low\",\"inactive\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/risks",
+      "desc": "You can get the details of all available Change Requests here.",
+      "disp_desc": "View All Risk",
+      "workflow": "",
+      "output": {
+        "sample": "{\"risks\":[{\"id\":\"3\",\"description\":\"Represents high criticality of a change during implementation.\",\"name\":\"High\",\"inactive\":false},{\"id\":\"1\",\"description\":\"Represents low criticality of a change during implementation.\",\"name\":\"Low\",\"inactive\":false},{\"id\":\"2\",\"description\":\"Represents medium criticality of a change during implementation.\",\"name\":\"Medium\",\"inactive\":false}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":3,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+      },
+     "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/risks/{id}",
+      "desc": "You can edit the changes here.",
+      "disp_desc": "Update a Risk",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"risk\":{\"id\":\"1\",\"description\":\"Represents low criticality of a change during implementation.\",\"name\":\"Low\",\"inactive\":false}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"risk\":{\"id\":\"1\",\"description\":\"Represents low criticality of a change during implementation.\",\"name\":\"Low\",\"inactive\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/risks/{id}",
+      "desc": "You can delete the changes here.",
+      "disp_desc": "Delete a Risk",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "column": "RISKEDEFINITION:RISKID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "name",
+    "type": "String",
+    "desc": "The name of the Change risk",
+    "column": "RISKEDEFINITION:NAME",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "description",
+    "type": "String",
+    "desc": "The description of the Change risk",
+    "column": "RISKEDEFINITION:DESCRIPTION",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "inactive",
+    "type": "Boolean",
+    "desc": "Denotes whether the Change type is marked as not for further usage",
+    "column": "RISKEDEFINITION:ISDELEETD",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  }
+],
+  "isReleased": "false"
+}
+

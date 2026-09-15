@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles name="region" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+
+        <url path="/api/v3/regions" roles="SDOrgAdmin" method="post" user_type="all">
+            <param name="input_data" template="region" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+
+        <url path="/api/v3/regions/(\d+)" roles="SDOrgAdmin" method="put" user_type="all">
+            <param name="input_data" template="region" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/regions" roles="SDOrgAdmin" method="put" user_type="all">
+            <param name="input_data" template="region" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" min-occurrences="1" max-len="2000" regex="ids"/>
+        </url>
+
+
+        <url path="/api/v3/regions/(\d+)" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/regions" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <url path="/api/v3/regions/(\d+)" roles="SDOrgAdmin" method="delete" user_type="all"/>
+        <url path="/api/v3/regions" roles="SDOrgAdmin" method="delete" user_type="all">
+            <param name="ids" min-occurrences="1" max-len="2000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/regions/(\d+)/(_?)history" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/regions/(_?)history" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/regions/(_?)get_records_for_history" roles="SDOrgAdmin" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/regions/(_?)get_performed_by_for_history" roles="SDOrgAdmin" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" path="/api/v3/regions/(_?)metainfo" roles="SDOrgAdmin,ConfigureCMDB" user_type="all">
+            <param name="_" type="long"/>
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+
+        <param name="format" regex="json"/>
+        <param name="SUBREQUEST" regex="XMLHTTP|true"/>
+    </urls>
+</security>

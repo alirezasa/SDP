@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+
+    <!-- Problem CT URLs Starts -->
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles name="problem_ct_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <!-- Problem Custom Trigger Rules URLs Start -->
+
+        <url path="/api/v3/problem_custom_triggers/(\d+)" roles="SDAdmin" method="get">
+            <throttles name="problem_ct_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problem_custom_triggers/(\d+)" roles="SDAdmin" method="put">
+
+            <param name="input_data" template="problem_custom_trigger" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers" roles="SDAdmin" method="post">
+            <param name="input_data" template="problem_custom_trigger" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers" roles="SDAdmin" method="get">
+            <throttles name="problem_ct_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers/(\d+)" roles="SDAdmin" method="delete"/>
+        <url path="/api/v3/problem_custom_triggers/(_?)metainfo" roles="SDAdmin" method="get">
+            <param name="input_data" template="rule_metainfo_template" type="JSONObject" max-len="50"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers/(_?)organize" roles="SDAdmin" method="put">
+            <param name="input_data" template="organize_rules_groups" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers" roles="SDAdmin" method="put">
+            <param name="input_data" template="problem_custom_trigger" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="3000" description="SECRET_NOT_REQUIRED: id is not sensitive and needs to be recorded in accesslog"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers" roles="SDAdmin" method="delete">
+            <param name="ids" regex="ids" max-len="3000" description="SECRET_NOT_REQUIRED: id is not sensitive and needs to be recorded in accesslog"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers/(group|events)" roles="SDAdmin" method="get">
+            <throttles name="problem_ct_refer_entities" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers/(\d+)/(_?)metainfo" roles="SDAdmin" method="get">
+            <param name="input_data" template="rule_metainfo_template" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_custom_triggers/(\d+)/(group|events)" roles="SDAdmin" method="get">
+            <throttles name="problem_ct_refer_entities" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <!-- Problem Custom Trigger Rules URLs END -->
+        <!-- Problem Custom Trigger Group URLS BEGIN -->
+
+        <url path="/api/v3/problem_custom_trigger_groups/(_?)metainfo" roles="ViewProblems" method="get">
+            <param name="input_data" template="rule_metainfo_template" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_custom_trigger_groups/(\d+)" roles="SDAdmin" method="get">
+            <throttles name="problem_ct_group_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problem_custom_trigger_groups/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="problem_custom_trigger_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problem_custom_trigger_groups" roles="SDAdmin" method="post">
+            <param name="input_data" template="problem_custom_trigger_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problem_custom_trigger_groups" roles="SDAdmin" method="get">
+            <throttles name="problem_ct_group_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_custom_trigger_groups/(\d+)" roles="SDAdmin" method="delete"/>
+        <url path="/api/v3/problem_custom_trigger_groups/(_?)organize" roles="SDAdmin" method="put">
+            <param name="input_data" template="organize_rules_groups" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problem_custom_trigger_groups" roles="SDAdmin" method="put">
+            <param name="input_data" template="problem_custom_trigger_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="3000" description="SECRET_NOT_REQUIRED: id is not sensitive and needs to be recorded in accesslog"/>
+        </url>
+        <url path="/api/v3/problem_custom_trigger_groups" roles="SDAdmin" method="delete">
+            <param name="ids" regex="ids" max-len="3000" description="SECRET_NOT_REQUIRED: id is not sensitive and needs to be recorded in accesslog"/>
+        </url>
+        <url path="/api/v3/problem_custom_trigger_groups/(\d+)/_links" roles="SDAdmin" method="get">
+            <throttles name="problem_ct_group_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" />
+        </url>
+
+        <param name-regex="true" max-len="250" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem CT URLs Ends -->
+</security>

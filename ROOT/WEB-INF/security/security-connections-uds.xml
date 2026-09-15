@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+
+    <urls roles="SDAdmin" authentication="required" disable-extraparam="true">
+
+
+        <!-- UDS APIs Starts -->
+
+        <url path="/deluge/api/ui/v1/getI18n" method="get">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_getI18n" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="locale" regex="localeNames" description="specific locale to load dynamic languages" />
+        </url>
+
+        <url path="/deluge/delugeauth/validateUser" method="get">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_validateUser" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="20"/>
+            </throttles>
+            <param name="sharedBy" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="zohoServiceName" regex="SDPOnPremise" min-occurrences="1" max-occurrences="1"/>
+            <param name="hideUserAccess" type="boolean" min-occurrences="0" max-occurrences="1"/>
+        </url>
+
+        <url path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connections" method="get" >
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_connections_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="flowNeeded" type="boolean" min-occurrences="0" max-occurrences="1"/>
+        </url>
+
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connections/[0-9]+" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_connections_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+        </url>
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connections/[0-9]+/revoke" method="post">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_revoke" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+        </url>
+
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connections/[0-9]+/connect" method="post">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_connect_post" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="dynamicValues" type="String" min-occurrences="0" max-occurrences="1" secret="true" max-len="50000" description="Don't have restiction in UI. But added 50000 with the assumption of 50 paramnames and 50 param values with each 750 encrypted characters"/>
+            <param name="origin" regex="url" min-occurrences="0" max-occurrences="1"/>
+        </url>
+
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connections" method="post">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_connections_post" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="name" regex="connectorLinkName" min-occurrences="1" max-occurrences="1" max-len="50"/>
+            <param name="displayName" type="String" min-occurrences="1" max-occurrences="1" max-len="50"/>
+            <param name="scopes" type="JSONArray" template="scopeNamesArrayTemplate" min-occurrences="0" max-occurrences="1" array-size="1-50" max-len="-1"/>
+            <param name="connector" type="JSONObject" template="connectorTemplate" min-occurrences="1" max-occurrences="1"/>
+        </url>
+
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connections/[0-9]+" method="put">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_connections_put" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="displayName" type="String" min-occurrences="0" max-occurrences="1" max-len="50"/>
+            <param name="scopes" type="JSONArray" template="scopeNamesArrayTemplate" min-occurrences="0" max-occurrences="1" array-size="1-50" max-len="-1"/>
+            <param name="forceEdit" type="boolean" min-occurrences="0" max-occurrences="1"/>
+        </url>
+
+        <url path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connectors"  method="get">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_connectors_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="flowNeeded" type="boolean" min-occurrences="0" max-occurrences="1"/>
+        </url>
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/customConnectors" method="post">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_customConnectors_post" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="name" regex="connectorLinkName" min-occurrences="1" max-occurrences="1" max-len="50"/>
+            <param name="displayName" type="String" min-occurrences="1" max-occurrences="1" max-len="50"/>
+            <param name="authenticationData" type="JSONObject" template="authenticationJsonTemplate" min-occurrences="1" max-occurrences="1" max-len="-1" secret="true"/>
+        </url>
+
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/customConnectors/[a-z_0-9]+" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_customConnectors_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+        </url>
+
+        <url csrf="true" path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/customConnectors/[a-z_0-9]+" method="put">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_customConnectors_put" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="displayName" type="String" min-occurrences="0" max-occurrences="1" max-len="50"/>
+            <param name="forceEdit" type="boolean" min-occurrences="0" max-occurrences="1"/>
+            <param name="authenticationData" type="JSONObject" template="authenticationJsonTemplate" min-occurrences="1" max-occurrences="1" max-len="-1" secret="true"/>
+        </url>
+
+        <url path="/deluge/api/ui/v1/[0-9]+/services/[A-Za-z]+/connectors/[a-z_0-9]+" method="get">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_connectors_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="type" regex="1" min-occurrences="1" max-occurrences="1"/>
+            <param name="zuid" regex="id" min-occurrences="1" max-occurrences="1"/>
+        </url>
+
+        <url path="/deluge/ui/authenticate" method="get">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_authenticate_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="scopeID" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="service" regex="SDPOnPremise" min-occurrences="1" max-occurrences="1"/>
+            <param name="id" regex="id" min-occurrences="1" max-occurrences="1"/>
+            <param name="locale" regex="localeNames" min-occurrences="0" max-occurrences="1"/>
+            <param name="rtl" type="boolean" min-occurrences="0" max-occurrences="1"/>
+            <param name="theme" regex="dark" min-occurrences="0" max-occurrences="1"/>
+        </url>
+
+        <url path="/integration/oauth/callback" method="get">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_callback" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="[a-zA-Z_][a-zA-Z0-9_-]*" type="String" max-len="2000"  name-regex="true" secret="true" max-occurrences="20" description="Since max occurance is mandatory presuming 3rd party apps will not send more than 20 params"/>
+        </url>
+
+        <url path="/dre/fonts/dre-con-fonticons.(ttf|woff)">
+            <throttles key="url.path+url.dynamic_key" name="dre_connection_fonticons" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="50"/>
+            </throttles>
+            <param name="6if1tu" type="String" max-len="0"/>
+        </url>
+
+    </urls>
+
+    <regexes>
+        <regex name="connectorLinkName" value="^[a-z][a-z0-9_]*$"/>
+        <regex name="paramName" value="^[a-zA-Z_][a-zA-Z0-9_]*$"/>
+        <regex name="authenticationURLPattern" value="^(((ftp|http(s)?)[:]{1}[/]{2})|(www[.]{1})|[\{]{1}([a-z0-9_]*)[\}]{1})[a-zA-Z0-9\:\/\{\}\-_\.\?\=&amp;\%]*"/>
+        <regex name="dynamicDataNamePattern" value="^[a-z][a-z0-9_]*$"/>
+        <regex name="localeNames" value="(fr_FR|de_DE|es_ES|nl_NL|pt_BR|pt_PT|sv_SE|tr_TR|ru_RU|it_IT|ko_KR|ja_JP|da_DK|pl_PL|uk_UA|vi_VN|hu_HU|bg_BG|hr_HR|cs_CZ|hi_IN|th_TH|zh_CN|zh_TW|nb_NO|ar_EG|ro_RO|fi_FI|he_IL|el_GR|is_IS|ka_GE|sl_Sl|cy_GB|lt_LT|mk_MK|hy_AM|iw_IL|bs_BA|sr_RS)"/>
+    </regexes>
+    <jsontemplates>
+        <jsontemplate name="authenticationJsonTemplate">
+            <key name="consumer_key"  type="String" min-occurrences="0" max-occurrences="1" max-len="2000" secret="true"/>
+            <key name="consumer_secret"  type="String"  min-occurrences="0" max-occurrences="1" max-len="2000" secret="true" />
+            <key name="authorize_url"  regex="authenticationURLPattern" min-occurrences="0" max-occurrences="1" max-len="255"/>
+            <key name="access_token_url" regex="authenticationURLPattern" min-occurrences="0" max-occurrences="1" max-len="255"/>
+            <key name="refresh_token_url" regex="authenticationURLPattern" min-occurrences="0" max-occurrences="1" max-len="255"/>
+            <key name="type" regex="oauth2|basic|apikey"  min-occurrences="0" max-occurrences="1"/>
+            <key name="grant_type" regex="authorization_code" min-occurrences="0" max-occurrences="1"/>
+            <key name="sendAs" regex="querystring|formdata|header"  min-occurrences="0" max-occurrences="1"/>
+            <key name="scope_demiliter" regex=",| |\+"  min-occurrences="0" max-occurrences="1"/>
+            <key name="userParams" type="JSONArray" template="basicParamsTemplate" min-occurrences="0" max-occurrences="1" array-size="1-50" max-len="-1"/>
+            <key name="scopes" type="JSONArray" template="scopeJsonArrayTemplate" array-size="1-50" min-occurrences="0" max-occurrences="1" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="scopeNamesArrayTemplate">
+            <value type="String" />
+        </jsontemplate>
+
+        <jsontemplate name="basicParamsTemplate">
+            <key name="name" regex="paramName"  min-occurrences="1" max-occurrences="1" max-len="100"/>
+            <key name="displayName"  type="String" min-occurrences="1" max-occurrences="1" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="scopeJsonArrayTemplate">
+            <key index="0-50" type="JSONObject" template="scopeJsonTemplate" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="scopeJsonTemplate">
+            <key name="id"  regex="id" min-occurrences="0" max-occurrences="1"/>
+            <key name="name"  type="String"  min-occurrences="0" max-occurrences="1"/>
+            <key name="displayName"  type="String" min-occurrences="0" max-occurrences="1"/>
+        </jsontemplate>
+
+        <jsontemplate name="connectorTemplate">
+            <key name="name"  regex="connectorLinkName" min-occurrences="1" max-occurrences="1"/>
+            <key name="type"  regex="1"    min-occurrences="0" max-occurrences="1"/>
+        </jsontemplate>
+
+    </jsontemplates>
+
+</security>

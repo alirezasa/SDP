@@ -1,0 +1,994 @@
+<?xml version="1.0" standalone="no" ?>
+<!-- Security authentication for Report module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required">
+        <throttles name="Reports" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="300" lock-period="5M"/>
+        </throttles>
+
+        <url path="/setup/reports-promotion.jsp" method="post" csrf="true" roles="ViewReports"/>
+
+
+
+        <url path="/reports/sendmail.jsp" method="get" roles="ViewReports">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="([0-9]+)" name-regex="true" type="String"/>
+            <param name="report_title" type="String"/>
+            <param name="isAPISupported" type="boolean"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" roles="ViewReports">
+            <param name="folder_id" type="long" range=">=0"/>
+            <param name="fromDashboard" regex="true"/>
+            <param name="report_id" type="long" range="-1,>0"/>
+            <param name="reportType" regex="Chart|Matrix"/>
+            <param name="aaURL" regex="aaURL"/>
+
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="save_report"
+             roles="ModifyReports,CreateReports">
+             <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_advmatrix_page" roles="ModifyReports,CreateReports">
+            <param name="module_id" type="long" range=">0"/>
+            <param name="isAPISupported" type="boolean"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="custom_settings"
+             roles="SDAdmin,ReportConfigAdmin"/>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module" operation-value="export"
+             roles="ViewReports">
+            <param name="file_type" regex="CSV|XLS|XLSX|HTML|PDF|DOC|DOCX|XML"/>
+            <param name="report_id" type="long" range=">0"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="print_preview"
+             roles="ViewReports">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="get_abs_date" roles="ModifyReports,CreateReports">
+            <param name="filter_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="get_criteria_operator" roles="ModifyReports,CreateReports">
+            <param name="column_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="datapicker"
+             roles="ModifyReports,CreateReports">
+            <param name="column_id" type="long" range=">0"/>
+            <param name="row_index" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="create_new_folder" roles="CreateReports">
+            <param name="folder_name" type="String"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="update_folder" roles="ViewReports">
+            <param name="folderName" type="String"/>
+            <param name="folderDesc" type="String" max-len="250" secret="true"/>
+            <param name="folderId" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="edit_folder"
+             roles="ModifyReports,CreateReports">
+            <param name="folderId" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="show_query"
+             roles="ViewReports">
+            <param name="freshreport" regex="true|false"/>
+            <param name="queryreport" regex="true|false"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_grouping_page" roles="ModifyReports,CreateReports">
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_summary_page" roles="ModifyReports,CreateReports">
+            <param name="displayColumnList" type="String" max-occurrences="500" max-len="200"/>
+            <param name="loadSummaryColumn" regex="true|false"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+            <param name="count" type="String" max-occurrences="100"/>
+            <param name="sum" type="String" max-occurrences="100"/>
+            <param name="average" type="String" max-occurrences="100"/>
+            <param name="max" type="String" max-occurrences="100"/>
+            <param name="min" type="String" max-occurrences="100"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_graph_page" roles="ModifyReports,CreateReports">
+            <param name="loadGraphDetails" regex="true|false"/>
+            <param name="displayColumnList" type="String" max-occurrences="500" max-len="200"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="edit_report" roles="ModifyReports">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="isAPISupported" type="boolean"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_filter_page" roles="ModifyReports,CreateReports">
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="graph_view"
+             roles="ViewReports">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="module_id" type="long" range=">0"/>
+             <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="update_custom_settings" roles="SDAdmin,ReportConfigAdmin">
+            <param name="smallText" type="long" range="1-999"/>
+            <param name="largeText" type="long" range="1-999"/>
+            <param name="number" type="long" range="1-999"/>
+            <param name="date" type="long" range="1-999"/>
+            <param name="time" type="long" range="1-999"/>
+            <param name="cellWidth" type="long" range="1-999"/>
+            <param name="cellHeight" type="long" range="1-999"/>
+            <param name="dateFormat" type="String"/>
+            <param name="replaceNullValue" type="String"/>
+            <param name="fontpath" type="String" max-len="250"/>
+            <param name="columnAliasLength" type="int"/>
+            <param name="maxSingleSelectableColumns" type="int" range="1-25"/>
+            <param name="maxMultiSelectableColumns" type="int" range="1-10"/>
+            <param name="disablelink" regex="true|false"/>
+            <param name="groupperpage" regex="true|false"/>
+            <param name="includeShare" regex="true|false"/>
+            <param name="removetitle" regex="removeTitleFileTypes"/>
+            <!-- SD-93590 : Label of Bar chart's are overlapping so providing cx to configure label length - security conf-->
+            <param name="labelLengthSBC" type="long" range=">=0"/>
+            <param name="maxColsBC" type="long" range="1-999"/>
+            <param name="timespentformat" regex="DD:HH:MM:SS|HH:MM:SS|HH:MM"/>
+            <param name="chartHeight" type="long" range="1-9999"/>
+            <param name="chartWidth" type="long" range="1-9999"/>
+            <param name="customizeExcel" regex="true|false"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module" operation-value="duplicate_report"
+             roles="CreateReports">
+             <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="create_duplicate_report" roles="CreateReports">
+            <param name="folderId" type="long" range=">0"/>
+            <param name="reportName" type="String"/>
+            <param name="ispublic" regex="public|private"/>
+            <param name="desc" type="String" max-len="250" secret="true"/>
+             <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_folder_details" roles="ViewReports"/>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="save_report_as" roles="ModifyReports,CreateReports">
+            <param name="folderId" type="long" range=">0"/>
+            <param name="reportName" type="String"/>
+            <param name="ispublic" regex="public|private"/>
+            <param name="desc" type="String" max-len="250" secret="true"/>
+            <param name="matrixReportType" regex="advanced|simple"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="emailthisreport" roles="ViewReports">
+            <param name="to" type="String" allow-empty="false" max-len="10000" secret="true" min-occurrences="1"/>
+            <param name="toCc" type="String" max-len="10000" secret="true"/>
+            <param name="toBcc" type="String" max-len="10000" secret="true"/>
+            <param name="Message" allow-empty="false" max-len="-1" secret="true" xss="sdpantisamyfilter" description="SSA_APPLIED; for HTML content"/>
+            <param name="file_type" regex="CSV|XLS|XLSX|HTML|PDF|INLINEHTML|DOC|DOCX|XML"/>
+            <param name="report_id" type="long" range=">0"/>
+            <param name="emailsubject" allow-empty="false" type="String" max-len="250" secret="true"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+            <param name="reportTitle" type="String" max-len="2500" secret="true"/>
+            <param name="isDownloadableLink" regex="true|false"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="change_view" roles="ViewReports">
+            <param name="filterView" regex="all_reports|all_query_reports"/>
+            <param name="folder_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="generate_report" roles="ViewReports">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="reportType"
+                   regex="Matrix Reports|Tabular Reports|Summary Reports|Audit Reports|CI History Report|Request Metrics Report"/>
+            <param name="isAPISupported" type="boolean"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_simplematrix_page" roles="ModifyReports,CreateReports">
+            <param name="module_id" type="long" range=">=0"/>
+            <param name="isAPISupported" type="boolean"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="generate_matrix_report" roles="ModifyReports,CreateReports">
+            <param name="matrixReportType" regex="advanced|simple"/>
+            <param name="simpleTopColumn" type="String" max-len="200"/>
+            <param name="simpleLeftColumn" type="String" max-len="200"/>
+            <param name="simpleMatrixSummaryType" regex="Count|Sum|Avg|Min|Max|Percentage"/>
+            <param name="simpleMatrixCountColumn" type="String" max-len="200"/>
+            <param name="filterEnabled" regex="true|false"/>
+            <param name="dateFilterColumn" type="String" max-len="200"/>
+            <param name="preDateFilterType" type="String"/>
+            <param name="dateFilterType" type="long" range=">=0"/>
+            <param name="preFromDate" type="String"/>
+            <param name="preToDate" type="String"/>
+            <param name="([0-9]+)_filterColumn_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="criteriaValue_([0-9]+)" name-regex="true" type="String" max-len="12000" max-occurrences="50" description="For Criteria in Custom Reports" secret="true"/>
+            <param name="selectCriteria_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="matchType_([0-9]+)" name-regex="true" regex="and|or" max-occurrences="50"/>
+            <param name="matrixGroupColumn1" type="String" max-len="200"/>
+            <param name="matrixGroupColumn2" type="String" max-len="200"/>
+            <param name="matrixGroupColumn3" type="String" max-len="200"/>
+            <param name="matrixGroupColumn4" type="String" max-len="200"/>
+            <param name="matrixGroupColumn5" type="String" max-len="200"/>
+            <param name="matrixColumnGroupBy1" regex="Year|Month|Day|Time|Year,Month|Year,Month,Day|Year,Month,Week|Week|-1"/>
+            <param name="matrixColumnGroupBy2" regex="Year|Month|Day|Time|Year,Month|Year,Month,Day|Year,Month,Week|Week|-1"/>
+            <param name="matrixColumnGroupBy3" regex="Year|Month|Day|Time|Year,Month|Year,Month,Day|Year,Month,Week|Week|-1"/>
+            <param name="matrixColumnGroupBy4" regex="Year|Month|Day|Time|Year,Month|Year,Month,Day|Year,Month,Week|Week|-1"/>
+            <param name="matrixColumnGroupBy5" regex="Year|Month|Day|Time|Year,Month|Year,Month,Day|Year,Month,Week|Week|-1"/>
+            <param name="matrixGroup1" type="String" max-len="200"/>
+            <param name="matrixGroup2" type="String" max-len="200"/>
+            <param name="matrixGroup3" type="String" max-len="200"/>
+            <param name="matrixGroup4" type="String" max-len="200"/>
+            <param name="matrixGroup5" type="String" max-len="200"/>
+            <param name="matrixCountColumn" type="String" max-len="200"/>
+            <param name="matrixSummaryType" regex="Count|Sum|Avg|Min|Max|Percentage"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+            <param name="criteriaJSON" type="String" max-len="10000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="can_delete" roles="DeleteReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="delete_folder" roles="DeleteReports">
+            <param name="folder_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="delete_report" roles="DeleteReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_report_page" roles="ModifyReports,CreateReports">
+            <param name="chartEnabled" regex="true|false"/>
+            <param name="displayColumnList" type="String" max-occurrences="500" max-len="200"/>
+            <param name="filterEnabled" regex="true|false"/>
+            <param name="dateFilterColumn" type="String" max-len="200"/>
+            <param name="preDateFilterType" type="String"/>
+            <param name="dateFilterType" type="long" range=">=0"/>
+            <param name="preFromDate" type="String"/>
+            <param name="preToDate" type="String"/>
+            <param name="([0-9]+)_filterColumn_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="criteriaValue_([0-9]+)" name-regex="true" type="String" max-len="12000" max-occurrences="50" description="For Criteria in Custom Reports" secret="true"/>
+            <param name="selectCriteria_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="matchType_([0-9]+)" name-regex="true" regex="and|or" max-occurrences="50"/>
+            <param name="groupEnabled" regex="true|false"/>
+            <param name="groupTabularColumn" type="String" max-len="200"/>
+            <param name="orderBy([0-9]+)" max-occurrences="3" name-regex="true" type="String" max-len="200"/>
+            <param name="orderBy([0-9]+)_ascOrder" name-regex="true" regex="true|false"/>
+            <param name="summaryEnabled" regex="true|false"/>
+            <param name="count" type="String" max-occurrences="100"/>
+            <param name="sum" type="String" max-occurrences="100"/>
+            <param name="average" type="String" max-occurrences="100"/>
+            <param name="max" type="String" max-occurrences="100"/>
+            <param name="min" type="String" max-occurrences="100"/>
+            <param name="chartType" type="long" range=">0"/>
+            <param name="pieChartGroupColumn" type="String" max-len="200"/>
+            <param name="pieChartDisplayFormat" type="String"/>
+            <param name="barXGroup1" type="String" max-len="200"/>
+            <param name="barXGroup2" type="String" max-len="200"/>
+            <param name="barChartBy" type="String"/>
+            <param name="lineXDate" type="String" max-len="200"/>
+            <param name="lineXDateFormat" type="String"/>
+            <param name="lineXGroup" type="String" max-len="200"/>
+            <param name="timeXDate" type="String" max-len="200"/>
+            <param name="timeXDateFormat" type="String"/>
+            <param name="timeXGroup" type="String" max-len="200"/>
+            <param name="timeYCountColumn" type="String" max-len="200"/>
+            <param name="areaXDate" type="String" max-len="200"/>
+            <param name="areaXDateFormat" type="String"/>
+            <param name="areaXGroup" type="String" max-len="200"/>
+            <param name="areaXGroup1" type="String" max-len="200"/>
+            <param name="areaXGroup2" type="String" max-len="200"/>
+            <param name="metricGroupBy_([1-5]+)" name-regex="true" type="long" max-occurrences="5" range="-1,>0"/>
+            <param name="criteriaJSON" type="String" max-len="10000"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="start_page" roles="CreateReports"/>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="get_available_module" roles="CreateReports">
+            <param name="report_type" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_input_page" roles="CreateReports">
+            <param name="newReport" regex="true|false"/>
+            <param name="moduleID" type="long" range=">0"/>
+            <param name="reportType"
+                   regex="Matrix Reports|Tabular Reports|Summary Reports|Audit Reports|CI History Report|Request Metrics Report"/>
+            <param name="reportTitle" type="String" allow-empty="false"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_matrix_page" roles="CreateReports">
+            <param name="newReport" regex="true|false"/>
+            <param name="moduleID" type="long" range=">0"/>
+            <param name="reportType"
+                   regex="Matrix Reports|Tabular Reports|Summary Reports|Audit Reports|CI History Report|Request Metrics Report"/>
+            <param name="reportTitle" type="String" allow-empty="false"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="generate_next_report_page" roles="ViewReports">
+            <param name="PAGE_INDEX" type="long" range=">=0"/>
+            <param name="TOTAL_PAGES" type="long" range=">0"/>
+            <param name="module_id" regex="null|[0-9]+"/>
+            <param name="report_id" regex="null|[0-9]+"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+        </url>
+
+        <url path="/reports/report-DB-viz.jsp" method="get" roles="CreateQueryReport,ReportConfigAdmin">
+            <param name="tableName" type="String" max-len="250" secret="true"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_query_editor" roles="CreateQueryReport">
+            <param name="query" type="String" allow-empty="false" max-len="50000" secret="true"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="run_query_editor_query" roles="CreateQueryReport">
+            <param name="query" type="String" allow-empty="false" max-len="50000" secret="true"/>
+            <param name="report_id" type="long" range=">0"/>
+            <param name="reportTitle" type="String" allow-empty="false"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="edit_qreport" roles="CreateQueryReport">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="isAPISupported" type="boolean"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" operation-param="module"
+             operation-value="report_reorder" roles="ViewReports"/>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="browse_sample_reports" roles="CreateQueryReport">
+            <param name="query" type="String" max-len="50000" secret="true"/>
+        </url>
+
+        <url path="/ReportSchedule.do" roles="ViewReports" method="post" csrf="true"/>
+
+        <url path="/ReportSchedule.do" roles="ViewReports" method="post" operation-param="mode" operation-value="save"
+             csrf="true">
+            <param name="reportName" type="String" min-occurrences="1" allow-empty="false" max-len="2500" secret="true"/>
+            <param name="subject" type="String" max-len="250" secret="true"/>
+            <param name="format" min-occurrences="1" allow-empty="false" regex="CSV|XLS|XLSX|HTML|PDF|INLINEHTML|DOC|DOCX|XML"/>
+            <param name="message" type="String" max-len="10000" secret="true"/>
+            <param name="to" type="String" max-len="10000" secret="true"/>
+            <param name="toCc" type="String" max-len="10000" secret="true"/>
+            <param name="toBcc" type="String" max-len="10000" secret="true"/>
+            <param name="scheduleLocation" type="String" max-len="500" secret="true"/>
+            <param name="schedule_api_json" template="schedule_api_json" type="JSONObject" max-len="-1"/>
+            <param name="isDownloadableLink" regex="true|false"/>
+        </url>
+
+        <url path="/ReportSchedule.do" roles="ViewReports" method="post" operation-param="mode" operation-value="new"
+             csrf="true">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/ReportSchedule.do" roles="ViewReports" method="get" operation-param="mode" operation-value="new">
+            <param name="GettingStarted" regex="true"/>
+        </url>
+
+        <url path="/ReportSchedule.do" roles="ViewReports" method="post" operation-param="mode" operation-value="edit"
+             csrf="true">
+            <param name="task_id" type="long" range=">0" min-occurrences="1"/>
+        </url>
+        <url path="/ReportSchedule.do" roles="ViewReports" method="post" operation-param="mode" operation-value="delete"
+             csrf="true">
+            <param name="task_id" type="long" range=">0" min-occurrences="1"/>
+        </url>
+
+        <url path="/ReportSchedule.do" roles="ViewReports" method="post" operation-param="mode" operation-value="update"
+             csrf="true">
+            <param name="task_id" type="long"  range=">0" min-occurrences="1"/>
+            <param name="reportName" min-occurrences="1" allow-empty="false" type="String" max-len="2500" secret="true"/>
+            <param name="subject" type="String" max-len="250" secret="true"/>
+            <param name="format" min-occurrences="1" allow-empty="false" regex="CSV|XLS|XLSX|HTML|PDF|INLINEHTML|DOC|DOCX|XML"/>
+            <param name="message" type="String" max-len="10000" secret="true"/>
+            <param name="to" type="String" max-len="10000" secret="true"/>
+            <param name="toCc" type="String" max-len="10000" secret="true"/>
+            <param name="toBcc" type="String" max-len="10000" secret="true"/>
+            <param name="scheduleLocation" type="String" max-len="500" secret="true"/>
+            <param name="schedule_api_json" template="schedule_api_json" type="JSONObject" max-len="-1"/>
+            <param name="isDownloadableLink" regex="true|false"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="post" operation-param="module" operation-value="generate_report"
+             roles="ViewReports" csrf="true">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="post" csrf="true" operation-param="module" operation-value="export"
+             roles="ViewReports">
+            <param name="file_type" regex="CSV|XLS|XLSX|HTML|PDF|DOC|DOCX|XML"/>
+            <param name="report_id" type="long"  range=">0"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="get" operation-param="module" operation-value="print_preview"
+             roles="ViewReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="edit_report" roles="ModifyReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_criteria_page" roles="ModifyReports,CreateReports">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="displaySubReportList" type="long" max-occurrences="500" range=">0"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_report_page" roles="ModifyReports,CreateReports">
+            <param name="dateFilterColumn" type="long" range="-1,>0"/>
+            <param name="preDateFilterType" type="String"/>
+            <param name="dateFilterType" type="long" range=">0"/>
+            <param name="preFromDate" type="String"/>
+            <param name="preToDate" type="String"/>
+            <param name="([0-9]+)_filterColumn_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="criteriaValue_([0-9]+)" name-regex="true" type="String" max-len="12000" max-occurrences="50" description="For Criteria in Custom Reports" secret="true"/>
+            <param name="selectCriteria_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="matchType_([0-9]+)" name-regex="true" regex="and|or" max-occurrences="50"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_available_subreports" roles="ModifyReports,CreateReports">
+            <param name="moduleID" type="long" range=">0"/>
+            <param name="reportTitle" type="String" allow-empty="false"/>
+        </url>
+
+        <url path="/SummaryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="generate_next_report_page" roles="ViewReports">
+            <param name="PAGE_INDEX" type="long" range=">=0"/>
+            <param name="TOTAL_PAGES" type="long" range=">0"/>
+            <param name="module_id" regex="null|[0-9]+"/>
+            <param name="report_id" regex="null|[0-9]+"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="post" operation-param="module" operation-value="generate_report"
+             roles="ViewReports" csrf="true">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="post" csrf="true" operation-param="module" operation-value="export"
+             roles="ViewReports">
+            <param name="file_type" regex="CSV|XLS|XLSX|HTML|PDF|DOC|DOCX|XML"/>
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="get" operation-param="module" operation-value="print_preview"
+             roles="ViewReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="get" operation-param="module" operation-value="save_report"
+             roles="ModifyReports,CreateReports"/>
+
+        <url path="/CIHistoryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="edit_report" roles="ModifyReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="get_criteria_operator" roles="ModifyReports,CreateReports">
+            <param name="column_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="show_report_page" roles="ModifyReports,CreateReports">
+            <param name="historyReport" type="long" range=">0"/>
+            <param name="dateFilterColumn" type="long" range=">0"/>
+            <param name="preDateFilterType" type="String"/>
+            <param name="dateFilterType" type="long" range=">0"/>
+            <param name="preFromDate" type="String"/>
+            <param name="preToDate" type="String"/>
+            <param name="([0-9]+)_filterColumn_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="criteriaValue_([0-9]+)" name-regex="true" type="String" max-len="12000" max-occurrences="50" description="For Criteria in Custom Reports" secret="true"/>
+            <param name="selectCriteria_([0-9]+)" name-regex="true" type="long" max-occurrences="50" range="-1,>0"/>
+            <param name="matchType_([0-9]+)" name-regex="true" regex="and|or" max-occurrences="50"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="save_report_as" roles="ModifyReports,CreateReports">
+            <param name="folderId" type="long" range=">=0"/>
+            <param name="reportName" type="String"/>
+            <param name="ispublic" regex="public|private"/>
+            <param name="desc" type="String" max-len="250" secret="true"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="CIHistoryPage" roles="CreateReports">
+            <param name="moduleID" type="long" range=">0"/>
+            <param name="reportTitle" type="String" allow-empty="false"/>
+        </url>
+
+        <url path="/CIHistoryReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="generate_next_report_page" roles="ViewReports">
+            <param name="PAGE_INDEX" type="long" range=">=0"/>
+            <param name="TOTAL_PAGES" type="long" range=">0"/>
+            <param name="module_id" regex="null|[0-9]+"/>
+            <param name="report_id" regex="null|[0-9]+"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="post" csrf="true" operation-param="module"
+             operation-value="auditmainpage" roles="CreateReports">
+            <param name="moduleID" type="long" range=">0"/>
+            <param name="reportTitle" type="String" allow-empty="false"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="post" operation-param="module" operation-value="show_report_page"
+             csrf="true" roles="CreateReports">
+            <param name="historyReport" type="long" range=">0"/>
+            <param name="dateFilterColumn" type="long" range=">0"/>
+            <param name="preDateFilterType" type="String"/>
+            <param name="dateFilterType" type="long" range=">0"/>
+            <param name="preFromDate" type="String"/>
+            <param name="preToDate" type="String"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="post" operation-param="module" operation-value="edit_report"
+             csrf="true" roles="ModifyReports,CreateReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="get" operation-param="module" operation-value="save_report"
+             roles="ModifyReports,CreateReports"/>
+
+        <url path="/AuditHistoryReport.do" method="post" operation-param="module" operation-value="save_report_as"
+             csrf="true" roles="ModifyReports,CreateReports">
+            <param name="folderId" type="long" range=">0"/>
+            <param name="reportName" type="String" allow-empty="false"/>
+            <param name="ispublic" regex="public|private"/>
+            <param name="desc" type="String" max-len="250" secret="true"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="post" operation-param="module" operation-value="generate_report"
+             roles="ViewReports" csrf="true">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="get" operation-param="module" operation-value="print_preview"
+             roles="ViewReports">
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="post" csrf="true" operation-param="module"
+             operation-value="generate_next_report_page" roles="ViewReports">
+            <param name="PAGE_INDEX" type="long" range=">=0"/>
+            <param name="TOTAL_PAGES" type="long" range=">0"/>
+            <param name="module_id" regex="null|[0-9]+"/>
+            <param name="report_id" regex="null|[0-9]+"/>
+        </url>
+
+        <url path="/AuditHistoryReport.do" method="get" operation-param="module"
+             operation-value="InventoryHomeauditpage" roles="CreateReports">
+            <param name="moduleID" type="long" range=">0"/>
+            <param name="reportTitle" type="String"/>
+
+        </url>
+
+        <url path="/CustomReportHandler.do" method="get" roles="CreateReports"
+             operation-param="module" operation-value="addChartAsWidget">
+            <param name="report_id" type="long" range=">0"/>
+            <param name="widget_id" type="long" range=">0"/>
+            <param name-regex="true" name="[0-9]+" type="String"/>
+            <param name="isAPISupported" type="boolean"/>
+            <param name="report_title" regex="String"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="makeAsWidget" roles="CreateReports">
+            <param name="widgetName" type="String" allow-empty="false" max-len="250"/>
+            <param name="widgetDesc" type="String" max-len="250" secret="true"/>
+            <param name="dashboardTab" type="String"/>
+            <param name="ispublic" type="String"/>
+            <param name="report_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/CustomReportHandler.do" method="post" csrf="true" operation-param="module"
+             operation-value="updateWidgetSettings" roles="CreateReports">
+            <param name="widgetName" type="String" allow-empty="false" max-len="250"/>
+            <param name="widgetDesc" type="String" max-len="250" secret="true"/>
+            <param name="dashboardTab" type="String"/>
+            <param name="ispublic" regex="public|private"/>
+            <param name="report_id" type="long" range=">0"/>
+            <param name="widget_id" type="long" range=">0"/>
+        </url>
+
+        <url path="/servlet/DBVizAJaxServlet" method="get" roles="ViewReports" operation-param="action"
+             operation-value="getFKDetails">
+            <param name="columnType" type="String"/>
+            <param name="columnid" type="String"/>
+            <param name="colmnName" type="String"/>
+            <param name="tableId" type="String"/>
+            <param name="fetch" type="JSONArray" template="strarray" max-len="-1" array-size="0-100"/>
+        </url>
+
+        <!-- 9 digit id with comma is 10 character , 500 fields maximum , so max-length 5000 -->
+        <url path="/servlet/AJaxServlet" method="get" roles="ViewReports" operation-param="action"
+             operation-value="CheckRequestSelectableUDFColumnsAllowedLimit">
+            <param name="selectedColumnIds" max-len="5000" regex="(,\d+)+" allow-empty="false" secret="true"/>
+        </url>
+
+        <!-- Request Custom Filter -->
+        <url roles="ViewRequests" path="/CustomReportHandler.do" operation-param="module"
+             operation-value="get_criteria,get_input_type" method="get">
+            <param name="column_id" type="long" range=">0"/>
+        </url>
+
+        <url roles="ViewRequests" path="/CustomReportHandler.do" operation-param="module" csrf="true"
+             operation-value="get_criteria,get_input_type" method="post">
+            <param name="column_id" type="long" range=">0"/>
+        </url>
+
+        <url roles="ViewRequests" path="/CustomReportHandler.do" operation-param="module"
+             operation-value="datapickerFilter,datapickerADVFilter" method="get">
+            <param name="column_id" type="long" allow-empty="false" range=">0"/>
+            <param name="text_field_index" type="long" range=">0"/>
+        </url>
+
+        <url roles="ViewReports" path="/servlet/AJaxServlet" operation-param="action" operation-value="hideReportInfoPanel" method="post" csrf="true"/>
+
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getDefaultReportQuery"
+             roles="CreateQueryReport" method="post" csrf="true">
+            <param name="reportID" type="String"/>
+        </url>
+
+        <url path="/servlet/AJaxServlet" roles="CreateReports" method="post" operation-param="action" operation-value="changeReportScheduleStatus" csrf="true">
+            <param name="task_id" min-occurrences="1" allow-empty="false" range=">0" type="long"/>
+            <param name="report_status" regex="true|false" min-occurrences="1" allow-empty="false" />
+        </url>
+
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="changeAllScheduleStatus"
+             roles="SDAdmin,ReportConfigAdmin" method="post" csrf="true">
+            <param name="allScheduledReportStatus" min-occurrences="1" allow-empty="false" type="boolean"/>
+        </url>
+
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getAllScheduleStatus"
+             roles="ViewReports" method="get">
+        </url>
+
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getCustomReportFilters"
+             roles="CreateReports" method="get">
+            <param name="reportID" range=">=0" type="long" allow-empty="true"/>
+            <param name="isAPISupported" regex="true|false"/>
+            <param name="previousConfig" type="JSONObject" template="apireportconfig" max-len="60000"/>
+            <param name="chartXCol" type="String" max-len="500" allow-empty="false" min-occurrences="1" />
+            <param name="chartXVal" type="String" max-len="2000" allow-empty="false" min-occurrences="1" secret="true"/>
+            <param name="chartYCol" type="String" max-len="500" allow-empty="true" />
+            <param name="chartYVal" type="String" max-len="2000" allow-empty="true" secret="true"/>
+            <param name="otherNegate" type="String" max-len="2000" allow-empty="true" secret="true"/>
+        </url>
+
+        <url path="/changePwd.do" user_type="all" roles="Common_Role" operation-param="mode" operation-value="update_fileProtectionPwd" method="post" csrf="true" description="The url is used in ESM Directory. Hence configured user type all">
+            <param name="fileProtectPwd" type="String" secret="true" allow-empty="false" max-len="500"/>
+            <param name="changeFilePwdButton" regex="Save"/>
+        </url>
+                
+        <!-- Advanced Analytics -->
+        <url roles="ViewReports" path="/servlet/AJaxServlet" operation-param="action" operation-value="getZRIntegrationStatus" method="get"/>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action"
+             operation-value="getMenuStatus,disableMenu,enableMenu" method="post" csrf="true">
+            <param name="module" regex="advAnalyticPlus"/>
+        </url>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="getZROPUrl"
+             method="post" csrf="true">
+            <param name="module" regex="advAnalyticPlus"/>
+            <param name="zropURL" type="String" secret="true"/>
+        </url>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action"
+             operation-value="zrSaveRetentionPolicy"
+             method="post" csrf="true">
+            <param name="month" type="String"/>
+        </url>
+
+        <url path="/servlet/AJaxServlet" operation-param="action"
+            operation-value="check_if_schedule_location_exists" roles="CreateReports" method="get">
+            <param name="attchPath" allow-empty="false" min-occurrences="1" type="String" max-len="500" />
+        </url>
+
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="checkScheduleExportTypes"
+             roles="ViewReports" method="get">
+            <param name="reportName" min-occurrences="1" allow-empty="false" type="String" max-len="2500" secret="true"/>
+        </url>
+
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getUserIdForEmail"
+             roles="ViewReports" method="get">
+            <param name="toMail" regex="emailstring" type="String" max-len="200" secret="true"/>
+        </url>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="zrSaveScheduleInfo"
+             method="post" csrf="true">
+            <param name="everyDayType" regex="At|Repeat"/>
+            <param name="everyDayTime" type="String"/>
+            <param name="everyDayHour" type="String"/>
+        </url>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="isDBExists"
+             method="post" csrf="true">
+            <param name="zropAccountsURL" type="String" secret="true"/>
+            <param name="emailID" type="String" secret="true"/>
+            <param name="atKey" type="String" max-len="1000" secret="true"/>
+            <param name="isKeyChange" regex="true|false"/>
+            <param name="isZROP" regex="true|false"/>
+            <param name="zropURL" type="String" secret="true"/>
+            <param name="clientGrid" type="String" secret="true"/>
+            <param name="zrDBName" type="String" secret="true"/>
+        </url>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="deleteZROPAtKey"
+             method="post" csrf="true">
+            <param name="zropURL" type="String" secret="true"/>
+        </url>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="zrUploadNow"
+             method="post" csrf="true"/>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="disableOauthAABanner"
+             method="post" csrf="true"/>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="disableRequestUDFAABanner"
+             method="post" csrf="true"/>
+
+        <url roles="SDAdmin" path="/servlet/ZRAJaxServlet" operation-param="action" operation-value="disableAssetUDFAABanner"
+             method="post" csrf="true"/>
+
+        <url roles="SDAdmin" path="/ZRConfigurationDef.do" method="post" csrf="true" rebrand="zmon">
+            <param name="go" type="String"/>
+            <param name="showConfigPage" regex="true|false"/>
+        </url>
+
+        <url roles="SDAdmin" path="/ZRConfigurationDef.do" operation-param="mode"
+             operation-value="save,saveandsync,removeall,resync,repopulate" method="post"
+             csrf="true" rebrand="zmon">
+            <param name="DataBaseID" type="String"/>
+            <param name="zropURL" type="String" secret="true"/>
+            <param name="zropAccountURL" type="String" secret="true"/>
+            <param name="isAssetBuild" regex="true|false" secret="true"/>
+            <param name="isATKeyChange" regex="true|false"/>
+            <param name="isZAInteg" regex="true|false"/>
+            <param name="showAnalytics_TECHMenu" type="String"/>
+            <param name="isZROP" regex="true|false"/>
+            <param name="zropHost" type="String" secret="true"/>
+            <param name="zropPort" type="long" secret="true"/>
+            <param name="zrDbname" type="String" max-len="50" secret="true"/>
+            <param name="zrDataBaseName" type="String" max-len="50" secret="true"/>
+            <param name="clientGrid" type="long" secret="true"/>
+            <param name="rootUserEmailID" type="String" secret="true"/>
+            <param name="emailID" type="String" secret="true"/>
+            <param name="rootUserATKey" type="String" max-len="1000" secret="true"/>
+            <param name="clientID" type="String" max-len="1000" secret="true"/>
+            <param name="clientSecret" type="String" max-len="1000" secret="true"/>
+            <param name="fromDate" type="String"/>
+            <param name="currentTime" type="long"/>
+            <param name="fromDate_Display" type="String"/>
+            <param name="everyDayTime" type="String"/>
+            <param name="everyDayHour" type="String"/>
+            <param name="retentionDate" type="String"/>
+            <param name="showConfigPage" regex="true|false"/>
+            <param name="go" type="String"/>
+            <param name="isSSOEnabled" regex="true|false"/>
+            <param name="orgID" type="long" range=">=0"/>
+        </url>
+
+        <url roles="SDAdmin" path="/ZRConfigurationDef.do" method="get" rebrand="zmon"/>
+        <!--AE qs chg st-->
+        <url path="/CustomReportHandler.do" roles="SDAdmin" method="get" operation-param="module" operation-value="aplusQuickSetup"></url>
+        <url path="/aplusinteg" roles="SDAdmin" method="get" operation-param="action" operation-value="launchQsetupPopup,getStatusJson,doItMyself,launchQSFromAdmin,getZCInputs,getServerInfo,downloadAplus,initDataSync"></url>
+
+        <url path="/aplusinteg" roles="SDAdmin" method="get" operation-param="action" operation-value="setLicenseChkValue">
+            <param name="chkVal" regex="true|false"/>
+        </url>
+        <url path="/aplusinteg" roles="SDAdmin" method="get" operation-param="action" operation-value="saveInstallType">
+            <param name="type" regex="same"/>
+        </url>
+        <url path="/aplusinteg" roles="SDAdmin" method="get"  operation-param="action" operation-value="configureInputs">
+            <param name="adminEmailAddress" regex="email" min-occurrences="1" secret="true"/>
+        </url>
+        <url path="/aplusinteg" roles="SDAdmin" method="get" operation-param="action" operation-value="deleteAndReinitiateAction">
+            <param name="pHost" type="String" secret="true"/>
+            <param name="pPort" type="long"/>
+            <param name="pUname" type="String" secret="true"/>
+            <param name="pPwd" type="String" secret="true"/>
+        </url>
+        <!--AE qs chg ed-->
+
+        <url path="/servlet/OauthServlet" roles="SDAdmin" method="get" operation-param="module" operation-value="aainteg">
+            <param name="mode" type="String"/>
+            <param name="OauthJSON" type="JSONObject" template="OauthJSON" max-len="3000"/>
+        </url>
+
+        <url roles="SDAdmin,ReportConfigAdmin" path="/setup/ReportNotifications.jsp" method="get" />
+
+        <url path="/setup/ReportNotifications.jsp" operation-param="action" operation-value="Save" method="post" csrf="true" roles="SDAdmin,ReportConfigAdmin">
+            <param name="Report_EditDelete_Notification"  regex="on"/>
+        </url>
+
+        <url path="/AuthHandler" roles="ViewReports" method="get">
+            <param name="SAMLRequest" type="String" max-len="10000"/>
+            <param name="RelayState" type="String" max-len="10000"/>
+        </url>
+
+        <url path="/servlet/ReportLinkServlet" user_type="all" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+            <param name="fileID" type="long" allow-empty="false"/>
+        </url>
+    </urls>
+
+    <regexes>
+        <regex name="aaURL" value="^http(s?)\:\/\/[-.\w]*(\/?)([a-zA-Z0-9\-\.\?\,\:\'\/\\\+=_]*)?$" />
+        <regex name="removeTitleFileTypes" value="^(?!\s*$)(?:html|pdf|xls|xlsx|csv|xml|doc|docx|,)+$" />
+    </regexes>
+
+    <jsontemplates>
+        <jsontemplate name="OauthJSON" disable-extra-key="true">
+            <key name="clientid" type="String" max-len="1000" secret="true"/>
+            <key name="clientsecret" type="String" max-len="1000" secret="true"/>
+            <key name="authurl" type="String" max-len="1000" secret="true"/>
+            <key name="tokenurl" type="String" max-len="1000" secret="true"/>
+            <key name="scope" type="String" max-len="100" secret="true"/>
+            <key name="URL" type="String" max-len="1000" secret="true"/>
+        </jsontemplate>
+
+        <jsontemplate name="query_api" disable-extra-key="true">
+            <key name="query" type="String" max-len="50000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="apireportconfig">
+			<key name="reportId" type="long" range="-1,>0"/>
+			<key name="ownerId" type="long" range="-1,>0"/>
+			<key name="moduleId" type="long" range=">0"/>
+			<key name="folderId" type="long" range=">=0"/>
+			<key name="reportName" type="String"/>
+			<key name="reportTitle" type="String"/>
+			<key name="reportDesc" type="String" max-len="250"/>
+            <key name="isPublic" type="boolean"/>
+			<key name="reportType" regex="Tabular Reports|Matrix Reports|simple|advanced" />
+			<key name="reportTypeId" type="int"/>
+			<key name="freshReport" type="boolean" />
+			<key name="displayReportName" type="String"/>
+			<key name="datefilter" type="JSONObject" template="reportdatefilter" max-len="500"/>
+			<key name="displayColumns" template="largestrarray" type="JSONArray" max-len="-1" array-size="0-500"/>
+			<key name="groupByColumn" type="String" max-len="200"/>
+			<key name="orderBy" type="JSONArray" template="reportorderby" max-len="300" array-size="0-3"/>
+			<key name="cntCols" type="JSONArray" template="strarray" max-len="300" array-size="0-100"/>
+			<key name="sumCols" type="JSONArray" template="strarray" max-len="300" array-size="0-100"/>
+			<key name="minCols" type="JSONArray" template="strarray" max-len="300" array-size="0-100"/>
+			<key name="maxCols" type="JSONArray" template="strarray" max-len="300" array-size="0-100"/>
+			<key name="avgCols" type="JSONArray" template="strarray" max-len="300" array-size="0-100"/>
+			<key name="groupBySummary" type="boolean"/>
+			<key name="pageSummary" type="boolean"/>
+			<key name="reportSummary" type="boolean"/>
+			<key name="summaryOnly" type="boolean"/>
+			<key name="chartId" type="long" range=">0"/>
+			<key name="chartProperties" type="JSONObject" template="chartconfig" max-len="100000"/>
+			<key name="entity" type="String" max-occurrences="1"/>
+			<key name="leftColumn" type="String" max-occurrences="1" max-len="200"/>
+			<key name="countColumn" type="String" max-occurrences="1" max-len="200"/>
+			<key name="topColumn" type="String" max-occurrences="1" max-len="200"/>
+			<key name="group1" type="String" max-occurrences="1" max-len="200"/>
+			<key name="group2" type="String" max-occurrences="1" max-len="200"/>
+			<key name="group3" type="String" max-occurrences="1" max-len="200"/>
+            <key name="group4" type="String" max-occurrences="1" max-len="200"/>
+            <key name="group5" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroup1" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroupBy1" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroup2" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroupBy2" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroup3" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroupBy3" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroup4" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroupBy4" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroup5" type="String" max-occurrences="1" max-len="200"/>
+            <key name="columnGroupBy5" type="String" max-occurrences="1" max-len="200"/>
+			<key name="summaryType" regex="Count|Sum|Avg|Min|Max|Percentage" max-occurrences="1"/>
+			<key name="criteriaJSON" type="JSONArray" template="reportcriteria" max-len="45000" array-size="0-200"/>
+		</jsontemplate>
+        <jsontemplate name="reportdatefilter">
+			<key name="dateFilterColumn" type="String" max-len="200"/>
+			<key name="preDateFilterType" regex="predefined|customized"/>
+			<key name="dateFilterType" type="long" range=">=0"/>
+			<key name="preFromDate" type="String"/>
+			<key name="preToDate" type="String"/>
+		</jsontemplate>
+        <jsontemplate name="reportorderby">
+            <key name="field" type="String" max-len="200"/>
+            <key name="order" regex="asc|desc"/>
+        </jsontemplate>
+        <jsontemplate name="chartconfig">
+			<key name="chartType" type="long" range=">0"/>
+			<key name="display_format" type="long" range=">0"/>
+			<key name="group_column" type="String" max-len="200"/>
+			<key name="data_column" type="String" max-len="200"/>
+			<key name="summary_by" type="String" max-len="200"/>
+			<key name="areaXDate" type="String" max-len="200"/>
+			<key name="areaXGroup" type="String" max-len="200"/>
+			<key name="areaYCountColumn" type="String" max-len="200"/>
+			<key name="areaDateFormat" type="String"/>
+			<key name="timeXDate" type="String" max-len="200"/>
+			<key name="timeXGroup" type="String" max-len="200"/>
+			<key name="timeYCountColumn" type="String" max-len="200"/>
+			<key name="timeDateFormat" type="String"/>
+			<key name="lineXDate" type="String" max-len="200"/>
+			<key name="lineXGroup" type="String" max-len="200"/>
+			<key name="lineYCountColumn" type="String" max-len="200"/>
+			<key name="lineDateFormat" type="String"/>
+			<key name="barXGroup1" type="String" max-len="200"/>
+			<key name="barXGroup2" type="String" max-len="200"/>
+			<key name="barYCountColumn" type="String" max-len="200"/>
+			<key name="barChartBy" type="String"/>
+            <key name="chartData" type="String" max-len="60000"/>
+		</jsontemplate>
+        <jsontemplate name="reportcriteria">
+			<key name="field" type="String" max-len="200"/>
+			<key name="criteriaId" type="long" range=">0"/>
+			<key name="logical_operator" regex="and|or"/>
+			<key name="values" type="String" max-len="50000"/>
+			<key name="condition" type="String"/>
+		</jsontemplate>
+        <jsontemplate name="schedule_api_json">
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <key name="repeat_every" type="int"/>
+            <key name="frequency" regex="schedule_frequency" min-occurrences="1"/>
+            <key name="daily" type="JSONObject" template="daily_schedule" max-len="-1"/>
+            <key name="weekly" type="JSONObject" template="weekly_schedule" max-len="-1"/>
+            <key name="monthly" type="JSONObject" template="monthly_schedule" max-len="-1"/>
+            <key name="yearly" type="JSONObject" template="yearly_schedule" max-len="-1"/>
+            <key name="repeat_end" type="JSONObject" template="schedule_repeat_end" max-len="-1"/>
+            <key name="advanced" type="boolean"/>
+        </jsontemplate>
+    </jsontemplates>
+
+</security>

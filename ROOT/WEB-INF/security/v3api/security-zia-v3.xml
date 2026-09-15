@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true" rebrand="zmon">
+        <throttles name="zia" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="15" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/zia_actions/(_?)categoryprediction" roles="CreateRequests" method="post" user_type="all" url-type="dynamic">
+            <param name="input_data" template="request_categoryprediction" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)templateprediction" roles="CreateRequests" method="post" user_type="all" url-type="dynamic">
+            <param name="input_data" template="request_templateprediction" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)get_all_prediction" roles="CreateRequests" method="post" user_type="all" url-type="dynamic">
+            <param name="input_data" template="getallprediction" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)approval_notifications" roles="ZiaVerifier" method="get" url-type="dynamic">
+            <throttles name="zia_approval_notifications" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="approvalnotification" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)reopen_notifications" roles="ZiaVerifier" method="get" url-type="dynamic">
+            <throttles name="zia_reopen_notifications" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="reopennotification" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)parser_notifications" roles="ZiaVerifier" method="get">
+            <throttles name="zia_parser_notifications" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="parsernotification" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)supported_parser_actions/request" roles="ZiaVerifier" method="get">
+            <throttles name="zia_supported_parser_actions" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)all_notifications" roles="ZiaVerifier" method="get" url-type="dynamic">
+            <throttles name="zia_all_notifications" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="15" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="approvalnotification" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)test_zia_parser" roles="SDAdmin" method="post">
+            <throttles name="test_zia_parser" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="content" type="String" max-len="10000" secret="true" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_actions/(_?)get_mail_content/(\d+)" roles="ZiaVerifier" method="get">
+            <throttles name="get_mail_content" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="parser_notification_base" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/zia_bot_actions/(_?)metainfo" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/zia_bot_actions" roles="SDAdmin" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="bot_action_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="5s"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_parsers" method="GET" roles="SDAdmin">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/zia_parsers/(_?)metainfo" method="GET" roles="SDAdmin" />
+        <url path="/api/v3/zia_parsers/(\d+)" method="PUT" roles="SDAdmin">
+            <param name="input_data" template="zia_parser" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_parsers/(_?)history" roles="SDAdmin" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_parsers/(_?)get_performed_by_for_history" roles="SDAdmin" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_parsers/(_?)save_acknowledgement_details/(zia_parser_ack|zia_parser_nopredic_ack)" roles="SDAdmin" method="post">
+            <throttles name="save_acknowledgement_details" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="parser_acknowledgement" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_parsers/(_?)get_acknowledgement_details/(zia_parser_ack|zia_parser_nopredic_ack)" roles="SDAdmin" method="get" >
+            <throttles name="get_acknowledgement_details" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/zia_parsers/(_?)get_parser_training_status" roles="SDAdmin" method="get" >
+            <throttles name="get_parser_training_status" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/zia_bot_actions/(_?)remove" roles="SDAdmin" method="delete">
+            <param name="ids" regex="ids"/>
+        </url>
+        <url path="/api/v3/zia_bot_actions/(\d+)/(_?)modify" roles="SDAdmin" method="put">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="bot_action_update" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param name="input_data" template="zia_bot_action" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_bot_actions/(_?)getallactions" roles="SDAdmin" method="get"/>
+        <url method="put" path="/api/v3/zia_bot_buttons" roles="SDAdmin">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="button_bot_command_bulk_update" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param name="ids" regex="ids"/>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="zia_bot_button" name="input_data"/>
+        </url>
+        <url path="/api/v3/zia_bot_buttons/(_?)metainfo" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/zia_bot_buttons" roles="SDAdmin" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="bot_button_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="5s"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/zia_bot_buttons/(_?)remove" roles="SDAdmin" method="delete">
+            <param name="ids" regex="ids" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_bot_buttons/(\d+)/(_?)modify" roles="SDAdmin" method="put">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="bot_button_update" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param name="input_data" template="zia_bot_button" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_bot_buttons/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="zia_bot_button" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_bot_workflows/(_?)get_workflow/(collapse|expand)" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/zia_bot_workflows/(_?)get_action_workflow/(\d+)" roles="SDAdmin" method="get">
+            <param name="isActionsListRequired" type="boolean"/>
+        </url>
+        <url path="/api/v3/zia_bot_workflows/(_?)get_button_workflow/(\d+)" roles="SDAdmin" method="get">
+            <param name="isButtonsListRequired" type="boolean"/>
+        </url>
+        <url path="/api/v3/zia_bot_workflows/(_?)save_workflow" roles="SDAdmin" method="put">
+            <param name="input_data" template="zia_workflow" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_bot_workflows/(_?)load_bot" roles="SDAdmin" method="put"/>
+        <url path="/api/v3/zia_bot_workflows/(_?)get_action_button" roles="SDAdmin" method="get">
+            <param name="input_data" template="zia_workflow_action" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/embed_zia_bot/(_?)metainfo" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/embed_zia_bot/details" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/embed_zia_bot/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="embed_zia_put_call" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/zia_bot_properties" roles="SDAdmin" method="put">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="bot_property_update">
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param name="input_data" template="zia_bot_property" type="JSONObject" max-len="10000" min-occurrences="1"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Zia Bot Actions & Buttons History-->
+    <urls authentication="required" api="true">
+        <url roles="SDAdmin" path="/api/v3/embed_zia_bot/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/embed_zia_bot/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/zia_bot_actions/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/zia_bot_actions/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/zia_bot_buttons/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/zia_bot_buttons/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/zia_bot_workflows/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <throttles name="zia_bot_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </urls>
+    <urls authentication="required" remote_server="true" path="/common/ViewHistory.jsp" operation-param="module">
+        <param name="id" type="long" allow-empty="false" range=">0"/>
+        <param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+        <param name="search_filter" regex="zia_bot_action|zia_bot_button|zia_bot_workflow|embed_zia_bot"/>
+        <param name="admin_entity" regex="true"/>
+        <param name="skip_filter_options" type="String"/>
+        <param name="skip_operation_names" type="String"/>
+        <param name="is_date_filter" type="boolean"/>
+        <param name="module_value" type="String"/>
+
+        <url roles="SDAdmin" operation-value="zia_bot_actions">
+            <param name="key" regex="zia_bot_actions_history" />
+        </url>
+        <url roles="SDAdmin" operation-value="zia_bot_buttons">
+            <param name="key" regex="zia_bot_buttons_history"/>
+        </url>
+        <url roles="SDAdmin" operation-value="embed_zia_bot">
+            <param name="key" regex="embed_zia_bot_history"/>
+        </url>
+        <url roles="SDAdmin" operation-value="zia_bot_workflows">
+            <param name="key" regex="zia_bot_workflows_history"/>
+        </url>
+        <throttles name="aah_zia_bot" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </urls>
+    <!-- End of Zia Buttons & Actions Configuration-->
+    <jsontemplates>
+        <jsontemplate name="zia_parser">
+            <key name="zia_parser" template="zia_parser_base" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="zia_parser_base">
+            <key name="enabled" type="boolean" />
+            <key name="subject" type="String" max-len="20" />
+            <key name="excluded_fields" type="String" max-len="30000" secret="true" />
+            <key name="excluded_actions" type="String" max-len="500" secret="true" />
+            <key name="append_parser_info" regex="all|template|none" />
+            <key name="parser_info" type="String" max-len="3000" secret="true" />
+            <key name="send_acknowledge" type="boolean" />
+        </jsontemplate>
+        <jsontemplate name="approvalnotification" disable-extra-key="true">
+            <key name="list_info" type="JSONObject" template="list_info_base" max-len="-1"></key>
+        </jsontemplate>
+        <jsontemplate name="reopennotification" disable-extra-key="true">
+            <key name="list_info" type="JSONObject" template="list_info_base" max-len="-1"></key>
+        </jsontemplate>
+        <jsontemplate name="parsernotification">
+            <key name="list_info" type="JSONObject" template="list_info_base" max-len="-1"></key>
+            <key name="parser_notification" type="JSONObject" template="parser_notification_base" max-len="-1" min-occurrences="1"></key>
+        </jsontemplate>
+        <jsontemplate name="parser_notification_base">
+            <key name="entity" regex="request" min-occurrences="1" />
+            <key name="entityid" regex="id" min-occurrences="1" />
+            <key name="type" regex="properties|actions" />
+            <key name="actionid" regex="id" />
+        </jsontemplate>
+        <jsontemplate name="parser_acknowledgement">
+            <key name="parser_acknowledgement" type="JSONObject" template="parser_acknowledgement_base" max-len="-1" min-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="parser_acknowledgement_base">
+            <key name="subject" type="String" secret="true" max-len="500" min-occurrences="1" allow-invalid="false"/>
+            <key name="description" xss="sdpantisamyfilter" max-len="-1" description="HTML element is passed as a String" secret="true" min-occurrences="1" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="request_categoryprediction" disable-extra-key="true">
+            <key name="zia_action" type="JSONObject" template="sdpai_request_input" max-len="-1"></key>
+        </jsontemplate>
+        <jsontemplate name="request_templateprediction" disable-extra-key="true">
+            <key name="zia_action" type="JSONObject" template="sdpai_request_input" max-len="-1"></key>
+        </jsontemplate>
+        <jsontemplate name="getallprediction" disable-extra-key="true">
+            <key name="zia_action" type="JSONObject" template="sdpzia_getall_input" max-len="-1"></key>
+        </jsontemplate>
+        <jsontemplate name="sdpai_request_input">
+            <key name="subject" type="String" max-len="250"/>
+            <key name="content" type="String" max-len="30000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="sdpzia_getall_input" disable-extra-key="true">
+            <key name="subject" type="String" max-len="250"/>
+            <key name="content" type="String" max-len="30000" secret="true"/>
+            <key name="wobean" type="JSONObject" template="request" max-len="-1"></key>
+        </jsontemplate>
+        <jsontemplate name="zia_properties_template">
+            <key name="prediction"  type="JSONObject" template="zia_properties_list" max-len="-1"/>
+            <key name="appliedlist" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="discardedlist" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="ziaSuggestedTemplateId" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="zia_properties_list">
+            <key name="template"  type="JSONObject" template="IDJson" max-len="-1"/>
+            <key name="category" type="JSONObject" template="IDJson" max-len="-1"/>
+        </jsontemplate>
+        <!-- Bot Templates -->
+        <jsontemplate name="zia_message" disable-extra-key="true">
+            <key name="transcript" template="zia_transcript" type="JSONObject" max-len="12000"/>
+        </jsontemplate>
+        <jsontemplate name="zia_transcript" disable-extra-key="true">
+            <key name="message"  type="String" max-len="3900" secret="true"/>
+            <key name="button" regex="32|33|34"/>
+            <key name="option_id" type="String" max-len="7800" secret="true"/>
+            <key name="options" type="JSONArray" template="zia_transcript_options" max-len="4500"/>
+        </jsontemplate>
+        <jsontemplate name="zia_transcript_options" disable-extra-key="true">
+            <key name="id" type="String"/>
+            <key name="label" type="String" max-len="4000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="zia_bot_action">
+            <key name="zia_bot_action" template="zia_bot_action_base" type="JSONObject" />
+        </jsontemplate>
+        <jsontemplate name="zia_bot_action_base">
+            <key name="is_enabled" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="zia_bot_action_view_details_base">
+            <key name="module" regex="request|request-tasks|request-notes|request-problem|request-request_initiated_change|request-request_caused_by_change|request-project|problem|problem-tasks|problem-notes|problem-associated_incidents|problem-associated_change|change|change-tasks|change-releases|project|project-tasks|project-milestones|release|release-notes|release-changes|release-projects|solution" />
+            <key name="type" regex="count|list|summary|text" />
+        </jsontemplate>
+        <jsontemplate name="zia_bot_button">
+            <key name="zia_bot_button" template="zia_bot_button_base" type="JSONObject" max-len="1000"/>
+            <key name="zia_bot_buttons" allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="zia_bot_button_base"/>
+        </jsontemplate>
+        <jsontemplate name="zia_bot_button_base">
+            <key name="name" type="String"/>
+            <key name="is_enabled" type="boolean"/>
+            <key name="bot_command_id" template="bot_command_base" type="JSONObject" max-len="1000"/>
+            <key name="usertype" description="The usertype here indicates the scope for the button based on users. It is not a sensitive data." regex="All|Technician|Requester"/>
+        </jsontemplate>
+        <jsontemplate name="embed_zia_put_call">
+            <key name="embed_zia_bot" template="embed_zia_details" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="embed_zia_details">
+            <key name="is_embed_zia_enabled" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_button_base">
+            <key name="next_node" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow">
+            <key name="workflow" template="zia_workflow_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_action">
+            <key name="isDefault" type="boolean"/>
+            <key name="id" type="long" range=">0"/>
+            <key name="customFunctionId" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_base">
+            <key name="name" type="String"/>
+            <key name="description" type="String"/>
+            <key name="module" template="zia_workflow_module_base" type="JSONObject"/>
+            <key name="statements" template="zia_workflow_statement_base" type="JSONArray" max-len="-1" array-size="0-1000"/>
+            <key name="connectors" template="zia_workflow_connector_base" type="JSONArray" max-len="-1" array-size="0-1000"/>
+            <key name="modified_workflow" template="zia_modified_workflow_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_module_base">
+            <key name="name" regex="zia-bot"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_statement_base">
+            <key name="id" type="String"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="type" template="zia_workflow_statement_type_base" type="JSONObject" max-len="-1"/>
+            <key name="key" description="The key here determines the type of the node. It is not a sensitive data." regex="start|multiSelectNode|action|userInput|output|furtherAssistanceButton|furtherAssistance|feedback|button"/>
+            <key name="position" template="zia_workflow_point2d" type="JSONObject" max-len="-1"/>
+            <key name="options" template="zia_workflow_option_base" type="JSONArray" max-len="-1" array-size="0-15"/>
+            <key name="internal_name" type="String" secret="true"/>
+            <key name="start" template="zia_workflow_start" type="JSONObject" max-len="-1"/>
+            <key name="action" template="zia_action_id" type="JSONObject" max-len="-1"/>
+            <key name="button" template="zia_workflow_button_base" type="JSONObject" max-len="-1"/>
+            <key name="is_default" type="boolean"/>
+            <key name="description" type="String" max-len="1000" secret="true"/>
+            <key name="custom_function_id" type="String"/>
+            <key name="view_details" template="zia_bot_action_view_details_base" type="JSONObject" max-len="-1"/>
+            <key name="can_delete_node" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_start">
+            <key name="initial_start_node" type="String"/>
+            <key name="next_node" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_statement_type_base">
+            <key name="name" regex="start|multiSelectNode|action|userInput|output|furtherAssistanceButton|furtherAssistance|feedback|button"/>
+        </jsontemplate>
+        <jsontemplate name="zia_action_id">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_option_base">
+            <key name="id" type="String"/>
+			<key name="name" type="String" max-len="250"/>
+            <key name="next_node" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_connector_base">
+            <key name="id" type="String"/>
+            <key name="source" template="zia_workflow_connector_source" type="JSONObject" max-len="-1"/>
+            <key name="target" template="zia_workflow_connector_target" type="JSONObject" max-len="-1"/>
+            <key name="vertices" template="zia_workflow_point2d" type="JSONArray" max-len="-1" array-size="0-50"/>
+            <key name="attributes" template="zia_workflow_attribute_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_point2d" disable-extra-key="true">
+			<key name="x" type="String"  min-occurrences="1" max-len="10" />
+			<key name="y" type="String"  min-occurrences="1" max-len="10" />
+		</jsontemplate>
+        <jsontemplate name="zia_workflow_attribute_base">
+            <key name="connector_id" type="String"/>
+            <key name="candelete_target" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="zia_modified_workflow_base">
+            <key name="nodes_added" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="nodes_removed" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="nodes_updated" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="buttons_updated" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="counter" template="zia_workflow_counter_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_counter_base">
+            <key name="multiSelectNode_count" type="long" range=">0"/>
+            <key name="actionNode_count" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_connector_source" disable-extra-key="true">
+            <key name="source_statement" template="zia_workflow_statement_unique" type="JSONObject" max-len="-1" />
+            <key name="source_port" type="String" max-len="257" />
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_connector_target" disable-extra-key="true">
+            <key name="target_statement" template="zia_workflow_statement_unique" type="JSONObject" max-len="-1" />
+            <key name="target_port" regex="input" />
+        </jsontemplate>
+        <jsontemplate name="zia_workflow_statement_unique">
+            <key name="id" type="String"/>
+            <key name="key" description="The key here determines the type of the node. It is not a sensitive data." regex="start|multiSelectNode|action|userInput|output|furtherAssistanceButton|furtherAssistance|feedback|button" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="zia_custom_data">
+            <key name="verified-emailapproval|^[A-Za-z]\w*(?:\s+[A-Za-z]\w*)*$" name-regex="true" type="JSONObject" template="zia_label_data_array" max-len="-1" max-occurrences="42" />
+        </jsontemplate>
+        <!-- SD-132474 : Unable to add more than 100 dataset in Reopen Prediction -->
+        <jsontemplate name="zia_label_data_array">
+            <key name="label_[1-3]" name-regex="true" type="JSONArray" template="strarray_300" max-len="-1" max-occurrences="3"/>
+        </jsontemplate>
+        <jsontemplate name="strarray_300">
+            <key allow-invalid="false" index="0-299" max-len="1000" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="zia_bot_property">
+            <key name="zia_bot_property" template="zia_bot_property_base" type="JSONArray" max-len="10000" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="zia_bot_property_base">
+            <key name="name" type="String" max-len="250"/>
+            <key name="value" type="String" max-len="250"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

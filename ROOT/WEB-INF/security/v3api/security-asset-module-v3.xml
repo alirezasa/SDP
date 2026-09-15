@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls api="true" authentication="required" >
+        <throttles name="asset_module_apis" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1M" threshold="80" lock-period="5M"/>
+        </throttles>
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_modules">
+            <param name="input_data" type="JSONObject" template="asset_module" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)">
+            <param name="input_data" type="JSONObject" template="asset_module" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules">
+            <param name="input_data" type="JSONObject" template="asset_module" max-len="-1" min-occurrences="1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_modules">
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <!-- refer entity collection start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/fields/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/fields/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/fields/_total_count" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/sub_entities/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/sub_entities">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/sub_entities/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/sub_entities/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/sub_entities/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections">
+            <param name="input_data" type="JSONObject" template="layout_section" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/(\d+)">
+            <param name="input_data" type="JSONObject" template="layout_section" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections">
+            <param name="input_data" type="JSONObject" template="layout_section" max-len="-1" min-occurrences="1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections">
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/(\d+)/entity/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/entity">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/(\d+)/entity">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/entity/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/layouts/(\d+)/sections/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <!-- refer entity collection end -->
+        <!-- refer entity start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/(parent|asset_type|asset_category|icon|status|category)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(parent|asset_type|asset_category|icon|status|category)/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(parent|asset_type|asset_category|icon|status|category)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/(parent|asset_type|asset_category|icon|status|category)/(\d+)" />
+        <!-- refer entity end -->
+        <!-- convenience operations start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_new_form">
+            <param name="input_data" type="JSONObject" template="asset_module_new_form" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/_new_form" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/_get_dependencies_count" />
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/_activate" />
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_get_performed_by_for_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" allow-invalid="false" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_modules/_get_records_for_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" allow-invalid="false" />
+        </url>
+        <!-- convenience operations ends -->
+        <!-- image starts -->
+        <url method="get" path="/api/v3/asset_modules/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="res" regex="50x50|120x120"/>
+            <param name="key" regex="[a-z0-9]+" max-len="500" max-occurrences="1" secret="true" description="SHORT_LIFE_KEY" />
+        </url>
+        <url method="get" path="/api/v3/asset_modules/(\d+)/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="res" regex="50x50|120x120"/>
+            <param name="key" regex="[a-z0-9]+" max-len="500" max-occurrences="1" secret="true" description="SHORT_LIFE_KEY" />
+        </url>
+    </urls>
+    <urls api="true" authentication="required">
+        <throttles name="asset_modules_images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_modules/images">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_modules/(\d+)/images">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <!-- image ends -->
+    </urls>
+</security>

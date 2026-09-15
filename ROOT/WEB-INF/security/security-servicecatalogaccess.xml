@@ -1,0 +1,283 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<!--
+    All service catalog related url entries should be specified here.
+    -->
+    <urls method="get" authentication="required">
+    	  <throttles name="scatalog_struts_get_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="10" lock-period="5M"/>
+          </throttles>
+          <!-- Admin Section URLs -->
+		  
+          <url roles="ServiceRequestConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="servicecatalogudf,servicecatalogsla">
+          	<param name="mode" regex="getAddForm"/>
+          </url>
+		  	
+    	  <!-- Service Catalog Additional Field URLs -->
+    	  <url roles="ServiceRequestConfig" path="/setup/Service_add_fields.jsp">
+			 <param name="ServiceId"  type="long"/>
+			 <param name="id"  type="long"/>
+			 <param name="[0-9]+" name-regex="true" type="String" max-occurrences="1" max-len="0"/>
+		  </url>
+		  
+		  <url roles="ServiceRequestConfig" path="(/STATE_ID/[0-9]+)?/RequestAdditionalFieldListView(_HD_[0-9]+)?.cc" url-type="dynamic" operation-param="udfModule" operation-value="Service">
+        	<param name="UNIQUE_ID" regex="RequestAdditionalFieldListView(_HD_[0-9]+)?"/>
+        	<param name="entityId" type="long"/>
+    	  </url>
+    	  
+    	  <!-- Service SLA URLs -->
+    	  <url roles="ServiceRequestConfig" path="/ServiceSLA.do" operation-param="mode" operation-value="newServiceSLA">
+          	<param name="serviceId" type="long"/>
+          	<param name="id" type="long"/>
+          </url>
+          <url roles="ServiceRequestConfig" path="/ServiceSLA.do" operation-param="mode" operation-value="edit">
+          	<param name="id" type="long"/>
+          </url>
+		
+      	  <!-- Other URLs -->      
+          <url path="/api/v3/servicerequests/[0-9]+" user_type="all" roles="ViewRequests" url-type="dynamic">
+			<param name="INPUT_DATA" template="include" type="JSONObject" max-len="-1"/>
+			<param name="date" type="long"/>
+		  </url>
+          
+          <url path="/jsp/MobilePushNotificationConfig.jsp" roles="SDOrgAdmin" user_type="all"/>
+		  <url path="/api/v3/push_notifications/(_?)upload" method="post" roles="SDOrgAdmin" user_type="all" operation-param="for" operation-value="import_service_json" csrf="true" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="push_notifications_fcm_json_upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <file name="input_file" max-size="1024" allowed-extensions="json" content-type-name="json" allow-empty="false">
+                <filename regex="filename" max-len="250"/>
+            </file>
+          </url>
+		  <!--Resource Section URLs and Params-->
+		  <url path="/servlet/SDAjaxServlet" user_type="all" operation-param="action" operation-value="getResourceJson" roles="ViewRequests,ViewRequestMaintenances">
+		  <throttles name="getResourceJson_url" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="20" lock-period="5M"/>
+          </throttles>
+			<param name="woID" type="long"/>
+			<param name="templateId" type="long"/>
+			<param name="requiredFormat" regex="array"/>
+		  </url>
+		
+		  <url path="/servlet/HdClientUtilServlet" roles="SDAdmin,HelpdeskConfig" operation-param="command" operation-value="downloadResQuesSampleXLS" />
+    	  <!--Resource Section URLs and Params-->
+    	  
+
+    	  
+    	  <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getMickeyListExportInfo" roles="ViewRequests">
+   			<param name="viewName" regex="RequestsView(_HD_\d+)*" min-occurrences="1"/>
+		  </url>
+		  
+		  <url path="/servlet/AJaxServlet" roles="ViewRequests" operation-param="action" operation-value="exportMickeyList">
+   			<param name="stateData" type="JSONObject" template="mickey_listview_state_data" max-len="-1" min-occurrences="1"/>
+			<!-- Caution: Do not change param name, report module (which is used for export) uses this param -->
+			<param name="file_type" regex="HTML|PDF|XLS|XLSX|CSV|DOC|DOCX|XML" min-occurrences="1"/>
+		  </url>
+		  
+		  <!-- request dependency URLs-->
+		  <url path="/AssociateDependency(_HD_[0-9]+)?.cc"  roles="ViewRequests" url-type="dynamic">
+		    <param name="UNIQUE_ID" regex="AssociateDependency(_HD_[0-9]+)?"/>
+			<param name="WorkorderId" type="long"/>
+			<param name="Type" type="String"/>
+			<param name="FromModule" regex="RequestDependency"/>
+	      </url>
+
+	      <url path="/STATE_ID/[0-9]+/AssociateDependency(_HD_[0-9]+)?.cc" roles="ViewRequests" url-type="dynamic">
+			<param name="UNIQUE_ID" regex="AssociateDependency(_HD_[0-9]+)?"/>
+			<param name="WorkorderId" type="long"/>
+			<param name="Type" type="String"/>
+			<param name="FromModule" regex="RequestDependency"/>
+	      </url>
+	    
+		  <url path="/DependencyRequests(_HD_[0-9]+)?.cc" roles="ViewRequests" url-type="dynamic">
+		    <param name="UNIQUE_ID" regex="DependencyRequests(_HD_[0-9]+)?"/>
+			<param name="WorkorderId" type="long"/>
+		  </url>
+
+	      <url path="/STATE_ID/[0-9]+/DependencyRequests(_HD_[0-9]+)?.cc" roles="ViewRequests" url-type="dynamic">
+			<param name="UNIQUE_ID" regex="DependencyRequests(_HD_[0-9]+)?"/>
+			<param name="WorkorderId" type="long"/>
+		  </url>
+		
+	      <url path="/AssoDependencyRequest.do"  roles="ModifyRequests" operation-param="mode" operation-value="getWindow">
+			<param name="WorkorderId" type="long" allow-empty="false"/>
+	      </url>
+
+		  <url path="/RequestDependencies.do"  roles="ModifyRequests" operation-param="SubmitAction" operation-value="getMap">
+			<param name="EntityId" type="long" allow-empty="false"/>
+			<param name="Module" regex="request|archived"/>
+		  </url>
+
+	      <url path="/WODependencyDef.do"  roles="ViewRequests" operation-param="SubmitAction" operation-value="getDependencyDetails">
+			<param name="IsArchive" regex="true"/>
+		    <param name="AssociatedEntityId" type="long" allow-empty="false"/>
+		    <param name="DepWorkorderId" type="long" max-occurrences="250" allow-empty="false"/>
+		    <param name="Module" regex="request|archived"/>
+		    <param name="scopeid" regex="^[1-9]{1}[0-9]*$|null"/>
+		  </url>
+		  <url path="/workorder/CreateService.jsp" roles="ViewRequests">
+	    	<param name="module" regex="Request"/>
+            <param name="woID" type="long"/>
+          </url>
+		  <url path="/workorder/RequestCost.jsp" >
+            <param name="woId" type="long" allow-empty="false"/>
+			<param name="siteId" regex="^[1-9]{1}[0-9]*$|null"/>
+	      </url>
+		  <url path="/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="newPR" roles="CreatePR">
+			<param name="woID"  type="long" />
+			<param name="fromRequestPage" regex="true" />
+		  </url>
+		  <url path="/servlet/HdClientUtilServlet" roles="ModifyRequests,SDAdmin,HelpdeskConfig" operation-param="command" operation-value="getProductInfo">
+		  	<param name="productId" type="long"/>
+		  </url>
+		  <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getCITypeIds" roles="ServiceRequestConfig">
+        	<param name="citypename" type="String" min-len="1" max-len="250" min-occurrences="1" max-occurrences="10"/>
+    	</url>
+		  <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getOBOUserDetails"  user_type="all"  roles="CreateRequests">
+		  	<param name="reqId" type="long"/>
+			<param name="search" type="String" max-len="250"/>
+		  </url>
+		  <url path="/servlet/SDAjaxServlet"  operation-param="action" operation-value="getResCheckBoxLimit" roles="CreateRequests,ModifyRequests" user_type="all"/>
+    </urls>
+
+    <urls method="post" csrf="true" authentication="required">
+    	  <throttles name="scatalog_struts_post_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+          	<throttle duration="1M" threshold="10" lock-period="5M"/>
+          </throttles>
+          
+          
+          <!-- Service SLA URLs -->
+    	  <url roles="ServiceRequestConfig" path="/ServiceSLA.do" operation-param="mode" operation-value="add">
+    	  	<param-group name="ServiceSLAForm"/>
+          	<param name="serviceId" type="long"/>
+            <param name="id" type="long"/>
+          </url>
+          <url roles="ServiceRequestConfig" path="/ServiceSLA.do" operation-param="mode" operation-value="addAndAddNew">
+    	  	<param-group name="ServiceSLAForm"/>
+          </url>
+          <url roles="ServiceRequestConfig" path="/ServiceSLA.do" operation-param="mode" operation-value="update">
+    	  	<param-group name="ServiceSLAForm"/>
+          </url>
+          <url roles="ServiceRequestConfig" path="/ServiceSLA.do" operation-param="mode" operation-value="updateAndAddNew">
+    	  	<param-group name="ServiceSLAForm"/>
+          </url>
+          <url roles="ServiceRequestConfig" path="/ServiceSLA.do" operation-param="mode" operation-value="cancel">
+    	  	<param-group name="ServiceSLAForm"/>
+          	<param name="serviceId" type="long"/>
+            <param name="id" type="long"/>
+          </url>
+          <!--Other URLs-->
+          <url path="/servlet/MobilePushNotificationConfigServlet" roles="SDOrgAdmin" user_type="all">
+            <param name="applep12" type="String" max-len="500" min-occurrences="1" secret="true"/>
+            <param name="applekey" type="String" max-len="500" min-occurrences="1" secret="true"/>
+            <param name="mode" type="boolean" min-occurrences="1" />
+            <param name="applebundleid" regex="([\w]+\.)+[\w]+(?=[\s]|$)" max-len="500" min-occurrences="1" secret="true" />
+			<param name="fcm_json_id" type="String" max-len="50" min-occurrences="1" />
+          </url>
+           
+          <url roles="IncidentRequestConfig,ServiceRequestConfig" path="/servlet/SDAjaxServlet" operation-param="action" operation-value="organize_request_catalog">
+		  	<param name="serviceCategoryId" type="long" min-occurrences="1"/>
+			<param name="categorySortOrder" type="JSONObject" template="reorder" min-occurrences="1" max-len="-1"/>
+			<param name="templateSortOrder" type="JSONObject" template="reorder" min-occurrences="1" max-len="-1"/>
+		  </url>
+		   
+		  <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="setRequestCancelStatus" roles="SDAdmin">
+          	<param name="createNewStatus" regex="true"/>
+        	<param name="statusName" type="String" max-len="100"/>
+        	<param name="statusDescription" type="String" max-len="250"/>
+        	<param name="statusColor" type="String" max-len="7"/>
+        	<param name="useExistingStatusid" type="long"/>
+          </url>
+           
+          <url path="/servlet/AJaxServlet" operation-param="action" operation-value="convertExcelToJson" roles="SDAdmin,HelpdeskConfig">
+			<file name="excelfile" content-type-name="xls" max-size="10240" limit="1" allowed-extensions="xls" allow-empty="false">
+				<filename regex="filename" max-len="250"/>
+			</file>
+		  </url>
+	   
+	   
+	   <!-- Request details page - Dependency Tab -->
+	    <url path="/AssoDependencyRequest.do" roles="ModifyRequests" operation-param="mode" operation-value="submitAction">
+			<param name="viewType" regex="All_Completed|All_Completed_User|All_Pending|All_Pending_Requests_Tasks_User|All_Pending_User|All_Requests|All_User|Due_Today_User|Group_OLA_Overdue|MyOpen_Or_Unassigned|My_Pending_Approval|OLA_Overdue_System|OLA_Overdue_System_Today|Onhold_System|Onhold_User|Open_System|Open_User|Overdue_System|Overdue_System_Today|Overdue_User|Pending_Approval|Share_All_Requests|Share_Pending|Unassigned_System|Updated_By_Me|Waiting_Update|closed_chat_requests|missed_chat_requests|Incident_Requests|Service_Requests"/>
+		    <param name="Associate" regex="true"/>
+		    <param name="DepWorkorderId" type="long" max-occurrences="250" allow-empty="false"/>
+		    <param name="WorkorderId" type="long" allow-empty="false"/>
+		    <param name="DummyColumn" type="String" max-len="0"/>
+		    <param name="search" regex="Search"/>
+		    <param name="SearchText" type="String" max-len="250"/>
+	    </url>
+		
+		<url path="/RequestDependencies.do"  roles="ModifyRequests" operation-param="SubmitAction" operation-value="AddRequestDependency,DeleteRequestDependency,DeleteRequestFromDependencyGroup">
+			<param name="EntityId" type="long" allow-empty="false"/>
+			<param name="Module" regex="request|archived"/>
+			<param name="Request_Relation" regex="removeDependency|Depends-On"/>
+			<param name="Base_ReqId" type="long"/>
+			<param name="Dependson_ReqId" type="long"/>
+			<param name="Dependent_ReqId" type="long" allow-empty="false"/>
+		</url>
+	
+		<url path="/WODependencyDef.do"  roles="ViewRequests" operation-param="SubmitAction" operation-value="DissociateDependency,DissociateLastDependency">
+		    <param name="IsArchive" regex="true"/>
+		    <param name="AssociatedEntityId" type="long" allow-empty="false"/>
+		    <param name="DepWorkorderId" type="long" max-occurrences="250" allow-empty="false"/>
+		    <param name="Module" regex="request|archived"/>
+		</url>
+    </urls>
+
+<param-groups>
+<param-group name="ServiceSLAForm">
+	<param name="name"  type="String"/>
+    <param name="slaID"  type="long"/>
+    <param name="slaName"  type="String"/>
+    <param name="siteId" type="long"/>
+    <param name="comments" type="String" max-len="2000" secret="true"/>
+    <param name="isDeleted" type="boolean"/>
+    
+    <param name="frDueByDays"  type="long" range=">=0"/>
+    <param name="frDueByHours"  type="long" range="0-23"/>
+    <param name="frDueByMinutes"  type="long" range="0-59"/>
+             
+    <param name="dueByDays"  type="long" range=">=0"/>
+    <param name="dueByHours"  type="long" range="0-23"/>
+    <param name="dueByMinutes"  type="long" range="0-59"/>
+             
+    <param name="overrideOperatingHours" regex="on"/>
+    <param name="overrideHolidays"  regex="on"/>
+    <param name="overrideWeekends"  regex="on"/>
+
+    <param name="checkbox[0-5]+" name-regex="true"  regex="on"/>
+    <param name="notifyList[0-5]+" name-regex="true" type="String" max-len="1000" max-occurrences="5"/>
+    <param name="selected[0-5]+" name-regex="true"  type="String" max-len="1000" max-occurrences="5"/>
+    <param name="escalateBefore[0-5]+" name-regex="true" regex="escbefore|escafter"/>
+    <param name="escalateAfterDays[0-5]+" name-regex="true" type="long"/>
+    <param name="escalateAfterHours[0-5]+" name-regex="true" type="long"/>
+    <param name="escalateAfterMinutes[0-5]+" name-regex="true" type="long"/>
+
+    <param name="actionValues" type="JSONArray" template="ActionValuesTemplate" array-size="5" max-len="500"/>
+    <param name="PlaceInGroup" type="long" max-occurrences="5"/>
+    <param name="AssignToTech" type="long" max-occurrences="5"/>
+    <param name="priority" type="long" max-occurrences="5"/>
+    <param name="level" type="long" max-occurrences="5"/>
+    <param name="olaDetails" type="JSONObject" template="OLADetailsTemplate" max-len="-1"/>
+</param-group>
+</param-groups>
+
+<jsontemplates>
+  <jsontemplate name="ActionValuesTemplate">
+    <key name="position" type="long"/>
+    <key name="queueid" type="long"/>
+    <key name="technicianid" type="long"/>
+    <key name="priorityid" type="long"/>
+    <key name="levelid" type="long"/>
+  </jsontemplate>
+  <jsontemplate name="reorder">
+  	<key name="Integers" max-occurrences="500" name-regex="true" type="long"/>
+  </jsontemplate>
+  <jsontemplate name="mickey_listview_state_data">
+		<extrakey max-len="100" type="String" limit="25" description="to allow unknown state params"/>
+		<key name="_VN" regex="RequestsView(_HD_\d+)*|ArchiveRequestsView(_HD_\d+)*" min-occurrences="1"/>
+	</jsontemplate>
+</jsontemplates>
+
+</security>
+
+<!--$Id$-->

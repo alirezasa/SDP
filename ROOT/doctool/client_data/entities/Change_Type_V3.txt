@@ -1,0 +1,172 @@
+{
+  "operations": [
+    {
+      
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_types",
+      "desc": "You can add a new change here.",
+      "disp_desc": "Add a Change Type",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{\"change_type\":{\"description\":\"Routine, low-impact changes that do not require a formal approval\",\"name\":\"Standard\",\"color\": \"#ff6666\",\"inactive\":false}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"change_type\":{\"id\":\"1\",\"description\":\"Routine, low-impact changes that do not require a formal approval\",\"name\":\"Standard\",\"color\": \"#ff6666\",\"inactive\":false}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_types/{id}",
+      "desc": "You can view the details of a specific Change Request here.",
+      "disp_desc": "View a Change Type",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"change_type\":{\"id\":\"1\",\"description\":\"Routine, low-impact changes that do not require a formal approval\",\"name\":\"Standard\",\"color\": \"#ff6666\",\"inactive\":false}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_types",
+      "desc": "You can get the details of all available Change Requests here.",
+      "disp_desc": "View all Change Types",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_types\":[{\"id\":\"2\",\"description\":\"High impact and /or Resource requirements usually approved after consulting management\",\"name\":\"Major\",\"color\": \"#ff6666\",\"inactive\":false},{\"id\":\"4\",\"description\":\"Minor impact and Resource requirements usually approved by a Change Manager\",\"name\":\"Minor\",\"color\": \"#ff6666\",\"inactive\":false},{\"id\":\"3\",\"description\":\"Changes with high impact usually approved by CAB members.\",\"name\":\"Significant\",\"color\": \"#ff6666\",\"inactive\":false},{\"id\":\"1\",\"description\":\"Routine, low-impact changes that do not require a formal approval\",\"name\":\"Standard\",\"color\": \"#ff6666\",\"inactive\":false}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":4,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_types/{id}",
+      "desc": "You can edit the changes here.",
+      "disp_desc": "Update a Change Type",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"change_type\":{\"id\":\"1\",\"description\":\"Routine, low-impact changes that do not require a formal approval\",\"name\":\"Standard\",\"color\": \"#ff6666\",\"inactive\":false}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"change_type\":{\"id\":\"1\",\"description\":\"Routine, low-impact changes that do not require a formal approval\",\"name\":\"Standard\",\"color\": \"#ff6666\",\"inactive\":false}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_types/{id}",
+      "desc": "You can delete the changes here.",
+      "disp_desc": "Delete a Change Type",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "inOP": "true",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "CHANGETYPEDEFINITION:CHANGETYPEID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "name",
+    "type": "String",
+    "inOP": "true",
+    "desc": "The name of the Change type",
+    "graphView": "",
+    "column": "CHANGETYPEDEFINITION:NAME",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "description",
+    "type": "String",
+    "inOP": "true",
+    "desc": "The description of the Change type",
+    "graphView": "",
+    "column": "CHANGETYPEDEFINITION:DESCRIPTION",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "pre_approved",
+    "type": "Boolean",
+    "desc": "Used to identify the pre approved Change Requests",
+    "graphView": "",
+    "column": "CHANGETYPEDEFINITION:ISPREAPPROVED",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "color",
+    "type": "String",
+    "inOP": "true",
+    "desc": "Color code of the Change type",
+    "graphView": "",
+    "column": "CHANGETYPEDEFINITION:COLORCODE",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "inactive",
+    "type": "Boolean",
+    "inOP": "true",
+    "desc": "Denotes whether the Change type is marked as not for further usage",
+    "graphView": "",
+    "column": "CHANGETYPEDEFINITION:ISDELEETD",
+    "html_type": "",
+    "isDefault": "true",
+    "inOP": "true",
+    "inOD": "true",
+    "internalType": "int",
+    "entity": null,
+    "relational_mapping": null,
+    "autofill": null,
+    "dfs_module_name": null,
+    "delete": null,
+    "add_reference_entity": null,
+    "trim_length": null,
+    "suffix": null,
+    "group": null,
+    "validation_rules": [],
+    "isReleased": "true"
+  }
+],
+  "isReleased": "false"
+}
+

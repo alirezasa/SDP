@@ -1,0 +1,379 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "path": [
+        "/api/v3/requests/{request_id}/approval_levels/{approval_level_id}/approvals",
+        "/api/v3/releases/{release_id}/approval_levels/{approval_level_id}/approvals",
+        "/api/v3/changes/{change_id}/approval_levels/{approval_level_id}/approvals"
+      ],
+      "desc": "This operation submits request for approval",
+      "disp_desc": "Add Approval",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"approval\":{\"approver\":{\"email_id\":\"user1@zylker.com\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"approval\":{\"id\":\"301\",\"approval_level\":{\"id\":\"12345\",\"level\":1,\"status\":\"Approved\",\"created_by\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"created_time\":{\"value\":\"1456464639051\",\"display_value\":\"Feb 26, 2016 11:00 AM\"},\"associated_entity\":\"request\",\"request\":{\"id\":1}},\"status\":\"Approved\",\"sent_on\":{\"value\":\"1410633000000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"approver\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"action_taken_on\":{\"value\":\"14106330000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"comments\":\"This is approved\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "path": [
+        "/api/v3/requests/{request_id}/approval_levels/{approval_level_id}/approvals/{approval_id}/_send_notification",
+        "/api/v3/releases/{release_id}/approval_levels/{approval_level_id}/approvals/{approval_id}/_send_notification",
+        "/api/v3/changes/{change_id}/approval_levels/{approval_level_id}/approvals/{approval_id}/_send_notification"
+      ],
+      "desc": "This operation will send/resend the particular approval notification to the approver mail_ids",
+      "disp_desc": "Send Approval",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"notification\":{\"subject\":\"Approval required for a Request\",\"description\":\"Your approval is required for a request to proceed with its execution. The details of the Request can be found at $ApprovalLink\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"Success\",\"statuscode\":\"200\",\"message\":\" Approval notification sent successfully.\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/requests/{request_id}/approval_levels/{approval_level_id}/approvals/{approval_id}",
+        "/api/v3/releases/{release_id}/approval_levels/{approval_level_id}/approvals/{approval_id}",
+        "/api/v3/changes/{change_id}/approval_levels/{approval_level_id}/approvals/{approval_id}"
+      ],
+      "desc": "Get details about particular approval",
+      "disp_desc": "View Approval",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"approval\":{\"id\":\"301\",\"approval_level\":{\"id\":\"12345\",\"level\":1,\"status\":\"Approved\",\"created_by\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"created_time\":{\"value\":1456464639051,\"display_value\":\"Feb 26, 2016 11:00 AM\"},\"associated_entity\":\"request\",\"request\":{\"id\":1}},\"status\":\"Approved\",\"sent_on\":{\"value\":\"1410633000000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"approver\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"action_taken_on\":{\"value\":\"14106330000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"comments\":\"This is approved\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/requests/{request_id}/approval_levels/{approval_level_id}/approvals",
+        "/api/v3/releases/{release_id}/approval_levels/{approval_level_id}/approvals",
+        "/api/v3/changes/{change_id}/approval_levels/{approval_level_id}/approvals"
+      ],
+      "desc": "Used to get all approvals related to associated entity id",
+      "disp_desc": "View all Approvals",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"approvals\":[{\"id\":\"301\",\"approval_level\":{\"id\":\"12345\",\"level\":1,\"status\":\"Approved\",\"created_by\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"created_time\":{\"value\":\"1456464639051\",\"display_value\":\"Feb 26, 2016 11:00 AM\"},\"associated_entity\":\"request\",\"request\":{\"id\":1}},\"status\":\"Approved\",\"sent_on\":{\"value\":\"1410633000000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"approver\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"action_taken_on\":{\"value\":\"14106330000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"comments\":\"This is approved\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": "/api/v3/approvals",
+      "desc": "Get pending approval list of the logged in user",
+      "disp_desc": "Get Pending Approvals",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"row_count\": \"100\", \"fields_required\": [ \"approval_level.request.is_service_request\" ], \"filter_by\": { \"name\": \"my_pending_approvals\" } } }"
+      },
+      "output": {
+        "sample": " {\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"approvals\":[{\"approver\":{\"email_id\":\"jeniffer.doe@sdp.com\",\"phone\":\"1234455\",\"name\":\"JenifferDoe\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"portal_name\":\"ITHelpdesk\",\"clarifications_raised\":false,\"comments\":null,\"associated_entity\":\"request\",\"approval_level\":{\"request\":{\"requester\":{\"email_id\":null,\"phone\":\"1234562564\",\"name\":\"Guest\",\"mobile\":\"\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"10\",\"department\":null},\"template\":{\"is_service_template\":false,\"service_category\":null,\"name\":\"DefaultRequest\",\"id\":\"1\"},\"short_description\":\"\",\"created_time\":{\"display_value\":\"Jan11,202311:05AM\",\"value\":\"1673415313253\"},\"subject\":\"Test\",\"is_overdue\":false,\"technician\":null,\"priority\":null,\"created_by\":{\"email_id\":\"guest@sdp.com\",\"phone\":\"1234455\",\"name\":\"Guest\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"due_by_time\":{\"display_value\":\"-\",\"value\":\"-1\"},\"site\":null,\"is_service_request\":false,\"cancel_requested\":false,\"id\":\"1\",\"status\":{\"color\":\"#0066ff\",\"name\":\"Open\",\"id\":\"2\"},\"group\":null},\"name\":\"LevelOne\",\"id\":\"301\"},\"id\":\"302\",\"portal_id\":1,\"sent_on\":{\"display_value\":\"Jan11,202311:05AM\",\"value\":\"1673415324370\"},\"action_taken_on\":null,\"status\":{\"name\":\"PendingApproval\",\"id\":\"1\"}},{\"approver\":{\"email_id\":\"jeniffer.doe@sdp.com\",\"phone\":\"1234455\",\"name\":\"JenifferDoe\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"portal_name\":\"ITHelpdesk\",\"comments\":null,\"associated_entity\":\"change\",\"approval_level\":{\"change_stage\":{\"internal_name\":\"Submission\",\"stage_index\":\"1\",\"name\":\"Submission\",\"id\":\"1\"},\"change\":{\"id\":\"1\",\"title\":\"Test\",\"priority\":null,\"change_requester\":null},\"name\":\"Default\",\"id\":\"1\"},\"id\":\"1\",\"portal_id\":1,\"sent_on\":{\"display_value\":\"Jan11,202311:09AM\",\"value\":\"1673415562387\"},\"action_taken_on\":null,\"status\":{\"name\":\"PendingApproval\",\"id\":\"1\"}}],\"list_info\":{\"has_more_rows\":false,\"fields_required\":[\"approval_level.request.is_service_request\"],\"start_index\":1,\"filter_by\":{\"name\":\"my_pending_approvals\"},\"row_count\":2}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/requests/{request_id}/approval_levels/{level_number}/approvals/{approval_id}/_approve",
+        "/api/v3/releases/{release_id}/approval_levels/{level_number}/approvals/{approval_id}/_approve",
+        "/api/v3/changes/{change_id}/approval_levels/{level_number}/approvals/{approval_id}/_approve",
+        "/api/v3/purchase_requests/{purchase_request_id}/approval_levels/{level_number}/approvals/{approval_id}/_approve",
+        "/api/v3/purchase_orders/{purchase_order_id}/approval_levels/{level_number}/approvals/{approval_id}/_approve"
+      ],
+      "desc": "Action taken on an Approval. The attribute 'comments' is mandatory for Change approval.",
+      "disp_desc": "Approve",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"approval\":{\"comments\":\"approver comments\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Approval updated successfully\",\"status_code\":\"200\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/requests/{request_id}/approval_levels/{level_number}/approvals/{approval_id}/_reject",
+        "/api/v3/releases/{release_id}/approval_levels/{level_number}/approvals/{approval_id}/_reject",
+        "/api/v3/changes/{change_id}/approval_levels/{level_number}/approvals/{approval_id}/_reject",
+        "/api/v3/purchase_requests/{purchase_request_id}/approval_levels/{level_number}/approvals/{approval_id}/_reject",
+        "/api/v3/purchase_orders/{purchase_order_id}/approval_levels/{level_number}/approvals/{approval_id}/_reject"
+      ],
+      "desc": "Action taken on an Approval. The attribute 'comments' is mandatory for Change, Purchase Request and Purchase Order approvals.",
+      "disp_desc": "Reject",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"approval\":{\"comments\":\"approver comments\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Approval updated successfully\",\"status_code\":\"200\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/requests/{request_id}/approval_levels/{approval_level_id}/approvals/{approval_id}",
+        "/api/v3/requests/{release_id}/approval_levels/{approval_level_id}/approvals/{approval_id}",
+        "/api/v3/changes/{change_id}/approval_levels/{approval_level_id}/approvals/{approval_id}"
+      ],
+      "desc": "Delete particular aprroval",
+      "disp_desc": "Delete Approval",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": "/api/v3/requests/{request_id}/approval_levels/{approval_level_id}/approvals/{approval_id}/_send_notification",
+      "desc": "Gent content for send approval notification",
+      "disp_desc": "Get Approval Notification Content",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"notification\":{\"subject\":\"Approval required for a Request\",\"description\":\"Your approval is required for a Request to act upon. The details of the Request can be found at $ApprovalLink<br/>\"},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Common",
+      "path": "/api/v3/approvals/_total_count",
+      "desc": "Get the total count of approvals based on the provided filter criteria",
+      "disp_desc": "Get Approvals Count",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"filter_by\": { \"name\": \"my_pending_approvals\" } } }"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"_total_count\":{\"approvals\":0}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Common",
+      "path": "/api/v3/approvals",
+      "desc": "Get module-specific pending approvals. Use different filter names for different modules: 'my_request_pending_approvals' for requests, 'my_change_pending_approvals' for changes, 'my_release_pending_approvals' for releases, and 'my_purchase_pending_approvals' for purchases",
+      "disp_desc": "Get Module-specific Approvals",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"filter_by\": { \"name\": \"my_request_pending_approvals\" }, \"start_index\": 1, \"row_count\": 10, \"get_total_count\": true, \"fields_required\": [\"moduleId\", \"module\", \"moduleTitle\", \"approval_name\", \"status.name\", \"comments\", \"subject\", \"sent_on\", \"action_taken_on\", \"requester_name\", \"priority\", \"description\", \"helpdesk_name\", \"approval.notification_details\", \"approval_level.change.created_time\", \"approval_level.request.created_time\", \"approval_level.release.created_time\", \"approval_level.purchase_request.created_date\", \"approval_level.purchase_order.created_date\"], \"sort_field\": \"sent_on\", \"sort_order\": \"desc\" } }",
+        "note": "For other modules, change the filter name to: my_change_pending_approvals, my_release_pending_approvals, my_purchase_pending_approvals"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"approvals\":[{\"id\":\"301\",\"approval_level\":{\"id\":\"12345\",\"level\":1,\"status\":\"Approved\",\"created_by\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"created_time\":{\"value\":\"1456464639051\",\"display_value\":\"Feb 26, 2016 11:00 AM\"},\"associated_entity\":\"request\",\"request\":{\"id\":1}},\"status\":\"Approved\",\"sent_on\":{\"value\":\"1410633000000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"approver\":{\"id\":\"123567\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"action_taken_on\":{\"value\":\"14106330000\",\"display_value\":\"Sep 14, 2014 12:00AM\"},\"comments\":\"This is approved\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOP": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Id of the approval",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "APPROVALDETAILS:APPROVALID",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "desc": "Current status of the approval. The possible values for this attribute can be Approved, Rejected, Pending Approval and To Be Sent",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "approver",
+      "type": "Object",
+      "desc": "The user who can take action on the approval",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "sent_on",
+      "type": "Date Object",
+      "desc": "Date of approval mail sent",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "action_taken_on",
+      "type": "Date Object",
+      "desc": "Date of approval action taken",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "comments",
+      "type": "String",
+      "desc": "Comments given by the approver when an approval action is taken",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "associated_entity",
+      "type": "String",
+      "desc": "Used to identify the entity of the approval.  The possible values for this attribute  can be request, change, purchase_request and purchase_order",
+      "graphView": "",
+      "column": "",	
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "request",
+      "type": "Object",
+      "desc": "This attribute will be present if the associated_entity is 'request'. It holds the associated Request details",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "change",
+      "type": "Object",
+      "desc": "This attribute will be present if the associated_entity is change'. It holds the associated  Change details",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "purchase_request",
+      "type": "Object",
+      "desc": "This attribute will be present if the associated_entity is 'purchase_request'. It holds the associated Purchase Request details",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "purchase_order",
+      "type": "Object",
+      "desc": "This attribute will be present if the associated_entity is 'purchase_order'. It holds the associated Purchase Order details",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "approval_level",
+      "type": "Object",
+      "desc": "Level of the approval",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReleased": "true",
+      "relEntity": {
+        "name": "Approval_level",
+        "type": "parent",
+        "relation": "1to1"
+      },
+      "inOP": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1486034199000
+}

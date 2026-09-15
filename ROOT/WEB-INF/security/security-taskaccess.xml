@@ -1,0 +1,180 @@
+<!-- $Id$ -->
+<!-- Security authentication for Task module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" user_type="all" description="Roles are not defined as role check will be done at server side">
+		<throttles name="task_module_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<url method="get" path="/tasks/ViewArcRequestTask.jsp">
+			<param name="TASKID" type="long"/>
+			<param name="MODULE" regex="ArcRequest"/>
+		</url>
+
+		<url method="get" path="/tasks/CalendarPrintView.jsp">
+			<param name="TASKID" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="assoId" regex="id"/>
+			<param name="module" regex="general|request|problem|change|project|milestone|release"/>
+		</url>
+
+		<url method="get" path="/dashboard/TaskReport.jsp">
+			<param name="viewFullReport" type="boolean"/>
+		</url>
+
+		<!-- Restricting Request related dashboard widget jsp files -->
+		<url path="/dashboard/CreateTaskTable.jsp"  roles="SDAdmin,ViewRequests" method="get">
+			<param name="viewFullReport" type="boolean" min-occurrences="1"/>
+			<param name="id" regex="table_[0-9]+"/>
+			<param name="site" type="long"/>
+			<param name="viewId" regex="Dashboard1|BirdsView|assetHome|ProjectHome" />
+			<param name="groups" regex="ids" max-len="250" />
+		</url>
+
+	</urls>
+
+	<urls authentication="required">
+		<throttles name="task_module_admin_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<!-- Notification Rules start-->
+		<url method="get" operation-param="mode" operation-value="read" path="/setup/TaskNotifications.jsp" roles="SDAdmin,HelpdeskConfig"/>
+		<url csrf="true" operation-param="mode" operation-value="edit" method="post" path="/setup/TaskNotifications.jsp" roles="SDAdmin,HelpdeskConfig">
+			<param name="Task_Assign" regex="on"/>
+			<param name="Notify_Task_Reassign" regex="on"/>
+			<param name="Notify_Task_Rescheduled" regex="on"/>
+			<param name="Notify_Task_Worklog" regex="on"/>
+			<param name="TaskCloseDepNotify_E-Mail" regex="on"/>
+			<param name="NotifyOwner_TasksOverdue" regex="on"/>
+			<param name="TaskReminder_Notify" regex="on"/>
+			<param name="Task_GroupAssign" regex="on"/>
+			<param name="TaskCloseDepGroupNotify" regex="on"/>
+			<param name="NotifyAssocEntity_TaskRescheduled" regex="on"/>
+			<param name="NotifyAssocEntity_Task_Close" regex="on"/>
+			<param name="NotifyAssocEntity_AllTask_Close" regex="on"/>
+			<param name="NotifyAssocEntity_TasksOverdue" regex="on"/>
+			<param name="SaveNot" regex="Save"/>
+		</url>
+
+		<url roles="SDAdmin" path="/NotificationContent.do" method="get" operation-param="notifType"
+			 operation-value="Task_Assign,Notify_Task_Reassign,Notify_Task_Rescheduled,Notify_Task_Worklog,TaskCloseDepNotify_E-Mail,NotifyOwner_TasksOverdue,Task_GroupAssign,TaskCloseDepGroupNotify,TaskReminder_Notify,comment-reply,comment-mention"/>
+
+		<url roles="SDAdmin" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType"
+			 operation-value="Task_Assign,Notify_Task_Reassign,Notify_Task_Rescheduled,Notify_Task_Worklog,TaskCloseDepNotify_E-Mail,NotifyOwner_TasksOverdue,Task_GroupAssign,TaskCloseDepGroupNotify,TaskReminder_Notify,comment-reply,comment-mention">
+			<param-group name="NotificationContent"/>
+		</url>
+
+		<url roles="HelpdeskConfig" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType"
+			 operation-value="NotifyAssocEntity_TaskRescheduled,NotifyAssocEntity_Task_Close,NotifyAssocEntity_AllTask_Close,NotifyAssocEntity_TasksOverdue,Notify_DepTasks_Overdue">
+			<param-group name="NotificationContent"/>
+		</url>
+
+		<url roles="HelpdeskConfig" path="/NotificationContent.do" method="get" operation-param="notifType"
+			 operation-value="NotifyAssocEntity_TaskRescheduled,NotifyAssocEntity_Task_Close,NotifyAssocEntity_AllTask_Close,NotifyAssocEntity_TasksOverdue,Notify_DepTasks_Overdue"/>
+		<!-- Notification Rules start-->
+
+		<!-- Task custom triggers start-->
+		<url path="/RequestExternalAction.do" method="get" operation-param="module" operation-value="task" roles="TaskConfig">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="task_custom_trigger_get" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="method" regex="getTriggerActionData|getAutoActionListView|getAutoActionCritVals|organizeActions|editAutoAction"/>
+			<param name="action_id" type="long"  />
+		</url>
+
+		<url path="/RequestExternalAction.do" operation-param="module" operation-value="task" method="post" csrf="true" roles="TaskConfig">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="task_custom_trigger_post" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="20" lock-period="5m"/>
+			</throttles>
+			<param name="method" regex="saveReOrderActions|saveAutoAction|enableDisableAction|deleteAutoAction" min-occurrences="1"/>
+			<param name="(?i)(action_id)" name-regex="true" type="long"  max-occurrences="2"/>
+			<param name="items" type="JSONObject" template="project_task_custom_trigger_template" max-len="-1" />
+			<param name="reorderItems" regex="ids" />
+		</url>
+
+		<url path="/SetUpWizard.do" roles="TaskConfig"  method="get" operation-param="forwardTo" operation-value="taskautoaction">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="task_custom_trigger_organize" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="isReorder" regex="true|failure"/>
+		</url>
+		<!-- Task custom triggers end-->
+	</urls>
+
+	<!-- Task module API based UI urls start -->
+	<urls authentication="required" user_type="all" method="get" description="FGR_APPLIED:Roles are not defined as role check will be done at server side" >
+		<throttles name="task_module_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<url path="/ui/tasks" operation-param="mode" operation-value="list">
+			<param name="module" regex="request|change|problem|project|milestone|release|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" allow-empty="false" />
+			<param name="moduleId" type="long" allow-empty="false" />
+			<param name="from" regex= "showAllTasks|combinedView|printView" allow-empty="false" />
+			<param name="owner" type="String" max-len="150" allow-empty="false" />
+			<param name="site" type="long" allow-empty="false" />
+			<param name="queryId" type="long" allow-empty="false" />
+			<param name="filter" type="String" allow-empty="false" regex = "pending_tasks|unassigned_tasks|my_pending_tasks|my_all_tasks|all_tasks"/>
+			<param name="projectId" type="long" allow-empty="false" />
+			<param name="stageId" type="long" allow-empty="false" />
+			<param name="group" type="JSONObject" template="taskGroupTemplate" max-len="-1" />
+		</url>
+
+
+		<url path="/ui/tasks" operation-param="mode" operation-value="detail" description="ROLE_NOT_REQUIRED">
+			<param name="module" regex="request|change|problem|project|milestone|release|general|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" allow-empty="false" />
+			<param name="moduleId" type="long" allow-empty="false" />
+			<param name="from" regex= "showAllTasks|combinedView|gantt|resMgmt|history|homeMyTasks|reqListView|rq_leftpanel|notification|kanban" allow-empty="false" />
+			<param name="taskId" type="long" min-occurrences="1" allow-empty="false" />
+			<param name="projectId" type="long" allow-empty="false" />
+		</url>
+
+		<url path="/ui/tasks" operation-param="mode" operation-value="form">
+			<param name="module" regex="request|change|problem|project|milestone|release|general|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" allow-empty="false"/>
+			<param name="moduleId" type="long" allow-empty="false" />
+			<param name="from" regex= "showAllTasks|scheduler|combinedView|reqListView|homeMyTasks|detail" allow-empty="false" />
+			<param name="taskId" type="long" allow-empty="false" />
+			<param name="projectId" type="long" allow-empty="false" />
+			<param name="stageId" type="long" allow-empty="false" />
+			<param name="startTime" type="long" allow-empty="false" />
+		</url>
+
+		<url path="/ui/tasks" operation-param="mode" operation-value="template">
+			<param name="module" regex="request|change|problem|project|milestone|release|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" min-occurrences="1" allow-empty="false" />
+			<param name="moduleId" type="long" min-occurrences="1" allow-empty="false" />
+			<param name="projectId" type="long" allow-empty="false" />
+			<param name="stageId" type="long" allow-empty="false" />
+		</url>
+
+		<url path="/ui/tasks" operation-param="mode" operation-value="unified">
+			<param name="module" regex="project|request" allow-empty="false"/>
+			<param name="moduleId" type="long" range=">0"/>
+			<param name="scheduledEnd" type="long" range=">0"/>
+		</url>
+
+		<url path="/ui/tasks" operation-param="mode" operation-value="resource"/>
+
+		<url path="/tasks/TaskDependencyTreeView.jsp" operation-param="mode" operation-value="view">
+			<throttles name="task_dependency_urls" key="url.path+url.dynamic_key+param.isExport" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="1" lock-period="5M"/>
+			</throttles>
+			<param name="module" regex="request|problem|change|release|project|milestone|project_template|milestone_template|request_template|problem_template|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" min-occurrences="1"/>
+			<param name="entityid" type="long" min-occurrences="1"/>
+			<param name="grandParentId" type="long"/>
+			<param name="ownerId" type="long"/>
+			<param name="isEditable" type="boolean"/>
+			<param name="stageId" type="long"/>
+			<param name="isExport" regex="true"/>
+			<param name="orientationType" regex="1"/>
+		</url>
+
+		<url path="/project/ProjectHistory.jsp"  operation-param="module" operation-value="tasks">
+			<param name="id" type="long" range=">0" min-occurrences="1"/>
+			<param name="parentModule" regex="request|change|problem|project|milestone|release|general|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" allow-empty="false" />
+			<param name="moduleId" type="long" range=">0"/>
+			<param name="is_new_filter" regex="true"  min-occurrences="1"/>
+			<param name="is_date_filter" regex="true"  min-occurrences="1"/>
+		</url>
+	</urls>
+	<!-- Task module API based UI urls end -->
+</security>

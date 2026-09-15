@@ -1,0 +1,687 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}",
+      "desc": "This operation is used to get the Problem details of the given Problem ID.",
+      "disp_desc": "View Problem",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"problem\":{\"known_error_details\":{\"is_known_error\":false,\"updated_by\":null,\"comments\":null,\"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ],\"updated_time\":null,\"description\":\"\",\"title\":\"d\",\"urgency\":null,\"reported_by\":null,\"id\":\"1\",\"root_cause\":{\"updated_by\":null,\"description\":null,\"updated_on\":null},\"item\":null,\"impact\":null,\"technician\":null,\"closed_time\":null,\"priority\":null,\"resolution\":null,\"workaround\":null,\"due_by_time\":null,\"symptoms\":{\"updated_by\":null,\"description\":null,\"updated_on\":null},\"site\":null,\"affected_service\":null,\"impact_details\":{\"updated_on\":null,\"updated_by\":null,\"description\":null},\"reported_time\":{\"display_value\":\"May 10, 2019 11:02 AM\",\"value\":\"1557466366502\"},\"associated_asset\":null,\"category\":null,\"subcategory\":null,\"status\":{\"color\":\"#0066ff\",\"name\":\"Open\",\"id\":\"1\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems",
+      "desc": "This opertaion is used to get the Problem details of the all the problems.",
+      "disp_desc": "View All Problem",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"row_count\": \"10\", \"get_total_count\": \"true\", \"sort_field\": \"id\", \"sort_order\": \"asc\", \"search_criteria\": { \"field\": \"status.name\", \"condition\": \"is\", \"value\": \"Open\" } } }"
+      },
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": true, \"start_index\": 1, \"row_count\": 10 }, \"problems\": [ { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": { \"display_value\": \"Dec 12, 2019 06:49 PM\", \"value\": \"1576156744270\" }, \"item\": null, \"impact\": null, \"description\": null, \"technician\": { \"email_id\": null, \"name\": \"Heather Graham\", \"is_vipuser\": false, \"id\": \"6\", \"department\": { \"site\": null, \"name\": \"Engineering\", \"id\": 2 } }, \"closed_time\": null, \"title\": \"sample title for problem\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"2\", \"reported_time\": { \"display_value\": \"Dec 12, 2019 03:49 PM\", \"value\": \"1576145998282\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"3\" }, \"group\": { \"site\": null, \"name\": \"Hardware Problems\", \"id\": \"1\" } }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": { \"display_value\": \"Dec 13, 2019 02:28 PM\", \"value\": \"1576227527278\" }, \"item\": null, \"impact\": null, \"description\": null, \"technician\": { \"email_id\": null, \"name\": \"Heather Graham\", \"is_vipuser\": false, \"id\": \"6\", \"department\": { \"site\": null, \"name\": \"Engineering\", \"id\": 2 } }, \"closed_time\": null, \"title\": \"sample title for problem\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": { \"display_value\": \"Dec 14, 2019 02:28 PM\", \"value\": \"1576313880000\" }, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"5\", \"reported_time\": { \"display_value\": \"Dec 13, 2019 11:04 AM\", \"value\": \"1576215294833\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"3\" }, \"group\": { \"site\": null, \"name\": \"Hardware Problems\", \"id\": \"1\" } }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": { \"display_value\": \"Dec 14, 2019 08:45 PM\", \"value\": \"1576336517917\" }, \"item\": null, \"impact\": null, \"description\": null, \"technician\": { \"email_id\": null, \"name\": \"Heather Graham\", \"is_vipuser\": false, \"id\": \"6\", \"department\": { \"site\": null, \"name\": \"Engineering\", \"id\": 2 } }, \"closed_time\": { \"display_value\": \"Dec 14, 2019 08:45 PM\", \"value\": \"1576336517935\" }, \"title\": \"gghghg\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": { \"display_value\": \"Dec 14, 2019 02:29 PM\", \"value\": \"1576313940000\" }, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"6\", \"reported_time\": { \"display_value\": \"Dec 13, 2019 02:29 PM\", \"value\": \"1576227571151\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"3\" }, \"group\": { \"site\": null, \"name\": \"Hardware Problems\", \"id\": \"1\" } }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"item\": null, \"impact\": null, \"description\": \"\", \"technician\": null, \"closed_time\": null, \"title\": \"sample title for problem\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"7\", \"reported_time\": { \"display_value\": \"Dec 14, 2019 08:28 PM\", \"value\": \"1576335538216\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"3\" }, \"group\": null }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"item\": null, \"impact\": null, \"description\": \"\", \"technician\": null, \"closed_time\": null, \"title\": \"sample title for problem\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"8\", \"reported_time\": { \"display_value\": \"Dec 14, 2019 08:48 PM\", \"value\": \"1576336737660\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"3\" }, \"group\": null }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"item\": null, \"impact\": null, \"description\": \"\", \"technician\": null, \"closed_time\": null, \"title\": \"test\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"9\", \"reported_time\": { \"display_value\": \"Dec 14, 2019 08:49 PM\", \"value\": \"1576336798155\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" }, \"group\": null }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": { \"display_value\": \"Dec 17, 2019 02:53 PM\", \"value\": \"1576574638819\" }, \"item\": null, \"impact\": null, \"description\": null, \"technician\": { \"email_id\": null, \"name\": \"Heather Graham\", \"is_vipuser\": false, \"id\": \"6\", \"department\": { \"site\": null, \"name\": \"Engineering\", \"id\": 2 } }, \"closed_time\": null, \"title\": \"sample title for problem\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"10\", \"reported_time\": { \"display_value\": \"Dec 16, 2019 04:34 PM\", \"value\": \"1576494267151\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" }, \"group\": { \"site\": null, \"name\": \"Hardware Problems\", \"id\": \"1\" } }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"item\": null, \"impact\": null, \"description\": \"\", \"technician\": null, \"closed_time\": null, \"title\": \"sample title for problem\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"11\", \"reported_time\": { \"display_value\": \"Dec 16, 2019 05:16 PM\", \"value\": \"1576496819840\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" }, \"group\": null }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"item\": null, \"impact\": null, \"description\": \"\", \"technician\": null, \"closed_time\": null, \"title\": \"test qpo\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Guest\", \"is_vipuser\": false, \"id\": \"3\", \"department\": null }, \"id\": \"12\", \"reported_time\": { \"display_value\": \"Dec 17, 2019 03:47 PM\", \"value\": \"1576577822976\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" }, \"group\": null }, { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"item\": null, \"impact\": null, \"description\": \"\", \"technician\": null, \"closed_time\": null, \"title\": \"sample title for problem\", \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"site\": null, \"urgency\": null, \"reported_by\": null, \"id\": \"13\", \"reported_time\": { \"display_value\": \"Dec 18, 2019 04:37 PM\", \"value\": \"1576667246473\" }, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" }, \"group\": null } ] }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Problem",
+      "disp_desc": "Add Problem",
+      "path": "/api/v3/problems",
+      "desc": "This operation is used to add new Problem.",
+      "disp_desc": "Add Problem",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"problem\":{\"title\":\"sample title for problem\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"problem\": { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"description\": null, \"title\": \"sample title for problem\", \"urgency\": null, \"reported_by\": null, \"id\": \"6\", \"root_cause\": { \"updated_by\": null, \"description\": null, \"updated_on\": null }, \"item\": null, \"impact\": null, \"technician\": null, \"closed_time\": null, \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"symptoms\": { \"updated_by\": null, \"description\": null, \"updated_on\": null }, \"site\": null, \"affected_service\": null, \"impact_details\": { \"updated_on\": null, \"updated_by\": null, \"description\": null }, \"reported_time\": { \"display_value\": \"May 10, 2019 11:28 AM\", \"value\": \"1557467901624\" }, \"associated_asset\": null, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}",
+      "desc": "This opertaion is used to update the Problem by using the unique PROBLEMID.",
+      "disp_desc": "Edit a Problem",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"problem\":{\"title\":\"sample title for problem\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"problem\": { \"known_error_details\": { \"is_known_error\": false, \"updated_by\": null, \"comments\": null, \"updated_on\":null}, \"udf_fields\" : {\"udf_sline_27\": \"sample single line\",\"udf_mline_28\": \"sample multi line for udf field \",\"udf_date_31\": {\"display_value\": \"Sep 10, 2020 10:31 AM\",\"value\": \"1599714060000\"},\"udf_pick_29\": {\"name\": \"sample\",\"id\": 1},\"udf_long_30\": \"1\"}, \"attachments\" : [ { \"content_type\": \"image/png\", \"size\": { \"display_value\": \"1KB\",\"value\": 1024},\"module\": \"problem\", \"name\": \"sample.png\",\"content_url\": \"/api/v3/problems/1/attachments/1/download\",\"id\": \"1\" } ], \"updated_time\": null, \"description\": null, \"title\": \"sample title for problem\", \"urgency\": null, \"reported_by\": null, \"id\": \"6\", \"root_cause\": { \"updated_by\": null, \"description\": null, \"updated_on\": null }, \"item\": null, \"impact\": null, \"technician\": null, \"closed_time\": null, \"priority\": null, \"resolution\":null,\"workaround\":null, \"due_by_time\": null, \"symptoms\": { \"updated_by\": null, \"description\": null, \"updated_on\": null }, \"site\": null, \"affected_service\": null, \"impact_details\": { \"updated_on\": null, \"updated_by\": null, \"description\": null }, \"reported_time\": { \"display_value\": \"May 10, 2019 11:28 AM\", \"value\": \"1557467901624\" }, \"associated_asset\": null, \"category\": null, \"subcategory\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}",
+      "desc": "This operation is used to delete the Problem by using the unique PROBLEMID.",
+      "disp_desc": "Delete a Problem",
+      "workflow": "",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/pickup",
+      "desc": "The operation allows you to pickup Problem on your name as a technician.",
+      "disp_desc": "Pickup Problem",
+      "workflow": "",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"messages\": [ { \"status_code\": 2000, \"type\": \"success\", \"message\": \"Problem picked up\" } ], \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/close",
+      "desc": "The operation allows you to close Problem by using the unique PROBLEMID.",
+      "disp_desc": "Close Problem",
+      "workflow": "",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"messages\": [ { \"status_code\": 2000, \"type\": \"success\", \"message\": \"Problem closed\" } ], \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+        {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/assign",
+      "desc": "The operation allows you to assign group and technician to a Problem by using the unique PROBLEMID.",
+      "disp_desc": "Assign Problem",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"problem\":{\"group\":{\"id\":1},\"technician\":{\"id\":6}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"messages\": [ { \"status_code\": 2000, \"type\": \"success\", \"message\": \"Problem assigned\" } ], \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/root_cause",
+      "desc": "The operation allows you to add root cause for this problem.",
+      "disp_desc": "Add Root Cause",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"root_cause\":{\"description\":\"a sample root cause\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"root_cause\": { \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"id\": \"302\", \"description\": \"a sample root cause\", \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"}, \"updated_on\": { \"display_value\": \"Dec 24, 2019 03:48 PM\", \"value\": \"1577182682082\" } } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/root_cause",
+      "desc": "This operation is used to get the Root Cause of the given Problem ID.",
+      "disp_desc": "Get Root Cause",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": false, \"start_index\": 1, \"row_count\": 1 }, \"root_cause\": [ { \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"id\": \"302\", \"description\": \"a sample root cause 123\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"}, \"updated_on\": { \"display_value\": \"Dec 24, 2019 03:54 PM\", \"value\": \"1577183074339\" } } ] }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/root_cause/{root_cause_id}",
+      "desc": "The operation allows you to edit root cause for this problem.",
+      "disp_desc": "Edit Root Cause",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"root_cause\":{\"description\":\"a sample root cause 123\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"root_cause\": { \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"id\": \"302\", \"description\": \"a sample root cause\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"}, \"updated_on\": { \"display_value\": \"Dec 24, 2019 03:48 PM\", \"value\": \"1577182682082\" } } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/impact_details",
+      "desc": "The operation allows you to add impact details for this problem.",
+      "disp_desc": "Add Impact Details",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"impact_details\":{\"description\":\"a sample impact details\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"impact_details\": { \"updated_on\": { \"display_value\": \"Dec 24, 2019 04:04 PM\", \"value\": \"1577183655430\" }, \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"id\": \"1\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"}, \"description\": \"a sample impact details\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/impact_details",
+      "desc": "This operation is used to get the Impact Details of the given Problem ID.",
+      "disp_desc": "Get Impact Details",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"impact_details\": { \"updated_on\": { \"display_value\": \"Dec 24, 2019 04:04 PM\", \"value\": \"1577183655430\" }, \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"id\": \"1\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"}, \"description\": \"a sample impact details\" } }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/impact_details/{impact_details_id}",
+      "desc": "The operation allows you to edit impact details for this problem.",
+      "disp_desc": "Edit Impact details",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"impact_details\":{\"description\":\"a sample impact details 123\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"impact_details\": { \"updated_on\": { \"display_value\": \"Dec 24, 2019 04:04 PM\", \"value\": \"1577183655430\" }, \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"id\": \"1\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"}, \"description\": \"a sample impact details 123\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/symptoms",
+      "desc": "The operation allows you to add Symptoms for this problem.",
+      "disp_desc": "Add Symptoms",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"symptoms\":{\"description\":\"a sample symptoms \"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"symptoms\": { \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"description\": \"a sample symptoms\", \"updated_on\": { \"display_value\": \"Dec 24, 2019 04:17 PM\", \"value\": \"1577184433085\" }, \"id\": \"1\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"} }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/symptoms",
+      "desc": "This operation is used to get the Symptoms of the given Problem ID.",
+      "disp_desc": "Get Symptoms",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"symptoms\": [ { \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"description\": \"a sample symptoms\", \"updated_on\": { \"display_value\": \"Dec 24, 2019 04:17 PM\", \"value\": \"1577184433085\" }, \"id\": \"1\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"} } ], \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": false, \"start_index\": 1, \"row_count\": 1 } }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/symptoms/{symptoms_id}",
+      "desc": "The operation allows you to edit Symptoms for this problem.",
+      "disp_desc": "Edit Symptoms",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"symptoms\":{\"description\":\"a sample symptoms 123 \"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"symptoms\": { \"updated_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"description\": \"a sample symptoms 123\", \"updated_on\": { \"display_value\": \"Dec 24, 2019 04:17 PM\", \"value\": \"1577184433085\" }, \"id\": \"1\",  \"problem\": {\"id\": \"1\",\"title\": \"sample title for problem\"} }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "long",
+      "desc": "Id of this Problem",
+      "graphView": "",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "title",
+      "type": "String",
+      "desc": "Title of this problem",
+      "graphView": "",
+      "column": "PROBLEM:TITLE",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "reported_by",
+      "type": "Object",
+      "desc": "Indicated the reporter of the problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "reported_time",
+      "type": "Date Object",
+      "desc": "Denotes the reported time of this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "HTML Desc",
+      "desc": "Description of the problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "category",
+      "type": "Object",
+      "desc": "Category to which the problem belongs",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "subcategory",
+      "type": "Object",
+      "desc": "Sub-Category to which the problem belongs",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "item",
+      "type": "Object",
+      "desc": "Item to which the problem belongs",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "impact",
+      "type": "Object",
+      "desc": "Impact of this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "urgency",
+      "type": "Object",
+      "desc": "Urgency of this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "priority",
+      "type": "Object",
+      "desc": "Priority of this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "desc": "Status of this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "technician",
+      "type": "Object",
+      "desc": "Technician assigned to this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "associated_assets",
+      "type": "Object",
+      "desc": "Assets associated to this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "affected_services",
+      "type": "Object",
+      "desc": "Technician assigned to this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Denotes the site to which the problem belongs",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "group",
+      "type": "Object",
+      "desc": "Denotes the group to which the problem belongs",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "closed_time",
+      "type": "Date Object",
+      "desc": "Denotes the time of closure of this problem",
+      "graphView": "",
+      "isReadOnly" : "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "due_by_time",
+      "type": "Date Object",
+      "desc": "Denotes the due by time of this problem",
+      "graphView": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+    ],
+    "subsections": {
+    "known_error_details": {
+      "desc": "Known Error details of this problem",
+      "inOD": "true",
+      "inOP": "true",
+      "attributes": [
+        {
+          "name": "is_known_error",
+          "type": "Boolean",
+          "desc": "Denotes whether this problem is a known error or not.",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOP": "true",
+          "inOD": "true",
+          "isReleased": "true"
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "desc": "Comments about Known Error for this problem",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_by",
+          "type": "Object",
+          "desc": "Denotes the technician who updated the known error",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReadOnly": "true",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_on",
+          "type": "Date Object",
+          "desc": "Denotes the updated time of the known error",
+          "isReadOnly" : "true",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true"
+        }
+      ],
+      "isReleased": "true"
+    },
+    "root_cause": {
+      "desc": "Root Cause details of this problem",
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true",
+      "attributes": [
+        {
+          "name": "description",
+          "type": "String",
+          "desc": "Description of the root cause for this problem",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_by",
+          "type": "Object",
+          "desc": "Denotes the technician who updated the root cause",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReadOnly": "true",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_on",
+          "type": "Date Object",
+          "desc": "Denotes the updated time of the root cause",
+          "isReadOnly" : "true",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true"
+        }
+        ]
+        },
+        "impact_details": {
+      "desc": "Impact details of this problem",
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true",
+      "attributes": [
+        {
+          "name": "description",
+          "type": "String",
+          "desc": "Description of the impact details for this problem",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_by",
+          "type": "Object",
+          "desc": "Denotes the technician who updated the impact details",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReadOnly": "true",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_on",
+          "type": "Date Object",
+          "desc": "Denotes the updated time of the impact details",
+          "isReadOnly" : "true",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true"
+        }
+        ]
+        },
+        "symptoms": {
+      "desc": "Symptoms of this problem",
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true",
+      "attributes": [
+        {
+          "name": "description",
+          "type": "String",
+          "desc": "Description of the symptoms for this problem",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_by",
+          "type": "Object",
+          "desc": "Denotes the technician who updated the symptoms",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReadOnly": "true",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "updated_on",
+          "type": "Date Object",
+          "desc": "Denotes the updated time of the symptoms",
+          "isReadOnly" : "true",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true"
+        }
+      ],
+      "isReleased": "true"
+    }
+    },
+  "isReleased": "true",
+  "lastModified": 1474268472000
+}

@@ -1,0 +1,131 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<jsontemplates>
+		<jsontemplate name="worklog_time_spent_temp" disable-extra-key="true">
+			<key name="worklog" template="worklog_time_spent" type="JSONObject" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="worklog_time_spent" disable-extra-key="true">
+			<key name="start_time" template="datefield" type="JSONObject" max-len="-1" min-occurrences="1" />
+			<key name="end_time" template="datefield" type="JSONObject" max-len="-1" min-occurrences="1" />
+		</jsontemplate>
+		<jsontemplate name="customfunction_execute">
+			<key name="custom_function" template="customfunction_execute_base" type="JSONObject" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="customfunction_execute_base">
+			<key name="param_details" template="customfunction_execute_request" type="JSONObject" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="customfunction_execute_request">
+			<key name-regex="true" name="^[A-Za-z]\w*$" type="String" max-len="-1" max-occurrences="10"  description="A full request/project/tasks get response can be passed as input, hence we can't predict max-len"/>
+		</jsontemplate>
+		<jsontemplate name="list_info_template" disable-extra-key="true">
+			<key name="list_info" type="JSONObject"  max-len="-1" template="list_info_base" />
+			<key name="fields_required" type="JSONArray" max-len="-1" template="strarray" />
+		</jsontemplate>
+		<!--task api convenience operations start-->
+		<jsontemplate name="assign_task_info">
+			<key name="task" type="JSONObject" max-len="-1" template="assign_task_data" />
+		</jsontemplate>
+		<jsontemplate name="assign_task_data">
+			<key name="owner" type="JSONObject" max-len="-1" template="user_unique" />
+			<key name="group" type="JSONObject" max-len="-1" template="support_group_unique" />
+		</jsontemplate>
+		<jsontemplate name="mark_task_info">
+			<key name="task" type="JSONObject" max-len="-1" template="mark_task_data" />
+		</jsontemplate>
+		<jsontemplate name="mark_task_data">
+			<key name="marked_owner" type="JSONObject" max-len="-1" template="user_unique" />
+			<key name="marked_group" type="JSONObject" max-len="-1" template="support_group_unique" />
+		</jsontemplate>
+		<jsontemplate name="assign_task_without_group_info">
+			<key name="task" type="JSONObject" max-len="-1" template="assign_task_without_group_data" />
+		</jsontemplate>
+		<jsontemplate name="assign_task_without_group_data">
+			<key name="owner" type="JSONObject" max-len="-1" template="user_unique" />
+		</jsontemplate>
+		<jsontemplate name="mark_task_without_group_info">
+			<key name="task" type="JSONObject" max-len="-1" template="mark_task_without_group_data" />
+		</jsontemplate>
+		<jsontemplate name="mark_task_without_group_data">
+			<key name="marked_owner" type="JSONObject" max-len="-1" template="user_unique" />
+		</jsontemplate>
+		<jsontemplate name="assign_milestone_info">
+			<key name="milestone" type="JSONObject" max-len="-1" template="assign_milestone_data" />
+		</jsontemplate>
+		<jsontemplate name="assign_milestone_data">
+			<key name="owner" type="JSONObject" max-len="-1" template="user_unique" />
+		</jsontemplate>
+		<!--task api convenience operations end-->
+		<!--import framework related templates start-->
+		<jsontemplate name="import_mapped_field" disable-extra-key="true">
+			<key name="attachment_id" type="long" min-occurrences="1" allow-invalid="false"/>
+			<key name="entity" regex="api_name" min-occurrences="1" allow-invalid="false"/>
+			<key name="module" regex="import_modules" min-occurrences="1" allow-invalid="false"/>
+			<key name="file_format" regex="XLS|XLSX|CSV" min-occurrences="1" allow-invalid="false"/>
+			<key name="sheet_no" type="long" range="0-1000000" min-occurrences="1" allow-invalid="false"/>
+			<key name="import_action" regex="1|2|3|4|5" min-occurrences="1" allow-invalid="false"/>
+			<key name="operation" regex="map_fields" min-occurrences="1" allow-invalid="false"/>
+			<key name="mappings" type="JSONObject" max-len="-1" template="import_mapping" min-occurrences="1"/>
+			<key name="addReferEntityIfNotExists" type="boolean" min-occurrences="1" allow-invalid="false"/>
+			<key name="associateAssetToUserSite" type="boolean"/>
+			<key name="checkBoxProduct" type="boolean"/>
+			<key name="checkBoxService" type="boolean"/>
+		</jsontemplate>
+		<jsontemplate name="saveFileDetails" disable-extra-key="true">
+			<key name="attachment_id" type="long" />
+			<key name="entity" regex="api_name" min-occurrences="1" allow-invalid="false"/>
+			<key name="file_format" regex="XLS|XLSX|CSV" min-occurrences="1" allow-invalid="false"/>
+			<key name="sheet_no" type="long" range="1-1000000" min-occurrences="1" allow-invalid="false"/>
+			<key name="import_action" regex="1|2|3|4|5" min-occurrences="1" allow-invalid="false"/>
+			<key name="operation" regex="input_file" min-occurrences="1" allow-invalid="false"/>
+		</jsontemplate>
+
+		<jsontemplate name="download_results_file" disable-extra-key="true">
+			<key name="results_path" type="long" min-occurrences="1" allow-invalid="false"/>
+		</jsontemplate>
+
+		<jsontemplate name="import_history" disable-extra-key="true">
+			<key name="entity" regex="api_name" min-occurrences="1"/>
+			<key name="file_format" regex="xls/xlsx/csv|mpp|MPP" allow-invalid="false"/>
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base"/>
+		</jsontemplate>
+
+		<jsontemplate name="getAdditionalFieldsFromMpp" disable-extra-key="true">
+			<key name="entity" regex="project|milestone|task" min-occurrences="1" allow-invalid="false"/>
+			<key name="operation" regex="mpp_additional_fields" min-occurrences="1" allow-invalid="false"/>
+		</jsontemplate>
+
+		<jsontemplate name="import_mpp_field" disable-extra-key="true">
+			<key name="entity" regex="project|milestone|task" min-occurrences="1" allow-invalid="false"/>
+			<key name="attachment_id" type="long" min-occurrences="1" allow-invalid="false"/>
+			<key name="file_format" regex="MPP|mpp" min-occurrences="1" allow-invalid="false"/>
+			<key name="operation" regex="input_file" min-occurrences="1" allow-invalid="false"/>
+			<key name="addReferEntityIfNotExists" type="boolean" min-occurrences="1" allow-invalid="false"/>
+			<key name="addtionalFieldJson" type="JSONObject" max-len="-1" template="udf_fields_mpp_mapping" min-occurrences="1"/>
+		</jsontemplate>
+
+		<jsontemplate name="udf_fields_mpp_mapping" disable-extra-key="true">
+			<key name-regex="true" name="udf_(char|sline|mline|pick|decimal|date|long)_[0-9]+" type="String" max-occurrences="90" allow-invalid="false"/>
+		</jsontemplate>
+
+		<jsontemplate name="import_mapping" disable-extra-key="true">
+			<key name="date_format" regex="yyyy-MM-dd|yyyy/MM/dd|yyyy.MM.dd|dd-MM-yyyy|dd/MM/yyyy|dd.MM.yyyy|MM-dd-yyyy|MM/dd/yyyy|MM.dd.yyyy" min-occurrences="1" allow-invalid="false"/>
+			<key name="time_format" regex="HH:mm:ss|HH:mm" min-occurrences="1" allow-invalid="false"/>
+			<key name="parent_entity" type="String" max-len="150" allow-invalid="false"/>
+			<key name="parent_entity_id" type="String" max-len="150" allow-invalid="false"/>
+			<key name-regex="true" name="api_name" type="JSONObject" max-len="-1" template="import_entity_mapping" min-occurrences="1" max-occurrences="10"/>
+		</jsontemplate>
+		
+		<jsontemplate name="import_entity_mapping" disable-extra-key="true">
+			<key name-regex="true" name="api_name" type="String" max-occurrences="50" max-len="150" allow-invalid="false"/>
+			<key name="udf_fields" type="JSONObject" max-len="-1" template="udf_fields_import_mapping"/>
+		</jsontemplate>
+
+		<jsontemplate name="udf_fields_import_mapping" disable-extra-key="true">
+			<key name-regex="true" name="api_name" type="String" max-occurrences="90" max-len="150" allow-invalid="false"/>
+		</jsontemplate>
+		<!--import framework related templates end-->
+	</jsontemplates>
+</security>
+
+
+

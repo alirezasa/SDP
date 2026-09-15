@@ -1,0 +1,18 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zc.page.builder.formembed.property.resetbutton"] = 'Restablecer el texto del botón (solo web)';
+i18n["zcpage.dialog.embed.redirectto"] = 'Redirigir a';
+i18n["zcpage.dialog.embed.redirectto.tooltip"] = 'Redirigir en la presentación de forma exitosa';
+i18n["zcpage.dialog.embed.submittxt"] = 'Enviar texto del botón';
+i18n["zcpage.dialog.embed.successmsg.tooltip"] = 'Mensaje que se mostrará en la presentación exitosa del formulario';
+i18n["zcpage.dialog.form.configure.values"] = 'Configurar valores';
+i18n["zc.builder.page.embed.report.config"] = 'No hay opciones de configuración disponibles para el reporte seleccionado';
+i18n["zcpage.dialog.embed.actions"] = 'Acciones';
+i18n["zcpage.dialog.embed.duplicate"] = 'Duplicar';
+i18n["zcpage.dialog.embed.edit"] = 'Editar';
+i18n["zcpage.dialog.embed.export"] = 'Exportar';
+i18n["zcpage.dialog.embed.filter"] = 'Filtro';
+i18n["zcpage.dialog.embed.miscellaneous"] = 'Varios';
+i18n["zcpage.dialog.embed.printexport"] = 'Imprimir y exportar ';
+i18n["zcpage.dialog.embed.recordscount"] = 'Recuento de registros';
+i18n["zcpage.dialog.embed.report.addfilter"] = 'Agregar filtro';
+i18n["zcpage.dialog.embed.report.addfilter.desc"] = 'Agregue un filtro y restrinja los registros que se mostrarán en este reporte. ';
+i18n["zcpage.dialog.embed.search.and.filters"] = 'Buscar y filtrar';

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        .zrop-slider {
+            position: relative;
+            overflow: hidden;
+        }
+        .zrop-slider-list {
+            display: none;
+        }
+        .zrop-slider-list.active {
+            display: block;
+        }
+        .zrop-slider-intro p {
+            position: absolute;
+            display: block;
+            margin: 0;
+            top: 10px;
+            width: 85%;
+            font-size: 22px;
+            font-weight: 600;
+            opacity: 0;
+            animation-duration: 12s;
+            animation-timing-function: ease-in-out;
+            animation-name: anim-intro-txt;
+        }
+        .zrop-slider-intro img {
+            display: block;
+            padding-top: 70px;
+            margin: 0 auto;
+            opacity: 0;
+            max-width: 60%;
+            height: 220px;
+            animation-duration: 12s;
+            animation-timing-function: ease-in-out;
+            animation-name: anim-intro-img;
+        }
+        .zrop-slider-intro ul {
+            width: 85%;
+            padding: 30px 0px 0px;
+            color: #999;
+            margin: 0 auto;
+            right: calc(10% - 50px);
+            list-style-type: disc;
+
+        }
+        .zrop-slider-intro ul li {
+            font-weight: 100;
+            text-align: center;
+            list-style-type: none;
+        }
+        .zrop-slider-intro ul li.txt-item1, .zrop-slider-intro ul li.txt-item2, .zrop-slider-intro ul li.txt-item3, .zrop-slider-intro ul li.txt-item4, .zrop-slider-intro ul li.txt-item5 {
+            padding: 5px 0;
+            opacity: 0;
+            animation-duration: 12s;
+            animation-timing-function: ease-in-out;
+        }
+        .zrop-slider-intro .txt-item1 {
+            animation-name: anim-intro-txt-list1;
+        }
+        .zrop-slider-intro .txt-item2 {
+            animation-name: anim-intro-txt-list2;
+        }
+        .zrop-slider-intro .txt-item3 {
+            animation-name: anim-intro-txt-list3;
+        }
+        .zrop-slider-intro .txt-item4 {
+            animation-name: anim-intro-txt-list4;
+        }
+        .zrop-slider-intro .txt-item5 {
+            animation-name: anim-intro-txt-list5;
+        }
+        .zrop-slider-intro ul li span {
+            margin-left: -7px;
+            color: #222;
+            font-size: 24px;
+            line-height: 42px;
+            font-weight: 300;
+        }
+        @keyframes anim-intro-txt-list1 {
+            10% {
+                opacity: 0;
+            }
+            20%, 85% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        @keyframes anim-intro-txt-list2 {
+            20% {
+                opacity: 0;
+            }
+            30%, 85% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        @keyframes anim-intro-txt-list3 {
+            30% {
+                opacity: 0;
+            }
+            40%, 85% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        @keyframes anim-intro-txt-list4 {
+            40% {
+                opacity: 0;
+            }
+            50%, 85% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        @keyframes anim-intro-txt-list5 {
+            50% {
+                opacity: 0;
+            }
+            60%, 85% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        @keyframes anim-intro-txt {
+            0% {
+                right: -100%;
+                opacity: 0;
+            }
+            10%, 90% {
+                right: 10%;
+                opacity: 1;
+            }
+            100% {
+                right: 100%;
+                opacity: 0;
+            }
+        }
+        @keyframes anim-intro-img {
+            0%, 5% {
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        .zrop-btn-action {
+            cursor: pointer;
+            text-align: center;
+            margin: 20px auto 0;
+            display: block;
+            padding: 10px 35px;
+            font-size: 18px;
+            border-radius: 2px;
+        }
+        .zrop-slider-gif.active:before {
+            content: "";
+            height: 50px;
+            display: block;
+        }
+        .zrop-slider-gif.active img {
+            width: auto;
+            max-width: 100%;
+            /*max-height: 530px;*/
+            background-size: contain;
+            animation-duration: 5s;
+            animation-timing-function: ease-in-out;
+            animation-name: anim-slider-img;
+        }
+        .zrop-slider-list.zrop-slider-gif {
+            width: 85%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .zrop-slider-gif p {
+            text-align: left;
+            position: absolute;
+            display: block;
+            margin: 0;
+            top: 10px;
+            width: 85%;
+            font-size: 22px;
+            font-weight: 600;
+            opacity: 0;
+            animation-duration: 5s;
+            animation-timing-function: ease-in-out;
+            animation-name: anim-slider-txt;
+        }
+        @keyframes anim-slider-txt {
+            0% {
+                right: -100%;
+                opacity: 0;
+            }
+            10%, 90% {
+                right: 10%;
+                opacity: 1;
+            }
+            100% {
+                right: 100%;
+                opacity: 0;
+            }
+        }
+        @keyframes anim-slider-img {
+            0%, 5% {
+                opacity: 0;
+            }
+            10%, 90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+        .zrop-slider-list.active {
+            height: 570px;
+        }
+        .zrop-slider-gif.active img {
+            height: 520px;
+            width: auto;
+        }
+        #reportlistviewpage .mr-divRight .zrop-slider-gif p, #reportlistviewpage .mr-divRight .zrop-slider-intro p {
+            font-size: 20px;
+            font-weight: 400;
+        }
+        #reportlistviewpage .mr-divRight .zrop-slider-intro img {
+            padding-top: 70px;
+            padding-bottom: 25px;
+            max-width: 75%;
+            height: auto;
+        }
+        #reportlistviewpage .mr-divRight .zrop-slider-intro ul {
+            padding-top: 0;
+        }
+        #reportlistviewpage .mr-divRight .zrop-slider-intro ul li span {
+            font-size: 18px;
+            font-weight: 300;
+            line-height: 26px;
+        }
+        #reportlistviewpage .mr-divRight .zrop-adv-analytics-btn {
+            display: none;
+        }
+        #reportlistviewpage .mr-divRight .zrop-slider-gif.active .zrop-slider-img-holder img {
+            width: auto;
+            height: 100%;
+        }
+        #reportlistviewpage .mr-divRight .zrop-close-link {
+            display: none;
+        }
+        /***** Fix for bottom btn overwriting style_ext.css*****/
+        #reportlistviewpage .mr-divRight .mr-butSec > div {
+            vertical-align: baseline;
+            border: none;
+        }
+        #reportlistviewpage .mr-divRight .mr-butSec div:nth-last-child(2) > img {
+            margin: 0 auto 15px;
+        }
+        #reportlistviewpage .mr-divRight .mr-butSec div > img {
+            padding: 0 0 2px;
+        }
+        #reportlistviewpage .mr-divRight .mr-butSec > div:last-child:before {
+            content: '- (OR) -';
+            top: 75px;
+            width: 60px;
+            white-space: nowrap;
+        }
+        #reportlistviewpage .mr-divRight .mr-butSec > div {
+            margin-top: 0;
+        }
+        #reportlistviewpage .mr-divRight .mr-butSec > p {
+            font-size: 18px;
+        }
+        #reportlistviewpage .mr-divRight .mr-but.red {
+            background: #f23032;
+            opacity: 0.9;
+        }
+        #reportlistviewpage .mr-divRight .mr-but.green {
+            opacity: 0.9;
+        }
+        #reportlistviewpage .mr-divRight .mr-butSec {
+            margin: 30px auto 0;
+            border-top: 1px solid #cccccc;
+            max-width: 650px;
+        }
+        select#promo_signup {
+            max-width: 200px;
+        }
+        .ui-dialog-titlebar{
+            display: flex;
+        }
+        button.close-link {
+            white-space: nowrap;
+            color: rgb(0, 141, 221) !important;
+            color: var(--link_tab_line_color) !important;
+            opacity: 1 !important;
+            padding-top: 0 !important;
+        }
+        @media screen and (min-width: 1440px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 405px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 355px
+            }
+        }
+        @media screen and (min-width: 1500px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 400px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 350px
+            }
+        }
+        @media screen and (min-width: 1600px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 415px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 365px
+            }
+        }
+        @media screen and (min-width: 1700px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 410px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 360px
+            }
+        }
+        @media screen and (min-width: 1800px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 470px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 420px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro ul li span {
+                line-height: 36px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro img {
+                padding-top: 85px;
+                padding-bottom: 40px;
+                max-width: 75%;
+                height: auto
+            }
+        }
+        @media screen and (min-width: 1900px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 530px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 480px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro ul li span {
+                line-height: 36px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro img {
+                padding-top: 85px;
+                padding-bottom: 40px;
+                max-width: 75%;
+                height: auto
+            }
+        }
+        @media screen and (min-width: 2400px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 585px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 535px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro ul li span {
+                line-height: 36px;
+                font-size: 20px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro img {
+                padding-top: 85px;
+                padding-bottom: 40px;
+                max-width: 75%;
+                height: auto
+            }
+        }
+        @media screen and (min-width: 2800px) {
+            #reportlistviewpage .mr-divRight .zrop-slider-list.active {
+                height: 600px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-gif.active img {
+                max-height: 550px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro ul li span {
+                line-height: 34px;
+                font-size: 20px
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro img {
+                padding-top: 75px;
+                padding-bottom: 30px;
+                max-width: 75%;
+                height: auto
+            }
+        }
+        @media screen and (max-width:1280px) {
+            #reportlistviewpage .mr-divRight .mr-butSec > div {
+                width: 100%;
+                padding-bottom: 0px;
+            }
+            #reportlistviewpage .mr-divRight .mr-butSec > div:last-child:before {
+                top: -60px;
+                left: calc(50% - 17px);
+            }
+            #reportlistviewpage .mr-divRight .zrop-slider-intro ul li span {
+                font-size: 14px;
+                line-height: 18px;
+            }
+            .zrop-slider-list.active {
+                height: 380px;
+            }
+            .zrop-slider-gif.active img {
+                height: 330px;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div id="zrop-slider">
+    <div class="zrop-slider">
+        <div class="zrop-slider-list zrop-slider-intro zrop-slider-1 active">
+            <p>Advanced Analytics for ServiceDesk Plus</p>
+            <img src="/images/aplus-sdp.svg"/>
+            <ul>
+                <li class="txt-item1"><span>Derive actionable insight to improve process efficiency</span></li>
+                <li class="txt-item2"><span>Save time in building reports using the voice activated assistant</span>
+                </li>
+                <li class="txt-item3"><span>Predict request volumes using forecast reports</span></li>
+                <li class="txt-item4"><span>Get notified of potential SLA breaches before anybody else</span></li>
+                <li class="txt-item5"><span>Tag technicians in reports and collaborate in real-time</span></li>
+            </ul>
+        </div>
+        <div class="zrop-slider-list zrop-slider-gif zrop-slider-2">
+            <p>IT budget forecasts</p>
+            <img src="/images/aplus1.svg"/>
+        </div>
+        <div class="zrop-slider-list zrop-slider-gif zrop-slider-3">
+            <p>SLA compliance trends</p>
+            <img src="/images/aplus2.svg"/>
+        </div>
+        <div class="zrop-slider-list zrop-slider-gif zrop-slider-4">
+            <p>Technician reassignment history</p>
+            <img src="/images/aplus3.svg"/>
+        </div>
+        <div class="zrop-slider-list zrop-slider-gif zrop-slider-5">
+            <p>CIO and help desk manager dashboards</p>
+            <img src="/images/aplus4.svg"/>
+        </div>
+        <div class="zrop-slider-list zrop-slider-gif zrop-slider-6">
+            <p>Asset Financials</p>
+            <img src="/images/aplus5.svg"/>
+        </div>
+    </div>
+    <div class="zrop-adv-analytics-btn">
+        <input type="button" name="addWO" value="Try Advanced Analytics"
+               id="addWOButton" class="zrop-btn-action btn btn-primary">
+    </div>
+</div><!-- zrop-slider - Ends -->
+
+</body>
+</html>

@@ -1,0 +1,168 @@
+{
+  "operations": [
+    {
+      
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_roles",
+      "desc": "You can add a new Change Stage here.",
+      "disp_desc": "Add a Change Role",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{\"change_role\":{\"description\":\"The person who manages/control the changes that are raised in the environment\",\"inactive\":false,\"name\":\"ChangeManager2\",\"permissions\":[{\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"1\",\"name\":\"Submission\"}},{\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"2\",\"name\":\"Planning\"}},{\"approve\":false,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"3\",\"name\":\"CAB Evaluation\"}},{\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"4\",\"name\":\"Implementation\"}},{\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"7\",\"name\":\"UAT\"}},{\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"8\",\"name\":\"Release\"}},{\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"5\",\"name\":\"Review\"}},{\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"6\",\"name\":\"Close\"}}],\"user_type\":\"TECH\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"change_role\":{\"id\":\"1\",\"description\":\"The person who manages/control the changes that are raised in the environment\",\"inactive\":false,\"name\":\"ChangeManager\",\"permissions\":[{\"id\":\"1\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"1\",\"name\":\"Submission\",\"displayname\":\"Submission\"}},{\"id\":\"2\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"2\",\"name\":\"Planning\",\"displayname\":\"Planning\"}},{\"id\":\"3\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"3\",\"name\":\"Approval\",\"displayname\":\"CAB Evaluation\"}},{\"id\":\"4\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"4\",\"name\":\"Implementation\",\"displayname\":\"Implementation\"}},{\"id\":\"5\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"7\",\"name\":\"UAT\",\"displayname\":\"UAT\"}},{\"id\":\"6\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"8\",\"name\":\"Release\",\"displayname\":\"Release\"}},{\"id\":\"7\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"5\",\"name\":\"Review\",\"displayname\":\"Review\"}},{\"id\":\"8\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"6\",\"name\":\"Close\",\"displayname\":\"Close\"}}],\"user_type\":\"SDCM\",\"prominent\":true},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_roles/{id}",
+      "desc": "You can view the details of a specific Change Request here.",
+      "disp_desc": "View a Change Role",
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_role\":{\"id\":\"1\",\"description\":\"The person who manages/control the changes that are raised in the environment\",\"inactive\":false,\"name\":\"ChangeManager\",\"permissions\":[{\"id\":\"1\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"1\",\"name\":\"Submission\",\"displayname\":\"Submission\"}},{\"id\":\"2\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"2\",\"name\":\"Planning\",\"displayname\":\"Planning\"}},{\"id\":\"3\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"3\",\"name\":\"Approval\",\"displayname\":\"CAB Evaluation\"}},{\"id\":\"4\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"4\",\"name\":\"Implementation\",\"displayname\":\"Implementation\"}},{\"id\":\"5\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"7\",\"name\":\"UAT\",\"displayname\":\"UAT\"}},{\"id\":\"6\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"8\",\"name\":\"Release\",\"displayname\":\"Release\"}},{\"id\":\"7\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"5\",\"name\":\"Review\",\"displayname\":\"Review\"}},{\"id\":\"8\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"6\",\"name\":\"Close\",\"displayname\":\"Close\"}}],\"user_type\":\"SDCM\",\"prominent\":true},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_roles",
+      "desc": "You can get the details of all available Change Requests here.",
+      "disp_desc": "View all Change Roles",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },      
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_roles\":[{\"id\":\"4\",\"description\":\"A dynamic group of people who recommend/reject the Change based on their opinions.\",\"inactive\":false,\"name\":\"CAB\",\"user_type\":\"ALL\",\"prominent\":true},{\"id\":\"5\",\"description\":\"A dynamic group of people who approve/reject the Change.\",\"inactive\":false,\"name\":\"ChangeApprover\",\"user_type\":\"TECH\",\"prominent\":false},{\"id\":\"1\",\"description\":\"The person who manages/control the changes that are raised in the environment\",\"inactive\":false,\"name\":\"ChangeManager\",\"user_type\":\"SDCM\",\"prominent\":true},{\"id\":\"2\",\"description\":\"The Person who is alloted to a change and owns it for successful completion.\",\"inactive\":false,\"name\":\"ChangeOwner\",\"user_type\":\"COTECH\",\"prominent\":true},{\"id\":\"3\",\"description\":\"The person who initiates the request for such change\",\"inactive\":false,\"name\":\"ChangeRequester\",\"user_type\":\"ALL\",\"prominent\":true},{\"id\":\"7\",\"description\":\"Person/Group who implement(s) all tasks in Change record, in the time period specified.\",\"inactive\":false,\"name\":\"Implementer\",\"user_type\":\"TECH\",\"prominent\":false},{\"id\":\"6\",\"description\":\"An accountable person of a given change, owns accountability in the change's life cyle\",\"inactive\":false,\"name\":\"Line Manager\",\"user_type\":\"ALL\",\"prominent\":false},{\"id\":\"8\",\"description\":\"Person who reviews all tasks in the Change record.\",\"inactive\":false,\"name\":\"Reviewer\",\"user_type\":\"TECH\",\"prominent\":false},{\"id\":\"301\",\"description\":\"\",\"inactive\":false,\"name\":\"senthilssss\",\"user_type\":\"ALL\",\"prominent\":false}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":9,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_roles/{id}",
+      "desc": "You can edit the changes here.",
+      "disp_desc": "Update a Change Role",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"change_role\":{\"id\":\"1\",\"description\":\"The person who manages/control the changes that are raised in the environment\",\"inactive\":false,\"name\":\"ChangeManager\",\"permissions\":[{\"id\":\"1\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"1\",\"name\":\"Submission\"}},{\"id\":\"2\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"2\",\"name\":\"Planning\"}},{\"id\":\"3\",\"approve\":false,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"3\",\"name\":\"CAB Evaluation\"}},{\"id\":\"4\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"4\",\"name\":\"Implementation\"}},{\"id\":\"5\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"7\",\"name\":\"UAT\"}},{\"id\":\"6\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"8\",\"name\":\"Release\"}},{\"id\":\"7\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"5\",\"name\":\"Review\"}},{\"id\":\"8\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"6\",\"name\":\"Close\"}}],\"user_type\":\"TECH\"}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"change_role\":{\"id\":\"1\",\"description\":\"The person who manages/control the changes that are raised in the environment\",\"inactive\":false,\"name\":\"ChangeManager\",\"permissions\":[{\"id\":\"1\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"1\",\"name\":\"Submission\",\"displayname\":\"Submission\"}},{\"id\":\"2\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"2\",\"name\":\"Planning\",\"displayname\":\"Planning\"}},{\"id\":\"3\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"3\",\"name\":\"Approval\",\"displayname\":\"CAB Evaluation\"}},{\"id\":\"4\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"4\",\"name\":\"Implementation\",\"displayname\":\"Implementation\"}},{\"id\":\"5\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"7\",\"name\":\"UAT\",\"displayname\":\"UAT\"}},{\"id\":\"6\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"8\",\"name\":\"Release\",\"displayname\":\"Release\"}},{\"id\":\"7\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"5\",\"name\":\"Review\",\"displayname\":\"Review\"}},{\"id\":\"8\",\"approve\":true,\"edit\":true,\"view\":true,\"stage\":{\"id\":\"6\",\"name\":\"Close\",\"displayname\":\"Close\"}}],\"user_type\":\"TECH\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_roles/{id}",
+      "desc": "You can delete the changes here.",
+      "disp_desc": "Delete a Change Role",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "CHANGEROLES:ID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "name",
+    "type": "String",
+    "desc": "The name of the Change Role",
+    "graphView": "",
+    "column": "CHANGEROLES:DISPLAYNAME",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+
+  {
+    "name": "description",
+    "type": "String",
+    "desc": "The description of the Change Role",
+    "graphView": "",
+    "column": "CHANGEROLES:DESCRIPTION",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "prominent",
+    "type": "Boolean",
+    "desc": "Used to identify the prominent Change roles which are not deletable",
+    "graphView": "",
+    "column": "CHANGEROLES:prominent",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "user_type",
+    "type": "String",
+    "desc": "Pre defined values used to restrict the allowed users for this Change Role. The possible values are: ChangeManager, ChangeOwner, Technician, AllUser",
+    "graphView": "",
+    "column": "CHANGEROLES:USERTYPE",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+    {
+      "name": "members",
+      "isDefault": "true",
+      "type": "Array Of Objects",
+      "column": "",
+      "desc": "Array of changerole_permissions objects denoting the permissions of the change role for each change stage.",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+  {
+    "name": "inactive",
+    "type": "Boolean",
+    "desc": "Denotes whether the Change Role is marked as not for further usage",
+    "graphView": "",
+    "column": "CHANGEROLES:ISDELEETD",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  }   
+  ],
+  "isReleased": "false"
+}
+

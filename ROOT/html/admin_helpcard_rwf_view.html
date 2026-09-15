@@ -1,0 +1,180 @@
+<div class="pb30">
+  <div>
+    You can configure the basic details and the directional path of a workflow in the workflow editor using the built-in
+    graphical tool.
+  </div>
+  <div class="mt10">
+    To create a workflow, enter the following basic details:
+  </div>
+  <ul class="mt10">
+    <li>Workflow Name</li>
+    <li>Description</li>
+    <li>Type (General/Emergency)</li>
+  </ul>
+  <div class="mt10">The Workflow Editor is provided with an expandable, scrollable canvas for creating workflow diagrams
+    and a stencil panel. The stencil panel contains various nodes such as Stage, Condition, Switch, Notification,
+    Approval and Field Update. You can add a node to the canvas using a simple drag and drop motion. When you add a node
+    to the canvas, a pop-up window opens, where you must specify the properties of the node.</div>
+  <div class="mt10">Refer to the pointers below to understand the usage of various nodes. Click on a pointer to expand
+    it for more details:</div>
+  <details class="mt10 helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">Stage</span> - Add a release stage to your
+      workflow.</summary>
+    <ul class="mt10">
+      <li>Select the stage and status from their relevant drop-down. </li>
+      <li>You can have multiple status in a stage. The number of input and output ports on the node depends on the
+        number of status chosen.</li>
+      <li>By default, the globally configured status notifications are not impacted by release workflows and continue to
+        operate as configured under <span class="sb">Admin</span>. To override the notifications based on the workflow,
+        hover over a status and click the <span class="sb">Mail</span> icon. Configure and save the notifications as
+        required. </li>
+      <li>Status that have notification override enabled are indicated with a yellow mail icon.</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">Condition</span> - Specify a condition to be met
+      before the release proceeds to the next stage.</summary>
+    <ul class="mt10">
+      <li>Enter a name for your node.</li>
+      <li>Specify the criteria by selecting column, criteria and the value(s). </li>
+      <li>Click the <span class="sb">Add</span> icon to add multiple criteria using AND/OR operators. You can drag a
+        criteria over the indentation space below another criteria to add it as sub-criteria. Criteria containing
+        sub-criteria are denoted with a drop-down icon.</li>
+      <li>The condition node is rendered with a single input port and two output ports (Yes/No).</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">Switch</span> - Switch is a multi-way branch node
+      that refers to the value in a field and applies the workflow path based on the selected value. </summary>
+    <ul class="mt10">
+      <li>Select the field to apply the switch condition.</li>
+      <li>Add the field values which must be referred to. You can design different workflow path for each field value.
+      </li>
+      <li>Switch node is rendered with a single input port and N number of output ports based on the values selected.
+      </li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">Notification</span> - Configure a custom
+      notification for your release workflow. </summary>
+    <ul class="mt10">
+      <li>Select an existing custom notification or add a new notification in the <span class="sb">Notification
+          Name</span> drop-down. You can also edit the selected notifications using the <span class="sb">Edit</span>
+        icon.
+        <ul>
+          <li>To add/edit a notification, enter the notification name and add a description.</li>
+          <li>Select the Release Roles/Organization Roles to whom the notification must be sent. To select users, type
+            the user name and select the user from the drop-down. </li>
+          <li>Enter the subject and message to be sent in the notification email.</li>
+          <li>Click <span class="sb">Save</span>.</li>
+        </ul>
+      </li>
+      <li>If you select an existing notification, the notify to, description, and subject are auto-populated based on
+        the selected notification details.</li>
+      <li>Notification node is rendered with a single input port and output port.</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">Approval</span> - Add an approval level between
+      stages and configure approval email notifications. </summary>
+    <ul class="mt10">
+      <li>Enter the approval name.</li>
+      <li>Choose the approval condition from the <span class="sb">Wait For</span> drop-down. You have the following options:
+        <ul class="mt10">
+          <li>Anyone to approve</li>
+          <li>Everyone to approve</li>
+          <li>First response action</li>
+          <li>Majority to approve</li>
+          <li>% to approve</li>
+        </ul>
+        For majority to approve and % to approve options, the approvals will be approved only when most of the approvers approve or the configured percentage of approvers approve. If not, the approval willl be rejected.<br> You can also configure the first response from any of the approvers as the approval action</li>
+      <li>Select the Release Roles/Organization Roles as the approvers. To select users, type the user name and select
+        the user from the drop-down. </li>
+      <li>Enter your approval notification subject and message. You can add variables if needed.</li>
+      <li>Approval node is rendered with a single input port and two output ports (Approved/Denied).</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">Field Update</span> - Update a field value before
+      it proceeds to the next stage in the workflow. </summary>
+    <ul class="mt10">
+      <li>Select an existing field update configuration or add a new configuration from the <span class="sb">Field
+          Update Name</span> drop-down. You can also edit the selected configuration using the <span
+          class="sb">Edit</span> icon.
+        <ul>
+          <li>To add/edit a field configuration, enter the field update name and description.</li>
+          <li>Select the field and the value that must be applied during the field update. You can configure update for
+            multiple fields using the <span class="sb">Add</span> icon.</li>
+          <li>Click <span class="sb">Save</span>.</li>
+        </ul>
+      </li>
+      <li>If you select an existing configuration, the description will be auto-updated based on the selected field
+        details.</li>
+      <li>Field Update node is rendered with a single input port and output port.</li>
+    </ul>
+  </details>
+  <div class="mt10">
+    After adding a node, link the nodes to specify the workflow direction. Hover over a node to view the input and
+    output ports. Click on an output port of a source node and drag the path to an input port of the target node as
+    required. By default, the Submission & Close Stages are included in the canvas and connected to the start and end
+    nodes respectively. Although, the default stages are uneditable, you can modify the added nodes/path link as below:
+  </div>
+  <ul class="mt10">
+    <li>Hover over a node to edit or delete it.</li>
+    <li>Drag a node or path link to reposition it on the canvas as needed.</li>
+    <li>Hover over a path link to add vertexes by clicking on it or remove vertexes using the <span
+        class="sb">Close</span> icon.</li>
+    <li>Hover over a path link to view the source nodes, target nodes, and vertexes.</li>
+    <li>The source or target node of a path link can be changed by dragging the input or output circles.</li>
+  </ul>
+  <h4 class="sb">Stencil Actions
+    <hr>
+  </h4>
+  <div>
+    <span class="sb"> Move the Stencil Panel</span> - Use the <span class="sb">Drag</span> icon on the top-left of the
+    stencil to move it anywhere within the canvas.
+  </div>
+  <div class="mt10">
+    <span class="sb">Undo/Redo Workflow</span> - Use the respective icons on the stencil header to undo/redo any actions
+    or transitions on the workflow data.
+  </div>
+  <div class="mt10">
+    <span class="sb"> Reset Workflow </span> - Use the <span class="sb">Close</span> icon on the stencil to reset a new
+    workflow to its default state. If the workflow was previously saved, it will be restored to its last updated state.
+  </div>
+  <div class="mt10">
+    <span class="sb"> Collapse the Stencil </span>- The stencil panel can be toggled on/off using the drop-down icon at
+    the far right.
+  </div>
+  <h4 class="sb">Workflow Actions
+    <hr>
+  </h4>
+  <div>
+    <span class="sb"> Save Workflow </span>- Click <span class="sb">Save</span> on the workflow header. Note that only
+    <a class="cur-ptr text-link"
+      href="https://help.servicedeskplus.com/configurations/release_management/configuring_release_workflows.html$validate-workflow"
+      target="_blank"> validated workflows</a> can be saved. Descriptive warning messages are displayed to notify you if
+    the workflow configuration contains errors.
+  </div>
+  <div class="mt10">
+    <span class="sb">Zoom In/Zoom Out Workflow</span> - Use the zoom handle on the right corner of the canvas to view
+    the graph in a large/small scaled view.
+  </div>
+  <div class="mt10">
+    <span class="sb">Saved Workflow Actions</span> - On saved workflows, you can click the <span
+      class="sb">Hamburger</span> icon to view the workflow properties, history and to export the workflow graph as a
+    PDF.
+  </div>
+  <div class="mt10">
+    <span class="sb">Manage Stage and Status Visibility</span> - Choose if you want to display all the stages and statuses in releases or only the ones included in the workflow by using the Manage Stage & Status settings at the top of the workflow builder.
+    <ul class="mt10">
+      <li><span class="sb">Show all stages and statuses:</span> Use this to display all stages and statuses in the release.</li>
+      <li><span class="sb">Show only the stages and statuses included in workflow:</span> Use this to display only the stages and statuses included in the workflow.</li>
+  </ul>
+ </div>
+</div>

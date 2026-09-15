@@ -1,0 +1,252 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/topics"
+      ],
+      "desc": "This operation helps you add a new topic.",
+      "disp_desc": "Add a topic",
+      "workflow": "SolutionUtil.java#addSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"topic\":{\"name\":\"test topic under Routers\",\"parent\":{\"id\":\"4\"}}}",
+        "showattr": "true"
+      },	  
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\": 2000,\"status\":\"Success\"},\"topic\":{\"parent\":{\"name\":\"Printers\",\"id\":\"3\"},\"name\":\"test topic under Routers\",\"id\":\"302\",\"solution_count\":\"0\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/topics/{topic_id}"
+      ],
+      "desc": "This operation helps you view an existing topic by ID.",
+      "disp_desc": "View a topic",
+      "workflow": "SolutionUtil.java#viewSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\": 2000,\"status\":\"Success\"},\"topic\":{\"parent\":{\"name\":\"Hardware\",\"id\":\"1\"},\"name\":\"Routers\",\"id\":\"4\",\"solution_count\":\"0\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/topics"
+      ],
+      "desc": "This operation helps you view all the existing topics in the application.",
+      "disp_desc": "View all topics",
+      "workflow": "SolutionUtil.java#viewSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"3\",\"start_index\":\"1\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\": 2000,\"status\":\"Success\"}],\"topics\":[{\"parent\": null,\"name\":\"Hardware\",\"id\":\"1\",\"solution_count\":\"0\"},{\"parent\": {\"name\":\"Hardware\",\"id\":\"1\"},\"name\":\"Routers\",\"id\":\"4\",\"solution_count\":\"0\"},{\"parent\": {\"name\":\"Hardware\",\"id\":\"1\"},\"name\":\"Switches\",\"id\":\"5\",\"solution_count\":\"0\"}],\"list_info\":{\"has_more_rows\": true,\"start_index\": 1,\"row_count\": 3}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/topics/{topic_id}"
+      ],
+      "desc": "This operation helps you rename a topic.",
+      "disp_desc": "Update a topic",
+      "workflow": "SolutionUtil.java#updateSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"topic\":{\"name\":\"topic to test\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\": 2000,\"status\":\"Success\"},\"topic\":{\"parent\":{\"name\":\"Hardware\",\"id\":\"1\"},\"name\":\"topic to test\",\"id\":\"3\",\"solution_count\":\"0\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/topics/{topic_id}"
+      ],
+      "desc": "This operation helps you delete an existing topic by ID.",
+      "disp_desc": "Delete a topic",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"topic\":{\"solution_to_topic\":\"2\",\"subtopic_to_topic\":\"2\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\": 2000,\"status\":\"Success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+          "name": "",
+          "method": "PUT",
+          "moduleName" : "Solutions",
+          "path": [
+            "/api/v3/topics/{topic_id}/_restore_from_trash"
+          ],
+          "desc": "This operation helps you restore an existing topic from trash",
+          "disp_desc": "Restore topic from trash",
+          "workflow": "",
+          "isReleased": "true",
+          "input" : {
+            "name" : "INPUT_DATA",
+            "sample":"{\"restore_solutions\" : false}",
+            "showattr": "true"
+          },
+          "output": {
+            "sample": "{\"response_status\":{\"status_code\": 2000,\"status\":\"Success\"}}"
+          },
+          "defaultAttributes": [],
+          "excludedAttributes": [],
+          "inOP": "true",
+          "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/topics/{topic_id}"
+      ],
+      "desc": "This operation helps you Change parent of a topic.",
+      "disp_desc": "Change parent",
+      "workflow": "SolutionUtil.java#updateSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"topic\":{\"parent\":{\"id\":\"1\"}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\": 2000,\"status\":\"Success\"},\"topic\":{\"parent\":{\"name\":\"Hardware\",\"id\":\"1\"},\"name\":\"topic to test\",\"id\":\"3\",\"solution_count\":\"0\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/topics/{topic_id}"
+      ],
+      "desc": "This operation helps you remove parent and move child as parent of a topic.",
+      "disp_desc": "Remove parent and move child as parent",
+      "workflow": "SolutionUtil.java#updateSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"topic\":{\"parent\":null}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\": 2000,\"status\":\"Success\"},\"topic\":{\"parent\": null,\"name\":\"topic to test\",\"id\":\"3\",\"solution_count\":\"0\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique ID of the Topic.",
+      "graphView": "",
+      "column": "KB_TOPICS :TOPICID",
+      "isMandatory": "true",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "The name of the Topic.",
+      "graphView": "",
+      "column": "KB_TOPICS:TOPICNAME",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "parent",
+      "type": "Object",
+      "desc": "Parent topic of the topic",
+      "graphView": "",
+      "column": "TOPICHIERARCHY:PARENTID",
+      "relEntity": {
+          "name": "Topic",
+          "type": "referential",
+          "relation": "1to1"
+        },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "solution_count",
+      "type": "Number",
+      "desc": "Denotes the number of solutions under the topic.",
+      "graphView": "",
+      "column": "KB_TOPICS:SOLUTION_COUNT",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "isdeleted",
+      "type": "Boolean",
+      "desc": "Indicates the topic is deleted or not.",
+      "graphView": "",
+      "column": "KB_TOPICS:ISDELETED",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+
+  ],
+  "isReleased": "true",
+  "lastModified": 1470052815000
+}

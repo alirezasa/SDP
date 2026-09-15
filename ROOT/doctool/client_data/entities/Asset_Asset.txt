@@ -1,0 +1,596 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "PUT",
+      "path": [
+        "/api/v3/asset_assets?ids={id1,id2,id3}"
+      ],
+      "desc": "Bulk updates for assets can be performed using this syntax, allowing updates for all available fields. Up to 100 IDs can be provided in the URL, separated by commas.",
+      "disp_desc": "Bulk update of assets",
+      "moduleName" : "Asset",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\n  \"asset_asset\": {\n    \"asset_tag\": \"TAG#212\",\n    \"vendor\": {\n      \"id\": \"4\",\n      \"name\": \"Vendor\"\n    },\n    \"org_serial_number\": \"JASKL-KJSKJ-PIJSNJ\",\n    \"description\": \"Update Asset\",\n    \"state\": {\n      \"id\": \"3\",\n      \"name\": \"In Repair\"\n    },\n    \"site\": {\n      \"id\": \"3\",\n      \"name\": \"Site1\"\n    },\n    \"location\": \"Location1\",\n    \"acquisition_date\": {\n      \"value\": \"1709038440000\"\n    },\n    \"expiry_date\": {\n      \"value\": \"1740660840000\"\n    },\n    \"purchase_cost\": \"500\",\n    \"warranty_expiry\": {\n      \"value\": \"1772110440000\"\n    }\n  }\n}"
+      },
+      "output": {
+        "sample": ""
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": [
+        "/api/v3/asset_assets"
+      ],
+      "disp_desc": "Get all assets",
+      "moduleName" : "Asset",
+      "desc": "Retrieve asset details from the API without specifying the ID in the URL. This will display all one-to-one fields of asset details. You can specify required fields using the 'fields_required' key, but collection fields such as 'network adaptors' cannot be retrieved.",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\n  \"list_info\": {\n    \"row_count\": \"25\",\n    \"start_index\": 1,\n    \"sort_field\": \"name\",\n    \"sort_order\": \"asc\",\n    \"fields_required\": [\n      \"name\",\n      \"module\",\n      \"product\",\n      \"state\",\n      \"barcode\",\n      \"user\",\n      \"department\",\n      \"used_by_asset\",\n      \"site\",\n      \"purchase_cost\",\n      \"vendor\",\n      \"loan_end\"\n    ]\n  }\n}"
+      },
+      "workflow": "",
+      "output": {
+        "sample": "{\n  \"asset_assets\": [\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": {\n        \"name\": \"Site1\",\n        \"id\": \"3\"\n      },\n      \"vendor\": {\n        \"name\": \"Vendor\",\n        \"currency\": {\n          \"id\": \"2\"\n        },\n        \"id\": \"4\"\n      },\n      \"name\": \"asset\",\n      \"is_loaned\": false,\n      \"id\": \"1\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Repair\",\n        \"id\": \"3\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"500.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": {\n        \"name\": \"Site1\",\n        \"id\": \"3\"\n      },\n      \"vendor\": {\n        \"name\": \"Vendor\",\n        \"currency\": {\n          \"id\": \"2\"\n        },\n        \"id\": \"4\"\n      },\n      \"name\": \"Copy of asset-10\",\n      \"is_loaned\": false,\n      \"id\": \"10\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Repair\",\n        \"id\": \"3\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"500.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-2\",\n      \"is_loaned\": false,\n      \"id\": \"2\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-3\",\n      \"is_loaned\": false,\n      \"id\": \"3\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-4\",\n      \"is_loaned\": false,\n      \"id\": \"4\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-5\",\n      \"is_loaned\": false,\n      \"id\": \"5\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-6\",\n      \"is_loaned\": false,\n      \"id\": \"6\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-7\",\n      \"is_loaned\": false,\n      \"id\": \"7\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-8\",\n      \"is_loaned\": false,\n      \"id\": \"8\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    },\n    {\n      \"product\": {\n        \"part_no\": \"-\",\n        \"asset_category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"product_type\": {\n          \"internal_name\": \"Access Point\",\n          \"name\": \"Access Point\",\n          \"id\": \"78\",\n          \"type\": {\n            \"id\": \"1\"\n          },\n          \"icon_name\": {\n            \"content-url\": \"/images/no-image-icon.svg\"\n          }\n        },\n        \"all_product_type\": {\n          \"parent\": {\n            \"api_plural_name\": \"asset_assets\",\n            \"name\": \"asset_asset\",\n            \"id\": \"65\",\n            \"display_name\": \"Asset\",\n            \"display_plural_name\": \"Assets\"\n          },\n          \"api_plural_name\": \"asset_access_points\",\n          \"icon\": {\n            \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n            \"id\": \"9\"\n          },\n          \"is_deletable\": true,\n          \"display_name\": \"Access Point\",\n          \"display_plural_name\": \"Access Points\",\n          \"asset_category\": {\n            \"id\": \"2\"\n          },\n          \"internal_name\": \"Access Point\",\n          \"api_name\": \"asset_access_point\",\n          \"name\": \"asset_access_point\",\n          \"asset_type\": {\n            \"id\": \"1\"\n          },\n          \"is_child_allowed\": true,\n          \"id\": \"78\",\n          \"category\": {\n            \"id\": \"7\"\n          }\n        },\n        \"name\": \"asdasda\",\n        \"asset_type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"id\": \"4\",\n        \"type\": {\n          \"name\": \"Asset\",\n          \"id\": \"1\"\n        },\n        \"category\": {\n          \"name\": \"IT\",\n          \"id\": \"2\"\n        },\n        \"manufacturer\": null\n      },\n      \"module\": {\n        \"parent\": {\n          \"api_plural_name\": \"asset_assets\",\n          \"name\": \"asset_asset\",\n          \"id\": \"65\",\n          \"display_name\": \"Asset\",\n          \"display_plural_name\": \"Assets\"\n        },\n        \"api_plural_name\": \"asset_access_points\",\n        \"icon\": {\n          \"content-url\": \"/api/v3/asset_modules/78/images/9\",\n          \"id\": \"9\"\n        },\n        \"is_deletable\": true,\n        \"display_name\": \"Access Point\",\n        \"display_plural_name\": \"Access Points\",\n        \"asset_category\": {\n          \"id\": \"2\"\n        },\n        \"internal_name\": \"Access Point\",\n        \"api_name\": \"asset_access_point\",\n        \"name\": \"asset_access_point\",\n        \"asset_type\": {\n          \"id\": \"1\"\n        },\n        \"is_child_allowed\": true,\n        \"id\": \"78\",\n        \"category\": {\n          \"id\": \"7\"\n        }\n      },\n      \"used_by_asset\": null,\n      \"site\": null,\n      \"vendor\": null,\n      \"name\": \"Copy of asset-9\",\n      \"is_loaned\": false,\n      \"id\": \"9\",\n      \"state\": {\n        \"is_scan_required\": true,\n        \"is_ownership_allowed\": false,\n        \"name\": \"In Store\",\n        \"id\": \"1\",\n        \"is_ownership_mandatory\": false\n      },\n      \"purchase_cost\": \"0.00\",\n      \"department\": null,\n      \"barcode\": null,\n      \"user\": null,\n      \"loan_end\": null\n    }\n  ],\n  \"response_status\": [\n    {\n      \"status_code\": 2000,\n      \"status\": \"success\"\n    }\n  ],\n  \"list_info\": {\n    \"has_more_rows\": false,\n    \"start_index\": 1,\n    \"sort_field\": \"name\",\n    \"fields_required\": [\n      \"name\",\n      \"module\",\n      \"product\",\n      \"state\",\n      \"barcode\",\n      \"user\",\n      \"department\",\n      \"used_by_asset\",\n      \"site\",\n      \"purchase_cost\",\n      \"vendor\",\n      \"loan_end\"\n    ],\n    \"page\": 1,\n    \"sort_order\": \"asc\",\n    \"row_count\": 10\n  }\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": [
+        "/api/v3/asset_assets/_metainfo"
+      ],
+      "disp_desc": "Get asset metainfo",
+      "desc": "Metainfo api provides the meta data of Asset fields. This api provides comprehensive information about the fields of Asset entity such as field type, constraints, display name, display type, etc.",
+      "input": {
+        "name": "input_data",
+        "sample": "{\n  \"for\": \"advanced_filter\"\n}"
+      },
+      "workflow": "",
+      "moduleName" : "Asset",
+      "output": {
+        "sample": "{\n  \"response_status\": {\n    \"status_code\": 2000,\n    \"status\": \"success\"\n  },\n  \"metainfo\": {\n    \"is_dynamic\": true,\n    \"plural_name\": \"asset_assets\",\n    \"relationship\": false,\n    \"fields\": {\n      \"total_cost\": {\n        \"for_filter_view\": true,\n        \"type\": \"double\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"TCO\",\n        \"constraints\": {\n          \"num_range\": \"0\"\n        },\n        \"searchable\": false,\n        \"for_list_view\": true,\n        \"display_type\": \"Currency\",\n        \"display_key\": \"sdp.inventory.detailAsset.assettco\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false\n      },\n      \"org_serial_number\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.inventory.asset.org.serialnumber\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"string\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Org Serial Number\",\n        \"constraints\": {\n          \"max_length\": 50\n        },\n        \"for_list_view\": true\n      },\n      \"last_operation_status\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"asset_operation_status\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Operation Status\",\n        \"for_list_view\": false,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"asset.last.operation.status\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/last_operation_status\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"last_operation_status_code\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"asset_operation_code\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Operation Status Code\",\n        \"for_list_view\": false,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"asset.last.operation.status.code\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/last_operation_status_code\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"state\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"asset_state\",\n        \"lookup_field\": \"name\",\n        \"default_value\": {\n          \"name\": \"In Store\",\n          \"id\": \"1\"\n        },\n        \"type\": \"lookup\",\n        \"partial_field\": true,\n        \"list_view\": true,\n        \"display_name\": \"Asset State\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.inventory.detailAsset.AssetState\",\n        \"for_detail_view\": true,\n        \"href\": \"/asset_assets/state?input_data={\\\"list_info\\\":{\\\"search_criteria\\\":{\\\"field\\\":\\\"name\\\",\\\"condition\\\":\\\"is not\\\",\\\"value\\\":\\\"Disposed\\\"}}}\",\n        \"fields\": {\n          \"name\": {\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 30\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"barcode\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.inventory.workstation.listview.barcode\",\n        \"for_detail_view\": true,\n        \"unique\": true,\n        \"for_filter_view\": true,\n        \"type\": \"string\",\n        \"partial_field\": true,\n        \"list_view\": true,\n        \"display_name\": \"Barcode\",\n        \"constraints\": {\n          \"max_length\": 100\n        },\n        \"for_list_view\": true\n      },\n      \"loan_end\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"sdp.inventory.detailAsset.leaseEnd\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Loan End\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"operational_cost\": {\n        \"for_filter_view\": true,\n        \"type\": \"double\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Operational Cost(s)\",\n        \"constraints\": {\n          \"num_range\": \"0\"\n        },\n        \"searchable\": false,\n        \"for_list_view\": true,\n        \"display_type\": \"Currency\",\n        \"display_key\": \"sdp.inventory.detailAsset.header.operationalCost\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false\n      },\n      \"asset_tag\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.inventory.detailAsset.resTag\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"string\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Asset Tag\",\n        \"constraints\": {\n          \"max_length\": 50\n        },\n        \"for_list_view\": true\n      },\n      \"created_time\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"sdp.requests.config.createdtime\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"for_filter_view\": false,\n        \"form_field\": false,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Created time\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"last_scan_failure_time\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"asset.scan.failure.time\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"for_filter_view\": false,\n        \"form_field\": false,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Failure Scan Time\",\n        \"searchable\": false,\n        \"for_list_view\": false\n      },\n      \"module\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"asset_module\",\n        \"lookup_field\": \"display_name\",\n        \"type\": \"lookup\",\n        \"partial_field\": true,\n        \"list_view\": true,\n        \"display_name\": \"Product Type\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.admin.product.addproduct.type\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/module\",\n        \"fields\": {\n          \"name\": {\n            \"editable\": false,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"regex\": \"api_name\",\n              \"max_length\": 50\n            },\n            \"for_list_view\": true,\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": false,\n            \"unique\": true,\n            \"form_field\": false\n          }\n        }\n      },\n      \"created_by\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"user\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Created By\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"common.createdby\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/created_by\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.admin.technician.addtechnician.name\",\n            \"for_detail_view\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 150\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"part_no\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.admin.product.addproduct.partnumber\",\n        \"read_only\": true,\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"form_field\": false,\n        \"type\": \"string\",\n        \"partial_field\": true,\n        \"list_view\": true,\n        \"display_name\": \"Part No.\",\n        \"constraints\": {\n          \"max_length\": 100\n        },\n        \"for_list_view\": true\n      },\n      \"last_operation_triggered_by\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"asset_operation_trigger\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Operation Triggered By\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"asset.last.operation.triggered\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/last_operation_triggered_by\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"purchase_order\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"purchase_order\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Purchase Order\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.overview.assetMgmt.purchaseOrder.title\",\n        \"read_only\": true,\n        \"for_detail_view\": true,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/purchase_order\",\n        \"fields\": {\n          \"name\": {\n            \"display_key\": \"sdp.purchase.listViewI.poName\",\n            \"for_detail_view\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"PO Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 100\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"network_adapters\": {\n        \"for_filter_view\": false,\n        \"multiple\": true,\n        \"lookup_entity\": \"network_adapter\",\n        \"lookup_field\": \"name\",\n        \"sortable\": false,\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"display_name\": \"Network Adapter\",\n        \"searchable\": false,\n        \"for_list_view\": false,\n        \"display_key\": \"network.adapter\",\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/network_adapters\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.inventory.detailWS.nicname\",\n            \"for_detail_view\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": false,\n            \"list_view\": true,\n            \"display_name\": \"NIC Name\",\n            \"constraints\": {\n              \"max_length\": 100\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"name\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.inventory.detailAsset.resourcename\",\n        \"for_detail_view\": true,\n        \"unique\": true,\n        \"for_filter_view\": true,\n        \"type\": \"string\",\n        \"partial_field\": true,\n        \"list_view\": true,\n        \"display_name\": \"Asset Name\",\n        \"mandatory\": true,\n        \"constraints\": {\n          \"max_length\": 200\n        },\n        \"for_list_view\": true\n      },\n      \"udf_fields\": {\n        \"display_key\": \"sdp.admin.leftpanel.customfields.home\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": false,\n        \"type\": \"udf\",\n        \"partial_field\": false,\n        \"list_view\": false,\n        \"display_name\": \"Additional Fields\",\n        \"fields\": {},\n        \"for_list_view\": true\n      },\n      \"history_description\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.common.description\",\n        \"for_detail_view\": false,\n        \"for_filter_view\": false,\n        \"form_field\": false,\n        \"type\": \"string\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Description\",\n        \"constraints\": {\n          \"max_length\": 250\n        },\n        \"for_list_view\": false\n      },\n      \"retain_user_site\": {\n        \"display_type\": \"Boolean\",\n        \"display_key\": \"sdp.asset.listView.assetCSVImport.confirmMSG\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": false,\n        \"default_value\": \"true\",\n        \"sortable\": false,\n        \"type\": \"boolean\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Retain user site as asset site.\",\n        \"for_list_view\": false\n      },\n      \"acquisition_date\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"sdp.inventory.detailAsset.acquisitionDate\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Acquisition Date\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"manufacturer\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.admin.product.addproduct.manufacturer\",\n        \"read_only\": true,\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"form_field\": false,\n        \"type\": \"string\",\n        \"partial_field\": true,\n        \"list_view\": true,\n        \"display_name\": \"Manufacturer\",\n        \"constraints\": {\n          \"max_length\": 100\n        },\n        \"for_list_view\": true\n      },\n      \"modified_time\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"asset.modifiedtime\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"for_filter_view\": false,\n        \"form_field\": false,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last modified time\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"current_cost\": {\n        \"for_filter_view\": true,\n        \"type\": \"double\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Current Book Value\",\n        \"constraints\": {\n          \"num_range\": \"0\"\n        },\n        \"searchable\": false,\n        \"for_list_view\": true,\n        \"display_type\": \"Currency\",\n        \"display_key\": \"sdp.inventory.detailAsset.currentCost\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false\n      },\n      \"vendor\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"vendor\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Vendor\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.inventory.wsDetailView.hw.processorVendor\",\n        \"for_detail_view\": true,\n        \"href\": \"/asset_assets/vendor\",\n        \"fields\": {\n          \"name\": {\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 100\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"asset_type\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"asset_type\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Asset Type\",\n        \"for_list_view\": false,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.inventory.getinputfile.resourcetype\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/asset_type\",\n        \"fields\": {\n          \"name\": {\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 30\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"purchase_cost\": {\n        \"display_type\": \"Currency\",\n        \"display_key\": \"sdp.license.addnew.pocost\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"default_value\": \"0.00\",\n        \"type\": \"double\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Purchase Cost\",\n        \"constraints\": {\n          \"num_range\": \"0:9999999999999\"\n        },\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"department\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"department\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Department\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.helpdesk.common.dept\",\n        \"for_detail_view\": true,\n        \"href\": \"/asset_assets/department\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 100\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"loan_start\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"sdp.inventory.detailAsset.leaseStart\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Loan Start\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"product\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"product\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": true,\n        \"list_view\": true,\n        \"display_name\": \"Product\",\n        \"mandatory\": true,\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.admin.leftpanel.assetmgmt.product\",\n        \"for_detail_view\": true,\n        \"href\": \"/asset_assets/product\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 150\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"last_scan_status\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"asset_operation_status\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Scan Status\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"asset.last.scan.status\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/last_scan_status\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"last_scan_status_code\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"asset_operation_code\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Operation Status Code\",\n        \"for_list_view\": false,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"asset.last.operation.status.code\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/last_scan_status_code\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"expiry_date\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"sdp.inventory.detailAsset.expiryDate\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Expiry Date\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"used_by_asset\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"asset_asset\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Associated to Assets\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"asset.associcated.asset\",\n        \"for_detail_view\": true,\n        \"href\": \"/asset_assets/used_by_asset\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.inventory.detailAsset.resourcename\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Asset Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 200\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"warranty_expiry\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"sdp.inventory.assetImport.stepTwo.warantyEndDate\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Warranty Expiry Date\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"last_scan_success_time\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"asset.scan.success.time\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"for_filter_view\": false,\n        \"form_field\": false,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Success Scan Time\",\n        \"searchable\": false,\n        \"for_list_view\": false\n      },\n      \"asset_category\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"asset_category\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Asset Category\",\n        \"for_list_view\": false,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.inventory.report.assetcategory\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/asset_category\",\n        \"fields\": {\n          \"name\": {\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 30\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"site\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"site\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Site\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"ae.cmdb.source.site\",\n        \"for_detail_view\": true,\n        \"href\": \"/asset_assets/site\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.common.name\",\n            \"for_detail_view\": true,\n            \"unique\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 250\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"is_asset_depreciation\": {\n        \"display_type\": \"Boolean\",\n        \"display_key\": \"asset.depreciation.configured.for.asset\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": false,\n        \"default_value\": \"false\",\n        \"sortable\": false,\n        \"type\": \"boolean\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Is Asset Depreciation\",\n        \"for_list_view\": false\n      },\n      \"modified_by\": {\n        \"for_filter_view\": false,\n        \"lookup_entity\": \"user\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last modified by\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"asset.modifiedby\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"form_field\": false,\n        \"href\": \"/asset_assets/modified_by\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.admin.technician.addtechnician.name\",\n            \"for_detail_view\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 150\n            },\n            \"for_list_view\": true\n          }\n        }\n      },\n      \"location\": {\n        \"display_type\": \"Single Line\",\n        \"display_key\": \"sdp.inventory.assetImport.stepTwo.location\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": true,\n        \"type\": \"string\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Location\",\n        \"constraints\": {\n          \"max_length\": 250\n        },\n        \"for_list_view\": true\n      },\n      \"is_loanable\": {\n        \"display_type\": \"Boolean\",\n        \"display_key\": \"sdp.inventory.detailAsset.isLoanable\",\n        \"for_detail_view\": true,\n        \"for_filter_view\": false,\n        \"default_value\": \"false\",\n        \"sortable\": false,\n        \"type\": \"boolean\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Is Loanable\",\n        \"for_list_view\": false\n      },\n      \"last_scan_time\": {\n        \"display_type\": \"Date/Time\",\n        \"display_key\": \"asset.scan.time\",\n        \"read_only\": true,\n        \"for_detail_view\": false,\n        \"for_filter_view\": false,\n        \"form_field\": false,\n        \"type\": \"datetime\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"Last Scan Time\",\n        \"searchable\": false,\n        \"for_list_view\": true\n      },\n      \"user\": {\n        \"for_filter_view\": true,\n        \"lookup_entity\": \"user\",\n        \"lookup_field\": \"name\",\n        \"type\": \"lookup\",\n        \"partial_field\": false,\n        \"list_view\": true,\n        \"display_name\": \"User\",\n        \"for_list_view\": true,\n        \"display_type\": \"Pick List\",\n        \"display_key\": \"sdp.helpdesk.common.user\",\n        \"for_detail_view\": true,\n        \"href\": \"/asset_assets/user\",\n        \"fields\": {\n          \"name\": {\n            \"display_type\": \"Single Line\",\n            \"display_key\": \"sdp.admin.technician.addtechnician.name\",\n            \"for_detail_view\": true,\n            \"for_filter_view\": true,\n            \"type\": \"string\",\n            \"partial_field\": true,\n            \"list_view\": true,\n            \"display_name\": \"Name\",\n            \"mandatory\": true,\n            \"constraints\": {\n              \"max_length\": 150\n            },\n            \"for_list_view\": true\n          }\n        }\n      }\n    },\n    \"entity\": \"asset_asset\"\n  }\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "path": [
+        "/api/v3/assets/{assetId}"
+      ],
+      "desc": "Assets can be deleted using this operation",
+      "disp_desc": "Delete an asset",
+      "moduleName" : "Asset",
+      "workflow": "",
+      "output": {
+        "sample": "{\n  \"response_status\": {\n    \"status_code\": 2000,\n    \"status\": \"success\"\n  }\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/assets?ids={id1,id2}"
+      ],
+      "desc": "Assets can be deleted in bulk using this operation. Up to 100 IDs can be provided in the URL, separated by commas.",
+      "disp_desc": "Bulk delete assets",
+      "workflow": "",
+      "output": {
+        "sample": "{\n  \"response_status\": [\n    {\n      \"status_code\": 2000,\n      \"id\": \"8\",\n      \"status\": \"success\"\n    },\n    {\n      \"status_code\": 2000,\n      \"id\": \"9\",\n      \"status\": \"success\"\n    }\n  ]\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "false",
+      "isReleased": "true"
+    },
+      {
+        "output": {"sample": "{\"attachment\":{\"module\":\"asset_asset\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image/png\",\"size\":{\"display_value\":\"126.46KB\",\"value\":129496},\"name\":\"Screenshot from 2024-05-30 16-15-20.png\",\"attached_on\":{\"display_value\":\"Jun 3, 2024 11:57 AM\",\"value\":\"1717396054710\"},\"content_url\":\"/api/v3/asset_assets/1/attachments/7/_download\",\"id\":\"7\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+        "path": "/api/v3/asset_assets/{assetId}/_upload",
+        "method": "PUT",
+        "moduleName" : "Asset",
+        "workflow": "",
+        "disp_desc": "Add attachment",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "fileinput": "true",
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to upload an attachment to an asset."
+    },
+    {
+        "path": "/api/v3/asset_assets/{assetId}/attachments/{attachment_id}/_download",
+        "method": "GET",
+        "moduleName" : "Asset",
+        "workflow": "",
+        "disp_desc": "Download attachment",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to download a particular attachment present in an asset."
+    },
+    {
+        "output": {"sample": "{\"attachments\":[{\"module\":\"asset_asset\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image/png\",\"size\":{\"display_value\":\"126.46KB\",\"value\":129496},\"name\":\"Screenshot from 2024-05-30 16-15-20.png\",\"attached_on\":{\"display_value\":\"Jun 3, 2024 11:57 AM\",\"value\":\"1717396054710\"},\"content_url\":\"/api/v3/asset_assets/1/attachments/7/_download\",\"id\":\"7\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"},
+        "path": "/api/v3/asset_assets/{assetId}/attachments",
+        "method": "GET",
+        "moduleName" : "Asset",
+        "workflow": "",
+        "disp_desc": "Get attachments list",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to fetch all attachments present in an asset."
+    },
+    {
+        "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+        "path": "/api/v3/asset_assets/{assetId}/attachments/{attachment_id}",
+        "method": "DELETE",
+        "moduleName" : "Asset",
+        "workflow": "",
+        "disp_desc": "Delete attachment",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to delete an attachment in an asset."
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier used to identify the asset.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Unique name of the asset. <br><br> <b>Sample Data</b><br><pre><code>\"name\":\"Sample Asset\"</code></pre> <b>Constraints</b><br> 1. Maximum length of 200 characters",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isMandatory": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "product",
+      "type": "Object",
+      "desc": "Product name of an asset, name or id of a product can be given. <br><br> <b>Sample Data</b><br><pre><code>\"product\": {\n  \"id\": \"1\",\n  \"name\": \"Sample Product\"\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isMandatory": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "acquisition_date",
+      "type": "Object",
+      "desc": "Date and time when the asset was acquired. <br><br> <b>Sample Data</b><br><pre><code>\"acquisition_date\": {\n  \"display_value\": \"May 13, 2021 02:51 PM\",\n  \"value\": \"1620897660000\"\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "asset_category",
+      "type": "Object",
+      "desc": "Category of the asset such as Asset, Consumable, etc.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "asset_tag",
+      "type": "String",
+      "desc": "Asset tag of an asset. <br><br> <b>Sample Data</b><br><pre><code>\"asset_tag\":\"ASSET-6796\" </code></pre> <b>Constraints</b><br> 1. Maximum length of 50 characters",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "asset_type",
+      "type": "Object",
+      "desc": "Type of the asset such as IT, Non-IT etc.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "barcode",
+      "type": "String",
+      "desc": "Barcode assigned to the asset serves as a unique identifier for asset tracking purposes. <br><br> <b>Sample Data</b><br><pre><code>\"barcode\":\"XCAJSBFOQU7852\"</code></pre> <b>Constraints</b><br> 1. Maximum length of 100 characters",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "desc": "User who created the asset.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "desc": "Time at which the asset was created.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "current_cost",
+      "type": "Object",
+      "desc": "Current cost of the asset which is calculated based on the purchase cost and depreciation details.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "department",
+      "type": "Object",
+      "desc": "Department to which the asset is assigned.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "depreciation_detail",
+      "type": "Object",
+      "desc": "Depreciation details of the asset.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Description of the asset. <br><br> <b>Sample Data</b><br><pre><code>\"description\":\"This is a sample asset\"</code></pre> <b>Constraints</b><br> 1. Maximum length of 250 characters",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "expiry_date",
+      "type": "Object",
+      "desc": "Date and time when the asset is expected to expire. <br><br> <b>Sample Data</b><br><pre><code>\"expiry_date\": {\n  \"display_value\": \"May 13, 2021 02:51 PM\",\n  \"value\": \"1620897660000\"\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_loanable",
+      "type": "Boolean",
+      "desc": "Indicates whether the asset can be loaned or not.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_loaned",
+      "type": "Boolean",
+      "desc": "Indicates whether the asset is loaned or not.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "loan_end",
+      "type": "Object",
+      "desc": "Date and time when the asset loan ends. <br><br> <b>Sample Data</b><br><pre><code>\"loan_end\": {\n  \"display_value\": \"May 13, 2021 02:51 PM\",\n  \"value\": \"1620897660000\"\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "loan_start",
+      "type": "Object",
+      "desc": "Date and time when the asset loan starts. <br><br> <b>Sample Data</b><br><pre><code>\"loan_start\": {\n  \"display_value\": \"May 10, 2021 12:45 PM\",\n  \"value\": \"1620817660000\"\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "location",
+      "type": "String",
+      "desc": "Location of the asset. <br><br> <b>Sample Data</b><br><pre><code>\"location\":\"Chennai\"</code></pre><b>Constraints</b><br> 1. Maximum length of 250 characters",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "manufacturer",
+      "type": "String",
+      "desc": "Manufacturer of the asset.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "org_serial_number",
+      "type": "String",
+      "desc": "Organization Serial Number field to track assets. <br><br> <b>Sample Data</b><br><pre><code>\"org_serial_number\":\"ASSET-6796\"</code></pre><b>Constraints</b><br> 1. Maximum length of 50 characters",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "part_no",
+      "type": "String",
+      "desc": "Part Number field from the asset's Product. <br><br> <b>Sample Data</b><br><pre><code>\"part_no\":\"XCAJSBFOQU7852\"</code></pre> <b>Constraints</b><br> 1. Maximum length of 100 characters",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "purchase_cost",
+      "type": "Number",
+      "desc": "Cost of the asset at the time of purchase. <br><br> <b>Sample Data</b><br><pre><code>\"purchase_cost\":1000.00</code></pre> <b>Constraints</b><br> 1. Range: 0 to 9999999999999",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "purchase_order",
+      "type": "Object",
+      "desc": "Purchase order details of the asset.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "purchase_order_no",
+      "type": "String",
+      "desc": "Purchase order number of the asset.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "retain_user_site",
+      "type": "Boolean",
+      "desc": "When enabled, the asset will be retained at the user's site.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Site to which the asset is assigned.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "state",
+      "type": "Object",
+      "desc": "State of the asset such as In-use, In-repair, etc. <br><br> <b>Default: </b> In Store.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "udf_fields",
+      "type": "Object",
+      "desc": "User defined fields of the asset that are configured in the product type layout will appear here. This also includes it's parent product type's user defined fields. These fields can take various types such as String, Object, Number, etc. <br><br> <b>Sample Data</b><br><pre><code>\"udf_fields\": {\n  \"udf_field1\": \"value1\",\n  \"udf_field2\": {\n    \"name\": \"value2\"\n  }\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "used_by_asset",
+      "type": "Object",
+      "desc": "Asset to which the asset is assigned, name or id of an asset can be given.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "user",
+      "type": "Object",
+      "desc": "User to whom the asset is assigned, name or id of a user can be given.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "vendor",
+      "type": "Object",
+      "desc": "Vendor of the asset, name or id of a vendor can be given. <br><br> <b>Sample Data</b><br><pre><code>\"vendor\": {\n  \"id\": \"1\",\n  \"name\": \"Sample Vendor\"\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "warranty_expiry",
+      "type": "Object",
+      "desc": "Warranty Expiry date of an asset. <br><br> <b>Sample Data</b><br><pre><code>\"warranty_expiry\": {\n  \"display_value\": \"May 10, 2021 12:45 PM\",\n  \"value\": \"1620817660000\"\n}</code></pre>",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true"
+}

@@ -1,0 +1,241 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "path": "/api/v3/worklog",
+      "desc": "This operation helps you add a new worklog for the given input.",
+      "disp_desc": "Add a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"worklog\":{\"request\":{\"id\":\"1\"},\"description\":\"Adding a worklog\",\"technician\":{\"name\":\"Howard Stern\"},\"start_time\":{\"value\":1421042555857},\"end_time\":{\"value\":1421042555857}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Worklog added successfully\",\"statuscode\":\"200\"}]},\"worklog\":[{\"id\":\"301\",\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"technician\":{\"id\":\"8\",\"name\":\"Howard Stern\"},\"end_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"tech_charge\":\"0.0\",\"total_time_spent\":\"0 Hrs 0 Mins \",\"description\":\"Adding a worklog\",\"task\":null,\"change\":null,\"request\":{\"id\":\"1\",\"title\":\"Sample 01\"},\"total_charge\":\"0.0\",\"start_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"problem\":null,\"associated_entity\":\"request\",\"created_time\":{\"display_value\":\"Aug 1, 2016 04:38 PM\",\"value\":\"1470049706630\"},\"other_charge\":\"0.0\"}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": [
+        "/api/v3/worklog/{worklog-id}"
+      ],
+      "desc": "This operation helps you retrieve the work-log details for the worklog_id provided.",
+      "disp_desc": "View a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Worklog details fetched successfully\",\"statuscode\":\"200\"}]},\"worklog\":[{\"id\":\"301\",\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"technician\":{\"id\":\"8\",\"name\":\"Howard Stern\"},\"end_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"tech_charge\":\"0.0\",\"total_time_spent\":\"0 Hrs 0 Mins \",\"description\":\"Adding a worklog\",\"task\":null,\"change\":null,\"request\":{\"id\":\"1\",\"title\":\"Sample 01\"},\"total_charge\":\"0.0\",\"start_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"problem\":null,\"associated_entity\":\"request\",\"created_time\":{\"display_value\":\"Aug 1, 2016 04:38 PM\",\"value\":\"1470049706630\"},\"other_charge\":\"0.0\"}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": "/api/v3/worklog",
+      "desc": "This operation helps you view all the worklogs for a given request ID.",
+      "disp_desc": "View all worklogs",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"worklog\":{\"request\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"List view fetched successfully\",\"statuscode\":\"200\"}]},\"worklog\":[{\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"technician\":{\"id\":\"8\",\"name\":\"Howard Stern\"},\"tech_charge\":\"0.0\",\"task\":null,\"change\":null,\"problem\":null,\"id\":\"1\",\"end_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"description\":\"Adding a worklog\",\"total_time_spent\":\"0\",\"request\":{\"id\":\"1\",\"title\":\"Test\"},\"total_charge\":\"0.0\",\"start_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"created_time\":{\"display_value\":\"Jul 12, 2016 07:10 PM\",\"value\":\"1468330838436\"},\"other_charge\":\"0.0\"},{\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"technician\":{\"id\":\"8\",\"name\":\"Howard Stern\"},\"tech_charge\":\"0.0\",\"task\":null,\"change\":null,\"problem\":null,\"id\":\"301\",\"end_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"description\":\"Edited worklog\",\"total_time_spent\":\"0\",\"request\":{\"id\":\"1\",\"title\":\"Test\"},\"total_charge\":\"0.0\",\"start_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"created_time\":{\"display_value\":\"Jul 12, 2016 08:19 PM\",\"value\":\"1468334944919\"},\"other_charge\":\"0.0\"},{\"TOTAL_CHARGE_total_actualValue\":0,\"TIMESPENT_total\":\"0 Hrs 0 Mins \",\"TOTAL_CHARGE_total\":0,\"TIMESPENT_total_actualValue\":0}],\"list_info\":{\"end_index\":\"2\",\"start_index\":\"1\",\"page_number\":\"1\",\"sort_order\":\"A\",\"row_count\":\"10\",\"total_count\":\"2\",\"search_fields\":{}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": [
+        "/api/v3/worklog_timetaken"
+      ],
+      "desc": "This operation helps you obtain the timespent value.",
+      "disp_desc": "Worklog_timetaken",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"worklog_timetaken\":{\"start_time\":{\"value\":1421042555857},\"end_time\":{\"value\":1421042555857},\"request\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"worklog_timetaken\":[{\"id\":\"1\",\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"technician\":null,\"end_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"tech_charge\":\"0.0\",\"total_time_spent\":\"0 Hrs 0 Mins \",\"description\":null,\"task\":null,\"change\":null,\"request\":{\"id\":\"1\",\"title\":\"Sample 01\"},\"total_charge\":\"0.0\",\"start_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"problem\":null,\"associated_entity\":\"request\",\"created_time\":{\"display_value\":\"Aug 1, 2016 04:39 PM\",\"value\":\"1470049758287\"},\"other_charge\":\"0.0\"}],\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Timespent calculated successfully\",\"statuscode\":\"200\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "path": [
+        "/api/v3/worklog/{worklog-id}"
+      ],
+      "desc": "This operation helps you update the worklog for the given worklog_Id.",
+      "disp_desc": "Update a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"worklog\":{\"description\":\"Edited worklog\",\"technician\":{\"name\":\"Howard Stern\"},\"start_time\":{\"value\":1421042555857},\"end_time\":{\"value\":1421042555857}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Worklog updated successfully\",\"statuscode\":\"200\"}]},\"worklog\":[{\"id\":\"301\",\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"technician\":{\"id\":\"8\",\"name\":\"Howard Stern\"},\"end_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"tech_charge\":\"0.0\",\"total_time_spent\":\"0 Hrs 0 Mins \",\"description\":\"Edited worklog\",\"task\":null,\"change\":null,\"request\":{\"id\":\"1\",\"title\":\"Sample 01\"},\"total_charge\":\"0.0\",\"start_time\":{\"display_value\":\"Jan 12, 2015 11:32 AM\",\"value\":\"1421042555857\"},\"problem\":null,\"associated_entity\":\"request\",\"created_time\":{\"display_value\":\"Aug 1, 2016 04:38 PM\",\"value\":\"1470049706630\"},\"other_charge\":\"0.0\"}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "path": [
+        "/api/v3/worklog/{worklog-id}"
+      ],
+      "desc": "This operation helps you delete a worklog based on the worklog_id.",
+      "disp_desc": "Delete a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Worklog deleted successfully [301]\",\"statuscode\":\"200\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "technician",
+      "type": "Object",
+      "desc": "Contains Name and/or ID of the Technician to whom the worklog is assigned.<br/> E.g \"technician\": {\"name\": \"Howard Stern\"}",
+      "graphView": "",
+      "column": "CHARGESTABLE:TECHNICIANID",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "owner",
+      "type": "Object",
+      "desc": "Contains name and/or Id of the technician to whom the worklog is assigned.<br/> E.g \"technician\": {\"name\": \"Howard Stern\"}",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOD": "true",
+      "internalType": "int",
+      "entity": null,
+      "relational_mapping": "CHARGESTABLE:TECHNICIANID",
+      "autofill": null,
+      "dfs_module_name": null,
+      "delete": null,
+      "add_reference_entity": null,
+      "trim_length": null,
+      "suffix": null,
+      "group": null,
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "start_time",
+      "type": "Object",
+      "desc": "Date and time to start the worklog. JSON Object has the \"value\" in milliseconds and \"display_value\" in the standard date format. <br/> E.g \"start_time\":{\"value\":1428477462973}",
+      "graphView": "",
+      "column": "CHARGESTABLE:TS_STARTTIME",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "end_time",
+      "type": "Object",
+      "desc": "Date and time to end the worklog. JSON Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"end_time\":{\"value\":1428477462973}",
+      "graphView": "",
+      "column": "CHARGESTABLE : TS_ENDTIME",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "desc": "Date and time of creation of Worklog. JSON Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"created_time\":{\"value\":1428477462973}",
+      "graphView": "",
+      "column": "CHARGESTABLE : TS_ENDTIME",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "recorded_time",
+      "type": "Object",
+      "desc": "Date and time of creation of Worklog. JSON Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"recorded_time\":{\"value\":1428477462973}",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOD": "true",
+      "internalType": "int",
+      "entity": null,
+      "relational_mapping": "CHARGESTABLE : TS_ENDTIME",
+      "autofill": null,
+      "dfs_module_name": null,
+      "delete": null,
+      "add_reference_entity": null,
+      "trim_length": null,
+      "suffix": null,
+      "group": null,
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "other_charge",
+      "type": "Number",
+      "desc": "Extra charges other than the Technician related to the worklog.",
+      "graphView": "",
+      "column": "CHARGESTABLE : OTHER_CHARGE",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Description about the worklog.",
+      "graphView": "",
+      "column": "CHARGESTABLE : DESCRIPTION",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "total_time_spent",
+      "type": "Number",
+      "desc": "Total time spent on the worklog.",
+      "graphView": "",
+      "column": "CHARGESTABLE : TIMESPENT",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "request<br/>problem<br/>change<br/>task",
+      "type": "Object",
+      "desc": "Parent Entity to which the worklog is going to be associated. Value should be in json format.<br/>E.g : - {\"id\":1}<br/> Note : Only one parameter out of the four will be accepted",
+      "graphView": "",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "lastModified": 1470049813000,
+  "isReleased": "true"
+}

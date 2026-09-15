@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <!-- Platform AI URLs and Templates   -->
+    <urls authentication="required" disable-extraparam="true" api="true" rebrand="zmon">
+        <url path="/api/v3/platform_ai_vendors/(\d+)" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/platform_ai_vendors" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/platform_ai_vendors/_get_configurations" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/platform_ai_vendors/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="platform_ai_vendor" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/platform_ai_vendors/(_?)metainfo" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/platform_ai_usecases" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/platform_ai_configurations/(\d+)" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/platform_ai_configurations" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/platform_ai_usage_statistics/(_?)metainfo" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/platform_ai_usage_statistics" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/platform_ai_usage_statistics/_get_total_token_count" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/platform_ai_usage_statistics/_get_performed_by" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/platform_ai_usage_statistics/_get_usecases" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/platform_ai/_reply_assistance" roles="ViewRequests" user_type="all" method="post">
+            <param name="input_data" template="reply_assistance" type="JSONObject" max-len="11000" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/platform_ai/_request_summarization" roles="ViewRequests" user_type="all" method="post">
+            <param name="input_data" template="request_summarization" type="JSONObject" min-occurrences="1" />
+        </url>
+        <url path="/common/ViewHistory.jsp" roles="SDAdmin" operation-param="module" operation-value="platform_ai_vendors">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="platform_ai_vendors_history" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="15" lock-period="5M"/>
+            </throttles>
+            <param name="key" regex="platform_ai_vendors_history" min-occurrences="1"/>
+            <param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+            <param name="search_filter" regex="platform_ai_vendor" min-occurrences="1"/>
+            <param name="admin_entity" regex="true" min-occurrences="1"/>
+            <param name="is_date_filter" regex="true" min-occurrences="1"/>
+            <param name="skip_filter_options" regex="operationName,entity" min-occurrences="1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/platform_ai_vendors/_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/platform_ai_vendors/_get_performed_by_for_history" method="get"/>
+        <throttles name="platform_ai" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="platform_ai_vendor" disable-extra-key="true">
+            <key name="platform_ai_vendor" template="platform_ai_vendor_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="platform_ai_vendor_base" disable-extra-key="true">
+            <key name="is_enabled" regex="false"/>
+            <key name="platform_ai_configuration" type="JSONObject" max-len="-1" template="platform_ai_configuration_base"/>
+            <key name="platform_ai_usecases" allow-invalid="false" array-size="0-9" max-len="-1" type="JSONArray" template="platform_ai_usecase_base"/>
+        </jsontemplate>
+        <jsontemplate name="platform_ai_usecase_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="vendor_id" type="JSONObject" max-len="-1" template="IDJson"/>
+            <key name="scope" regex="All|Requester|Technician"/>
+        </jsontemplate>
+        <jsontemplate name="platform_ai_configuration" disable-extra-key="true">
+            <key name="platform_ai_configuration" template="platform_ai_configuration_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="platform_ai_configuration_base" disable-extra-key="true">
+            <key name="id" type="long" range=">0"/>
+            <key name="vendor_id" type="JSONObject" max-len="-1" template="IDJson"/>
+            <key name="organization_id" type="String" max-len="250"/>
+            <key name="organization_name" type="String" max-len="250"/>
+            <key name="api_key" type="String" max-len="500" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="reply_assistance" disable-extra-key="true">
+            <key name="platform_ai" template="reply_assistance_base" type="JSONObject" max-len="11000"/>
+        </jsontemplate>
+        <jsontemplate name="reply_assistance_base">
+            <key name="query" type="String" max-len="10000" secret="true"/>
+            <key name="category" regex="rephrase|grammar|generate|reply"/>
+            <key name="isRegenerate" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="request_summarization" disable-extra-key="true">
+            <key name="platform_ai" template="request_summarization_base" type="JSONObject"/>
+        </jsontemplate>
+        <jsontemplate name="request_summarization_base">
+            <key name="workorderid" regex="id"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

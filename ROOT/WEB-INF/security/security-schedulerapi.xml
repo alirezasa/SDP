@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+<regexes>
+        <regex name="schedule_frequency" value="minutes|hours|once|daily|weekly|monthly|yearly"/>
+		<regex name="day_of_week" value="[1-7]" />
+		<regex name="day_of_month" value="-1|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|21|22|23|24|25|26|27|28|29|30|31" />
+		<regex name="month_of_year" value="0|1|2|3|4|5|6|7|8|9|10|11" />
+		<regex name="week_of_month" value="[1-5]" />
+</regexes>
+
+<jsontemplates>
+        <jsontemplate name="daily_schedule">
+		    <key name="exclude_nonworkingdays" type="boolean"/>
+		</jsontemplate>
+		<jsontemplate name="weekly_schedule">
+		    <key name="days_of_week" template="days_of_week" type="JSONArray" max-len="-1" min-occurrences="1" array-size="0-7"/>
+		</jsontemplate>
+		<jsontemplate name="monthly_schedule">
+		    <key name="days_of_month" template="days_of_month_array" type="JSONArray" max-len="-1"  array-size="0-31"/>
+		    <key name="days_of_week" template="days_of_week_array_template" type="JSONArray" max-len="-1" array-size="0-10"/>
+		    <key name="weeks_of_month" template="weeks_of_month" type="JSONArray" max-len="-1"  array-size='0-5'/>
+		</jsontemplate>
+		<jsontemplate name="yearly_schedule">
+		    <key name="months_of_year" template="month_of_year_array" type="JSONArray" max-len="-1" min-occurrences="1"  array-size="0-12"/>
+		    <key name="days_of_month" template="days_of_month_array" type="JSONArray" max-len="-1"  array-size="0-31"/>
+		    <key name="days_of_week" template="days_of_week_array_template" type="JSONArray" max-len="-1"  array-size="0-10"/>
+		    <key name="weeks_of_month" template="weeks_of_month" type="JSONArray" max-len="-1"  array-size='0-5'/>
+		</jsontemplate>
+		<jsontemplate name="weeks_of_month">
+			<key name="day_of_week"  regex="day_of_week" min-occurrences="1" />
+			<key name="week_of_month"  regex="week_of_month" min-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="days_of_week"><key index="0-6" type="int" regex="day_of_week"/></jsontemplate>
+		<jsontemplate name="days_of_month_array"><key index="0-31" regex="day_of_month"/></jsontemplate>
+		<jsontemplate name="days_of_week_array_template"><key index="0-10" regex="day_of_week" /></jsontemplate>
+		<jsontemplate name="weeks_of_month_array"><key index="0-4" regex="week_of_month" /></jsontemplate>
+		<jsontemplate name="month_of_year_array"><key index="0-11" regex="month_of_year" /></jsontemplate>
+		<jsontemplate name="schedule_repeat_end">
+			<key name="on" template="datefield" type="JSONObject" max-len="-1" />
+			<key name="after_occurrences" type="long" range="1-100"/>
+			<key name="never" type="boolean"/>
+		</jsontemplate>
+
+		<jsontemplate name="scheduler_format_json">
+			<key name="schedule_name" type="String" min-occurrences="1"/>
+			<key name="is_portal_specific" regex="true|false"/>
+			<key name="start_time" template="datefield" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<key name="repeat_every" type="int"/>
+			<key name="frequency" regex="schedule_frequency" min-occurrences="1"/>
+			<key name="daily" type="JSONObject" template="daily_schedule" max-len="-1"/>
+			<key name="weekly" type="JSONObject" template="weekly_schedule" max-len="-1"/>
+			<key name="monthly" type="JSONObject" template="monthly_schedule" max-len="-1"/>
+			<key name="yearly" type="JSONObject" template="yearly_schedule" max-len="-1"/>
+			<key name="repeat_end" type="JSONObject" template="schedule_repeat_end" max-len="-1"/>
+			<key name="advanced" type="boolean"/>
+			<key name="transaction_timeout" type="int" allow-invalid="false" range=">0"/>
+		</jsontemplate>
+
+
+	    <!--To get history and future schedule occurrences -->
+		<jsontemplate name="scheduler_action_get">
+			<key name="id" type="long" range=">0" min-occurrences="1"/>
+			<key name="sort_order" regex="asc|desc"/>
+			<key name="operation" regex="history|schedule_details" min-occurrences="1"/>
+			<key name="occurrences" type="int" range=">0"/>
+			<key name="entity" type="String"/>
+		</jsontemplate>
+
+	<!--To suspend and resume a schedule -->
+		<jsontemplate name="scheduler_action_put">
+			<key name="schedule_id"  type="long" range=">0" min-occurrences="1"/>
+			<key name="operation" regex="suspend|resume" min-occurrences="1"/>
+		</jsontemplate>
+
+	<jsontemplate name="scheduler_api_get">
+		<key name="future_list" type="JSONObject" max-len="-1" template="future_list"/>
+		<key name="rec_type" type="boolean"/>
+	</jsontemplate>
+	<jsontemplate name="future_list">
+		<key name="span_start_time" type="long" range=">0" min-occurrences="1"/>
+		<key name="span_end_time" type="long" range=">0" min-occurrences="1"/>
+	</jsontemplate>
+
+</jsontemplates>
+
+</security>

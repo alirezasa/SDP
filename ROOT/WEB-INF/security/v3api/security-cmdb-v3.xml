@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <regexes>
+        <regex name="cmdb" value="(cmdb+(_([a-z]|[0-9])+)*)" />
+    </regexes>
+
+    <!-- Old URLs for backward compatability -->
+    <urls api="true" authentication="required" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_ci" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="SDCMDBManager" path="/api/v3/cis/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDCMDBManager" path="/api/v3/cis">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDCMDBManager" path="/api/v3/cis/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDCMDBManager" path="/api/v3/cis/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="viewCI" path="/api/v3/cis/(\d+)/ci_relationships/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/cis/(\d+)/ci_relationships">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="ModifyCI" path="/api/v3/cis/(\d+)/ci_relationships">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="ci_relationship" name="input_data"/>
+        </url>
+        <url method="delete" roles="ModifyCI" path="/api/v3/cis/(\d+)/ci_relationships/(\d+)"/>
+        <url method="delete" roles="ModifyCI" path="/api/v3/cis/(\d+)/ci_relationships">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="viewCI" path="/api/v3/cis/(\d+)/ci_relationships/(parent_ci|child_ci|type)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="viewCI" path="/api/v3/cis/(\d+)/ci_relationships/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="viewCI" path="/api/v3/cis/(\d+)/ci_relationships/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/ci_relationships/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url  method="delete" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/attachments/(\d+)"/>
+
+        <url  method="get" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/attachments">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url  method="get" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/attachments/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+
+        <url  method="delete" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/attachments">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+
+        <url  method="get" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+
+        <url  method="post" roles="SDCMDBManager" path="/api/v3/cis/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="cis_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" secret="true" name="description"/>
+        </url>
+
+        <url  method="post" roles="SDCMDBManager" path="/api/v3/cis/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="cis_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" secret="true" name="description"/>
+        </url>
+
+        <url  roles = "SDCMDBManager" method="put" path="/api/v3/cis/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="cis_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" secret="true" name="description"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDCMDBManager" path="/api/v3/citypes/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="citype_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDCMDBManager" path="/api/v3/citypes">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="citype_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/relationship_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <param name-regex="true" max-len="100" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"  max-occurrences="1"/>
+        <param name="format" regex="json"/>
+    </urls>
+
+    <urls api="true" remote_server="false" authentication="required" roles="ConfigureCMDB">
+        <throttles name="ci_status_apis" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <!--CI status URL start-->
+        <url method="post" path="/api/v3/ci_status">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_status_add" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_status" name="input_data"/>
+        </url>
+        <url method="put"  path="/api/v3/ci_status/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_status_edit" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_status" name="input_data"/>
+        </url>
+        <url method="put"  path="/api/v3/ci_status">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_status_edit" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="1000" name="ids" min-occurrences="1"/>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_status" name="input_data"/>
+        </url>
+        <url method="delete"  path="/api/v3/ci_status">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_status_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="1000" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="get"  path="/api/v3/ci_status/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get"  path="/api/v3/ci_status">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get"  path="/api/v3/ci_status/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/ci_status/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get"  path="/api/v3/ci_status/_history">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get"  path="/api/v3/ci_status/_get_performed_by_for_history">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get"  path="/api/v3/ci_status/_get_records_for_history">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/ci_status/_metainfo"  method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!--CI status URL end-->
+    </urls>
+    <urls api="true" remote_server="false" authentication="required" roles="SDAdmin">
+        <throttles name="ci_sync_rule_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <!--sync rule url starts-->
+        <url method="post" path="/api/v3/ci_sync_rules">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_sync_rule_add" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_sync_rule" name="input_data"/>
+        </url>
+        <url method="put" path="/api/v3/ci_sync_rules/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_sync_rule_edit" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_sync_rule" name="input_data"/>
+        </url>
+        <url method="delete" path="/api/v3/ci_sync_rules/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_sync_rule_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+        </url>
+        <url method="delete" path="/api/v3/ci_sync_rules">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_sync_rule_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="1000" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_sync_rules">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/ci_sync_rules/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_sync_rules/(source_module|destination_module|sub_module)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="post" path="/api/v3/ci_sync_rules/(\d+)/_run_through_filter"/>
+        <url path="/api/v3/ci_sync_rules/_get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_sync_rules/_get_records_for_history">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_sync_rules/_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_sync_rules/_metainfo">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/ci_sync_rules/_reorder">
+            <param max-len="-1" type="JSONObject" template="reorder_sync_rule" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_sync_rules/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <!--  sync rule url ends -->
+    </urls>
+    <urls api="true" remote_server="false" authentication="required">
+        <throttles name="ci_type_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <!--CI type start-->
+        <url method="post" roles="ConfigureCMDB" path="/api/v3/ci_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_type_add" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="60" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_type" name="input_data"/>
+        </url>
+        <url method="put" roles="ConfigureCMDB" path="/api/v3/ci_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_type_edit" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_type" name="input_data"/>
+        </url>
+        <url method="delete" roles="ConfigureCMDB" path="/api/v3/ci_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_type_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="post" roles="ConfigureCMDB" path="/api/v3/ci_types/images">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/images/(\d+)">
+            <param regex="50x50|120x120" name="res"/>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key"/>
+        </url>
+        <url method="get" roles="ViewCI,ViewAssociatedCI" path="/api/v3/ci_types/(\d+)/images/(\d+)">
+            <param regex="50x50|120x120" name="res"/>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key"/>
+        </url>
+        <!--allowed values API for CMDB default images-->
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/icon">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/parent">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/(\d+)/fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/parent/(\d+)/images/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/(\d+)/_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/ci_types/_metainfo" roles="ConfigureCMDB" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/(\d+)/_new_form">
+            <param name="input_data" template="cm_new_form" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/ci_types/_max_child_level"/>
+    </urls>
+    <urls api="true" remote_server="false" authentication="required" roles="ConfigureCMDB">
+        <throttles name="ci_type_relationship_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <url method="post" path="/api/v3/ci_types/(\d+)/relationships">
+            <throttles name="ci_type_relationship_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_type_relationship" name="input_data"/>
+        </url>
+        <url method="put" path="/api/v3/ci_types/(\d+)/relationships/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="ci_type_relationship" name="input_data"/>
+            <throttles name="ci_type_relationship_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" path="/api/v3/ci_types/(\d+)/relationships/(\d+)">
+            <throttles name="ci_type_relationship_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/ci_types/(\d+)/relationships">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/ci_types/(\d+)/relationships/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/ci_types/(\d+)/relationships/_metainfo" >
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" path="/api/v3/ci_types/(\d+)/relationships/(destination_module|association_type)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/ci_types/(\d+)/relationships/(\d+)/fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+    </urls>
+
+    <urls api="true" remote_server="false" authentication="required">
+        <throttles name="cmdb_module_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <!-- CRUD operation URL for CMDB starts-->
+        <url method="post" roles="CreateCI" path="/api/v3/${cmdb}">
+            <param name="input_data" template="cmdb" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="put" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)">
+            <param name="input_data" template="cmdb" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="put" roles="ModifyCI" path="/api/v3/${cmdb}">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="cmdb" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="DeleteCI" path="/api/v3/${cmdb}/(\d+)"/>
+        <url method="delete" roles="DeleteCI" path="/api/v3/${cmdb}">
+            <param regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewCI,ViewAssociatedCI" path="/api/v3/${cmdb}/(\d+)">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- CRUD operation URL for CMDB ends-->
+        <!-- Attachment URLS starts -->
+        <url method="put" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/_upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="cmdb_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/attachments/(\d+)/_download">
+            <param name="mode" regex="view"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/attachments/_download">
+            <param name="mode" regex="view"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/attachments">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="delete" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/attachments/(\d+)"/>
+        <!-- Attachment URLS ends -->
+        <!-- Convinient URLS starts -->
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewCI,ViewAssociatedCI" path="/api/v3/${cmdb}/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!--   since metadata url is used in requester login for loading listview in request/change     -->
+        <url method="get" user_type="all"  roles="ViewRequester,SDGuest" path="/api/v3/${cmdb}/_metadata">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewCI,ViewAssociatedCI" path="/api/v3/${cmdb}/(\d+)/_history">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="put" roles="ModifyCI" path="/api/v3/${cmdb}/_modify_ci_type">
+            <param max-len="-1" type="JSONObject" template="modify_ci_type" name="input_data" min-occurrences="1"/>
+            <param regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ModifyCI" path="/api/v3/${cmdb}/_modify_ci_type">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewCI,ViewAssociatedCI" path="/api/v3/${cmdb}/_association_filter"/>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/_get_problem_templates_with_ci_field">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/_get_request_templates_with_ci_field">
+            <param name="input_data" template="request_templates_ci_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="post" roles="CreateCI" path="/api/v3/${cmdb}/(\d+)/_copy">
+            <param max-len="-1" type="JSONObject" template="copy_configuration_item_template" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/_export">
+            <throttles key="url.path+url.dynamic_key" name="ci_export" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="export_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/_get_all_relationships"/>
+        <url method="get" roles="ViewCI,ViewAssociatedCI" path="/api/v3/${cmdb}/(\d+)/_ci_association_count"/>
+        <url method="post" roles="CreateCI" path="/api/v3/${cmdb}/_upload" operation-param="for" operation-value="import">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_for_field_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/cmdb/_get_unknown_devices"/>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/_total_count">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- Convinient URLS ends -->
+        <!-- Allowed value call for CMDB starts-->
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(module|status|created_by|last_updated_by|site|linked_entity)">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" max-occurrences="1"/>
+        </url>
+        <!--   custom filter metainfo sent without "_", so adding regex here      -->
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(module|status|created_by|last_updated_by|site|linked_entity)/(_?)metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/udf_[0-9a-z_]+">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" max-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/udf_[0-9a-z_]+/(_)metainfo">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" max-occurrences="1"/>
+        </url>
+        <url method="get" roles="CreateCI,ModifyCI" path="/api/v3/${cmdb}/(user|department|groups|service_category|assets|software_installations)">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" max-occurrences="1"/>
+        </url>
+        <url method="get" roles="CreateCI" path="/api/v3/${cmdb}/assets/module">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" max-occurrences="1"/>
+        </url>
+        <!-- Allowed value call for CMDB ends-->
+        <!-- CI Relationship over association URLS Starts  -->
+        <url method="post" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}">
+            <param allow-invalid="false" name="input_data" template="ci_instance_relationship" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}/(\d+)"/>
+        <url method="delete" roles="ModifyCI"  path="/api/v3/${cmdb}/(\d+)/${association}">
+            <param name="ids" max-len="1200" min-occurrences="1" regex="ids"/>
+        </url>
+        <url method="get" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}/_metainfo">
+            <param allow-invalid="false" name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}/(source|destination|relationship_type|udf_[a-z0-9_]+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}/(source|destination)/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <!--    file type additional field for ci relationship using upload without _, so adding regex here     -->
+        <url method="post" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}/(_?)upload/(attach_[a-z0-9_]+)">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/${association}/(\d+)/udf_fields/(attach_[a-z0-9_]+)/(\d+)/_download">
+            <param name="mode" regex="view"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/${association}/udf_fields/(attach_[a-z0-9_]+)/(\d+)/_download">
+            <param name="mode" regex="view"/>
+        </url>
+        <url method="delete" roles="ModifyCI" path="/api/v3/${cmdb}/(\d+)/${association}/udf_fields/(attach_[a-z0-9_]+)/(\d+)">
+            <param name="mode" regex="view"/>
+        </url>
+        <!--URL used in ci relationship import without _, so adding regex into it-->
+        <url path="/api/v3/${cmdb}/${association}/(_?)upload" method="post" roles="ModifyCI" operation-param="for" operation-value="import"  >
+            <throttles name="import_file_upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- this call triggered from component without _ in add relationship form. so adding regex here       -->
+        <url method="get" roles="ViewCI"  path="/api/v3/${cmdb}/(\d+)/(_?)association_summary"/>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/${association}/_links">
+            <param allow-invalid="false" name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewCI" path="/api/v3/${cmdb}/(\d+)/${association}/_total_count"/>
+        <!-- CI Relationship over association URLS ends -->
+        <!--  CMDB Post migration urls starts  -->
+        <url path="/api/v3/CMDBPostMigrationServlet" roles="SDAdmin" method="POST" description="The url cmdb post migration for saving configuration.">
+            <param name="migrationType" regex="ignoreConfiguration" />
+            <param name="input_data" type="String" secret="true" max-len="35000"/>
+            <throttles name="cmdb_post_migration" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="80" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/CMDBPostMigrationServlet" roles="SDAdmin" method="GET" description="To get citypes and respective product type.">
+            <param name="migrationType" regex="getCITypes|restartSchedule" />
+            <throttles name="cmdb_post_migration_schedule" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="80" lock-period="5M"/>
+            </throttles>
+        </url>
+        <!--  CMDB Post migration urls ends  -->
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="cmdb">
+            <key name="cmdb" name-regex="true" template="cmdb_base" type="JSONObject|JSONArray" max-len="-1" array-size="0-100" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="cmdb_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="description" type="String" secret="true" max-len="250"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="status" template="ci_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="linked_entity" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="linked_instance" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="udf_fields" dynamic-json-template="true" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_status">
+            <key name="ci_status" type="JSONObject" template="ci_status_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_status_base">
+            <key name="id" allow-invalid="false" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="color" regex="color"/>
+            <key name="description" type="String" secret="true" max-len="3500"/>
+            <key name="inactive" allow-invalid="false" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="ci_status_unique">
+            <key name="id" allow-invalid="false" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="ci_type">
+            <key name="ci_type" type="JSONObject" template="ci_type_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_type_base">
+            <key name="id" allow-invalid="false" type="long" range=">0"/>
+            <key name="name" regex="api_name" max-len="25"/>
+            <key name="api_plural_name" regex="api_name" max-len="25"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="display_plural_name" type="String" max-len="250"/>
+            <key name="parent" type="JSONObject" template="module_unique" max-len="-1"/>
+            <key name="category" type="JSONObject" template="entity_category_unique" max-len="-1"/>
+            <key name="icon" type="JSONObject" template="image_template" max-len="-1"/>
+            <key name="description" type="String" secret="true" max-len="500"/>
+            <key name="inactive" allow-invalid="false" type="boolean"/>
+            <key name="configurations" template="entity_configuration_base" type="JSONArray" array-size="0-10" max-len="-1"/>
+            <key name="fields" allow-invalid="false" array-size="0-200" type="JSONArray" template="udf_field_unique" max-len="-1"/>
+            <key name="layouts" allow-invalid="false" array-size="0-100" type="JSONArray" template="layout_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_type_unique">
+            <key name="id" allow-invalid="false" type="long" range=">0"/>
+            <key name="name" regex="api_name" max-len="25"/>
+            <key name="api_plural_name" regex="api_name" max-len="25"/>
+            <key name="display_name" type="String" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="ci_sync_rule">
+            <key max-len="-1" type="JSONObject" template="sync_rule_base" name="ci_sync_rule"/>
+        </jsontemplate>
+        <jsontemplate name="ci_type_relationship">
+            <key max-len="-1" type="JSONObject" template="module_relationship_base" name="relationship"/>
+        </jsontemplate>
+        <jsontemplate name="ci_relationship_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="parent_ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="child_ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="relationship_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="relationship_type" template="relationship_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="related_citype" template="ci_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="citype_relationship" template="module_relationship_unique" type="JSONObject" max-len="-1"/>
+            <key max-len="500" type="String" secret="true" name="comments"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="created_by"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="created_time"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="last_updated_by"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="last_updated_time"/>
+            <key allow-invalid="false" type="boolean" name="is_inverse"/>
+            <key name="udf_fields" dynamic-json-template="true" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_relationship">
+            <key name="ci_relationship" template="ci_relationship_base" type="JSONObject" max-len="-1"/>
+            <key name="ci_relationships" template="ci_relationship_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="ci_relationship_unique_wrapper">
+            <key name="ci_relationship" template="ci_relationship_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="modify_ci_type">
+            <key max-len="-1" type="JSONObject" template="ci_type_unique" name="ci_type"/>
+        </jsontemplate>
+        <jsontemplate name="copy_configuration_item_template">
+            <key name="copy" type="JSONObject" max-occurrences="1" max-len="-1" template="copy_configuration_item_template_data"/>
+        </jsontemplate>
+        <jsontemplate name="copy_configuration_item_template_data">
+            <key name="number_of_copies" type="int" max-occurrences="1" range="1-10"/>
+        </jsontemplate>
+        <jsontemplate name="request_templates_ci_get">
+            <key name="is_service_template" type="boolean" max-occurrences="1"/>
+            <key name="req_temp_search_name" type="String" max-len="250" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_instance_relationship_base">
+            <key allow-invalid="false" name="id" range=">0" type="long"/>
+            <key allow-invalid="false" name="source" template="association_instance_unique" type="JSONObject" max-len="-1"/>
+            <key allow-invalid="false" name="destination" template="association_instance_unique" type="JSONObject" max-len="-1"/>
+            <key max-len="50" type="JSONObject" template="association_type_unique" name="relationship_type"/>
+            <key allow-invalid="false" type="boolean" name="is_inverse"/>
+            <key name="udf_fields" dynamic-json-template="true" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="ci_instance_relationship">
+            <key name="association" name-regex="true" template="ci_instance_relationship_base" type="JSONObject|JSONArray" max-len="-1" array-size="0-100" max-occurrences="1"/>
+            <key name="(association_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" name-regex="true" template="ci_instance_relationship_base" type="JSONObject|JSONArray" max-len="-1" array-size="0-100" max-occurrences="1"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

@@ -1,0 +1,245 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}/drafts",
+      "desc": "This operation lets you save a email notification content as draft in a request",
+      "disp_desc": "Save as Draft",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"draft\":{\"to\":[{\"email_id\":\"user2@zylker.com\"}],\"type\":\"reply\",\"cc\":[{\"email_id\":\"user3@zylker.com\"}],\"subject\":\"Re: [Request ID :##26##] : Please provide me an account in our CRM system\",\"description\":\"<div>Dear Vivi,<br /></div><div><br /></div><div> Category : Operating System <br /></div><div><br /></div><div> Description : <br /></div><div><b>Please provide me an account in our CRM system</b><br /></div><div><br /></div><div><br /></div><div>Regards,<br /></div><div>System Admin Team<br /></div>\"}}"
+      },
+      "output": {
+        "sample": "{\"draft\":{\"id\":\"1\",\"to\":[{\"email_id\":\"user2@zylker.com\"}],\"cc\":[{\"email_id\":\"user3@zylker.com\"}],\"subject\":\"Re: [Request ID :##26##] : Please provide me an account in our CRM system\",\"description\":\"<div>Dear Vivi,<br /></div><div><br /></div><div> Category : Operating System <br /></div><div><br /></div><div> Description : <br /></div><div><b>Please provide me an account in our CRM system</b><br /></div><div><br /></div><div><br /></div><div>Regards,<br /></div><div>System Admin Team<br /></div>\",\"last_updated_time\":{\"value\":\"1486032424117\",\"display_value\":\"Feb 2, 2017 04:17 PM\"},\"sender\":{\"id\":\"3\",\"name\":\"User1\",\"email_id\":\"user1@zylker.com\",\"sms_mail\":null,\"photo_url\":\"https://accounts.zylker.com/file?ID=1933117&t=user&fs=thumb\"}},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}/send_for_review",
+      "desc": "This operation lets you send the existing draft of a request to review",
+      "disp_desc": "Send For Review",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"notification\":{\"to\":[{\"email_id\":\"user1@zylker.com\"}],\"subject\":\"Please review the draft\",\"description\":\"Please review the draft in the following link:$RequestLink\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request-id}/get_review_mail_content"
+      ],
+      "desc": "This operation lets you get the email content to send draft review email",
+      "disp_desc": "Review Content",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"notification\":{\"subject\":\"Please review the draft\",\"description\":\"Please review the draft in the following link:$RequestLink\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}/drafts/{draft-id}",
+      "desc": "This operation lets you get the email content of the existing draft of a request",
+      "disp_desc": "Get Draft",
+      "workflow": "",
+      "output": {
+        "sample": "{\"draft\":{\"id\":\"1\",\"to\":[{\"email_id\":\"user2@zylker.com\"}],\"cc\":[{\"email_id\":\"user3@zylker.com\"}],\"subject\":\"Re: [Request ID :##26##] : Please provide me an account in our CRM system\",\"description\":\"<div>Dear Vivi,<br /></div><div><br /></div><div> Category : Operating System <br /></div><div><br /></div><div> Description : <br /></div><div><b>Please provide me an account in our CRM system</b><br /></div><div><br /></div><div><br /></div><div>Regards,<br /></div><div>System Admin Team<br /></div>\",\"sent_time\":{\"value\":\"1486032424117\",\"display_value\":\"Feb 2, 2017 04:17 PM\"},\"sender\":{\"id\":\"3\",\"name\":\"User1\",\"email_id\":\"user1@zylker.com\",\"sms_mail\":null,\"photo_url\":\"https://accounts.zylker.com/file?ID=1933117&t=user&fs=thumb\"}},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request-id}/drafts"
+      ],
+      "desc": "This operation lets you get all the drafts present under a request",
+      "disp_desc": "Get All Drafts",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"drafts\":[{\"id\":\"1\",\"to\":[{\"email_id\":\"user2@zylker.com\"}],\"cc\":[{\"email_id\":\"user3@zylker.com\"}],\"subject\":\"Re: [Request ID :##26##] : Please provide me an account in our CRM system\",\"description\":\"<div>Dear Vivi,<br /></div><div><br /></div><div> Category : Operating System <br /></div><div><br /></div><div> Description : <br /></div><div><b>Please provide me an account in our CRM system</b><br /></div><div><br /></div><div><br /></div><div>Regards,<br /></div><div>System Admin Team<br /></div>\",\"sent_time\":{\"value\":\"1486032424117\",\"display_value\":\"Feb 2, 2017 04:17 PM\"},\"sender\":{\"id\":\"3\",\"name\":\"User1\",\"email_id\":\"user1@zylker.com\",\"sms_mail\":null,\"photo_url\":\"https://accounts.zylker.com/file?ID=1933117&t=user&fs=thumb\"}}],\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}/drafts/{draft-id}",
+      "desc": "This operation lets you delete the draft of a request",
+      "disp_desc": "Delete Draft",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the draft",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "to",
+      "type": "Array",
+      "desc": "Array of email adsresses to be stored for the \"to addresses\" in the email draft.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "cc",
+      "type": "Array",
+      "desc": "Array of email addresses to be stored for the \"cc addresses\" in the email draft.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "subject",
+      "type": "String",
+      "desc": "Subject content to be stored in the email draft.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Email description content to be stored in the draft.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "sent_time",
+      "type": "Date Object",
+      "desc": "Shows the time when the draft is recently edited.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "sender",
+      "type": "Object",
+      "desc": "User object of who created the draft",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1467184876000
+}

@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" authentication="required">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contract-purchase-admin" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--Contract type urls start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/contract_types">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_type" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/contract_types/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_type" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/contract_types/(\d+)"></url>
+        <url method="put" roles="SDAdmin" path="/api/v3/contract_types">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_type" name="input_data"/>
+            <param allow-empty="false" regex="ids" min-occurrences="1" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/contract_types">
+            <param allow-empty="false" regex="ids" min-occurrences="1" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/(\d+)/_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/_get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="level_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/contract_types/_get_records_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="level_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/contract_types/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!--Contract type urls end -->
+        <!-- Purchase admin urls starts -->
+        <!-- Cost Center urls starts -->
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/cost_centers">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="cost_center" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/cost_centers/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="cost_center" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/cost_centers/(\d+)">
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/cost_centers">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="cost_center" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/cost_centers">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/(department|owner)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/(\d+)/(department|owner)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/_get_records_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="cost_centers_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/_get_performed_by_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="cost_center_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/cost_centers/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!--Cost Center urls end -->
+        <!-- GL Code urls starts-->
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/gl_codes">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="gl_code" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/gl_codes/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="gl_code" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/gl_codes/(\d+)"></url>
+        <url method="put" roles="SDAdmin" path="/api/v3/gl_codes">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="gl_code" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/gl_codes">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/_get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="gl_code_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/_get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="gl_code_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/gl_codes/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!-- GL Code urls ends-->
+        <!-- Vendor Service urls starts-->
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/vendor_services">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/vendor_services/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/vendor_services/(\d+)">
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/vendor_services">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/vendor_services">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/(gl_code|type)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/(\d+)/(gl_code|type)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/_get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="vendor_service_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/_get_performed_by_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="vendor_service_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_services/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!-- Vendor Service urls ends-->
+        <!-- Vendor Service Association urls starts-->
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/vendor_service_associations">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service_association" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/vendor_service_associations/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service_association" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/vendor_service_associations/(\d+)">
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_get_unassociated_services">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="unassociated_services_template" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_get_unassociated_vendors">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="unassociated_vendors_template" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/vendor_service_associations">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service_association" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/vendor_service_associations">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/(vendor_service|vendor|support_vendor)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/(\d+)/(vendor_service|vendor|support_vendor)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="vendor_service_association_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="vendor_service_association_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_associations/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!-- Vendor Service Association urls ends-->
+        <!-- Vendor Service Types urls starts-->
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/vendor_service_types">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service_type" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/vendor_service_types/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service_type" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/vendor_service_types/(\d+)">
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/vendor_service_types">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="vendor_service_type" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/vendor_service_types">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendor_service_types/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!-- Vendor Service Types urls ends-->
+        <!-- Purchase Default urls starts-->
+        <url method="put" roles="SDAdmin" path="/api/v3/purchase_default_values/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="purchase_default_value" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/purchase_default_values">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="purchase_default_value" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/(\d+)/(cost_center|billing_address|shipping_address)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/_get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="purchase_default_value_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/_get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="purchase_default_value_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/purchase_default_values/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!-- Purchase Default urls ends-->
+        <!-- Currency urls starts-->
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="put" roles="SDOrgAdmin" path="/api/v3/currencies/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="currency" name="input_data"/>
+        </url>
+        <url user_type="all" method="delete" roles="SDOrgAdmin" path="/api/v3/currencies/(\d+)">
+        </url>
+        <!-- get basecurreny can be accesed by requesters too hence no roles -->
+        <url user_type="all" method="get" roles="Common_Role" path="/api/v3/currencies/_get_base_currency">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="currency_get_base" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="20" duration="1s"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="Common_Role" path="/api/v3/currencies/_metainfo">
+            <param regex="ids" max-len="1200" name="ids" description="Comma separated value is passed in ids"/>
+        </url>
+        <url user_type="all" method="get" roles="Common_Role" path="/api/v3/currencies/(\d+)/_metainfo">
+        </url>
+        <url user_type="all" method="put" roles="SDOrgAdmin" path="/api/v3/currencies/(\d+)/_change_base_currency">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="currency" name="input_data"/>
+        </url>
+        <url user_type="all" method="put" roles="SDOrgAdmin" path="/api/v3/currencies">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="currency" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="delete" roles="SDOrgAdmin" path="/api/v3/currencies">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/_get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="currencies_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/currencies/_get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="currencies_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- Currency urls ends-->
+        <!-- PO Closure Fields urls starts-->
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/po_closure_fields/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_closure_field" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/po_closure_fields">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_closure_field" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields/_get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="po_closure_fields_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/po_closure_fields/_get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="po_closure_fields_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- PO Closure Fields urls ends-->
+        <!-- Purchase admin urls ends-->
+    </urls>
+    <!--Vendor urls starts -->
+    <urls api="true" authentication="required" >
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="vendor" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/(\d+)/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/_get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="vendor_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/vendors/_get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="vendor_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/vendors" roles="AddingNewVendor" method="post">
+            <param name="input_data" template="vendor" type="JSONObject" max-len="-1" min-occurrences="1" />
+        </url>
+        <url path="/api/v3/vendors/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="vendor" type="JSONObject" max-len="-1" min-occurrences="1" />
+        </url>
+        <url path="/api/v3/vendors/(\d+)" roles="SDAdmin" method="delete">
+        </url>
+        <url path="/api/v3/vendors" roles="SDAdmin" method="put">
+            <param name="input_data" template="vendor" type="JSONObject" max-len="-1" min-occurrences="1" />
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false" min-occurrences="1" />
+        </url>
+        <url method="get" path="/api/v3/vendors/_metainfo" roles="AddingNewVendor,HelpdeskConfig">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" path="/api/v3/vendors/(\d+)/_metainfo" roles="SDAdmin">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors" roles="SDAdmin" method="delete">
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false" min-occurrences="1" />
+        </url>
+        <url path="/api/v3/vendors/_allowed_values_for_fields" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/(\d+)/_allowed_values_for_fields" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/(currency)" roles="AddingNewVendor,HelpdeskConfig" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/(\d+)/(currency)" roles="AddingNewVendor" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/((multi|pick)_[a-z0-9_]+)" roles="AddingNewVendor" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/vendor_udf_fields/((multi|pick)_[a-z0-9_]+)" roles="AddingNewVendor" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/(\d+)/((multi|pick)_[a-z0-9_]+)" roles="AddingNewVendor" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/(\d+)/vendor_udf_fields/((multi|pick)_[a-z0-9_]+)" roles="AddingNewVendor" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/vendors/(_?)upload/(attach_[a-z0-9_]+)" roles="AddingNewVendor" method="post" description="/_upload used for Attachment Additional field">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/vendors/(\d+)/(_?)upload/(attach_[a-z0-9_]+)" roles="AddingNewVendor" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/vendors/vendor_udf_fields/(attach_[a-z0-9_]+)/(\d+)/_download" roles="AddingNewVendor" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/vendors/(\d+)/vendor_udf_fields/(attach_[a-z0-9_]+)/(\d+)/_download" roles="AddingNewVendor" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url method="get" path="/api/v3/vendors/_export" roles="SDAdmin">
+            <param max-len="-1" type="JSONObject" template="export_info" name="input_data"   />
+        </url>
+        <url path="/api/v3/vendors/(_?)upload" method="post" api="true" roles="SDAdmin" operation-param="for" operation-value="import">
+            <throttles name="vendor_upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+            <file name="theFile" content-type-name="xls,xlsx,csv" max-size="10000" allowed-extensions="xls,csv,xlsx" allow-empty="false">
+                <filename regex="filename" max-len="250"/>
+            </file>
+        </url>
+        <!--Vendor urls end -->
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="contract_type_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="100" type="String" name="name"/>
+        </jsontemplate>
+        <jsontemplate name="contract_type_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="100" type="String" name="name"/>
+            <key max-len="250" type="String" name="description" secret="true" description="description will be in text format and not in html format"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="created_by"/>
+            <key allow-invalid="false" type="boolean" name="deleted"/>
+        </jsontemplate>
+        <jsontemplate name="contract_type">
+            <key max-len="-1" type="JSONObject" template="contract_type_base" name="contract_type"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="contract_type_base" name="contract_types"/>
+        </jsontemplate>
+        <jsontemplate name="cost_center_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="code" type="String" max-len="250"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="cost_center_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="code" type="String" max-len="250"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="department" template="department_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="owner" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="description" secret="true" type="String" max-len="3500" description="description will be in text format and not in html format"/>
+        </jsontemplate>
+        <jsontemplate name="cost_center">
+            <key name="cost_center" template="cost_center_base" type="JSONObject" max-len="-1"/>
+            <key name="cost_centers" template="cost_center_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="currency_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="code" type="String" max-len="250"/>
+            <key name="symbol" regex="([^&lt;&gt;;'&quot;-]+)" max-len="10"/>
+            <key name="exchange_rate" type="double" range=">=0.0"/>
+        </jsontemplate>
+        <jsontemplate name="currency_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="code" type="String" max-len="250"/>
+            <key name="symbol" regex="([^&lt;&gt;;'&quot;-]+)" max-len="10"/>
+            <key name="exchange_rate" type="double" range=">=0.0"/>
+        </jsontemplate>
+        <jsontemplate name="currency">
+            <key name="currency" template="currency_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="gl_code_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="gl_code_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="description" secret="true" type="String" max-len="250" description="description will be in text format and not in html format"/>
+        </jsontemplate>
+        <jsontemplate name="gl_code">
+            <key name="gl_code" template="gl_code_base" type="JSONObject" max-len="-1"/>
+            <key name="gl_codes" template="gl_code_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="po_closure_field_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="module" type="String" max-len="150"/>
+            <key name="field" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="500"/>
+            <key name="is_mandatory" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="po_closure_field">
+            <key name="po_closure_field" template="po_closure_field_base" type="JSONObject" max-len="-1"/>
+            <key name="po_closure_fields" template="po_closure_field_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_default_value_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="tax_rate" type="double" range="0-100"/>
+            <key name="is_shipping_tax_included" type="boolean" allow-invalid="false"/>
+            <key name="signing_authority" type="String" max-len="50" secret="true"/>
+            <key name="cost_center" template="cost_center_unique" type="JSONObject" max-len="-1"/>
+            <key name="terms" type="String" max-len="3500" secret="true"/>
+            <key name="remarks" type="String" max-len="3500" secret="true"/>
+            <key name="custom_po_id" type="long" max-len="19" range=">0"/>
+            <key name="billing_address" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="shipping_address" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="can_owner_approve_po" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_default_value">
+            <key name="purchase_default_value" template="purchase_default_value_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="150" />
+            <key name="type" template="vendor_service_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="150" />
+            <key name="description" secret="true" type="String" max-len="2500" description="In data-dictionary, max-size is -1"/>
+            <key name="part_no" type="String" max-len="100"/>
+            <key name="gl_code" template="gl_code_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="vendor_service_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="deleted" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service">
+            <key name="vendor_service" template="vendor_service_base" type="JSONObject" max-len="-1"/>
+            <key name="vendor_services" template="vendor_service_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service_association_base">
+            <key name="id" type="long"/>
+            <key name="vendor_service" template="vendor_service_unique" type="JSONObject" max-len="-1"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250" secret="true"/>
+            <key name="service_price" type="double" range=">=0.0"/>
+            <key name="tax_rate" type="double" range="0-100"/>
+            <key name="service_period_years" type="int" range="0-10"/>
+            <key name="service_period_months" type="int" range="0-11"/>
+            <key name="support_vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service_association">
+            <key name="vendor_service_association" template="vendor_service_association_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service_type_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service_type_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="200"/>
+            <key name="description" secret="true" type="String" max-len="2500" description="In data-dictionary, max-size is -1"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_service_type">
+            <key name="vendor_service_type" template="vendor_service_type_base" type="JSONObject" max-len="-1"/>
+            <key name="vendor_service_types" template="vendor_service_type_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="currency" template="currency_unique" type="JSONObject" max-len="-1"/>
+            <key name="contact_person" type="String" max-len="250" secret="true"/>
+            <key name="email_id" regex="emailstring" max-len="200" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="vendor_base">
+            <key name="id" type="long" allow-invalid="false" />
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="description" secret="true" type="String" max-len="2500" description="description will be in text format and not in html format"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1" />
+            <key name="contact_person" type="String" max-len="250" secret="true"/>
+            <key name="email_id" regex="emailstring" max-len="200" secret="true"/>
+            <key name="phone" regex="contact_number" max-len="30" secret="true"/>
+            <key name="fax" type="String" max-len="30" secret="true"/>
+            <key name="web_url" regex="^((ht|f)tp(s?)|(HT|F)TP(S?))\:\/\/[-.\w]*(\/?)([a-zA-Z0-9\-\.\?\,\:\'\/\\\+=&amp;%\$#_@]*)?$" max-len="255" secret="true"/>
+            <key name="door_no" type="String" max-len="50" secret="true"/>
+            <key name="street" type="String" max-len="150" secret="true"/>
+            <key name="landmark" type="String" max-len="150" secret="true"/>
+            <key name="city" type="String" max-len="150" secret="true"/>
+            <key name="postal_code" type="String" max-len="50" secret="true"/>
+            <key name="state" type="String" max-len="50" secret="true"/>
+            <key name="country" type="String" max-len="150" secret="true"/>
+            <key name="currency" template="currency_unique" type="JSONObject" max-len="-1"/>
+            <key allow-invalid="false" type="boolean" name="deleted"/>
+            <key name="vendor_udf_fields" max-len="-1" type="JSONObject" template="vendor_udf_fields_ref"/>
+        </jsontemplate>
+        <jsontemplate name="vendor">
+            <key name="vendor" template="vendor_base" type="JSONObject" max-len="-1"/>
+            <key name="vendors" template="vendor_base" type="JSONArray" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+    </jsontemplates>
+</security>

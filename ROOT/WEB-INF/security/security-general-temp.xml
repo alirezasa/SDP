@@ -1,0 +1,621 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<regexes>
+		<regex name="res" value="res_([0-9]+)" />
+		<regex name="qstn_text" value="qstn_(text)(_)([0-9]+)" />
+		<regex name="qstn_single_valued" value="qstn_(select|radio)(_)([0-9]+)" />
+		<regex name="qstn_multi_valued" value="qstn_(check)(_)([0-9]+)" />
+		<regex name="qstn_simple" value="qstn_(simple)(_)([0-9]+)" />
+		<regex name="template_fields" value="category|subcategory|item|status|mode|priority|site|group|level|technician|request_type|impact|impact_details|urgency|resolution|subject|description|asset|space|configuration_items|service_category|editor|approvers|requester_name|service_category|email_ids_to_notify|site|udf_(sline|mline|pick|long|decimal|date|multiselect)(_)([0-9]+)|qstn_(text|select|check|simple|radio)(_)([0-9]+)" />
+		<!--Update the same widget_custom_url regex in selfservicecustomization_Technicianscript.js for client side validation-->
+		<regex name="widget_custom_url" value="(^(ht|f)tp(s?)\:\/\/[-.\w]*(\/?)([a-zA-Z0-9\-\.\?\,\:\'\/\\\+=&amp;%\$#_@]*)?$)|((\/|\\)custom(\/|\\)widgets(\/|\\)[a-zA-Z0-9_(\/|\\)-]+[0-9a-zA-Z()\[\]{}+_\-\;\#\^\.\$@\?\,\:\'\!\P{InBasicLatin}\s]+\.(?i)html?)|(about:blank)" />
+		<regex name="questions_reqprop" value="qstn_(text)(_)([0-9]+)|qstn_(simple)(_)([0-9]+)|qstn_(select)(_)([0-9]+)|qstn_(radio)(_)([0-9]+)|qstn_(check)(_)([0-9]+)" />
+		<regex name="udf_fields_reqprop" value="udf_sline(_)([0-9]+)|udf_mline(_)([0-9]+)|udf_pick(_)([0-9]+)|udf_(multiselect)(_)([0-9]+)|udf_(date)(_)([0-9]+)|udf_(long)(_)([0-9]+)|udf_(decimal)(_)([0-9]+)" />
+		<regex name="long_regex" value="[0-9]+" />
+		<regex name="color_settings_fields" value="priority|group|category|status|risk|stage|impact|change_type|urgency|emergency" />
+		<regex name="default_fields_reqprop" value="category|subcategory|item|status|mode|priority|site|group|level|technician|request_type|impact|impact_details|urgency|resolution|subject|description|assets|configuration_items|service_category|requester|department|due_by_time|attachments" />
+		<regex name="rgbaColorCode" value="^rgba?\(\d{0,3}, ?\d{0,3}, ?\d{0,3}(, ?(0|1|(0\.\d{1,2})))?\)$" />
+	</regexes>
+	<jsontemplates>
+
+		<jsontemplate name="inv_rel_type_template">
+			<key name="id" type="long" />
+			<key name="name" type="String" max-len="250" />
+		</jsontemplate>
+		<jsontemplate name="approval_level_rule">
+			<key max-occurrences="1" name="type" regex="percent|condition|template_configurations"/>
+			<key max-occurrences="1" name="value" regex="anyone_approves|everyone_approves|first_response_action|33|50|75|100|or|and|anyone|all|first_response|majority"/>
+		</jsontemplate>
+		<jsontemplate name="approvals_approve_reject" disable-extra-key="true">
+			<key name="approval" type="JSONObject" template="approvals_take_action" max-len="-1" />
+			<key name="approval_level" type="JSONObject" template="approvals_take_action" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="bulk_approvals_approve_reject" disable-extra-key="true">
+			<key name="approval" type="JSONArray" template="bulk_approvals_take_action" max-len="-1" array-size="0-100"/>
+			<key name="module" type="String" min-occurrences="1" regex="request|change|release|purchase|purchase_request|purchase_order" />
+			<key name="comments" max-len="2000" type="String" max-occurrences="1" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="bulk_approvals_take_action" disable-extra-key="true">
+            <key name="id" type="long" min-occurrences="1"/>
+            <key name="approval_level_id" type="long" min-occurrences="1"/>
+            <key name="module_id" type="long" min-occurrences="1"/>
+			<key name="parent_module" type="String" max-occurrences="1"/>
+            <key name="portal_id" type="long" max-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="approvals_take_action" disable-extra-key="true">
+			<key name="comments" max-len="2000" type="String" max-occurrences="1" secret="true"/>
+			<key name="from_zia" type="boolean" />
+		</jsontemplate>
+		<jsontemplate name="approvals_send_notification" disable-extra-key="true">
+			<key name="approval" type="JSONObject" template="approvals_notification_obj" max-len="-1" />
+			<key name="approvals" type="JSONArray" template="approvals_notification_obj" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="approvals_reset_levels" disable-extra-key="true">
+			<key name="stage" type="JSONArray" template="longarray" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="approvals_notification_obj" disable-extra-key="true">
+			<key name="notification" type="JSONObject" template="approvals_notification_obj_content" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="approvals_notification_obj_content" disable-extra-key="true">
+			<key name="title" type="String" max-len="1000" min-occurrences="1" secret="true"/>
+			<key name="description" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+			<key name="attachments" type="JSONArray" template="approval_attachment_template" max-len="-1" array-size="0-100" />
+	    </jsontemplate>
+	    <jsontemplate name="approval_attachment_template">
+			<key name="id" type="long"  range=">0"/>
+			<key name="name" type="String" max-len="250"/>
+			<key name="path" type="String" max-len="2000" />
+			<key name="size" type="long"  range=">0"/>
+		</jsontemplate>
+		<jsontemplate name="resources_template">
+			<key name-regex="true" name="res" type="JSONObject" template="questions_base" max-occurrences="100" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="questions_base">
+			<key name-regex="true" name="qstn_text" type="JSONObject" max-occurrences="100" template="resourcesValueJson" max-len="-1"/>
+			<key name-regex="true" name="qstn_simple" type="JSONObject" max-occurrences="100" template="IDNameJson" max-len="-1" secret="true"/>
+			<key name-regex="true" name="qstn_single_valued" type="JSONObject" max-occurrences="100" template="IDNameJson" max-len="-1" secret="true"/>
+			<key name-regex="true" name="qstn_multi_valued" type="JSONArray" max-occurrences="100" template="IDNameJson" max-len="-1" array-size="0-1000" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="resourcesValueJson">
+			<key name="value" type="String" max-len="2000" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="approval_level_template">
+			<key name="level" type="int"/>
+			<key name="display_name" type="String" max-len="50"/>
+			<key name="approvers" type="JSONObject" template="request_service_approvers_template" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="node_ui_attributes" disable-extra-key="true">
+			<key name="position" type="JSONObject|JSONArray" template="positionJSON" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="field_association_base">
+			<key name="associations" type="JSONArray" template="field_association" array-size="0-100" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="field_association">
+			<key name="id" type="long" />
+			<key name="index" type="int" />
+			<key name="mandatory" type="boolean" />
+			<key name="readonly" type="boolean" />
+			<key name="default_value" type="String" />
+		</jsontemplate>
+		<jsontemplate name="field_dissociation_base">
+			<key name="dissociations" type="JSONArray" template="IDJson" array-size="0-100" max-len="-1" />
+		</jsontemplate>
+        <jsontemplate name="tag_info" disable-extra-key="true">
+            <key name="tags" template="tag_unique" type="JSONArray" max-len="-1" max-occurrences="1" array-size="0-100" />
+        </jsontemplate>
+		<!--templates for save widgets-->
+		<jsontemplate name="ordered_views_template">
+			<key name="ordered_views" type="JSONArray" template="strarray" max-len="1500" array-size="0-50" />
+			<key name="selected_views" type="JSONArray" template="strarray" max-len="1500" array-size="0-50" />
+		</jsontemplate>
+		<jsontemplate name="saveDashboardGlobalOptions">
+			<key name="wide_layout" type="boolean" />
+			<key name="bgcolor" type="int" />
+		</jsontemplate>
+		<jsontemplate name="saveUserDefinedDashboard">
+			<key name="name" type="String" />
+			<key name="description" type="String" max-len="250" secret="true" />
+			<key name="reports" type="JSONArray" template="saveUserDefinedDashboard_reports" max-len="-1" array-size="0-200" />
+			<key name="is_executive_view" type="boolean" />
+			<key name="isshared" type="boolean" />
+			<key name="max_cols" type="String" />
+			<key name="share_info" type="JSONArray" template="saveUserDefinedDashboard_shareInfo" max-len="-1" array-size="0-200" />
+			<key name="shared_to_all_tech" type="boolean" />
+			<key name="ordered_views" type="JSONArray" template="strarray" max-len="1500" array-size="0-200" />
+			<key name="selected_views" type="JSONArray" template="strarray" max-len="1500" array-size="0-200" />
+			<key name="wide_layout" type="boolean" />
+			<key name="bgcolor" type="int" />
+		</jsontemplate>
+		<jsontemplate name="saveUserDefinedDashboard_shareInfo">
+			<key name="type" regex="SDUSER|ORGROLE|USERROLE|SUPPORTGROUP|USERGROUP"/>
+			<key name="details" type="JSONArray" template="saveUserDefinedDashboard_shareInfoUser" max-len="-1" array-size="0-200" />
+		</jsontemplate>
+		<jsontemplate name="saveUserDefinedDashboard_shareInfoUser">
+			<key name="id" type="long" />
+			<key name="name" type="String" secret="true" max-len="150"/>
+		</jsontemplate>
+		<jsontemplate name="saveUserDefinedDashboard_reports">
+			<key name="module" type="String" />
+			<key name="report_details" type="JSONArray" template="saveUserDefinedDashboard_reportDetails" max-len="-1" array-size="0-200" />
+		</jsontemplate>
+		<jsontemplate name="saveUserDefinedDashboard_reportDetails">
+			<key name="name" type="String" />
+			<key name="widgetid" type="String" />
+			<key name="url" regex="widget_custom_url" max-len="250" />
+			<key name="type" regex="URL|Editor|Attach" />
+			<key name="content" max-len="-1" secret="true" xss="sdpantisamyfilter" description="SSA_APPLIED; for HTML content" />
+			<key name="reportid" type="String" />
+			<key name="id" type="String" max-len="36" />
+		</jsontemplate>
+		<jsontemplate name="save_widget_template">
+			<key name="urlinfo" type="JSONObject" template="urlinfo_template" max-len="-1" />
+			<key name="diminfo" type="JSONObject" template="diminfo_template" max-len="-1" />
+			<key name="properties" type="JSONObject" template="save_widget_prop_template" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="columnWidgetTemplate">
+			<key name="name" type="String" max-len="100" />
+			<key name="viewName" type="String" max-len="100" />
+			<key name="width" type="int" />
+		</jsontemplate>
+		<jsontemplate  name="groups_in_dashboard">
+			<key name="id" type="String" max-len="250" />
+			<key name="text" type="String" max-len="250" />
+			<key name="name" type="String" max-len="250" />
+		</jsontemplate>
+		<jsontemplate name="theme_template">
+			<key name="themeName" regex="misty|ocean|prime|spearmint" />
+			<key name="isPublished" type="boolean" />
+			<key name="isDelete" type="boolean" />
+		</jsontemplate>
+		<jsontemplate name="urlinfo_template">
+			<key name="ExtUrlInfo" type="JSONObject" template="extUrlInfo_template" max-len="-1" />
+			<key name="NewExtUrlInfo" type="JSONObject" template="extUrlInfo_template" max-len="-1" />
+			<key name="RemovedExtUrlInfo" type="JSONArray" template="widgetURL_template" max-len="-1" array-size="0-200" />
+		</jsontemplate>
+		<jsontemplate name="extUrlInfo_template">
+			<key name-regex="true" name="[dummy]*[0-9]+" type="JSONObject" template="widgetURL_template" max-len="-1" max-occurrences="100" />
+		</jsontemplate>
+		<jsontemplate name="widgetURL_template">
+			<key name="url" regex="widget_custom_url" max-len="250" />
+			<key name="title" type="String" />
+			<key name="type" regex="URL|Editor|Attach" />
+			<key name="target" regex="same_tab|new_tab" />
+			<key name="content" max-len="-1" secret="true" xss="sdpantisamyfilter" description="SSA_APPLIED; for HTML content" />
+			<key name="id" type="String" max-len="36" />
+		</jsontemplate>
+		<jsontemplate name="diminfo_template">
+			<key name="DefaultWidgets" type="JSONObject" template="diminfo_obj" max-len="-1" />
+			<key name="ExternalWidgets" type="JSONObject" template="diminfo_obj" max-len="-1" />
+			<key name="TableGraphWidgets" type="JSONObject" template="diminfo_obj" max-len="-1" />
+			<key name="NewExternalWidgets" type="JSONObject" template="NewExternalWidgets_template" />
+			<key name="RemovedCustomWidgets" type="JSONObject" template="RemovedCustomWidgets_template" />
+			<key name="RemovedWidgets" type="JSONObject" template="diminfo_obj" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="NewExternalWidgets_template"></jsontemplate>
+		<jsontemplate name="RemovedCustomWidgets_template"></jsontemplate>
+		<jsontemplate name="diminfo_obj">
+			<key name-regex="true" name="(custom|dummy)*[0-9_]+" type="JSONArray" template="longarray" array-size="0-4" max-occurrences="250" />
+			<key name-regex="true" name="(Table|Graph)_\d+" type="JSONArray" template="longarray" array-size="0-4" max-occurrences="250" />
+		</jsontemplate>
+		<jsontemplate name="save_widget_prop_template">
+			<key name="bgColor" type="int" range="1-4" />
+			<key name="isWideLayout" type="boolean" />
+			<key name="search_widget_theme" regex="misty|ocean|prime|spearmint" />
+			<key name="max_cols" type="int" range="1-6" />
+		</jsontemplate>
+		<!--End of templates for save widgets-->
+		<!--Widget Sharing-->
+		<jsontemplate name="widget_sharing_template">
+            <key name="widget_share" template="widget_sharing_template_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+		<jsontemplate name="widget_sharing_template_base">
+			<key name="widget_id" type="JSONObject" template="IDNameJson" max-len="300" />
+			<key name="widget_type" regex="Default|Report|External|Table|Graph" />
+			<key name="share_type" regex="Private|Public|Shared" />
+			<key name="share_id" type="long" range=">=0" />
+			<key name="shared_to" template="widget_sharedTo" type="JSONArray" max-len="-1" array-size="0-100"/>
+		</jsontemplate>
+		<jsontemplate name="widget_sharedTo">
+			<key name="reference_id" type="long" range=">=0" />
+			<key name="reference_type" regex="user|userRole|supportGroup|userGroup|orgRole|All" />
+		</jsontemplate>
+		<!--End of Widget Sharing-->
+		<!--Table and Graph Widgets-->
+		<jsontemplate name="add_table_graph_widget">
+            <key name="widget" template="add_table_graph_widget_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+		<jsontemplate name="add_table_graph_widget_base">
+			<key name="name" type="String" max-len="250" />
+			<key name="module" regex="request|asset|change|release|solution|request_maintenance|project|task|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" />
+			<key name="dashboard_id" type="long" range=">=0" />
+			<key name="is_public" type="boolean" />
+			<key name="graph_type" type="long" range=">=0" /> 
+			<key name="display_name" type="String" max-len="250" />
+			<key name="description" type="String" max-len="4000" secret="true" />
+			<key name="widget_type" regex="Default|Table|Graph" />
+			<key name="properties" template="table_graph_widget_properties" type="JSONObject" max-len="-1" />
+			<key name="share_info" template="widget_sharing_template_base" type="JSONObject" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="table_graph_widget_properties">
+			<key name="filters" template="strarray" type="JSONArray" max-len="500" array-size="1-10" />
+			<key name="columns" template="strarray" type="JSONArray" max-len="750" array-size="1-15" />
+			<key name="graphType" regex="Bar|Pie|Line|Area|Doughnut|Funnel|Pyramid|HorizontalBar" />
+			<key name="groupBy" type="String" max-len="100" />
+			<key name="apiName" regex="cm_api_name" />
+			<key name="isExecutiveWidget" type="boolean" />
+		</jsontemplate>
+		<!--End of Table and Graph Widgets-->
+
+		<!--Creator Integration Templates-->
+		<jsontemplate name="creator_links_save_config">
+			<key name="display_name" type="String" max-len="250" />
+			<key name="show_to_requesters" type="boolean" />
+			<key name="added_creator_link" type="JSONArray" array-size="0-100" template="creator_links_node" max-len="-1"/>
+			<key name="modified_creator_link" type="JSONArray" array-size="0-100" template="creator_links_node" max-len="-1"/>
+			<key name="deleted_creator_link" type="JSONArray" array-size="0-100" template="creator_links_node" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="creator_links_node">
+			<key name="id" type="String" max-len="25" />
+			<key name="name" type="String" max-len="100" />
+			<key name="url" regex="url" max-len="2000" secret="true"/>
+			<key name="show_to_requesters" type="boolean" />
+			<key name="description" type="String" max-len="200" secret="true"/>
+			<key name="index" type="long" />
+		</jsontemplate>
+		<jsontemplate name="creator_links_saveEnableStatus">
+			<key name="is_enabled" type="boolean" />
+		</jsontemplate>
+		<!--End of Creator Integration Templates-->
+
+		<jsontemplate name="app_template">
+            <key name="for" regex="history_filter"/>
+        </jsontemplate>
+		<!-- Save Theme params -->
+		<jsontemplate name="saveThemeInputData">
+			<key name="allow_user_customization" type="boolean" />
+			<key name="css_type" regex="Green|Red|Blue|Violet|Custom" />
+			<key name="font_family" type="String" />
+			<key name="body_background_color" regex="rgbaColorCode" />
+			<key name="input_border_color" regex="rgbaColorCode" />
+			<key name="input_border_shadow" regex="rgbaColorCode" />
+			<key name="link_tab_line_color" regex="rgbaColorCode" />
+			<key name="primary_button_border" regex="rgbaColorCode" />
+			<key name="primary_button_color" regex="rgbaColorCode" />
+			<key name="primary_button_hover_color" regex="rgbaColorCode" />
+			<key name="primary_button_text" regex="rgbaColorCode" />
+			<key name="tab_hover_color" regex="rgbaColorCode" />
+			<key name="tab_normal_text" regex="rgbaColorCode" />
+			<key name="tab_selected_color" regex="rgbaColorCode" />
+			<key name="tab_selected_text" regex="rgbaColorCode" />
+			<key name="top_header_color" regex="rgbaColorCode" />
+			<key name="layout" regex="topbar|sidebar|sidebarlite" />
+			<!-- Added for release module-->
+			<key name="primary_button_light_color" regex="rgbaColorCode" />
+		</jsontemplate>
+		<!-- End of Save Theme-->
+
+		<jsontemplate name="lifecycle_get_connected_nodes" disable-extra-key="true">
+			<key name="module" type="JSONObject" template="module_unique"  max-len="-1" min-occurrences="1" />
+			<key name="node_entity_id" type="long" min-occurrences="1" />
+			<key name="nodes_list_info" type="JSONObject" template="list_info_base" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="request_get_connected_statuses">
+			<key name="status_id" type="long" min-occurrences="1" />
+			<key name="nodes_list_info" type="JSONObject" template="list_info_base" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="status_mandatory_fields">
+			<key name="status_id" type="long" />
+			<key name="template_id" type="long" />
+		</jsontemplate>
+
+		<!-- color settings json template starts -->
+		<jsontemplate name="color_settings_json">
+			<key name="default_settings" type="JSONObject" template="defaultSettingsColorJSON" max-len="-1" max-occurrences="1" />
+			<key name="other_settings" type="JSONArray" template="OtherSettingColorJSON" max-len="-1" max-occurrences="1" array-size="0-100" />
+		</jsontemplate>
+		<jsontemplate name="defaultSettingsColorJSON">
+			<key name="background_color" regex="color" max-len="10" max-occurrences="1" />
+			<key name="default_background" regex="color" max-len="10" max-occurrences="1" />
+			<key name="columns" type="JSONArray" template="strarray" max-len="-1" max-occurrences="1" array-size="0-100" />
+		</jsontemplate>
+		<jsontemplate name="OtherSettingColorJSON">
+			<key name="field" regex="color_settings_fields" max-occurrences="1" />
+			<key name="values" type="JSONArray" template="IDNameJson" max-len="-1" max-occurrences="1" array-size="0-100" />
+			<key name="background_color" regex="color" max-len="10" max-occurrences="1" />
+		</jsontemplate>
+		<!-- color settings json template ends -->
+		<jsontemplate name="IDNameEmailJson">
+			<key name="id" type="long" />
+			<key name="name" type="String" max-len="200" />
+			<key name="email_id" type="String" max-len="200" />
+		</jsontemplate>
+		<jsontemplate name="sla_escalations_template">
+			<key name="id" type="long" />
+			<key name="escalation_time" type="JSONObject" template="datefield" />
+			<key name="level" type="long" />
+			<key name="sla_type" type="String" />
+		</jsontemplate>
+		<jsontemplate name="template_layout_settings_info" disable-extra-key="true">
+			<key name="template_layout_setting" type="JSONArray" max-occurrences="1" max-len="-1" array-size="1-3" template="template_layout_setting_base" />
+		</jsontemplate>
+	<!-- commenting one jsontemplates tag to avoid duplication during MSP xml merge task -->
+	<!--</jsontemplates> -->
+	<!--<jsontemplates> -->
+		<jsontemplate name="placeholders_get_list" disable-extra-key="true">
+			<key name="for" regex="request_notes|wfnotification" />
+			<key name="module" regex="request|release|request_note|request_notification|request_approval|request_approval_level|problem|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" />
+			<key name="list_info" template="list_info_base" type="JSONObject" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="filter_by_json">
+			<key name="id" type="long" />
+			<key name="name" type="String" />
+		</jsontemplate>
+		
+		<jsontemplate name="portal_search" disable-extra-key="true">
+			<key name="search" type="JSONObject" min-occurrences="1" max-len="-1" template="portal_search_info_base" />
+		</jsontemplate>
+		<jsontemplate name="portal_search_info_base" disable-extra-key="true">
+			<key name="search_text" type="String" max-len="5000" secret="true"/>
+			<key name="portal" type="JSONObject" template="search_portal_details" />
+			<key name="include_modules" type="JSONArray" min-occurrences="1" template="portal_search_module" max-len="-1" array-size="1-5" />
+			<key name="current_portal" type="boolean"/>
+			<key name="row_count" type="int" range="1-5"/>
+            <key name="sort_by" type="String"/>
+            <key name="include_ids" type="JSONArray" template="longarray" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="search_portal_details" disable-extra-key="true">
+			<key name="id" type="long" />
+			<key name="name" type="String" max-len="500" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="portal_search_module" disable-extra-key="true">
+			<key index="0-8" regex="announcement|solution|request|project|template|arc_request|asset|change|user" min-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="statusUnique">
+			<key name="id" type="long" />
+			<key name="name" type="String" max-len="100" />
+			<key name="internalname" type="String" max-len="100" />
+			<key name="color" regex="color" />
+		</jsontemplate>
+		<!--CSI Templates start -->
+		<jsontemplate name="csi_model_template">
+			<key name="csi_model" type="JSONObject" template="csi_model" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="csi_model">
+			<key name="categories" type="JSONArray" template="categories_template" max-len="-1" array-size="0-1000" />
+		</jsontemplate>
+		<jsontemplate name="categories_template">
+			<key name="name" type="String" max-len="100" />
+			<key name="sub_categories" type="JSONArray" template="sub_categories_template" max-len="-1" array-size="0-1000" />
+		</jsontemplate>
+		<jsontemplate name="sub_categories_template">
+			<key name="name" type="String" max-len="100" />
+			<key name="items" type="JSONArray" template="items_template" max-len="-1" array-size="0-1000" />
+		</jsontemplate>
+		<jsontemplate name="items_template">
+			<key name="name" type="String" max-len="100" />
+		</jsontemplate>
+		<!--CSI Templates end -->
+		<jsontemplate name="solution_operation">
+			<key name="solution" type="JSONObject" template="solution_comment" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="solution_comment">
+			<key name="operation_comment" type="String" max-len="-1" description="NO_MAXLEN : As provided in data-dictionary"/>
+		</jsontemplate>
+		<jsontemplate name="solution_setting_comment">
+			<key name="solution" type="JSONObject" template="comment_scope" />
+		</jsontemplate>
+		<jsontemplate name="comment_scope">
+			<key name="comment_isenabled" type="boolean" />
+		</jsontemplate>
+		<jsontemplate name="topic_operation">
+			<key name="topic" type="JSONObject" template="topic_move" />
+		</jsontemplate>
+		<jsontemplate name="topic_move">
+			<key name="solution_to_topic" type="String" />
+			<key name="subtopic_to_topic" type="String" />
+		</jsontemplate>
+		<jsontemplate name="sol_list_info">
+			<key name="list_info" type="JSONObject" max-len="-1" template="sol_list_info_base" />
+			<key name="for" regex="list_view_filter|advanced_search_filter|topic_filter"/>
+		</jsontemplate>
+		<jsontemplate name="sol_list_info_base">
+			<key name="row_count" type="int" />
+			<key name="start_index" type="int" />
+			<key name="sort_field" type="String" />
+			<key name="search_string" type="String" />
+			<key name="sort_fields" type="JSONArray" template="sort_fields_json" max-len="-1" array-size="0-3" />
+			<key name="sort_order" regex="asc|desc|A|D" />
+			<key name="filter" type="String" />
+			<key name="filter_by" type="JSONObject" template="IDNameJson" />
+			<key name="search_fields" type="JSONObject" max-len="-1" template="search_field_json" />
+			<key name="search_criteria" type="JSONObject|JSONArray" max-len="-1" template="search_criteria" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+			<key name="group_by" type="JSONArray" array-size="0-100" template="strarray" />
+			<key name="get_total_count" regex="true|false" />
+			<key name="search_fields_condition" regex="or|and" />
+			<key name="gsearch" type="String" max-len="5000" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="portal_landing_config" disable-extra-key="true">
+			<key name="type" regex="esm_portal|org_default_portal" min-occurrences="1" max-occurrences="1" />
+			<key name="default_portal" template="portal_template" type="JSONObject" max-occurrences="1" />
+			<key name="is_allowed_preferred_portal_for_users" type="boolean" max-occurrences="1" />
+		</jsontemplate>
+		<jsontemplate name="reorder_portal" disable-extra-key="true">
+			<key name="is_allowed" type="boolean" max-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="toggle_default_portal" disable-extra-key="true">
+			<key name-regex="true" name="default_portal" template="portal_template" type="JSONObject" min-occurrences="1" max-occurrences="1" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="integrations_input_json">
+			<key name="id" type="long" />
+			<key name="name" type="String" />
+			<key name="description" type="String" />
+			<key name="configuration" type="String" max-len="-1" secret="true"/>
+			<key name="actions" type="String" max-len="-1" secret="true"/>
+			<key name="isEnabled" type="boolean" />
+			<key name="globalConfig" type="JSONObject" template="global_config" max-len="-1" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="global_config">
+			<key name="parameter" regex="UEM_product|ADSSP_PLUGIN_TECH|ADSSP_PLUGIN_REQ" />
+			<key name="category" regex="UEMPRODUCTS|ADSELFSERVICE" />
+			<key name="value" regex="Endpoint Central|Remote Access Plus|Patch Manager Plus|Vulnerability Manager Plus|Application Control Plus|Device Control Plus|Endpoint DLP Plus|false|true" />
+		</jsontemplate>
+		<jsontemplate name="integrations_input_array">
+			<key index="0-1" type="JSONObject" template="integrations_input_json" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="integrations_input_data">
+			<key name="integrations" type="JSONArray" template="integrations_input_array" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="sms_configuration_input_data">
+			<key name="sms_configurations" type="JSONObject" template="sms_configurations" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="send_sms_input_data">
+			<key name="send_sms" type="JSONObject" template="send_sms" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="sms_configurations">
+			<key name="sms_mail" type="boolean"/>
+			<key name="unicode_type" type="String" regex="null|UTF-16BE"/>
+			<key name="integrations" type="JSONObject" template="integrations_input_json" max-len="-1"/> 
+		</jsontemplate>
+		<jsontemplate name="send_sms">
+			<key name="message" type="String" max-len="250" secret="true" />
+			<key name="recipients" type="String" max-len="20" secret="true" /> 
+		</jsontemplate>
+		<jsontemplate name="telephony_info">
+			<key name="caller" type="String" max-len="20" secret="true"/>
+			<key name="callee" type="String" max-len="20" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="telephony_save">
+			<key name="server" type="String" secret="true"/>
+			<key name="port" type="long" range=">0" secret="true"/>
+			<key name="username" type="String" secret="true"/>
+			<key name="password" type="String" max-len="2000" secret="true"/>
+			<key name="name" type="String" />
+			<key name="tLink" type="String" secret="true"/>
+			<key name="scriptFile" type="String" />
+			<key name="sipType" regex="sip|pjsip" />
+			<key name="createRequest" type="boolean"/>
+		</jsontemplate>
+
+		<jsontemplate name="integration_key_reassign" disable-extra-key="true">
+			<key name="owned_by" type="JSONObject" template="user_unique" min-occurrences="1" max-occurrences="1" max-len="-1" />
+			<key name="comments" max-len="250" type="String" max-occurrences="1" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="resource_position_template" disable-extra-key="true">
+			<key name="row" type="int"/>
+			<key name="column" type="int"/>
+		</jsontemplate>
+		<jsontemplate name="rule_metainfo_template" disable-extra-key="true">
+			<key name="module_type" regex="incident_request|service_request"/>
+			<key name="extended_module" regex="request_note|request_notification|request_approval_level|request_approval|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))"/>
+		</jsontemplate>
+		<jsontemplate name="rule_allowed_values_list_info">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="extended_module" regex="request_note|request_notification|request_approval_level|request_approval|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" />
+			<key name="include_inactive_value" type="boolean" max-occurrences="1" />
+		</jsontemplate>
+		<jsontemplate name="id_order_json" disable-extra-key="true">
+			<key name="id" type="long"/>
+			<key name="order" type="long" max-len="100"/>
+		</jsontemplate>
+
+		<jsontemplate name="organize_rules_groups" disable-extra-key="true">
+			<key name-regex="true" name="(([a-z0-9_]+)(_)(business_rule_groups))|(business_rule_groups)|(([a-z0-9_]+)(_)(custom_trigger_groups))|(custom_trigger_groups)|(([a-z0-9_]+)(_)(business_rules))|(([a-z0-9_]+)(_)(custom_triggers))" type="JSONArray" template="id_order_json" max-len="-1" array-size="0-1000"/>
+		</jsontemplate>
+		
+		<jsontemplate name="ffr_criteria" disable-extra-key="true">
+			<key name="FIELDID" type="String" min-occurrences="1" max-occurrences="1" allow-invalid="false" max-len="50"/>
+			<key name="VALUES" type="JSONArray" template="medium_strarray" max-occurrences="1" max-len="-1" array-size="0-200"/>
+			<key name="CONDITION" type="String" min-occurrences="1" max-occurrences="1" allow-invalid="false" max-len="25"/>
+			<key name="OPERATOR" regex="and|or|AND|OR" min-occurrences="1"/>
+			<key name="LISTENER" regex="change" min-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="ffr_action" disable-extra-key="true">
+			<key name="ACTIONTYPE" type="String" max-len="25" min-occurrences="1" allow-invalid="false"/>
+			<key name="FIELDS" type="JSONArray" template="ffr_action_fields" max-occurrences="1" max-len="-1" array-size="0-200"/>
+		</jsontemplate>
+		<jsontemplate name="ffr_action_fields" disable-extra-key="true">
+			<key name="FIELDID" type="String" min-occurrences="1" allow-invalid="false" max-len="50"/>
+			<key name="VALUES" type="JSONArray" template="medium_strarray" max-len="-1" array-size="0-200"/>
+			<key name="LISTENER" regex="change" min-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="ffr_rule_data" disable-extra-key="true">
+			<key name="ACTIONS" type="JSONArray" template="ffr_action" max-occurrences="1" max-len="-1" array-size="0-200"/>
+			<key name="CRITERIAS" type="JSONArray" template="ffr_criteria" max-occurrences="1" max-len="-1" array-size="0-200"/>
+			<key name="RuleEvent" regex="onform_load|onfield_change|onform_submit|page_script" />
+			<key name="ISENABLED" type="boolean" />
+			<key name="OPERATIONTYPE" regex="all|create|edit|all_page|rlv_page|rdp_page" min-occurrences="1" allow-invalid="false"/>
+			<key name="RULEID" allow-invalid="false" regex="-1|((\d+)(\,)?)*" max-len="25"/>
+			<key name="RULENAME" type="String" min-occurrences="1" allow-invalid="false" max-len="250"/>
+			<key name="RULETYPE" type="long" min-occurrences="1" allow-invalid="false"/>
+			<key name="TEMPLATEIDS" type="JSONArray" template="medium_strarray" max-occurrences="1" max-len="-1" array-size="0-200"/>
+			<key name="USERTYPE" regex="Technician|all_users|Requester|UserExceptCMCO|UserExceptRMRE" min-occurrences="1"/>
+			<key name="FIELDID" type="String" max-occurrences="1" max-len="50"/>
+			<key name="LISTENER" regex="change" max-occurrences="1"/>
+			<key name="JSCODE" type="String" max-len="-1" max-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="check_backup_approver_availability">
+   			<key name="approvers" type="JSONArray" template="user_unique" max-len="-1" array-size="1-100"/>
+  		</jsontemplate>
+		<jsontemplate name="submit_for_approval" disable-extra-key="true">
+    		<key name="for" regex="add_approval_level"/>
+    		<key name="approvals" type="JSONArray" template="approval_base" max-len="-1" array-size="1-50" min-occurrences="1"/>
+    		<key name="notification" type="JSONObject" template="approvals_notification_obj_content" max-len="-1" min-occurrences="1"/>
+   		</jsontemplate>
+
+		  <!--Timer templates start-->
+		<jsontemplate name="timer_intial_delay_template">
+			<key max-occurrences="1" min-occurrences="1" name="type" regex="user_defined_time|date_field|percentage_date_field|before_date_field|after_date_field"/>
+			<key name="time_interval" type="JSONObject" max-len="50" template="timer_interval_template"/>
+			<key name="percentage" type="int" range="1-500"/>
+			<key name="field" type="String" max-len="100"/>
+			<key name="relative_field" type="String"/>
+		</jsontemplate>
+        
+        <jsontemplate name="timer_repeat_config_template">
+			<key name="time_interval" type="JSONObject" min-occurrences="1" max-len="50" template="timer_interval_template"/>
+			<key name="end_after_execution" type="int" min-occurrences="1" range="1-5"/>
+		</jsontemplate>
+
+        <jsontemplate name="timer_interval_template">
+			 <key name="hours" type="int" min-occurrences="1" range="0-23"/>
+			 <key name="minutes" type="int" min-occurrences="1" range="0-59"/>
+			 <key name="days" type="int" min-occurrences="1" range="0-99"/>
+		</jsontemplate>
+
+		<!--Timer templates end-->
+
+		
+	</jsontemplates>
+
+	<!-- We don't need to load security-generalaccess.xml entry in non-login context that's why "worklog_base" json group entry moved here. This file loaded before the a-i,j-r,s-z templates load, the loading done in sd context web.xml file -->
+	<jsonkey-groups>
+		<jsonkey-group name="worklog_base">
+			<key name="id" type="long"/>
+			<key name="template" template="worklog_template_unique" type="JSONObject" max-len="-1" allow-invalid="false"/>
+			<key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+			<key name="owner" template="user_unique" type="JSONObject" max-len="-1"/>
+			<key name="(?i)(description)" name-regex="true" secret="true" max-len="-1" xss="sdpantisamyfilter"/>
+			<key name="time_spent" template="timediff" type="JSONObject" max-len="-1"/>
+			<key name="start_time" template="datefield" type="JSONObject" max-len="-1"/>
+			<key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+			<key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+			<key name="other_cost" type="double"/>
+			<key name="total_cost" type="double"/>
+			<key name="owner_cost" type="double" secret="true"/>
+			<key name="type" template="worklog_type_unique" type="JSONObject" max-len="-1"/>
+			<key name="task" template="task_unique" type="JSONObject" max-len="-1"/>
+			<key name="include_nonoperational_hours" type="boolean" allow-invalid="false"/>
+			<key name="udf_fields" template="all_udf_fields_ref" type="JSONObject" max-len="-1"/>
+		</jsonkey-group>
+		<jsonkey-group name="template_base">
+			<key name="name" type="String" max-len="100" />
+			<key name="comment" type="String" max-len="1000" secret="true"/>
+			<key name="layouts" template="layout_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false" />
+			<key name="style_properties" template="template_style_properties" type="JSONObject" max-len="-1" />
+			<key name="id" type="long" allow-invalid="false" />
+			<key name="is_default" type="boolean" allow-invalid="false" />
+			<key name="deleted" type="boolean" allow-invalid="false" />
+		</jsonkey-group>
+	</jsonkey-groups>
+</security>

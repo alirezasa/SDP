@@ -1,0 +1,64 @@
+<!DOCTYPE>
+<html>
+<head>
+</head>
+<body>
+<p>使用项目自定义触发器，自动触发在项目中使用的脚本文件或自定义动作中的任何‘<strong>动作</strong>’。</p>
+<p>要创建一个新的项目自定义触发器，</p>
+<ul>
+<li>点击<strong>“添加新动作”</strong>。</li>
+<li>输入动作名称、动作描述，并选择执行该动作的时间。</li>
+<li>选择动作类型（自定义方法/脚本）并指向需要运行的相应脚本/类文件。</li>
+<li>设置在项目上执行的动作需要匹配的条件。您可以通过点击“+”图标，添加多个条件。根据您的需要，在增加条件中，选择与/或的并列关系。</li>
+<li>取消选择‘<strong>停止处理后续动作</strong>’复选框，将执行连续的动作，即便已经在一个项目上应用了一个动作规则。</li>
+</ul>
+<p><strong>注：</strong></p>
+<ul>
+<li>请确保您为‘<strong>新的动作</strong>’输入一个独特的名称，这样名称就不会与现有的‘<strong>动作</strong>’名称相冲突。</li>
+<li>确保文本文件只存储在[SDP_Home]/integration/custom_scripts/executor_files目录下，且脚本文件只存储在[SDP_Home]/integration/custom_scripts/中。</li>
+<li>默认情况下，‘<strong>停止处理后续动作</strong>’一直处于启用状态，动作将按照“动作规则顺序”执行。列表视图中的“编排动作”允许您重新安排动作的执行顺序。</li>
+<li>列表视图中的‘<strong>编排动作</strong>’允许您重新安排动作的执行顺序。</li>
+</ul>
+<p><strong>技术信息：</strong></p>
+<p>在<strong>执行动作</strong>中,选择您要执行的是脚本还是自定义方法，并使用以下条件进行配置：</p>
+<ul>
+<li> <strong>脚本：</strong>指定包含脚本内容的文本文件名称。比如：<strong>AddComments.txt</strong></li>
+<li> <strong>自定义方法：</strong>通过执行自定义方法，您可以在ServiceDesk Plus和其他外部应用程序中操作数据。根据所需选择自定义函数或添加一个新函数。</li>
+<li> <strong>支持返回的操作：</strong>UPDATE_PROJECT & ADD_COMMENTS</li>
+</ul>
+<p><strong>注: </strong></p>
+<ul>
+<li>在脚本中，您可以将API参数作为参数传递，比如py addComments.py $TITLE $TYPE。</li>
+<li><strong>projectObj</strong>和<strong>context</strong>是自定义函数中支持的参数。</li>
+</ul>
+<p><strong>脚本内的其他参数支持：</strong></p>
+<p>$COMPLETE_V3_JSON_FILE--->完整的请求对象将被保存到一个JSON文件，文件路径将作为字符串对象传递。如果操作是‘<strong>项目正被编辑</strong>’，那么DIFF_JSON（旧项目数据和新项目数据之间的差异）也将被保存到一个JSON文件。</p>
+<div class="alert alert-info icon" role="alert">
+  <span class="msg">$HELPDESK_ID---><strong>门户ID</strong>。这个ID需要作为值传递给所有SDP API调用与新的URL参数 "PORTALID "相对应。只适用于启用ESM的设置。
+<p>JSON 文件路径：<em>(SDP_Home\integration\custom_scripts\project\12_1426143538036.json).</em></p>
+<p><strong>触发应用程序的响应案例：</strong></p>
+<p>{
+  <br>    "message":"Customized message"   
+  <br>    "operations": [<br>
+  
+          {<br>
+  
+              "operation_name": "ADD_COMMENTS",<br>
+  
+              "input_data": {<br>
+  
+                      "comment": {<br>
+  
+                           "content": "Sample content from script"<br>
+  
+                      }<br>
+  
+              }<br>
+  
+          }<br>
+  
+    ]<br>
+  
+}</p>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles name="site" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+
+
+        <url path="/api/v3/sites" roles="SDOrgAdmin" method="post" user_type="all">
+            <param name="input_data" template="site" type="JSONObject" max-len="50000" min-occurrences="1"/>
+        </url>
+
+
+        <url path="/api/v3/sites/(\d+)" roles="SDOrgAdmin,SDAdmin" method="put" user_type="all">
+            <param name="input_data" template="site" type="JSONObject" max-len="50000" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/sites" roles="SDOrgAdmin,SDAdmin" method="put" user_type="all">
+            <param name="input_data" template="sites" type="JSONObject" max-len="50000" min-occurrences="1"/>
+            <param name="ids" max-len="2000" regex="ids" />
+        </url>
+
+        <url path="/api/v3/sites/(_?)metainfo" method="get" roles="SDAdmin,SDOrgAdmin,HelpdeskConfig,ConfigureCMDB" user_type="all">
+            <throttles name="site_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url path="/api/v3/sites/(\d+)" roles="SDAdmin,SDOrgAdmin,SDSiteAdmin" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="50000"/>
+        </url>
+        <url path="/api/v3/sites" roles="SDAdmin,SDOrgAdmin,SDSiteAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="50000"/>
+        </url>
+
+        <url path="/api/v3/sites/(_?)valid_sites_for_modify_association" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all" url-type="dynamic">
+            <param name="ids" max-len="2000" regex="ids" min-occurrences="1"/>
+            <param name="input_data" template="move_entity_template" type="JSONObject" max-len="50000"/>
+        </url>
+        <url path="/api/v3/sites/(\d+)" roles="SDAdmin,SDOrgAdmin" method="delete" user_type="all" url-type="dynamic">
+            <param name="input_data" template="move_entity_template" type="JSONObject" max-len="50000"/>
+
+
+        </url>
+        <url path="/api/v3/sites" roles="SDAdmin,SDOrgAdmin" method="delete" user_type="all">
+            <param name="input_data" template="move_entity_template" type="JSONObject" max-len="50000"/>
+            <param name="ids" max-len="2000" regex="ids" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/sites/(\d+)/(_?)history" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="50000"/>
+        </url>
+        <url path="/api/v3/sites/(_?)history" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="50000"/>
+        </url>
+
+        <url path="/api/v3/sites/(_?)get_records_for_history" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/sites/(_?)get_performed_by_for_history" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="SDOrgAdmin,SDAdmin,HelpdeskConfig" path="/api/v3/sites/(region|timezone)" user_type="all">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+        <param name="format" regex="json"/>
+    </urls>
+	<jsontemplates>
+		<jsontemplate name="move_entity_template" disable-extra-key="true">
+			<key name="update_site_related_entities" type="JSONObject" template="update_site_related_entities_template_def" max-len="3500"/>
+			<key name="update_site_referring_configurations" type="JSONArray" template="update_site_referring_configurations_template_def" max-len="50000" array-size="0-250"/>
+			<key name="update_portal_user_criteria" type="JSONObject" template="associate_portal_requester_base" max-len="3500" />
+			<key name="input_needed_for" regex="AssociatedEntities|ReferringEntities"/>
+		</jsontemplate>
+
+		<jsontemplate name="update_site_referring_configurations_template_def" disable-extra-key="true">
+			<key name="id" type="long" range=">-2"/>
+			<key name="refer_referring_operational_hours_from" type="JSONObject" template="site_unique" max-len="300"/>
+			<key name="refer_referring_holidays_from" type="JSONObject" template="site_unique" max-len="300"/>
+			<key name="refer_referring_tech_group_sla_from" type="JSONObject" template="site_unique" max-len="300"/>
+		</jsontemplate>
+
+		<jsontemplate name="update_site_related_entities_template_def" disable-extra-key="true">
+			<key name="move_pm_task_to" type="JSONObject" template="site_unique" max-len="300"/>
+			<key name="move_template_to" type="JSONObject" template="site_unique" max-len="300"/>
+			<key name="move_user_to" type="JSONObject" template="site_unique" max-len="300"/>
+			<key name="move_asset_to" type="JSONObject" template="site_unique" max-len="300"/>
+		</jsontemplate>
+
+        <jsontemplate name="site_settings" disable-extra-key="true">
+            <key name="operational_hours" template="site_settings_mode" type="JSONObject" max-len="300" />
+            <key name="holidays" template="site_settings_mode"  type="JSONObject" max-len="300" />
+            <key name="departments" template="site_settings_mode"  type="JSONObject" max-len="300" />
+            <key name="groups" template="site_settings_mode" type="JSONObject" max-len="300"/>
+            <key name="sla" template="site_settings_mode" type="JSONObject" max-len="300" />
+            <key name="technicians" template="site_settings_mode" type="JSONObject" max-len="300" />
+        </jsontemplate>
+
+        <jsontemplate name="site_settings_mode" disable-extra-key="true">
+            <key min-occurrences="1" name="mode" regex="refer|custom" />
+            <key name="site" template="site_unique" type="JSONObject" max-len="300" />
+        </jsontemplate>
+	</jsontemplates>
+</security>

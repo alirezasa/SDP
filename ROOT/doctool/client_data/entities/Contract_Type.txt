@@ -1,0 +1,182 @@
+{
+   "attributes":[
+      {
+         "name":"id",
+         "type":"Number",
+         "desc":"Unique identifier used to identify the contract type.",
+         "graphView":"",
+         "column":"ContractCategory:CATEGORYID",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isMandatory": "true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true", 
+	 "isReleased":"true"
+      },
+      {
+         "name":"name",
+         "type":"String",
+         "desc":"Name of the contract type which will uniquely identify the individual contract types",
+         "graphView":"",
+	 "column":"ContractCategory:CATEGORYNAME",
+         "odcolumn": "",
+	 "html_type": "",
+         "isMandatory":"true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"description",
+         "type":"String",
+         "desc":"Enter a short description in the Description",
+         "graphView":"",
+	 "column":"ContractCategory:DESCRIPTION",
+	 "odcolumn": "",
+	 "html_type": "",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"created_by",
+         "type":"Object",
+         "desc":"Denotes the technician who created the contract type.",
+         "graphView":"",
+	 "column":"ContractCategory.:CREATEDBY",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"true",
+         "relEntity":{
+            "name":"User",
+            "type":"referential",
+            "relation":"1to1"
+         },
+	 "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"deleted",
+         "type":"Boolean",
+         "desc":"Boolean value indicating whether the contract type is active or in inactive status.",
+         "graphView":"",
+	 "column":"ContractCategory:DELETED",
+         "odcolumn": "",
+	 "html_type": "",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      }
+   ],
+   "operations":[
+      {
+         "name":"",
+         "method":"GET",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contract_types/{contract_type_id}"],
+         "desc":"This operation fetches details of a contract type.",
+         "disp_desc":"View A Contract Type",
+         "workflow":"",
+         "output":{"sample":"{ \"contract_type\": { \"deleted\": false, \"name\": \"Sales Contract\", \"description\": \"A Sales Contract is a legally binding document that outlines the terms and conditions of a sale between a seller and a buyer.\", \"id\": \"1\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"},
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "defaultAttributes": [],
+	 "excludedAttributes": [],
+         "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"GET",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contract_types"],
+         "desc":"This operation fetches all contract types.",
+         "disp_desc":"View All Contract Types",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{\"list_info\":{\"row_count\":2,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}",
+            "showattr":"true"
+         },
+         "output":{
+            "sample":"{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"contract_types\":[{\"deleted\": false, \"name\": \"Sales Contract\", \"description\": \"A Sales Contract is a legally binding document that outlines the terms and conditions of a sale between a seller and a buyer.\", \"id\": \"1\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null } }]}"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "defaultAttributes": [],
+	 "excludedAttributes": [],
+         "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"POST",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contract_types"],
+         "desc":"This operation lets you add a contract type.",
+         "disp_desc":"Add A Contract Type",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{\"contract_type\":{\"name\":\"Advisory Agreement\",\"description\":\"An Advisory Agreement is a legal document that outlines the terms and conditions under which an individual or entity agrees to provide advisory services to another party.\"}}"
+         },
+         "output":{
+            "sample":"{\"contract_type\": { \"deleted\": false, \"name\": \"Advisory Agreement\", \"description\": \"An Advisory Agreement is a legal document that outlines the terms and conditions under which an individual or entity agrees to provide advisory services to another party.\", \"id\": \"1\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "defaultAttributes": [],
+	 "excludedAttributes": [],
+         "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"PUT",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contract_types/{contract_type_id}"],
+         "desc":"This operation lets you update a contract type.",
+         "disp_desc":"Update A Contract Type",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{\"contract_type\":{\"name\":\"Void Contract\",\"description\":\"A void contract is a legal agreement\"}}"
+         },
+         "output":{
+            "sample":"{\"contract_type\": { \"deleted\": false, \"name\": \"Void Contract\", \"description\": \"A void contract is a legal agreement that is considered null and void right from its inception, as if it never existed.\", \"id\": \"1\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "defaultAttributes": [],
+	 "excludedAttributes": [],
+         "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"DELETE",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contract_types/{contract_type_id}"],
+         "desc":"This operation lets you delete a contract type.",
+         "disp_desc":"Delete A Contract Type",
+         "workflow":"",
+         "output":{
+            "sample":"{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "defaultAttributes": [],
+	 "excludedAttributes": [],
+         "isReleased":"true"
+      }
+   ],
+   "Additional Elements": [],
+   "isReleased":"true"
+}

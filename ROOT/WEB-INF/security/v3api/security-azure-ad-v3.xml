@@ -1,0 +1,174 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true">
+         <url path="/api/v3/azure_domains/(\d+)" roles="SDOrgAdmin" method="get" user_type="all"  url-type="dynamic">
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_domain_get" dynamic-throttle="true" >
+                 <throttle lock-period="5m" threshold="30" duration="1M"/>
+             </throttles>
+         </url>
+         <url path="/api/v3/azure_domains" roles="SDOrgAdmin" method="get" user_type="all" >
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_domain_get_list" dynamic-throttle="true" >
+                 <throttle lock-period="5m" threshold="30" duration="1M"/>
+             </throttles>
+             <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+         </url>
+         <url path="/api/v3/azure_domains" roles="SDOrgAdmin" method="post" user_type="all">
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_domain_add" dynamic-throttle="true" >
+                 <throttle lock-period="5m" threshold="15" duration="1M"/>
+             </throttles>
+             <param name="input_data" type="JSONObject" template="azuretemplate" max-len="-1" min-occurrences="1"/>
+         </url>
+         <url path="/api/v3/azure_domains/(\d+)" roles="SDOrgAdmin" method="put" user_type="all" url-type="dynamic">
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_domain_edit" dynamic-throttle="true" >
+                 <throttle lock-period="5m" threshold="15" duration="1M"/>
+             </throttles>
+             <param name="input_data" type="JSONObject" template="azuretemplate" max-len="-1" min-occurrences="1"/>
+         </url>
+         <url path="/api/v3/azure_domains/(\d+)" roles="SDOrgAdmin" method="delete" user_type="all" url-type="dynamic">
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_domain_delete" dynamic-throttle="true" >
+                 <throttle lock-period="5m" threshold="15" duration="1M"/>
+             </throttles>
+         </url>
+        <url path="/api/v3/azure_domains/(\d+)/test_domain_connection" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_domain_test_connection" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/azure_domains/(_?)metainfo" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_domain_metainfo" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url path="/api/v3/azure_fields/(_?)metainfo" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_field_metainfo" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <!--Below url is for getting Reporting to user list under criteria-->
+        <url path="/api/v3/azure_fields/manager" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_field_manager" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url path="/api/v3/azure_supported_fields" roles="SDOrgAdmin" method="get" user_type="all" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_supported_fields_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/azure_configs/(\d+)" roles="SDOrgAdmin" method="put" user_type="all" url-type="dynamic">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_config_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="azure_config_template" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/azure_configs" roles="SDOrgAdmin" method="get" user_type="all" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_config_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!--Below url is for getting azure groups list under criteria-->
+        <url path="/api/v3/azure_fields/group" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_field_group" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+        </url>
+
+     </urls>
+
+    <urls authentication="required">
+        <url path="/servlet/AJaxServlet" roles="SDOrgAdmin" method="post" operation-param="action" operation-value="saveAzureSchedule" user_type="all" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_save_schedule" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="azureSchedule" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/servlet/AJaxServlet" method="get" roles="SDOrgAdmin" operation-param="action" operation-value="getAzureConfiguration" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_get_configuration" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+        </url>
+
+        <url path="/servlet/AJaxServlet" method="get" roles="SDOrgAdmin" operation-param="action" operation-value="syncAzureGroups" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_sync_group" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1M"/>
+            </throttles>
+            <param name="domainID" type="long" range=">0" />
+        </url>
+
+        <url path="/servlet/AJaxServlet" roles="SDOrgAdmin" method="post" operation-param="action" operation-value="azureOneTimeImport" user_type="all" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_onetime_import" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="azureOneTimeImportJSON" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/ESM.do" operation-param="type" operation-value="azuread" user_type="all" roles="SDOrgAdmin">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="azure_esm" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+        </url>
+    </urls>
+
+     <jsontemplates>
+         <jsontemplate name="azuretemplate">
+             <key name="azure_domain" type="JSONObject" template="azure_domain" max-len="-1" min-occurrences="1" />
+         </jsontemplate>
+         <jsontemplate name="azure_domain">
+             <key name="id" type="long" range=">0" />
+             <key name="name" secret="true" type="String" max-len="255"  />
+             <key name="client_id" secret="true" type="String" max-len="36" />
+             <key name="client_secret" secret="true" type="String" max-len="500" />
+             <key name="token_url" regex="(?i)^https:\/\/login\.microsoftonline\.com.*\/token$" secret="true" type="String" max-len="100"  />
+             <key name="criteria_json" secret="true" type="JSONArray" template="search_criteria" max-len="-1" array-size="0-10" />
+             <key name="is_criteria_enabled" type="boolean" />
+             <key name="azure_field_map" type="JSONArray" template="azure_field_map" max-len="-1" array-size="0-100" />
+             <key name="azure_selected_field" type="JSONArray" template="azure_selected_field" max-len="-1" array-size="0-100"/>
+         </jsontemplate>
+         <jsontemplate name="azure_field_map">
+             <key name="id" type="long" range=">0" />
+             <key name="domain_id" type="long" range=">0" />
+             <key name="sd_field_name" max-len="250" regex="email_id|reporting_to|department|first_name|jobtitle|mobile|last_name|secondary_emailids|login_name|phone|employee_id|name|middle_name|site|udf_sline_[0-9]+|udf_mline_[0-9]+|udf_pick_[0-9]+|udf_long_[0-9]+"/>
+             <key name="azure_field_id" type="JSONObject" template="azure_field_id" max-len="-1" />
+         </jsontemplate>
+         <jsontemplate name="azure_field_id">
+             <key name="id" type="long" range=">0" />
+         </jsontemplate>
+         <jsontemplate name="azure_selected_field">
+             <key name="id" type="long" range=">0" />
+             <key name="domain_id" type="long" range=">0" />
+             <key name="azure_field_id" type="long" range=">0" />
+         </jsontemplate>
+         <jsontemplate name="azureSchedule">
+             <key name="azureScheduleConfig" type="JSONObject" template="scheduleConfig" max-len="-1" min-occurrences="1" />
+         </jsontemplate>
+         <jsontemplate name="scheduleConfig">
+             <key name="enabled" type="boolean" min-occurrences="1"/>
+             <key name="repeat_every" type="int" range="7-365" max-occurrences="1"/>
+             <key name="start_time" template="datefield" type="JSONObject" max-len="-1" max-occurrences="1"/>
+         </jsontemplate>
+         <jsontemplate name="azure_config_template">
+             <key name="azure_config" type="JSONObject" template="azure_config" max-len="-1" min-occurrences="1" />
+         </jsontemplate>
+         <jsontemplate name="azure_config">
+             <key name="id" type="long" range=">0" max-occurrences="1"/>
+             <key name="parameter" regex="DELETE_USER_TYPE" max-occurrences="1"/>
+             <key name="param_value" max-occurrences="1" regex="manual|auto"/>
+         </jsontemplate>
+         <jsontemplate name="azureOneTimeImportJSON">
+             <key name="userPrincipalNames" secret="true" regex="[\w\s\!#^\~@\,\-\.\']+" max-len="2000" min-occurrences="1" />
+             <key name="domainID" type="long" range=">0" />
+         </jsontemplate>
+     </jsontemplates>
+</security>

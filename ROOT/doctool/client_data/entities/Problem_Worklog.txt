@@ -1,0 +1,308 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/worklogs",
+      "desc": "This operation helps you add a new worklog for the given input. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Add a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"worklog\": { \"template\": { \"id\": \"3\" }, \"owner\": { \"id\": \"5\" }, \"time_spent\": { \"hours\": \"9\", \"minutes\": \"30\" }, \"start_time\": { \"value\": \"1541060100000\" }, \"end_time\": { \"value\": \"1541146542726\" }, \"type\": { \"id\": 1 }, \"description\": \"sample worklog description\", \"other_cost\": \"45\", \"include_nonoperational_hours\": \"false\" }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": " {\"response_status\": {\"status_code\": 2000, \"status\": \"success\" }, \"worklog\": {\"owner\": {\"email_id\": null, \"cost_per_hour\": 0, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\" }, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"template\": {\"name\": \"General Template\", \"id\": \"3\" }, \"created_time\": {\"display_value\": \"Mar 27, 2024 01:39 PM\", \"value\": \"1711526983126\" }, \"include_nonoperational_hours\": false, \"total_cost\": \"0.00\", \"other_cost\": \"45.00\", \"associated_entity\": \"problem\", \"end_time\": {\"display_value\": \"Nov 2, 2018 02:15 PM\", \"value\": \"1541148300000\" }, \"description\": \"sample worklog description\", \"owner_cost\": \"0.00\", \"type\": null, \"created_by\": {\"email_id\": null, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\" }, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"time_spent\": {\"hours\": \"09\", \"minutes\": \"30\", \"value\": \"34200000\" }, \"start_time\": {\"display_value\": \"Nov 1, 2018 01:45 PM\", \"value\": \"1541060100000\" }, \"problem\": {\"id\": \"1\", \"title\": \"New problem\" }, \"id\": \"11\" } }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": [
+        "/api/v3/problems/{problem_id}/worklogs/{worklog_id}"
+      ],
+      "desc": "This operation helps you retrieve the work-log details for the worklog_id provided. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "View a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": " {\"response_status\": {\"status_code\": 2000, \"status\": \"success\" }, \"worklog\": {\"owner\": {\"email_id\": null, \"cost_per_hour\": 0, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\" }, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"template\": {\"name\": \"General Template\", \"id\": \"3\" }, \"created_time\": {\"display_value\": \"Mar 27, 2024 01:39 PM\", \"value\": \"1711526983126\" }, \"include_nonoperational_hours\": false, \"total_cost\": \"0.00\", \"other_cost\": \"45.00\", \"associated_entity\": \"problem\", \"end_time\": {\"display_value\": \"Nov 2, 2018 02:15 PM\", \"value\": \"1541148300000\" }, \"description\": \"sample worklog description\", \"owner_cost\": \"0.00\", \"type\": null, \"created_by\": {\"email_id\": null, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\" }, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"time_spent\": {\"hours\": \"09\", \"minutes\": \"30\", \"value\": \"34200000\" }, \"start_time\": {\"display_value\": \"Nov 1, 2018 01:45 PM\", \"value\": \"1541060100000\" }, \"problem\": {\"id\": \"1\", \"title\": \"New problem\" }, \"id\": \"11\" } }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": "/api/v3/problems/{problem_id}/worklogs",
+      "desc": "This operation helps you view all the worklogs for the given problem. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "View all worklogs",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"row_count\": \"5\", \"get_total_count\": \"true\", \"start_index\": \"2\", \"sort_fields\": [ { \"field\": \"owner.name\", \"order\": \"asc\" }, { \"field\": \"total_cost\", \"order\": \"desc\" } ], \"search_criteria\": { \"field\": \"type\", \"condition\": \"is not\", \"values\": [ { \"id\": \"301\" } ], \"children\": [ { \"field\": \"other_cost\", \"condition\": \"lte\", \"values\": [ 1000 ], \"logical_operator\": \"AND\" }, { \"field\": \"created_by\", \"condition\": \"=\", \"values\": [ { \"id\": \"5\" } ], \"logical_operator\": \"OR\" } ] }, \"fields_required\": [ \"id\", \"owner\", \"time_spent\", \"template\" ] }}"
+      },
+      "output": {
+        "sample": " {\"response_status\": [{\"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": {\"sort_fields\": [{\"field\": \"owner.name\", \"order\": \"asc\" }, {\"field\": \"total_cost\", \"order\": \"desc\" } ], \"has_more_rows\": false, \"start_index\": 2, \"fields_required\": [\"id\", \"owner\", \"time_spent\", \"template\" ], \"total_count\": 3, \"page\": 1, \"search_criteria\": {\"condition\": \"is not\", \"field\": \"type\", \"children\": [{\"condition\": \"lte\", \"field\": \"other_cost\", \"logical_operator\": \"AND\", \"values\": [\"1000\" ] }, {\"condition\": \"=\", \"field\": \"created_by\", \"logical_operator\": \"OR\", \"values\": [{\"id\":\"5\"} ] } ], \"values\": [{\"id\":\"301\"} ] }, \"get_total_count\": \"true\", \"row_count\": 2 }, \"worklogs\": [{\"owner\": {\"email_id\": null, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\" }, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"template\": {\"name\": \"General Template\", \"id\": \"3\" }, \"id\": \"13\", \"time_spent\": {\"hours\": \"09\", \"minutes\": \"30\", \"value\": \"34200000\" } } ]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": [
+        "/api/v3/problems/{problem_id}/worklogs/_get_time_spent"
+      ],
+      "desc": "This operation helps you obtain the timespent value. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Worklog_timetaken",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"worklog\": { \"start_time\": { \"value\": \"1565850600000\" }, \"end_time\": { \"value\": \"1565865000000\" } }}"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"worklog\": { \"time_spent\": { \"hours\": \"04\", \"minutes\": \"00\" } }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Problem",
+      "path": [
+        "/api/v3/problems/{problem_id}/worklogs/{worklog_id}"
+      ],
+      "desc": "This operation helps you update the worklog for the given worklog_Id. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Update a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"worklog\": { \"owner\": { \"id\": \"5\" }, \"time_spent\": { \"hours\": \"1\", \"minutes\": \"45\" }, \"description\": \"edited \", \"other_cost\": \"333\" }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\": {\"status_code\": 2000, \"status\": \"success\" }, \"worklog\": {\"owner\": {\"email_id\": null, \"cost_per_hour\": 0, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\" }, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"template\": {\"name\": \"General Template\", \"id\": \"3\" }, \"created_time\": {\"display_value\": \"Mar 27, 2024 01:44 PM\", \"value\": \"1711527248517\" }, \"include_nonoperational_hours\": false, \"total_cost\": \"333.00\", \"other_cost\": \"333.00\", \"associated_entity\": \"problem\", \"end_time\": {\"display_value\": \"Nov 1, 2018 03:30 PM\", \"value\": \"1541066400000\" }, \"description\": \"edited\", \"owner_cost\": \"0.00\", \"type\": null, \"created_by\": {\"email_id\": null, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\" }, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"time_spent\": {\"hours\": \"01\", \"minutes\": \"45\", \"value\": \"6300000\" }, \"start_time\": {\"display_value\": \"Nov 1, 2018 01:45 PM\", \"value\": \"1541060100000\" }, \"problem\": {\"id\": \"1\", \"title\": \"New problem\" }, \"id\": \"13\" } }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Problem",
+      "path": [
+        "/api/v3/problems/{problem_id}/worklogs/{worklog_id}"
+      ],
+      "desc": "This operation helps you delete a worklog based on the worklog_id. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Delete a worklog",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": [
+        "/api/v3/problems/{problem_id}/worklogs/_summary"
+      ],
+      "desc": "This operation helps you get worklog summary containing total timespent and total total_charge. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Worklog Summary",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"summary\": {\"total_cost\": \"0.00\", \"time_spent\": {\"hours\": \"322\", \"minutes\": \"41\"} }, \"response_status\": {\"status_code\": 2000, \"status\": \"success\"} }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the worklog",
+      "isReadOnly": "true",
+      "graphView": "",
+      "column": "CHARGESTABLE : CHARGEID",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "template",
+      "type": "Object",
+      "desc": "Contains Name and ID of the template with which the worklog is created.<br/> E.g \"template\": {\"id\": \"3\",\"name\": \"General Template\"}",
+      "graphView": "",
+      "column": "CHARGESTABLE:TEMPLATEID",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "owner",
+      "type": "Object",
+      "desc": "Contains Name and ID of the User to whom the worklog is assigned.<br/> E.g \"owner\": {\"name\": \"Howard Stern\"}",
+      "graphView": "",
+      "column": "CHARGESTABLE:TECHNICIANID",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "start_time",
+      "type": "Object",
+      "desc": "Date and time to start the worklog. JSON Object has the \"value\" in milliseconds and \"display_value\" in the standard date format. <br/> E.g \"start_time\":{\"value\":1428477462973}",
+      "graphView": "",
+      "column": "CHARGESTABLE:TS_STARTTIME",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "end_time",
+      "type": "Object",
+      "desc": "Date and time to end the worklog. JSON Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"end_time\":{\"value\":1428477462973}",
+      "graphView": "",
+      "column": "CHARGESTABLE : TS_ENDTIME",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "include_nonoperational_hours",
+      "type": "Boolean",
+      "desc": "Attribute to decide whether to include non operational hours or not.",
+      "graphView": "",
+      "column": "CHARGESTABLE:INC_NONOPER_HOURS",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "isReadOnly": "true",
+      "desc": "Date and time of creation of Worklog. JSON Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"created_time\":{\"value\":1428477462973}",
+      "graphView": "",
+      "column": "CHARGESTABLE : CREATEDTIME",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+     {
+      "name": "created_by",
+      "type": "Object",
+      "desc": "This attribute holds the user who created the worklog\nThis attribute is applicable only for output and will be ignored in input fields",
+      "graphView": "",
+      "column": "CHARGESTABLE : CREATEDBY",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "other_cost",
+      "type": "Number",
+      "desc": "Extra worklog costs other than the Owner cost.",
+      "graphView": "",
+      "column": "CHARGESTABLE : OTHER_CHARGE",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "total_cost",
+      "type": "Number",
+      "isReadOnly": "true",
+      "desc": "Cost including both owner cost and other cost.",
+      "graphView": "",
+      "column": "CHARGESTABLE : TOTAL_CHARGE",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "owner_cost",
+      "type": "Number",
+      "isReadOnly": "true",
+      "desc": "Cost charged by the owner for the hours of timespent.",
+      "graphView": "",
+      "column": "CHARGESTABLE : TECH_CHARGE",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "HTML Desc",
+      "desc": "Description about the worklog.",
+      "graphView": "",
+      "column": "CHARGESTABLE : DESCRIPTION",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "time_spent",
+      "type": "Number",
+      "desc": "Total time spent on the worklog.",
+      "graphView": "",
+      "column": "CHARGESTABLE : TIMESPENT",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "type",
+      "type": "Object",
+      "desc": "Used to categorize the worklogs of similar cases. Object has \"id\" and/or \"name\" of the worklog type. <br/>E.g \"type\":{\"id\":2}",
+      "column": "CHARGESTABLE : WORKLOGTYPEID",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "udf_fields",
+      "type": "Object",
+      "desc": "User Defined Fields that need to appear in the new worklog form apart from the pre-set fields.",
+      "graphView": "",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "problem",
+      "type": "Object",
+      "isReadOnly": "true",
+      "desc": "Parent Entity to which the worklog is going to be associated.",
+      "column": "PROBLEMTOCHARGE : PROBLEMID",
+      "graphView": "",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "lastModified": 1470049813000,
+  "isReleased": "true"
+}

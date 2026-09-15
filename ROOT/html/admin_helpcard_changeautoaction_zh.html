@@ -1,0 +1,97 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<p>通过自定义触发器，可以使用脚本文件或者自定义Java类文件，执行需要的特定'<strong>动作</strong>'。在'<strong>添加新动作</strong>'的窗口中，指定动作的名称和动作的简要描述。从下拉列表中，选择<strong>执行该动作</strong>的时机。在<strong>匹配条件</strong>中，选定适当的条件和该条件的属性值。选择'<strong>动作类型</strong>'以及要触发的脚本文件。反选&#39;<strong>停止处理后续动作</strong>' 
+将在该动作应用之后，继续执行后续的动作。</p>
+<p><strong>说明</strong>:</p>
+<ul>
+  <li> 请确保动作名称的唯一性，不会与已有的动作发生冲突。</li>
+  <li>新的动作可以在变更被 '<strong>创建</strong>' , <strong>'编辑</strong>' 以及 '<strong>创建或编辑</strong>'时被执行。<br>
+  </li>
+  <li>确保脚本文件/类文件存放于指定的位置。存放目录为： [SDP_Home]/integration/custom_scripts/</li>
+  <li>默认情况下，'<strong>停止处理后续动作</strong>'被选中，因此，在动作执行之后，其后的动作不会被执行。</li>
+  <li>可通过'<strong>编排动作</strong>s'，重新编排要执行动作的顺序。<br>
+  </li>
+</ul>
+<p><strong>示例的场景</strong>:</p>
+<p>
+当一个紧急变更请求被提交后，需要为其配置紧急CAB，以便立即验证并审批该紧急变更。故在这里定义了紧急变更提交时要执行的新动作，通过自定义脚本来实现上述的要求。</p>
+<p>&nbsp;</p>
+<p><strong>技术员明细</strong>:</p>
+<p>如果您选择执行类型为<strong>Java类</strong>，需要在要执行的脚本/类文件出，提供相应的类文件。如： "<strong>com.servicedeskplus.integration.ChangeActionImplementation</strong>"。</p>
+<p>如果选择的执行类型为<strong>脚本</strong>，则需要执行脚本名称和相应的脚本文件的路径。如："<strong>py addApprovers.py</strong>&quot;。</p>
+<p>不管是脚本还是类文件，都支持指定变量。</p>
+<p>如: py addApprovers.py $TITLE $TYPE $TEMPLATE</p>
+<p>对于类：com.servicedeskplus.integration.ChangeActionImplementation $TITLE $TYPE $TEMPLATE</p>
+<p><strong> 支持的其它参数</strong>:</p>
+<p>$COMPLETE_JSON_FILE ---&gt; 完整的请求对象将被保存为一个 JSON 文件，文件路径将作为字符串对象提供。如果执行时机为：<strong>'当变更被编辑时&#39;</strong>, 
+还会将 DIFF_JSON (旧变更数据与新变更数据的差异) 也保存到一个 JSON 文件。</p>
+<p>JSON 文件路径：<em>(SDP_Home\integration\custom_scripts\change\12_1426143538036.json).</em></p>
+<p><strong>触发器应用的输入数据:</strong></p>
+<blockquote>
+  <p>{<br>INPUT_DATA :<br>{
+    <br>	
+	&quot;login_name&quot; : &quot;logged in user's name&quot;,<br> 
+    &quot;entity&quot; : &quot;module name: here change&quot;,<br>
+    &quot;entity_diff_data&quot; : &quot;difference between the old change data and new change data&quot;,<br>
+    &quot;entity_data&quot; : &quot;GET change API response&quot;
+  <br>}<br>
+  }</p>
+</blockquote>
+<p><strong>触发器应用的应答:</strong></p>
+<p>{
+  <br> 'message':"Customized message"   
+  <br>'operations': [<br>
+  
+  &nbsp;&nbsp; {<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'operation_name': 'UPDATE_ROLES',<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'input_data': {<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'change': {<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'roles': [<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'id': ROLE ID,<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'name': 'CHANGE ROLE NAME',<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'users': [<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'email': 'USERMAILID',<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'name': 'USERNAME'<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+{<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'id': USERID,<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 'name': 'USERNAME'<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ]<br>
+  
+  &nbsp;&nbsp; }<br>
+  
+  }</p>
+</body>
+</html>

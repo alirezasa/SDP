@@ -1,0 +1,98 @@
+<!doctype HTML public "-//W3C//DTD HTML 4.0 Frameset//EN">
+
+<html>
+
+<!--(==============================================================)-->
+<!--(Document created with RoboEditor. )============================-->
+<!--(==============================================================)-->
+
+<head>
+
+<title>auto_action</title>
+
+<!--(Meta)==========================================================-->
+
+<meta http-equiv=content-type content="text/html; charset=windows-1252">
+<meta name=date content="04 5, 2007 4:46:35 PM">
+<meta name=generator content="RoboHELP by eHelp Corporation - www.ehelp.com">
+<meta name=generator-major-version content=0.1>
+<meta name=generator-minor-version content=1>
+<meta name=filetype content=kadov>
+<meta name=filetype-version content=1>
+<meta name=page-count content=1>
+<meta name=layout-height content=637>
+<meta name=layout-width content=802>
+
+
+
+</head>
+
+<!--(Body)==========================================================-->
+
+
+<body>
+
+<p>You can define rules to automatically invoke any custom class or script file. The action rules can be applied to a request when it is created, (or received) or edited or both</p>
+<p>&nbsp;</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"><span class=helpheading
+														style="font-weight: bold;">Adding 
+ a New Action Rule</span> </p>
+
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">To add a new Action Rule, click <strong>Add New Action</strong> link on the top right corner of the <strong>Request Custom Action</strong> list page.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Specify a unique <strong>Action Name</strong> to identify the integration.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;"> If you wish to describe the action rule in detail, you can enter the content for the same in the <strong>Description</strong> text box.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Choose one of the two execute options from the <strong>Execute the Action</strong> drop down. </p>
+<ul>
+  <li><span class="Bulletted" style="font-weight: normal;"><span class="Sub-topic-2"><strong><em>When a Request is created</em></strong> - Select this option to apply the rule when a request is created.</span></span><br>
+  </li>
+  <li><span class="Sub-topic-2"><strong><em>When a Request is edited</em></strong> -  Select this option to apply the rule when a request is edited. <br>
+  </span></li>
+  <li><span class="Sub-topic-2"><strong><em>When a Request is created and edited</em></strong> -  Select this option to apply the rule when a request is created and edited. <br>
+  </span></li>
+  <li><span class="Sub-topic-2"><strong><em>When a Request is approved</em></strong> -  Select this option to apply the rule when a request is approved. <br>
+  </span></li>
+  <li><span class="Sub-topic-2"><strong><em>When a Request is rejected</em></strong> -  Select this option to apply the rule when a request is rejected. <br>
+  </span></li>
+  <li><span class="Sub-topic-2"><strong><em>When a Request is approved or rejected</em></strong> -  Select this option to apply the rule when a request is approved or rejected. <br>
+  </span></li>
+  <li><span class="Sub-topic-2"><strong><em>When a new reply received</em></strong> -  Select this option to apply the rule when a new reply received for a request. <br>
+  </span></li>
+</ul>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">You can define the rules and set matching criteria based on the incoming requests (form based requests and e-mails). For the requests that match the criteria, the specified executor will be invoked and the appropriate action will be carried out without any manual intervention.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">From the <strong>Criteria</strong> combo box, select the specific criteria, and then select the matching <strong>Conditions</strong> from the combo box. Click <strong>Choose</strong> button to add the specific values. You can choose to match all the criteria set by selecting 'and' option or match any of them by choosing 'or' option from the drop down. You can click <strong>Add</strong> <strong>another criteria</strong> link to add more rules with the criteria and conditions.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">Now  set the <strong>appropriate actions</strong> that need  to be performed on the requests that match the above criteria that you have  added.</p>
+<p style="margin-top: 0pt; margin-bottom: 0pt;">&nbsp;</p>
+<p>Under <strong>Perform Action</strong>, choose whether you want to execute class, script, or custom function and configure the same using the following pointers:<br></p>
+<ul>
+  <li><strong>Class</strong>: Specify the <strong>Executor</strong> class. For example, <strong>com.servicedeskplus.integration.JiraActionImplementation</strong>.</li>
+  <li><strong>Script</strong>: Specify the name and path of the script file. For example, <strong>cmd / c Index.bat</strong>. The script will run from <strong>[SDP_Home]/integration/custom_scripts</strong>.</li>
+  <li><strong>Custom Function</strong>: By executing custom functions, you can manipulate data in ServiceDesk Plus and other external applications. <strong>requestObj</strong> and <strong>context</strong> are the arguments supported in custom functions. </li>
+</ul>
+<p><strong>Note: </strong>In a script, you can pass all API parameters as arguments, whereas <strong>requestObj</strong> and <strong>context</strong> are the arguments supported in custom functions. </p>
+<p><strong>Examples</strong>&nbsp;</p><p><em>For Script </em>: cmd&nbsp;/ c Index.bat $COMPLETE_V3_JSON_FILE</p><p><em>For Class</em> &nbsp;:&nbsp;com.servicedeskplus.integration.JiraActionImplementation</p><p>
+    <strong>Some of the Other Parameters Supported</strong></p><p>$COMPLETE_V3_JSON_FILE ---&gt; Complete Request Object will be saved to a JSON file and the file path will be passed as String Object. If the Operation is <em><strong>When a Request is edited</strong></em>, then DIFF_JSON (difference between the old request data and new request data) will also be saved to a JSON file.</p><p>JSON File Path &nbsp;: <em>(SDP_Home\integration\custom_scripts\request\12_1426143538036.json).</em></p>
+
+<p><strong>Email and SMS Notification</strong>&nbsp;</p>
+<p>You can notify users about a high priority request via Email or SMS right when it is created. To configure a notification, click <b>Add</b> beside the preferred mode and choose the required template. Add the email recipients and click <b>Save</b>.
+You can also create templates for these notifications from the template drop-down.</p>
+
+<p>By default, the <strong>Stop processing subsequent Actions</strong> check box is enabled and the execution of the action will stop once a   rule is applied on a request. On deselecting this option, execution of   successive action will continue (as per the action rule order) even   after an action rule is applied on a request.</p>
+<p>&nbsp;</p>
+</body>
+  
+
+<p><span class="helpheading">Organizing Custom Triggers</span><br>
+To organize the Actions, click the <strong>Organize Actions</strong> 
+ link and in the pop-up, select the business rule and click <strong>Move up</strong> 
+ or <strong>Move Down</strong> button. It decides the order in which the rule is 
+ applied on the incoming request. </p>
+
+</html>
+
+
+
+

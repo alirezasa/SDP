@@ -1,0 +1,278 @@
+{
+    "operations": [
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get All Workflows",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"sort_fields\":[{\"field\":\"created_time\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"fields_required\":[\"is_default\",\"validated\",\"inactive\",\"name\",\"description\",\"type\"],\"total_count\":1,\"search_criteria\":{\"condition\":\"eq\",\"field\":\"module.name\",\"value\":\"release\"},\"get_total_count\":\"true\",\"row_count\":1},\"workflows\":[{\"inactive\":false,\"validated\":true,\"name\":\"Minimal\",\"description\":null,\"id\":\"3\",\"is_default\":false,\"type\":\"General\"}]}"},
+            "path": "/api/v3/workflows",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"fields_required\":[\"is_default\",\"validated\",\"inactive\",\"name\",\"description\",\"type\"],\"get_total_count\":true,\"search_criteria\":{\"field\":\"module.name\",\"condition\":\"eq\",\"value\":\"release\"},\"sort_fields\":[{\"field\":\"created_time\",\"order\":\"asc\"}]}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to get all release workflow details."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add a Workflow",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"workflow\":{\"created_time\":{\"display_value\":\"Sep 15, 2020 01:50 AM\",\"value\":\"1600114818332\"},\"connectors\":[{\"id\":\"50015\",\"source\":{\"source_port\":\"output_Requested\",\"source_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"18\",\"key\":\"Stage_submission_1_1\"}},\"target\":{\"target_port\":\"input_In Progress\",\"target_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"15\",\"key\":\"Stage_close_2_2\"}}},{\"id\":\"50014\",\"source\":{\"source_port\":\"output_Completed\",\"source_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"15\",\"key\":\"Stage_close_2_2\"}},\"target\":{\"target_port\":\"input\",\"target_statement\":{\"name\":\"End\",\"description\":null,\"id\":\"16\",\"key\":\"end\"}}},{\"id\":\"50013\",\"source\":{\"source_port\":\"output\",\"source_statement\":{\"name\":\"Start\",\"description\":null,\"id\":\"17\",\"key\":\"start\"}},\"target\":{\"target_port\":\"input_Requested\",\"target_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"18\",\"key\":\"Stage_submission_1_1\"}}}],\"module\":{\"name\":\"release\",\"id\":\"1\",\"display_name\":\"Release\",\"category\":{\"id\":\"1\"}},\"description\":null,\"statements\":[{\"stage_internal_name\":\"close\",\"stage_id\":\"9\",\"stage_index\":\"9\",\"description\":\"Release closed after applying the closure code.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Closure\",\"action\":null,\"statuses\":[{\"internal_name\":\"cancelled\",\"name\":\"Cancelled\",\"description\":\"Release process is Cancelled\",\"id\":\"33\",\"override_notification\":false},{\"internal_name\":\"completed\",\"name\":\"Completed\",\"description\":\"Close is completed\",\"id\":\"30\",\"override_notification\":false},{\"internal_name\":\"failed\",\"name\":\"Failed\",\"description\":\"Cannot be closed\",\"id\":\"31\",\"override_notification\":false},{\"internal_name\":\"in_progress\",\"name\":\"In Progress\",\"description\":\"Closure is in progress\",\"id\":\"32\",\"override_notification\":false}],\"id\":\"15\",\"position\":{\"x\":1050,\"y\":140},\"key\":\"Stage_close_2_2\"},{\"is_start_node\":\"false\",\"name\":\"End\",\"description\":null,\"action\":null,\"id\":\"16\",\"position\":{\"x\":1530,\"y\":420},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"end\"},{\"is_start_node\":\"true\",\"name\":\"Start\",\"description\":null,\"action\":null,\"id\":\"17\",\"position\":{\"x\":50,\"y\":20},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"start\"},{\"stage_internal_name\":\"submission\",\"stage_id\":\"1\",\"stage_index\":\"1\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Submission\",\"action\":null,\"statuses\":[{\"internal_name\":\"accepted\",\"name\":\"Accepted\",\"description\":\"Release has been Accepted\",\"id\":\"2\",\"override_notification\":false},{\"internal_name\":\"rejected\",\"name\":\"Rejected\",\"description\":\"Release has been Rejected\",\"id\":\"3\",\"override_notification\":false},{\"internal_name\":\"requested\",\"name\":\"Requested\",\"description\":\"Release has been Requested\",\"id\":\"1\",\"override_notification\":false}],\"id\":\"18\",\"position\":{\"x\":300,\"y\":120},\"key\":\"Stage_submission_1_1\"}],\"type\":\"General\",\"is_default\":false,\"created_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"last_updated_by\":null,\"inactive\":false,\"validated\":true,\"last_updated_time\":null,\"name\":\"Minimal\",\"id\":\"3\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/workflows",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"workflow\":{\"name\":\"Minimal\",\"description\":\"\",\"module\":{\"name\":\"release\"},\"inactive\":false,\"type\":\"General\",\"statements\":[{\"name\":\"Closure\",\"type\":{\"name\":\"Stage\"},\"key\":\"Stage_close_2_2\",\"description\":\"Release closed after applying the closure code.\",\"position\":{\"x\":1050,\"y\":140},\"stage_id\":\"9\",\"statuses\":[{\"internal_name\":\"cancelled\",\"id\":\"33\"},{\"internal_name\":\"completed\",\"id\":\"30\"},{\"internal_name\":\"failed\",\"id\":\"31\"},{\"internal_name\":\"in_progress\",\"id\":\"32\"}]},{\"name\":\"End\",\"type\":{\"name\":\"StartEndNode\"},\"key\":\"end\",\"description\":null,\"position\":{\"x\":1530,\"y\":420},\"is_start_node\":false},{\"name\":\"Start\",\"type\":{\"name\":\"StartEndNode\"},\"key\":\"start\",\"description\":null,\"position\":{\"x\":50,\"y\":20},\"is_start_node\":true},{\"name\":\"Submission\",\"type\":{\"name\":\"Stage\"},\"key\":\"Stage_submission_1_1\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"position\":{\"x\":300,\"y\":120},\"stage_id\":\"1\",\"statuses\":[{\"internal_name\":\"accepted\",\"id\":\"2\"},{\"internal_name\":\"rejected\",\"id\":\"3\"},{\"internal_name\":\"requested\",\"id\":\"1\"}]}],\"connectors\":[{\"source\":{\"source_statement\":{\"key\":\"start\"},\"source_port\":\"output\"},\"target\":{\"target_statement\":{\"key\":\"Stage_submission_1_1\"},\"target_port\":\"input_Requested\"},\"vertices\":[]},{\"source\":{\"source_statement\":{\"key\":\"Stage_close_2_2\"},\"source_port\":\"output_Completed\"},\"target\":{\"target_statement\":{\"key\":\"end\"},\"target_port\":\"input\"},\"vertices\":[]},{\"source\":{\"source_statement\":{\"key\":\"Stage_submission_1_1\"},\"source_port\":\"output_Requested\"},\"target\":{\"target_statement\":{\"key\":\"Stage_close_2_2\"},\"target_port\":\"input_In Progress\"},\"vertices\":[]}]}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to add a release workflow."
+        },
+        {
+            "output": {"sample": "{\"workflow\":{\"created_time\":{\"display_value\":\"Sep 15, 2020 01:50 AM\",\"value\":\"1600114818332\"},\"connectors\":[{\"id\":\"50015\",\"source\":{\"source_port\":\"output_Requested\",\"source_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"18\",\"key\":\"Stage_submission_1_1\"}},\"target\":{\"target_port\":\"input_In Progress\",\"target_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"15\",\"key\":\"Stage_close_2_2\"}}},{\"id\":\"50014\",\"source\":{\"source_port\":\"output_Completed\",\"source_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"15\",\"key\":\"Stage_close_2_2\"}},\"target\":{\"target_port\":\"input\",\"target_statement\":{\"name\":\"End\",\"description\":null,\"id\":\"16\",\"key\":\"end\"}}},{\"id\":\"50013\",\"source\":{\"source_port\":\"output\",\"source_statement\":{\"name\":\"Start\",\"description\":null,\"id\":\"17\",\"key\":\"start\"}},\"target\":{\"target_port\":\"input_Requested\",\"target_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"18\",\"key\":\"Stage_submission_1_1\"}}}],\"module\":{\"name\":\"release\",\"id\":\"1\",\"display_name\":\"Release\",\"category\":{\"id\":\"1\"}},\"description\":null,\"statements\":[{\"stage_internal_name\":\"close\",\"stage_id\":\"9\",\"stage_index\":\"9\",\"description\":\"Release closed after applying the closure code.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Closure\",\"action\":null,\"statuses\":[{\"internal_name\":\"cancelled\",\"name\":\"Cancelled\",\"description\":\"Release process is Cancelled\",\"id\":\"33\",\"override_notification\":false},{\"internal_name\":\"completed\",\"name\":\"Completed\",\"description\":\"Close is completed\",\"id\":\"30\",\"override_notification\":false},{\"internal_name\":\"failed\",\"name\":\"Failed\",\"description\":\"Cannot be closed\",\"id\":\"31\",\"override_notification\":false},{\"internal_name\":\"in_progress\",\"name\":\"In Progress\",\"description\":\"Closure is in progress\",\"id\":\"32\",\"override_notification\":false}],\"id\":\"15\",\"position\":{\"x\":1050,\"y\":140},\"key\":\"Stage_close_2_2\"},{\"is_start_node\":\"false\",\"name\":\"End\",\"description\":null,\"action\":null,\"id\":\"16\",\"position\":{\"x\":1530,\"y\":420},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"end\"},{\"is_start_node\":\"true\",\"name\":\"Start\",\"description\":null,\"action\":null,\"id\":\"17\",\"position\":{\"x\":50,\"y\":20},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"start\"},{\"stage_internal_name\":\"submission\",\"stage_id\":\"1\",\"stage_index\":\"1\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Submission\",\"action\":null,\"statuses\":[{\"internal_name\":\"accepted\",\"name\":\"Accepted\",\"description\":\"Release has been Accepted\",\"id\":\"2\",\"override_notification\":false},{\"internal_name\":\"rejected\",\"name\":\"Rejected\",\"description\":\"Release has been Rejected\",\"id\":\"3\",\"override_notification\":false},{\"internal_name\":\"requested\",\"name\":\"Requested\",\"description\":\"Release has been Requested\",\"id\":\"1\",\"override_notification\":false}],\"id\":\"18\",\"position\":{\"x\":300,\"y\":120},\"key\":\"Stage_submission_1_1\"}],\"type\":\"General\",\"is_default\":false,\"created_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"last_updated_by\":null,\"inactive\":false,\"validated\":true,\"last_updated_time\":null,\"name\":\"Minimal\",\"id\":\"3\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/workflows/{wf_id}",
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Workflow details",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch a particular release workflow detail."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Edit a workflow",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"workflow\":{\"created_time\":{\"display_value\":\"Sep 15, 2020 01:50 AM\",\"value\":\"1600114818332\"},\"connectors\":[{\"id\":\"50015\",\"source\":{\"source_port\":\"output_Requested\",\"source_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"18\",\"key\":\"Stage_submission_1_1\"}},\"target\":{\"target_port\":\"input_In Progress\",\"target_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"15\",\"key\":\"Stage_close_2_2\"}}},{\"id\":\"50014\",\"source\":{\"source_port\":\"output_Completed\",\"source_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"15\",\"key\":\"Stage_close_2_2\"}},\"target\":{\"target_port\":\"input\",\"target_statement\":{\"name\":\"End\",\"description\":null,\"id\":\"16\",\"key\":\"end\"}}},{\"id\":\"50013\",\"source\":{\"source_port\":\"output\",\"source_statement\":{\"name\":\"Start\",\"description\":null,\"id\":\"17\",\"key\":\"start\"}},\"target\":{\"target_port\":\"input_Requested\",\"target_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"18\",\"key\":\"Stage_submission_1_1\"}}}],\"module\":{\"name\":\"release\",\"id\":\"1\",\"display_name\":\"Release\",\"category\":{\"id\":\"1\"}},\"description\":\"Updated description\",\"statements\":[{\"stage_internal_name\":\"close\",\"stage_id\":\"9\",\"stage_index\":\"9\",\"description\":\"Release closed after applying the closure code.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Closure\",\"action\":null,\"statuses\":[{\"internal_name\":\"cancelled\",\"name\":\"Cancelled\",\"description\":\"Release process is Cancelled\",\"id\":\"33\",\"override_notification\":false},{\"internal_name\":\"completed\",\"name\":\"Completed\",\"description\":\"Close is completed\",\"id\":\"30\",\"override_notification\":false},{\"internal_name\":\"failed\",\"name\":\"Failed\",\"description\":\"Cannot be closed\",\"id\":\"31\",\"override_notification\":false},{\"internal_name\":\"in_progress\",\"name\":\"In Progress\",\"description\":\"Closure is in progress\",\"id\":\"32\",\"override_notification\":false}],\"id\":\"15\",\"position\":{\"x\":1050,\"y\":140},\"key\":\"Stage_close_2_2\"},{\"is_start_node\":\"false\",\"name\":\"End\",\"description\":null,\"action\":null,\"id\":\"16\",\"position\":{\"x\":1530,\"y\":420},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"end\"},{\"is_start_node\":\"true\",\"name\":\"Start\",\"description\":null,\"action\":null,\"id\":\"17\",\"position\":{\"x\":50,\"y\":20},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"start\"},{\"stage_internal_name\":\"submission\",\"stage_id\":\"1\",\"stage_index\":\"1\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Submission\",\"action\":null,\"statuses\":[{\"internal_name\":\"accepted\",\"name\":\"Accepted\",\"description\":\"Release has been Accepted\",\"id\":\"2\",\"override_notification\":false},{\"internal_name\":\"rejected\",\"name\":\"Rejected\",\"description\":\"Release has been Rejected\",\"id\":\"3\",\"override_notification\":false},{\"internal_name\":\"requested\",\"name\":\"Requested\",\"description\":\"Release has been Requested\",\"id\":\"1\",\"override_notification\":false}],\"id\":\"18\",\"position\":{\"x\":300,\"y\":120},\"key\":\"Stage_submission_1_1\"}],\"type\":\"General\",\"is_default\":false,\"created_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"last_updated_by\":null,\"inactive\":false,\"validated\":true,\"last_updated_time\":null,\"name\":\"Minimal\",\"id\":\"3\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/workflows/{wf_id}",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"workflow\":{\"description\":\"Updated description\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to edit a release workflow."
+        },
+        {
+            "path": "/api/v3/workflows/{wf_id}",
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete a workflow",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete a release workflow."
+        },
+        {
+            "output": {"sample": "{\"workflow\":{\"created_time\":{\"display_value\":\"Jan 8, 2021 02:11 PM\",\"value\":\"1610095307372\"},\"connectors\":[{\"workflow\":{\"id\":\"301\"},\"id\":\"50301\",\"source\":{\"source_port\":\"output_Completed\",\"source_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"27\",\"key\":\"Stage_close_2_2\"}},\"target\":{\"target_port\":\"input\",\"target_statement\":{\"name\":\"End\",\"description\":null,\"id\":\"25\",\"key\":\"end\"}}},{\"workflow\":{\"id\":\"301\"},\"id\":\"50302\",\"source\":{\"source_port\":\"output_Accepted\",\"source_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"26\",\"key\":\"Stage_submission_1_1\"}},\"target\":{\"target_port\":\"input_Rejected\",\"target_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"26\",\"key\":\"Stage_submission_1_1\"}}},{\"workflow\":{\"id\":\"301\"},\"id\":\"50303\",\"source\":{\"source_port\":\"output\",\"source_statement\":{\"name\":\"Start\",\"description\":null,\"id\":\"24\",\"key\":\"start\"}},\"target\":{\"target_port\":\"input_Requested\",\"target_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"26\",\"key\":\"Stage_submission_1_1\"}}},{\"workflow\":{\"id\":\"301\"},\"id\":\"50304\",\"source\":{\"source_port\":\"output_Requested for Information\",\"source_statement\":{\"name\":\"Submission\",\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"id\":\"26\",\"key\":\"Stage_submission_1_1\"}},\"target\":{\"target_port\":\"input_In Progress\",\"target_statement\":{\"name\":\"Closure\",\"description\":\"Release closed after applying the closure code.\",\"id\":\"27\",\"key\":\"Stage_close_2_2\"}}}],\"module\":{\"api_plural_name\":null,\"name\":\"release\",\"display_name_plural\":\"admin.module.releases\",\"id\":\"2\",\"display_name\":\"common.release\",\"icon_name\":null},\"description\":\"stage loop and override notification\",\"statements\":[{\"workflow\":{\"id\":\"301\"},\"is_start_node\":\"true\",\"module\":{\"created_time\":null,\"last_updated_by\":null,\"api_plural_name\":null,\"last_updated_time\":null,\"name\":\"release\",\"display_name_plural\":\"admin.module.releases\",\"description\":null,\"id\":\"2\",\"display_name\":\"common.release\",\"category\":null,\"icon_name\":null,\"created_by\":null},\"name\":\"Start\",\"description\":null,\"action\":null,\"id\":\"24\",\"position\":{\"x\":50,\"y\":20},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"start\"},{\"workflow\":{\"id\":\"301\"},\"is_start_node\":\"false\",\"module\":{\"created_time\":null,\"last_updated_by\":null,\"api_plural_name\":null,\"last_updated_time\":null,\"name\":\"release\",\"display_name_plural\":\"admin.module.releases\",\"description\":null,\"id\":\"2\",\"display_name\":\"common.release\",\"category\":null,\"icon_name\":null,\"created_by\":null},\"name\":\"End\",\"description\":null,\"action\":null,\"id\":\"25\",\"position\":{\"x\":600,\"y\":600},\"type\":{\"name\":\"StartEndNode\",\"id\":\"6\"},\"key\":\"end\"},{\"stage_internal_name\":\"submission\",\"workflow\":{\"id\":\"301\"},\"stage_id\":\"1\",\"stage_index\":\"1\",\"module\":{\"created_time\":null,\"last_updated_by\":null,\"api_plural_name\":null,\"last_updated_time\":null,\"name\":\"release\",\"display_name_plural\":\"admin.module.releases\",\"description\":null,\"id\":\"2\",\"display_name\":\"common.release\",\"category\":null,\"icon_name\":null,\"created_by\":null},\"description\":\"Release of a service is assigned priority, risk, and business requirements.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Submission\",\"action\":null,\"statuses\":[{\"internal_name\":\"accepted\",\"name\":\"Accepted\",\"description\":\"Release has been Accepted\",\"id\":\"2\",\"override_notification\":false},{\"internal_name\":\"rejected\",\"notification_content_id\":\"301\",\"subject\":\"Release with ID: ##${display_id.display_value}## rejected in the ${stage.name} stage.\",\"name\":\"Rejected\",\"description\":\"Release has been Rejected\",\"id\":\"3\",\"override_notification\":true,\"content\":\"<div>Release with ID: ${display_id.display_value} is rejected.<br><\/div><div><br><\/div><div><b>User Comments:<\/b> ${status_comments} <br><\/div><div><br><\/div><div><i><b>Release Overview<\/b><\/i><br><\/div><div>--------------------------------------<br><\/div><div><br><\/div><div><b>Title:<\/b> ${title} <br><\/div><div><b>Requested by:<\/b> ${release_requester} <br><\/div><div><b>Current Phase:<\/b> ${stage.name} Stage with status as ${status.name} <br><\/div><div><b>Category:<\/b> ${category.name} <br><\/div><div><b>Sub-Category:<\/b> ${subcategory.name} <br><\/div><div><b>Item:<\/b> ${item.name} <br><\/div><div><b>Scheduled Start:<\/b> ${scheduled_start_time} <br><\/div><div><b>Scheduled End:<\/b> ${scheduled_end_time} <br><\/div><div><b>Description:<\/b> ${description} <br><\/div><div><br><\/div><div><b>Roles and Ownership:<\/b><br><\/div><div>${release_roles}<br><\/div><div><br><\/div><div>For more details:<br><\/div><div>${release_link}<br><\/div>\",\"notify_to\":{\"xpaths\":[{\"xpath\":\"release.release_manager\",\"display_name\":\"Release Manager\"}],\"users\":[{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}]}},{\"internal_name\":\"requested\",\"name\":\"Requested\",\"description\":\"Release has been Requested\",\"id\":\"1\",\"override_notification\":false},{\"internal_name\":\"requested_for_info\",\"name\":\"Requested for Information\",\"description\":\"Release has been resent to Requester for more information\",\"id\":\"4\",\"override_notification\":false}],\"id\":\"26\",\"position\":{\"x\":300,\"y\":120},\"key\":\"Stage_submission_1_1\"},{\"stage_internal_name\":\"close\",\"workflow\":{\"id\":\"301\"},\"stage_id\":\"9\",\"stage_index\":\"9\",\"module\":{\"created_time\":null,\"last_updated_by\":null,\"api_plural_name\":null,\"last_updated_time\":null,\"name\":\"release\",\"display_name_plural\":\"admin.module.releases\",\"description\":null,\"id\":\"2\",\"display_name\":\"common.release\",\"category\":null,\"icon_name\":null,\"created_by\":null},\"description\":\"Release closed after applying the closure code.\",\"type\":{\"name\":\"Stage\",\"id\":\"1\"},\"name\":\"Closure\",\"action\":null,\"statuses\":[{\"internal_name\":\"cancelled\",\"name\":\"Cancelled\",\"description\":\"Release process is Cancelled\",\"id\":\"33\",\"override_notification\":false},{\"internal_name\":\"completed\",\"name\":\"Completed\",\"description\":\"Close is completed\",\"id\":\"30\",\"override_notification\":false},{\"internal_name\":\"failed\",\"name\":\"Failed\",\"description\":\"Cannot be closed\",\"id\":\"31\",\"override_notification\":false},{\"internal_name\":\"in_progress\",\"name\":\"In Progress\",\"description\":\"Closure is in progress\",\"id\":\"32\",\"override_notification\":false}],\"id\":\"27\",\"position\":{\"x\":950,\"y\":130},\"key\":\"Stage_close_2_2\"}],\"type\":\"General\",\"is_default\":false,\"created_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"last_updated_by\":null,\"inactive\":false,\"validated\":true,\"last_updated_time\":null,\"name\":\"Duplicate Workflow\",\"id\":\"301\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/workflows/{wf_id}/_duplicate"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"copy_workflow\":{\"name\":\"Duplicate Workflow\"}}"
+            },
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Duplicate Workflow",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to copy a release workflow."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "WORKFLOW:WORKFLOWID",
+            "inOD": "true",
+            "type": "long",
+            "isReleased": "true",
+            "desc": "Unique identifier of the workflow",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "WORKFLOW:WORKFLOWNAME",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Name of the workflow",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "type",
+            "column": "WORKFLOW:TYPE",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Type of the workflow. Allowed Values - General , Emergency",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "WORKFLOW:DESCRIPTION",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Description of the workflow",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "is_default",
+            "column": "WORKFLOW:ISDEFAULT",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Denotes if the workflow is the default workflow.",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "created_time",
+            "column": "WORKFLOW:CREATEDTIME",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Denotes the created time of the workflow. This attribute is applicable only for output and will be ignored in input fields eg:_ { \"value\":\"1427119462376\", \"display_value\":\"Nov 24, 2014 11:58 AM\" }",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "created_by",
+            "column": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "This attribute holds the user who created the workflow. This attribute is applicable only for output and will be ignored in input fields",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "inactive",
+            "column": "",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Denotes if the workflow is active/inactive",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "module",
+            "column": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Module to which the workflow belongs to",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "validated",
+            "column": "",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "last_updated_time",
+            "column": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "last_updated_by",
+            "column": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": "",
+            "relEntity": {
+                "name": "User",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "statements",
+            "column": "",
+            "inOD": "true",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "connectors",
+            "column": "",
+            "inOD": "true",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1610095415000
+}

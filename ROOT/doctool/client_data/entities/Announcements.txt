@@ -1,0 +1,242 @@
+{
+    "operations": [
+        {
+            "name": "",
+            "method": "POST",
+            "moduleName" : "Common",
+            "path": "/api/v3/announcements",
+            "desc": "This operation allowes you to create a new announcement",
+            "disp_desc": "Add Announcement",
+            "workflow": "",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"announcement\":{\"title\":\"Sample Announcement Title\",\"is_public\":true,\"from_date\":{\"value\":\"1662369609685\"},\"to_date\":{\"value\":0},\"user_groups\":[],\"content\":\"Sample Announcement description for api documenta​tion.\",\"priority\":{\"id\":\"4\",\"name\":\"High\"},\"service_category\":[{\"id\":\"1\",\"name\":\"Application Login\"}],\"announcement_type\":{\"id\":\"2\",\"name\":\"New Policy\"}}}",
+                "showattr": "true"
+            },
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"announcement\":{\"has_user_group\":false,\"from_date\":{\"display_value\":\"Sep 5, 2022 02:50 PM\",\"value\":\"1662369609685\"},\"service_category\":[{\"name\":\"Application Login\",\"id\":\"1\",\"ciid\":\"1\"}],\"dc_announcement_id\":null,\"title\":\"Sample Announcement Title\",\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"created_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content\":\"Sample Announcement description for api documentation.\",\"to_date\":null,\"is_public\":true,\"id\":\"1\",\"created_date\":{\"display_value\":\"Sep 5, 2022\",\"value\":\"1662369708489\"},\"announcement_type\":{\"name\":\"New Policy\",\"description\":\"New Policy issued\",\"id\":\"2\"},\"user_groups\":[]}}"
+            },
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "GET",
+            "moduleName" : "Common",
+            "path": "/api/v3/announcements/{announcement_id}",
+            "desc": "This operation helps you view an existing announcement using the unique ID.",
+            "disp_desc": "View Announcement",
+            "workflow": "",
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"announcement\":{\"has_user_group\":false,\"from_date\":{\"display_value\":\"Sep 5, 2022 02:50 PM\",\"value\":\"1662369609685\"},\"service_category\":[{\"name\":\"Application Login\",\"id\":\"1\",\"ciid\":\"1\"}],\"dc_announcement_id\":null,\"title\":\"Sample Announcement Title\",\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"created_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content\":\"Sample Announcement description for api documentation.\",\"to_date\":null,\"is_public\":true,\"id\":\"1\",\"created_date\":{\"display_value\":\"Sep 5, 2022\",\"value\":\"1662369708489\"},\"announcement_type\":{\"name\":\"New Policy\",\"description\":\"New Policy issued\",\"id\":\"2\"},\"user_groups\":[]}}"
+            },
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "GET",
+            "moduleName" : "Common",
+            "path": "/api/v3/announcements",
+            "desc": "This operation helps you view all the existing announcements as a list.",
+            "disp_desc": "View All Announcements",
+            "workflow": "",
+            "input": {
+                "name":"INPUT_DATA",
+                "sample":"{\"list_info\":{\"row_count\":\"10\",\"get_total_count\":\"true\",\"sort_field\":\"id\",\"sort_order\":\"asc\",\"search_criteria\":{\"field\":\"priority.name\",\"condition\":\"is\",\"value\":\"High\"}}}"
+            },
+            "output": {
+                "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"sort_field\":\"id\",\"start_index\":1,\"total_count\":2,\"sort_order\":\"asc\",\"search_criteria\":{\"condition\":\"is\",\"field\":\"priority.name\",\"value\":\"High\"},\"get_total_count\":\"true\",\"row_count\":2},\"announcements\":[{\"has_user_group\":false,\"from_date\":{\"display_value\":\"Sep 5, 2022 02:50 PM\",\"value\":\"1662369609685\"},\"to_date\":null,\"is_public\":true,\"id\":\"601\",\"created_date\":{\"display_value\":\"Sep 12, 2022\",\"value\":\"1662976216222\"},\"announcement_type\":{\"name\":\"New Policy\",\"description\":\"New Policy issued\",\"id\":\"2\"},\"dc_announcement_id\":null,\"title\":\"Sample Announcement Title\",\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"created_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content\":\"Sample Announcement description for api documentation.\"},{\"has_user_group\":false,\"from_date\":{\"display_value\":\"Sep 5, 2022 02:50 PM\",\"value\":\"1662369609685\"},\"to_date\":null,\"is_public\":true,\"id\":\"602\",\"created_date\":{\"display_value\":\"Sep 12, 2022\",\"value\":\"1662976232882\"},\"announcement_type\":{\"name\":\"New Policy\",\"description\":\"New Policy issued\",\"id\":\"2\"},\"dc_announcement_id\":null,\"title\":\"Sample Announcement Title\",\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"created_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content\":\"Sample Announcement description for api documentation.\"}]}"
+            },
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "PUT",
+            "moduleName" : "Common",
+            "path": [
+                "/api/v3/announcements/{announcement_id}",
+                "/api/v3/announcements?ids={announcement_ids}"
+            ],
+            "desc": "This operation helps you edit the existing announcements by using the unique ID.",
+            "disp_desc": "Edit Announcement",
+            "workflow": "",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"announcement\":{\"title\":\"Edited Sample Announcement Title\",\"content\":\"Edited Sample Announcement description for api documenta​tion.\",\"priority\":{\"id\":\"2\",\"name\":\"Normal\"}}}",
+                "showattr": "true"
+            },
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"announcement\":{\"has_user_group\":false,\"from_date\":{\"display_value\":\"Sep 5, 2022 02:50 PM\",\"value\":\"1662369609685\"},\"service_category\":[{\"name\":\"Application Login\",\"id\":\"1\",\"ciid\":\"1\"}],\"dc_announcement_id\":null,\"title\":\"Edited Sample Announcement Title\",\"priority\":{\"color\":\"#006600\",\"name\":\"Normal\",\"id\":\"2\"},\"created_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content\":\"Edited Sample Announcement description for api documentation.\",\"to_date\":null,\"is_public\":true,\"id\":\"601\",\"created_date\":{\"display_value\":\"Sep 12, 2022\",\"value\":\"1662976216222\"},\"announcement_type\":{\"name\":\"New Policy\",\"description\":\"New Policy issued\",\"id\":\"2\"},\"user_groups\":[]}}"
+            },
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "DELETE",
+            "moduleName" : "Common",
+            "path": [
+                "/api/v3/announcements/{announcement_id}",
+                "/api/v3/announcements?ids={announcement_ids}"
+            ],
+            "desc": "This operation helps you delete an existing announcements by using the unique ID.",
+            "disp_desc": "Delete Announcement",
+            "workflow": "",
+            "output": {
+                "sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"}}"
+            },
+            "inOP": "true",
+            "isReleased": "true"
+        }
+    ],
+    "attributes": [
+        {
+            "name": "id",
+            "type": "long",
+            "desc": "Id of this Announcement",
+            "graphView": "",
+            "column": "ANNOUNCEMENT:ANNOUNCEID",
+            "isReadOnly": "true",
+            "isDefault": "true",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "title",
+            "type": "String",
+            "desc": " Title of this Announcement",
+            "graphView": "",
+            "column": "ANNOUNCEMENT:TITLE",
+            "isDefault": "true",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "content",
+            "type": "HTML Desc",
+            "desc": "Text(content) to be entered as content",
+            "graphView": "",
+            "column": "ANNOUNCEMENT:MESSAGE",
+            "isMandatory": "true",
+            "inOP": "true",
+            "isReleased": "true"
+
+        },
+        {
+            "name": "created_by",
+            "type": "Object",
+            "desc": "Created user details for an announcement",
+            "graphView": "",
+            "column": "ANNOUNCEMENT : USERID",
+            "html_type": "",
+            "isReadOnly": "true",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "created_date",
+            "type": "Date Object",
+            "desc": "Created date of Announcement",
+            "graphView": "",
+            "column": "ANNOUNCEMENT : CREATEDDATE",
+            "html_type": "",
+            "isReadOnly": "true",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "from_date",
+            "type": "Date Object",
+            "desc": "Announcement from date",
+            "graphView": "",
+            "column": "ANNOUNCEMENT : DATE_FROM",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "to_date",
+            "type": "Date Object",
+            "desc": "Announcement to date",
+            "graphView": "",
+            "column": "ANNOUNCEMENT : DATE_TO",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "is_public",
+            "type": "boolean",
+            "desc": "Public / Private Announcement",
+            "graphView": "",
+            "column  ": "ANNOUNCEMENT : ISPUBLIC",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "has_user_group",
+            "type": "boolean",
+            "desc": "Boolean for whether the announcement has user groups",
+            "graphView": "",
+            "column  ": "ANNOUNCEMENT : HAS_USER_GROUP",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "user_groups",
+            "type": "Object",
+            "desc": "User Groups for an announcement (if any)",
+            "graphView": "",
+            "column  ": "AnnouncementUGMapping.USERGROUPID",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+           
+        },
+        {
+            "name": "priority", 
+            "type": "Object",
+            "desc": "Priority of an announcement",
+            "graphView": "",
+            "column  ": "ANNOUNCEMENT : PRIORITYID",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "announcement_type",
+            "type": "Object",
+            "desc": "Type of announcement",
+            "graphView": "",
+            "column  ": "ANNOUNCEMENT : ANNOUNCEMENTTYPEID",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+            
+        },
+        {
+            "name": "service_category",
+            "type": "Object",
+            "desc": "Service categories affected by the announcement",
+            "graphView": "",
+            "column  ": "AnnouncementServiceMapping.SERVICEID",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "email_ids",
+            "type": "Array",
+            "desc": "Email ids to notify about the announcements.",
+            "graphView": "",
+            "html_type": "",
+            "inOP": "true",
+            "isReleased": "true"
+        }
+    ],
+    "Additional Elements": []
+}

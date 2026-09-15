@@ -1,0 +1,585 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" method="get" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_entity" dynamic-throttle="true" >
+            	<throttle lock-period="5m" threshold="80" duration="1m"/>
+        	</throttles>
+        <!-- id have null value in approval pages, will be removed later-->
+        <url path="/ESM.do" operation-param="type" operation-value="currency" user_type="all" roles="SDOrgAdmin"/>
+	    <url roles="ViewPurchaseOrder" path="/api/v3/purchaseorders/null">
+	     	<param name="INPUT_DATA" template="list_info" type="JSONObject" max-len="-1"/>
+		 	<param name="date" regex="null|[0-9]+"/>
+		</url>
+		<url roles="ViewPurchaseOrder" path="/api/v3/purchaseorders/[0-9]+">
+	     	<param name="INPUT_DATA" template="list_info" type="JSONObject" max-len="-1"/>
+		 	<param name="date" regex="null|[0-9]+"/>
+		</url>
+		<url roles="ModifyPurchaseOrder,ViewRequests" path="(/STATE_ID/[0-9]+)?/POAssociatedWOListView.cc"  >
+			<param name="UNIQUE_ID" regex="POAssociatedWOListView"/>
+		</url>
+		<url roles="ModifyPurchaseOrder,ViewRequests" path="(/STATE_ID/[0-9]+)?/POAssociatedWOListView_HD_[0-9]+.cc" >
+			<param name="UNIQUE_ID" regex="POAssociatedWOListView_HD_[0-9]+"/>
+		</url>
+		<url roles="ViewPurchaseOrder,ModifyRequests" path="(/STATE_ID/[0-9]+)?/WOAssociatedPOListView.cc"  >
+			<param name="UNIQUE_ID" regex="WOAssociatedPOListView"/>
+		</url>
+		<url roles="ViewPurchaseOrder,ModifyRequests" path="(/STATE_ID/[0-9]+)?/WOAssociatedPOListView_HD_[0-9]+.cc"  >
+			<param name="UNIQUE_ID" regex="WOAssociatedPOListView_HD_[0-9]+"/>
+		</url>
+		<url roles="ViewPurchaseOrder,ViewPR" path="/PurchaseOrderList.do">
+			<param name="requestId" regex="null|[0-9]+"/>
+			<param name="poID" regex="null|[0-9]+"/>
+			<param name="operation" regex="newPO|newPR|viewPO|viewPR"/>
+			<param name="module" regex="newPO|view"/>
+			<param name="status" type="String" max-len="30"/>
+			<param name="gsearch" type="String" max-len="5000" secret="true"/>
+		</url>
+		<url roles="ViewPurchaseOrder,ViewPR" path="/purchase/PurchaseOrderList.jsp">
+			<param name="requestId" regex="null|[0-9]+"/>
+			<param name="poID" regex="null|[0-9]+"/>
+			<param name="operation" regex="newPO|newPR|viewPO|viewPR"/>
+			<param name="module" regex="newPO|view"/>
+		</url>	
+		<url roles="AddingNewVendorService" path="/PurchaseOrder.do" operation-param="module" operation-value="add_new_service_page"> 
+	       		<param name="vendorId" type="long" range=">0" min-occurrences="1"/>
+	       		<param name="index" type="long" range=">0" min-occurrences="1"/>
+	    	</url>
+	    	<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/Notify.do" operation-param="notifyModule" operation-value="PurchaseOrder">
+		   	<param name="mode" regex="E-Mail"/>
+			<param name="id" type="long" range=">0" min-occurrences="1"/>
+			<param name="notifyTo" regex="Ordered|Owner|Vendor"/>
+	    </url>
+		<url roles="CreatePurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="newPO">
+			<param name="sectionLoad" type="boolean"/>
+		</url>
+		<url roles="ViewPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="view">
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="sectionLoad" type="boolean"/>
+			<param name="operation" regex="add|update"/>
+		</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="ReceiveItems" >
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="time" type="String" max-len="100"/>
+		</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="pomandatory" >
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="date" type="String" max-len="250"/>
+		</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="show_add_new_product_page">
+		    	<param name="vendorId" type="long" range=">0" min-occurrences="1"/>
+			<param name="componentTypeId" type="long" range=">0" min-occurrences="1"/>
+			<param name="componentType" type="String" max-len="250"/>
+			<param name="index" type="long" range=">0"/>
+		</url>
+		<url path="/PurchaseOrder.do" operation-param="module" operation-value="print_preview" user_type="all" description="Url accessed by requester also in non login.">
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<url roles="ModifyPurchaseOrder" path="/WOToPOList.do" operation-param="operation" operation-value="associate_requests" >
+			<param name="purchaseOrderID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<url roles="ModifyRequests" path="/POToWOList.do" operation-param="operation" operation-value="associate_po" >
+			<param name="workOrderID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<url roles="CreatePR,ModifyPR,CreatePurchaseOrder,ModifyPurchaseOrder,CancelPurchaseOrder" path="/PurchaseApproval.do" operation-param="module" operation-value="get">
+        		<param name="poID" type="long" range=">0"/>
+            		<param name="requestId" type="long" range=">0"/>
+			<param name="date" regex="null|[0-9]+"/>
+			<param name="approvalLevel" type="long" range="0-10"/>
+			<param name="time" type="String" max-len="100"/>
+			<param name="approvalId" type="String" max-len="100"/>
+			<param name="changeStatusTo" regex="Pending Approval|Canceled|Closed|Payment Done|Invoice Received|CancelPO"/>
+        	</url>
+		<url roles="ViewPR,ViewPurchaseOrder" path="/PurchaseApproval.do" operation-param="module" operation-value="approved">
+            		<param name="poID" type="long" range=">0"/>
+            		<param name="requestId" type="long" range=">0"/>
+			<param name="date" regex="null|[0-9]+"/>
+			<param name="approvalLevel" type="long" range="0-10"/>
+			<param name="time" type="String" max-len="100"/>
+			<param name="approvalId" type="String" max-len="100"/>
+			<param name="changeStatusTo" regex="Pending Approval|Approved|Rejected"/>
+        	</url>
+
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/purchase/InvoiceDetails.jsp" operation-param="module" operation-value="add_invoice_details">
+		    	<param name="invoiceDetailsID" type="long" range=">0"/>
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="time" type="String" max-len="100"/>
+			<param name="pageTiltle" type="String" max-len="100"/>
+	    	</url>
+		<url roles="ModifyPurchaseOrder" path="/purchase/InvoiceDetails.jsp" operation-param="module" operation-value="update_invoice_details">
+		    	<param name="invoiceDetailsID" type="long" range=">0" min-occurrences="1"/>
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="time" type="String" max-len="100"/>
+			<param name="pageTiltle" type="String" max-len="100"/>
+	    	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/purchase/POPaymentDetails.jsp" operation-param="module" operation-value="add_payment_details">
+		   	<param name="paymentID" type="long" range=">0"/>
+			<param name="mode" type="String" max-len="100"/>
+			<param name="time" type="String" max-len="100"/>
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<url roles="ModifyPurchaseOrder" path="/purchase/POPaymentDetails.jsp" operation-param="module" operation-value="update_payment_details">
+		    	<param name="paymentID" type="long" range=">0" min-occurrences="1"/>
+			<param name="mode" type="String" max-len="100"/>
+			<param name="time" type="String" max-len="100"/>
+			<param name="poID" type="long" range=">0"/>
+		</url>
+		<url roles="SDAdmin" path="/purchase/POSiteInput.jsp" >
+		    	<param name="address" regex="Shipping|Billing"/>
+		</url>
+		<url roles="ViewPurchaseOrder" path="/purchase/InvoicePaymentListView.jsp" >
+		    	<param name="poID" type="long" range=">0" min-occurrences="1"/>
+	    	</url>
+		<url roles="ViewPurchaseOrder" path="/purchase/posummarylist.jsp"/>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder,CreatePR,ModifyPR" path="/purchase/POApproverPop-up.jsp">
+		    <param name="date" type="String" max-len="100"/>
+			<param name="totalCost" type="double" range=">=0"/>
+			<param name="id" type="String" max-len="100"/>
+			<param name="LevelNo" type="long" range=">0"/>
+			<param name="appIds" type="String" max-len="100"/>
+			<param name="allOtherSelectedAppId" type="String" max-len="100"/>
+			<param name="condition" type="String" max-len="50"/>
+		</url>
+		<url roles="ViewPurchaseOrder,ModifyPurchaseOrder" path="/purchase/POReconcile.jsp">
+		    	<param name="time" type="String" max-len="100"/>
+			<param name="poID" type="long" range=">0"/>
+			<param name="callFrom" type="String" max-len="100"/>
+			<param name="countOfConflictWS" type="String" max-len="100" description="Holds undefined value"/>
+		</url>
+		<url roles="ViewPurchaseOrder" path="/purchase/purchaseflow.jsp" />
+		<url roles="SDAdmin" path="/setup/PurchaseNotifications.jsp" />
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/common/AEFileAttachment.jsp" operation-param="module" operation-value="PONotifications_attachment">
+			<param name="type"  regex="new"/>
+			<param name="[0-9]+" name-regex="true" type="boolean" max-occurrences="1"/>
+	    	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/Select2Servlet" operation-param="module" operation-value="vendorservicetype">
+			<param name="params" type="String" max-len="10000" secret="true" description="params contain all the parameter"/>
+			<param name="page" type="long" range=">0"/>
+			<param name="searchText" type="String" max-len="200"/>
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+"/>            
+        	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/Select2Servlet" operation-param="module" operation-value="vendorservice">
+			<param name="params" type="String" max-len="10000" secret="true" description="params contain all the parameter"/>
+			<param name="page" type="long" range=">0"/>
+			<param name="searchText" type="String" max-len="150"/>
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+"/>            
+        	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/Select2Servlet" operation-param="module" operation-value="partno">
+			<param name="params" type="String" max-len="10000" secret="true" description="params contain all the parameter"/>
+			<param name="page" type="long" range=">0"/>
+			<param name="searchText" type="String" max-len="100"/>
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+"/>            
+        	</url>
+		<url path="/servlet/Select2Servlet" operation-param="module" operation-value="product" roles="CreatePurchaseOrder,ModifyPurchaseOrder">
+			<param name="params" type="String" max-len="10000"  description="we will be having many params for it" secret="true"/>
+			<param name="page" type="long" range=">=0"/>
+			<param name="searchText" secret="true" type="String" max-len="1000"/>
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+"/>
+		</url>
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="prsettings,vendorServices"/>
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="purchaseudf,purchaserequestudf" />
+		<url roles="SDOrgAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="currencyConfig" user_type="all" description="Url accessed by requester also in non login."/>
+		<!--Notification Rules for Purchase(PO & PR) module-->
+        <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType" operation-value="Purchase_Notification,POCanceledNotification,POApprovedNotification,PORejectedNotification,POPendingApprovalNotification,PORejectedNotificationForSRT,POReceivedNotificationForSRT,POPartiallyReceivedNotificationForSRT,POCanceledNotificationForSRT,PRPendingApprovalNotification,PRApprovedNotification,PRRejectedNotification,PRCloseNotification,PRCancelNotification,PRReceivedNotification,PRPartiallyReceivedNotification,PROverdueNotification,POPartialyReceivedNotification,POCloseNotification,PROpenNotification">
+			<param name="onlyContentPage" regex="yes"/>
+			<param name="fromPR" type="boolean"/>
+		</url>
+	</urls>
+
+	<urls authentication="required" method="POST" csrf="true" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_entity_post" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+       		</throttles>
+	    	
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="purchaseudf" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="po_udf_post" dynamic-throttle="true" >
+				<throttle lock-period="30m" threshold="3" duration="1m"/>
+			</throttles>
+		   	<param name="XML" type="String" max-len="370000" secret="true" description="XML param contains the full data tag,12 text,4 numeric,4 date,4 cost fields"/>
+			<param name="TABLENAME" regex="PurchaseOrder_Fields"/>
+			<param name="serviceCategory" type="String" max-len="100"/>
+		</url>
+		<url roles="ViewPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="refresh_menu">
+			<param name="poID" type="long" range=">0"/>
+		</url>
+		<url roles="AddingNewVendor,CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchVendorCurrency" remote_server="true">
+			<param name="vendorId" type="long" range=">0" min-occurrences="1"/>
+	    	</url>
+		<url user_type="all" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchBaseCurrency" description="Url accessed by requester also in non login."/>
+			
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchWSNameForServiceTag">
+		     	<param name="ser_Tag" type="String" max-len="100"/>
+	    	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchSerTagForScanWS">
+		     	<param name="scan_wsName" type="String" max-len="100"/>
+	    	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/AJaxServlet" operation-param="action" operation-value="serTagCheckForReceive">
+		     	<param name="serTags" type="String" max-len="-1" secret="true" description="Comma separated values"/>
+		</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/servlet/AJaxServlet" operation-param="action" operation-value="searchUserForPurchase">
+		     	<param name="reqName" type="String" max-len="150" secret="true" />
+	    	</url>
+		<url roles="ViewPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="fetchPOsummaryList">
+    		<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+	    </url>
+		<url roles="ViewPurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="reconcilews">
+		     	<param name="resourceid" type="String" max-len="100" max-occurrences="150"/>
+		</url>
+	    	<url roles="CreatePurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="newPO">
+		    	<param name="requestIds" regex="null|[0-9]+" max-occurrences="100"/>
+		</url>
+	    	<url roles="ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="editpo">
+		      	<param name="poID" type="long" range=">0" min-occurrences="1"/>
+	    	</url>
+		<url roles="SDAdmin" path="/PurchaseOrder.do" operation-param="module" operation-value="add_site_details">
+		    	<param name="site" type="String" max-len="100"/>
+			<param name="region" type="String" max-len="100"/>
+			<param name="door" type="String" max-len="100" secret="true"/>
+			<param name="street" type="String" max-len="100" secret="true"/>
+			<param name="landmark" type="String" max-len="100" secret="true"/>
+			<param name="city" type="String" max-len="100" secret="true"/>
+			<param name="pcode" type="String" max-len="100" secret="true"/>
+			<param name="state" type="String" max-len="100" secret="true"/>
+			<param name="country" type="String" max-len="100" secret="true"/>
+		</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="get_vendor_details">
+		     	<param name="vendorid" type="long" range=">0,-1" min-occurrences="1" description="Holds -1 when no vendor is chosen in the dropdown"/>
+	    	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="get_site_details">
+			<param name="siteid" type="long" range=">0,-1" min-occurrences="1" description="Holds -1 when no site is chosen in the dropdown"/>
+		</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="get_component_details">
+		   	<param name="vendorID" type="long" range=">0"  min-occurrences="1"/>
+           	<param name="componentId" type="long" range=">0"/>
+			<param name="componentName" type="String" max-len="150"/>
+	    	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="get_service_details">
+		   	<param name="vendorID" type="long" range=">0" min-occurrences="1"/>
+			<param name="serviceName" type="String" max-len="150"/>
+        		<param name="serviceId" type="long" range=">0"/>
+	    	</url>
+		<url roles="DeletePurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="delete_po">
+		  	<param name="checkbox" type="long" range=">0" max-occurrences="300"/>
+	    	</url>
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="updateMandatory">
+		    	<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="saveOption" type="String" max-len="100"/>
+			<param name="divToShow" regex="listView"/>
+			<param name="char_UDF_CHAR((1[0-2])|([1-9]))" name-regex="true" type="String" max-len="3500" max-occurrences="12" secret="true"/>
+			<param name="long_UDF_LONG[1-4]" name-regex="true" type="long" range=">=0" max-occurrences="4" secret="true"/>
+			<param name="date_UDF_DATE[1-4]" name-regex="true" type="String" max-len="50" max-occurrences="4" secret="true"/>
+			<param name="mfields" type="String" max-len="250" secret="true"/>
+			<param name="mfieldsCount" type="long" range=">0"/>
+		</url>
+	    	<url roles="CreatePurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="add_new_po">
+		    	<param name="purchaseOrderID" type="String" max-len="50" description="POcustomID configured by customer which holds string value"/>
+			<param name="purchaseOrderName" type="String" max-len="100" min-occurrences="1"/>
+			<param name="requiredBy" type="String" max-len="100"/>
+			<param name="createdDate" type="String" max-len="100"/>
+			<param name="vendor" type="long" range=">0" min-occurrences="1"/>
+			<param name="shippingAddress" type="String" max-len="250" secret="true"/>
+			<param name="billingAddress" type="String" max-len="250" secret="true"/>
+			<param name="poCurrencyId" type="long" range=">0"/>
+			<param name="exchangeRate" type="double" range=">0"/>
+			<param name="poItems" type="String" max-occurrences="150" max-len="-1" secret="true" description="Item name"/>
+			<param name="subTotal" type="double" range=">=0"/>
+			<param name="discountvalue" type="double" range=">=0"/>
+			<param name="discount" type="double" range=">=-1" description="Holds -1 when discountvalue itself provided instead of rate"/>
+			<param name="totalitemvalue" type="double" range=">=0"/>
+			<param name="shippingcost" type="double" range=">=0"/>
+			<param name="taxratevalue" type="double" range=">=0"/>
+			<param name="taxrate" type="double" range=">=0"/>
+			<param name="salestax" type="double" range=">=0"/>
+			<param name="addtaxrate" type="double" range=">=0"/>
+			<param name="priceadjustment" type="double" description="Holds postive and negative values"/>
+			<param name="totalvalue" type="double" range=">=0"/>
+			<param name="approveCondition_1" regex="or|and"/>
+			<param name="approveCondition_2" regex="or|and"/>
+			<param name="approveCondition_3" regex="or|and"/>
+			<param name="approveCondition_4" regex="or|and"/>
+			<param name="approveCondition_5" regex="or|and"/>
+			<param name="approveCondition_6" regex="or|and"/>
+			<param name="approveCondition_7" regex="or|and"/>
+			<param name="approveCondition_8" regex="or|and"/>
+			<param name="approveCondition_9" regex="or|and"/>
+			<param name="approveCondition_10" regex="or|and"/>
+			<param name="approver_1" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_2" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_3" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_4" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_5" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_6" type="long" range=">0" max-occurrences="10"/>
+		    	<param name="approver_7" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_8" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_9" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_10" type="long" range=">0" max-occurrences="10"/>
+			<param name="levelCount" type="long" range=">=0"/>
+			<param name="poApprovalEnabled" type="boolean"/>
+			<param name="reqName" type="String" max-len="150" secret="true"/>
+			<param name="reqID" type="long" range=">0"/>
+			<param name="costcenter" regex="-1|[0-9]+"/>
+			<param name="glcode" regex="-1|[0-9]+"/>
+			<param name="remarks" type="String" max-len="-1" secret="true" description="As provided in data-dictionary"/>
+			<param name="terms" type="String" max-len="-1" secret="true" description="As provided in data-dictionary"/>
+			<param name="signingAuthority" type="String" max-len="50" secret="true"/>	
+        	<param name="long[1-4]" name-regex="true" regex="null|[0-9]+" max-occurrences="4" secret="true"/>	
+			<param name="text((1[0-2])|([1-9]))" name-regex="true" type="String" max-len="3500" max-occurrences="12" secret="true"/>
+        	<param name="date[1-4]" name-regex="true" type="String" max-len="50" max-occurrences="4" secret="true"/>
+        	<param name="cost[1-4]" name-regex="true" type="double" range=">=0" max-occurrences="4" secret="true"/>	
+        	<param name="ownerAsOnlyApproverForFirstLevel"	type="boolean"/>
+        	<param name="notifyToApprover" type="boolean"/>	
+        	<param name="requestIds" regex="null|[0-9]+" max-occurrences="100"/>			 
+	    </url>
+	
+		<url roles="ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="update_po">
+		    <param name="po_id" type="long" range=">0" min-occurrences="1"/>
+		    <param name="purchaseOrderID" type="String" max-len="50" description="POcustomID configured by customer which holds string value" min-occurrences="1"/>
+			<param name="purchaseOrderName" type="String" max-len="100" min-occurrences="1"/>
+			<param name="requiredBy" type="String" max-len="100"/>
+			<param name="createdDate" type="String" max-len="100"/>
+			<param name="vendor" type="long" range=">0" min-occurrences="1"/>
+			<param name="shippingAddress" type="String" max-len="250" secret="true"/>
+			<param name="billingAddress" type="String" max-len="250" secret="true"/>
+			<param name="poCurrencyId" type="long" range=">0"/>
+			<param name="exchangeRate" type="double" range=">0"/>
+			<param name="poItems" type="String" max-occurrences="150" max-len="-1" secret="true" description="Comma separated PO item name."/>
+			<param name="subTotal" type="double" range=">=0"/>
+			<param name="discountvalue" type="double" range=">=0"/>
+			<param name="discount" type="double" range=">=-1" description="Holds -1 when discountvalue itself provided instead of rate"/>
+			<param name="totalitemvalue" type="double" range=">=0"/>
+			<param name="shippingcost" type="double" range=">=0"/>
+			<param name="taxratevalue" type="double" range=">=0"/>
+			<param name="taxrate" type="double" range=">=0"/>
+			<param name="salestax" type="double" range=">=0"/>
+			<param name="addtaxrate" type="double" range=">=0"/>
+			<param name="priceadjustment" type="double" description="Holds postive and negative values"/>
+			<param name="totalvalue" type="double" range=">=0"/>
+			<param name="approveCondition_1" regex="or|and"/>
+			<param name="approveCondition_2" regex="or|and"/>
+			<param name="approveCondition_3" regex="or|and"/>
+			<param name="approveCondition_4" regex="or|and"/>
+			<param name="approveCondition_5" regex="or|and"/>
+			<param name="approveCondition_6" regex="or|and"/>
+			<param name="approveCondition_7" regex="or|and"/>
+			<param name="approveCondition_8" regex="or|and"/>
+			<param name="approveCondition_9" regex="or|and"/>
+			<param name="approveCondition_10" regex="or|and"/>
+			<param name="approver_1" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_2" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_3" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_4" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_5" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_6" type="long" range=">0" max-occurrences="10"/>
+		    <param name="approver_7" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_8" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_9" type="long" range=">0" max-occurrences="10"/>
+			<param name="approver_10" type="long" range=">0" max-occurrences="10"/>
+			<param name="levelCount" type="long" range=">=0"/>
+			<param name="poApprovalEnabled" type="boolean"/>
+			<param name="reqName" type="String" max-len="150" secret="true"/>
+			<param name="reqID" type="long" range=">0"/>
+			<param name="costcenter" regex="-1|[0-9]+"/>
+			<param name="glcode" regex="-1|[0-9]+"/>
+			<param name="remarks" type="String" max-len="-1" secret="true" description="As provided in data-dictionary"/>
+			<param name="terms" type="String" max-len="-1" secret="true" description="As provided in data-dictionary"/>
+			<param name="signingAuthority" type="String" max-len="50" secret="true"/>	
+            <param name="long[1-4]" name-regex="true" regex="null|[0-9]+" max-occurrences="4" secret="true"/>	
+			<param name="text((1[0-2])|([1-9]))" name-regex="true" type="String" max-len="3500" max-occurrences="12" secret="true"/>
+            <param name="date[1-4]" name-regex="true" type="String" max-len="100" max-occurrences="4" secret="true"/>
+            <param name="cost[1-4]" name-regex="true" type="double" range=">=0" max-occurrences="4" secret="true"/>	
+            <param name="ownerAsOnlyApproverForFirstLevel"	type="boolean"/>
+            <param name="notifyToApprover" type="boolean"/>
+            <param name="requestIds" regex="null|[0-9]+" max-occurrences="100"/>			 
+	    </url>
+		
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="add_invoice_details,update_invoice_details">
+		    <param name="invoiceid" type="String" max-len="100"/>
+			<param name="invoicedateid" type="String" max-len="100"/>
+			<param name="paymentDueDate" type="String" max-len="100"/>
+			<param name="invoicecomments" type="String" max-len="10000" secret="true"/>
+			<param name="notifyPaymnt" regex="on"/>
+			<param name="userList" type="long" range=">0" max-occurrences="50"/>
+			<param name="notifyList" type="long" range=">0" max-occurrences="50"/>
+			<param name="notifydays" type="long" range=">0"/>
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="invoiceDetailsID" type="long" range=">0"/>
+		</url>
+		
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="add_payment_details,update_payment_details">
+		    <param name="payAmount" type="double" range=">=0"/>
+			<param name="paymentDate" type="String" max-len="100"/>
+			<param name="paymentComments" type="String" max-len="10000" secret="true"/>
+			<param name="notifyPOPaymnt" regex="on"/>
+			<param name="paymentDueDate" type="String" max-len="100"/>
+			<param name="userList" type="long" range=">0" max-occurrences="50"/>
+			<param name="notifyList" type="long" range=">0" max-occurrences="50"/>
+			<param name="notifydays" type="long" range=">0"/>
+			<param name="paymentExchangeRate" type="double" range=">0"/>
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="paymentDetailsID" type="long" range=">0"/>  
+		</url>
+		
+		<url roles="ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="delete_invoice">
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="invDetID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		
+		<url roles="ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="delete_payment">
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="paymentDetID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder,CancelPurchaseOrder,CreatePR,ModifyPR" path="/PurchaseApproval.do" operation-param="module" operation-value="close,invoice_received,payment_done,cancel_this_po,cancelpr">
+		    <param name="enableMailNotify" type="long" range=">0"/>
+		    <param name="approvalId" type="String" max-len="100"/>
+			<param name="approvalLevel" type="long" range="0-10"/>
+			<param name="poID" regex="-1|[0-9]+"/>
+			<param name="requestId" regex="-1|[0-9]+"/>
+			<param name="mailIds" regex="emailList" max-len="5000" secret="true"/>
+			<param name="subject" type="String" max-len="500" secret="true"/>
+			<param name="description" type="String" max-len="10000" secret="true"/>
+		</url>
+		
+		<url roles="ViewPR,ViewPurchaseOrder" path="/PurchaseApproval.do" operation-param="module" operation-value="sendApprovalNotification,approve,sendRejectedNotification">
+		    <param name="enableMailNotify" type="long" range=">0"/>
+		    <param name="approvalId" type="String" max-len="100"/>
+			<param name="approvalLevel" type="long" range="0-10"/>
+			<param name="poID" regex="-1|[0-9]+"/>
+			<param name="requestId" regex="-1|[0-9]+"/>
+			<param name="mailIds" regex="emailList" max-len="5000" secret="true"/>
+			<param name="subject" type="String" max-len="500" secret="true"/>
+			<param name="description" type="String" max-len="10000" secret="true"/>
+		</url>
+		
+		<url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PONotify.do" operation-param="notifyTo" operation-value="Ordered,Owner,Vendor">
+		    <param name="notifyModule" type="String" regex="PurchaseOrder"/>
+		    <param name="notifyToVendor" type="String" max-len="50"/>
+			<param name="to" regex="emailList" max-len="5000" secret="true"/>
+			<param name="ccAddress" regex="emailList" max-len="5000" secret="true"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="contentType" type="String" max-len="500" secret="true"/>
+			<param name="isForward" type="String" max-len="100"/>
+			<param name="orgReqIDStr" type="long" range=">0"/>
+			<param name="userID" type="long" range=">0"/>
+			<param name="module" type="String" max-len="100"/>
+			<param name="enableNotify" type="boolean"/>
+			<param name="subject" type="String" max-len="500" secret="true"/>
+			<param name="desc" max-len="-1" secret="true" xss="sdpantisamyfilter" description="since it is a html content, Max len as provided in the data-dictionary."/>
+			<param name="att_file_id" type="long" range=">0" max-occurrences="25"/>
+			<param name="attach" regex="filename" max-len="1000" max-occurrences="50"/>
+			<param name="attPath" type="String" max-len="10240" secret="true" max-occurrences="50"/>
+			<param name="attSize" type="long" range=">0" max-occurrences="50"/>
+			<param name="att_desc" type="String" max-len="1000" secret="true" max-occurrences="50"/>
+			<param name="poPDFName" type="String" max-len="100"/>
+			<param name="submit" type="String" max-len="100"/>
+			<param name="cancel" type="String" max-len="100"/>
+		</url>
+		
+	    <url roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="received_items">
+		    <param name="itemList" regex="on" max-occurrences="6" description="Types of item receiving- Asset, Workstation, Software, Services, Others"/>
+			<param name="productextid" type="String" max-len="25" max-occurrences="150" description="Value contains id_index"/>
+			<param name="quantity_[0-9]+_[0-9]+" name-regex="true" type="double" range=">=0" max-occurrences="150"/>
+			<param name="servicetag_[0-9]+_[0-9]+" name-regex="true" max-occurrences="150" type="String" max-len="-1" secret="true" description="Based on item quantity service tag is noted."/>
+			<param name="enableSerTagAsBarcode_[0-9]+_[0-9]+" name-regex="true" max-occurrences="150" regex="on|off"/>
+			<param name="poID" type="long" range=">0" min-occurrences="1"/>
+			<param name="typeOfLicense_[0-9]+_[0-9]+" name-regex="true" regex="upgrade|standard" max-occurrences="150"/>
+			<param name="licenseType_[0-9]+_[0-9]+" name-regex="true" type="long" range=">=-1" max-occurrences="150"/>
+			<param name="key_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="-1" max-occurrences="150" secret="true" description="Based on item quantity license key is noted."/>
+			<param name="licenseOption_[0-9]+_[0-9]+" name-regex="true" type="long" range=">=-1" max-occurrences="150"/>
+			<param name="licenseCount_[0-9]+_[0-9]+" name-regex="true" regex="Unlimited|[0-9]+" max-occurrences="150"/>
+			<param name="licensedSoftware_[0-9]+_[0-9]+" name-regex="true" regex="-1|[0-9]+" max-occurrences="150"/>
+			<param name="alreadyPurchased_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="-1" max-occurrences="150" secret="true" description="Not sure about the item quantity."/>
+			<param name="licenseKey_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="-1" max-occurrences="150" secret="true" description="Based on item quantity license key is noted."/>
+			<param name="purchasedLicense_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="-1" max-occurrences="150" secret="true" description="Not sure about the item quantity."/>
+			<param name="licenseKey_Renewal_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="-1" max-occurrences="150" secret="true" description="Based on item quantity license key is noted."/>
+			<param name="acquisitionDate_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="15" max-occurrences="150"/>
+			<param name="expiryDate_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="15" max-occurrences="150"/>
+			<param name="oldLicense_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="-1" max-occurrences="150" secret="true" description="Not sure about the item quantity."/>
+			<param name="installAllowed_[0-9]+_[0-9]+" name-regex="true" type="String" max-len="-1" max-occurrences="150" secret="true" description="Not sure about the item quantity."/>
+		</url>
+		
+		<url roles="ViewPurchaseOrder" path="/PurchaseOrder.do" operation-param="module" operation-value="show_history">
+		   	<param name="poID" type="long" range=">0" min-occurrences="1"/>
+	    </url>
+		
+		<url roles="ViewRequests,ModifyPurchaseOrder" path="/WOToPOList.do" operation-param="operation" operation-value="associate_requests">
+		    <param name="status" type="String" max-len="100"/>
+			<param name="pageLength" type="long" range=">=0" max-occurrences="2"/>
+			<param name="loadingMsg" type="String" max-len="100" max-occurrences="2"/>
+			<param name="rowcount" type="String" max-len="100" max-occurrences="2"/>
+			<param name="poid" regex="-1|[0-9]+"/>
+			<param name="WOID" regex="-1|[0-9]+"/>
+			<param name="Title" type="String" max-len="250" secret="true"/>
+			<param name="Owner" type="String" max-len="100"/>
+			<param name="checkbox" type="long" range=">0" max-occurrences="50"/>
+			<param name="checkbox[0-9]+" name-regex="true" type="String" max-len="10"/>
+		</url>
+		<url roles="ViewPurchaseOrder,ModifyRequests" path="/POToWOList.do" operation-param="operation" operation-value="associate_po">
+		    <param name="poStatus" type="String" max-len="100"/>
+			<param name="pageLength" type="long" range=">=0" max-occurrences="2"/>
+			<param name="loadingMsg" type="String" max-len="100" max-occurrences="2"/>
+			<param name="rowcount" type="String" max-len="100" max-occurrences="2"/>
+			<param name="workOrderID" type="long" range=">0"/>
+			<param name="POCustomID" type="String" max-len="50" description="POcustomID configured by customer which holds string value"/>
+			<param name="POName" type="String" max-len="100"/>
+			<param name="Owner" type="String" max-len="100"/>
+			<param name="Status" type="String" max-len="100"/>
+			<param name="checkbox" type="long" range=">0" max-occurrences="50"/>
+			<param name="checkbox[0-9]+" name-regex="true" type="String" max-len="10"/>
+		</url>
+ 		<url roles="ViewRequests,ModifyPurchaseOrder" path="/WOToPOAssociation.do" operation-param="operation" operation-value="associate_po,detach_po">
+		    <param name="workOrderID" type="long" range=">0" min-occurrences="1"/>
+			<param name="checkbox" type="long" range=">0" max-occurrences="50"/>
+		</url>
+		<url roles="ViewRequests,ModifyPurchaseOrder" path="/WOToPOAssociation.do" operation-param="operation" operation-value="associate_requests,detach_requests">
+		    <param name="purchaseOrderID" type="long" range=">0" min-occurrences="1"/>
+			<param name="checkbox" type="long" range=">0" max-occurrences="50"/>
+		</url>
+		<url roles="AddingNewVendorService" path="/PurchaseOrder.do" operation-param="module" operation-value="addNewServiceItem">
+			<param name="vendorId" type="long" range=">0"/>
+			<param name="index" type="long" range=">0"/>
+			<param name="serviceName" type="String" max-len="150"/>
+			<param name="serviceType" type="long" range=">0"/>
+			<param name="servicePrice" type="double" range=">=0"/>
+			<param name="servicePartNo" type="String" max-len="100"/>
+			<param name="serviceTaxRate" type="double" range=">=0"/>
+		</url>
+		<url roles="SDAdmin,SDOrgAdmin" user_type="all" path="/CurrencyConfig.do" operation-param="operation" operation-value="fetchCurrencySymbol" description="Url accessed by requester also in non login.">
+		    <param name="currencyId" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<!--Notification Rules for Purchase(PO & PR) module-->
+	    <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType" operation-value="Purchase_Notification,POCanceledNotification,POApprovedNotification,PORejectedNotification,POPendingApprovalNotification,PORejectedNotificationForSRT,POReceivedNotificationForSRT,POPartiallyReceivedNotificationForSRT,POCanceledNotificationForSRT,PRPendingApprovalNotification,PRApprovedNotification,PRRejectedNotification,PRCloseNotification,PRCancelNotification,PRReceivedNotification,PRPartiallyReceivedNotification,PROverdueNotification,POPartialyReceivedNotification,POCloseNotification,PROpenNotification">
+			<param name="element1" type="String" max-len="100"/>
+			<param name="element2" type="String" max-len="100"/>
+			<param name="subject" type="String" max-len="500" secret="true"/>
+			<param name="content" max-len="-1" secret="true" xss="sdpantisamyfilter" description="since it is a html content, Max len as provided in the data-dictionary."/>
+			<param name="mode" regex="update"/>
+		</url>
+    		<url roles="SDAdmin" path="/AssetDefaultConfigDef.do" operation-param="formName" operation-value="purchaseForm">
+    			<param name="isAjaxSubmit" regex="ajaxSubmit"/>
+			<param name="data" template="purchase_notification_template" type="JSONObject" max-len="-1"/>
+    		</url>
+	</urls>
+	<!-- templates -->
+    	<jsontemplates>
+        	<jsontemplate name="purchase_notification_template">
+			<key name="notifyPOOverdue" type="boolean"/>
+			<key name="notifyPOCanceled" type="boolean"/>
+			<key name="notifyPOApproved" type="boolean"/>
+			<key name="notifyPORejected" type="boolean"/>
+			<key name="notifyPOPendingApproval" type="boolean"/>
+			<key name="notifyPORejectedForSrt" type="boolean"/>
+			<key name="notifyPOReceivedForSrt" type="boolean"/>
+			<key name="notifyPartiallyReceivedSrt" type="boolean"/>
+			<key name="notifyPOCanceledForSrt" type="boolean"/>
+			<key name="PRPendingApprovalNotification" type="boolean"/>
+			<key name="PRApprovedNotification" type="boolean"/>
+			<key name="PRRejectedNotification" type="boolean"/>
+			<key name="PRCloseNotification" type="boolean"/>
+			<key name="PRCancelNotification" type="boolean"/>
+			<key name="PRReceivedNotification" type="boolean"/>
+			<key name="PRPartiallyReceivedNotification" type="boolean"/>
+			<key name="PROverdueNotification" type="boolean"/>
+		</jsontemplate>
+	</jsontemplates>
+</security>
+<!-- $Id$ -->

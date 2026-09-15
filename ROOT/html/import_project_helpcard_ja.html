@@ -1,0 +1,287 @@
+<div class="helpcard-content">
+	<p>プロジェクトのインポート機能により、Microsoft Project（MSプロジェクト）を使用して作成したプロジェクトをServiceDesk Plusに簡単にインポートすることができます。各MSプロジェクトは単一プロジェクトとしてインポートすることができます。MSプロジェクトの属性は、ServiceDesk Plusのプロジェクトにおける属性と同値である必要があります。そのため、MSプロジェクトにおける属性は以下のようにServiceDesk Plus内の属性と一致する必要があります。</p>
+	<p><strong>注意</strong>： デフォルトの優先度（Low、Normal、Medium、High）のいずれかが削除され、［入力した範囲の優先度がない場合、新規優先度として作成します。］のオプションが有効の場合、MSプロジェクトの範囲に該当する、削除された優先度が再生成されます。</p>
+	<div class="helpcard-projectfile pb15"><a class="" href="/servlet/ImportServlet?submitaction=SampleXLSFile&module=Projects&file_type=mpp" rel="noopener noreferrer uitip" title="クリックしてサンプルMSプロジェクトファイルをダウンロード" download><span class="common-sprite icon-sm list-notes-icon-on mr10"></span>サンプルMSプロジェクトファイル</a></div>
+	<p class="helpcard-attribut-head">MSプロジェクトからServiceDesk Plusのプロジェクトに属性をマッピング</p>
+	<div class="bs-example">
+		<!-- code section begins -->
+		<z-collapsiblepanels zclass-name="accordion-log zcomponents" toggle-on-header-click="true" toggle-button="false">
+				<z-collapsiblepanel is-active="false">
+					<z-cpheading>
+						プロジェクト属性のマッピング <span class="cspr icon-sm circle-arrow-down fr"></span>
+					</z-cpheading>
+					<z-cpcontent id="collapseOne">
+						<div>
+							<p>MSプロジェクトのプロジェクトファイルはServiceDesk Plusのプロジェクトとしてマッピングされます。各プロジェクトファイルは1つのプロジェクトを持ち、一度に1つのプロジェクトがインポートできます。ServiceDesk Plusのプロジェクトでは、以下のテーブル表のようにマッピングされます。</p>
+							<table class="table table-bordered helpcard-table">
+								<thead>
+									<tr>
+										<th class="tc" colspan="2">MSプロジェクト <span class="common-sprite icon-lg helpcard-table-arrow ml10 mr10"></span>ServiceDesk Plusのプロジェクト</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Title</td>
+										<td>件名</td>
+									</tr>
+									<tr>
+										<td>Subject</td>
+										<td>説明</td>
+									</tr>
+									<tr>
+										<td>Actual Work</td>
+										<td>実際の時間日時</td>
+									</tr>
+									<tr>
+										<td>Actual Cost</td>
+										<td>実際のコスト</td>
+									</tr>
+									<tr>
+										<td>Cost</td>
+										<td>見積りコスト</td>
+									</tr>
+									<tr>
+										<td>Comments</td>
+										<td>コメント</td>
+									</tr>
+									<tr>
+										<td>Start</td>
+										<td>予定開始</td>
+									</tr>
+									<tr>
+										<td>Finish</td>
+										<td>予定終了</td>
+									</tr>
+									<tr>
+										<td>Actual Start</td>
+										<td>実際の開始日時</td>
+									</tr>
+									<tr>
+										<td>Actual Finish</td>
+										<td>実際の終了日時</td>
+									</tr>
+									<tr>
+										<td>Work</td>
+										<td>見積もり時間</td>
+									</tr>
+									<tr>
+										<td>Created</td>
+										<td>作成日時</td>
+									</tr>
+									<tr>
+										<td class="helpcard-table-head1" colspan="2"><strong>ステータス</strong></td>
+									</tr>
+									<tr>
+										<td>At 100% of Completion</td>
+										<td>Closed</td>
+									</tr>
+									<tr>
+										<td>Other Cases</td>
+										<td>Open</td>
+									</tr>
+									<tr>
+										<td class="helpcard-table-head1" colspan="2"><strong>優先度</strong></td>
+									</tr>
+									<tr>
+										<td>Range 0 to 250</td>
+										<td>Low</td>
+									</tr>
+									<tr>
+										<td>Range 251 to 500</td>
+										<td>Normal</td>
+									</tr>
+									<tr>
+										<td>Range 501 to 750</td>
+										<td>Medium</td>
+									</tr>
+									<tr>
+										<td>Range 751 to 1000</td>
+										<td>High</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</z-cpcontent>
+				</z-collapsiblepanel>
+				<z-collapsiblepanel is-active="false">
+					<z-cpheading>
+						マイルストーン属性のマッピング <span class="cspr icon-sm circle-arrow-down fr"></span>
+					</z-cpheading>
+					<z-cpcontent id="collapseTwo">
+						<div>
+							<p>MSプロジェクトのタスクリストはServiceDesk Plusのプロジェクトで、マイルストーンとしてマッピングされます。各タスクリストがそれぞれマイルストーンとして作成されます。ServiceDesk Plusのマイルストーンでは、以下のテーブル表のようにマッピングされます。</p>
+							<table class="table table-bordered helpcard-table">
+								<thead>
+									<tr>
+										<th class="tc" colspan="2">MSプロジェクト <span class="common-sprite icon-lg helpcard-table-arrow ml10 mr10"></span> ServiceDesk Plusのプロジェクト</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Name of the Task List</td>
+										<td>件名</td>
+									</tr>
+									<tr>
+										<td>Deadline</td>
+										<td>プロジェクト日程</td>
+									</tr>
+									<tr>
+										<td>Notes</td>
+										<td>コメント</td>
+									<tr>
+										<td>Start</td>
+										<td>予定開始</td>
+									</tr>
+									<tr>
+										<td>Finish</td>
+										<td>予定終了</td>
+									</tr>
+									<tr>
+										<td>Actual Start</td>
+										<td>実際の開始日時</td>
+									</tr>
+									<tr>
+										<td>Actual Finish</td>
+										<td>実際の終了日時</td>
+									</tr>
+									<tr>
+										<td>Work</td>
+										<td>見積もり時間</td>
+									</tr>
+									<tr>
+										<td>Actual Work</td>
+										<td>実際の時間</td>
+									</tr>
+									<tr>
+										<td>Created</td>
+										<td>作成日時</td>
+									</tr>
+									<tr>
+										<td class="helpcard-table-head1" colspan="2"><strong>ステータス</strong></td>
+									</tr>
+									<tr>
+										<td>At 100% of Completion</td>
+										<td>Closed</td>
+									</tr>
+									<tr>
+										<td>Other Cases</td>
+										<td>Open</td>
+									</tr>
+									<tr>
+										<td class="helpcard-table-head1" colspan="2"><strong>優先度</strong></td>
+									</tr>
+									<tr>
+										<td>Range 0 to 250</td>
+										<td>Low</td>
+									</tr>
+									<tr>
+										<td>Range 251 to 500</td>
+										<td>Normal</td>
+									</tr>
+									<tr>
+										<td>Range 501 to 750</td>
+										<td>Medium</td>
+									</tr>
+									<tr>
+										<td>Range 751 to 1000</td>
+										<td>High</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</z-cpcontent>
+				</z-collapsiblepanel>
+				<z-collapsiblepanel is-active="false">
+					<z-cpheading>
+						タスク属性のマッピング <span class="cspr icon-sm circle-arrow-down fr"></span>
+					</z-cpheading>
+					<z-cpcontent id="collapseThree">
+						<div>
+							<p>MSプロジェクトにおけるタスクとマイルストーンはServiceDesk Plusのプロジェクトにおけるタスクとしてマッピングされます。ServiceDesk Plusのタスクでは、以下のテーブル表のようにマッピングされます。</p>
+							<table class="table table-bordered helpcard-table">
+								<thead>
+									<tr>
+										<th class="text-center" colspan="2">MSプロジェクト <span class="common-sprite icon-lg helpcard-table-arrow ml10 mr10"></span> ServiceDesk Plusのプロジェクト</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Name of the Task</td>
+										<td>件名</td>
+									</tr>
+									<tr>
+										<td>Duration</td>
+										<td>見積り工数</td>
+									</tr>
+									<tr>
+										<td>Percent Complete</td>
+										<td>進行中（%）</td>
+									</tr>
+									<tr>
+										<td>Deadline</td>
+										<td>メールで事前通知(～前)</td>
+									</tr>
+									<tr>
+										<td>Notes</td>
+										<td>コメント</td>
+									</tr>
+									<tr>
+										<td>Start</td>
+										<td>予定開始</td>
+									</tr>
+									<tr>
+										<td>Finish</td>
+										<td>予定終了</td>
+									</tr>
+									<tr>
+										<td>Actual Start</td>
+										<td>実際の開始日時</td>
+									</tr>
+									<tr>
+										<td>Actual Finish</td>
+										<td>実際の終了日時</td>
+									</tr>
+									<tr>
+										<td>Created</td>
+										<td>作成日時</td>
+									</tr>
+									<tr>
+										<td class="helpcard-table-head1" colspan="2"><strong>ステータス</strong></td>
+									</tr>
+									<tr>
+										<td>At 100% of Completion</td>
+										<td>Closed</td>
+									</tr>
+									<tr>
+										<td>Other Cases</td>
+										<td>Open</td>
+									</tr>
+									<tr>
+										<td class="helpcard-table-head1" colspan="2"><strong>優先度</strong></td>
+									</tr>
+									<tr>
+										<td>Range 0 to 250</td>
+										<td>Low</td>
+									</tr>
+									<tr>
+										<td>Range 251 to 500</td>
+										<td>Normal</td>
+									</tr>
+									<tr>
+										<td>Range 501 to 750</td>
+										<td>Medium</td>
+									</tr>
+									<tr>
+										<td>Range 751 to 1000</td>
+										<td>High</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</z-cpcontent>
+				</z-collapsiblepanel>
+		</z-collapsiblepanels>
+		<!-- code section ends -->
+		<div class="clearfix"></div>
+	</div>
+</div>

@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id$-->
+
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+	<urls authentication="required"  method="get" api="true" user_type="all" description="ROLE_NOT_REQUIRED: Since TECHNICIAN_KEY is passed as attribute, configuring role is not required.">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="cmdb_v1_api" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="25" duration="1s"/>
+		</throttles>
+		<paramorstream name="INPUT_DATA" type="String" max-len="-1" secret="true" description="since it is an input stream, max-len is configured as -1. xml data will be sent as stream from CMDB API."/>
+		<url path="/api/cmdb/ci/list/all">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/list/all/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/list/all/[A-Za-z0-9]+" path-regex="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/count/all">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/count/all/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/count/[A-Za-z0-9]+" path-regex="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/count">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/count/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/[a-zA-Z0-9-^()%@$#&amp;!+:;/.]+" path-regex="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|update|delete|read|GET|Read"/>
+			<param name="sdpmobilenative" type="String" max-len="200" secret="true"/>
+		</url>
+		<url path="/api/cmdb/ci/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|update|delete|read|GET|Read"/>
+			<param name="sdpmobilenative" type="String" max-len="200" secret="true"/>
+		</url>
+		<url path="/api/cmdb/ci">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|update|delete|read|GET|Read"/>
+			<param name="sdpmobilenative" type="String" max-len="200" secret="true"/>
+		</url>
+
+		<!--	CI Type Operations	Start-->
+		<url path="/api/cmdb/citype">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/citype/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/citype/list">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/citype/list/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/citype/[a-zA-Z0-9-^()%@$#&amp;!+:;/.]+/cicount" path-regex="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+" path-regex="true" method="get" api="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+" path-regex="true" method="post" api="true" description="ROLE_NOT_REQUIRED: Since TECHNICIAN_KEY is passed as attribute, Configuring Roles and csrf attribute is not required. Also configuring Mandatory parameter is not needed for the below URLs with POST method.">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/citypeattributes/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/cirelationships/[a-zA-Z0-9%^()@$#&amp;!+:;/.]+(/[a-zA-Z0-9%^()@$#&amp;!+:;/.]+)?" path-regex="true" method="post" api="true" description="ROLE_NOT_REQUIRED: Since TECHNICIAN_KEY is passed as attribute, Configuring Roles and csrf attribute is not required. Also configuring Mandatory parameter is not needed for the below URLs with POST method.">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/cirelationships">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|delete|read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/cirelationships/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|delete|read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/cirelationships/[a-zA-Z0-9%^()@$#&amp;!+:;/.]+">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/software">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/software/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+	</urls>
+
+	<urls authentication="required"  method="post" api="true" user_type="all" description="ROLE_NOT_REQUIRED: Since TECHNICIAN_KEY is passed as attribute, Configuring Roles and csrf attribute is not required. Also configuring Mandatory parameter is not needed for the below URLs with POST method.">
+
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="cmdb_v1_api_post" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="25" duration="1s"/>
+		</throttles>
+		<paramorstream name="INPUT_DATA" type="String" max-len="-1" secret="true" description="since it is an input stream, max-len is configured as -1. xml data will be sent as stream from CMDB API."/>
+
+		<url path="/api/cmdb/ci/list/all">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/list/all/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/list/all/[A-Za-z0-9]+" path-regex="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/citype/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+/cicount" path-regex="true" method="post" api="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/citype/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+/cicount" path-regex="true" method="get" api="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/citype/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+" path-regex="true" method="post" api="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/citype/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+" path-regex="true" method="get" api="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/count/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/ci/[a-zA-Z0-9-^()%@$#&amp;!+:;/.]+" path-regex="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|update|delete|read|GET|Read"/>
+			<param name="sdpmobilenative" type="String" max-len="100" secret="true"/>
+		</url>
+		<url path="/api/cmdb/ci/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|update|delete|read|GET|Read"/>
+			<param name="sdpmobilenative" type="String" max-len="100" secret="true"/>
+		</url>
+		<url path="/api/cmdb/ci">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|update|delete|read|GET|Read"/>
+			<param name="sdpmobilenative" type="String" max-len="100" secret="true"/>
+		</url>
+		<!--	CI Type Operations	Start-->
+		<url path="/api/cmdb/citype">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/citype/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/citype/list">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/citype/list/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+
+		<url path="/api/cmdb/cirelationships/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+" method="get" api="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+
+		<url path="/api/cmdb/cirelationships/[a-zA-Z0-9-^()%@$#&amp;!+:;/.=?_]+" method="post" api="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="OPERATION_NAME" regex="add|read|GET|Read"/>
+			<param name="format" regex="json|xml"/>
+		</url>
+		<url path="/api/cmdb/citypeattributes" remote_server="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/citypeattributes/" remote_server="true">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/cirelationships">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|delete|read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/cirelationships/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add|delete|read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/cirelationships/[a-zA-Z0-9%^()&gt;&lt;-@$#&amp;!+:;/.]+">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="read|GET|Read"/>
+		</url>
+		<url path="/api/cmdb/software">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+		<url path="/api/cmdb/software/">
+			<param name="TECHNICIAN_KEY" type="String" max-len="100" secret="true"/>
+			<param name="format" regex="json|xml"/>
+			<param name="OPERATION_NAME" regex="add"/>
+		</url>
+
+	</urls>
+
+	<!--CMDB Tab URL changes  - Sampath-->
+	<urls authentication="required"  method="get"  >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="relationships_admin" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+		<!-- not checked all for all operation-values-->
+		<!-- Relationship Map (Tree View) CI Details Page, Tree-view Popup -->
+		<url path="/RelationshipMap.do"  roles="ViewCI" operation-param="action" operation-value="showRelMap,getChartData">
+			<param name="ciId" type="long" range=">0" />
+			<param name="mappedCIIDS" regex="ids" max-len="3000"/> <!-- Used in Tree-view while clicking any node -->
+			<param name="showCIInfoInDialog" type="boolean"/>
+			<param name="isPrintPreview" type="boolean"/>
+			<param name="fromdashboard" type="boolean"/>
+			<param name="isNewAssetDetailPage" type="boolean"/>
+			<param name="loadDataFromParent" type="boolean"/>
+			<param name="startIndx" type="long" range=">=0"/>
+			<param name="ciTypeId" type="long" range=">=0"/>
+			<param name="switchToOtherAppTab" type="boolean"/>
+			<param name="module" regex="Change|Request|Problem"/>
+		</url>
+		<!-- Relationship Map (Tree View) CI Details Page, Tree-view Popup -->
+
+	</urls>
+
+
+
+	<urls authentication="required"  method="post" csrf="true"  >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="relationships_admin_post" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+		<!-- Business View More Info -->
+		<url path="/BusinessViewMoreInfo.do" roles="ViewCI">
+			<param name="viewId" type="long" range=">0" min-occurrences="1"/>
+			<param name="ciId" type="long" range=">0" />
+		</url>
+		<!-- Business View More Info -->
+
+	</urls>
+
+
+	<urls authentication="required"  method="get"   allowed_portals="it" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="relationships_listview_it" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+		<url path="(/STATE_ID/[0-9]+)?/BusinessViewsListView.cc" path-regex="true" roles="ViewCI">
+			<param name="UNIQUE_ID" regex="BusinessViewsListView"/>
+			<param name="siteId" regex="-1|null|[0-9]+"/>
+		</url>
+
+	</urls>
+
+
+	<!-- Jagadeesh URLs -->
+	<urls authentication="required"  method="get"  >
+
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_details_get" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+		<!-- -->
+
+
+
+		<!-- Not sure -->
+		<url path="/cmdb/BusinessViewsListView.jsp"  roles="ViewCI"/>
+		<url method="get" roles="ViewCI" path="/jstree/JSTreeServlet" operation-param="entity" operation-value="ci_type">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_type_get_list" dynamic-throttle="true" >
+				<throttle lock-period="5M" threshold="30" duration="1M"/>
+			</throttles>
+		</url>
+		<url path="/ui/cmdb_module" method="get" roles="ViewCI,ViewAssociatedCI">
+			<param name="ci_type" regex="cmdb"/>
+			<param name="mode" regex="list|edit|add|details|popup" />
+			<param name="ciid" type="long" range=">0"/>
+			<param name="refEntity" type="String"/>
+			<param name="refField" type="String"/>
+			<param name="refInstanceId" type="long" range=">0"/>
+			<param name="from" regex="cmdb|CMDB"/>
+			<param name="defaultTab" regex="details|association|relationship|history"/>
+			<param name="defaultAssociatedModule" regex="request|change|problem|release"/>
+			<param name="gsearch" type="String" max-len="1000" secret="true" />
+		</url>
+		<!--	History for admin tab and module tab	-->
+		<url path="/common/ViewHistory.jsp" method="get" operation-param="module" operation-value="cmdb" roles="ViewCI,ViewAssociatedCI">
+			<param name="id" type="long" range=">0"/>
+			<param name="ci_type" regex="cmdb"/>
+			<param name="is_date_filter" type="boolean"/>
+			<param name="key" regex="cmdb"/>
+			<param name="is_new_history" type="boolean"/>
+		</url>
+		<url path="/common/ViewHistory.jsp" method="get" operation-param="module" operation-value="ci_sync_rules, ci_status, ci_types" roles="ConfigureCMDB">
+			<param name="id" type="long" range=">0" />
+			<param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+			<param name="admin_entity" regex="true"/>
+			<param name="key" regex="ci_sync_rules_history|ci_status_history"/>
+			<param name="is_new_history" type="boolean" />
+			<param name="search_filter" regex="ci_status|ci_sync_rule|ci_type" />
+			<param name="is_date_filter" type="boolean" />
+			<param name="skip_filter_options" type="String"/>
+		</url>
+		<!--	Moving from security-custom-module.xml to security-cmdbaccess.xml to use in AE build	-->
+		<url path="/common/ViewHistory.jsp" roles="SDAdmin" method="get" operation-param="module" operation-value="association_types">
+			<throttles name="association_types_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="association_types_history"/>
+			<param name="id" type="long" range=">=1" allow-invalid="false" />
+			<param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+			<param name="search_filter" regex="association_type"/>
+			<param name="admin_entity" type="boolean"/>
+			<param name="is_date_filter" type="boolean"/>
+		</url>
+
+
+		<!-- finished Upto here -->
+		<!-- openBusinessView - CMDB -> Business View HomePage http://localhost:8080/BusinessView.do?operation=openBusinessView
+			 dashboard, getWidgets -> Card View http://localhost:8080/BusinessView.do?operation=dashboard
+			 showMoreInfo, getCIDistribution -> on clicking ... on any business View -> It will lead us to CI Distribution -> changes -> Requests -> Solutions
+			 edit -> Editing any business View
+			 reorderViews, getListOfViews -> ReorderViews in Card Layout of Business Views
+			 Need to validate in Non-Admin Login
+		-->
+		<url path="/BusinessView.do" roles="ViewCI"  operation-param="operation" operation-value="edit,showMoreInfo,save,listView,dashboard,reorderViews,openBusinessView,getListOfViews,getViewDetails,getWidgets,getCIDistribution">
+			<!-- <param name="views" type="String" max-len="1000" description=""/> --><!-- not sure on this attribute --> -->
+			<!-- <param name="reorderedList" type="JSONArray" template="longarray" max-len="-1" array-size="0-100" /> -->
+			<param name="viewId" type="long" range=">0" />
+			<param name="viewName" type="String" max-len="200" secret="true"/>
+			<param name="description" type="String" max-len="2000" secret="true"/>
+			<param name="visibility" regex="private|public" />
+			<param name="baseCiid" type="long" range=">0" />
+			<param name="editable" type="boolean" />
+			<param name="sites" regex="^[0-9,]*$"/>
+			<param name="ciId" type="long" range=">0"/>
+			<param name="forBaseCI" type="String" max-len="20"/>
+		</url>
+		<!-- BusinessView Map -->
+
+
+		<!-- Cluster View D3 Map Relationships -->
+		<url path="/RelationshipMapD3.do" roles="ViewCI,ViewAssociatedCI"  operation-param="operation" operation-value="showRelD3,getData,getRelatedCIData">
+			<param name="viewId" regex="null|-1|[0-9]+"/>
+			<param name="ciId" type="long" range=">0" min-occurrences="1"/>
+			<param name="iframe" type="boolean" />
+			<param name="dashboard" type="boolean" />
+			<param name="mappedCIIDS" regex="ids" max-len="4000" description="Happens in businessViews Card Layout"/> <!-- happens in BusinessViews card Layout-->
+		</url>
+		<!-- Cluster View D3 Map Relationships -->
+
+
+		<!-- From Change, Request & Problem Modules, we can associate an asset in Add/Edit form using select2, there we are calling this URL -->
+		<url path="/selectci.json" user_type="all"  roles="SDChangeManager,ViewInventoryWS,CreateRequests,ModifyRequests">
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+"/>
+			<param name="searchText" type="String" max-len="250" secret="true"/>
+			<param name="page" type="long" range=">0"/>
+			<param name="null|[0-9]+"  name-regex="true" type="String" max-len="30" description="date string"/>
+		</url>
+		<!-- From Change, Request & Problem Modules, we can associate an asset in Add/Edit form using select2, there we are calling this URL -->
+
+	</urls>
+
+
+
+	<urls authentication="required"  method="get"   allowed_portals="facility,hr,blank" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_details_hr" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+		<url roles="ViewCI" path="(/STATE_ID/[0-9]+)?/BusinessViewsListView_HD_[0-9]+.cc" path-regex="true">
+			<param name="UNIQUE_ID" regex="BusinessViewsListView_HD_[0-9]+"/>
+			<param name="siteId" regex="-1|null|[0-9]+"/>
+		</url>
+
+	</urls>
+
+
+	<!-- finished upto here -->
+
+	<!-- Jagadeesh URLS -->
+	<urls authentication="required"  method="post" csrf="true"    >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ci_details_post" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+
+		<!-- Business Views -->
+		<url path="/BusinessView.do" roles="ViewCI"  operation-param="operation" operation-value="skipTour,editViewDetails,deleteView,saveView,updateView,reorderViewsPost">
+			<param name="operation" regex="^[a-zA-Z]*$" />
+			<param name="views" type="String" max-len="4000" secret="true"/> <!-- It's an array it has to be mentioned in js -->
+			<param name="reorderedList" type="JSONArray" template="longarray" max-len="4000" array-size="0-100" />
+			<param name="viewId" regex="null|[0-9]+"/>
+			<param name="viewName" type="String" max-len="200" secret="true"/>
+			<param name="description" type="String" max-len="2000" secret="true"/>
+			<param name="visibility" regex="private|public" />
+			<param name="baseCiid" type="long" range=">0" />
+			<param name="editable" regex="on|off|null"/>
+			<param name="sites" regex="^[0-9,]*$"/> <!-- plain Array -->
+			<param name="viewData" type="String" max-len="50000000" secret="true"/>
+		</url>
+		<!-- Business Views -->
+
+
+		<!-- Relationship Map D3 View Export as PNG and PDF -->
+		<url path="/RelationshipMapD3.do" roles="ViewCI,ViewAssociatedCI"  operation-param="operation" operation-value="export">
+			<param name="viewId" regex="null|-1|[0-9]+"/>
+			<param name="operation" regex="^[a-zA-Z]*$" />
+			<param name="ciId" type="long" range=">0"/>
+			<param name="mappedCIIDS" regex="^[0-9,]*$"/>
+			<param name="imageWidth" regex="^(?:[0-9]\d*|0)?(?:\.\d+)?$"/>
+			<param name="imageHeight" regex="^(?:[0-9]\d*|0)?(?:\.\d+)?$"/>
+			<param name="exportType" regex="pdf|png" min-occurrences="1"/>
+			<param name="exportFileName" type="String" max-len="300" secret="true"/>
+			<param name="datauri" type="String" max-len="5000000" secret="true" description="some random encoded text" min-occurrences="1"/>
+		</url>
+		<!-- Relationship Map D3 View Export aS PNG and PDF -->
+
+	</urls>
+
+	<jsontemplates>
+		<jsontemplate name="role_details_template_dept">
+			<key name="user" type="JSONObject" template="user_unique" max-len="-1"/>
+			<key name="org_role" type="JSONObject" template="org_role_unique" max-len="-1"/>
+			<key name="id" type="long" range=">0"/>
+		</jsontemplate>
+
+		<jsontemplate name="org_roles_template_dept">
+			<key name="role_details" type="JSONArray" template="role_details_template_dept" max-len="-1"/>
+			<key name="config_details" type="String" max-len="250"/>
+			<key name="config_type" type="String" max-len="250"/>
+		</jsontemplate>
+
+		<jsontemplate name="org_details_dept">
+			<key name="orgroles" type="JSONArray" template="org_roles_template_dept" max-len="-1"/>
+		</jsontemplate>
+	</jsontemplates>
+</security>
+
+
+		<!--
+        task 1. Description attribute should be there for max-len="-1", select2servlet
+        task 2. ajaxservlet (unused URLs removal)
+        task 3. post-get conversion check (csrf issue)
+        task 4. XML Entries in Sheet
+        task 5. max-occurrences and min-occurrences for edit CASe
+        task 6. roleless URLs
+
+        Recently found some issue in the review,
+
+        1. Some of the URLs (or operation params) are used in both get and post parameters.  This will cause csrf issue, so we need to specify separate operation params.
+
+        2. In BarcodeScanAction/UserAPISupportAction, we are using the method invocation directly without doGet/doPost methods, In these places, we need to add the below restrict to invoke from only post operations.
+        if(!"POST".equals(request.getMethod())){ return (mapping.findForward("AuthError"));//No I18N }
+
+        3. For operations which can be sensitive like API  key generation, we need to change as POST, instead of get operation.
+
+         4. We can remove the nurls disable-ex attribute in the module specific xmls, as they are unused now.
+
+        5. Need to specify range for the double values [cost]
+
+        6. Need to mention secret for the sensitive params which are added newly (fromaddress, toaddress in notifications / password)
+
+        7. user-type="all" need to be added for the URLs which can be invoked by requester also, Need to remove for other places.
+
+        Please check the above mentioned changes and change in the module specific urls.
+
+
+
+        -->
+		<!--$Id$-->

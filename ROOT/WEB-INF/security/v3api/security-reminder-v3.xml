@@ -1,0 +1,578 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true">
+        <url path="/api/v3/reminders" roles="" method="post"  description="FGR_APPLIED">
+            <throttles name="reminder_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/reminders/(\d+)" roles="" method="get"  description="FGR_APPLIED">
+            <throttles name="reminder_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/reminders/(\d+)" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/reminders" roles="" method="get"  description="FGR_APPLIED">
+            <throttles name="reminder_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/reminders/(\d+)" roles="" method="delete"  description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reminders/(_?)close" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/reminders/(_?)open" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/reminders" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/reminders" roles="" method="delete"  description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/reminders/(\d+)/(_?)close" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reminders/(\d+)/(_?)open" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reminders/(_?)allowed_values_for_fields" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reminders/(\d+)/(_?)allowed_values_for_fields" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reminders/(\d+)/_links" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reminders/_links" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reminders/_total_count" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/requests/(\d+)/reminders" roles="ViewRequests" method="post"  description="FGR_APPLIED">
+            <throttles name="reminder_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)" roles="" method="get"  description="FGR_APPLIED">
+            <throttles name="reminder_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders" roles="" method="get"  description="FGR_APPLIED">
+            <throttles name="reminder_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)" roles="" method="delete"  description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(_?)close" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(_?)open" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders" roles="" method="delete"  description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)/(_?)close" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)/(_?)open" roles="" method="put"  description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(_?)allowed_values_for_fields" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)/(_?)allowed_values_for_fields" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)/_links" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/_links" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/reminders/_total_count" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/releases/(\d+)/reminders" roles="" method="post" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)" roles="" method="delete" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(_?)close" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(_?)open" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders" roles="" method="delete" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)/(_?)close" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)/(_?)open" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(_?)allowed_values_for_fields" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)/(_?)allowed_values_for_fields" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)/_links" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/_links" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/_total_count" roles="=" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/reminders" roles="ViewProblems" method="post" description="FGR_APPLIED">
+            <throttles name="reminder_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)" roles="" method="get" description="FGR_APPLIED">
+            <throttles name="reminder_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)" roles="" method="put" description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders" roles="" method="get" description="FGR_APPLIED">
+            <throttles name="reminder_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>-
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)" roles="" method="delete" description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(_?)close" roles="" method="put" description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(_?)open" roles="" method="put" description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders" roles="" method="put" description="FGR_APPLIED" >
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders" roles="" method="delete" description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)/(_?)close" roles="" method="put" description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)/(_?)open" roles="" method="put" description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(_?)allowed_values_for_fields" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)/(_?)allowed_values_for_fields" roles="" method="get"  description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_for_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)/_links" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/_links" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/_total_count" roles="" method="get" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/changes/(\d+)/reminders" roles="" method="post" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)" roles="" method="delete" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(_?)close" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(_?)open" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reminder" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders" roles="" method="delete" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)/(_?)close" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)/(_?)open" roles="" method="put" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_open" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(_?)allowed_values_for_fields" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_list_info" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)/(_?)allowed_values_for_fields" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_allowed_values_list_info" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)/_links" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/_links" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="2500" regex="\d+((\,\d+)?){0,249}" allow-empty="false"/>
+            <throttles name="reminder_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/_total_count" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="reminder_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/reminders/(_?)metainfo" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/requests/(\d+)/reminders/(_?)metainfo" roles="ViewRequests" method="get" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(_?)metainfo" roles="ViewProblems" method="get"  description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(_?)metainfo" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(_?)metainfo" roles="" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/reminders/(\d+)/metainfo" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/requests/(\d+)/reminders/(\d+)/metainfo" roles="ViewRequests" method="get" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/reminders/(\d+)/metainfo" roles="ViewProblems" method="get"  description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/reminders/(\d+)/metainfo" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/reminders/(\d+)/metainfo" method="get" user_type="all" description="FGR_APPLIED">
+            <throttles name="reminder_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url method="get" path="/ui/reminders" roles="" operation-param="mode" operation-value="view" description="FGR_APPLIED">
+            <throttles key="url.path+url.dynamic_key" name="reminders_all" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <!--reminder urls for history starts -->
+        <url method="get" path="/api/v3/reminders/(\d+)/(_?)history" roles="" user_type="all" description="FGR_APPLIED">
+            <throttles key="url.path+url.dynamic_key" name="history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/reminders/(_?)history" roles="" user_type="all" description="FGR_APPLIED">
+            <throttles key="url.path+url.dynamic_key" name="history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url path="/common/ViewHistory.jsp" roles="" user_type="all" method="get" operation-param="module" operation-value="reminders" description="FGR_APPLIED">
+            <throttles key="url.path+url.dynamic_key" name="remindersViewhistory_jsp" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="id" type="long" range=">0"/>
+            <param name="key" regex="reminders_history"/>
+            <param name="entity_key" type="String" description="not possible to add regex as this key accepts i18n values"/>
+            <param name="admin_entity" type="boolean"/>
+            <param name="is_date_filter" type="boolean"/>
+            <param name="is_new_history" type="boolean" />
+        </url>
+
+        <!--reminder urls for history ends -->
+        <param name="format" regex="json"/>
+    </urls>
+</security>

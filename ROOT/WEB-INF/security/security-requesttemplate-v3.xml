@@ -1,0 +1,402 @@
+<!-- $Id$ -->
+<!-- Security for Request template related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required">
+		
+        <url path="/api/v3/request_templates" roles="IncidentRequestConfig,ServiceRequestConfig" method="post" api="true">
+            <param name="input_data" template="request_template_api_key" type="JSONObject" max-len="-1" />
+			<throttles name="request_templates_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>			
+        </url>
+        <url path="/api/v3/request_templates/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="put" api="true">
+            <param name="input_data" template="request_template_api_key" type="JSONObject" max-len="-1" />
+			<throttles name="request_templates_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>				
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/mark_active" roles="IncidentRequestConfig,ServiceRequestConfig" method="put"  api="true">
+			<throttles name="request_templates_active" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>			
+		</url>
+        
+
+		<url path="/api/v3/request_templates/(\d+)/sla_associations/sla" roles="ServiceRequestConfig" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="request_templates_sla_assocations_sla" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+        <url method="post" roles="IncidentRequestConfig,ServiceRequestConfig" path="/api/v3/request_templates/images" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" roles="IncidentRequestConfig,ServiceRequestConfig" path="/api/v3/request_templates/(\d+)/images" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <!--Role not mentioned here as Entity Authorization will be invoked.
+        User can access the image using key independent of role-->
+        <url method="get" user_type="all" roles="" path="/api/v3/request_templates/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED : AS ENTITY AUTHORIZATION WILL BE INVOKED">
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+            <throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <!--Role not mentioned here as Entity Authorization will be invoked.
+        User can access the image using key independent of role/user_type-->
+        <url method="get" roles="" path="/api/v3/request_templates/images/(\d+)">
+            <throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <!--allowed values API for request template default images-->
+        <url method="get" roles="IncidentRequestConfig,ServiceRequestConfig" path="/api/v3/request_templates/icon">
+            <throttles key="url.path+url.dynamic_key" name="icon" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+	
+	<urls authentication="required">
+		
+		<!-- This URL will be generated by framwork for requesttemplate.json in which get is defined-->
+        <!--url path="/api/v3/request_templates/(\d+)" user_type="all" method="get"/-->
+		
+		<url path="/api/v3/request_templates" roles="IncidentRequestConfig,ServiceRequestConfig" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+			<throttles name="request_templates_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>				
+		</url>
+		
+        <url path="/api/v3/request_templates/(\d+)/meta_info" roles="IncidentRequestConfig,ServiceRequestConfig" method="get" >
+			<throttles name="request_templates_meta" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>	
+		</url>
+		
+		<url path="/api/v3/additional_fields" roles="IncidentRequestConfig,ServiceRequestConfig" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+			<throttles name="additional_fields_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>				
+        </url>  
+
+        <url path="/api/v3/additional_fields/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="get">
+			<throttles name="additional_fields_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+        
+		
+        <url path="/api/v3/request_template_newform" roles="IncidentRequestConfig,ServiceRequestConfig" method="get">
+            <param name="input_data" template="request_temp_form_key" type="JSONObject" max-len="-1" />
+			<throttles name="request_templates_new" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>				
+        </url>    
+		
+        <url path="/api/v3/request_template_newform_meta_info" roles="IncidentRequestConfig,ServiceRequestConfig" method="get">
+            <param name="input_data" template="request_temp_metaform_key" type="JSONObject" max-len="-1" />
+			<throttles name="request_templates_new_meta" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>				
+        </url>
+		
+        <url path="/api/v3/request_template_request/(\d+)" roles="ViewRequests" user_type="all" method="get"> 
+             <param name="APPROVAL_KEY" type="String" max-len="3500" secret="true"/>
+			<throttles name="request_template_request_th" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>			 
+		</url> 
+        
+	</urls>
+	
+	<urls authentication="required">
+		
+		<url path="/api/v3/request_templates" roles="IncidentRequestConfig,ServiceRequestConfig" method="delete" api="true">
+            <param name="ids" max-len="3000" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" />
+			<throttles name="request_templates_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>				
+        </url>
+		
+        <url path="/api/v3/request_templates/(\d+)/task_configurations" roles="IncidentRequestConfig,ServiceRequestConfig" method="put"  api="true">
+            <param name="input_data" template="request_template_api_key" type="JSONObject" max-len="-1" />
+			<throttles name="request_templates_task" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>				
+        </url>
+				
+        <url path="/api/v3/request_templates/(\d+)/approval_configurations" roles="IncidentRequestConfig,ServiceRequestConfig" method="put" api="true">
+            <param name="input_data" template="request_template_api_key" type="JSONObject" max-len="-1" />
+            <throttles name="request_templates_approvals" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+        </url>
+		
+        <url path="/api/v3/request_templates/(\d+)/copyTemplate" roles="IncidentRequestConfig,ServiceRequestConfig" method="post" api="true">
+            <param name="input_data" template="copy_template_key" type="JSONObject" max-len="-1" />
+			<throttles name="request_templates_copy" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>				
+        </url> 
+		
+		<url path="/api/v3/additional_fields" roles="IncidentRequestConfig,ServiceRequestConfig" method="delete" api="true">
+            <param name="ids" max-len="3000" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" />
+			<throttles name="additional_fields_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>			
+        </url> 
+		
+		<url path="/api/v3/additional_fields" roles="IncidentRequestConfig,ServiceRequestConfig" method="post" api="true">
+            <param name="input_data" template="udf_field_api_key" type="JSONObject" max-len="-1" />
+			<throttles name="additional_fields_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>			
+        </url> 
+        <url path="/api/v3/additional_fields/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="put" api="true">
+            <param name="input_data" template="udf_field_api_key" type="JSONObject" max-len="-1" />
+			<throttles name="additional_fields_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>				
+    	</url> 
+		
+        <!-- Consilio Changes start-->
+		<!-- Using 60 throttle for post and delete as key account customer uses this for integration-->
+        <url path="/api/v3/udf__fields/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="post" api="true">
+            <param name="input_data" template="udf__field_api_key" type="JSONObject" max-len="-1" />
+			<throttles name="udf__fields_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>			
+    	</url> 
+		<url path="/api/v3/udf__fields/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="delete" api="true">
+            <param name="input_data" template="udf__field_api_key" type="JSONObject" max-len="-1" />
+			<throttles name="udf__fields_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>			
+		</url>
+        <!-- Consilio Changes End-->  		
+		
+		<!-- Below URL is not used -->
+        <!--url path="/api/v3/request_template_request" user_type="all" method="get" /-->
+		<url path="/api/v3/request_templates/(\d+)/enable" roles="IncidentRequestConfig,ServiceRequestConfig" method="put"  api="true">
+			<throttles name="request_templates_enable" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>			
+		</url>
+        <url path="/api/v3/request_templates/(\d+)/disable" roles="IncidentRequestConfig,ServiceRequestConfig" method="put"  api="true">
+			<throttles name="request_templates_disable" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>			
+		</url>
+        <url path="/api/v3/request_templates/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="delete" api="true">
+			<throttles name="request_templates_sdelete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>			
+        </url>
+	</urls>
+        <!---
+Moving the JSON templates from security-api-v3-manuan.xml starts here
+-->
+<jsontemplates>
+        <jsontemplate name="udf_fields_ref_temp">
+            <key name-regex="true" name="udf_pick" max-len="3500" type="JSONObject" template="IDNameJson" max-occurrences="200" secret="true" />
+            <key name-regex="true" name="udf_sline" max-len="3500" type="String" max-occurrences="200"  secret="true" />
+            <key name-regex="true" name="udf_mline" max-len="3500" type="String" max-occurrences="200"  secret="true" />
+            <key name-regex="true" name="udf_long_" type="long" max-occurrences="200"  secret="true" />
+            <key name-regex="true" name="udf_decimal_" type="double" max-occurrences="200" secret="true" />
+            <key name-regex="true" name="udf_date_" type="JSONObject" template="datefield" max-occurrences="200" secret="true" />
+        </jsontemplate>
+        <jsontemplate name="request_template_task_ids_template">
+            <key index="0-149" type="JSONObject" template="IDJson" />
+        </jsontemplate>
+        <jsontemplate name="IDJson">
+            <key name="id" type="long"  />
+        </jsontemplate>
+        <jsontemplate name="request_template_api_key">
+            <key name="request_templates" template="request_template_json" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="request_template_json">
+            <key name="name" max-len="250" type="String" />
+            <key name="description" max-len="1000" type="String"  secret="true" />
+            <key name="is_service_template" type="boolean" />
+            <key name="show_to_requester" type="boolean" />
+            <key name="layouts" template="template_layout_json" type="JSONArray" max-len="-1" array-size="1-3" />
+            <key name="approval_levels" template="approval_level_template" type="JSONArray" max-len="-1" array-size="0-100" />
+            <key name="approval_configurations" template="approval_configuration_template" type="JSONObject" max-len="-1" />
+            <key name="task_configurations" template="task_configuration_template" type="JSONObject" max-len="-1" />
+            <key name="request" type="JSONObject" template="request_temp_def_values" max-len="-1" />
+            <key name="service_category" template="service_category_unique" type="JSONObject" max-len="-1" />
+            <key name="support_groups" type="JSONArray" template="IDNameJson" max-len="-1" array-size="0-100" />
+            <key name="user_groups" type="JSONArray" template="IDNameJson" max-len="-1" array-size="0-100" />
+            <key name="is_cost_enabled" type="boolean" />
+            <key name="cost_details" type="JSONObject" template="cost_info_json" max-len="-1" />
+            <key name="help_text"  xss="sdpantisamyfilter"  max-len="-1" />
+            <key name="style_properties" type="JSONObject" template="template_style_properties" max-len="-1" />
+            <key name="icon" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="technician_help_text"  xss="sdpantisamyfilter"  max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="copy_template_key">
+            <key name="request_templates" type="JSONObject" template="copy_template_json" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="cost_info_json">
+            <key name="service_cost" type="double" />
+            <key name="cost_comments" type="String" max-len="2000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="copy_template_json">
+            <key name="no_of_copies" type="long" range="1-5" />
+            <key name="service_category" template="service_category_unique" type="JSONObject" max-len="-1" />
+			<!--Name is generated internally so commenting. Will be useful in future if we support name -->
+            <!--key name="name" type="String" /-->
+            <key name="copyto" regex="incident|service|Incident|Service" />
+            <key name="copy_as_inactive" type="boolean" />
+        </jsontemplate>
+        <jsontemplate name="request_temp_form_key">
+            <key name="request_template_newform" type="JSONObject" template="request_temp_form" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="request_temp_form">
+            <key name="is_service_template" type="boolean" />
+            <key name="service_category" template="service_category_unique" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="request_temp_metaform_key">
+            <key name="request_template_newform_meta_info" type="JSONObject" template="request_temp_metaform" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="request_temp_metaform">
+            <key name="service_category" template="service_category_unique" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="udf_field_api_key">
+            <key name="additional_fields" template="udf_field_addition" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="udf_field_addition">
+            <key name="module" regex="request|checklist" />
+            <key name="sub_module" regex="Service|Incident|incident|service" />
+            <key name="name" type="String" max-len="100" />
+            <key name="description" type="String" max-len="250" />
+            <key name="field_type" regex="single_line|multi_line|numeric|decimal|pick_list|date/time|radio|checkbox|multi_select|boolean" />
+            <key name="service_category" template="service_category_unique" type="JSONObject" max-len="-1" />
+            <key name="allowed_values" type="JSONArray" max-len="-1" template="allowed_Values_array" array-size=">=0" />
+            <key name="isPII" type="boolean" />
+            <key name="encrypt_field" type="boolean" />
+            <key name="field_key" type="String" />
+            <key name="column_name" type="String" />
+            <key name="default_value" type="String" max-len="500" />
+            <key name="constraints" type="JSONObject" template="udf_constraints_temp" />
+        </jsontemplate>
+        <jsontemplate name="udf_constraints_temp">
+            <key name="fixed_length" type="int"  />
+            <key name="allow_numbers_only" type="boolean"  />
+        </jsontemplate>
+        <jsontemplate name="resources_temp_key">
+            <key name="resources" template="resource_template" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="resource_template">
+            <key name="title" type="String" max-len="200" />
+            <key name="description" type="String" max-len="1500" />
+            <key name="questions" type="JSONArray" template="IDNameJson" max-len="-1" array-size=">=0" />
+        </jsontemplate>
+        <jsontemplate name="request_temp_def_values">
+            <key name="subject" type="String" max-len="250" secret="true" />
+            <key name="description" type="JSONObject" template="reqtemp_desc_template" max-len="-1" secret="true"  />
+            <key name="resolution" type="JSONObject" template="reqtemp_desc_template" max-len="-1" secret="true"  />
+            <key name="impact_details" type="String" max-len="250" />
+            <key name="impact" template="impact_unique" type="JSONObject" max-len="-1" />
+            <key name="status" template="status_unique" type="JSONObject" max-len="-1" />
+            <key name="udf_fields" template="udf_fields_ref_temp" type="JSONObject" max-len="-1" />
+            <key name="mode" template="mode_unique" type="JSONObject" max-len="-1" />
+            <key name="sla" template="sla_unique" type="JSONObject" max-len="-1" />
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1" />
+            <key name="service_category" template="service_category_unique" type="JSONObject" max-len="-1" />
+            <key name="group" template="support_group_unique" type="JSONObject" max-len="-1" />
+            <key name="technician" template="user_unique" type="JSONObject" max-len="-1" />
+            <key name="priority" template="priority_unique" type="JSONObject" max-len="-1" />
+            <key name="level" template="level_unique" type="JSONObject" max-len="-1" />
+            <key name="category" template="category_unique" type="JSONObject" max-len="-1" />
+            <key name="subcategory" template="subcategory_unique" type="JSONObject" max-len="-1" />
+            <key name="item" template="item_unique" type="JSONObject" max-len="-1" />
+            <key name="urgency" template="urgency_unique" type="JSONObject" max-len="-1" />
+            <key name="request_type" template="request_type_unique" type="JSONObject" max-len="-1" />
+            <key name="email_ids_to_notify" template="emailarray" type="JSONArray" max-len="-1" array-size="0-100" secret="true"  />
+            <key name="editor" template="editor_values_template" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="editor_values_template" disable-extra-key="true">
+            <key name="org_role" template="org_role_unique" type="JSONObject" max-len="-1" />
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="reqtemp_desc_template">
+            <key name="content" xss="sdpantisamyfilter" max-len="-1" max-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="allowed_Values_array">
+			<!-- id param takes alphanumeric -->
+            <key name="id" type="String" max-len="500" />
+            <key name="name" type="String" max-len="500" />
+        </jsontemplate>
+        <jsontemplate name="template_layout_json">
+            <key name="name" min-occurrences="1" regex="requester_layout|technician_layout|resource_layout" />
+            <key name="resource_view" regex="1|2" />
+            <key name="sections" type="JSONArray" max-len="-1" template="template_layout_section" array-size="0-100" />
+        </jsontemplate>
+        <jsontemplate name="template_layout_section">
+            <key name="name" type="String" max-len="1000" />
+            <key name="help_text" type="String" max-len="2500" />
+            <key name="is_expandable" type="boolean" />
+            <key name="position" type="JSONObject" template="field_position" max-len="-1" />
+            <key name="fields" type="JSONArray" max-len="-1" template="layout_field" array-size="0-500" />
+            <key name="collapsed_state" regex="collapsed|expanded|none" />
+	    <!-- column_count modified for flexible layouts-->
+            <key name="column_count" regex="1|2|3|4|12" />
+            <key name="field_align" regex="left-right|top-bottom" />
+            <key name="title" type="String" max-len="1500" /> <!-- used to denote the resource section title -->
+            <key name="style_properties" type="JSONObject" template="template_style_properties" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="layout_field">
+            <key name="name" regex="template_fields"  />
+            <key name="position" type="JSONObject" template="field_position" max-len="-1" />
+            <key name="requester_can_view" type="boolean" />
+            <key name="mandatory" type="boolean" />
+            <key name="requester_can_edit" type="boolean" />
+            <key name="help_text" type="String" max-len="1500" />
+            <key name="height" type="long" />
+            <key name="options_display" regex="Vertical|Horizontal|vertical|horizontal" />
+            <key name="style_properties" type="JSONObject" template="style_properties" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="field_position">
+            <key name="row" type="int" />
+            <key name="col" type="int" />
+            <key name="col_size" type="int" />
+            <key name="row_size" type="int" />
+            <key name="field_layout" regex="left-right|top-bottom" />
+        </jsontemplate>
+        <jsontemplate name="approval_configuration_template">
+            <key name="approval_notification_on_create" type="boolean"/>
+            <key name="all_should_approve" type="boolean"/>
+            <key name="any_one_can_approve" type="boolean"/>
+            <key name="assign_tech_after_approve" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="task_configuration_template">
+            <key name="trigger_after_creation" type="boolean"  />
+            <key name="trigger_after_approval" type="boolean"  />
+            <key name="manual_trigger" type="boolean"  />
+            <key name="create_after_approval" type="boolean" />
+            <key name="can_requester_view_tasks" type="boolean" />
+        </jsontemplate>
+
+</jsontemplates>
+ <!---
+Moving the JSON templates from security-api-v3-manuan.xml ends here
+-->
+</security>
+

@@ -1,0 +1,294 @@
+{
+	"attributes": [{
+		"name": "id",
+		"type": "Number",
+		"desc": "Unique identifier used to identify the support group.",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"isMandatory": "true",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "name",
+		"type": "String",
+		"desc": "Name of the support group",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "description",
+		"type": "String",
+		"desc": "description",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "site",
+		"type": "Object",
+		"desc": "Site to which support group belong",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "deleted",
+		"type": "boolean",
+		"desc": "Indicates whether the support group is active or not",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "sender_name",
+		"type": "String",
+		"desc": "Support group's sender name",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "sender_email_id",
+		"type": "String",
+		"desc": "Support group's sender email id",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "group_email_id",
+		"type": "Array of Objects",
+		"desc": "Support group's email id",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "technicians",
+		"type": "Array of Objects",
+		"desc": "Support group's interested technicians",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "role_associations",
+		"type": "Array of Objects",
+		"desc": "Associated user of Support Group's role",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "request_add_notify",
+		"type": "Array of Objects",
+		"desc": "notifications to be sent to the above group of technicians when a new request is added",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "request_edit_notify",
+		"type": "Array of Objects",
+		"desc": "notifications to be sent to the above group of technicians when a request is edited",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "request_unpick_notify",
+		"type": "Array of Objects",
+		"desc": "Notifications to be sent to the above group of technicians when a request is unpicked",
+		"graphView": "",
+		"column": "",
+		"html_type": "",
+		"inOP": "true",
+		"isReleased": "true"
+	}],
+	"operations": [{
+		"name": "",
+		"method": "POST",
+		"moduleName" : "Common",
+		"path": "/api/v3/support_groups",
+		"desc": "This operation lets you add a support group.",
+		"disp_desc": "Add support group",
+		"workflow": "",
+		"input": {
+			"name": "INPUT_DATA",
+			"showattr": "true",
+			"sample": "{\"support_group\":{\"request_unpick_notify\":{\"escalation_after_days\":\"10\",\"escalation_users\":[{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}],\"escalation_after_hours\":\"23\",\"escalation_after_minutes\":\"5\"},\"request_edit_notify\":{\"escalation_users\":[{\"id\":\"5\"},{\"id\":\"6\"},{\"id\":\"7\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"deleted\":false,\"technicians\":[{\"id\":\"5\"},{\"id\":\"6\"},{\"id\":\"7\"}],\"name\":\"Completeaddcustom\",\"group_email_id\":[\"acme@zylker.com\"],\"description\":\"Completeaddcustom\",\"sender_name\":\"acme@zylker.com\",\"request_add_notify\":{\"escalation_users\":[{\"id\":\"5\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"sender_email_id\":\"acme@zylker.com\",\"role_associations\":[{\"group_role\":{\"id\":\"14\"},\"user\":{\"id\":\"5\"}}]}}"
+		},
+		"output": {
+			"sample": "{\"support_group\":{\"id\":\"14\",\"request_unpick_notify\":{\"escalation_after_days\":\"10\",\"escalation_users\":[{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}],\"escalation_after_hours\":\"23\",\"escalation_after_minutes\":\"5\"},\"request_edit_notify\":{\"escalation_users\":[{\"id\":\"5\"},{\"id\":\"6\"},{\"id\":\"7\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"deleted\":false,\"technicians\":[{\"id\":\"5\"},{\"id\":\"6\"},{\"id\":\"7\"}],\"name\":\"Completeaddcustom\",\"group_email_id\":[\"acme@zylker.com\"],\"description\":\"Completeaddcustom\",\"sender_name\":\"acme@zylker.com\",\"request_add_notify\":{\"escalation_users\":[{\"id\":\"5\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"sender_email_id\":\"acme@zylker.com\",\"role_associations\":[{\"group_role\":{\"id\":\"14\"},\"user\":{\"id\":\"5\"}}]},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": "/api/v3/support_groups/{support_group_id}",
+		"desc": "This operation lets you update a support group.",
+		"disp_desc": "Update support group",
+		"workflow": "",
+		"input": {
+			"name": "INPUT_DATA",
+			"showattr": "true",
+			"sample": "{\"support_group\":{\"request_edit_notify\":{\"escalation_users\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"technicians\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"description\":\"Network\",\"sender_name\":null,\"request_add_notify\":{\"escalation_users\":[{\"id\":\"5\"}]},\"request_unpick_notify\":{\"escalation_after_days\":\"10\",\"escalation_users\":[{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}],\"escalation_after_hours\":\"23\",\"escalation_after_minutes\":\"0\"},\"site\":null,\"deleted\":false,\"name\":\"Network2\",\"group_email_id\":[],\"sender_email_id\":null,\"role_associations\":[{\"group_role\":{\"id\":\"14\"},\"user\":{\"id\":\"5\"}}]}}"
+		},
+		"output": {
+			"sample": "{\"support_group\":{\"request_edit_notify\":{\"escalation_users\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"technicians\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"description\":\"Network\",\"sender_name\":null,\"request_add_notify\":{\"escalation_users\":[{\"id\":\"5\"}],\"escalation_roles\":[]},\"request_unpick_notify\":{\"escalation_after_days\":\"10\",\"escalation_users\":[{\"id\":\"6\"}],\"escalation_roles\":[{\"name\":\"GR\",\"id\":\"14\",\"display_name\":\"$GR$\"}],\"escalation_after_hours\":\"23\",\"escalation_after_minutes\":\"0\"},\"site\":null,\"deleted\":false,\"name\":\"Network2\",\"group_email_id\":[],\"id\":\"14\",\"sender_email_id\":null,\"role_associations\":[]},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "DELETE",
+		"moduleName" : "Common",
+		"path": "/api/v3/support_groups/{support_group_id}",
+		"desc": "This operation lets you delete a support group.",
+		"disp_desc": "Delete support group",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\": {\"status_code\": 2000,\"status\": \"success\"}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "GET",
+		"moduleName" : "Common",
+		"path": "/api/v3/support_groups/{support_group_id}",
+		"desc": "This operation fetches details of a support group.",
+		"disp_desc": "View support group",
+		"workflow": "",
+		"output": {
+			"sample": "{\"support_group\":{\"request_edit_notify\":{\"escalation_users\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"technicians\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"description\":\"Network\",\"sender_name\":null,\"request_add_notify\":{\"escalation_users\":[{\"id\":\"5\"}],\"escalation_roles\":[]},\"request_unpick_notify\":{\"escalation_after_days\":\"10\",\"escalation_users\":[{\"id\":\"6\"}],\"escalation_roles\":[{\"name\":\"GR\",\"id\":\"14\",\"display_name\":\"$GR$\"}],\"escalation_after_hours\":\"23\",\"escalation_after_minutes\":\"0\"},\"site\":null,\"deleted\":false,\"name\":\"Network2\",\"group_email_id\":[],\"id\":\"14\",\"sender_email_id\":null,\"role_associations\":[]},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "GET",
+		"moduleName" : "Common",
+		"path": ["/api/v3/support_groups"],
+		"desc": "This operation fetches all support groups.",
+		"disp_desc": "View all support groups",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"support_groups\":[{\"site\":null,\"deleted\":false,\"name\":\"HardwareProblems\",\"description\":\"\",\"sender_name\":null,\"id\":\"1\",\"sender_email_id\":null},{\"site\":null,\"deleted\":false,\"name\":\"Network\",\"description\":\"\",\"sender_name\":null,\"id\":\"2\",\"sender_email_id\":null},{\"site\":null,\"deleted\":false,\"name\":\"PrinterProblems\",\"description\":\"\",\"sender_name\":null,\"id\":\"3\",\"sender_email_id\":null},{\"site\":null,\"deleted\":false,\"name\":\"Network1\",\"description\":null,\"sender_name\":null,\"id\":\"302\",\"sender_email_id\":null}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":4}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": ["/api/v3/support_groups/{support_group_id}"],
+		"desc": "This operation associates user for the Group roles for a support group.",
+		"disp_desc": "Associate user for Group roles",
+		"workflow": "",
+		"input": {
+		    "showattr": "true",
+			"sample": "{\"support_group\": {\"role_associations\": [{\"group_role\": {\"id\": \"8\"},\"user\": {\"id\": \"4\"}}, {\"group_role\": {\"id\": \"9\"},\"user\": {\"id\": \"4\"}}]}}"
+		},
+		"output": {
+			"sample": "{\"support_group\":{\"request_edit_notify\":{\"escalation_users\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"technicians\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"description\":\"Network\",\"sender_name\":null,\"request_add_notify\":{\"escalation_users\":[{\"id\":\"5\"}],\"escalation_roles\":[]},\"request_unpick_notify\":{\"escalation_after_days\":\"10\",\"escalation_users\":[{\"id\":\"6\"}],\"escalation_roles\":[{\"name\":\"GR\",\"id\":\"14\",\"display_name\":\"$GR$\"}],\"escalation_after_hours\":\"23\",\"escalation_after_minutes\":\"0\"},\"site\":null,\"deleted\":false,\"name\":\"Network2\",\"group_email_id\":[],\"id\":\"14\",\"sender_email_id\":null,\"role_associations\":[{\"group_role\": {\"id\": \"8\"},\"user\": {\"id\": \"4\"}}, {\"group_role\": {\"id\": \"9\"},\"user\": {\"id\": \"4\"}}]},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": ["/api/v3/support_groups/{support_group_id}"],
+		"desc": "This operation dissociate user for the Group roles for a support group.",
+		"disp_desc": "Dissociate user for Group role",
+		"workflow": "",
+		"input": {
+		    "showattr": "true",
+			"sample": "{\"support_group\": {\"role_associations\": []}}"	
+		},
+		"output": {
+			"sample": "{\"support_group\":{\"request_edit_notify\":{\"escalation_users\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"escalation_roles\":[{\"id\":\"14\"}]},\"technicians\":[{\"id\":\"5\"},{\"id\":\"6\"}],\"description\":\"Network\",\"sender_name\":null,\"request_add_notify\":{\"escalation_users\":[{\"id\":\"5\"}],\"escalation_roles\":[]},\"request_unpick_notify\":{\"escalation_after_days\":\"10\",\"escalation_users\":[{\"id\":\"6\"}],\"escalation_roles\":[{\"name\":\"GR\",\"id\":\"14\",\"display_name\":\"$GR$\"}],\"escalation_after_hours\":\"23\",\"escalation_after_minutes\":\"0\"},\"site\":null,\"deleted\":false,\"name\":\"Network2\",\"group_email_id\":[],\"id\":\"14\",\"sender_email_id\":null,\"role_associations\":[]},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Common",
+		"path": ["/api/v3/support_groups?ids={support_group_ids}"],
+		"desc": "This operation update support group in bulk.",
+		"disp_desc": "Bulk Edit",
+		"workflow": "",
+		"input": {
+		    "showattr": "true",
+			"sample": "{\"support_group\":{\"technicians\":[{\"id\":\"7\"}]}}"
+		},
+		"output": {
+			"sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"1\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"2\",\"status\":\"success\"}],\"support_groups\":[{\"request_edit_notify\":{\"escalation_users\":[],\"escalation_roles\":[],\"id\":\"3\"},\"technicians\":[{\"id\":\"7\"},{\"id\":\"10\"},{\"id\":\"8\"}],\"description\":\"Allrequestsrelatedtohardwareproblemsareassignedtothisgroup.\",\"sender_name\":null,\"request_add_notify\":{\"escalation_users\":[{\"id\":\"10\"},{\"id\":\"7\"}],\"escalation_roles\":[],\"id\":\"1\"},\"request_unpick_notify\":{\"escalation_after_days\":\"0\",\"escalation_users\":[{\"id\":\"10\"}],\"escalation_roles\":[],\"escalation_after_hours\":\"1\",\"id\":\"2\",\"escalation_after_minutes\":\"0\"},\"site\":null,\"deleted\":false,\"name\":\"HardwareProblems\",\"group_email_id\":[],\"id\":\"1\",\"sender_email_id\":null,\"role_associations\":[]},{\"request_edit_notify\":{\"escalation_users\":[],\"escalation_roles\":[],\"id\":\"6\"},\"technicians\":[{\"id\":\"7\"},{\"id\":\"9\"},{\"id\":\"10\"},{\"id\":\"8\"}],\"description\":\"AllRequestsareassignedtothisGroup.AllNetworkrelatedrequestshavetobeattendedin30mins\",\"sender_name\":null,\"request_add_notify\":{\"escalation_users\":[{\"id\":\"10\"},{\"id\":\"9\"},{\"id\":\"7\"}],\"escalation_roles\":[],\"id\":\"4\"},\"request_unpick_notify\":{\"escalation_after_days\":\"0\",\"escalation_users\":[{\"id\":\"7\"}],\"escalation_roles\":[],\"escalation_after_hours\":\"0\",\"id\":\"5\",\"escalation_after_minutes\":\"30\"},\"site\":null,\"deleted\":false,\"name\":\"Network\",\"group_email_id\":[],\"id\":\"2\",\"sender_email_id\":null,\"role_associations\":[]}]}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "DELETE",
+		"moduleName" : "Common",
+        "path": ["/api/v3/support_groups?ids={support_group_ids}"],
+		"desc": "This operation delete support group in bulk.",
+		"disp_desc": "Bulk Delete",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"2\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"3\",\"status\":\"success\"}]}"
+		},
+		"inOP": "true",
+		"isReleased": "true"
+	},{
+        "name": "",
+        "method": "GET",
+		"moduleName" : "Common",
+        "path": ["/api/v3/support_groups/history"],
+        "desc": "This operation fetches all support group history.",
+        "disp_desc": "View support group global history",
+        "workflow": "",
+        "output": {
+            "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2},\"history\":[{\"support_group\":{\"name\":\"Network2\",\"id\":\"601\"},\"by\":{\"id\":\"5\"},\"diff\":[{\"field\":{\"name\":\"technicians\",\"display_name\":\"Technicians\"},\"previous_value\":null,\"current_value\":\"[6]\"},{\"field\":{\"name\":\"description\",\"display_name\":\"Description\"},\"previous_value\":null,\"current_value\":\"Network\"},{\"field\":{\"name\":\"name\",\"display_name\":\"Name\"},\"previous_value\":\"Network2\",\"current_value\":\"Network2\"}],\"id\":\"1202\",\"time\":{\"display_value\":\"Aug26,202209:44AM\",\"date\":\"Aug26,2022\",\"time\":\"09:44AM\",\"value\":\"1661487296947\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"operation\":\"edit\",\"entity\":\"support_group\",\"user_agent\":\"Mozilla/5.0(WindowsNT10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/104.0.5112.102Safari/537.36\"},{\"support_group\":{\"name\":\"Network2\",\"id\":\"601\"},\"by\":{\"id\":\"5\"},\"diff\":[{\"field\":{\"name\":\"support_group\"},\"previous_value\":null,\"current_value\":\"Network2\"}],\"id\":\"1201\",\"time\":{\"display_value\":\"Aug26,202209:44AM\",\"date\":\"Aug26,2022\",\"time\":\"09:44AM\",\"value\":\"1661487272528\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"operation\":\"add\",\"entity\":\"support_group\",\"user_agent\":\"Mozilla/5.0(WindowsNT10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/104.0.5112.102Safari/537.36\"}]}"
+        },
+        "inOP": "true",
+        "isReleased": "true"
+    }, {
+        "name": "",
+        "method": "GET",
+		"moduleName" : "Common",
+        "path": "/api/v3/support_groups/{support_group_id}/history",
+        "desc": "This operation fetches history of a support group.",
+        "disp_desc": "View support group history",
+        "workflow": "",
+        "output": {
+            "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2},\"history\":[{\"support_group\":{\"name\":\"Network2\",\"id\":\"601\"},\"by\":{\"id\":\"5\"},\"diff\":[{\"field\":{\"name\":\"technicians\",\"display_name\":\"Technicians\"},\"previous_value\":null,\"current_value\":\"[6]\"},{\"field\":{\"name\":\"description\",\"display_name\":\"Description\"},\"previous_value\":null,\"current_value\":\"Network\"},{\"field\":{\"name\":\"name\",\"display_name\":\"Name\"},\"previous_value\":\"Network2\",\"current_value\":\"Network2\"}],\"id\":\"1202\",\"time\":{\"display_value\":\"Aug26,202209:44AM\",\"date\":\"Aug26,2022\",\"time\":\"09:44AM\",\"value\":\"1661487296947\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"operation\":\"edit\",\"entity\":\"support_group\",\"user_agent\":\"Mozilla/5.0(WindowsNT10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/104.0.5112.102Safari/537.36\"},{\"support_group\":{\"name\":\"Network2\",\"id\":\"601\"},\"by\":{\"id\":\"5\"},\"diff\":[{\"field\":{\"name\":\"support_group\"},\"previous_value\":null,\"current_value\":\"Network2\"}],\"id\":\"1201\",\"time\":{\"display_value\":\"Aug26,202209:44AM\",\"date\":\"Aug26,2022\",\"time\":\"09:44AM\",\"value\":\"1661487272528\"},\"ip_address\":\"0:0:0:0:0:0:0:1\",\"operation\":\"add\",\"entity\":\"support_group\",\"user_agent\":\"Mozilla/5.0(WindowsNT10.0;Win64;x64)AppleWebKit/537.36(KHTML,likeGecko)Chrome/104.0.5112.102Safari/537.36\"}]}"
+        },
+        "inOP": "true",
+        "isReleased": "true"
+    }
+	],
+	"workflow": [],
+	"write_protect_criteria": [],
+	"path": "/support_groups",
+	"handler": "CachedEntityHandler",
+	"Additional Elements": [],
+	"isReleased": "true"
+}

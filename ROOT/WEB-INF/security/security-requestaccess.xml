@@ -1,0 +1,1552 @@
+<!--team:G2 Request Module related Security xml-->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <!--
+    All request related url entries should be specified here.
+    -->
+<urls authentication="required">
+        <!-- SD 86103 -->
+	    <url path="/workorder/ViewWOChangeIncident.jsp" user_type="all" roles="ViewRequests" method="get">
+			<throttles name="ViewWOChangeIncident_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+	    	<param name="workorderID" type="long" allow-empty="false"/>
+			<param name="[0-9]+" name-regex="true" type="String" max-len="10"  max-occurrences="1" />
+	    </url>
+
+	    <url path="/workorder/AddClosureCode.jsp" roles="ViewRequests" method="get">
+	    	<throttles name="ClosureCode_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+	    	<param name="workorderID" type="long"/>
+         </url>
+	    <!--Short cut jsp GoToReq-->
+        <url path="/jsp/goToReq.jsp" roles="ViewRequests" method="get">
+        	<throttles name="goToReq" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+	    </url>
+
+	    <url path="/workorder/ArchiveWOChangeIncident.jsp" roles="ViewRequests" method="get" user_type="all">
+	    	<param name="workorderID" type="long" allow-empty="false"/>
+			<param name= "[0-9]+" name-regex="true" type="long" max-occurrences="1"/>
+	    	<throttles name="archive_wo_change" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+	    </url>
+
+	    <url path="/workorder/WOBulkEdit.jsp" roles="ViewRequests" user_type="all" method="get">
+	    	<throttles name="WOBulkEdit_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+	    <!--team:G5-->
+
+	    <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="getRequestedID" user_type="all" roles="ViewRequests" method="get">
+	    	<throttles name="getRequestedID_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+	    	<param name="module" regex="request|change|causedbychange|arcproblem|arcwoproject|arcchange|arccausedbychange|survey"/>
+	    	<param name="search" type="long"/>
+	   	<param name="from" regex="form" />
+	    </url>
+   		<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="ValidateWOMerge" method="get" roles="MergingRequests">
+	   		<throttles name="validate_merge_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            	<throttle duration="1m" threshold="60" lock-period="5m"/>
+        	</throttles>
+	   		<param name="action" type="String"/>
+	   		<param name="woID" type="long" max-occurrences="250"/>
+	    </url>
+
+	   	<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="GetAllowedValues" user_type="all" roles="ViewRequests,CreateRequestMaintenances,ModifyRequestMaintenances" method="get">
+			<param name="module" regex="INCIDENT|SERVICE|CHANGE|PAGESCRIPT" />
+			<param name="templateId" type="long"  />
+			<param name="requiredFormat" regex="array" />
+			<throttles name="getallowedvalues_throttles" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+	    </url>
+
+	    <url path="/SDArchiveWorkOrder.do" user_type="all" roles="ViewRequests" method="get">
+	    	<throttles key="url.path+url.dynamic_key" name="SDArchiveWorkOrder" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            	<throttle duration="1m" lock-period="5m" threshold="30"/>
+        	</throttles>
+			<param name="woMode"  regex="viewWO|PrintView" />
+			<param name="fromModule"  regex="Solution" />
+			<param name="woID"  type="long" allow-empty="false" />
+	    </url>
+		<!--SD-110593 & SD-110596 Modified the roles to support edit the request-->
+	    <url path="/HoldRequest.do" roles="ModifyRequests" method="get">
+	    	<throttles name="holdrequest_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+	    	<param name="woMode" regex="hold|unhold"/>
+	    	<param name="workorderID" type="long"/>
+	    </url>
+
+
+	    <url path="/AddClosureCode.do" roles="ViewRequests" method="get">
+	    	<throttles name="ClosureCode_Get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+	    	<param name="workorderID" type="long"/>
+	    </url>
+
+	    <url path="/ArcWOTaskView(_HD_[0-9]+)?.cc" url-type="dynamic" roles="ViewRequests" method="get">
+	    	<throttles key="url.path+url.dynamic_key" name="ArcWOTaskView" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            	<throttle duration="1m" lock-period="5m" threshold="30"/>
+        	</throttles>
+		    <param name="UNIQUE_ID" regex="ArcWOTaskView(_HD_[0-9]+)?"/>
+	    </url>
+
+	    <url path="/STATE_ID/[0-9]+/ArcWOTaskView(_HD_[0-9]+)?.cc" url-type="dynamic" roles="ViewRequests" method="get">
+	    	<throttles key="url.path+url.dynamic_key" name="Stateid_ArcWOTaskView" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            	<throttle duration="1m" lock-period="5m" threshold="30"/>
+        	</throttles>
+		    <param name="UNIQUE_ID" regex="ArcWOTaskView(_HD_[0-9]+)?"/>
+	    </url>
+
+	    <url path="/api/v3/requests/[0-9]+/history" url-type="dynamic" user_type="all" method="get" roles="ViewRequests">
+			<throttles name="request_history_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+	    </url>
+
+	    <url path="/ArchiveRequestsView(_HD_[0-9]+)?.cc" url-type="dynamic" roles="ViewRequests" method="get">
+			<throttles name="archive_mickey_list_view_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		    <param name="UNIQUE_ID" regex="ArchiveRequestsView(_HD_[0-9]+)?"/>
+			<param name="globalViewName" type="String"/>
+	    </url>
+	    <url path="/STATE_ID/[0-9]+/ArchiveRequestsView(_HD_[0-9]+)?.cc" url-type="dynamic" user_type="all" roles="ViewRequests" method="get">
+			<throttles name="archive_mickey_list_view_get_with_state_id" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		    <param name="UNIQUE_ID" regex="ArchiveRequestsView(_HD_[0-9]+)?"/>
+			<param name="globalViewName" type="String"/>
+	    </url>
+
+
+	    <url path="/Templates.do" user_type="all" method="get" roles="ViewRequests">
+		    <throttles name="template_widget_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		    <param name="module" regex="mergedRequest|incident|serviceRequest" min-occurrences="1"/>
+		    <param name="page" regex="serviceRequest|incident"/>
+		    <param name="view" regex="admin"/>
+		    <param name="assetId"  type="long" />
+		    <param name="serviceId" type="long"/>
+			<param name="[0-9]+" name-regex="true" type="boolean" max-len="10" max-occurrences="1"/>
+		</url>
+
+
+
+
+	    <!--SD-63283 ListRequests.do page -->
+	    <url path="/ListRequests.do"  roles="ViewRequests" user_type="all" method="get">
+	    	<throttles name="ListRequests_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+		    <param name="popUserDetails"  type="boolean" />
+		    <param name="mode" regex="edit"/>
+		    <param name="id"  type="long" allow-empty="false" />
+		    <param name="reqId"  type="long"/>
+		    <param name="viewType" regex="Open_Requester|Onhold_Requester|All_Pending_Requester|Closed_Requester|All_Requester|All_Completed_Requester|Waiting_Update|Updated_By_Me"/>
+		    <param name="filterBy"  type="String"/>
+		    <param name="filterVal"  type="String"/>
+		    <param name="filterKey"  type="String" secret="true"/>
+		    <param name="filterName"  type="String"/>
+			<param name="telephony" type="boolean"/>
+			<param name="webhook" type="boolean"/>
+			<!-- Below params are used in Zia Bot for Request List Views -->
+			<param name="input_data" template="list_info_base" type="JSONObject" max-len="-1"/>
+			<param name="zia" type="boolean"/>
+			<param name="externalframe" type="boolean"/>
+	    </url>
+
+	    <url path="/AddResolution.do" method="get" roles="ViewRequests" user_type="all" operation-param="mode" operation-value="viewWOResolution">
+			<param name="module"  regex="request"/>
+			<param name="technicianID"  regex="id"/>
+			<param name="from"  regex="WOResolution"/>
+		    <param name="woID"  type="long" allow-empty="false"/>
+		    <param name="associatedEntityID"  type="long" allow-empty="false"/>
+			<param name="scopeid"  regex="id"/>
+			<param name="associatedEntity" regex="request"/>
+			<param name="isDetailsPage" type="boolean"/>
+			<param name="fromListView" type="boolean"/>
+			<param name="editResolution" type="boolean"/>
+			<param name="woMode" regex="trashWO|viewWO|editWO|printWO" />
+		    <param name="copySln" type="boolean" />
+			<param name="sln_id"  regex="id"/>
+			<throttles name="add_resolution_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="30" lock-period="5m"/>
+			</throttles>
+	    </url>
+
+
+	<url path="/workorder/requestResolution.jsp" method="get" roles="ViewRequests,ViewSolutions" user_type="all">
+		<param name="reqStatusClose" type="boolean" />
+		<param name="woID" type="long" range=">0" />
+		<param name="isDetailsPage" type="boolean" />
+		<param name="hasResolution" type="boolean" />
+		<param name="editResolution" type="boolean" />
+		<param name="woMode" regex="trashWO|viewWO|editWO" />
+		<throttles name="req_resolution_jsp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/workorder/SolutionPopup.jsp" roles="ViewRequests,ViewSolutions" method="get">
+		<param name="sln_id" type="long" range=">0"/>
+		<param name="request_solution_id" type="long" range=">0"/>
+		<param name="reqStatusClose" type="boolean" />
+		<param name="showbtmfooter" type="boolean" />
+		<throttles name="req_tried_soln_jsp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/workorder/popup_inference.jsp" roles="ModifyResolution,ModifyRequests,ViewSolutions" method="get">
+		<param name="request_sln_id" type="long" range=">0"/>
+		<param name="request_id" type="long" range=">0"/>
+		<param name="sln_id" type="long" range=">0"/>
+		<throttles name="req_soln_popup_inference_jsp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+
+	<!-- OP Framework Request API's from Request module-->
+	<!--role check is hanled in ConfigurationsExecutor file-->
+	<url path="/api/v3/self_service_portal_settings" user_type="all" method="get" description="ROLE_NOT_REQUIRED: AS IT IS HANDLED IN CODE">
+		<throttles name="self_service_portal_settings" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5m"/>
+		</throttles>
+		<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+	</url>
+
+	<url path="/api/v3/request_closing_rules"  roles="ViewRequests" method="get">
+	<throttles key="url.path+url.dynamic_key" name="request_closing_rules" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+	</url>
+
+	<url path="/api/v3/requests/[0-9]+/request_detail"  roles="ViewRequests" user_type="all" method="get">
+		<throttles name="request_detail_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+		<param name="APPROVAL_KEY" type="String" max-len="3500" secret="true"/>
+		<param name="includes" type="JSONArray" template="strarray" max-len="-1"  array-size="0-21" />
+		<param name="input_data" template="request_detail_includes" type="JSONObject" max-len="-1" />
+		<param name="nmi_preview" regex="true"/>
+	</url>
+
+	<url path="/api/v3/requests/[0-9]+/share" roles="ViewRequests" method="get">
+		<throttles name="share_get_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+	</url>
+
+	<!--Url for activities-->
+    <url path="/api/v3/activities" roles="ViewRequests" method="get">
+		<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		<throttles name="activities" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+	</url>
+	<!-- OP Framework Request API's fron Request module ends here-->
+	<url path="/workorder/LinkRequest.jsp"  method="get" roles="ModifyRequests">
+		<throttles name="LinkRequest_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+	</url>
+	<url path="/workorder/WODetails.jsp" user_type="all" method="get" roles="ViewRequests">
+		<param name="woID" type="long" allow-empty="false"/>
+		<throttles name="WODetails_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+	</url>
+	<url path="/workorder/WOTabDetails.jsp" user_type="all" method="get" roles="ViewRequests">
+		<throttles name="WOTabDetails_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+	</url>
+	<url path="/workorder/WOPrintPreview.jsp" user_type="all" roles="ViewRequests" method="get">
+		<throttles name="WOPrintPreview_Throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+		<param name="woID" type="long" allow-empty="false"/>
+		<param name="approval_key" type="String" max-len="3500" secret="true" />
+		<param name="isPreview" type="boolean"  max-occurrences="1"  />
+		<param name="fromListView" type="boolean"  max-occurrences="1"  />
+		<param name="fromexportPDF" type="boolean"  max-occurrences="1"  />
+		<param name="trimmed_details" type="String" max-occurrences="1"  />
+		<param name="woMode" regex="printWO" max-occurrences="1"  />
+		<param name="requester_id" type="long" max-occurrences="1"  />
+		<param name="[0-9]+" name-regex="true" type="String" max-len="10"   max-occurrences="1" />
+		<param name="printMode" type="boolean"  max-occurrences="1"  />
+	</url>
+	<url path="/workorder/ShareRequest.jsp" roles="ViewRequests" method="get">
+		<throttles name="ShareRequest_Throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+        <param name="mode" regex="view|edit"/>
+    </url>
+	<url path="/workorder/moveRequest.jsp" roles="MoveRequest" method="get">
+		<throttles name="moveRequest_Throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/workorder/WOMessage.jsp" user_type="all" method="get" roles="ViewRequests">
+		<throttles name="WOMessage_Throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/workorder/WOLayout.jsp" roles="ViewRequests" method="get">
+		<throttles name="Layout_Throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/workorder/WOForm.jsp" roles="ViewRequests,CreateRequestMaintenances,ModifyRequestMaintenances" user_type="all" method="get">
+		<throttles name="WOForm_Throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+		<param name="woID" type="long" range=">0" />			
+		<param name="reqTemplate" type="long" range=">0" />		
+		<param name="isMaintenance" type="boolean"/>
+		<param name="fromPage" regex="maintenanceDetails"/>
+	</url>
+	<url path="/workorder/SitePopup.jsp" roles="ViewRequests,ViewRequestMaintenances" method="get">
+		<throttles name="SitePopup_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+    </url>
+
+
+
+	<!-- 64110:Security issues] - URL "/common/ViewNotesFromList.jsp" is vulnerable to XSS has been fixed -->
+	<!-- viewing notes in request , change , problem and ArcRequest listview -->
+
+
+
+    <url path="/servlet/SDAjaxServlet" method="get" operation-param="action" operation-value="checkReqSGTChanges" roles="ViewRequests">
+    	<param name="module" regex="request"/>
+    	<param name="templateId" regex="positive_Integers"/>
+    	<param name="woId" regex="positive_Integers"/>
+    	<throttles name="checkReqSGTChanges_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+
+    </url>
+
+	<url path="/servlet/HdClientUtilServlet"  operation-param="command" operation-value="getTechTimerDetails" roles="ViewRequests" method="get">
+		<param name="username" type="String" secret="true" />
+		<param name="woID" type="long"/>
+		<throttles name="getTimer_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+	</url>
+	<url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="stopTechTimer" method="post" csrf="true" roles="ViewRequests">
+		<throttles name="stopTechTimer_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+		<param name="woID" type="long"/>
+		<param name="currenttechStatus" type="String" max-len="500"/>
+		<!-- null is also passed from client -->
+		<param name="techId" type="String"/>
+	</url>
+	
+	<url path="/servlet/HdClientUtilServlet"  operation-param="command" operation-value="getWorklogDetails" roles="ViewRequests" method="get">
+		<param name="woID" type="long"/>
+		<throttles name="getWorklogDetails_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+	</url>
+	<url path="/servlet/HdClientUtilServlet"  operation-param="command" operation-value="getShareDetails" roles="ViewRequests" method="get">
+		<throttles name="share_getdetails_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+		<param name="woID" type="long"/>
+	</url>
+	<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="getFieldJson" method="get" roles="ViewRequests" user_type="all">
+		<throttles name="get_field_json_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+		<param name="module" regex="INCIDENT|SERVICE|PAGESCRIPT|CHANGE"/>
+		<param name="templateId" type="long"/>
+	</url>
+	<url path="/servlet/AJaxServlet" operation-param="action" operation-value="GetTemplateSettings" user_type="all" method="get" roles="CreateRequests,CreateRequestMaintenances">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="AJaxServlet_GetTemplateSettings" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+	</url>
+
+</urls>
+
+<!--URLs used across Modules start-->
+
+<!--URLs used across Modules end-->
+
+<urls authentication="required">
+
+	<!--one time banner-->
+	<url roles="SDAdmin,HelpdeskConfig" path="/servlet/SDAjaxServlet" method="POST" operation-param="action" operation-value="disable_ShowInvalidRequestRulesInfo" csrf="true">
+		<throttles name="invalid_br_banner_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+	</url>
+
+	<!--SD-110593 & SD-110596 Modified the roles to support edit the request-->
+	<url path="/HoldRequest.do" roles="ModifyRequests" csrf="true" method="POST" operation-param="mode" operation-value="hold,unhold">
+		<throttles name="hold_request_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+    	<param name="desc" type="String" max-len="500" secret="true"/>
+		<param name="workOrderID"  type="long"/>
+    	<param name="addDesc" type="String"/>
+    </url>
+
+	<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="detach"  roles="ModifyRequests" csrf="true" method="POST">
+		<param name="module" regex="change|causedbychange|problem|project"/>
+		<param name="search" type="long"/>
+		<throttles name="detach_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+
+	</url>
+
+</urls>
+
+<!--new URLs-->
+<urls authentication="required">
+	<url method="GET" path="(/STATE_ID/[0-9]+)?/BulkEditRequest.do" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="bulkrequest_page" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+		<param name="hasSerReq" regex="true|false"/>
+		<param name="globalView" type="String"/>
+		<param name="parentView" type="String"/>
+		<!-- Calculation of max len : requestid max-len 10 + templateid max-len 10 + 2 hypen + 1 comma for 250 requests = (10+10+2+1)*100 = 2500
+
+		SD-98022 Modified the max-len to support bulk operation for only 250 ids -->
+		<param name="reqIDs" regex="[[0-9]+--[0-9]+]+" max-len="2500"/>
+    </url>
+
+
+	<url path="/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="viewWO" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="viewrequest_page" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+			<param name="fromListView"  regex="true|null" />
+			<param name="woID" type="long"/>
+			<param name="autoWorkLog" regex="true|false"/>
+			<param name="from" regex="dashboard|admin|msteams|cf_request|merge|link_request|maintenance|global_search"/><!-- Request details page return from/to module -->
+	</url>
+	<url path="/STATE_ID/[0-9]+/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="viewWO" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="viewrequestpage" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+			<param name="fromListView"  regex="true|null" />
+			<param name="woID" type="long"/>
+			<param name="autoWorkLog" regex="true|false"/>
+	</url>
+	<url path="/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="trashWO" roles="DeleteRequests">
+		<throttles key="url.path+url.dynamic_key" name="trashWO" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+			<param name="fromListView"  regex="true|null" />
+			<param name="woID" type="long"/>
+	</url>
+
+	<url path="/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="editWO" description="ROLE_NOT_REQUIRED:IT IS HANDLED IN CODE CHECK">
+		<throttles key="url.path+url.dynamic_key" name="edit_workorder_page" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+			<param name="fromPage"  regex="reqDetails" />
+			<param name="fromListView"  regex="true|null" />
+			<param name="woID" type="long"/>
+			<param name="reqTemplate"  type="long" />
+			<param name="isOverwrite" regex="true|false"/>
+			<param name="deleteTasks" regex="true|false"/>
+			<param name="minpreview" regex="true|false"/>
+			<param name="service" type="String"/>
+			<param name ="isSuggestedByZia" type="boolean"/>
+	</url>
+
+	<url path="/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="newWO" roles="CreateRequests">
+		<throttles key="url.path+url.dynamic_key" name="new_workorder_page" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+		<param name="reqTemplate"  type="long"   />
+		<param name="requestServiceId"  type="long"  />
+		<param name="linkWorkOrderId" type="long"  />
+		<!-- to be used in next phase with String length checks implemented in UI -->
+		<param name="createServiceComment" type="String" max-len="250"/>
+		<param name="reqID" type="long"  />
+		<param name="from" regex="alpha"/>
+		<param name="module"  regex="mergedRequest|serviceRequest|incident" />
+		<param name="fromModule" regex="RecreateRequest"/>
+		<param name="woID" type="long"/>
+		<param name="isOverwrite" regex="true|false"/>
+		<param name="assetId" type="long"  />
+		<param name="chatID" type="long"  />
+		<param name="minpreview" regex="true|false"/>
+		<param name="service" regex="telephony|OutlookAddIn"/>
+		<param name="fromSpace" regex="tree|details"/>
+		<param name="spaceID" type="long"/>
+        <param name="isFromZiaBot" type="boolean"/>
+        <param name="is_external_chat" type="boolean"/>
+		<param name="input_data" type="JSONObject" template="request_base" max-len="2000"/>
+		<param name="fromProject" regex="true"/>
+		<param name="isFromIntegrationBot" type="boolean"/>
+		<param name="integrationService" type="String"/>
+	</url>
+
+	<url path="/WorkOrder.do" method="get" operation-param="woMode" operation-value="viewAssessmentHistory"  roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="workorder_view_assessment_history_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+		<param name="woID"  type="long" />
+		<param name="externalframe" regex="true|false" />
+	</url>
+
+	<url path="/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="viewDetailsDiff" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="workorder_view_history_diff" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+		<param name="diffID"  type="long" allow-empty="false"/>
+	</url>
+
+	<url path="/WorkOrder.do" user_type="all" method="get" operation-param="woMode" operation-value="copyWO" roles="CreateRequests">
+		<throttles key="url.path+url.dynamic_key" name="workorder_duplicate_request" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+		<param name="workOrderID" type="long"/>
+		<param name="reqTemplate" type="long" />
+	</url>
+
+	<!-- SD-94074 - issue needs to be fixed -->
+
+	<url path="/WorkOrder.do" method="POST" csrf="true" operation-param="woMode" operation-value="deleteConversation" roles="DeleteRequests">
+		<param name="conversationID"  type="long" />
+		<param name="mainReqID" type="long"/>
+		<param name="-" type="long"/>
+		<throttles key="url.path+url.dynamic_key" name="delete_conversation_action" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+	</url>
+
+	<url path="/workorder/PrintConf.jsp" user_type="all"  roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="Archive_PrintConf" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+		<param name="woID" type="long" range=">0"/>
+		<param name="woMode" regex="PrintView"/>
+		<param name="printModule" regex="Archive Request"/>
+		<param name="fromexportPDF" type="boolean"/>
+	</url>
+
+	<url path="/WorkOrder.do" csrf="true" method="post" operation-param="woMode" operation-value="quickReq" roles="CreateRequests" disable-extraparam="true">
+	      <throttles name="quick_create_request" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+	      	<throttle duration="1m" threshold="60" lock-period="5m"/>
+              </throttles>
+              <param name="reqID"  regex="Integers"  />
+              <!-- to be used in next phase with String length checks implemented in UI -->
+              <param name="reqName" type="String" max-len="250" />
+              <param name="title" type="String" max-len="250"  secret="true"/>
+              <param name="description" type="String" max-len="3500" secret="true"/>
+              <param name="siteID" type="long"  />
+              <param name="siteID_siteSearch" type="String" />
+    </url>
+
+
+
+	<url path="/WorkOrder.do"  method="post" csrf="true" operation-param="woMode" operation-value="createService" roles="CreateRequests">
+		<throttles name="createService_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+		<param name="requestServiceId" type="long"/>
+        <param name="linkWorkOrderId" type="long"/>
+        <param name="reqTemplate" type="long"/>
+        <!-- to be used in next phase with String length checks implemented in UI -->
+        <param name="requesterName" type="String" max-len="250"/> -->
+        <param name="createServiceComment" type="String" max-len="250"/>
+        <param name="linkService" regex="linkService"/>
+	</url>
+
+
+
+	<url path="/WorkOrder.do"  method="post" csrf="true" operation-param="woMode" operation-value="mergeAsThdReq" roles="MergingRequests">
+		<throttles name="merge_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+		<param name="orgReqID" type="long"/>
+        <param name="woID" type="long"/>
+	</url>
+
+	<url path="/WorkOrder.do" csrf="true" method="post" operation-param="woMode" operation-value="restoreWO" roles="ViewRequests">
+		<param name="woID" type="long"/>
+		<throttles name="restore_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+	</url>
+
+
+    <!--For Remainder urls ends-->
+    <!--linkrequest.do/ removed-->
+	<!--Duplicate Workorder-->
+	<!--Merge Request-->
+	<url path="/MergeRequest.do" method="get" roles="ModifyRequests" operation-param="mode" operation-value="getWindow">
+		<throttles name="merge_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+		<param name="woID" type="long"/>
+	</url>
+
+	<url path="/MergeRequest.do" method="post" roles="ModifyRequests" operation-param="mode" operation-value="submitAction" csrf="true" >
+		<throttles name="merge_submit_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+		<param name="searchText" type="String" max-len="250"/>
+		<param name="mergeId" type="long"/>
+		<param name="DummyColumn" type="String" max-len="50"/>
+		<param name="search" type="String"/>
+		<param name="viewType" type="String"/>
+	</url>
+	<url path="/MergeRequest1.do" method="post" roles="ModifyRequests" csrf="true" >
+		<throttles name="merge_submit_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+		<param name="searchText" type="String" max-len="250"/>
+		<param name="mergeId" type="long"/>
+		<param name="DummyColumn" type="String" max-len="50"/>
+		<param name="search" type="String"/>
+		<param name="viewType" type="String"/>
+	</url>
+
+	<url path="/RemoveRequestLink.do" method="get" operation-param="removeLink" operation-value="getLinkedRequests" roles="ViewRequests">
+		<throttles name="get_remove_link_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+    	<param name="parentId" type="long" allow-empty="false"/>
+    	<param name="actionFrom" type="String"/>
+    	<param name="fromParent" type="boolean"/>
+    	<param name="fromChild" type="boolean"/>
+    </url>
+
+    <url path="/RemoveRequestLink.do" method="post" csrf="true" operation-param="removeLink" operation-value="Remove Link" roles="ViewRequests">
+    	<throttles name="remove_link_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+    	<param name="checkbox23"  regex="on"/>
+    	<param name="parentId" type="long"/>
+    	<param name="childId" type="long" max-occurrences="250"/>
+    	<param name="actionFrom" type="String"/>
+    	<param name="fromChild" type="boolean"/>
+    </url>
+
+	<!--Archive List View -->
+	<url path="/SDArchiveWOListView.do" user_type="all" operation-param="mode" operation-value="getWindow" roles="ViewRequests" method="get">
+		<throttles name="archive_list_view_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+	</url>
+	<url path="/SDArchiveWOListView.do" user_type="all" operation-param="mode" operation-value="submitAction" roles="ViewRequests" method="post" csrf="true">
+		<throttles name="archive_list_view_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+		<param name="viewName" type="String"/>
+		<param name="globalViewName" type="String"/>
+		<param name="requestViewChanged" type="boolean"/>
+	</url>
+
+	<!--login Close link-->
+	<url path="/workorder/CloseRequest.jsp" user_type="all" method="get" roles="ViewRequests">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="CloseRequest_Get" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+		<param name="woID" type="long"/>
+
+	</url>
+	<url path="/workorder/CloseRequest.jsp" user_type="all" method="post" csrf="true" roles="ViewRequests">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="CloseRequest_Post" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+		<param name="closeComment" type="String" max-len="1000"/>
+		<param name="submit" type="String"/>
+		<param name="woID" type="long"/>
+	</url>
+
+	<url path="/workorder/UpdateArcNotification.jsp" user_type="all" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="UpdateArcNotification_JSP" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param name="oldConvId" type="long"/>
+		<param name="notificationID" type="long"/>
+    </url>
+
+		<param max-occurrences="10" name="toBeDeleted" type="long"/>
+
+	<url path="/common/ViewConversationsFromList.jsp" method="get" operation-param="module" operation-value="requests,problems" roles="ViewRequests,ViewProblems">
+		<throttles key="url.path+url.dynamic_key" name="ConversationsList" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+        </throttles>
+		<param name="mode" regex="view"/>
+		<param name="id" range=">0" type="long"/>
+		<param name="currentView" type="String"/>
+		<param name="view" regex="notes|conversations"/>
+	</url>
+
+
+	<!--Request Conversation URLs ends here-->
+
+
+	<!-- Request List View URL(s) -->
+
+
+	<url path="/common/ViewNotesFromList.jsp" method="get" operation-param="mode" operation-value="getNotes" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="ViewNotesFromList_JSP" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+        <param name="Module" regex="ArcRequest"/>
+        <param name="ID" type="long" allow-empty="false"/>
+        <param name="currentView" type="String"/>
+        <param name="ct" type="long"/>
+    </url>
+	<!--Request GET_ALL operation starts here -->
+	<url path="/WOListView.do" method="GET"  roles="ViewRequests" user_type="all">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="RLV_GET_ALL" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+		<param name="viewName" regex ="Open_System|All_Pending_Requester|TRASH"/>
+		<param name="viewID" regex="[0-9]+"/>
+			<param name="globalViewName" type="String"/>
+			<param name="requestViewChanged" regex="true"/>
+			<param name="test" regex="change"/>
+			<param name="refreshTime" type="long"/>
+		<param name="fromModule" regex="addResolution|Dashboard"/>
+			<param name="day" type="long"/>
+			<param name="min" type="long"/>
+			<param name="isOD" regex="true|false"/>
+			<param name="table" type="String"/>
+			<param name="column" type="String"/>
+			<param name="value" type="long"/>
+			<param name="service" type="String"/>
+                        <param name="suggApproved" type="boolean"/>
+	    <param name="viewMode" regex="table|classic|combined|kanban|rq_leftpanel"/>
+	    <param name="from" regex="dashboard|admin|msteams|cf_request|merge|link_request"/>
+	    <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+	    <param name="url_search" template="list_info" type="JSONObject" max-len="-1"/>
+	</url>
+
+	<!-- Request GET_ALL operation ends here -->
+
+	 <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getWOListViewCount" user_type="all" method="post" csrf="true" roles="ViewRequests">
+	 	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="RLV_GET_TOTAL_COUNT" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+	</url>
+
+</urls>
+
+<urls authentication="required">
+
+		<!--Add Closure Code-->
+        <url path="/AddClosureCode.do" operation-param="mode" operation-value="add" method="post" csrf="true" roles="ViewRequests">
+        	<throttles name="ClosureCode_Post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+	        <param name="workorderID" type="long"/>
+	        <param name="closureCode" type="long"/>
+	        <param name="closureComments" type="String" max-len="1000"/>
+        </url>
+        <!-- Url to update shared request info -->
+        <url path="/api/v3/requests/[0-9]+/share" method="put" roles="ShareRequest" api="true">
+        	<throttles name="share_put_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        	<param name="input_data" type="JSONObject" template="share_template" max-len="-1" max-occurrences="1"/>
+        </url>
+</urls>
+
+
+<regexes>
+	<regex name="Integers" value="^[-]?[0-9]+$"/>
+	<regex name="hours" value="^(0?[0-9]|1[0-9]|2[0123])$" description="hours range from 0 to 23 or 00 to 23"/>
+	<regex name="date_format1" value="^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[012])-(19|20)\d\d$" description="validate date format dd-mm-yyyy. This will not handle the number of days correct in a month for ex it allow 31 days for feb."/>
+	<regex name="date" value="^([1-9]|[12][0-9]|3[01])$" description="validate date from 1 to 31"/>
+	<regex name="month" value="^([0-9]|[1][01])$" description="validate month from 0 to 11"/>
+	<regex name="positive_Integers" value="^[1-9]{1}[0-9]*$" description="validation for positive integers greater than zero"/>
+<regex name="alpha" value="[a-zA-Z]+" description="validation for Alpha charaters"/>
+</regexes>
+
+<!---
+Moving the JSON templates from security-api-v3-manual.xml starts here
+-->
+<jsontemplates>
+		<jsontemplate name="tech_auto_assign" disable-extra-key="true">
+			<key name="ENABLE_TECH_AUTO_ASSIGN" type="boolean" />
+			<key name="AUTO_ASSIGN_MODEL" regex="Round Robin|Load Balancing" />
+			<key name="APPLY_TAA_WHILE" regex="Created|Edited|Created and Edited" />
+			<key name="APPLY_TAA_WHILE_ADD_TO" regex="ALL|UNASSIGNED" />
+			<key name="ASSIGN_TO_ONLINE_TECHS_ONLY" type="boolean" />
+			<key name="RULES_CRITERIA" regex="INCLUDE|EXCLUDE" />
+			<key name="TECHNICIAN_CRITERIA" regex="INCLUDE|EXCLUDE" />
+			<key name="techarray" type="JSONArray" template="techarraybase" max-len="-1" array-size="0-1000" />
+			<key name="rules" type="JSONArray" template="tech_auto_assign_criteria_base" max-len="-1" array-size="0-1000" />
+			<key name="EXCLUDE_FEW_TECHS" type="boolean" />
+			<key name="ALLOW_EXCEPTIONS" type="boolean" />
+		</jsontemplate>
+		<jsontemplate name="techarraybase" disable-extra-key="true">
+			<key index="0-1000" type="JSONObject" template="IDTextJson" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="IDTextJson" disable-extra-key="true">
+			<key name="id" type="long" />
+			<key name="text" type="String" max-len="500" />
+		</jsontemplate>
+		<jsontemplate name="tech_auto_assign_criteria_base" disable-extra-key="true">
+			<key index="0-1000" type="JSONObject" template="tech_auto_assign_criteria_unique" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="tech_auto_assign_criteria_unique" disable-extra-key="true">
+			<key name="field" regex="request_type|level|priority|mode|category|group|site" />
+			<key name="condition" regex="is" />
+			<key name="logical_operator" regex="and|or" />
+			<key name="values" type="JSONArray" template="strarray" max-len="-1" array-size="0-1000" />
+			<key name="value" type="String" max-len="1000"/>
+		</jsontemplate>
+		<!--Request properties add to task template -->
+		<jsontemplate name="request_properties_base" disable-extra-key="true">
+			<key name="system_fields" type="JSONArray" template="reqdefaultprops_base" max-len="-1" array-size="0-100" />
+			<key name="request_udf_fields" type="JSONArray" template="columnaliases_base" max-len="-1" array-size="0-200" />
+		</jsontemplate>
+		<jsontemplate name="reqdefaultprops_base" disable-extra-key="true">
+			<key name="id" type="long" />
+			<key name="name" regex="default_fields_reqprop" />
+		</jsontemplate>
+		<jsontemplate name="columnaliases_base" disable-extra-key="true">
+			<key name="id" type="long" />
+			<key name="name" regex="udf_fields_reqprop" />
+		</jsontemplate>
+		<jsontemplate name="resource_base" disable-extra-key="true">
+			<key name="id" type="long" />
+			<key name="name" regex="res" />
+			<key name="questions" type="JSONArray" template="resourcequestion_base" array-size="0-100" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="resourcequestion_base" disable-extra-key="true">
+			<key name="id" type="long" />
+			<key name="name" regex="questions_reqprop" />
+		</jsontemplate>
+		<jsontemplate name="assign_request_info">
+			<key name="request" type="JSONObject" max-len="-1" template="assign_request_data" />
+		</jsontemplate>
+		<jsontemplate name="assign_request_data">
+			<key name="technician" type="JSONObject" max-len="-1" template="user_unique" />
+			<key name="group" type="JSONObject" max-len="-1" template="support_group_unique" />
+		</jsontemplate>
+		<jsontemplate name="close_request_info">
+			<key name="request" type="JSONObject" max-len="-1" template="close_request_data" />
+		</jsontemplate>
+		<jsontemplate name="close_request_data">
+			<key name="closure_info" type="JSONObject" max-len="-1" template="request_closure_info_template" />
+			<key name="is_fcr" type="boolean" />
+			<key name="status_change_comments" type="String" max-len="250" />
+		</jsontemplate>
+		<jsontemplate name="link_request_ids_info">
+			<key name="link_requests" type="JSONArray" max-len="-1" array-size="0-100" template="link_request_template" />
+		</jsontemplate>
+		<jsontemplate name="link_request_ids_delete">
+			<key name="link_requests" type="JSONArray" max-len="-1" array-size="0-100" template="link_input_template_delete" />
+		</jsontemplate>
+		<jsontemplate name="merge_request_ids_info" disable-extra-key="true">
+			<key name="merge_requests" type="JSONArray" max-occurrences="1" max-len="-1" array-size="0-50" template="merge_request_IDJson" />
+		</jsontemplate>
+		<jsontemplate name="merge_request_IDJson" disable-extra-key="true">
+			<key name="id" type="long"/>
+		</jsontemplate>
+		<jsontemplate name="link_input_template_delete">
+			<key name="linked_request" type="JSONObject" max-len="-1" template="request_unique" min-occurrences="1" />
+		</jsontemplate>
+		<jsontemplate name="link_request_template">
+			<key name="linked_request" type="JSONObject" max-len="-1" template="request_unique" />
+			<key name="comments" type="String" max-len="250" min-occurrences="1" />
+			<key name="filter_by" type="JSONObject" template="IDNameJson" />
+		</jsontemplate>
+		<jsontemplate name="resolution_input_template">
+			<key name="resolution" type="JSONObject" template="request_resolution_template" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="lifecycle_ui_attributes" disable-extra-key="true">
+			<key name="pan" type="JSONObject" template="positionJSON" max-len="-1" />
+			<key name="zoom" type="JSONObject" template="positionJSON" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="before" disable-extra-key="true">
+			<key name="placeholders" type="JSONArray" template="placeholder_unique" max-len="-1" array-size="0-100" />
+			<key name="before_rule" type="JSONObject" template="request_lifecycle_rule_base" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="during" disable-extra-key="true">
+			<key name="mandatory_fields" type="JSONArray" template="strarray" max-len="-1" array-size="0-100" />
+			<key name="optional_fields" type="JSONArray" template="strarray" max-len="-1" array-size="0-100" />
+			<key name="during_rules" type="JSONArray" template="request_lifecycle_rule_base" array-size="0-100" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="after" disable-extra-key="true">
+			<key name="after_rules" type="JSONArray" template="request_lifecycle_rule_base" array-size="0-100" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="request_metainfo_template">
+			<key name="for" type="String" max-len="200" />
+			<key name="include" template="strarray" type="JSONArray" max-len="-1" array-size="0-100" />
+			<key name="template" type="JSONObject" template="IDNameJson" />
+			<key name="templates" type="JSONArray" template="IDNameJson" array-size="0-500" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="transition_ui_attributes" disable-extra-key="true">
+			<key name="position" type="JSONObject|JSONArray" template="positionJSON" max-len="-1" />
+			<key name="label_position" type="String" />
+			<key name="source_node_port" type="String" />
+			<key name="target_node_port" type="String" />
+		</jsontemplate>
+		<jsontemplate name="lifecycle_draft_template" disable-extra-key="true">
+			<key name-regex="true" name="((([a-z0-9_]+)(_)(lifecycle))|lifecycle)" template="lifecycle_draft_template_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="lifecycle_draft_template_base" disable-extra-key="true">
+			<key name="id" type="long" />
+			<key name="name" type="String" max-len="50" />
+			<key name="description" type="String" max-len="250" />
+			<key name="is_published" type="boolean" />
+			<key name="is_enabled" type="boolean" />
+			<key name="has_draft" type="boolean" />
+			<key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+			<key name="ui_attributes" template="lifecycle_ui_attributes" type="JSONObject" max-len="-1" />
+			<key name="created_time" template="datefield" type="JSONObject" max-len="-1" />
+			<key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1" />
+			<key name="published_time" template="datefield" type="JSONObject" max-len="-1" />
+			<key name="created_by" template="user_unique" type="JSONObject" max-len="-1" />
+			<key name="last_updated_by" template="user_unique" type="JSONObject" max-len="-1" />
+			<key name="published_by" template="user_unique" type="JSONObject" max-len="-1" />
+			<key name="nodes" template="node_base" type="JSONArray" max-len="-1" array-size="0-100" />
+			<key name="transitions" template="transition_base" type="JSONArray" max-len="-1" array-size="0-150" />
+			<key name="request_templates" template="request_template_unique" type="JSONArray" max-len="-1" array-size="0-1000" />
+		</jsontemplate>
+		<jsontemplate name="wfnotify" disable-extra-key="true">
+			<key name="notify_users" type="JSONArray" template="user_unique" max-len="-1" array-size="0-100" />
+			<key name="notify_placeholders" type="JSONArray" template="placeholder_unique" max-len="-1" array-size="0-100" />
+			<key name="notify_org_roles" type="JSONArray" template="org_role_unique" max-len="-1" array-size="0-100" />
+		</jsontemplate>
+		<!-- OP Framework Request API's from Request module-->
+		<jsontemplate name="req_conversations">
+			<key name="system_notifications" type="boolean" />
+			<key name="list_info" type="JSONObject" template="req_list_info_conversations" />
+			<key name="notes" type="boolean" />
+			<key name="email" type="boolean" />
+		</jsontemplate>
+		<jsontemplate name="req_list_info_conversations">
+			<key name="start_index" type="long" />
+			<key name="sort_order" type="String" />
+			<key name="row_count" type="long" />
+			<key name="sort_field" type="String" />
+			<key name="get_total_count" type="boolean" />
+		</jsontemplate>
+		<jsontemplate name="request_detail_includes">
+			<key name="includes" type="JSONArray" template="strarray" max-len="-1"  array-size="0-12"/>
+			<key name="for" regex="duplicate_request"/>
+		</jsontemplate>
+		<jsontemplate name="view_name">
+			<key name="list_view" type="String" max-occurrences="1" />
+		</jsontemplate>
+		<!-- OP Framework Request API's fron Request module ends here-->
+		<!--Template for Move Request STARTS-->
+		<jsontemplate name="move_request_info" disable-extra-key="true">
+			<key name="request" type="JSONObject" max-len="-1" template="move_request_data" />
+		</jsontemplate>
+		<jsontemplate name="move_request_data" disable-extra-key="true">
+			<key name="move" type="JSONObject" max-len="-1" template="move_request_template" />
+		</jsontemplate>
+		<jsontemplate name="move_request_template" disable-extra-key="true">
+			<key name="target_portal" type="JSONObject" template="portal_template" />
+			<key name="move_comment" xss="sdpantisamyfilter" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="portal_template" disable-extra-key="true">
+			<key name="id" type="long" min-occurrences="1" />
+		</jsontemplate>
+		<!--Template for Move Request ENDS-->
+		<!--Template for Copy Request STARTS-->
+		<jsontemplate name="copied_from_info" disable-extra-key="true">
+			<key name="module" regex="request|chat|pm_tasks|release_notification|change_notification|request_draft|request_notification|telephony|solution_notification" min-occurrences="1" />
+			<key name="id" type="long" />
+		</jsontemplate>
+		<!--Template for Copy Request ENDS-->
+		<!--Template for priority matrix override option-->
+		<jsontemplate name="priority_matrix_allow_override" disable-extra-key="true">
+			<key name="priority_matrix" type="JSONObject" max-len="-1" template="priority_matrix_allow_override_base" />
+		</jsontemplate>
+		<jsontemplate name="priority_matrix_allow_override_base" disable-extra-key="true">
+			<key name="allow_override" type="boolean" max-occurrences="1" />
+		</jsontemplate>
+		<!-- template for validating associate_checklists convenience operation-->
+		<jsontemplate name="associate_checklist_ids" disable-extra-key="true" >
+			<key name="checklists" type="JSONArray" max-len="-1" array-size="0-100" template="IDJson"/>
+		</jsontemplate>
+		<jsontemplate name="notification_dollar_var_template" disable-extra-key="true">
+			<key name="module" type="String"/>
+			<key name="for" type="String"/>
+		</jsontemplate>
+		<jsontemplate name="request_new_form_includes" disable-extra-key="true">
+			<key name="includes" type="JSONArray" template="strarray" max-len="-1"  array-size="0-11"/>
+			<key name="template" type ="JSONObject" template="IDJson" />
+			<key name="request_maintenance" type ="JSONObject" template="IDJson" />
+			<key name="for" regex ="request_bulk_edit|preview_template|maintenance"/>
+		</jsontemplate>
+		<jsontemplate name="share_template">
+			<key name="share" type="JSONObject" template="share_input" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="share_input">
+			<key name="technicians" type="JSONArray" template="share_user_template" max-len="-1" array-size="0-100"/>
+			<key name="users" type="JSONArray" template="share_user_template" max-len="-1" array-size="0-100"/>
+			<key name="sites" type="JSONArray" template="share_site_index_template" max-len="-1" array-size="0-100"/>
+			<key name="groups" type="JSONArray" template="share_group_template" max-len="-1" array-size="0-100"/>
+			<key name="departments" type="JSONArray" template="share_department_template" max-len="-1" array-size="0-100"/>
+			<key name="technician_comments" type="String" max-len="150"/>
+			<key name="user_comments" type="String" max-len="150"/>
+			<key name="user_scope" template="strarray" type="JSONArray" max-len="50" array-size="0-2"/>
+		</jsontemplate>
+		<jsontemplate name="share_user_template">
+			<key name="id" type="long"/>
+			<key name-regex="true" name="name|text" type="String" max-len="150" secret="true"/>
+			<key name="employeeId" type="String" max-len="50" secret="true"/>
+			<key name-regex="true" name="isVipUser|is_vipuser" type="boolean" secret="true"/>
+			<key name="email_id" type="String" max-len="200" secret="true"/>
+			<key name="email" type="String" max-len="200" secret="true"/>
+			<key name="locked" type="boolean"/>
+			<key name="deptName" type="String" max-len="200" />
+		</jsontemplate>
+		<jsontemplate name="share_site_index_template">
+			<!--To allow null value inside JSONArray, index is used -->
+			<key index="0-100" type="JSONObject" template="share_site_template" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="share_site_template">
+		   <key name="id" type="long"/>
+		   <key name-regex="true" name="name|text" type="String"  max-len="250"/>
+		   <key name="locked" type="boolean"/>
+		  </jsontemplate>
+		<jsontemplate name="share_group_template">
+			<key name="id" type="long"/>
+			<key name-regex="true" name="name|text" type="String" max-len="250"/>
+			<key name="site" type="JSONObject" template="site_unique" max-len="-1"/>
+			<key name="locked" type="boolean"/>
+		</jsontemplate>
+		<jsontemplate name="share_department_template">
+			<key name="id" type="long"/>
+			<key name-regex="true" name="name|text" type="String" max-len="100"/>
+			<key name="site" type="JSONObject" template="site_unique" max-len="-1"/>
+			<key name="locked" type="boolean"/>
+		</jsontemplate>
+		<jsontemplate name="reply_request_jsontemplate">
+			<key name="operation" type="JSONObject" template="reply_request_operation" min-occurrences="1" max-occurrences="1" max-len='-1'/>
+		</jsontemplate>
+		<jsontemplate name="reply_request_operation">
+			<key name="details" type="JSONObject" template="reply_request_details" min-occurrences="1" max-occurrences="1" max-len='-1'/>
+		</jsontemplate>
+		<jsontemplate name="reply_request_details">
+			<key name="cc" regex="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"  secret="true"/>
+			<key name="to" regex="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"  secret="true"/>
+			<key name="bcc" regex="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4}[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,4})[\W]*$"  secret="true"/>
+			<key name="subject" type="String" max-len="500"/>
+			<key name="description" xss="sdpantisamyfilter" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="add_conversation_jsontemplate">
+			<key name="operation" type="JSONObject" template="add_conversation_operation" min-occurrences="1" max-occurrences="1" max-len='-1'/>
+		</jsontemplate>
+		<jsontemplate name="add_conversation_operation">
+			<key name="details" type="JSONObject" template="add_conversation_details" min-occurrences="1" max-occurrences="1" max-len='-1'/>
+		</jsontemplate>
+		<jsontemplate name="add_conversation_details">
+			<key name="subject" type="String" max-len="250"/>
+			<key name="reopenaction" regex="Reopen"/>
+			<key name="description" xss="sdpantisamyfilter" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="request_get_list" disable-extra-key="true">
+	        <key name="for" regex="list_view_filter|advanced_search_filter"/>
+	        <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base"/>
+	        <key name="include" type="JSONArray" template="strarray" max-len="-1" />
+	        <key name="fields_required" type="JSONArray"  max-len="-1" array-size="0-100" template="strarray"/>
+	   	</jsontemplate>
+	   	<jsontemplate name="widget_template">
+            <key name="site" type="JSONArray" template="widget_template_arr" max-len="100" array-size="0-100"/>
+            <key name="group" type="JSONArray" template="widget_template_arr" max-len="-1" array-size="0-100"/>
+            <key name="type" regex="last_week|this_week|last_month|this_month|this_year|last_year|last_[0-9]+_days"/>
+			<key name="status" type="JSONArray" template="strarray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="widget_template_arr">
+            <key name="id" type="long" />
+        </jsontemplate>	
+</jsontemplates>
+<!---
+Moving the JSON templates from security-api-v3-manual.xml ends here
+-->
+	<urls authentication="required">
+		<url path="/api/v3/requests/(_?)metainfo" roles="ViewRequests,HelpdeskConfig" method="get" user_type="all" disable-extraparam="true">
+			<throttles name="request_metainfo_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="request_metainfo_template" type="JSONObject" max-len="-1" />
+		</url>
+		<url path="/api/v3/requests/(\d+)/(_?)metainfo" url-type="dynamic" method="get" roles="ViewRequests,HelpdeskConfig" user_type="all" disable-extraparam="true">
+			<throttles name="request_id_metainfo_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="request_metainfo_template" type="JSONObject" max-len="-1" />
+			<param max-len="200" name="APPROVAL_KEY" type="String" secret="true"/>
+		</url>
+		<url path="/api/v3/requests/department" roles="IncidentBusinessRuleConfig,ServiceRequestConfig,RLCConfig,CommonRequestConfig,ViewRequests" method="get" disable-extraparam="true">
+			<throttles name="request_dept_allowedval_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		 <!--Readonly field url added to use in BR/CT criteria-->
+		<url path="/api/v3/requests/sla" roles="IncidentBusinessRuleConfig,ServiceRequestConfig,RLCConfig,CommonRequestConfig,ViewRequests" method="get"  disable-extraparam="true">
+			<throttles name="request_sla_allowedval_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/requests/created_by" roles="IncidentBusinessRuleConfig,ServiceRequestConfig,RLCConfig,CommonRequestConfig,ViewRequests" method="get" disable-extraparam="true">
+			<throttles name="request_created_by_allowedval_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/requests/summary" roles="ViewRequests" method="get" user_type="all">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+			<param name="ids" regex="ids" max-len="3000"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="request_summary" dynamic-throttle="true"  >
+	            <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+		</url>
+		<!--url for new form combined call .Used in add New form-->
+		<url path="/api/v3/requests/(_?)newform" method="get" roles="CreateRequests,ModifyRequests,ViewRequestMaintenances" user_type="all" disable-extraparam="true">
+			<throttles name="request_newform_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="request_new_form_includes" type="JSONObject" max-len="-1"  min-occurrences="1" />
+		</url>
+
+	<url path="/common/ViewHistory.jsp" roles="ViewRequests,ViewRequester" user_type="all" operation-param="module" operation-value="requests">
+		<throttles key="url.path+url.dynamic_key" name="viewhistory_jsp" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param name="id" type="long" allow-empty="false"/>
+		<param name="key" regex="req_history_sort_order"/>
+		<param name="print_view" type="boolean"/>
+	</url>
+	</urls>
+
+	<urls authentication="required" disable-extraparam="true" api="true">
+	<!-- team:G2 Checklist Details -->
+	<url path="/common/ChecklistDetails.jsp"  method="GET" roles="ViewRequests,ViewRequester" >
+		<throttles key="url.path+url.dynamic_key" name="checklist_details_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param name="id" type="long" allow-empty="false"/>
+		<param name="module" regex="requests|archive_requests" />
+		<param name="submodule" regex="checklists|archive_checklists" min-occurrences="1" />
+	</url>
+	<!-- team:G2 Checklist Preview -->
+	<url path="/common/ChecklistPreview.jsp"  method="GET" roles="ViewRequests,ViewRequester" >
+		<throttles key="url.path+url.dynamic_key" name="checklist_preview_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param name="id" type="long" allow-empty="false"/>
+		<param name="module" regex="requests|archive_requests" />
+		<param name="submodule" regex="checklists|archive_checklists" />
+	</url>
+	<!-- team:G2 Checklist List View -->
+	<url path="/common/ChecklistsListView.jsp"  method="GET" roles="ViewRequests" >
+		<throttles key="url.path+url.dynamic_key" name="checklist_listview_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param name="id" type="long" allow-empty="false"/>
+		<param name="module" regex="requests" />
+	</url>
+
+
+	<!--team:G2 archive_checklists crud operations -->
+	<url method="get" path="/api/v3/archive_requests/(\d+)/archive_checklists" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="archive_checklist_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+	<url method="get" path="/api/v3/archive_requests/(\d+)/archive_checklists/(\d+)" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="archive_checklist_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+	</url>
+
+	<!--team:G2 archive_checklist_item crud operations -->
+	<url method="get" path="/api/v3/archive_requests/(\d+)/archive_checklists/(\d+)/archive_checklist_items" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="archive_checklist_item_request_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+	<url method="get" path="/api/v3/archive_requests/(\d+)/archive_checklists/(\d+)/archive_checklist_items/(\d+)" roles="ViewRequests">
+		<throttles key="url.path+url.dynamic_key" name="archive_checklist_item_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+	</url>
+
+		<url path="/api/v3/archive_requests/(\d+)/archive_task/(\d+)/attachments" roles="ViewRequests" method="get">
+			<throttles name="arc_request_task_attachment_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/archive_requests/(\d+)/archive_task/(\d+)/attachments/(\d+)/(_?)download" roles="ViewRequests" method="get">
+			<throttles name="arc_task_download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+
+	<!--archived_request image operations start-->
+		<!--Role not mentioned for all archive image urls as Entity Authorization will be invoked.
+		User can access the image using key independent of role/user_type-->
+		<url method="get" roles="" path="/api/v3/archive_requests/(\d+)/archive_task/(\d+)/images/(\d+)">
+		<throttles key="url.path+url.dynamic_key" name="archived_task_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+	</url>
+	<url method="get" roles="" path="/api/v3/archive_requests/(\d+)/archive_task/(\d+)/archive_task_comment/(\d+)/images/(\d+)">
+		<throttles key="url.path+url.dynamic_key" name="archived_comment_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+	</url>
+	<url method="get" roles="" path="/api/v3/archive_requests/(\d+)/archive_task/(\d+)/archive_worklogs/(\d+)/images/(\d+)">
+		<throttles key="url.path+url.dynamic_key" name="archived_task_worklog_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+	</url>
+	<url method="get" roles="" path="/api/v3/archive_requests/(\d+)/archive_worklog/(\d+)/images/(\d+)">
+		<throttles key="url.path+url.dynamic_key" name="archived_worklog_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+	</url>
+	<url method="get" user_type="all" roles="" path="/api/v3/archive_requests/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED: AS FOR ALL ARCHIVE IMAGE URLS AS ENTITY AUTHORIZATION WILL BE INVOKED.">
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		<throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+	</url>
+		<!--Roles not added here, as they're handled in Entity Authorization layer-->
+	<url method="get" user_type="all" roles="" description="ROLE_NOT_REQUIRED: Authenticated via image token" path="/api/v3/archive_requests/(\d+)/videos/(\d+)">
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		<throttles key="url.path+url.dynamic_key" name="media" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+	</url>
+	<url method="get" user_type="all" roles="" path="/api/v3/archive_requests/(\d+)/archive_notes/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED: AS FOR ALL ARCHIVE IMAGE URLS AS ENTITY AUTHORIZATION WILL BE INVOKED.">
+		<throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+	</url>
+	<url method="get" path="/api/v3/archive_requests/(\d+)/archive_notes/(\d+)/attachments/(\d+)/(_?)download" roles="ViewRequests" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="note_attachment" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="10"/>
+		</throttles>
+		<param name="mode" regex="view"/>
+	</url>
+	
+
+	<url user_type="all" method="get" roles="" path="/api/v3/archive_requests/(\d+)/archive_notification/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED: AS FOR ALL ARCHIVE IMAGE URLS AS ENTITY AUTHORIZATION WILL BE INVOKED.">
+		<throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+	</url>
+		<!--Roles not added here, as they're handled in Entity Authorization layer-->
+	<url user_type="all" method="get" roles="" description="ROLE_NOT_REQUIRED: Authenticated via image token" path="/api/v3/archive_requests/(\d+)/archive_notification/(\d+)/videos/(\d+)">
+		<throttles key="url.path+url.dynamic_key" name="video" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+	</url>
+	<url method="get" path="/api/v3/archive_requests/(\d+)/archive_notification/(\d+)/attachments/(\d+)/(_?)download" roles="ViewRequests" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="notification_attachment" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="10"/>
+		</throttles>
+		<param name="mode" regex="view"/>
+	</url>
+	<!--archived_request image operations end-->
+
+	<!--archive_request crud operations -->
+	<url method="get" path="/api/v3/archive_requests" roles="ViewRequests" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="archive_request_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+	<url method="get" path="/api/v3/archive_requests/(\d+)" roles="ViewRequests" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="archive_request_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+	</url>
+	<url method="delete" path="/api/v3/archive_requests/(\d+)" roles="SDAdmin">
+		<throttles key="url.path+url.dynamic_key" name="archive_request_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+	</url>
+	<url method="get" path="/api/v3/archive_requests/(\d+)/attachments/(\d+)/(_?)download" roles="ViewRequests" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="attachment" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="10"/>
+		</throttles>
+		<param name="mode" regex="view"/>
+	</url>
+	<url method="get" path="/api/v3/archive_requests/(\d+)/resolution_attachments/(\d+)/(_?)download" roles="ViewRequests" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="resolution_attachment" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="10"/>
+		</throttles>
+		<param name="mode" regex="view"/>
+	</url>
+	<!--archive_request additional operations -->
+	<url method="delete" path="/api/v3/archive_requests" roles="SDAdmin">
+		<throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param max-len="3000" name="ids" regex="ids"/>
+	</url>
+		<!--Role not mentioned for archive requests user image urls as Entity Authorization will be invoked.
+		User can access the image using key independent of role/user_type-->
+	<url method="get" path="/api/v3/archive_requests/(\d+)/(requester|on_behalf_of)/(\d+)" roles="ViewRequests" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="archive_request_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+	</url>
+		<!--Role not mentioned for archive requests user image urls as Entity Authorization will be invoked-->
+	<url user_type="all" method="get" roles="" path="/api/v3/archive_requests/(\d+)/(requester|on_behalf_of)/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED: AS FOR ALL ARCHIVE IMAGE URLS AS ENTITY AUTHORIZATION WILL BE INVOKED.">
+		<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="60" duration="1m"/>
+		</throttles>
+	</url>
+
+	<!--team:G2 checklist crud operations -->
+	<url method="post" path="/api/v3/checklists" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param max-len="-1" min-occurrences="1" name="input_data" template="checklist" type="JSONObject"/>
+	</url>
+	<url method="put" path="/api/v3/checklists/(\d+)" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param max-len="-1" min-occurrences="1" name="input_data" template="checklist" type="JSONObject"/>
+	</url>
+	<url method="delete" path="/api/v3/checklists/(\d+)" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+	</url>
+	<url method="get" path="/api/v3/checklists/(\d+)" roles="SDAdmin,HelpdeskConfig,CreateRequests,ModifyRequests">
+		<throttles key="url.path+url.dynamic_key" name="checklist_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+	</url>
+	<url method="get" path="/api/v3/checklists" roles="SDAdmin,HelpdeskConfig,CreateRequests,ModifyRequests">
+		<throttles key="url.path+url.dynamic_key" name="checklist_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+
+	<!--checklist additional operations -->
+	<url method="delete" path="/api/v3/checklists" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<!-- Max 100 per page in list view 11*100=1100 ~= 1200 -->
+		<param max-len="1200" name="ids" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+	</url>
+
+	<url method="get" path="/api/v3/checklists/(\d+)/(_?)history" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+
+	<url method="get" path="/api/v3/checklists/(_?)history" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+	</url>
+
+	<url method="get" path="/api/v3/checklists/(_?)get_records_for_history" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+	</url>
+
+	<url method="get" path="/api/v3/checklists/(_?)get_performed_by_for_history" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+	</url>
+
+	<url method="get" path="/api/v3/checklist_items" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+	<url method="get" path="/api/v3/checklists/(\d+)/checklist_items" roles="SDAdmin,HelpdeskConfig">
+		<throttles key="url.path+url.dynamic_key" name="checklist_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+
+	<url method="post" path="/api/v3/request_templates/(\d+)/checklists" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="template_checklist_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param max-len="-1" min-occurrences="1" name="input_data" template="template_checklist" type="JSONObject"/>
+	</url>
+
+	<url method="put" path="/api/v3/request_templates/(\d+)/checklists/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="template_checklist_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param max-len="-1" min-occurrences="1" name="input_data" template="template_checklist" type="JSONObject"/>
+	</url>
+	<url method="put" path="/api/v3/request_templates/(\d+)/checklists" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="template_checklist_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param max-len="-1" min-occurrences="1" name="input_data" template="template_checklist" type="JSONObject"/>
+	</url>
+
+	<url method="delete" path="/api/v3/request_templates/(\d+)/checklists/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="template_checklist_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+	</url>
+
+	<url method="get" path="/api/v3/request_templates/(\d+)/checklists/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="template_checklist_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+	</url>
+	<url method="get" path="/api/v3/template_checklists" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="template_checklist_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+	<url method="get" path="/api/v3/request_templates/(\d+)/checklists" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="template_checklist_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+	</url>
+
+	<!--team:G2 template checklist additional operations -->
+	<url method="delete" path="/api/v3/request_templates/(\d+)/checklists" roles="IncidentRequestConfig,ServiceRequestConfig">
+		<throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<!-- Setting max limit as 500  11*500=5500 ~=6000 -->
+		<param max-len="6000" name="ids" regex="(\d)+(?:(\,)(\d)+){0,499}(\,)?"/>
+	</url>
+
+	<url path="/api/v3/request_templates/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="get" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="request_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+	</url>
+
+	<url path="/api/v3/request_templates/(\d+)/(service_category|user_groups)/(\d+)" roles="IncidentRequestConfig,ServiceRequestConfig" method="get" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+	</url>
+
+	<url path="/api/v3/request_templates/(_?)history" roles="IncidentRequestConfig,ServiceRequestConfig" method="get">
+		<throttles key="url.path+url.dynamic_key" name="request_templates_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+	</url>
+
+	<url path="/api/v3/request_templates/(_?)get_records_for_history" roles="IncidentRequestConfig,ServiceRequestConfig" method="get">
+		<throttles key="url.path+url.dynamic_key" name="request_templates_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+	</url>
+
+	<url path="/api/v3/request_templates/(_?)get_performed_by_for_history" roles="IncidentRequestConfig,ServiceRequestConfig" method="get">
+		<throttles key="url.path+url.dynamic_key" name="request_templates_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+	</url>
+
+	<url path="/api/v3/requests/sla_violated_technician" roles="ViewRequests" method="get">
+        <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        <throttles key="url.path+url.dynamic_key" name="request_sla_violated_technician" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+        	<throttle duration="1m" lock-period="5m" threshold="60"/>
+    	</throttles>
+    </url>
+
+ 	<url path="/api/v3/requests/sla_violated_group" roles="ViewRequests" method="get">
+        <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        <throttles key="url.path+url.dynamic_key" name="request_sla_violated_group" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+        	<throttle duration="1m" lock-period="5m" threshold="60"/>
+    	</throttles>
+    </url>
+
+	<url path="/api/v3/requests/fr_sla_violated_technician" roles="ViewRequests" method="get">
+		<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		<throttles key="url.path+url.dynamic_key" name="request_fr_sla_violated_technician" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+	</url>
+
+	<url path="/api/v3/requests/fr_sla_violated_group" roles="ViewRequests" method="get">
+		<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		<throttles key="url.path+url.dynamic_key" name="request_fr_sla_violated_group" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+        	<throttle duration="1m" lock-period="5m" threshold="60"/>
+    	</throttles>
+    </url>
+
+    <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="notification-invoke" roles="ViewRequests" method="POST" user_type="all">
+            <param name="moduleid" type="long"  allow-empty="false"/>
+            <param name="module" regex="request"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="notification-invoke" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+    </url>
+    
+    <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="allowed_templates_for_user" roles="ModifyRequests" method="get">
+        <param name="woId" type="long" allow-empty="false"/>
+        <param name="input_data" template="request_get_list" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="allowed_templates_for_user" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+    </url>
+
+	</urls>
+
+</security>
+<!-- $Id$ -->

@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = 'المشاهد';
+i18n["zcpage.builder.viewer.ar"] = 'أركانساس';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = 'تكوين العارض';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = 'حذف العارض';
+i18n["zcpage.builder.arviewer.deletetitle"] = 'حذف عارض الواقع المعزز';
+i18n["zcpage.builder.arviewer.deletewarning"] = 'لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد أنك تريد حذفه؟';
+i18n["zcpage.builder.viewer.arsetup"] = 'إعداد الواقع المعزز';
+i18n["zcpage.builder.viewer.arsetup.msg"] = 'انقر فوق ”إضافة إدخال“ لمنح إدخال للعارض.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = 'إضافة إدخال';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = 'مجموعة AR قائمة على علامة';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = 'متغيرة الصفحة';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = 'لا توجد متغيرات للصفحة للاختيار منها. ومع ذلك، يمكنك إضافة متغير جديد للصفحة تحت تبويب <b>متغيرات الصفحة والنصوص البرمجية</b>. <br> <a href=\"https://help.zoho.com/portal/en/kb/creator/developer-guide/pages/page-script-and-variables/articles/page-scripts-and-variable" target=\"_blank\">اعرف المزيد</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = 'لا توجد مجموعات AR قائمة على علامة لتحديدها. لكن، يمكنك إنشاء واحدة في مكتبة AR ضمن قسم خدمة Micro. <a href=\"https://www.zoho.com/creator/help/microservices/add-models.html#create_arset" target=\"_blank\">اعرف المزيد</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = 'هذا إدخال محدد للهاتف المحمول. لتسجيل العلامة، يتم استخدام كاميرا الهاتف المحمول الخاص بك.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = 'يجب أن تكون قيمة متغير الصفحة اسم النموذج ثلاثي الأبعاد المستخدم في مكتبة الواقع المعزز.';
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = 'إذا ألغيت الآن، فلن تُحفظ أي تغييرات أجريتها على هذا العارض.';

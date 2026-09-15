@@ -1,0 +1,124 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/project_import"
+      ],
+      "desc": "This operation helps you import projects from Microsoft Projects.<br>\n<b>Note:</b> Only one file can be imported at a time by this operation.",
+      "disp_desc": "Import a project from MS Project",
+      "workflow": "",
+      "fileinput": "true",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"sdp.project.import.success\",\"statuscode\":\"200\"}]},\"project_import\":{\"project\":{\"id\":\"6\",\"title\":\"Sample Project MPP\"},\"imported_time\":{\"display_value\":\"Aug 1, 2016 04:35 PM\",\"value\":\"1470049514134\"},\"file_name\":\"sampleProjectMpp.mpp\",\"imported_by\":{\"id\":\"3\",\"name\":\"administrator\"}}}"
+      },
+      "roles": [
+        "Add Project"
+      ],
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/api/v3/sample_project_file",
+      "desc": "This operation helps you download sample Microsoft Project files in MPP format.<br><b>Note:</b> Remember, the download might result in the content of the file.",
+      "disp_desc": "Download sample MPP File",
+      "workflow": "",
+      "roles": [
+        "Add Project"
+      ],
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/project_import_history"
+      ],
+      "desc": "This operation helps you view the history of imported projects. Row count is restricted to 100 for an ajax call.",
+      "disp_desc": "View import history of projects",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"start_index\":\"1\",\"end_index\":\"4\",\"row_count\":\"3\"}}"
+      },
+      "output": {
+        "sample": "{\"project_import_history\":[{\"project\":{\"id\":\"6\",\"title\":\"Sample Project MPP\"},\"import_status\":{\"id\":6,\"status\":\"Success\",\"messages\":[{\"message\":null,\"type\":\"Success\"}]},\"imported_time\":{\"display_value\":\"Aug 1, 2016 04:35 PM\",\"value\":\"1470049514119\"},\"file_name\":\"sampleProjectMpp.mpp\",\"imported_by\":{\"id\":\"3\",\"name\":\"administrator\"}},{\"project\":{\"id\":\"5\",\"title\":\"خطة المشروع\"},\"import_status\":{\"id\":5,\"status\":\"Warning\",\"messages\":[{\"message\":\"Error occured while importing task : \\\"null\\\"\",\"type\":\"Warning\"},{\"message\":null,\"type\":\"Success\"}]},\"imported_time\":{\"display_value\":\"Aug 1, 2016 10:49 AM\",\"value\":\"1470028777480\"},\"file_name\":\"Arabic Project Plan1.mpp\",\"imported_by\":{\"id\":\"3\",\"name\":\"administrator\"}},{\"project\":{\"id\":\"4\",\"title\":\"Project1\"},\"import_status\":{\"id\":4,\"status\":\"Success\",\"messages\":[{\"message\":null,\"type\":\"Success\"}]},\"imported_time\":{\"display_value\":\"Aug 1, 2016 10:45 AM\",\"value\":\"1470028552705\"},\"file_name\":\"a1225-2010.mpp\",\"imported_by\":{\"id\":\"3\",\"name\":\"administrator\"}}],\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"History details of project import are fetched successfully.\",\"statuscode\":\"200\"}]},\"list_info\":{\"end_index\":3,\"start_index\":1,\"has_more\":true,\"row_count\":3}}"
+      },
+      "roles": [
+        "Add Project"
+      ],
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "filename",
+      "type": "String",
+      "desc": "File name from which the project is imported.",
+      "graphView": "",
+      "column": "IMPORTPROJECTHISTORY:FILENAME",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "imported_by",
+      "type": "Object",
+      "desc": "The details of the user who imported the project.",
+      "graphView": "",
+      "column": "IMPORTPROJECTHISTORY : IMPORTEDBY",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "imported_time",
+      "type": "Number",
+      "desc": "Denotes the time of import of the project.",
+      "graphView": "",
+      "column": "IMPORTPROJECTHISTORY : IMPORTEDTIME",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "project",
+      "type": "Object",
+      "desc": "Includes the details such as 'id' and 'name' of the project imported. ex: \"project\": {\"id\":3,\"name\":\"Sample Project\"}",
+      "graphView": "",
+      "column": "IMPORTPROJECTHISTORY : PROJECTID",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "import_status",
+      "type": "Object",
+      "desc": "Displays status messages when projects are imported. Below are the import status messages: <br>1. The project is successfully imported without errors. <br>2. Imported with errors. <br>3. Import failed.",
+      "graphView": "",
+      "column": "IMPORTPROJECTHISTORY : IMPORT_STATUS",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "isReleased": "true",
+  "lastModified": 1470049524000
+}

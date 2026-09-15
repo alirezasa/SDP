@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <!-- Solution and topics will be available for both requester and technicians hence roles will not configured for url with 'Get' method -->
+    <urls authentication="optional"  api="true">
+        <url path="/api/v3/solutions/(\d+)/attachments/(_?)download" roles="ViewSolutions" method="get" user_type="all">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+            <param name="ids" max-len="1200" regex="ids" secret="true"/>
+        </url>
+        <url path="/api/v3/solutions/(\d+)" roles="ViewSolutions" method="get" user_type="all">
+            <throttles name="sol_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/solutions" roles="ViewSolutions" method="get" user_type="all">
+            <throttles name="sol_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="sol_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/solutions/(_?)metainfo" roles="ViewSolutions" method="get" user_type="all" >
+            <throttles name="metainfo_getall" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="solution_metainfo_template"/>
+        </url>
+        <url path="/api/v3/topics/_get_topic_tree" roles="ViewSolutions" method="get" user_type="all">
+            <throttles name="get_topic_tree" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="topic" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+ </security>

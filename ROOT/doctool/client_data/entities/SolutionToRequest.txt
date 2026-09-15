@@ -1,0 +1,221 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Solutions",
+      "path": "/api/v3/solution_to_request",
+      "desc": "This operation is used to associate(applied/tried) solution to a request. Comments can be added only for the tried solution. Default value of association_type field is tried. Solution and Request is mandatory fields.",
+      "disp_desc": "Associate Solution to Request",
+      "workflow": "SolutionAssociationUtil.java#associateSolutionToRequest#QSDRequestWrapper",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution_to_request\":{\"solution\":{\"id\":\"1\"},\"request\":{\"id\":\"1\"},\"comments\":\"Need more info\",\"association_type\":\"tried\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Solution associated to request successfully.\",\"status_code\":\"200\"}]},\"solution_to_request\":{\"id\":\"301\",\"association_type\":\"tried\",\"request\":{\"id\":\"4\",\"title\":\"User PC does not boot\"},\"associated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"associated_time\":{\"display_value\":\"Oct 5, 2016 11:45 AM\",\"value\":\"1475648144089\"},\"solution\":{\"id\":\"1\",\"title\":\"To move data from one installation from another.\"},\"comments\":\"Need more info\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Solutions",
+      "path": "/api/v3/solution_to_request/{solution_to_request_id}",
+      "desc": "This operation is used to dissociate solution from a request. Dissociating solution from a  request does not remove the solution details from the resolution content.",
+      "disp_desc": "Dissociate Solution from Request",
+      "workflow": "SolutionAssociationUtil.java#dissociateSolutionFromRequest#QSDRequestWrapper",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Solution dissociated from request successfully.\",\"status_code\":\"200\"}]},\"solution_to_request\":{\"id\":\"301\",\"association_type\":\"tried\",\"request\":{\"id\":\"4\",\"title\":\"User PC does not boot\"},\"associated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"associated_time\":{\"display_value\":\"Oct 5, 2016 11:45 AM\",\"value\":\"1475648144089\"},\"solution\":{\"id\":\"1\",\"title\":\"To move data from one installation from another.\"},\"comments\":\"Need more info\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/requests/{request_id}/associated_solutions"
+      ],
+      "desc": "This operation is used to retrieve all associated solution to request details based on the request id.",
+      "disp_desc": "Associated Solutions to Request",
+      "workflow": "SolutionAssociationUtil.java#viewAssociatedSolutions#QSDRequestWrapper",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"3\",\"start_index\":\"1\",\"end_index\":\"2\",\"sort_field\":\"associated_time\",\"sort_order\":\"desc\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"List view fetched successfully\",\"status_code\":\"200\"}]},\"solution_to_request\":[{\"id\":\"302\",\"association_type\":\"applied\",\"request\":{\"id\":\"1\",\"title\":\"Unable to fetch mails\"},\"associated_time\":{\"display_value\":\"Oct 5, 2016 11:52 AM\",\"value\":\"1475648537673\"},\"associated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"solution\":{\"id\":\"5\",\"title\":\"Unable to fetch mails\",\"description\":\"Title : Modify Login screens and Logout screensDescription : Find below the procedure to meet with your need:1. Save the page served under http://[servername-or-ipaddress:port-number] as index.html. C...\"},\"comments\":null},{\"id\":\"2\",\"association_type\":\"tried\",\"request\":{\"id\":\"1\",\"title\":\"Unable to fetch mails\"},\"associated_time\":{\"display_value\":\"Oct 4, 2016 06:55 PM\",\"value\":\"1475587559457\"},\"associated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"solution\":{\"id\":\"2\",\"title\":\"How to generate a Support file ?\",\"description\":\"Please follow the steps mentioned below for support file generation:Go to 'Support' tab.Click on 'Support File'. This would create a file with extension zip.gzPlease mail this file to servicedeskplus-...\"},\"comments\":\"Need more info\"}],\"list_info\":{\"has_more_rows\":false,\"end_index\":\"2\",\"start_index\":\"1\",\"page_number\":\"1\",\"sort_order\":\"D\",\"row_count\":\"2\",\"sort_field\":\"associated_time\",\"total_count\":\"2\",\"search_fields\":{}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": "/api/v3/requests/{request_id}/suggest_solutions",
+      "desc": "This operation is used to retrieve the suggested solution details based on the Title, Category, Sub Category and Item of the request.If the search_string is given, the solution will be retrieved based on the search_string not by the request details.",
+      "disp_desc": "Suggested Solutions",
+      "workflow": "SolutionAssociationUtil.java#getSolutionSuggestions#QSDRequestWrapper",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"3\",\"start_index\":\"1\",\"end_index\":\"2\"},\"fields_required\":[\"title\",\"public\",\"trimmeddescription\"]}"
+      },
+      "output": {
+        "sample": "{\"solutions\":[{\"title\":\"Troubleshooting DCOM Error\",\"public\":true,\"trimmeddescription\":\"'Either access denied for the user or the remote DCOM option might be disabled in the workstation.'This error will occur if the login credentials provided for scanning is invalid or the Remote DCOM is...\"}],\"fields_required\":[\"title\",\"public\",\"trimmeddescription\"],\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"List view fetched successfully\",\"status_code\":\"200\"}]},\"list_info\":{\"has_more_rows\":false,\"end_index\":\"1\",\"start_index\":\"1\",\"page_number\":\"1\",\"row_count\":\"1\",\"total_count\":\"1\",\"search_fields\":{}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": "/api/v3/solutions/{solution_id}/associated_requests",
+      "desc": "This operation is used to retrieve all associated solution to request details based on the solution id.",
+      "disp_desc": "Associated Requests",
+      "workflow": "SolutionAssociationUtil.java#getAssociatedRequestIDs#QSDRequestWrapper",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"3\",\"start_index\":\"1\",\"end_index\":\"2\",\"sort_field\":\"associated_time\",\"sort_order\":\"desc\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"List view fetched successfully\",\"status_code\":\"200\"}]},\"solution_to_request\":[{\"id\":\"2\",\"association_type\":\"tried\",\"request\":{\"id\":\"1\",\"title\":\"Unable to fetch mails\"},\"associated_time\":{\"display_value\":\"Oct 4, 2016 06:55 PM\",\"value\":\"1475587559457\"},\"associated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"solution\":{\"id\":\"2\",\"title\":\"How to generate a Support file ?\",\"description\":\"Please follow the steps mentioned below for support file generation:Go to 'Support' tab.Click on 'Support File'. This would create a file with extension zip.gzPlease mail this file to servicedeskplus-...\"},\"comments\":\"Need more info\"}],\"list_info\":{\"has_more_rows\":false,\"end_index\":\"1\",\"start_index\":\"1\",\"page_number\":\"1\",\"sort_order\":\"D\",\"row_count\":\"1\",\"sort_field\":\"associated_time\",\"total_count\":\"1\",\"search_fields\":{}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solution_to_request/{solution_to_request_id}"
+      ],
+      "desc": "This operation is used to update the comments of the solution tried to the request. If the comments field is empty or not present, comments of the solution is updated with null value.",
+      "disp_desc": "Update Solution To Request Association",
+      "workflow": "SolutionAssociationUtil.java#updateSolutionToRequestAssociation#QSDRequestWrapper",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution_to_request\":{\"comments\":\"Need more info\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Comments updated successfully for tried solution.\",\"status_code\":\"200\"}]},\"solution_to_request\":{\"id\":\"2\",\"association_type\":\"tried\",\"request\":{\"id\":\"1\",\"title\":\"Unable to fetch mails\"},\"associated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"associated_time\":{\"display_value\":\"Oct 4, 2016 06:55 PM\",\"value\":\"1475587559457\"},\"solution\":{\"id\":\"2\",\"title\":\"How to generate a Support file ?\"},\"comments\":\"Need more info\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/associated_arcrequests"
+      ],
+      "desc": "This operation is used to retrieve all associated solution to archive request details based on the solution id.",
+      "disp_desc": "Associated Archive Requests",
+      "workflow": "SolutionAssociationUtil.java#getAssociatedArcRequestIDs#QSDRequestWrapper",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"3\",\"start_index\":\"1\",\"end_index\":\"2\",\"sort_field\":\"associated_time\",\"sort_order\":\"desc\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"List view fetched successfully\",\"status_code\":\"200\"}]},\"solution_to_request\":[{\"id\":\"6\",\"association_type\":\"applied\",\"request\":{\"id\":\"2\",\"title\":\"backup\"},\"associated_time\":{\"display_value\":\"Oct 4, 2016 07:08 PM\",\"value\":\"1475588282428\"},\"associated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"solution\":{\"id\":\"1\",\"title\":\"To move data from one installation from another.\",\"description\":\"You can move the data from the existing server to new server. Please follow the steps mentioned below: 1. Stop ManageEngine ServiceDesk Plus service2. Kindly Upgrade the SD+ if needed. Take the link b...\"},\"comments\":null}],\"list_info\":{\"has_more_rows\":false,\"end_index\":\"1\",\"start_index\":\"1\",\"page_number\":\"1\",\"sort_order\":\"D\",\"row_count\":\"1\",\"sort_field\":\"associated_time\",\"total_count\":\"1\",\"search_fields\":{}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Integer",
+      "desc": "Unique mapping id of solution to a request",
+      "graphView": "SolutionToRequest#id",
+      "column": "SOLUTIONTOREQUEST:MAPPINGID",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "comments",
+      "type": "String",
+      "desc": "Comments of the solution tried if the existing solution doesn't resolve the problem completely",
+      "graphView": "SolutionToRequest#comments",
+      "column": "SOLUTIONTOREQUEST:COMMENTS",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "association_type",
+      "type": "String",
+      "desc": "Holds the value \"applied\" if the solution has resolved the request or \"tried\" if the solution does not resolve the request completely",
+      "graphView": "SolutionToRequest#association_type",
+      "column": "SOLUTIONTOREQUEST:ASSOCIATIONTYPE",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "solution",
+      "type": "Object",
+      "desc": "Solution associated with the Request",
+      "graphView": "SolutionToRequest#solution",
+      "column": "SOLUTIONTOREQUEST:SOLUTIONID",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "request",
+      "type": "Object",
+      "desc": "Particular request to which the Solution has been associated",
+      "graphView": "SolutionToRequest#request",
+      "column": "SOLUTIONTOREQUEST:REQUESTID",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "associated_by",
+      "type": "Object",
+      "desc": "Details of the user who associates the  solution to request",
+      "graphView": "SolutionToRequest#associatedby",
+      "column": "SOLUTIONTOREQUEST:ASSOCIATEDBY",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "associated_time",
+      "type": "Object",
+      "desc": "Denotes the time the solution was associated to the request",
+      "graphView": "SolutionToRequest#associatedtime",
+      "column": "SOLUTIONTOREQUEST:ASSOCITEDTIME",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "isReleased": "true",
+  "lastModified": 1477131467000,
+  "Additional Elements": []
+}

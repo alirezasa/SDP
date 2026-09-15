@@ -1,0 +1,147 @@
+<!-- $Id$ -->
+<!-- Security authentication for Organizational Roles related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="OrgRolesThrottle" dynamic-throttle="true"  >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="orgroles" method="GET"/>
+
+        <url path="/ESM.do" operation-param="type" operation-value="orgroles" user_type="all" roles="SDOrgAdmin" method="GET"/>
+
+        <url roles="SDOrgAdmin,SDSiteAdmin" path="/OrgRoles.do" operation-param="action" operation-value="searchAutoComplete" method="GET" user_type="all">
+            <param name="sType" type="long" range=">=0"/>
+            <param name="eType" regex="ORG|REGION|SITE|DEPARTMENT"/>
+            <param name="sText" type="String" max-len="100"/>
+            <param name="count" type="long" range=">=0"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="OrgRolesThrottleToSearchUsers" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/OrgRoles.do" operation-param="action" operation-value="vieworg" method="GET">
+            <param name="view" regex="associateuser|orgroles"/>
+            <param name="roleid" type="long" range=">=0"/>
+        </url>
+
+        <url roles="SDOrgAdmin" path="/OrgRoles.do" operation-param="action" operation-value="get_roles_roleid" method="GET" user_type="all">
+            <param name="roleid" type="long" range=">=0"/>
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/OrgRoles.do" operation-param="action" operation-value="get_roles_entity" method="GET" user_type="all">
+            <param name="eType" regex="ORG|REGION|SITE|DEPARTMENT"/>
+            <param name="eId" type="long" range=">=0"/>
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/OrgRoles.do" operation-param="action" operation-value="get_all_roles_userid" method="GET" user_type="all">
+            <param name="userId" type="long" range=">=0"/>
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/OrgRoles.do" operation-param="action" operation-value="add_role" method="POST" csrf="true" user_type="all">
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/OrgRoles.do" operation-param="action" operation-value="add_association" method="POST" csrf="true">
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/OrgRoles.do" operation-param="action" operation-value="update_role" method="POST" csrf="true">
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/OrgRoles.do" operation-param="action" operation-value="update_association" method="POST" csrf="true">
+            <param name="operation_type" regex="update_role_user|update_user|update_user_association"/>
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/OrgRoles.do" operation-param="action" operation-value="delete_role" method="POST" csrf="true">
+            <param name="roleId" type="long" range=">=0"/>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/OrgRoles.do" operation-param="action" operation-value="delete_association" method="POST" csrf="true">
+            <param name="input_json" type="JSONObject" template="orgroles_template" max-len="20000"/>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/OrgRoles.do" operation-param="action" operation-value="unusedEntities" method="GET">
+            <param name="limit" type="long" range=">=0"/>
+            <param name="offset" type="long" range=">=0"/>
+            <param name="roleId" type="long" range=">=0"/>
+            <param name="eType" regex="ORG|REGION|SITE|DEPARTMENT"/>
+            <param name="needCount" type="boolean"/>
+            <param name="sText" type="String" max-len="100"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="OrgRolesThrottleToSearchEntity" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin" path="/OrgRoles.do" operation-param="action" operation-value="searchOrgRoles" method="GET">
+            <param name="count" type="long" range=">=0"/>
+            <param name="defaultRoles" type="boolean"/>
+            <param name="sText" type="String" max-len="100"/>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/importRole.do" operation-param="operation" operation-value="step1" method="GET"/>
+        <url roles="SDOrgAdmin" user_type="all" path="/importRole.do" operation-param="operation" operation-value="sampleXLS" method="GET"/>
+        <url roles="SDOrgAdmin" user_type="all" path="/importRole.do" operation-param="operation" operation-value="failedRolesList" method="GET"/>
+        <url roles="SDOrgAdmin" user_type="all" path="/importRole.do" operation-param="operation" operation-value="failedRolesListWithErrors" method="GET"/>
+        <url roles="SDOrgAdmin" user_type="all" path="/importRole.do" operation-param="operation" operation-value="step2" method="POST" csrf="true" >
+            <file name="theFile" max-size="50000" allowed-extensions="xls" content-type-name="xls" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <param name="chooseXLS" type="String" max-len="1000"/>
+            <param name="forwardfrom" regex="ESM|null"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ImportRoles_step2" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/importRole.do" operation-param="operation" operation-value="step3" method="POST" csrf="true">
+            <param name="xlsfile" max-len="500" type="String"/>
+            <param name="sheetcount" type="long" range=">=0"/>
+            <param name="name" type="String" max-len="250"/>
+            <param name="mail" type="String" max-len="250" secret="true"/>
+            <param name="value" type="String" max-len="500"/>
+            <param name="in" type="String" max-len="5000" secret="true"/>
+            <param name="forwardfrom" regex="ESM|null"/>
+            <file name="theFile" max-size="50000" allowed-extensions="xls" content-type-name="xls" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ImportRoles_step3" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+    </urls>
+
+    <jsontemplates>
+        <jsontemplate name="orgroles_template">
+            <key name="list_info" type="JSONObject" template="orgroles_list_info_template"/>
+            <key name="orgroles" type="JSONArray" template="orgroles_array_template" max-len="20000"/>
+            <key name="role_details" type="JSONArray" template="orgroles_roles_array_template" max-len="20000"/>
+        </jsontemplate>
+
+        <jsontemplate name="orgroles_list_info_template">
+            <key name="search_fields" type="JSONObject" template="orgroles_list_info_search_fields_template"/>
+            <key name="get_total_count" type="boolean"/>
+            <key name="row_count" type="long" range=">=0"/>
+            <key name="start_index" type="long" range=">=0"/>
+        </jsontemplate>
+
+        <jsontemplate name="orgroles_list_info_search_fields_template">
+            <key name="entity" type="String" max-len="19"/>
+            <key name="user" type="String" max-len="19"/>
+        </jsontemplate>
+
+        <jsontemplate name="orgroles_array_template">
+            <key name="orgrole_type" regex="ORG|REGION|SITE|DEPARTMENT"/>
+            <key name="role_details" type="JSONArray" template="orgroles_roles_array_template" max-len="10000"/>
+            <key name="role_id" type="long" range=">=0"/>
+            <key name="user_details" type="JSONArray" template="orgroles_user_array_template" max-len="10000"/>
+            <key name="list_info" type="JSONObject" template="orgroles_list_info_template"/>
+        </jsontemplate>
+
+        <jsontemplate name="orgroles_user_array_template">
+            <key name="id" type="long" range=">=0"/>
+            <key name="config_details" type="JSONArray" template="longarray" array-size="0-200" max-len="10000"/>
+        </jsontemplate>
+
+        <jsontemplate name="orgroles_roles_array_template">
+            <key name="old_user_id" type="long" range=">=0"/>
+            <key name="id" type="long" range=">=0"/>
+            <key name="user_id" type="long" range=">=0"/>
+            <key name="config_details" type="JSONArray" template="longarray" array-size="0-200" max-len="10000"/>
+            <key name="description" type="String" max-len="250" secret="true"/>
+            <key name="name" type="String" max-len="50"/>
+        </jsontemplate>
+
+    </jsontemplates>
+</security>

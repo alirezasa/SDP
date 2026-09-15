@@ -1,0 +1,151 @@
+<div class="pb30" id="admin_helpcard">
+	<div class="mt10">
+		Configure E-Mail command / Zia parser to parse the content of the mail and perform actions on the Request.
+	</div>
+	<div class="mt10">
+		<details class="mt10 helpdetailstag">
+			<summary><span class="detailsarrow top-1"></span><span class="sb">E-Mail Command</span></summary>
+			<div class="m10">
+				<p>
+					E-mail
+					Command allows the technician to delimit fields in the e-mail, according
+					to which the e-mail can be parsed and corresponding fields can be set. </p>
+
+
+				<p>To configure E-mail Command,</p>
+
+				<p>1. In the Mail Server Settings page, click on <strong>E-mail Command</strong>
+					tab. The E-mail <span style="font-weight: medium;">Command</span> configuration
+					screen is displayed.</p>
+
+				<p>2. Click on the check box <strong>Enable E-mail Command</strong> to activate the
+					e-mail parsing feature. If this option is not selected, then the incoming
+					e-mail will be handled as a normal mail based on established business
+					rules even if the incoming e-mails contain the parsing string in the subject.</p>
+
+				<p>3. In the <strong>E-mail Subject contains</strong> text box, enter valid subject
+					line that determines the e-mails which have to be parsed. E-mails containing
+					this text will be parsed for various fields. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->Assume
+					the Email subject identifier is given as @SDP@, then emails with subject
+					containing @SDP@ alone will be considered for parsing.</p>
+
+				<p>4. Provide any special character (@@, ##, $$, %%, &amp;&amp;, so on)
+					as the <strong>Command</strong><strong> Delimiter</strong>. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->The
+					field values assigned between these special characters are assigned to
+					the corresponding fields while the requests are created. Assume if the
+					Command Delimiter is @@ and the email description need to set category
+					field to Printer, then the email description should contain @@Category=Printer@@.</p>
+
+				<p>Notes:</p>
+
+				<ul style="list-style: DISC;"
+					type=disc>
+
+					<li class=kadov-P><p>A request can be created / updated / closed /
+						picked up by a technician through e-mails. Operational string &quot;Operation
+						= AddRequest&quot;, &quot;Operation = EditRequest&quot;, &quot;Operation
+						= CloseRequest&quot; and &quot;Operation = PickupRequest&quot; is used
+						for this purpose.</p></li>
+
+					<li class=kadov-P><p>To update, pick up or close a request through
+						e-mail, the corresponding operational string (EditRequest / PickupRequest
+						/ CloseRequest) and the RequestId must be present. If not, the e-mail
+						will be processed normally and treated as a new request.</p></li>
+
+					<li class=kadov-P><p>When a request is updated through an e-mail, the
+						conversation will not be added in the request. Hence attachments and inline
+						images in the e-mail will not be updated in the request. However, the
+						update information will be added in the history.</p></li>
+
+					<li class=kadov-P><p>If the field name given in the e-mail is not available
+						in the application, then parsing will be excluded for that field.</p></li>
+
+					<li class=kadov-P><p>If there is more than one value present for a
+						particular field in an e-mail, then the last value alone will be taken
+						and others will be discarded.</p></li>
+
+					<li class=kadov-P><p>Request threads with subject containing the &quot;RequestId&quot;
+						and no operational string (EditRequest) will be updated as a normal conversation
+						and a new request will not be created.</p></li>
+
+					<li class=kadov-P><p>The e-mail sender should have a login in the application
+						for the E-mail Parsing to happen. <!--kadov_tag{{<spaces>}}-->&nbsp;<!--kadov_tag{{</spaces>}}-->This
+						is because, various operations that can be handled by a user to parse
+						an e-mail are defined by the user's Role. Request authorization (close
+						a request, pick up a request, update a request, accept closure of a request
+						and so on) are set using Roles in the application. </p></li>
+
+					<li class=kadov-P><p>The e-mail sender will be considered as the requester
+						if the requester name is not specified in the e-mail.</p></li>
+
+					<li class=kadov-P><p>Permissions and Parameters supported:</p></li>
+				</ul>
+
+				<ul style="list-style: lower-alpha;"
+					type=a>
+
+					<ol style="list-style: lower-alpha;"
+						type=a>
+
+						<li class=kadov-P><p>If the e-mail sender is a requester with requester
+							permissions, then the fields that be parsed are limited. A requester can
+							parse only those fields that he can view in the request form while creating
+							a request. </p></li>
+
+						<li class=kadov-P><p>If the e-mail sender is a technician with
+							technician permissions, then the fields that can be parsed are same as
+							those fields that he can view in the request form while creating a request.</p></li>
+
+						<li class=kadov-P><p>Fields that can be parsed are LEVEL, MODE,
+							PRIORITY, URGENCY, IMPACT, IMPACTDETAILS, CATEGORY, SUBCATEGORY, ITEM,
+							GROUP, TECHNICIAN, TECHNICIANEMAIL, REQUESTER, REQUESTEREMAIL, REQUESTID,
+							REQUESTTEMPLATE, REQUESTTYPE, STATUS, SITE, ASSET, RESOLUTION, SUBJECT, DESCRIPTION, DUEBYTIME, FRDUEBYTIME, CALLBACKURL, EDITOR, EDITOREMAIL, Resources and additional
+							field label (the field label given in the e-mail must match the field
+							label set in the product)</p></li>
+
+						<li class=kadov-P><p>To change the fields that a requester or a
+							technician can parse, go to Admin --&gt; Request Templates (under Helpdesk
+							domain), select Default Template and add or remove the fields.</p></li>
+					</ol>
+				</ul>
+
+				<ul style="list-style: DISC;"
+					type=disc>
+
+					<li class=kadov-P><p>The RequestId present in the description of the
+						e-mail it will be given higher precedence over the RequestId present in
+						the subject of the e-mail.</p></li>
+				</ul>
+			</div>
+		</details>
+		<hr class="m0 hr-medium">
+		<details class="helpdetailstag">
+			<summary><span class="detailsarrow top-1"></span><span class="sb">Zia Parser</span></summary>
+			<div class="m10">
+				<p>Analyzes incoming emails containing the configured phrase in the subject and performs various actions on requests or updates request properties.</p>
+				<p class="sb">Configure Zia Parser</p>
+				<ul>
+					<li>Enable Zia parser.</li>
+					<li>Enter the required phrase. Incoming emails containing this phrase in their subject will be parsed. By default, @ZIA is configured. You can modify it, if required. Note that the Zia parser identifier should be different from the email command identifier.</li>
+					<li>Select the request fields and actions to exclude from parsing.</li>
+					<li>Notify users about Zia parser by using the placeholder <strong>$ZiaParserInfo</strong>. Select the required option:
+						<ul>
+							<li><strong>All Notifications</strong> - Information will be appended to all request system notifications. The <strong>$ZiaParserInfo</strong> will be replaced with the parser information.</li>
+							<li><strong>Configured Templates</strong> - Information will be appended only if the <strong></strong>$ZiaParserInfo</strong> is present in the template.</li>
+							<li><strong>None</strong> - The dollar variable in the configured template will be set empty.</li>
+						</ul>
+					</li>
+					<li>Click <strong>Modify this information</strong> to edit the notification content.</li>
+					<li>Enable this option to notify the sender whether the Zia parser has taken action on the email or failed to parse any properties. Click Customize to modify the notification message.</li>
+					<li>Click <strong>Save</strong>.</li>
+				</ul>
+				<p><i>Note: Fields and actions mentioned in the email are parsed only if Zia parser is trained with the relevant content.</i></p>
+				<p><strong>Test Zia Parser</strong></p>
+				<ul>
+					<li>To check the parser's configuration, click <strong>Test Zia Parser</strong> at the top of the configuration section.</li>
+					<li>Provide inputs and click <strong>Parse</strong>. You can refer to the <strong>Example Prompt</strong> section for sample sentences</li>
+				</ul>
+			</div>
+		</details>
+	</div>
+</div>

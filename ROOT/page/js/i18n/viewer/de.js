@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = 'Viewer';
+i18n["zcpage.builder.viewer.ar"] = 'AR';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = 'Viewer konfigurieren';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = 'Viewer löschen';
+i18n["zcpage.builder.arviewer.deletetitle"] = 'AR-Viewer löschen';
+i18n["zcpage.builder.arviewer.deletewarning"] = 'Diese Aktion kann nicht rückgängig gemacht werden. Wirklich löschen?';
+i18n["zcpage.builder.viewer.arsetup"] = 'AR-Einrichtung';
+i18n["zcpage.builder.viewer.arsetup.msg"] = 'Zum Erstellen einer Eingabe für den Betrachter klicken Sie auf „Eingabe hinzufügen“.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = 'Eingabe hinzufügen';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = 'Markiererbasiertes AR-Set';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = 'Seitenvariable';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = 'Keine Seitenvariablen zur Auswahl vorhanden. Allerdings können Sie auf der Registerkarte <b>Seitenvariablen und Skript</b> eine neue Seitenvariable hinzufügen. <br> <a href=\"https://help.zoho.com/portal/en/kb/creator/developer-guide/pages/page-script-and-variables/articles/page-scripts-and-variable" target=\"_blank\">Mehr dazu</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = 'Keine markiererbasierten AR-Sets zur Auswahl. Allerdings ist eine Erstellung im Abschnitt „Mikrodienste“ der AR-Bibliothek möglich. <a href=\"https://www.zoho.com/creator/help/microservices/add-models.html#create_arset" target=\"_blank\">Mehr dazu</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = 'Dies ist eine mobilgerätespezifische Eingabe. Zum Erfassen der Markierung wird die Kamera Ihres Mobilgerätes eingesetzt.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = 'Der Wert der Seitenvariable muss dem Namen des 3D-Modells entsprechen, das in der AR-Bibliothek verwendet wird.';
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = 'Wenn Sie jetzt abbrechen, werden sämtliche an diesem Betrachter vorgenommenen Änderungen nicht gespeichert.';

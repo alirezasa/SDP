@@ -1,0 +1,18 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zc.page.builder.formembed.property.resetbutton"] = 'Reset button text (Web only)';
+i18n["zcpage.dialog.embed.redirectto"] = 'Redirect to';
+i18n["zcpage.dialog.embed.redirectto.tooltip"] = 'Redirect on successful form submission';
+i18n["zcpage.dialog.embed.submittxt"] = 'Submit button text';
+i18n["zcpage.dialog.embed.successmsg.tooltip"] = 'Message to be displayed on successful form submission';
+i18n["zcpage.dialog.form.configure.values"] = 'Configure values';
+i18n["zc.builder.page.embed.report.config"] = 'No configuration options available for the selected report';
+i18n["zcpage.dialog.embed.actions"] = 'Actions';
+i18n["zcpage.dialog.embed.duplicate"] = 'Duplicate';
+i18n["zcpage.dialog.embed.edit"] = 'Edit';
+i18n["zcpage.dialog.embed.export"] = 'Export';
+i18n["zcpage.dialog.embed.filter"] = 'Filter';
+i18n["zcpage.dialog.embed.miscellaneous"] = 'Miscellaneous';
+i18n["zcpage.dialog.embed.printexport"] = 'Print & Export ';
+i18n["zcpage.dialog.embed.recordscount"] = 'Records count';
+i18n["zcpage.dialog.embed.report.addfilter"] = 'Add filter';
+i18n["zcpage.dialog.embed.report.addfilter.desc"] = 'Add a filter and restrict records to be displayed in this report. ';
+i18n["zcpage.dialog.embed.search.and.filters"] = 'Search & Filters';

@@ -1,0 +1,134 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/technician_auto_assign"
+      ],
+      "desc": "This operation fetches the details of technician auto assign configuration",
+      "disp_desc": "View technician auto assign configurations",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"tech_auto_assign\":{\"is_enabled\":true,\"model\":\"loadbalancing\",\"execute_when_request_created\":true,\"execute_when_request_edited\":true,\"assign_to_requests\":\"unassigned\",\"technician_availability_by\":\"duebydate\",\"excluded_technicians\":[{\"id\":\"100000000000007300\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"},{\"id\":\"100000000000021010\",\"name\":\"Heather Graham\",\"email_id\":\"abc@zylker.com\"}],\"exceptions\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"status\",\"condition\":\"is\",\"value\":[{\"name\":\"On Hold\"}]}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/technician_auto_assign"
+      ],
+      "desc": "This operation lets you update the details of technician auto assign configuration",
+      "disp_desc": "Update technician auto assign configuration",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"tech_auto_assign\":{\"is_enabled\":true,\"model\":\"loadbalancing\",\"execute_when_request_created\":true,\"execute_when_request_edited\":true,\"assign_to_requests\":\"unassigned\",\"technician_availability_by\":\"duebydate\",\"excluded_technicians\":[{\"id\":\"100000000000007300\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"},{\"id\":\"100000000000021010\",\"name\":\"Heather Graham\",\"email_id\":\"abc@zylker.com\"}],\"exceptions\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"status\",\"condition\":\"is\",\"value\":[{\"name\":\"On Hold\"}]}]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"tech_auto_assign\":{\"is_enabled\":true,\"model\":\"loadbalancing\",\"execute_when_request_created\":true,\"execute_when_request_edited\":true,\"assign_to_requests\":\"unassigned\",\"technician_availability_by\":\"duebydate\",\"excluded_technicians\":[{\"id\":\"100000000000007300\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"},{\"id\":\"100000000000021010\",\"name\":\"Heather Graham\",\"email_id\":\"abc@zylker.com\"}],\"exceptions\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"status\",\"condition\":\"is\",\"value\":[{\"name\":\"On Hold\"}]}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "is_enabled",
+      "type": "Boolean",
+      "desc": "Indicated whether the technician auto assign functionality is enabled or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "model",
+      "type": "String",
+      "desc": "Requests are assigned to the technicians either through Round Robin or Load Balancing model. \nLoad Balancing: The number of requests that are In progress and assigned to a technician is taken as the load of the technician. So on selecting this model, technicians with the least load are assigned to requests. \nRound Robin: In this model, technicians are assigned to the request irrespective of the load.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "execute_when_request_created",
+      "type": "Boolean",
+      "desc": "Indicates whether the technician auto assign option should be executed for newly created requests",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "execute_when_request_edited",
+      "type": "Boolean",
+      "desc": "Indicates whether the technician auto assign option should be executed for updation of requests",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "assign_to_requests",
+      "type": "String",
+      "desc": "On creating a new request, the technician auto assign can be applied to the Unassigned Requests or to the assigned/unassigned Requests. \nUnassigned Requests: On selecting this option, the technician auto assign is applied to requests that are unassigned even after passing through all the Business Rules and Category selections. \nAll Requests: When this option is selected, the technicians assigned to the requests through business rules or category selection, will be overridden. ",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "technician_availability_by",
+      "type": "String",
+      "desc": "The system will automatically allocate the technicians assigned to requests based on Created date or Due by date availability. This setting acts as a filter i.e it performs an additional check for the availability of the technician. Unassigned Requests: On selecting this option, the technician auto assign is applied to requests that are unassigned even after passing through all the Business Rules and Category selections. \nAll Requests: When this option is selected, the technicians assigned to the requests through business rules or category selection, will be overridden. ",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "excluded_technicians",
+      "type": "Array of Objects",
+      "desc": "List of technicians to exclude from being auto assigned",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "exceptions",
+      "type": "Array of Objects",
+      "desc": "Criteria upon which certain requests  will be excluded from being auto assigned to technicians",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "lastModified": 1474011532000
+}

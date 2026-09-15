@@ -1,0 +1,883 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" method="get">
+		<!-- Missed urls added (while merging with FOESM) -->
+		<!-- Missed urls added-->
+		<!-- Note : All Commented urls is duplicated -->
+
+		<url path="/common/PrintPreviewComponent.jsp" remote_server="true" user_type="all">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PrintPreviewComponent" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="assets" />
+			<param name="entity_id" type="long" />
+			<param name="isCMDB" type="boolean" />
+			<param name="externalframe" type="boolean" />
+			<param name="previewSlider" type="boolean" />
+		</url>
+
+		<!-- extras-->
+		<!-- Missed urls -->
+
+		<url path="/STATE_ID/[0-9]+/ChooserListTypeInline.cc" roles="Common_Role" path-regex="true" user_type="all" method="get" remote_server="true" disable-extraparam="true">
+			<throttles name="column_chooser_url" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="UNIQUE_ID" regex="ChooserListTypeInline"/>
+			<param name="viewName" type="String" allow-empty="false" min-occurrences="1" />
+			<param name="CHANGEID" type="long" />
+		     	<param name="CHANGEINCIDENTDETAILS" type="boolean"/>
+			<param name="TABLEVIEWID" type="String" allow-empty="false" max-occurrences="1" />
+			<param name="TYPE" type="String" max-occurrences="1"/>
+			<param name="scopeid" regex="id" max-occurrences="2"/>
+			<param name="associatedEntityID" type="long" max-occurrences="2"/>
+			<param name="problemid" type="long" max-occurrences="1"/>
+			<param name="globalViewName" type="String" allow-empty="false" max-occurrences="1"/>
+			<param name="ASSETID" type="long"/>
+			<param name="PROBLEMID" type="long" />
+			<param name="wsId" type="long" />
+			<param name="FROM" regex="Filter|ChangeFilter"/>
+			<param name="searchText" type="String" max-len="250"/>
+			<param name="SearchText" type="String" max-len="250"/>
+			<!-- Support group related param -->
+			<param name="showView" regex="Active|InActive"/>
+			<!-- Backup Tech Chart related params -->
+			<param name="month" type="long" range="0-12"/>
+			<param name="year" type="long" range=">=0"/>
+			<param name="forwardTo" regex="service" max-occurrences="3"/>
+			<!-- <param name="TABLEVIEWID" regex="AssetView"> -->
+			<param name="ciTypeId" regex="null|[0-9]+"/>
+			<param name="fromTab" regex="assetTab"/>
+			<param name="auditFilter" regex="7+days|30+days|7 days|30 days|0|1|2|null"/>
+			<!-- Contract related param -->
+			<param name="categoryID" type="long" range=">0"/>
+			<param name="contractID" type="long" range=">0"/>
+			<!-- Scan & Software related params -->
+			<param name="siteId" regex="-1|-2|[0-9]+"/>
+			<param name="softwareId" type="long" range=">=-1" max-occurrences="100"/>
+			<param name="selectedSiteId" regex="-1|-2|[0-9]+"/>
+			<param name="expirein" type="long" range=">=-2"/>
+			<param name="licenseId" type="long" range=">=1"/>
+			<param name="softwareLicenseId" type="long" range=">=1"/>
+			<param name="isupgradelicenseview" type="boolean"/>
+			<param name="SWMANUFACTURERID" type="long" range=">=1"/>
+			<param name="softwareManufacturer" type="long" range=">=1"/>
+			<param name="fromLALicenseSearch" type="boolean"/>
+			<param name="FromModule" regex="RequestDependency"/>
+			<param name="Type" regex="All_Pending_User|All_Completed_User|All_Pending|Unassigned_System|All_Completed|Service_Requests|Incident_Requests|All_Requests"/>
+			<param name="WorkorderId" type="long" range=">0"/>
+			<param name="fromPage" type="String" max-len="100"/>
+			<param name="searchString" type="String" max-len="150"/>
+			<param name="productID" regex="null|[0-9]+"/>
+			<param name="productTypeID" regex="null|[0-9]+"/>
+			<param name="selectedAssets" regex="^[0-9,]*$" max-len="10000"/>
+			<param name="CATEGORYID" regex="null|-1|[0-9]+"/>
+			<param name="CHANGED" type="boolean"/>
+		</url>
+
+
+
+		<!-- Missed urls -->
+
+		<!-- This entry for http://localhost:8080/ -->
+		<url path="/" user_type="all" remote_server="true"/>
+
+		<!-- urls copied from viewconfiguration table viewname !!!!!!!!!!!!-->
+		<!--Moved to dynamic security as sugessted by Sec Team for SD-86219-->
+		<!--url path="/STATE_ID/[0-9]+/[A-Za-z0-9_]+.cc" path-regex="true" user_type="all" >
+			<param name="UNIQUE_ID" regex="[A-Za-z0-9_]+"/>
+		</url-->
+
+		<url path="/ListViewConfigurations.cc"  >
+			<param name="UNIQUE_ID" regex="ListViewConfigurations"/>
+		</url>
+		<url path="/TabCustomization.cc"  >
+			<param name="UNIQUE_ID" regex="TabCustomization"/>
+		</url>
+		<url path="/GridCustomization.cc"  >
+			<param name="UNIQUE_ID" regex="GridCustomization"/>
+		</url>
+		<url path="/TableLayoutCustomization.cc"  >
+			<param name="UNIQUE_ID" regex="TableLayoutCustomization"/>
+		</url>
+		<!--team:G2 View User Assets-->
+		<url path="/ChooserListTypeInline.cc" user_type="all" disable-extraparam="true">
+			<throttles name="column_chooser_url_withour_stateid" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="UNIQUE_ID" regex="ChooserListTypeInline"/>
+			<param name="TABLEVIEWID" regex="BackupTechView|GroupListView|WsRequestsHistory|ContractAssetsView|ArchiveRequestsView|ChangesForAsset|UpgradeDowngradeLicenses|SWUnlicencedInstallationView|SWLicencedInstallationView"/>
+			<param name="scopeid" regex="id" max-occurrences="2"/>
+			<param name="viewName" type="String" allow-empty="false" min-occurrences="1"/>
+			<param name="View_Name" type="String" allow-empty="false"/>
+			<param name="associatedEntityID" type="long" max-occurrences="2"/>
+			<param name="SHOW_LIST" type="String" allow-empty="false" max-occurrences="1000"/>
+			<param name="HIDE_LIST" type="String" allow-empty="false" max-occurrences="1000"/>
+			<!-- Support group related param -->
+			<param name="showView" regex="Active|InActive"/>
+			<!-- Backup Tech Chart related params -->
+			<param name="month" type="long" range="0-12"/>
+			<param name="year" type="long" range=">=0"/>
+			<param name="wsId" type="long" range=">=0"/>
+			<param name="fromPage" type="String"/>
+			<param name="TYPE" type="String"/>
+			<param name="searchString" type="String" max-len="150"/>
+			<param name="productID" regex="null|[0-9]+"/>
+			<param name="productTypeID" regex="null|[0-9]+"/>
+			<param name="ASSETID" type="long" range=">=-1"/>
+			<param name="CHANGEID" type="long" range=">=-1"/>
+			<param name="selectedAssets" regex="^[0-9,]*$" max-len="10000"/>
+			<!-- Software Module related params -->
+			<param name="softwareLicenseId" type="long" range=">0"/>
+			<param name="licenseId" type="long" range=">0"/>
+			<param name="selectedSiteId" type="long" range=">=-1"/>
+			<param name="isupgradelicenseview" type="boolean" />
+		</url>
+		<url path="/FilterCreateForm.cc"  >
+			<param name="UNIQUE_ID" regex="FilterCreateForm"/>
+		</url>
+		<!--SD-92679-->
+
+
+		<url path="/SearchN.do" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: all users have access to search">
+			<param name="configID" type="long" range="0-500"/>
+			<param name="userConfigID" type="long" range=">=0"/>
+			<param name="SELECTSITE" type="String" max-len="50"/>
+			<param name="SELECTEDSITEID" regex="[-0-9]+|null" max-len="19"/>
+			<param name="SELECTEDSITENAME" type="String" max-len="250"/>
+			<param name="searchText" type="String" max-len="5000" secret="true"/>
+			<param name="subModSelText" type="String" max-len="50"/>
+			<param name="selectName" type="String" max-len="50"/>
+			<param name="submitbutton" type="String" max-len="50"/>
+			<param name="url_search" template="list_info" type="JSONObject" max-len="-1"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="global_search" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+		</url>
+
+		<url path="/spellcheck.do" user_type="all" />
+
+
+		<url path="/autoSuggestions.do" user_type="all" method="GET">
+			<throttles name="autos_suggestions" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="id" type="String" />
+			<param name="from" regex="subject|submit" />
+			<param name="value" type="String" />
+		</url>
+		<!-- <url path="/RequestExternalAction.do" /> -->
+		<url path="/didform.do" user_type="all" method="GET"/>
+		<url path="/ListViewFilter.do" user_type="all" disable-extraparam="true" description="FGR_APPLIED:Roles are not defined as role check will be done at server side based on the module">
+			<throttles name="list_view_filter_action" window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="list_view_filter_modules" min-occurrences="1"/>
+			<param name="action" regex="addfilter|editfilter|preview|listview|advsearch" min-occurrences="1"/>
+			<param name="filterid" type="long" />
+		</url>
+
+
+		<!-- <url path="/CCTVView.do" /> -->
+		<!-- urls copied from /library/resources/WEB-INF/web.xml !!!!!!!!!!!!-->
+		<!-- <url path="/.*" /> -->
+		<!-- <url path=".*.swf" /> -->
+		<url path="/servlet/RssFeedCreator" />
+		<!-- <url path="/servlet/slaapi/.*" /> -->
+		<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="getDetails" user_type="all">
+			<param name="module" regex="solution|announcement"/>
+			<param name="from" regex="subject|submit"/>
+			<param name="solnids" type="String" />
+			<param name="announceids" type="String" />
+		</url>
+
+
+		<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="detach" user_type="all"/>
+
+		<!-- <url path="/servlet/AJaxServlet"/> -->
+		<url path="/servlet/AJaxServlet" operation-param="action" operation-value="searchMailId" user_type="all" roles="Common_Role"/>
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="checkUser" roles="CreateRequests,HelpdeskConfig,CreateProblems,ModifyProblems" user_type="all">
+			<param name="requestFrom" type="String"/>
+			<param name="search" type="String" max-len="150"/>
+			<param name="projectid" regex="id"/>
+		</url>
+	
+		<url path="/servlet/AJaxServlet" operation-param="action" operation-value="ExportAsPDF" user_type="all" method="POST" csrf="true" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ExportAsPDF" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="50" lock-period="5m"/>
+			</throttles>
+					<param name="options" type="JSONObject" template="pdfOptions" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<!-- <url path="/servlet/RuleFilterServlet" /> -->
+		<!-- <url path="/servlet/HdClientUtilServlet" /> -->
+		<url roles="SDAdmin" path="/servlet/DebugServlet" method="GET"/>
+
+
+		<!-- <url path="/api/.*" /> -->
+		<!-- <url path=".*.ls" /> -->
+		<!-- <url path="/ze/.*" /> -->
+		<!-- <url path="/approval/.*" /> -->
+
+		<!-- <url path=".*.ma" /> -->
+		<!-- <url path=".*.ve" /> -->
+		<url path="/servlet/SGTServlet">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SGTServlet" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+
+
+		<url path="/common/TechnicianSelect.jsp" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TechnicianSelect" >
+				<throttle duration="1m" threshold="50" lock-period="5m"/>
+			</throttles>
+		</url>
+		<!-- <url path="/common/DummyFrame.jsp" /> -->
+
+		<url path="/common/DummyListView.jsp" />
+
+		<url path="/common/AddEntityComments.jsp" />
+		
+		<url path="/common/ViewResolution.jsp" />
+		<!-- <url path="/common/AddAttachment.jsp" /> -->
+		
+
+
+
+		<!--url path="/common/NotesDetailsView.jsp" user_type="all"/-->
+		<url path="/jsp/Error.jsp" remote_server="true"/>
+		<url path="/jsp/HomePage.jsp" user_type="all"/>
+		<url path="/jsp/spellcheck.jsp" />
+		<url path="/jsp/index.jsp" user_type="all" description="ROLE_NOT_REQUIRED: Will be accessed by all users"/>
+
+		<!-- Timesheet related Conf-->
+		<!-- Disabled for SDP as of now ServiceDeskUtil.IS_TIMESHEET_ENABLED-->
+		<url operation-param="forwardTo" operation-value="TimesheetConfig" path="/SetUpWizard.do" roles="SDAdmin" method="get">
+		    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_Config_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+		<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="getStartDates" description="ROLE_NOT_REQUIRED : Role check not needed since all the techs can access this URL">
+			<param max-occurrences="1" name="module" regex="timesheet"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_getStartDates" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+		<url method="get" operation-param="notifType" operation-value="notifyTimesheetApprovalToTechnician,notifyTimesheetRejectionToTechnician,notifyTimesheetSubmitToApprover,notifyTimesheetRecallToApprover" path="/NotificationContent.do" roles="SDAdmin,HelpdeskConfig">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_NotificationContent_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url csrf="true" method="post" operation-param="notifType" operation-value="notifyTimesheetApprovalToTechnician,notifyTimesheetRejectionToTechnician,notifyTimesheetSubmitToApprover,notifyTimesheetRecallToApprover" path="/NotificationContent.do" roles="SDAdmin,HelpdeskConfig">
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_NotificationContent_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param max-len="-1" name="content" xss="sdpantisamyfilter" secret="true"/>
+            <param name="fromAdminPage" type="boolean"/>
+            <param max-len="1000" name="subject" type="String"/>
+            <param name="mode" type="String"/>
+		</url>
+
+		<url path="/jsp/GraphDisplay1.jsp" />
+		<!-- <url path="/jsp/DashboardCustomizationHeader.jsp" /> -->
+		<url path="/jsp/Notify.jsp" />		
+		<url path="/jsp/PreviewMessage.jsp" method="GET"/>
+		<url path="/calendar/TechCalendar.jsp" >
+			<param name="month" type="int" allow-empty="false" />
+			<param name="year" type="int" allow-empty="false" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TechCalendar.jsp" dynamic-throttle="true"  ><!--Copy of AdminCartCommonThrottle-->
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<!-- <url path="/calendar/MarkUnavailability.jsp" /> -->
+		<!-- <url path="/calendar/WeekCalendar.jsp" /> -->
+		<!-- <url path="/calendar/TechnicianCalendar.jsp" /> -->
+		<url path="/calendar/Calendar.jsp">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="Calendar.jsp" dynamic-throttle="true"  ><!--Copy of AdminCartCommonThrottle-->
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/calendar/LoggedInTechnicians.jsp" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="LoggedInTechnicians.jsp" dynamic-throttle="true"  ><!--Copy of AdminCartCommonThrottle-->
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<url path="/calendar/OnlyCalendar.jsp" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="OnlyCalendarThrottle" dynamic-throttle="true"  ><!--Copy of AdminCartCommonThrottle-->
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="Type" type="String"/>
+			<param name="month" type="int" allow-empty="false" range="0-11"/>
+			<param name="year" type="int" allow-empty="false" range=">=0"/>
+			<param name="techId" type="long" allow-empty="false" range=">=-1"/>
+			<param name="siteId" type="long" allow-empty="false" range=">=-2"/>
+			<param name="matrix" type="String"/>
+			<param name="groupId" type="long" range=">=-1"/>
+			<param name="exeScript" type="boolean"/>
+		</url>
+
+		<url path="/flexilistview/removepersonalize.jsp" roles="SDAdmin,SDOrgAdmin" user_type="all" description="Roles are used by purchase,software and user"  />
+
+		<url path="/components/jsp/Authenticate.jsp" />
+		<url path="/components/jsp/InstantFeedback.jsp" />
+		<url path="/components/jsp/ViewError.jsp" />
+		<url path="/components/jsp/columnchooser/chooserSelectType.jsp" />
+		<url path="/components/jsp/columnchooser/chooserListTypeInline.jsp" />
+		<url path="/components/jsp/columnchooser/chooserSelectTypeInline.jsp" />
+		<url path="/components/jsp/columnchooser/chooserListType.jsp" />
+		<url path="/components/jsp/table/TablePersonalization.jsp" />
+		<!-- urls copied from /AdventNetSD.war/WEB-INF/web.xml all urls already mentioned!!!!!!!!!!!!-->
+
+		<!-- <url path="/StageandStatus.do" /> -->
+		<!-- <url path="/WorkOrder.do" /> -->
+		<!-- urls copied from AdventNetMC.war/WEB-INF/web.xml!!!!!!!!!!!!-->
+
+
+		<!--Admin URLS-->
+		<!--<url path="/SearchRequester.do" user_type="all">
+			<param name="fromModule" regex="QuickReq|WorkOrder|Problem|Change|reportingTo|Department|UserGroups|WorkOrder_EMailCC|UserGroupUserList|Intermediate_Editing|OnBehalfOf_User|ScheduleRequest|ADDeleteSync" />
+		</url>-->
+		<url path="/SetUpWizard.do" operation-param="forwardTo" operation-value="instancesettings" method="get" roles="SDAdmin" description="Admin users can have a access to instance settings">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="instance_settings_setupwizard" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="forwardTo" type="String" max-len="100"/>
+			<param name="from" type="String" max-len="100"/>
+		</url>
+		<!--team:G2 Request List Column Chosser -->
+		<url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="getListColumns" user_type="all"  method="get">
+			<param name="uniqueFormId" regex="ChangesList(_HD_[0-9]+)?|RequestsView(_HD_[0-9]+)?"/>
+		</url>
+		<url path="/SetUpWizard.do" method="get" user_type="all" remote_server="true" disable-extraparam="true">
+			<param name="forwardTo" type="String" max-len="100"/>
+			<param name="from" type="String" max-len="100"/>
+			<param name="showWizard" type="boolean"/>
+			<param name="isFirstLogin" type="boolean"/>
+		</url>
+
+		<url path="/jsp/combined-view.jsp" method="get"/>
+		<url path="/jsp/TranslationPopup.jsp" roles="SDAdmin" method="get" disable-extraparam="true" rebrand="zmon">
+			<param name="i18key" type="String" max-len="250"/>
+		</url>
+		<!--Admin URLS-->
+		<!-- common URLs -->
+
+		<url path="/SiteLookup.do" roles="SDSiteAdmin,SDAdmin,SDOrgAdmin,CreatePurchaseOrder,ModifyPurchaseOrder" method="GET">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SiteLookUp" dynamic-throttle="true"  ><!--Copy of AdminCartCommonThrottle-->
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="configID" type="long" range="0-500"/>
+			<param name="SELECTSITE" type="String" max-len="50"/>
+			<param name="userConfigID" type="long" range=">=0"/>
+			<param name="SELECTEDSITEID" regex="[-0-9]+|null" max-len="19"/>
+			<param name="SELECTEDSITENAME" type="String" max-len="250"/>
+		</url>
+
+		<url path="/DCMSPAction.do" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DCMSPAction" >
+				<throttle duration="1m" threshold="80" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<url path="/DCIframeUpdate.do" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DCIframeUpdate" >
+				<throttle duration="1m" threshold="80" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<url path="/DummyListView.cc"  >
+			<param name="UNIQUE_ID" regex="DummyListView"/>
+		</url>
+
+		<url path="/ShowRequestsForTechOn.cc"  >
+			<param name="UNIQUE_ID" regex="ShowRequestsForTechOn"/>
+		</url>
+	</urls>
+
+	<urls authentication="required" method="post">
+		<!-- Missed urls added (while merging with FOESM) -->
+
+		<!-- Missed urls added-->
+
+		<url path="/spellcheck.do" user_type="all" csrf="true" method="post">
+			<param name="NEW_EDITOR" type="boolean"/>
+			<param name="DOMAIN_NAME" type="String" secret="true" max-len="250"/>
+			<param name="SPELL_CHECK_DICT_LANGUAGE" type="String" max-len="10" />
+			<param name="SPELL_CHECK_DOCUMENT_CONTENT" type="String" secret="true" max-len="-1" description="Html content passed for spellcheck not storing the data" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="spellcheck" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<!-- <url path="/SearchRequester.do" user_type="all">
+			<param name="fromModule" regex="QuickReq|WorkOrder|Problem|Change|reportingTo|Department|UserGroups|WorkOrder_EMailCC|UserGroupUserList|Intermediate_Editing|OnBehalfOf_User|ScheduleRequest|ADDeleteSync" />
+		</url> -->
+
+
+
+		<url path="/STATE_ID/[0-9]+/ChooserListTypeInline.cc" roles="Common_Role" path-regex="true" user_type="all" method="post" csrf="true" remote_server="true">
+			<throttles name="column_chooser_url" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="UNIQUE_ID" regex="ChooserListTypeInline"/>
+			<param name="TABLEVIEWID" type="String" allow-empty="false" max-occurrences="1" />
+			<param name="viewName" type="String" allow-empty="false"/>
+			<param name="View_Name" type="String" allow-empty="false"/>
+			<!--SD-99256 - Increasing the limit for Hide List Param-->
+			<param name="SHOW_LIST" type="String" allow-empty="false" max-occurrences="1000"/>
+			<param name="HIDE_LIST" type="String" allow-empty="false" max-occurrences="1000"/>
+		</url>
+
+		<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="noteTime" method="get" user_type="all">
+			<param name="module" regex="solution|announcement"/>
+			<param name="from" regex="subject|submit"/>
+			<param name="searchstr" type="String" max-len="1000"/>
+			<param name="currenttime" type="long"/>
+		</url>
+
+
+
+		<!-- Missed urls -->
+
+		<!-- urls copied from viewconfiguration table viewname !!!!!!!!!!!!-->
+		<!-- added csrf="true" reason : verify this 83127 -->
+		<!--Moved to security dynamic xml as sugessted by sec team SD-86219-->
+		<!--url path="/STATE_ID/[0-9]+/[A-Za-z0-9_]+.cc" path-regex="true" user_type="all" method ="post" csrf="true" >
+			<param name="UNIQUE_ID" regex="[A-Za-z0-9_]+"/>
+		</url-->
+		<!-- <url path="/ListViewConfigurations.cc" method="post">
+			<param name="UNIQUE_ID" regex="ListViewConfigurations"/>
+		</url>
+		<url path="/TabCustomization.cc" method="post">
+			<param name="UNIQUE_ID" regex="TabCustomization"/>
+		</url>
+		<url path="/GridCustomization.cc" method="post">
+			<param name="UNIQUE_ID" regex="GridCustomization"/>
+		</url>
+		<url path="/TableLayoutCustomization.cc" method="post">
+			<param name="UNIQUE_ID" regex="TableLayoutCustomization"/>
+		</url>
+		<url path="/CVCreationAddViewForm.cc" method="post">
+			<param name="UNIQUE_ID" regex="CVCreationAddViewForm"/>
+		</url>
+		<url path="/CVCreationEditViewForm.cc" method="post">
+			<param name="UNIQUE_ID" regex="CVCreationEditViewForm"/>
+		</url>
+		<url path="/CVCriteriaEditViewForm.cc" method="post">
+			<param name="UNIQUE_ID" regex="CVCriteriaEditViewForm"/>
+		</url>
+		<url path="/CVNewViewForm.cc" method="post">
+			<param name="UNIQUE_ID" regex="CVNewViewForm"/>
+		</url>
+		<url path="/CreateViewForm.cc" method="post">
+			<param name="UNIQUE_ID" regex="CreateViewForm"/>
+		</url>
+		<url path="/CreateForm.cc" method="post">
+			<param name="UNIQUE_ID" regex="CreateForm"/>
+		</url>
+		<url path="/ChooserSelectType.cc" method="post">
+			<param name="UNIQUE_ID" regex="ChooserSelectType"/>
+		</url>
+		<url path="/ChooserSelectTypeInline.cc" method="post">
+			<param name="UNIQUE_ID" regex="ChooserSelectTypeInline"/>
+		</url>
+		<url path="/ChooserListType.cc" method="post">
+			<param name="UNIQUE_ID" regex="ChooserListType"/>
+		</url>-->
+		<url path="/ChooserListTypeInline.cc" user_type="all" method="post" csrf="true" remote_server="true">
+			<throttles name="column_chooser_url" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="UNIQUE_ID" regex="ChooserListTypeInline"/>
+			<param name="View_Name" type="String" allow-empty="false"/>
+			<param name="viewName" type="String" allow-empty="false"/>
+			<param name="SHOW_LIST" type="String" allow-empty="false" max-occurrences="1000"/>
+			<!--SD-99256 - Increasing the limit for Hide List Param-->
+			<param name="HIDE_LIST" type="String" allow-empty="false" max-occurrences="1000"/>
+		</url>
+		<!-- <url path="/FilterCreateForm.cc" method="post">
+			<param name="UNIQUE_ID" regex="FilterCreateForm"/>
+		</url> -->
+
+
+		<!-- <url path="/SearchMatchingUser.do" /> -->
+
+
+
+
+
+
+
+		<!-- <url path="/allusers.do" /> -->
+		<!-- <url path="/GenerateReportWidget.do" /> -->
+
+		<!-- <url path="/CCTVView.do" /> -->
+		<!-- <url path="/UserAPISupportAction.do" user_type="all" roles="Common_Role"/> -->
+		<!-- urls copied from /library/resources/WEB-INF/web.xml !!!!!!!!!!!!-->
+		<!-- <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="detach" user_type="all"/> -->
+
+		<url path="/servlet/AJaxServlet" operation-param="action" operation-value="searchMailId" user_type="all" roles="Common_Role" method="post" csrf="true">
+			<param name="to" type="String" max-len="1000" secret="true"/>
+			<param name="ccAddress" type="String" max-len="1000" secret="true"/>
+		</url>
+
+		<!-- SD-72769 Requester unable to access close link-->
+		<!-- <url path="/servlet/SGTServlet" /> -->
+		<url path="/jsp/tfa/TFATopMenu.jsp" method="get" roles="Common_Role" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: Will be accessed by all users"/>
+		<!-- <url path="/common/TechnicianSelect.jsp" /> -->
+		<!-- <url path="/common/DummyFrame.jsp" /> -->
+		<!-- <url path="/common/FetchDropDownValues.jsp" />
+		<url path="/common/DummyListView.jsp" />
+		<url path="/common/GetCSIList.jsp" />
+		<url path="/common/AddEntityComments.jsp" />
+		<url path="/common/TimeEntry.jsp" />
+		<url path="/common/TimeEntryListView.jsp" />
+		
+		<url path="/common/TimeEntryList.jsp" />
+		<url path="/common/ViewResolution.jsp" />
+		<url path="/common/RefreshParentWindow.jsp" />
+
+		<url path="/common/FetchFromDownValues.jsp" />
+		<url path="/common/SelectAssets.jsp" />
+		<url path="/common/NotesDetailsView.jsp" user_type="all"/>
+
+
+
+
+		<url path="/jsp/PrintView.jsp" />
+		<url path="/jsp/Error.jsp" />
+		<url path="/jsp/spellcheck.jsp" /> -->
+		<!-- <url path="/jsp/SDNotify.jsp" user_type="all"/> -->
+		<!-- <url path="/jsp/GettingStarted.jsp" /> -->
+		<!-- <url path="/jsp/GraphDisplay1.jsp" /> -->
+		<!-- <url path="/jsp/OperationResult.jsp" /> -->
+		<!-- <url path="/jsp/Notify.jsp" /> -->
+		<!-- <url path="/jsp/goToReq.jsp" /> -->
+		<!-- <url path="/jsp/getLeftNav.jsp" user_type="all"/> -->
+		<!-- <url path="/jsp/ReviewDraft.jsp" /> -->
+		<!-- <url path="/jsp/SavedDraft.jsp" /> -->
+
+		<!-- <url path="/calendar/MiniCalendar.jsp" user_type="all"/>
+		<url path="/calendar/TechCalendar.jsp" /> -->
+
+
+		<!-- <url path="/flexilistview/removepersonalize.jsp" /> -->
+
+		<url path="/components/jsp/InstantFeedback.jsp" method="post" csrf="true"/>
+		<url path="/components/jsp/ChangeTheme.jsp" method="post" csrf="true"/>
+		<url path="/components/jsp/columnchooser/chooserSelectType.jsp" method="post" csrf="true"/>
+		<url path="/components/jsp/columnchooser/chooserListTypeInline.jsp" method="post" csrf="true"/>
+		<url path="/components/jsp/columnchooser/chooserSelectTypeInline.jsp" method="post" csrf="true"/>
+		<url path="/components/jsp/columnchooser/chooserListType.jsp" method="post" csrf="true"/>
+		<url path="/components/jsp/table/TablePersonalization.jsp" method="post" csrf="true"/>
+		<!-- urls copied from /AdventNetSD.war/WEB-INF/web.xml all urls already mentioned!!!!!!!!!!!!-->
+
+		<!-- <url path="/ChooseMultiUsers.do" /> -->
+		<!-- urls copied from AdventNetMC.war/WEB-INF/web.xml!!!!!!!!!!!!-->
+		<!-- common URLs -->
+		<url path="/DummyListView.cc" method="post" csrf="true">
+			<param name="UNIQUE_ID" regex="DummyListView"/>
+		</url>
+	</urls>
+
+
+
+
+
+	<!-- Missed urls  Note : This changes missed while merging ref: https://cmsuite.csez.zohocorpin.com/assetexplorer/code/ASSETEXPLORER_HACKSAW_BRANCH/e7f87d3adf24/-->
+
+	<!-- Change related urls -->
+	<urls authentication="required">
+        <url path="/serverParse.do" method="get" roles="SDAdmin" remote_server="true">
+            <param name="parser" regex="serverParser" />
+			<throttles name="serverParse" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1D" threshold="10" lock-period="1H"/>
+			</throttles>
+		</url>
+	</urls>
+
+
+	<urls authentication="required" disable-extraparam="true" user_type="all" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+
+		<url path="/SDCommonAction.do" operation-param="action" operation-value="checkUniqueExists" csrf="true" method="post">
+			<throttles name="project_code" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="attrName" regex="ProjectCode"/>
+			<param name="attrValue" type="String" max-len="50"/>
+		</url>
+
+	</urls>
+	<!-- Below urls gets from here - https://sheet.zoho.com/sheet/open/kiqvtaf696db224a044d1a1cb7e091285b508/sheets/STATE_ID%20%20dot%20cc%20urls/ranges/B64 -->
+	<urls authentication="required" method="get" user_type="all">
+		<url path="/STATE_ID/[0-9]+/ListViewConfigurations.cc" />
+		<url path="/STATE_ID/[0-9]+/FilterCreateForm.cc" />
+		<url path="/STATE_ID/[0-9]+/TableLayoutCustomization.cc" />
+		<url path="/STATE_ID/[0-9]+/DummyListView.cc" />
+		<url path="/STATE_ID/[0-9]+/TabCustomization.cc" />
+		<url path="/STATE_ID/[0-9]+/TabCustomization_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/FilterCreateForm_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/GridCustomization_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/ListViewConfigurations_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/TableLayoutCustomization_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/DummyListView_HD_[0-9]+.cc" />
+	</urls>
+	<urls authentication="required" method="post" csrf="true" user_type="all">
+		<url path="/STATE_ID/[0-9]+/ListViewConfigurations.cc" />
+		<url path="/STATE_ID/[0-9]+/FilterCreateForm.cc" />
+		<url path="/STATE_ID/[0-9]+/TableLayoutCustomization.cc" />
+		<url path="/STATE_ID/[0-9]+/DummyListView.cc" />
+		<url path="/STATE_ID/[0-9]+/TabCustomization.cc" />
+		<url path="/STATE_ID/[0-9]+/TabCustomization_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/FilterCreateForm_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/GridCustomization_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/ListViewConfigurations_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/TableLayoutCustomization_HD_[0-9]+.cc" />
+		<url path="/STATE_ID/[0-9]+/DummyListView_HD_[0-9]+.cc" />
+	</urls>
+
+	<urls authentication="required"  disable-extraparam="true" user_type="all" description="Roles are not defined as role check will be done at server side based on the module param" >
+
+		<param name="module" regex="import_modules" min-occurrences="1"/>
+		<param name="parentEntity" regex="api_name" allow-empty="false"/>
+		<param name="parentEntityId" type="long" allow-empty="false"/>
+
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="import_history" method="get" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="import_history" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="import_history" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="noheader" type="boolean"/>
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="import_summary" method="get" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="import_summary" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="entity" regex="api_name" min-occurrences="1"/>
+			<param name="noheader" type="boolean"/>
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="SampleXLSFile" method="get" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SampleXLSFile" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="entity" regex="api_name" allow-empty="false" />
+			<param name="file_type" regex="mpp" allow-empty="false"/>
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="getAdditionalFieldsFromMpp" method="post" csrf="true" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="getAdditionalFieldsFromMpp" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+			<param name="input_data" template="getAdditionalFieldsFromMpp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param max-len="250" name="ids" regex="\d+((\,\d+)?){0,9}" allow-empty="false" />
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="importMpp" method="post" csrf="true" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="importMpp" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+			<param name="input_data" template="import_mpp_field" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="import" method="post" csrf="true" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="import" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="10m"/>
+			</throttles>
+			<param name="input_data" template="import_mapped_field" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="download_results_file" method="get" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download_results_file" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="download_results_file" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="saveFileDetails" method="post" csrf="true" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="saveFileDetails" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="saveFileDetails" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="noheader" type="boolean"/>
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="loadImportTab" method="get" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="loadImportTab" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+
+			<param name="file_type" regex="mpp" allow-empty="false"/>
+			<param name="noheader" type="boolean"/>
+			<param name="entity" regex="api_name" />
+		</url>
+
+		<url path="/servlet/ImportServlet" operation-param="submitaction" operation-value="getSheetDetails" method="get" user_type="all" roles="Common_Role">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="loadImportTab" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="5m"/>
+			</throttles>
+			<param name="attachment_id" type="long" allow-empty="false" min-occurrences="1"/>
+			<param name="entity" regex="api_name" />
+		</url>
+
+	</urls>
+
+	<!-- DC team related urls starts - moved requestaccess.xml -->
+	<urls authentication="required">
+		<url path="/InstallSoftware.do" method="get" roles="InstallAndUnInstall">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="installsoftware_get" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		<param name="workOrderID" type="long" />
+			<param name="delete" type="String"/>
+			<param name="collectionId" type="String"/>
+			<param name="taskId"  type="long"/>
+	</url>
+		<url path="/RunScript.do" method="get" roles="RunScript">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="runscript_get" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		<param name="workOrderID" type="long" />
+	</url>
+
+		<url path="/RunScript.do" method="post" csrf="true" roles="RunScript">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="runscript_post" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="workOrderID"  type="long"/>
+			<param name="delete" regex="true|null"/>
+			<param name="collectionId" regex="[0-9]+|null" max-len="3000"/>
+			<param name="taskId"  type="long"/>
+			<param name="workstationNames" secret="true" type="String" max-len="250"/>
+			<param name="isClosed"  regex="on|null"/>
+			<param name="userNames" secret="true"  type="String" max-len="250"/>
+			<param name="installFor"  regex="Workstation|User"/>
+			<param name="scriptName" regex="^[\w\^&amp;&apos;\@\{\}\[\]\,\$\=\!\-\#\(\)\.%\+\~\_\` \P{InBasicLatin}]+$"/>
+			<param name="scriptArgs" type="String" max-len="400"/>
+			<param name="save" regex="Save|null"/>
+		</url>
+
+		<url path="/InstallSoftware.do" method="post" csrf="true" roles="InstallAndUnInstall">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="installsoftware_post" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="workOrderID" type="long"/>
+			<param name="delete" regex="true|null"/>
+			<param name="collectionId" regex="[0-9]+|null" max-len="3000"/>
+			<param name="taskId"  type="long"/>
+			<param name="workstationNames" secret="true" type="String" max-len="250"/>
+			<param name="isClosed"  regex="on|null"/>
+			<param name="userNames" secret="true" type="String" max-len="250"/>
+			<param name="installFor" regex="Workstation|User"/>
+			<param name="OperationType" regex="Install|Uninstall"/>
+			<param name="packageName" type="String" max-len="100"/>
+			<param name="isExcludeRebootServer" regex="1|0|null"/>
+			<param name="isScheduled" regex="Off|On|null"/>
+			<param name="runAs" type="String" max-len="250"/>
+			<param name="password" secret="true" regex="^.{1,500}$" max-len="500"/>
+			<param name="save"  regex="Save|null"/>
+		</url>
+	</urls>
+
+	<!-- DC team related urls ends - moved requestaccess.xml-->
+
+
+	<!-- CART related urls starts-->
+	<!-- personalization related urls starts-->
+	<urls authentication="required"  disable-extraparam="true" method="GET">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="personalize_get" dynamic-throttle="true"  >
+			<throttle duration="10m" threshold="10" lock-period="15m"/>
+		</throttles>
+	<url path="/Language.do" user_type="all" roles="Common_Role" remote_server="true">
+		<param name="fileProtectPwd" type="String" min-len="1" max-len="500" secret="true"/>
+		<param name="dateFormat" regex="cleartextpattern" />
+		<param name="timeFormat" regex="cleartextpattern" />
+		<param name="chooseLanguage" regex="cleartextpattern" />
+		<param name="timeZone" regex="cleartextpattern" />
+	</url>
+		<!-- support related url -->
+	<url path="/jsp/SupportLoading.jsp" remote_server="true"/>
+	</urls>
+	<urls authentication="required"  disable-extraparam="true" method="POST" csrf="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="personalize_post" dynamic-throttle="true"  >
+			<throttle duration="10m" threshold="10" lock-period="15m"/>
+		</throttles>
+	<url path="/Language.do" user_type="all" roles="Common_Role" remote_server="true">
+		<param name="fileProtectPwd" type="String" min-len="1" max-len="500" secret="true"/>
+		<param name="signature" secret="true" type="String" max-len="10000"/>
+		<param name="dateFormat" regex="cleartextpattern" />
+		<param name="timeFormat" regex="cleartextpattern" />
+		<param name="chooseLanguage" regex="cleartextpattern" />
+		<param name="timeZone" regex="cleartextpattern" />
+		<param name="MOD_IND" regex="Signature" />
+		<param name="FORMNAME" regex="languageForm" />
+		<param name="INLINEIMAGES" regex="filename" max-occurrences="25"/>
+		<param name="save"  type="String"/>
+		<param name="kbShortcuts" type="boolean" />
+	</url>
+	<!--/servlet/HdClientUtilServlet ends-->
+	</urls>
+	<urls authentication="required" api="true" >
+
+		<!-- Disabled for SDP as of now ServiceDeskUtil.IS_TIMESHEET_ENABLED-->
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_api_configurations" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+		<url path="/api/v3/timesheet_configurations" method="get" description="ROLE_NOT_REQUIRED : Role check not needed since all the techs can access this URL"/>
+		<url path="/api/v3/timesheet_configurations" method="put" roles="SDAdmin">
+		 <param max-len="-1" name="input_data" template="timesheet_configurations" type="JSONObject" min-occurrences="1"/>
+		</url>
+	</urls>
+	<!-- personalization related urls ends-->
+	<!-- CART related urls ends-->
+	<content-types>
+
+		<content-type name="image" content-types="image/png|image/jpeg|image/gif" />
+		<content-type name="video" content-types="video/mp4|video/webm|video/ogg" />
+		<content-type name="xls" content-types="application/msoffice|application/vnd.ms-excel|text/plain|text/rtf|text/x-xmcd|application/ooxml|application/x-msoffice|application/x-ooxml" />
+		<content-type name="csv" content-types="text/plain|text/rtf|text/x-xmcd|text/csv" />
+		<content-type name="zip" content-types="application/zip|application/x-xliff+zip|application/ooxml|application/x-ooxml" />
+		<content-type name="xml" content-types="application/xml|application/vnd.adobe.xdp+xml|application/vnd.adobe.xfdf|application/x-xliff+xml|application/vnd.ms-word2006ml|application/smil+xml|application/vnd.iptc.g2.newsmessage+xml" />
+		<content-type name="image_profilepic" content-types="image/png|image/jpeg|image/bmp" />
+		<content-type name="image_inline" content-types="image/png|image/jpeg|image/bmp|image/gif" />
+		<content-type name="all_image_type" content-types="image/.*" />
+		<content-type name="importssl" content-types="application/octet-stream|application/pkcs7-signature|application/x-java-keystore|text/plain|text/rtf|text/x-xmcd|application/x-x509-cert; format=pem|application/x-x509-cert; format=der|application/x-x509-key; format=pem|application/x-x509-key; format=der" />
+		<content-type name="importssl_key" content-types="application/x-java-keystore|text/plain|text/rtf|text/x-xmcd|application/x-x509-key; format=pem|application/x-x509-key; format=der" />
+		<content-type name="importssl_cert" content-types="application/octet-stream|text/plain|text/rtf|text/x-xmcd|application/x-x509-cert; format=pem|application/x-x509-cert; format=der" />
+		<content-type name="html" content-types="text/html|application/xhtml+xml" />
+		<content-type name="mpp" content-types="application/vnd.ms-project|application/msoffice|application/x-tika-msoffice|application/x-msoffice"/>
+		<content-type name="xlsx" content-types="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet|application/x-tika-ooxml"/>
+		 <content-type name="font" content-types="application/x-font-ttf|application/x-font-otf|application/x-font-woff|application/x-font-woff2|application/octet-stream"/>
+		<content-type name="json" content-types="application/json"/>
+		<content-type name="all">
+			<value>application</value>
+			<value>audio</value>
+			<value>video</value>
+			<value>image</value>
+			<value>text</value>
+			<value>message</value>
+			<value>model</value>
+			<value>multipart</value>
+		</content-type>
+	</content-types>
+
+	<url-validators>
+		<url-validator name="stream_support" mode="error" datauri-max-len="2147483647">
+			<scheme name="data">
+				<mimetypes allowed-values="image/jpg|image/png|image/gif|image/jpeg"></mimetypes>
+				<charsets allowed-values ="utf-8|iso-8859-1"></charsets>
+				<encoding allowed-values ="base64"></encoding>
+				<datapart allowed-values ="alpha|digit|+|/|:|,|="></datapart>
+			</scheme>
+		</url-validator>
+	</url-validators>
+
+	<internal-request-headers>
+		<header name="technician_key" type="String" secret="true" max-len="250" />
+		<header name="authtoken" type="String" secret="true" max-len="250" />
+	</internal-request-headers>
+</security>
+<!-- $Id$ -->

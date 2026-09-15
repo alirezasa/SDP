@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>outgoing_mail_server_setting</title>
+</head>
+
+<body>
+    <div class="pb30" id="admin_helpcard">
+        <div class="mt10">
+            メールの送信や、通知をトリガーするために、送信メールサーバーを設定します。
+        </div>
+        <div class="mt10">
+            ServiceDesk Plusからメールを送信するために、メールプロトコル（SMTP/SMTPs）、Exchange Web Service（EWS）、Microsoft Graphを使用できます。
+         </div>
+        <div class="mt10">選択した接続プロトコルに応じて、設定は変わります。
+            以下のポインターをクリックし、それぞれの接続プロトコルを設定する手順を確認します。
+        </div>
+        <div class="mt10">
+            <details class="mt10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">SMTP/SMTPS</span></summary>
+                <div class="mt10">
+                    <div>
+                        <table width="95%" border="1" align="center" cellpadding="6" class="mt15">
+                            <tr>
+                                <td><strong>フィールド名</strong></td><td><strong>説明</strong></td>
+                            </tr>
+                            <tr>
+                                <td>承認タイプ</td>
+                                <td>
+                                    <ul>
+                                        <li>メールボックスの認証情報を用いて認証する場合、<strong>基本認証</strong>を使用します。</li>
+                    <li>ServiceDesk Plusは<strong>OAuth 2.0認証</strong>をサポートしています。詳しくは<a class="text-link sb" href="http://servicedeskplus.helpdocsonline.com/oauth-authentication-2" target="_blank">こちら</a>。</li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>サーバー名/IPアドレス</td>
+                                <td>
+                                  <p>メールサーバーのサーバー名またはIPアドレスを指定します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>代替サーバー名/IPアドレス</td>
+                                <td>
+                                    <p>必要に応じて、バックアップサーバーの詳細を入力します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>差出人の名前</td>
+                                <td>
+                                    <p>ServiceDesk Plusから送信されたメールに表示される差出人の名前を入力します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>返信アドレス</td>
+                                <td>
+                                    <p>送信メールの<strong>宛先</strong>にあたるメールアドレスを入力します。返信メールはこのアドレスへ送信されます。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ユーザー名（OAuth認証のみ）</td>
+                                <td>
+                                    <p>メールボックスにアクセスするためのユーザー名を入力します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>プロトコル</td>
+                                <td>
+                                    <p>メールボックスに接続するためのプロトコルを選択します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>TLS有効</td>
+                                <td>
+                                    <p>必要に応じて、TLS（Transport Layer Security）を有効にします。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ポート</td>
+                                <td>
+                                    <p>選択したプロトコルに応じたポート番号を入力します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>認証が必要（基本認証のみ）</td>
+                                <td>
+                                    <p>メール送信時にメールボックスの認証を行いたい場合選択します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>認可サーバーの詳細（OAuth認証のみ）</td>
+                                <td>
+                                    <p><a href="http://servicedeskplus.helpdocsonline.com/oauth-authentication-2" target="_blank" class="text-link sb">こちら</a>にしたがって、認可サーバーのクライアントID、クライアントシークレット、承認URL、トークンURLを取得します。</p>
+                                    <p>トークンを取得するため、認可サーバーで<strong>リダイレクトURL</strong>を設定します。</p>
+                                    <p><strong>スコープ</strong>フィールドでは、メールボックスで得られた承認トークンのアクセシビリティを定義します。スコープとして入力されるデフォルト値は<a href="http://servicedeskplus.helpdocsonline.com/default-mail-server-configurations" target="_blank" class="text-link sb">こちら</a>をご覧ください。</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="pt10 pl30 pb10"><strong>注意：</strong>Office365 GCC Highメールボックスを使用している場合、ホスト名、接続URL、トークンURL、スコープのTLD（トップレベルドメイン）は<strong>.us</strong>であることを確認してください。</div>
+                </div>
+            </details>
+            <hr class="m0 hr-medium">
+            <details class="helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">EWS (Exchange Web Services)</span></summary>
+                <div class="mt10">
+                    <div>
+                        <table width="95%" border="1" align="center" cellpadding="6" class="mt15">
+                            <tr>
+                                <td><strong>フィールド名</strong></td><td><strong>説明</strong></td>
+                            </tr>
+                            <tr>
+                                <td>接続URL</td>
+                                <td>
+                                  <p>サーバーのEWSのURLを指定します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>メールアドレス</td>
+                                <td>
+                                  <p>メールを取得したいメールアドレスを入力します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>ユーザー名</td>
+                                <td>
+                                  <p>メールボックスにアクセスするためのユーザー名を入力します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>パスワード（基本認証のみ）</td>
+                                <td>
+                                  <p>メールボックスにアクセスするためのパスワードを入力します。</p>
+                                </td>
+                            </tr>
+                                <td>差出人の名前</td>
+                                <td>
+                                    <p>ServiceDesk Plusから送信されたメールに表示される差出人の名前を入力します。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>返信アドレス</td>
+                                <td>
+                                    <p>送信メールの<strong>宛先</strong>にあたるメールアドレスを入力します。返信メールはこのアドレスへ送信されます。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>認可サーバーの詳細（OAuth認証のみ）</td>
+                                <td>
+                                    <p><a href="http://servicedeskplus.helpdocsonline.com/oauth-authentication-2" target="_blank" class="text-link sb">こちら</a>にしたがって、認可サーバーのクライアントID、クライアントシークレット、承認URL、トークンURLを取得します。</p>
+                                    <p>トークンを取得するため、認可サーバーで<strong>リダイレクトURL</strong>を設定します。</p>
+                                    <p><strong>スコープ</strong>フィールドでは、メールボックスで得られた承認トークンのアクセシビリティを定義します。スコープとして入力されるデフォルト値は<a href="http://servicedeskplus.helpdocsonline.com/default-mail-server-configurations" target="_blank" class="text-link sb">こちら</a>をご覧ください。</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="pt10 pl30 pb10"><strong>注意：</strong>Office365 GCC Highメールボックスを使用している場合、ホスト名、接続URL、トークンURL、スコープのTLD（トップレベルドメイン）は<strong>.us</strong>であることを確認してください。</div>
+                </div>
+            </details>
+            <hr class="m0 hr-medium">
+            <details class="helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">Microsoft Graph</span></summary>
+                <div class="mt10">
+                    <div>
+                        <table width="95%" border="1" align="center" cellpadding="6" class="mt15">
+                            <tr>
+                                <td><strong>フィールド名</strong></td><td><strong>説明</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Graphエンドポイント</td>
+                                <td>
+                                    <p>Microsoft GraphAPIにアクセスするためのエンドポイントです。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>返信アドレス</td>
+                                <td>
+                                    <p>送信メールの<strong>宛先</strong>にあたるメールアドレスを入力します。返信メールはこのアドレスへ送信されます。</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>認可サーバーの詳細</td>
+                                <td>
+                                    <p><a href="http://servicedeskplus.helpdocsonline.com/oauth-authentication-2" target="_blank" class="text-link sb">こちら</a>にしたがって、認可サーバーのクライアントID、クライアントシークレット、承認URL、トークンURLを取得します。</p>
+                                    <p>トークンを取得するため、認可サーバーで<strong>リダイレクトURL</strong>を設定します。</p>
+                                    <p><strong>スコープ</strong>フィールドでは、メールボックスで得られた承認トークンのアクセシビリティを定義します。スコープとして入力されるデフォルト値は<a href="http://servicedeskplus.helpdocsonline.com/default-mail-server-configurations" target="_blank" class="text-link sb">こちら</a>をご覧ください。</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="mt10"></div>
+                </div>
+            </details>
+        </div>
+        <div class="mt10">
+            <ul>
+                <li>ServiceDesk Plusがメールサーバーへ接続するために、プロキシが必要な場合、プロキシサーバーを有効にします。プロキシは<a href="http://servicedeskplus.helpdocsonline.com/proxy-settings" target="_blank" class="text-link sb">プロキシ設定</a>で設定できます。</li>
+            </ul>
+        </div>
+        <div>
+            <p><strong>注意：</strong>デフォルトのメールサーバー設定について、詳しくは<a href="http://servicedeskplus.helpdocsonline.com/default-mail-server-configurations" target="_blank" class="text-link sb">こちら</a>をご覧ください。</p>
+        </div>
+    </div>
+</body>
+
+</html>

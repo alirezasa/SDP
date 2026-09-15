@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id$-->
+
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" method="get">
+		<param name="PORTALID" type="long" />
+
+		<url path="/NotificationContent.do" roles="SDOrgAdmin,SDAdmin,SDSiteAdmin,HelpdeskConfig" user_type="all" />
+		<url path="/Notify.do" />
+
+
+
+
+		<url path="/setup/ConfigureStyle.jsp" />
+
+
+		<url path="/setup/APIHelpdoc.jsp" />
+		<url path="/jsp/SubActionsPerformed.jsp" />
+		<url path="/jsp/SupportRequestForm.jsp" >
+			<throttles name="supportRequestForm" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/jsp/OutGoingCall.jsp" />
+		<url path="/jsp/ActionsPerformed.jsp" />
+		<url path="/debug/serverOutLog.jsp" >
+			<throttles name="serveroutLog" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/debug/CheckStatus.jsp" roles="SDAdmin" >
+			<param name="type" regex="TIMER|REPLIES_SENT|REQUESTER_RAISED|CONVERS|REPLIES" />
+			<param name="count" type="long" />
+			<throttles name="CheckStatus_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/dc/dciframeupdate.jsp" />
+		<url path="/debug/ScheduleList.jsp" roles="SDAdmin,SDSiteAdmin" remote_server="true">
+			<throttles name="scheduleList" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<!-- team:G2 Used in Form Page, Quick Create to get the selected user details -->
+		<url path="/servlet/AJaxServlet" operation-param="action" operation-value="getUserDetails"  user_type="all"  roles="CreateRequests,SDAdmin,CreateRequestMaintenances,ModifyRequestMaintenances">
+			<throttles name="getUserDetails_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="reqId" type="long"  />
+			<param name="search" type="String"  />
+			<param name="mappedId" type="long" />
+		</url>
+		</urls>
+	<urls authentication="required" method="post">
+	 <url path="/servlet/AJaxServlet" operation-param="action" operation-value="check_if_attachment_path_exists" user_type="all" roles="SDAdmin,SDOrgAdmin" csrf="true" method="POST" remote_server="true">
+	 	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="attachments_path_verification" >
+			<throttle duration="1m" threshold="45" lock-period="5m"/>
+		</throttles>
+        <param name="attchPath" type="String" max-len="500"/>
+        <param name="_" type="long"/>
+    </url>
+		<url path="/Notify.do" method="post" csrf="true"/>
+		<!-- SD-114439 Internal Pentest : removed usertype=all for this URL -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" method="POST" csrf="true" remote_server="true">
+			<param name="setUpModule" regex="surveyreports" min-occurrences="1"/>
+			<param name="showWizard" regex="true" min-occurrences="1"/>
+			<param name="previousButton" regex="previous"/>
+			<param name="nextButton" regex="next"/>
+			<throttles name="surveyReportsNav_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="15" lock-period="5m"/>
+			</throttles>
+		</url>
+
+
+		<!-- <param name="PORTALID" type="long" /> -->
+
+	</urls>
+
+
+		
+
+
+	<!-- CART Module starts-->
+	<!-- Community -> Support starts-->
+	<urls authentication="required" method="GET">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="support" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+		<url roles="SDAdmin" path="/Support.do" remote_server="true">
+		<param name="method" regex="getCommunityPage" type="String" min-occurrences="1"/>
+	</url>
+		<url roles="SDAdmin" path="/SupportFile.do" remote_server="true"/>
+
+		<!-- Community -> Support ends-->
+
+		<!-- Advance trial license starts.. -->
+
+     	<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="applyAdvanceTrialLicense" method="POST" csrf="true">
+			<throttles name="applyAdvanceTrialLicense_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param allow-invalid="false" name="input_data" type="JSONObject" template="addon_value" max-len="1000" array-size="0-10"/>
+        	<param name="SUBREQUEST" type="String" />
+       		<param name="_" type="long"/>
+		</url>
+
+	 	<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="cancelTrial" method="POST" csrf="true">
+			<throttles name="cancelTrial_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+             <param name="SUBREQUEST" type="String" />
+             <param name="_" type="long"/>
+     	</url>
+
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getAdvanceTrialLicenseDetails"  method="GET">
+			<throttles name="getAdvanceTrialLicenseDetails_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+              <param name="SUBREQUEST" type="String" />
+              <param name="_" type="long"/>
+    	</url>
+
+    	<!-- Advance trial license ends -->
+
+	</urls>
+	
+	<!-- CART Module ends-->
+
+<jsontemplates>
+	<jsontemplate name="addon_value">
+		<key name="ServiceCatalog" regex="true"/>
+                <key name="Project_Management" regex="true"/>
+                <key name="ChangeModule" regex="true"/>
+                <key name="CMDBModule" regex="true"/>
+                <key name="edition" regex="Professional|Enterprise"/>
+		<key name="emailID" regex="email" max-len="250" secret="true"/>
+    </jsontemplate>
+
+</jsontemplates>
+
+</security>
+
+<!--$Id$-->

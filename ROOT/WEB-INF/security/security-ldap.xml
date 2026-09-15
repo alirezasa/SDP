@@ -1,0 +1,52 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" method="POST">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ldap_post_urls" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="10" lock-period="5M"/>
+        </throttles>
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="saveLdapSchedule" user_type="all" csrf="true" remote_server="true">
+            <param name="ldapSchedule" type="boolean"/>
+            <param name="ldapScheduleDays" type="long" range="1-365"/>
+            <param name="ldapScheduleDate" type="long"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/ImportLdapUsers.do" operation-param="module" operation-value="saveLDAP" csrf="true" user_type="all" remote_server="true" disable-extraparam="true">
+            <param name="changePwd" type="boolean"/>
+            <param name="securityAuthentication" regex="SIMPLE"/>
+            <param name="domainController" type="String" max-len="200" secret="true"/>
+            <param name="ldapId" type="long" range=">0"/>
+            <param name="initialContextFactory" regex="com.sun.jndi.ldap.LdapCtxFactory"/>
+            <param name="userName" type="String" max-len="250" secret="true"/>
+            <param name="userPassword" type="String" max-len="2000" secret="true"/>
+            <param name="baseDn" type="String" max-len="250" secret="true"/>
+            <param name="searchFilter" type="String" max-len="2000" secret="true"/>
+            <param name="ldapType" type="String" max-len="200"/>
+            <param name="loginAttribute" type="String" max-len="200"/>
+            <param name="mailAttribute" type="String" max-len="200"/>
+            <param name="dnAttribute" type="String" max-len="200"/>
+            <param name="submit" type="String" max-len="200"/> <!--Value will be translated -->
+            <param name="submitImport" type="String" max-len="200"/> <!--Value will be translated -->
+        </url>
+        <url roles="SDOrgAdmin" path="/ImportLdapUsers.do" operation-param="module" operation-value="importLDAP" csrf="true" user_type="all" remote_server="true" disable-extraparam="true">
+            <param name="ldapId" type="long" range=">0"/>
+            <param name="checkbox" type="long" max-occurrences="250" range=">0"/>
+            <param name="pageLength" type="long" max-occurrences="2" range=">0"/>
+            <param name="loadingMsg" type="String" max-occurrences="2" max-len="200"/>
+            <param name="rowcount" type="String" max-occurrences="2" max-len="200"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/ImportLdapUsers.do" operation-param="module" operation-value="enableLdap,disableLdap" csrf="true" user_type="all" remote_server="true">
+            <param name="ldapauth" type="boolean"/>
+        </url>
+    </urls>
+
+    <urls authentication="required" disable-extraparam="true" method="GET">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ldap_get_urls" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <url path="/ESM.do" operation-param="type" operation-value="ldap" user_type="all" roles="SDOrgAdmin" />
+        <url roles="SDOrgAdmin" path="/ImportLdapUsers.do" operation-param="module" operation-value="editLDAP" user_type="all" remote_server="true">
+            <param name="LDAP_ID" type="long" range=">0"/>
+        </url>
+    </urls>
+
+</security>
+<!--$Id$-->

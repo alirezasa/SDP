@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <jsontemplates>
+
+        <jsontemplate name="asset_sync_rule_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="all_asset_template_unique" name="destination_module"/>
+            <key max-len="-1" type="JSONObject" template="module_unique" name="source_module"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sync_rule_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="all_asset_template_unique" name="destination_module"/>
+            <key max-len="-1" type="JSONObject" template="module_unique" name="source_module"/>
+            <key allow-invalid="false" type="boolean" name="delete_linked_instance"/>
+            <key name="sub_module" type="JSONObject" template="module_unique"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="search_criteria" name="condition"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="asset_field_mapping_base" name="field_mapping"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="asset_field_relationship_base" name="field_relationship"/>
+            <key allow-invalid="false" type="boolean" name="is_enabled"/>
+            <key max-len="5000" type="String" secret="true" name="description"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sync_rule">
+            <key max-len="-1" type="JSONObject" template="sync_rule_base" name="asset_sync_rule"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sync_rule_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="asset_sync_rule_unique" name="asset_sync_rule"/>
+        </jsontemplate>
+
+        <jsontemplate name="asset_field_mapping_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="50" type="String" name="source_field"/>
+            <key max-len="50" type="String" name="destination_field"/>
+        </jsontemplate>
+        <jsontemplate name="asset_field_mapping_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="50" type="String" name="source_field"/>
+            <key max-len="50" type="String" name="destination_field"/>
+        </jsontemplate>
+        <jsontemplate name="asset_field_mapping">
+            <key max-len="-1" type="JSONObject" template="asset_field_mapping_base" name="asset_field_mapping"/>
+        </jsontemplate>
+        <jsontemplate name="asset_field_mapping_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="asset_field_mapping_unique" name="asset_field_mapping"/>
+        </jsontemplate>
+
+    </jsontemplates>
+</security>

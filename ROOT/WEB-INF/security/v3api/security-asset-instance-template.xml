@@ -1,0 +1,1089 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <jsontemplates>
+        <jsontemplate name="all_asset_template_unique">
+            <!-- asset_base_asset_template -->
+            <key name="id" type="long" allow-invalid="false" range=">0"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="product" type="JSONObject" template="product_unique" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="site" type="JSONObject" template="site_unique" max-len="-1"/>
+            <key name="state" type="JSONObject" template="asset_state_unique" max-len="-1"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="module" type="JSONObject" template="asset_module_unique" max-len="-1"/>
+            <!-- asset_computer -->
+            <key name="chassis_type" type="JSONObject" template="chassis_type_unique" max-len="-1"/>
+            <!--asset_cisco_ip_phone -->
+            <key name="app_load_id" type="String" max-len="50"/>
+            <key name="boot_load_id" type="String" max-len="50"/>
+            <key name="fips_mode_enabled" type="String" max-len="20"/>
+            <key name="hardware_revision" type="String" max-len="50"/>
+            <key name="heap_free_memory" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="message_waiting" type="String" max-len="20" secret="true"/>
+            <key name="phone_dn" type="String" max-len="19" secret="true"/>
+            <key name="unique_device_identifier" type="String" max-len="50"/>
+            <key name="version" type="String" max-len="50"/>
+            <!-- asset_mobile_device -->
+            <key name="model" type="String" max-len="250"/>
+            <key name="imei" type="String" max-len="250" secret="true"/>
+            <key name="ud_id" type="String" max-len="250"/>
+            <key name="serial_number" type="String" max-len="250" secret="true"/>
+            <key name="mobile_os_type" type="JSONObject" template="mobile_os_type_unique" max-len="-1"/>
+            <!-- asset_printer -->
+            <key name="printer_serial_number" type="String" max-len="100" secret="true"/>
+            <!-- backup compatibility -->
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_type" type="JSONObject" template="product_type_unique" max-len="-1"/>
+            <key name="computer_group" type="JSONObject" template="computer_group_unique" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="all_asset_template_base">
+            <!-- asset_base_asset_template -->
+            <key name="id" type="long" allow-invalid="false" range=">0"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="product" type="JSONObject" template="product_unique" max-len="-1"/>
+            <key name="acquisition_date" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="asset_tag" type="String" max-len="50" secret="true"/>
+            <key name="description" type="String" max-len="250" secret="true"/>
+            <key name="expiry_date" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="is_asset_depreciation" type="boolean" allow-invalid="false"/>
+            <key name="is_loanable" type="boolean" allow-invalid="false"/>
+            <key name="loan_end" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="loan_start" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="location" type="String" max-len="250" secret="true"/>
+            <key name="org_serial_number" type="String" max-len="50" secret="true"/>
+            <key name="purchase_cost" type="double" range=">=0.0"/>
+            <key name="retain_user_site" type="boolean" allow-invalid="false"/>
+            <key name="state_history_comments" type="String" max-len="250" secret="true"/>
+            <key name="warranty_expiry" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="depreciation_detail" type="JSONObject" template="asset_depreciation_detail_unique" max-len="-1"/>
+            <key name="department" type="JSONObject" template="department_unique" max-len="-1"/>
+            <key name="site" type="JSONObject" template="site_unique" max-len="-1"/>
+            <key name="state" type="JSONObject" template="asset_state_unique" max-len="-1"/>
+            <key name="used_by_asset" type="JSONObject" template="all_asset_template_unique" max-len="-1"/>
+            <key name="user" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="vendor" type="JSONObject" template="vendor_unique" max-len="-1"/>
+            <key name="udf_fields" type="JSONObject" dynamic-json-template="true" max-len="-1"/>
+            <key name="created_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="current_cost" type="double" range=">=0.0"/>
+            <key name="is_depreciation_calculated" type="boolean" allow-invalid="false"/>
+            <key name="is_depreciation_configured" type="boolean" allow-invalid="false"/>
+            <key name="is_loaned" type="boolean" allow-invalid="false"/>
+            <key name="last_scan_failure_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="last_scan_success_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="last_scan_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="modified_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="module" type="JSONObject" template="asset_module_unique" max-len="-1"/>
+            <key name="operational_cost" type="double" range=">=0.0"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="purchase_order_no" type="String" max-len="50"/>
+            <key name="total_cost" type="double" range=">=0.0"/>
+            <key name="category" type="JSONObject" template="asset_category_unique" max-len="-1"/>
+            <key name="created_by" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="last_operation_data_source_info" type="JSONObject" template="operation_data_source_info_base" max-len="-1"/>
+            <key name="last_operation_status" type="JSONObject" template="operation_status_base" max-len="-1"/>
+            <key name="last_operation_status_code" type="JSONObject" template="operation_status_code_base" max-len="-1"/>
+            <key name="last_operation_triggered_by" type="JSONObject" template="operation_triggered_by_base" max-len="-1"/>
+            <key name="last_scan_status" type="JSONObject" template="operation_status_base" max-len="-1"/>
+            <key name="last_scan_operation_code" type="JSONObject" template="operation_status_code_base" max-len="-1"/>
+            <key name="modified_by" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="product_depreciation" type="JSONObject" template="asset_depreciation_detail_unique" max-len="-1"/>
+            <key name="purchase_order" type="JSONObject" template="purchase_order_unique" max-len="-1"/>
+            <key name="type" type="JSONObject" template="asset_type_unique" max-len="-1"/>
+            <key name="asset_attachments" type="JSONArray" array-size="0-100" template="asset_attachment_base" max-len="-1"/>
+            <key name="asset_connections" type="JSONArray" array-size="0-100" template="asset_connection_base" max-len="-1"/>
+            <key name="attachments" type="JSONArray" array-size="0-100" template="attachment_base" max-len="-1"/>
+            <key name="business_service_connections" type="JSONArray" array-size="0-100" template="business_service_connection_base" max-len="-1"/>
+            <key name="component_attachments" type="JSONArray" array-size="0-100" template="asset_attachment_base" max-len="-1"/>
+            <key name="contracts" type="JSONArray" array-size="0-100" template="contract_unique" max-len="-1"/>
+            <key name="costs" type="JSONArray" array-size="0-100" template="asset_sub_cost_base" max-len="-1"/>
+            <key name="depreciation_values" type="JSONArray" array-size="0-100" template="depreciation_unique" max-len="-1"/>
+            <key name="state_history" type="JSONArray" array-size="0-100" template="state_history_unique" max-len="-1"/>
+            <key name="asset_identifier" type="String" max-len="250" secret="true"/>
+            <key name="operation_identifier" type="String" max-len="250" secret="true"/>
+            <key name="history_description" type="String" max-len="250" secret="true"/>
+            <key name="operation_data_source_info" type="JSONObject" template="operation_data_source_info_base" max-len="-1"/>
+            <key name="operation_triggered_by" type="JSONObject" template="operation_triggered_by_base" max-len="-1"/>
+            <key name="operation_status" type="JSONObject" template="operation_status_base" max-len="-1"/>
+            <key name="operation_status_code" type="JSONObject" template="operation_status_code_base" max-len="-1"/>
+            <key name="space" type="JSONObject" template="space_instance_base" max-len="-1"/>
+            <!-- Old keys -->
+            <key name="inactive" type="boolean" allow-invalid="false"/>
+            <key name="last_audit" type="JSONObject" template="asset_audit_history_unique" max-len="-1"/>
+            <key name="last_success_audit" type="JSONObject" template="asset_audit_history_unique" max-len="-1"/>
+            <key name="linked_ci" type="JSONObject" template="ci_unique" max-len="-1"/>
+            <key name="product_type" type="JSONObject" template="product_type_unique" max-len="-1"/>
+            <key name="region_sys_attribute" type="JSONObject" template="region_unique" max-len="-1"/>
+            <key name="technician_sys_attribute" type="JSONObject" template="technician_unique" max-len="-1"/>
+            <!-- todo -->
+            <!-- asset_it_asset_template -->
+            <key name="ip_addresses" type="String" max-len="1500" secret="true"/>
+            <key name="mac_addresses" type="String" max-len="5000" secret="true"/>
+            <key name="primary_ip" type="String" max-len="250" secret="true"/>
+            <key name="device_type" type="JSONObject" template="device_type_unique" max-len="-1"/>
+            <key name="network_adapters" type="JSONArray" array-size="0-100" allow-invalid="false" template="asset_sub_network_adapter_base" max-len="-1"/>            <!-- snmp_device_template -->
+            <key name="discovered_serial_number" type="String" max-len="150" secret="true"/>
+            <key name="sys_description" type="String" max-len="500" secret="true"/>
+            <key name="sys_location" type="String" max-len="50" secret="true"/>
+            <key name="sys_name" type="String" max-len="150" secret="true"/>
+            <key name="sys_uptime" type="String" max-len="100"/>
+            <!-- asset_computer -->
+            <key name="bios_date" type="String" max-len="100"/>
+            <key name="bios_manufacturer" type="String" max-len="100"/>
+            <key name="bios_name" type="String" max-len="100"/>
+            <key name="bios_version" type="String" max-len="100"/>
+            <key name="build_number" type="String" max-len="50"/>
+            <key name="last_logged_user" type="String" max-len="100" secret="true"/>
+            <key name="logical_cpu_count" type="long" range=">=0"/>
+            <key name="ram_slots_count" type="long" range=">=0"/>
+            <key name="os_name" type="String" max-len="100"/>
+            <key name="os_license_type" type="String" max-len="100"/>
+            <key name="os_license_status" type="String" max-len="100"/>
+            <key name="os_system_drive" type="String" max-len="100"/>
+
+            <key name="physical_memory" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="product_id" type="String" max-len="50"/>
+            <key name="service_pack" type="String" max-len="50"/>
+            <key name="service_tag" type="String" max-len="100" secret="true"/>
+            <key name="sm_bios_version" type="String" max-len="100"/>
+            <key name="system_type" type="String" max-len="250"/>
+            <key name="virtual_memory" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="hard_disks" type="JSONArray" array-size="0-200" template="asset_sub_hard_disk_base" max-len="-1"/>
+            <key name="keyboards" type="JSONArray" array-size="0-100" template="asset_sub_keyboard_base" max-len="-1"/>
+            <key name="logical_drives" type="JSONArray" array-size="0-100" template="asset_sub_logical_drive_base" max-len="-1"/>
+            <key name="memory_modules" type="JSONArray" array-size="0-100" template="asset_sub_memory_module_base" max-len="-1"/>
+            <key name="monitors" type="JSONArray" array-size="0-100" template="asset_sub_monitor_base" max-len="-1"/>
+            <key name="motherboards" type="JSONArray" array-size="0-100" template="asset_sub_motherboard_base" max-len="-1"/>
+            <key name="mouse_devices" type="JSONArray" array-size="0-100" template="asset_sub_mouse_base" max-len="-1"/>
+            <key name="physical_drives" type="JSONArray" array-size="0-100" template="asset_sub_physical_drive_base" max-len="-1"/>
+            <key name="ports" type="JSONArray" array-size="0-100" template="asset_sub_port_base" max-len="-1"/>
+            <key name="printer_details" type="JSONArray" array-size="0-100" template="asset_sub_printer_base" max-len="-1"/>
+            <key name="processors" type="JSONArray" array-size="0-200" template="asset_sub_processor_base" max-len="-1"/>
+            <key name="sound_cards" type="JSONArray" array-size="0-100" template="asset_sub_sound_card_base" max-len="-1"/>
+            <key name="usb_controllers" type="JSONArray" array-size="0-100" template="asset_sub_usb_controller_base" max-len="-1"/>
+            <key name="user_accounts" type="JSONArray" array-size="0-100" template="asset_sub_user_account_base" max-len="-1"/>
+            <key name="video_cards" type="JSONArray" array-size="0-100" template="asset_sub_multimedia_base" max-len="-1"/>
+            <key name="virtual_machines" type="JSONArray" array-size="0-100" template="asset_sub_virtual_machine_base" max-len="-1"/>
+            <key name="agent_installed_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="agent_version" type="String" max-len="250"/>
+            <key name="free_slots" type="long" range=">=0"/>
+            <key name="last_boot_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="last_contact_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="last_agent_scan_time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="logged_on_user" type="String" max-len="500" secret="true"/>
+            <!--TODO -->
+            <key name="processor_names" type="String" max-len="10250" secret="true"/>
+            <key name="suggested_department" type="JSONObject" template="department_unique" max-len="-1"/>
+            <key name="suggested_user" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="total_disk_space" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="total_processor_core_count" type="long" range=">=0"/>
+            <key name="total_processor_count" type="long" range=">=0"/>
+            <key name="remote_office" type="String" max-len="500"/>
+            <key name="chassis_type" type="JSONObject" template="chassis_type_unique" max-len="-1"/>
+            <key name="domain" type="JSONObject" template="domain_unique" max-len="-1"/>
+            <key name="remote_session_history" type="JSONArray" array-size="0-100" template="remote_session_history_unique" max-len="-1"/>
+            <!-- Old keys -->
+            <key name="computer_group" type="JSONObject" template="computer_group_unique" max-len="-1"/>
+            <key name="system_manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="icon" type="String" max-len="100"/>
+            <!-- asset_printer -->
+            <key name="printer_serial_number" type="String" max-len="100" secret="true"/>
+            <key name="memory_capacity" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="memory_type" type="String" max-len="100"/>
+            <key name="input_units" type="JSONArray" array-size="0-100" template="asset_sub_input_unit_base" max-len="-1"/>
+            <key name="marker_supply_units" type="JSONArray" array-size="0-100" template="asset_sub_marker_supply_unit_base" max-len="-1"/>
+            <key name="marker_sub_units" type="JSONArray" array-size="0-100" template="asset_sub_marker_sub_unit_base" max-len="-1"/>
+            <key name="output_units" type="JSONArray" array-size="0-100" template="asset_sub_output_unit_base" max-len="-1"/>
+            <!-- asset_router -->
+            <key name="cpu_revision" type="String" max-len="50"/>
+            <key name="interfaces" type="JSONArray" array-size="0-100" template="asset_sub_device_interface_base" max-len="-1"/>
+            <!-- asset_firewall -->
+            <!-- asset_storage_device -->
+            <key name="allocated_disks" type="String" max-len="250"/>
+            <key name="storage_device_type" type="JSONObject" template="storage_device_type_unique"/>
+            <key name="failed_disk" type="String" max-len="250"/>
+            <key name="model_number" type="String" max-len="250" secret="true"/>
+            <key name="number_of_drives" type="String" max-len="250"/>
+            <key name="spared_disk" type="String" max-len="250"/>
+            <key name="total_aggregate" type="String" max-len="250"/>
+            <key name="total_capacity" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="total_disk" type="String" max-len="250"/>
+            <key name="volume" type="String" max-len="250"/>
+            <key name="netapp_aggregators" type="JSONArray" array-size="0-100" template="asset_sub_netapp_aggregator_base" max-len="-1"/>
+            <key name="netapp_physical_disks" type="JSONArray" array-size="0-100" template="asset_sub_netapp_physical_disk_base" max-len="-1"/>
+            <key name="netapp_volumes" type="JSONArray" array-size="0-100" template="asset_sub_netapp_volume_base" max-len="-1"/>
+            <!-- asset_rack -->
+            <key name="foot_print" type="String" max-len="250"/>
+            <key name="power_consumption" type="String" max-len="250"/>
+            <key name="rack_in_use" type="String" max-len="250"/>
+            <key name="rack_unit" type="String" max-len="250"/>
+            <key name="assigned_to" type="JSONObject" template="technician_unique" max-len="-1"/>
+            <!-- asset_ups -->
+            <key name="battery_capacity" type="long" range=">=0"/>
+            <key name="battery_current" type="long" range=">=0"/>
+            <key name="battery_time_remaining" type="long" range=">=0"/>
+            <key name="battery_voltage" type="long" range=">=0"/>
+            <!-- asset_video_encoder -->
+            <key name="cameras" type="JSONArray" array-size="0-100" template="asset_sub_camera_base" max-len="-1"/>
+            <!-- asset_ips -->
+            <key name="hardware_version" type="String" max-len="250"/>
+            <key name="software_version" type="String" max-len="250"/>
+            <!-- asset_ntp -->
+            <!-- asset_room_sensor -->
+            <key name="sensors" type="JSONArray" array-size="0-100" template="asset_sub_sensor_base" max-len="-1"/>
+            <!-- asset_ip_phone -->
+            <!-- asset_cisco_ip_phone -->
+            <key name="app_load_id" type="String" max-len="50"/>
+            <key name="boot_load_id" type="String" max-len="50"/>
+            <key name="fips_mode_enabled" type="String" max-len="20"/>
+            <key name="hardware_revision" type="String" max-len="50"/>
+            <key name="heap_free_memory" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="message_waiting" type="String" max-len="20" secret="true"/>
+            <key name="phone_dn" type="String" max-len="19" secret="true"/>
+            <key name="pool_free_memory" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="system_free_memory" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="unique_device_identifier" type="String" max-len="250" secret="true"/>
+            <key name="timezone" type="String" max-len="150"/>
+            <!-- asset_mobile_device -->
+            <key name="imei" type="String" max-len="250" secret="true"/>
+            <key name="ud_id" type="String" max-len="250"/>
+            <key name="serial_number" type="String" max-len="250" secret="true"/>
+            <key name="firmware_version" type="String" max-len="250"/>
+            <key name="is_personal" type="boolean" allow-invalid="false"/>
+            <key name="mobile_os_type" type="JSONObject" template="mobile_os_type_unique" max-len="-1"/>
+            <key name="build_version" type="String" max-len="250"/>
+            <key name="hardware_encryption" type="String" max-len="100"/>
+            <key name="passcode_compliant" type="boolean"/>
+            <key name="passcode_compliant_profile" type="boolean"/>
+            <key name="passcode_present" type="boolean"/>
+            <key name="allow_add_game_friends" type="boolean" allow-invalid="false"/>
+            <key name="allow_app_installation" type="boolean" allow-invalid="false"/>
+            <key name="allow_app_purchase" type="boolean" allow-invalid="false"/>
+            <key name="allow_camera" type="boolean" allow-invalid="false"/>
+            <key name="allow_facetime" type="boolean" allow-invalid="false"/>
+            <key name="allow_multi_player_game" type="boolean" allow-invalid="false"/>
+            <key name="allow_screencapture" type="boolean" allow-invalid="false"/>
+            <key name="allow_sync" type="boolean" allow-invalid="false"/>
+            <key name="allow_voice_dialing" type="boolean" allow-invalid="false"/>
+            <key name="force_backup" type="boolean" allow-invalid="false"/>
+            <key name="accept_cookies" type="boolean" allow-invalid="false"/>
+            <key name="allow_itunes" type="boolean" allow-invalid="false"/>
+            <key name="allow_safari" type="boolean" allow-invalid="false"/>
+            <key name="allow_youtube" type="boolean" allow-invalid="false"/>
+            <key name="allow_popups" type="boolean" allow-invalid="false"/>
+            <key name="enable_autofill" type="boolean" allow-invalid="false"/>
+            <key name="enable_javascript" type="boolean" allow-invalid="false"/>
+            <key name="explicit_music_podcast" type="boolean" allow-invalid="false"/>
+            <key name="force_fraud_warning" type="boolean" allow-invalid="false"/>
+            <key name="activate_data_network" type="boolean" allow-invalid="false"/>
+            <key name="allow_background_data" type="boolean" allow-invalid="false"/>
+            <key name="allow_bluetooth" type="boolean" allow-invalid="false"/>
+            <key name="allow_nfc" type="boolean" allow-invalid="false"/>
+            <key name="device_admin" type="boolean" allow-invalid="false"/>
+            <key name="available_capacity" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="networks" type="JSONArray" array-size="0-100" template="asset_sub_mobile_network_base" max-len="-1"/>
+            <key name="certificates" type="JSONArray" array-size="0-100" template="asset_sub_mobile_certificate_base" max-len="-1"/>
+            <!-- asset_virtual_host -->
+            <key name="vm_platform" type="JSONObject" template="virtual_server_type_unique" max-len="-1"/>
+            <key name="allowed_vms" type="int" range=">=0" allow-invalid="true"/>
+            <key name="installed_vms" type="int" range=">=0" allow-invalid="true"/>
+            <!-- asset_switch -->
+            <key name="cpu_type" type="String" max-len="100"/>
+            <key name="num_ports" type="long" range=">=0"/>
+            <key name="processor_board_id" type="String" max-len="100"/>
+            <key name="switch_ports" type="JSONArray" array-size="0-1000" template="asset_sub_switch_port_base" max-len="-1"/>
+            <!-- asset_router || asset_switch -->
+            <key name="config_register" type="String" max-len="50"/>
+            <key name="cpu" type="String" max-len="50"/>
+            <key name="dram_size" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="estimated_bandwidth" type="String" max-len="250"/>
+            <key name="firmware_revision" type="String" max-len="150"/>
+            <key name="flash_size" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="nvram_size" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="os_type" type="String" max-len="50"/>
+            <!-- asset_firewall || asset_storage_device || asset_ups || asset_video_encoder -->
+            <key name="firmware" type="String" max-len="250"/>
+            <!-- asset_router || asset_mobile_device -->
+            <key name="model" type="String" max-len="250"/>
+            <!-- asset_mobile_device || asset_ntp || asset_router || asset_storage_device || asset_switch  -->
+            <key name="os_version" type="String" max-len="250"/>
+            <!-- asset_cisco_ip_phone -->
+            <key name="version" type="String" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="all_asset_template">
+            <key name="api_name" name-regex="true" type="JSONObject|JSONArray" array-size="0-100" template="all_asset_template_base" max-len="-1" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_audit_history_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="is_delta_scan" type="boolean"/>
+            <key name="status" type="String" max-len="19"/>
+            <key name="message" type="String" max-len="250"/>
+            <key name="operation" type="String" max-len="50"/>
+            <key name="time" type="JSONObject" template="datefield" max-len="-1"/>
+            <key name="operation_owner" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="scan_mode" type="JSONObject" template="discovery_type_constant_unique" max-len="-1"/>
+            <key name="scan_type" type="JSONObject" template="discovery_type_constant_unique" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="operation_data_source_info_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="middleware" type="JSONObject" template="operation_middleware_base" max-len="-1"/>
+            <key name="protocol" type="JSONObject" template="operation_middleware_protocol_base" max-len="-1"/>
+            <key name="is_delta" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="operation_data_source_info_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="operation_middleware_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="display_name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_middleware_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_middleware_protocol_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="display_name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_middleware_protocol_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_triggered_by_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="display_name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_triggered_by_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_status_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="is_success" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="operation_status_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_status_code_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="link" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="operation_status_code_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <!--asset attachment-->
+        <jsontemplate name="asset_attachment_base">
+            <key name="child_asset" type="JSONObject" template="all_asset_template_unique" max-len="-1"/>
+            <key name="parent_asset" type="JSONObject" template="all_asset_template_unique" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_attachment">
+            <key name="asset_attachment" type="JSONObject" template="asset_attachment_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_cost_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="cost_factor" template="asset_cost_factor_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_cost_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="cost_factor" template="asset_cost_factor_unique" type="JSONObject" max-len="-1"/>
+            <key name="amount" type="double" range=">=0.0"/>
+            <key name="description" secret="true" type="String" max-len="250"/>
+            <key name="date" template="datefield" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_cost">
+            <key name="asset_sub_cost" template="asset_sub_cost_base" type="JSONObject" max-len="-1"/>
+            <key name="costs" template="asset_sub_cost_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_depreciation_detail_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="200"/>
+            <key name="depreciation_type" template="depreciation_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="salvage_value" type="double" range=">=0.0"/>
+            <key name="useful_life" type="long" range=">0"/>
+            <key name="depreciation_percent" type="double" range="1-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_depreciation_detail_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="200"/>
+            <key name="depreciation_type" template="depreciation_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="salvage_value" type="double" range=">=0.0"/>
+            <key name="useful_life" type="long" range=">0"/>
+            <key name="depreciation_percent" type="double" range="0-100"/>
+        </jsontemplate>
+        <!--asset_computer-->
+        <jsontemplate name="asset_sub_hard_disk_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="disk_capacity" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="disk_manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="disk_model" type="String" max-len="50"/>
+            <key name="disk_serial_number" type="String" max-len="100" secret="true"/>
+            <key name="disk_type" type="String" max-len="25"/>
+            <key name="free_space" type="JSONObject" template="memoryfield" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_hard_disk_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="disk_model" type="String" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_hard_disk">
+            <key name="hard_disk" type="JSONObject" template="asset_sub_hard_disk_base" max-len="-1"/>
+            <key name="hard_disks" type="JSONArray" array-size="0-200" template="asset_sub_hard_disk_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_keyboard_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_keyboard_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_keyboard">
+            <key name="keyboard" type="JSONObject" template="asset_sub_keyboard_base" max-len="-1"/>
+            <key name="keyboards" type="JSONArray" array-size="0-200" template="asset_sub_keyboard_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_logical_drive_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="drive_capacity" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="drive_serial_number" type="String" max-len="100" secret="true"/>
+            <key name="drive_type" type="String" max-len="25"/>
+            <key name="file_system" type="String" max-len="50" secret="true"/>
+            <key name="free_space" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="name" type="String" max-len="50" secret="true"/>
+            <key name="description" type="String" max-len="250" secret="true"/>
+            <key name="remote_host" type="String" max-len="250" secret="true"/>
+            <key name="remote_path" type="String" max-len="250" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_logical_drive_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="50" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_logical_drive">
+            <key name="logical_drive" type="JSONObject" template="asset_sub_logical_drive_base" max-len="-1"/>
+            <key name="logical_drives" type="JSONArray" array-size="0-100" template="asset_sub_logical_drive_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_memory_module_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="bank_label" type="String" max-len="100" secret="true"/>
+            <key name="frequency" type="long" range=">=0"/>
+            <key name="memory_capacity" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="memory_type" type="String" max-len="100"/>
+            <key name="module_tag" type="String" max-len="100" secret="true"/>
+            <key name="socket" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_memory_module_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_memory_module">
+            <key name="memory_module" type="JSONObject" template="asset_sub_memory_module_base" max-len="-1"/>
+            <key name="memory_modules" type="JSONArray" array-size="0-100" template="asset_sub_memory_module_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_monitor_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="100"/>
+            <key name="resolution" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_monitor_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_monitor">
+            <key name="monitor" type="JSONObject" template="asset_sub_monitor_base" max-len="-1"/>
+            <key name="monitors" type="JSONArray" array-size="0-100" template="asset_sub_monitor_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_motherboard_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100"/>
+            <key name="model" type="String" max-len="100"/>
+            <key name="product" type="String" max-len="100"/>
+            <key name="version" type="String" max-len="100"/>
+            <key name="installed_date" type="JSONObject" template="datefield" />
+            <key name="part_number" type="String" max-len="100"/>
+            <key name="primary_bus_type" type="String" max-len="100"/>
+            <key name="secondary_bus_type" type="String" max-len="100"/>
+            <key name="device_status" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_motherboard_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="product" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_motherboard">
+            <key name="motherboard" type="JSONObject" template="asset_sub_motherboard_base" max-len="1400"/>
+            <key name="motherboards" type="JSONArray" array-size="0-100" template="asset_sub_motherboard_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mouse_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="buttons" type="long" range=">=0"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mouse_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mouse">
+            <key name="mouse_device" type="JSONObject" template="asset_sub_mouse_base" max-len="-1"/>
+            <key name="mouse_devices" type="JSONArray" array-size="0-100" template="asset_sub_mouse_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_physical_drive_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="drive_manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="drive_type" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="250" secret="true"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="provider" type="String" max-len="100" secret="true"/>
+            <key name="version" type="String" max-len="50"/>
+            <key name="date" type="String" max-len="30"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_physical_drive_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_physical_drive">
+            <key name="physical_drive" type="JSONObject" template="asset_sub_physical_drive_base" max-len="-1"/>
+            <key name="physical_drives" type="JSONArray" array-size="0-100" template="asset_sub_physical_drive_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_port_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="status" type="String" max-len="25"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_port_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_port">
+            <key name="port" type="JSONObject" template="asset_sub_port_base" max-len="-1"/>
+            <key name="ports" type="JSONArray" array-size="0-100" template="asset_sub_port_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_printer_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="is_default" type="String" max-len="5"/>
+            <key name="location" type="String" max-len="100" secret="true"/>
+            <key name="model" type="String" max-len="100"/>
+            <key name="server" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="25"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_printer_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_printer">
+            <key name="printer_detail" type="JSONObject" template="asset_sub_printer_base" max-len="-1"/>
+            <key name="printer_details" type="JSONArray" array-size="0-100" template="asset_sub_printer_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_processor_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="core_count" type="long" range=">=0"/>
+            <key name="cpu_manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="cpu_model" type="String" max-len="50"/>
+            <key name="cpu_serial_number" type="String" max-len="50" secret="true"/>
+            <key name="cpu_stepping" type="String" max-len="50"/>
+            <key name="family" type="String" max-len="50"/>
+            <key name="manufacturer" type="String" max-len="50" secret="true"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="number_of_cores" type="long" range=">=0"/>
+            <key name="speed" type="double" range=">=0.0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_processor_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_processor">
+            <key name="processor" type="JSONObject" template="asset_sub_processor_base" max-len="-1"/>
+            <key name="processors" type="JSONArray" array-size="0-200" template="asset_sub_processor_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_usb_controller_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_usb_controller_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_usb_controller">
+            <key name="usb_controller" type="JSONObject" template="asset_sub_usb_controller_base" max-len="-1"/>
+            <key name="usb_controllers" type="JSONArray" array-size="0-100" template="asset_sub_usb_controller_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_user_account_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="description" type="String" max-len="250" secret="true"/>
+            <key name="domain" type="String" max-len="250" secret="true"/>
+            <key name="full_name" type="String" max-len="250" secret="true"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="status" type="String" max-len="250"/>
+            <key name="sid" type="String" max-len="250"/>
+            <key name="is_local_account" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_user_account_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_user_account">
+            <key name="user_account" type="JSONObject" template="asset_sub_user_account_base" max-len="-1"/>
+            <key name="user_accounts" type="JSONArray" array-size="0-100" template="asset_sub_user_account_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_multimedia_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="bios_version" type="String" max-len="25" secret="true"/>
+            <key name="chipset" type="String" max-len="250" secret="true"/>
+            <key name="memory" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="bios_date" type="String" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_multimedia_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_multimedia">
+            <key name="video_card" type="JSONObject" template="asset_sub_multimedia_base" max-len="-1"/>
+            <key name="video_cards" type="JSONArray" array-size="0-100" template="asset_sub_multimedia_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_sound_card_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_sound_card_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_sound_card">
+            <key name="sound_card" type="JSONObject" template="asset_sub_sound_card_base" max-len="-1"/>
+            <key name="sound_cards" type="JSONArray" array-size="0-200" template="asset_sub_sound_card_base" max-len="-1"/>
+        </jsontemplate>
+        <!-- asset_printer -->
+        <jsontemplate name="asset_sub_input_unit_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="capacity" type="String" max-len="100"/>
+            <key name="current_level" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="100"/>
+            <key name="vendor_name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_input_unit_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="capacity" type="String" max-len="100"/>
+            <key name="current_level" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="100"/>
+            <key name="vendor_name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_input_unit">
+            <key name="input_unit" type="JSONObject" template="asset_sub_input_unit_base" max-len="-1"/>
+            <key name="input_units" type="JSONArray" array-size="0-100" template="asset_sub_input_unit_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_marker_supply_unit_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="100" secret="true"/>
+            <key name="level" type="long" range=">=0"/>
+            <key name="max_capacity" type="long" range=">=0"/>
+            <key name="supply_unit" type="String" max-len="100"/>
+            <key name="type" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_marker_supply_unit">
+            <key name="marker_supply_unit" type="JSONObject" template="asset_sub_marker_supply_unit_base" max-len="-1"/>
+            <key name="marker_supply_units" type="JSONArray" array-size="0-100" template="asset_sub_marker_supply_unit_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_marker_supply_unit_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="100" secret="true"/>
+            <key name="level" type="long" range=">=0"/>
+            <key name="max_capacity" type="long" range=">=0"/>
+            <key name="supply_unit" type="String" max-len="100"/>
+            <key name="type" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_marker_sub_unit_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="life_count" type="String" max-len="100"/>
+            <key name="tech" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_marker_sub_unit_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="life_count" type="String" max-len="100"/>
+            <key name="tech" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_marker_sub_unit">
+            <key name="marker_sub_unit" type="JSONObject" template="asset_sub_marker_sub_unit_base" max-len="550"/>
+            <key name="marker_sub_units" type="JSONArray" array-size="0-100" template="asset_sub_marker_sub_unit_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_output_unit_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="capacity" type="String" max-len="100"/>
+            <key name="current_level" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="100"/>
+            <key name="vendor_name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_output_unit_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="capacity" type="String" max-len="100"/>
+            <key name="current_level" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="100"/>
+            <key name="vendor_name" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_output_unit">
+            <key name="output_unit" type="JSONObject" template="asset_sub_output_unit_base" max-len="750"/>
+            <key name="output_units" type="JSONArray" array-size="0-100" template="asset_sub_output_unit_base" max-len="-1"/>
+        </jsontemplate>
+
+        <!-- asset_storage_device -->
+        <jsontemplate name="storage_device_type_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="storage_device_type_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_physical_disk_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="raid_group_id" type="long" range=">=0"/>
+            <key name="raid_index" type="long" range=">=0"/>
+            <key name="raid_volume_id" type="long" range=">=0"/>
+            <key name="bay" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="firmware_revision" type="String" max-len="100"/>
+            <key name="model" type="String" max-len="100"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="status" type="String" max-len="100"/>
+            <key name="shelf" type="String" max-len="100"/>
+            <key name="total_size" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="type" type="String" max-len="100"/>
+            <key name="used_size" type="JSONObject" template="memoryfield" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_physical_disk_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="raid_group_id" type="long" range=">=0"/>
+            <key name="raid_index" type="long" range=">=0"/>
+            <key name="raid_volume_id" type="long" range=">=0"/>
+            <key name="bay" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="status" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_physical_disk">
+            <key name="netapp_physical_disk" type="JSONObject" template="asset_sub_netapp_physical_disk_base" max-len="-1"/>
+            <key name="netapp_physical_disks" type="JSONArray" array-size="0-100" template="asset_sub_netapp_physical_disk_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_aggregator_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="aggregator_index" type="long" range=">=0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="status" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_aggregator_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="aggregator_index" type="long" range=">=0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="status" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_aggregator">
+            <key name="netapp_aggregator" type="JSONObject" template="asset_sub_netapp_aggregator_base" max-len="350"/>
+            <key name="netapp_aggregators" type="JSONArray" array-size="0-100" template="asset_sub_netapp_aggregator_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_volume_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="volume_index" type="long" range=">=0"/>
+            <key name="aggregator_name" type="String" max-len="100"/>
+            <key name="status" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_volume_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="volume_index" type="long" range=">=0"/>
+            <key name="status" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_netapp_volume">
+            <key name="netapp_volume" type="JSONObject" template="asset_sub_netapp_volume_base" max-len="500"/>
+            <key name="netapp_volumes" type="JSONArray" array-size="0-100" template="asset_sub_netapp_volume_base" max-len="-1"/>
+        </jsontemplate>
+        <!-- asset_router -->
+        <jsontemplate name="asset_sub_device_interface_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="String" max-len="100"/>
+            <key name="admin_status" type="String" max-len="100"/>
+            <key name="ip_address" type="String" max-len="100" secret="true"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="netmask" type="String" max-len="100" secret="true"/>
+            <key name="operational_status" type="String" max-len="100"/>
+            <key name="physical_address" type="String" max-len="100" secret="true"/>
+            <key name="speed" type="String" max-len="100"/>
+            <key name="type" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_device_interface_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_device_interface">
+            <key name="device_interface" type="JSONObject" template="asset_sub_device_interface_base" max-len="-1"/>
+            <key name="device_interfaces" type="JSONArray" array-size="0-100" template="asset_sub_device_interface_base" max-len="-1"/>
+        </jsontemplate>
+
+        <!-- asset_mobile_device -->
+        <jsontemplate name="asset_sub_mobile_certificate_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="is_identity" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mobile_certificate_base">
+            <key name="id" type="long" allow-invalid="false" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="is_identity" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mobile_certificate">
+            <key name="mobile_certificate" type="JSONObject" template="asset_sub_mobile_certificate_base" max-len="400"/>
+            <key name="mobile_certificates" type="JSONArray" array-size="0-100" template="asset_sub_mobile_certificate_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mobile_network_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mobile_network_base">
+            <key name="id" type="long" allow-invalid="false" range=">0"/>
+            <key name="bluetooth_mac" type="String" max-len="100" secret="true"/>
+            <key name="wifi_mac" type="String" max-len="100" secret="true"/>
+            <key name="icc_id" type="String" max-len="100"/>
+            <key name="phone_number" type="String" max-len="100" secret="true"/>
+            <key name="current_carrier_network" type="String" max-len="100"/>
+            <key name="carrier_setting_version" type="String" max-len="100"/>
+            <key name="sim_carrier_network" type="String" max-len="100"/>
+            <key name="is_voice_roaming_enabled" type="boolean" allow-invalid="false"/>
+            <key name="is_data_roaming_enabled" type="boolean" allow-invalid="false"/>
+            <key name="is_roaming_enabled" type="boolean" allow-invalid="false"/>
+            <key name="cellular_technology" type="String" max-len="100"/>
+            <key name="current_mcc" type="String" max-len="100"/>
+            <key name="current_mnc" type="String" max-len="100"/>
+            <key name="subscriber_mcc" type="String" max-len="100"/>
+            <key name="subscriber_mnc" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_mobile_network">
+            <key name="network" type="JSONObject" template="asset_sub_mobile_network_base" max-len="-1"/>
+            <key name="networks" type="JSONArray" array-size="0-100" template="asset_sub_mobile_network_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="mobile_os_type_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="mobile_os_type_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="mobile_os_type">
+            <key name="os_type" type="JSONObject" template="mobile_os_type_base" max-len="400"/>
+        </jsontemplate>
+        <jsontemplate name="mobile_os_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="os_type" type="JSONObject" template="mobile_os_type_unique" max-len="500"/>
+            <key name="os_version" type="String" max-len="250"/>
+            <key name="build_version" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="mobile_os_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="os_type" type="JSONObject" template="mobile_os_type_unique" max-len="500"/>
+            <key name="os_version" type="String" max-len="250"/>
+            <key name="build_version" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="mobile_os">
+            <key name="mobile_os" type="JSONObject" template="mobile_os_base" max-len="700"/>
+            <key name="os" type="JSONArray" array-size="0-100" template="mobile_os_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_connection_base">
+            <key name="child_asset" type="JSONObject" template="all_asset_template_unique" max-len="-1"/>
+            <key name="parent_asset" type="JSONObject" template="all_asset_template_unique" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_connection">
+            <key name="asset_connection" type="JSONObject|JSONArray" array-size="0-100" template="asset_connection_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="business_service_connection_base">
+            <key name="asset" type="JSONObject" template="all_asset_template_unique" max-len="-1"/>
+            <key name="service_category" type="JSONObject" template="service_category_unique" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="business_service_connection">
+            <key name="business_service_connection" type="JSONObject|JSONArray" array-size="0-100" template="business_service_connection_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_network_adapter_unique">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_network_adapter_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="250" secret="true"/>
+            <key name="ip_address" type="String" max-len="250" secret="true"/>
+            <key name="mac_address" type="String" max-len="50" secret="true"/>
+            <key name="ipnet_mask" type="String" max-len="25" secret="true"/>
+            <key name="network" type="String" max-len="25" secret="true"/>
+            <key name="gateway" type="String" max-len="100" secret="true"/>
+            <key name="is_dhcp" type="boolean" allow-invalid="false" secret="true"/>
+            <key name="dhcp_server" type="String" max-len="100" secret="true"/>
+            <key name="nic_lease" type="String" max-len="100" secret="true"/>
+            <!-- Old Key-->
+            <key name="dhcp" type="String" max-len="50" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_network_adapter">
+            <key name="network_adapter" type="JSONObject" template="asset_sub_network_adapter_base" max-len="-1"/>
+            <key name="network_adapters" type="JSONArray" array-size="0-100" template="asset_sub_network_adapter_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_switch_port_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="long" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_switch_port_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="index" type="long" range=">=0"/>
+            <key name="admin_state" type="JSONObject" template="switch_port_state_unique"/>
+            <key name="description" type="String" max-len="100" secret="true"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="operational_state" type="JSONObject" template="switch_port_state_unique"/>
+            <key name="speed" type="long" range=">=0"/>
+            <key name="type" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_switch_port">
+            <key name="switch_port" type="JSONObject" template="asset_sub_switch_port_base" max-len="-1"/>
+            <key name="switch_ports" type="JSONArray" array-size="0-1000" template="asset_sub_switch_port_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="switch_port_state_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="switch_port_state_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_sensor_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_sensor_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="sensor_type" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_sensor">
+            <key name="sensor" type="JSONObject" template="asset_sub_sensor_base" max-len="700"/>
+            <key name="sensors" type="JSONArray" array-size="0-100" template="asset_sub_sensor_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_camera_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_camera_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_camera">
+            <key name="camera" type="JSONObject" template="asset_sub_camera_base" max-len="350"/>
+            <key name="cameras" type="JSONArray" array-size="0-100" template="asset_sub_camera_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_virtual_machine_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="ip_address" type="String" max-len="200" secret="true"/>
+            <key name="vm_host" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="virtual_machine" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="vm_name" type="String" max-len="200" secret="true"/>
+            <key name="memory_reservation" type="JSONObject" template="memoryfield" max-len="200"/>
+            <key name="memory_limit" type="String" max-len="50"/>
+            <key name="memory_shares" type="int" range=">=0"/>
+            <key name="memory_sharelevel" type="String" max-len="100"/>
+            <key name="memory_configured" type="String" max-len="100"/>
+            <key name="cpu_reservation" type="int" range=">=0"/>
+            <key name="cpu_limit" type="String" max-len="50"/>
+            <key name="cpu_shares" type="int" range=">=0"/>
+            <key name="cpu_sharelevel" type="String" max-len="100"/>
+            <key name="cpu_configured" type="String" max-len="100"/>
+            <key name="cpu_reservation_percentage" type="int" range="0-100"/>
+            <key name="cpu_limit_percentage" type="int" range="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_sub_virtual_machine">
+            <key name="virtual_machine" type="JSONObject" template="asset_sub_virtual_machine_base" max-len="-1"/>
+            <key name="virtual_machines" type="JSONArray" array-size="0-100" template="asset_sub_virtual_machine_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_list_info">
+            <key name="list_info" type="JSONObject" template="asset_list_info_base" max-len="-1"/>
+            <key name="for" type="String"/>
+            <key name="template" type="JSONObject" template="IDNameJson"/>
+            <key name="include_inactive_value" type="boolean" max-occurrences="1"/>
+            <key name="fields_required" type="JSONArray" array-size="0-100" template="strarray" max-len="-1"/>
+            <key name="ci_attributes" type="JSONObject" template="ci_attribute_name_template" max-len="-1"/>
+            <key name="include" type="JSONArray" template="strarray" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_list_info_base">
+            <key name="row_count" type="int" range=">=0"/>
+            <key name="page" type="int" range=">0"/>
+            <key name="start_index" type="int" range=">=0"/>
+            <key name="sort_field" type="String"/>
+            <key name="sort_fields" type="JSONArray" array-size="0-3" template="sort_fields_json" max-len="-1"/>
+            <key name="sort_order" regex="asc|desc|A|D" max-len="5"/>
+            <key name="filter" type="String"/>
+            <key name="filter_by" type="JSONObject" template="IDNameJson" max-len="50" />
+            <key name="asset_filter_by" type="JSONObject" template="asset_filter_by_base" max-len="50"/>
+            <key name="search_fields" type="JSONObject" template="search_field_json" max-len="-1"/>
+            <key name="search_criteria" type="JSONObject|JSONArray" template="search_criteria" max-len="-1"/>
+            <key name="fields_required" type="JSONArray" array-size="0-100" template="strarray" max-len="-1"/>
+            <key name="group_by" type="JSONArray" array-size="0-100" template="strarray" max-len="-1"/>
+            <key name="get_total_count" regex="true|false" max-len="50"/>
+            <key name="search_fields_condition" regex="or|and" max-len="50"/>
+            <key name="gsearch" type="String" max-len="5000" secret="true"/>
+            <key name="end_index" type="int" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_filter_by_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" regex="all_asset|all_asset_entity|all_asset_state|all_states|depreciated_assets|unaccounted_assets|computer_unscanned|computer_failed_scan|AutoAssign|disposed_assets|not_in_contract|ws_for_unknown_processors|vm_server_type" max-len="50"/>
+            <key name="days" regex="7|30|90" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="asset_export_info">
+            <key name="export" type="JSONObject" template="asset_export" max-len="-1" />
+            <key name="list_info" type="JSONObject" template="asset_list_info_base" max-len="-1" />
+            <key name="no_header" type="boolean"/>
+        </jsontemplate>
+		<jsontemplate name="asset_export">
+			<key name="format" type="String" regex="PDF|CSV|HTML|XLS|XLSX|DOC|DOCX|XML|pdf|csv|html|xls|xlsx|doc|docx|xml" />
+			<key name="title" type="String" max-len="250" />
+		</jsontemplate>
+    </jsontemplates>
+    <jsontemplates>
+        <jsontemplate name="asset_state_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+            <key name="is_ownership_allowed" type="boolean"/>
+            <key name="is_ownership_needed" type="boolean"/>
+            <key name="is_ownership_mandatory" type="boolean"/>
+            <key name="is_scan_required" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="asset_state_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+            <key name="description" secret="true" type="String" max-len="250"/>
+            <key name="is_ownership_allowed" type="boolean"/>
+            <key name="is_ownership_needed" type="boolean"/>
+            <key name="is_ownership_mandatory" type="boolean"/>
+            <key name="is_scan_required" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="asset_state">
+            <key name="asset_state" template="asset_state_base" type="JSONObject" max-len="-1"/>
+            <key name="asset_states" template="asset_state_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_state_unique_wrapper">
+            <key name="asset_state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

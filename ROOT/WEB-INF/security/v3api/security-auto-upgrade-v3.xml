@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true" rebrand="zmon">
+        <throttles name="auto_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <!-- to get auto update and hotswap settings -->
+        <url path="/api/v3/au_configurations" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="50000"/>
+        </url>
+        <!-- to enable/disable auto update and hotswap settings -->
+        <url path="/api/v3/au_configurations" roles="SDOrgAdmin" method="put" user_type="all">
+            <param name="input_data" template="au_configuration_template" type="JSONObject" max-len="50000" min-occurrences="1"/>
+        </url>
+        <!-- to upgrade and restart -->
+        <url path="/api/v3/au_configurations/_server_upgrade" roles="SDOrgAdmin" method="post" user_type="all"/>
+        <!-- to get upgradeHistory table details -->
+        <url path="/api/v3/patch_details" roles="SDOrgAdmin" method="get" user_type="all">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- to get patchInstallationStatus table details to be displayed in progress popup -->
+        <url  path="/api/v3/patch_details/(\d+)/(_?)history" method="get" roles="SDOrgAdmin" user_type="all">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- to view history -->
+        <url path="/api/v3/au_notifications/(_?)history" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/au_notifications/(_?)get_performed_by_for_history" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- to get allowed users list -->
+        <url path="/api/v3/au_notifications/notify_to_users" roles="SDOrgAdmin" method="get" user_type="all">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- to get users list to whom notifications will be sent -->
+        <url path="/api/v3/au_notifications/(\d+)" roles="SDOrgAdmin" method="get" user_type="all"/>
+        <url method="GET" path="/ESM.do" operation-param="type" operation-value="ESMAU" roles="SDOrgAdmin" user_type="all"/>
+
+        <url path="/api/v3/backup_technicians" roles="SDAdmin,SDSiteAdmin,SDCo-ordinator" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="50000"/>
+        </url>
+    </urls>
+</security>

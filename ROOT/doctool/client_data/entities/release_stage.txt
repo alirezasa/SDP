@@ -1,0 +1,104 @@
+{
+    "Additional Elements": [],
+    "operations": [
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get All Release Stages",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"release_stages\":[{\"internal_name\":\"close\",\"name\":\"Closure\",\"description\":\"Release closure\",\"id\":\"9\"},{\"internal_name\":\"deployment\",\"name\":\"Deployment\",\"description\":\"Release items are deployed\",\"id\":\"6\"},{\"internal_name\":\"implementation\",\"name\":\"Development\",\"description\":\"Prepare the release build and test\",\"id\":\"3\"},{\"internal_name\":\"planning\",\"name\":\"Planning\",\"description\":\"Release planning\",\"id\":\"2\"},{\"internal_name\":\"review\",\"name\":\"Review\",\"description\":\"Review of release build\",\"id\":\"8\"},{\"internal_name\":\"submission\",\"name\":\"Submission\",\"description\":\"Stage when a release item is submitted\",\"id\":\"1\"},{\"internal_name\":\"testing\",\"name\":\"Testing\",\"description\":\"Test the developed release build\",\"id\":\"4\"},{\"internal_name\":\"training\",\"name\":\"Training\",\"description\":\"Providing Training and Support for the deployed Release Items\",\"id\":\"7\"},{\"internal_name\":\"UAT\",\"name\":\"UAT\",\"description\":\"Build given to portion of Users to get tested and reviewed\",\"id\":\"5\"}],\"list_info\":{\"sort_fields\":[{\"field\":\"name\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"total_count\":9,\"get_total_count\":\"true\",\"row_count\":9}}"},
+            "path": ["/api/v3/release_stages"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"name\",\"order\":\"asc\"}]}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all release stage details."
+        },
+        {
+            "output": {"sample": "{\"release_stage\":{\"internal_name\":\"submission\",\"name\":\"Submission\",\"description\":\"Stage when a release item is submitted\",\"id\":\"1\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/release_stages/{release_stage_id}"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Release Stage",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch a particular release stage detail."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Update Release Stage",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"release_stage\":{\"internal_name\":\"submission\",\"name\":\"CAB Approval\",\"description\":\"This phase awaits cab approval for release\",\"id\":\"1\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/release_stages/{release_stage_id}"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"release_stage\":{\"name\":\"CAB Approval\",\"description\":\"This phase awaits cab approval for release\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to update a release stage detail."
+        }
+    ],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "RELEASESTAGEDEFINITION:STAGEID",
+            "type": "long",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Id of the release stage\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "RELEASESTAGEDEFINITION:NAME",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "name of this release stage\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "RELEASESTAGEDEFINITION:DESCRIPTION",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Description of this release stage",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "internal_name",
+            "column": "RELEASESTAGEDEFINITION:INTERNALNAME",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Internal name of the stage",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1576650138000
+}

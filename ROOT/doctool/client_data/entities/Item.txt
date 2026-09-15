@@ -1,0 +1,193 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "isReleased": "true",
+      "relational_mapping": "ItemDefinition.ITEMID",
+      "identifier": true,
+      "internalType": "long",
+      "column" : "ITEMDEFINITION : ITEMID",
+      "isMandatory": "true",
+      "desc": "Unique identifier used to identify the Item.",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "isReleased": "true",
+      "security": {
+        "regex": "sdp_safestring"
+      },
+      "relational_mapping": "ItemDefinition.NAME",
+      "partial_field": true,
+      "internalType": "string",
+      "column" : "ITEMDEFINITION : NAME",
+      "isMandatory": "true",
+      "desc": "Unique name of the item",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "isReleased": "true",
+      "security": {
+        "regex": "sdp_safestring"
+      },
+      "relational_mapping": "ItemDefinition.DESCRIPTION",
+      "internalType": "string",
+      "column" : "ITEMDEFINITION : DESCRIPTION",
+      "desc": "A short Description about the item",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "deleted",
+      "type": "Boolean",
+      "isReleased": "true",
+      "relational_mapping": "ItemDefinition.ISDELETED",
+      "internalType": "boolean",
+      "column" : "ITEMDEFINITION : ISDELETED",
+      "desc": "Indicates that the item is still use in the application",
+      "inOP": "true",
+      "inOD": "true",
+      "isReadOnly": "true"
+    },
+    {
+      "name": "subcategory",
+      "type": "Object",
+      "isReleased": "true",
+      "entity": "subcategory",
+      "relational_mapping": "ItemDefinition.SUBCATEGORYID",
+      "nullable": false,
+      "column" : "ITEMDEFINITION : SUBCATEGORYID",
+      "desc": "Subcategory under which the item belongs to. <br/>Ex:- {\"id\":\"1\",\"name\":\"Custom Subcategory\"}",
+      "inOP": "true",
+      "inOD": "true",
+      "relEntity": {
+        "name": "Subcategory",
+        "type": "referential",
+        "relation": "1to1"
+      }
+    }
+  ],
+  "operations": [
+    {
+      "method": "POST",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/items",
+        "/api/v3/subcategories/{subcategory_id}/items"
+      ],
+      "disp_desc": "Add Item",
+      "desc":"This operation lets you to add an item",
+      "isReleased": "true",
+      "roles": [
+        "SDAdmin"
+      ],
+      "api_oper_name": "ADD",
+      "inOP": "true",
+      "inOD": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"item\":{\"name\":\"Custom Item\",\"description\":\"Item Info\",\"subcategory\":{\"id\":\"1037\",\"name\":\"Custom Subcategory\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"item\":{\"id\":\"108037\",\"name\":\"Custom Item\",\"description\":\"Item Info\",\"deleted\":false,\"subcategory\":{\"id\":\"1037\",\"name\":\"Custom Subcategory\"}}}"
+      }
+    },
+    {
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/items/{item_id}"
+      ],
+      "disp_desc": "Update Item",
+      "isReleased": "true",
+      "roles": [
+        "SDAdmin"
+      ],
+      "api_oper_name": "EDIT",
+      "desc":"This operation lets you to edit an item",
+      "inOP": "true",
+      "inOD": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"item\":{\"name\":\"Custom Item\",\"description\":\"Item Info\",\"subcategory\":{\"id\":\"1037\",\"name\":\"Custom Subcategory\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"item\":{\"id\":\"108037\",\"name\":\"Custom Item\",\"description\":\"Item Info\",\"deleted\":false,\"subcategory\":{\"id\":\"1037\",\"name\":\"Custom Subcategory\"}}}"
+    }
+    },
+    {
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/items/{item_id}"
+      ],
+      "disp_desc": "Delete Item",
+      "isReleased": "true",
+      "roles": [
+        "SDAdmin"
+      ],
+      "api_oper_name": "DELETE",
+      "desc":"This operation lets you to delete an item",
+      "inOP": "true",
+      "inOD": "true",
+      "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"}
+    },
+    {
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/items/{item_id}"
+      ],
+      "disp_desc": "View Item",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "roles": [
+        "SDAdmin"
+      ],
+      "api_oper_name": "GET",
+      "desc":"This operation fetches the details of an Item",
+       "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"item\":{\"id\":\"108037\",\"name\":\"Custom Item\",\"description\":\"Item Info\",\"deleted\":false,\"subcategory\":{\"id\":\"1037\",\"name\":\"Custom Subcategory\"}}}"
+    }
+    },
+    {
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/items",
+        "/api/v3/subcategories/{subcategory_id}/items"
+      ],
+      "disp_desc": "View All Items",
+      "isReleased": "true",
+      "roles": [
+        "SDAdmin"
+      ],
+      "inOP": "true",
+      "inOD": "true",
+      "api_oper_name": "GET_LIST",
+      "desc":"View All Items",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":1,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"item\":{\"id\":\"108037\",\"name\":\"Custom Item\",\"description\":\"Item Info\",\"deleted\":false,\"subcategory\":{\"id\":\"1037\",\"name\":\"Custom Subcategory\"}}}"
+    }
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [],
+  "path": "/items",
+  "handler": "CachedEntityHandler",
+  "syslog_module": "Admin",
+  "cache_key": "ADMIN_CONF.ITEM_DO",
+  "entity_group": "Admin",
+  "isReleased": "true"
+}

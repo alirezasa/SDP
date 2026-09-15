@@ -1,0 +1,177 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/projects/{project_id}/members"
+      ],
+      "desc": "This operation lets you add available technicians/users configured in ServiceDesk Plus as a member of project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Add a project member",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"member\": { \"user\": { \"id\": \"5\", \"name\": \"Shawn Adams\" }, \"role\": { \"id\": \"4\", \"name\": \"Team Leader\" }, \"is_active\": \"true\" }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"member\": { \"role\": { \"name\": \"Team Leader\", \"id\": \"4\" }, \"is_active\": true, \"project\": { \"id\": \"3\", \"title\": \"Project-doctool\" }, \"id\": \"328\", \"user\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Shawn Adams\", \"is_vipuser\": false, \"id\": \"5\", \"department\": null } }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/projects/{project_id}/members"
+      ],
+      "desc": "This operation lets you add multiple technicians/users as members of a project in single operation. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Add Multiple project members",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"members\": [ { \"user\": { \"id\": \"8\" }, \"is_active\": \"false\", \"role\": { \"name\": \"Project Admin\" } }, { \"user\": { \"id\": \"9\" }, \"is_active\": \"true\", \"role\": { \"name\": \"Project Manager\" } } ]}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": [ { \"status_code\": 2000, \"id\": \"331\", \"status\": \"success\" }, { \"status_code\": 2000, \"id\": \"332\", \"status\": \"success\" } ], \"members\": [ { \"role\": { \"name\": \"Project Admin\", \"id\": \"1\" }, \"is_active\": false, \"project\": { \"id\": \"3\", \"title\": \"Project-Demo\" }, \"id\": \"331\", \"user\": { \"email_id\": null, \"name\": \"Howard Stern\", \"is_vipuser\": false, \"id\": \"8\", \"department\": null } }, { \"role\": { \"name\": \"Project Manager\", \"id\": \"3\" }, \"is_active\": true, \"project\": { \"id\": \"3\", \"title\": \"Project-Democ\" }, \"id\": \"332\", \"user\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Jeniffer Doe\", \"is_vipuser\": false, \"id\": \"9\", \"department\": { \"site\": null, \"name\": \"IT Services\", \"id\": 5 } } } ]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/projects/{project_id}/members/{member_id}"
+      ],
+      "desc": "This operation lets you update a project member's details. This can be used to change the project role given to a member or mark the member as active/inactive. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Update a project member",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"member\": { \"role\": { \"id\": \"3\", \"name\": \"Project Manager\" }, \"is_active\": false }}"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"member\": { \"role\": { \"name\": \"Project Manager\", \"id\": \"3\" }, \"is_active\": false, \"project\": { \"id\": \"2\", \"title\": \"Project-doctool\" }, \"id\": \"326\", \"user\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Jeniffer Doe\", \"is_vipuser\": false, \"id\": \"9\", \"department\": { \"site\": null, \"name\": \"IT Services\", \"id\": 5 } } }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/projects/{project_id}/members/{member_id}"
+      ],
+      "desc": "This operation removes/dissociates a member from a project. When a member is removed, tasks and milestones that were assigned to him will be marked unassigned. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Remove a member from project",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/projects/{project_id}/members"
+      ],
+      "desc": "This operation lets you view all  members associated with a project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "View all project members",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"sort_field\": \"user.phone\", \"sort_order\": \"asc\" }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"members\": [ { \"role\": { \"name\": \"Project Admin\", \"id\": \"1\" }, \"is_active\": true, \"project\": { \"id\": \"2\", \"title\": \"Project-doctool\" }, \"id\": \"301\", \"user\": { \"email_id\": null, \"login_name\": \"administrator\", \"jobtitle\": null, \"phone\": \"1234455\", \"employee_id\": \"009\", \"domain\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null } }, { \"role\": { \"name\": \"Project Admin\", \"id\": \"1\" }, \"is_active\": true, \"project\": { \"id\": \"2\", \"title\": \"Project-doctool\" }, \"id\": \"330\", \"user\": { \"email_id\": \"user1@zylker.com\", \"login_name\": \"sa\", \"jobtitle\": \"Organisation Manager\", \"phone\": \"12345\", \"employee_id\": \"010\", \"domain\": { \"name\": \"example.com\", \"id\": \"1\" }, \"name\": \"Shawn Adams\", \"is_vipuser\": false, \"id\": \"5\", \"department\": { \"site\": { \"name\": \"custom site\", \"id\": 901 }, \"name\": \"custom department\", \"id\": 301 } } }, { \"role\": { \"name\": \"Team Leader\", \"id\": \"4\" }, \"is_active\": true, \"project\": { \"id\": \"2\", \"title\": \"Project-doctool\" }, \"id\": \"326\", \"user\": { \"email_id\": \"user1@zylker.com\", \"login_name\": \"j\", \"jobtitle\": null, \"phone\": \"99999\", \"employee_id\": \"014\", \"domain\": { \"name\": \"ORG.ZZZ.COM\", \"id\": \"301\" }, \"name\": \"Jeniffer Doe\", \"is_vipuser\": false, \"id\": \"9\", \"department\": { \"site\": null, \"name\": \"IT Services\", \"id\": 5 } } } ], \"list_info\": { \"has_more_rows\": false, \"sort_field\": \"user.phone\", \"start_index\": 1, \"sort_order\": \"asc\", \"row_count\": 3 }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "isReadOnly": "true",
+      "desc": "Unique identifier of the project member.",
+      "graphView": "",
+      "column": "PROJECTMEMBERS : MEMBERID",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "user",
+      "type": "Object",
+      "desc": "Denotes the user to be added as a member of the project. This field cannot be edited.",
+      "graphView": "",
+      "column": "PROJECTMEMBERS : USERID",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "role",
+      "type": "Object",
+      "desc": "Project role or set of access permissions for the project members.",
+      "graphView": "",
+      "column": "PROJECTMEMBERS : PROJECTROLEID",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "project",
+      "isReadOnly": "true",
+      "type": "Object",
+      "desc": "Project to which the member is associated to.",
+      "graphView": "",
+      "column": "PROJECTMEMBERS : MEMBERID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "is_active",
+      "type": "Boolean",
+      "column": "PROJECTMEMBERS : ISACTIVE",
+      "desc": "Membership status of the user under the project\nTrue --> Active, False --> Inactive",
+      "graphView": "",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "isReleased": "true",
+  "lastModified": 1470048018000
+}

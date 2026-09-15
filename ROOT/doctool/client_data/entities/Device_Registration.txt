@@ -1,0 +1,120 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "path": "/api/v3/mobile_devices",
+      "moduleName" : "Common",
+      "desc": "This operation helps register device for Push Notifications",
+      "disp_desc": "Register device",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"mobile_device\": { \"device_id\": \"s7f6f3b1307eae7aa5fcfd64d2174aa01aa5a24405cfeac0b1a8cc80bf156a4f\", \"os\": \"iOS\", \"os_version\": \"8.1\", \"model\": \"ipad\", \"is_production\": \"true\" }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"mobile_device\": { \"id\": \"5\", \"os\": \"iOS\", \"model\": \"ipad\", \"is_registered\": true, \"device_id\": \"s7f6f3b1307eae7aa5fcfd64d2174aa01aa5a24405cfeac0b1a8cc80bf156a4f\", \"is_production\": true, \"os_version\": \"8.1\" }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/mobile_devices/{registration_id}"
+      ],
+      "desc": "This operation helps unregister device for Push Notifications",
+      "disp_desc": "Unregister device",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the registration",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "device_id",
+      "type": "String",
+      "desc": "Unique identifier of the device fetched from Push Notification provider server",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "os_version ",
+      "type": "String",
+      "desc": "OS verison of the device to be registered",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "model",
+      "type": "String",
+      "desc": "Model of the device to be registered",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_production",
+      "type": "Boolean",
+      "desc": "",
+      "graphView": "",
+      "column": "",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "os",
+      "type": "String",
+      "desc": "OS of the device to be registered",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1474268514000
+}

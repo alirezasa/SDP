@@ -1,0 +1,136 @@
+{
+  "operations": [
+    {
+      
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_closure_codes",
+      "desc": "You can add a new change here.",
+      "disp_desc": "Add a Closure Code",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{\"change_closure_code\":{\"inactive\":false,\"description\":\"Represents change that is closed after successful completion.\",\"name\":\"Closed - Completed\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample":"{\"change_closure_code\":{\"id\":\"1\",\"inactive\":false,\"description\":\"Represents change that is closed after successful completion.\",\"name\":\"Closed - Completed\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_closure_codes/{id}",
+      "desc": "You can view the details of a specific Change Request here.",
+      "disp_desc": "View a Closure Code",
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_closure_code\":{\"id\":\"1\",\"inactive\":false,\"description\":\"Represents change that is closed after successful completion.\",\"name\":\"Closed - Completed\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_closure_codes",
+      "desc": "You can get the details of all available Change Requests here.",
+      "disp_desc": "View all Closure Codes",
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_closure_codes\":[{\"id\":\"3\",\"inactive\":false,\"description\":\"Represents change that is closed after approval.\",\"name\":\"Closed - Approved\"},{\"id\":\"5\",\"inactive\":false,\"description\":\"Represents change that is closed due to cancellation.\",\"name\":\"Closed - Canceled\"},{\"id\":\"1\",\"inactive\":false,\"description\":\"Represents change that is closed after successful completion.\",\"name\":\"Closed - Completed\"},{\"id\":\"4\",\"inactive\":false,\"description\":\"Represents change that is closed after being put on hold.\",\"name\":\"Closed - Deferred\"},{\"id\":\"2\",\"inactive\":false,\"description\":\"Represents change that is closed due to rejection.\",\"name\":\"Closed - Rejected\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":5,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+      },
+        "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },     
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_closure_codes/{id}",
+      "desc": "You can edit the changes here.",
+      "disp_desc": "Update a Closure Code",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"change_closure_code\":{\"id\":\"1\",\"inactive\":false,\"description\":\"Represents change that is closed after successful completion.\",\"name\":\"Closed - Completed\"}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"change_closure_code\":{\"id\":\"1\",\"inactive\":false,\"description\":\"Represents change that is closed after successful completion.\",\"name\":\"Closed - Completed\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_closure_codes/{id}",
+      "desc": "You can delete the changes here.",
+      "disp_desc": "Delete a Closure Code",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "CHANGE_CLOSURECODE:ID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "name",
+    "type": "String",
+    "desc": "The name of the Change closure code",
+    "graphView": "",
+    "column": "CHANGE_CLOSURECODE:NAME",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "description",
+    "type": "String",
+    "desc": "The description of the Change closure code",
+    "graphView": "",
+    "column": "CHANGE_CLOSURECODE:DESCRIPTION",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "inactive",
+    "type": "Boolean",
+    "desc": "Denotes whether the Change closure code is marked as not for further usage",
+    "graphView": "",
+    "column": "CHANGE_CLOSURECODE:ISDELEETD",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  }
+],
+  "isReleased": "false"
+}
+

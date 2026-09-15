@@ -1,0 +1,441 @@
+<!-- $Id$ -->
+<!-- Security XML for Admin Settings owned by CART TEAM -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+    <!-- Login Page Customization -->
+    <urls authentication="required" disable-extraparam="true">
+        <url method="GET" path="/jsp/Customization.jsp" roles="SDOrgAdmin" user_type="all"/>
+        <url method="GET" path="/jsp/customizationLoginForm.jsp" roles="SDAdmin,SDOrgAdmin" user_type="all">
+            <param name="SUBREQUEST" regex="XMLHTTP|true"/>
+            <param name="_" type="long"/>
+        </url>
+        <url method="GET" path="/servlet/SDAjaxServlet" operation-param="action" operation-value="getCustomizeLoginPageImageList" roles="SDAdmin,SDOrgAdmin" user_type="all">
+            <param name="SUBREQUEST" regex="XMLHTTP|true"/>
+            <param name="_" type="long"/>
+        </url>
+        <url method="POST" path="/servlet/SDAjaxServlet" operation-param="action" operation-value="loginCustomization" roles="SDAdmin,SDOrgAdmin" user_type="all" csrf="true">
+            <param name="data" max-len="-1" max-occurrences="1" xss="sdpantisamyfilter"/>
+            <param name="SUBREQUEST" regex="XMLHTTP|true"/>
+        </url>
+
+        <!-- Common Throttle for Login Page Customizations -->
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="login_customization_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="15" lock-period="1m"/>
+        </throttles>
+
+        <url user_type="all" method="post" path="/api/v3/files/upload" operation-param="for" operation-value="LOGINCUSTOMIZATION" roles="SDAdmin,SDOrgAdmin" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="5120" name="input_image">
+                <filename max-len="1000" regex="filename"/>
+            </file>
+        </url>
+
+        <url method="post" path="/api/v3/files/upload" operation-param="for" operation-value="REPORTANISSUE" roles="SDAdmin" api="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="reportissue" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file content-type-name="image_inline,zip" allow-empty="false" max-size="20480" name="input_file">
+                <filename max-len="250" min-occurrences="1" regex="filename"/>
+            </file>
+        </url>
+
+    </urls>
+
+    <!-- Proxy Configuration -->
+    <urls authentication="required" disable-extraparam="true">
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="ProxySettings" method="GET" remote_server="true">
+            <param name="originProductOverview" type="boolean"/>
+            <param name="originEventNotification" type="boolean"/>
+        </url>
+        <url path="/ESM.do" roles="SDOrgAdmin" operation-param="type" operation-value="proxysettings" user_type="all" method="GET"/>
+        <url path="/ProxySettings.do" roles="SDOrgAdmin" operation-param="submitaction" operation-value="addUpdateProxySettings" method="POST" csrf="true" user_type="all" remote_server="true" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="proxy_addUpdateProxySettings" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+            <param name="proxyHost" type="String" max-len="50" secret="true"/>
+            <param name="proxyPort" type="String" max-len="19" secret="true"/>
+            <param name="proxyUserName" type="String" max-len="100" secret="true"/>
+            <param name="proxyPassword" type="String" max-len="1000" secret="true"/>
+            <param name="proxyPwdChanged" type="boolean"/>
+        </url>
+        <url path="/ProxySettings.do" roles="SDOrgAdmin" operation-param="submitaction" operation-value="deleteProxySettings" method="POST" csrf="true" user_type="all" remote_server="true" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="proxy_deleteProxySettings" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/proxy_settings/(_?)history" roles="SDOrgAdmin" method="get" user_type="all" remote_server="true">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/proxy_settings/(_?)get_records_for_history" roles="SDOrgAdmin" method="get" user_type="all" remote_server="true">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/proxy_settings/(_?)get_performed_by_for_history" roles="SDOrgAdmin" method="get" user_type="all" remote_server="true">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/common/ViewHistory.jsp" roles="SDOrgAdmin" operation-param="module" operation-value="proxy_settings" user_type="all" remote_server="true">
+            <param name="id" type="long" allow-empty="false"/>
+            <param name="key" regex="proxy_settings_history"/>
+            <param name="admin_entity|is_date_filter" regex="true|false" name-regex="true"/>
+            <param name="entity_key" type="String" max-len="100"/>
+            <param name="skip_filter_options|skip_operation_names|module_value" type="String" max-len="20" name-regex="true"/>
+            <param name="search_filter" regex="proxy_setting"/>
+        </url>
+
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="proxy_settings_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </urls>
+
+    <!-- Import SSL Certificate -->
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="importssl_operations" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url path="/ESM.do" operation-param="type" operation-value="importssl" user_type="all" roles="SDOrgAdmin" />
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="importssl" method="GET" remote_server="true"/>
+
+        <url roles="SDOrgAdmin" path="/importssl/controller" operation-param="action" operation-value="createSupportZip,getSummaryInformation,pollForProgress,resetCache,hideServerRestartNotification,hideSSLRenewalNotification,cleanUpDirectories,downloadSSLCert" method="GET" user_type="all" remote_server="true">
+            <param name="_" type="long" range=">0"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/importssl/controller" operation-param="action" operation-value="fileUpload" method="POST" user_type="all" csrf="true" remote_server="true" disable-extraparam="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="controller_fileUpload" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="SelectedFile" type="String" max-len="1000"/>
+            <param name="originalkey" regex="filename" max-len="1000"/>
+            <param name="keystorePassword"  regex="^((?![\&quot;\\\\]).)*$" secret="true"/>
+            <param name="intermediateCertificateOption" regex="Manual|Automatic"/>
+            <file name="certificateEndReply" max-size="10240" allowed-extensions="cer,crt,p7b,pfx,keystore,jks" content-type-name="importssl" continue-onerror="true" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <file name="originalKeystoreOrPrivateKey" max-size="10240" allowed-extensions="keystore,key" content-type-name="importssl_key" continue-onerror="true" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <file name="intermediateCertificateFile1" max-size="10240" allowed-extensions="cer,crt" content-type-name="importssl_cert" continue-onerror="true" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <file name="intermediateCertificateFile2" max-size="10240" allowed-extensions="cer,crt" content-type-name="importssl_cert" continue-onerror="true" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <file name="intermediateCertificateFile3" max-size="10240" allowed-extensions="cer,crt" content-type-name="importssl_cert" continue-onerror="true" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <file name="intermediateCertificateFile4" max-size="10240" allowed-extensions="cer,crt" content-type-name="importssl_cert" continue-onerror="true" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+        </url>
+    </urls>
+    <!-- SSL Admin Audit History URLs -->
+    <urls authentication="required" api="true" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED - SSL History Operations are ESM directory operations, have provided SDOrgAdmin for individual urls">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ssl_history" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url path="/api/v3/ssl/(_?)history" method="get" roles="SDOrgAdmin">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/ssl/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+    </urls>
+
+    <!-- ErrorLog, PII and Report an issue urls start-->
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="errorlog" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="10" lock-period="5M"/>
+        </throttles>
+        <!-- Community -> System Log Viewer -->
+        <url path="/ErrorLogDetails.do" roles="Common_Role" user_type="all" method="GET" remote_server="true" description="ROLE_NOT_REQUIRED-In User Bell Notifications ESM directory actions will have Errorlog link.Eg: User Merge "> <!-- For pure requester org admin to view the errorlog -->
+            <param name="errorId" type="long" range=">0"/>
+        </url>
+        <!--PII-->
+        <!-- adding method="GET" for msp merge-->
+        <url roles="SDOrgAdmin,SDSiteAdmin" path="/servlet/PIIServlet" operation-param="action" operation-value="getGDPRSettings" user_type="all" method="GET">
+            <param name="subAction" type="String" regex="fetchAnonymousNameMapping" />
+            <param name="userList" regex="ids" max-len="1000"/>
+            <param name="isUserId" type="boolean"/>
+        </url>
+        <url roles="SDOrgAdmin,SDSiteAdmin" path="/servlet/PIIServlet" operation-param="action" operation-value="getGDPRSettings" user_type="all" method="post" csrf="true">
+            <param name="subAction" type="String" regex="fetchAnonymousNameMapping" />
+            <param name="userList" regex="ids" max-len="1000"/>
+            <param name="isUserId" type="boolean"/>
+        </url>
+        <url roles="SDAdmin,ReportConfigAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getPrivacySettings" method="GET"/>
+        <url roles="SDAdmin,ReportConfigAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="updatePrivacySettings" csrf="true" method="POST">
+            <param name="PrivacySettings" type="JSONObject" template="privacy_settings" />
+        </url>
+        <url roles="SDOrgAdmin,SDAdmin" path="/servlet/PIIServlet" operation-param="action" operation-value="updateGDPRSettings" user_type="all" method="POST" csrf="true" disable-extraparam="true">
+            <param name="input_data" type="JSONObject" template="gdpr_fields" max-len="-1"/>
+            <param name="SUBREQUEST" regex="XMLHTTP" />
+        </url>
+
+        <!-- Community -> Report an issue -->
+        <url path="/supportRequest.do" method="GET" remote_server="true" rebrand="true">
+            <param name="submitAction" regex="fillform|fillDCform"/>
+        </url>
+        <url path="/supportRequest.do" method="POST" csrf="true" remote_server="true" disable-extraparam="true" rebrand="true">
+            <param name="fileName" regex="filename"/>
+            <param name="submitAction" regex="sendmail"/>
+            <param name="fromAddress" regex="emailstring" secret="true"/>
+            <param name="toAddress" regex="emailstring" secret="true"/>
+            <param name="ccAddress" type="String" secret="true" />
+            <param name="subject" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+            <param name="description" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+            <param name="defaultFile" type="boolean"/>
+        </url>
+    </urls>
+    <!-- ErrorLog, PII and Report an issue urls end -->
+
+    <!-- Admin Cart Common Urls start -->
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="AdminCartCommonThrottle" dynamic-throttle="true"  >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url path="/SetUpWizard.do" roles="SDAdmin,SDSiteAdmin"  operation-param="forwardTo" operation-value="queues"/>
+
+        <url path="/SetUpWizard.do" roles="SDAdmin"  operation-param="forwardTo" operation-value="leaveType" method="GET"/>
+        <url path="/SetUpWizard.do" roles="SDAdmin"  operation-param="forwardTo" operation-value="leaveType" method="POST" csrf="true">
+            <param name="TYPE" regex="DELETE"/>
+            <param name="CONFIGID" type="String" max-len="5250" description="upto 250 IDs can be appended as a single String in this param"/>
+        </url>
+
+        <url path="(/STATE_ID/[0-9]+)?/GroupListView(_HD_[0-9]+)?.cc" roles="SDAdmin,SDSiteAdmin,ViewInventoryWS" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="GroupListView(_HD_[0-9]+)?"/>
+            <param name="SITEID" regex="[0-9]+|null"  max-len="19"/>
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+            <param name="showView" regex="Active|InActive"/>
+        </url>
+        <url roles="SDAdmin" path="/ChangeType.cc" operation-param="forwardTo" operation-value="leaveType" method="POST" csrf="true">
+            <param name="UNIQUE_ID" regex="ChangeType"/>
+            <param name="NAME" type="String" max-len="100"/>
+            <param name="colorName" max-len="10" regex="color"/>
+            <param name="DESCRIPTION" type="String" max-len="250" secret="true"/>
+            <param name="ISDELETED" type="boolean"/>
+            <param name="CONFIGID" type="long" range=">=0"/>
+            <param name="save" type="String" max-len="50"/>
+            <param name="saveAndAddNew" type="String" max-len="50"/>
+        </url>
+
+        <url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/ChangeTypeList(_HD_[0-9]+)?.cc" operation-param="forwardTo" operation-value="leaveType" method="GET" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="ChangeTypeList(_HD_[0-9]+)?"/>
+        </url>
+        <url path="UserMergeListView.cc" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="UNIQUE_ID" regex="UserMergeListView"/>
+        </url>
+        <url path="/STATE_ID/[0-9]+/UserMergeListView.cc" roles="SDOrgAdmin" method="get" user_type="all" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="UserMergeListView"/>
+        </url>
+
+        <!-- Leave Types starts -->
+        <url roles="SDAdmin" path="/setup/ChangeTypeForm.jsp" operation-param="forwardTo" operation-value="leaveType" method="GET">
+            <param name="CONFIGID" type="long" range=">=0"/>
+            <param name="TYPE" regex="Edit|New"/>
+            <param name="[0-9]+" name-regex="true" type="String"/>
+        </url>
+
+        <!-- Leave types ends -->
+
+        <!-- User Merge starts -->
+        <url path="/UserMerge.do" roles="SDOrgAdmin" operation-param="action" operation-value="selectFilter" method="get" user_type="all">
+            <param name="mdh" regex="true"/>
+        </url>
+        <url path="/UserMerge.do" roles="SDOrgAdmin" operation-param="action" operation-value="submitFilter" method="post" csrf="true" user_type="all">
+            <param name="selFilters" type="JSONObject" template="userMerge_filter" max-len="50000"/>
+        </url>
+        <url path="/UserMerge.do" roles="SDOrgAdmin" operation-param="action" operation-value="fetchUserMergeListView" method="post" csrf="true" user_type="all">
+            <param name="from" regex="requesterList"/>
+            <param name="selValues" type="JSONObject" template="sduserids" max-len="50000"/>
+        </url>
+        <url path="/UserMerge.do" roles="SDOrgAdmin" operation-param="action" operation-value="redirectCheck" method="post" csrf="true" user_type="all">
+            <param name="from" regex="requesterList"/>
+        </url>
+        <!-- adding param unknown_user_merge due to unknown user merge changes for MSP and SCP and will be added in SDP future -->
+        <url path="/UserMerge.do" roles="SDOrgAdmin" operation-param="action" operation-value="submitUserData" method="post" csrf="true" user_type="all">
+            <param name="from" regex="listView|mergeView"/>
+            <param name="unknown_user_merge" type="boolean"/>
+            <param name="userData" type="JSONObject" template="userMerge_userData" max-len="50000"/>
+        </url>
+        <url path="/setup/UserMergeDef.jsp" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="mode" regex="selectFilter"/>
+        </url>
+        <!-- User merge ends -->
+
+        <!-- System Updates starts -->
+        <url path="/event/controller" roles="SDAdmin" operation-param="action" operation-value="resetIsNewStatus,fetchCount,getEventInfo" method="GET">
+            <param name="_" type="long"/>
+        </url>
+        <url path="/event/controller" roles="SDAdmin" operation-param="action" operation-value="resetReadStatus" method="GET">
+            <param name="ID" type="long" range=">=0"/>
+            <param name="headerID" type="long" range=">=0"/>
+            <param name="isRead" regex="true|false"/>
+            <param name="hasLink" regex="true|false"/>
+        </url>
+        <url path="/event/controller" roles="SDAdmin" operation-param="action" operation-value="getEventInfo" csrf="true" method="POST">
+            <param name="proxyHost" type="String" max-len="50" secret="true"/>
+            <param name="proxyPort" type="String" max-len="19" secret="true"/>
+            <param name="proxyUserName" type="String" secret="true"/>
+            <param name="proxyPassword" type="String" secret="true"/>
+        </url>
+        <!-- Event notification ends -->
+
+        <!-- Product Overview starts -->
+        <url path="/Overview.do" roles="SDAdmin" method="GET">
+            <param name="isFirstLogin" regex="true"/>
+        </url>
+        <url path="/overview/controller" roles="SDAdmin" operation-param="action" operation-value="getLicenseInformation,getUserEmailID" method="GET"/>
+        <url path="/overview/controller" roles="SDAdmin" operation-param="action" operation-value="getRecentQueries" method="GET">
+            <param name="postedFlag" regex="true|false"/>
+        </url>
+        <url path="/overview/controller" roles="SDAdmin" operation-param="action" operation-value="get" method="GET">
+            <param name="isFirstLogin" regex="true|false"/>
+        </url>
+        <url path="/overview/controller" roles="SDAdmin" operation-param="action" operation-value="proxy" csrf="true" method="POST">
+            <param name="proxyHost" type="String" max-len="50" secret="true"/>
+            <param name="proxyPort" type="String" max-len="19" secret="true"/>
+            <param name="proxyUserName" type="String" secret="true"/>
+            <param name="proxyPassword" type="String" secret="true"/>
+        </url>
+        <url path="/overview/controller" roles="SDAdmin" operation-param="action" operation-value="store" csrf="true" method="POST">
+            <param name="businessEmail" type="String" max-len="250" secret="true"/>
+            <param name="requestMessage" type="String" max-len="500" secret="true"/>
+            <param name="modulesInterestedIn" type="String" max-len="500" secret="true"/>
+        </url>
+        <!-- Product overview ends -->
+
+        <!-- MySchedule starts -->
+        <!-- All the technicians can access MySchedule.do hence not assigning any specific role -->
+        <url path="/MySchedule.do" operation-param="mode" operation-value="edit" method="GET"/>
+        <url path="/MySchedule.do" operation-param="mode" operation-value="update" csrf="true" method="POST">
+            <param name="module" regex="saveBackupTech"/>
+            <param name="leaveid" type="long" range=">=0"/>
+            <param name="backupTechId" type="String"/>
+        </url>
+        <!-- My Schedule ends -->
+
+        <!-- Tech calendar starts -->
+        <!-- All the technicians can access TechMonthCalendar.jsp hence not assigning any specific role -->
+        <url path="/calendar/TechMonthCalendar.jsp" method="get">
+            <param name="Type" type="String"/>
+            <param name="month" type="int" allow-empty="false" range="0-11"/>
+            <param name="year" type="int" allow-empty="false" range=">=0"/>
+            <param name="techId" type="long" allow-empty="false" range=">=-1"/>
+            <param name="siteId" type="long" allow-empty="false" range=">=-1"/>
+            <param name="matrix" type="String"/>
+            <param name="groupId" type="long" range=">=-1"/>
+        </url>
+        <url path="/calendar/TechnicianCalendar.jsp" method="get" roles="SDAdmin,SDSiteAdmin,SDCo-ordinator">
+            <param name="date" type="long" range="0-31"/>
+            <param name="month" type="long" range="0-12"/>
+            <param name="year" type="long" range=">=0"/>
+            <param name="techId" type="long" range=">=-1"/>
+            <param name="matrix" type="String"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin,SDCo-ordinator" path="/TechMatrix.do" method="GET"/>
+        <!-- Tech calendar ends -->
+
+        <!-- LoggedIn Technicians starts -->
+        <url path="/LoggedInTechs.do" roles="SDAdmin,SDSiteAdmin,SDCo-ordinator" method="GET"/>
+        <!-- ends -->
+
+        <!-- Mark Unavailabilty starts -->
+        <!-- All the technicians can access MarkUnavailability.jsp hence not assigning any specific role -->
+        <url path="/calendar/MarkUnavailability.jsp" operation-param="mode" operation-value="edit" method="GET">
+            <param name="from" regex="TechView"/>
+            <param name="TECHID" type="long" range=">=-1"/>
+            <param name="newwindow" type="boolean" />
+            <param name="DATE" type="long" range="0-31"/>
+            <param name="MONTH" type="long" range="0-12"/>
+            <param name="YEAR" type="long" range=">=0"/>
+            <param name="LEAVEID" type="long" range=">=0"/>
+            <param name="[0-9]+" name-regex="true" type="String"/>
+        </url>
+        <!-- All the technicians can access MarkUnavailability.jsp hence not assigning any specific role -->
+        <url path="/calendar/MarkUnavailability.jsp" operation-param="mode" operation-value="update" method="post" csrf="true">
+            <param name="LEAVEID" type="long" range=">=0"/>
+            <param name="from" regex="TechView"/>
+            <param name="BACKUPTECHNICIANID" regex="[0-9]+|null" max-len="19"/>
+            <param name="BACKUPGROUPROLEID" regex="[0-9]+|null" max-len="19"/>
+            <param name="TECHNICIANID" type="long" range=">=-1"/>
+            <param name="LEAVETYPEID" type="long" range=">=0"/>
+            <param name="FROM" type="String"/>
+            <param name="TO" type="String"/>
+            <param name="COMMENTS" type="String" max-len="5000"/>
+            <param name="submit" type="String"/>
+            <param name="cancel" type="String"/>
+        </url>
+        <!-- Mark unavailability ends -->
+
+        <!-- Backup Tech List starts -->
+        <url path="/BackupTechList.do" method="GET" user_type="all" roles="SDAdmin,SDSiteAdmin,SDCo-ordinator">
+            <param name="month" type="long" range="0-12"/>
+            <param name="year" type="long" range=">=0"/>
+        </url>
+        <!-- Backup Tech List ends -->
+
+        <!-- Tasks starts -->
+        <!-- All the technicians can access ShowRequestsForTechOn.jsp hence not assigning any specific role -->
+        <url path="/workorder/ShowRequestsForTechOn.jsp" method="post" csrf="true" > <!-- (reassigning the tech for tasks) -->
+            <param name="TASKID" type="long" range=">=0" max-occurrences="500"/>
+            <param name="reqOperation" type="String"/>
+            <param name="currtech" regex="^[\d ]*$"/>
+            <param name="group" type="long" range=">=-1"/>
+            <param name="technician" max-len="25" regex="role_[0-9]+|[0-9]+"/>
+            <param name="checkbox" type="long" range=">=0" max-occurrences="500"/>
+             <param name="CHANGEID" type="long" range=">=0" max-occurrences="250"/>
+            <param name="checkbox23" type="String"/>
+            <param name="woId" type="long" range=">=0" max-occurrences="500"/>
+            <param name="PROBLEMID" type="long" range=">=0" max-occurrences="250"/>
+        </url>
+        <!-- Tasks ends -->
+
+        <!-- Table data count starts -->
+        <url roles="SDAdmin,HelpdeskConfig" path="/debug/TableDataCount.jsp" method="GET" remote_server="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TableDataCount" dynamic-throttle="true"  >
+                <throttle duration="1D" threshold="2" lock-period="12H"/>
+            </throttles>
+        </url>
+    </urls>
+    <!-- Admin Cart Common Urls end -->
+
+    <jsontemplates>
+        <!--PII-->
+        <jsontemplate name="privacy_settings" disable-extra-key="true">
+            <key name="PRIVACYSETTINGS" type="JSONObject" template="gdpr"/>
+        </jsontemplate>
+        <jsontemplate name="gdpr" disable-extra-key="true">
+            <key name="GDPR" type="JSONObject" template="gdpr_enabled"/>
+        </jsontemplate>
+        <jsontemplate name="gdpr_enabled" disable-extra-key="true">
+            <key name="GDPR_COMPLIANCE_ENABLED" type="boolean"/>
+        </jsontemplate>
+
+        <jsontemplate name="gdpr_fields" disable-extra-key="true">
+            <key name="GDPR_COMPLIANCE_ENABLED" type="boolean"/>
+            <key name="PII_FIELDS_TO_DELETE" type="JSONObject" template="fields" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="fields" disable-extra-key="true">
+            <key name="REQUEST" type="JSONObject" template="incident" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="incident" disable-extra-key="true">
+            <key name="[0-9]+" name-regex="true" type="boolean" max-occurrences="250"/>
+        </jsontemplate>
+        <!-- PII end-->
+        <jsontemplate name="group_roles_template">
+            <key name="grouproles" type="JSONArray" template="support_group_role_association_base" array-size="0-100" max-len="20000"/>
+        </jsontemplate>
+        <jsontemplate name="support_group_v1_template">
+             <key name="operation" type="JSONObject" template="support_group_details_template" max-len="20000"/>
+         </jsontemplate>
+         <jsontemplate name="support_group_details_template">
+             <key name="details" type="JSONObject" template="support_group_site_template" max-len="20000"/>
+         </jsontemplate>
+         <jsontemplate name="support_group_site_template">
+             <key name="sitename" type="String" max-len="250"/>
+         </jsontemplate>
+    </jsontemplates>
+</security>

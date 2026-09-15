@@ -1,0 +1,65 @@
+<!DOCTYPE>
+<html>
+<head>
+</head>
+<body>
+<p>프로젝트 트리거를 사용하여 스크립트 파일 또는 사용자 정의 함수를 사용하여 프로젝트에서 모든 '<strong>액션</strong>'을 자동으로 트리거합니다. </p>
+<p>프로젝트에 대한 새 사용자 정의 트리거를 만들려면</p>
+<ul>
+<li> <strong>새 작업</strong>을 클릭합니다.</li>
+<li> 액션의 이름과 설명을 입력하고 작업을 실행해야 하는 시기를 선택합니다. </li>
+<li> 액션 유형(사용자 정의 함수/스크립트)을 선택하고 트리거해야 하는 해당 스크립트 파일을 가리킵니다. </li>
+<li> 프로젝트에서 액션을 실행해야 하는 기준을 설정합니다. + 아이콘을 클릭하여 여러 기준을 추가할 수 있습니다. 요구 사항에 따라 기준 간에 AND 및 OR 연산자 간에 전환합니다.</li>
+<li> '<strong>이후 액션 처리 중지</strong>' 확인란의 선택을 취소하면 프로젝트에 액션 규칙이 적용된 후에도 연속 작업이 실행됩니다.</li>
+</ul>
+<p><strong>참고 사항:</strong></p>
+<ul>
+<li> 이름이 기존 '<strong>액션</strong>' 이름과 충돌하지 않도록 '<strong>새 작업</strong>'에 고유한 이름을 입력해야 합니다.</li >
+<li> 텍스트 파일이 [SDP_Home]/integration/custom_scripts/executor_files 디렉토리에만 저장되고 스크립트 파일이 [SDP_Home]/integration/custom_scripts/에만 저장되는지 확인하십시오.</li>
+<li> 기본적으로 '<strong>이후 액션 처리 중지</strong>'가 항상 활성화되어 있으며 액션은 '액션 규칙 순서'에 따라 실행됩니다.</li>
+<li> 목록 보기의 '<strong>액션 구성</strong>'을 사용하면 액션이 실행되는 순서를 재정렬할 수 있습니다. </li>
+</ul>
+<p><strong>기술적 세부 정보:</strong></p>
+<p><strong>액션 수행</strong>에서 스크립트를 실행할지 또는 사용자 정의 함수를 실행할지 선택하고 다음 포인터를 사용하여 동일하게 구성합니다.</p>
+<ul>
+<li> <strong>스크립트:</strong> 스크립트 내용이 포함된 텍스트 파일의 이름을 지정합니다. 예: <strong>AddComments.txt</strong></li>
+<li> <strong>사용자 정의 함수:</strong> 사용자 정의 함수를 실행하여 ServiceDesk Plus 및 기타 외부 애플리케이션에서 데이터를 조작할 수 있습니다. 필요한 사용자 정의 함수를 선택하거나 새 함수를 추가하십시오. </li>
+<li> <strong>지원되는 반환 오퍼레이션(Supported Return Operations):</strong> UPDATE_PROJECT 및 ADD_COMMENTS</li>
+</ul>
+<p><strong>참고: </strong></p>
+<ul>
+<li>스크립트에서 py addComments.py $TITLE $TYPE과 같은 API 매개변수를 인수로 전달할 수 있습니다. </li>
+<li><strong>projectObj</strong> 및 <strong>context</strong>는 사용자 정의 함수에서 지원되는 인수입니다. </li>
+</ul>
+<p><strong>스크립트에서 지원되는 기타 매개변수:</strong></p>
+<p>$COMPLETE_V3_JSON_FILE ---> Complete Request Object는 JSON 파일에 저장되고 파일 경로는 String Object로 전달됩니다. Operation이 '<strong>프로젝트 편집 시</strong>'인 경우 DIFF_JSON(이전 프로젝트 데이터와 새 프로젝트 데이터의 차이)도 JSON 파일로 저장됩니다.</p>
+<div class="alert alert-info icon" role="alert">
+  <span class="msg">$HELPDESK_ID ---> <strong>포털의 ID</strong>. 이 ID는 새 URL 매개변수 'PORTALID'에 대해 모든 SDP API 호출에 값으로 전달되어야 합니다. 이는 ESM 활성화 설정에만 적용됩니다.
+</div>
+<p>JSON File Path  : <em>(SDP_Home\integration\custom_scripts\project\12_1426143538036.json).</em></p>
+<p><strong>Sample response from the trigger application:</strong></p>
+<p>{
+  <br>    "message":"Customized message"   
+  <br>    "operations": [<br>
+  
+          {<br>
+  
+              "operation_name": "ADD_COMMENTS",<br>
+  
+              "input_data": {<br>
+  
+                      "comment": {<br>
+  
+                           "content": "Sample content from script"<br>
+  
+                      }<br>
+  
+              }<br>
+  
+          }<br>
+  
+    ]<br>
+  
+}</p>
+</body>
+</html>

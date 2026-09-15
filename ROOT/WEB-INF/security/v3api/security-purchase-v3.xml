@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" authentication="required">
+	    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+		<!-- Attachment urls for purchase request starts -->
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+		<url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		<url method="delete" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/attachments/(\d+)"/>
+		<url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/attachments/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+		<url method="get" user_type="all" path="/api/v3/purchase_requests/(\d+)/attachments/(\d+)/(_?)download" description="FGR_APPLIED:Necessary role check added at server side.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true" description="For non login case parameter required."/>
+        </url>
+		 <url method="delete" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/attachments">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+        </url>
+		 <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+		<url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+		<url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		<url method="post" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(_?)upload" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_requests_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+		<url method="post" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/(_?)upload" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_requests_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+        <url method="put" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_requests_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+		<url method="get" roles="ViewPR" path="/api/v3/purchase_requests/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+		 <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		<url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(_?)metainfo">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+		</url>
+		<url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/(_?)metainfo">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+		</url>
+		<!-- Attachment urls for purchase request ends -->
+
+		<!-- Attachment urls for purchase order starts -->
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="delete" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments/(\d+)"/>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param min-occurrences="1" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="get" user_type="all" path="/api/v3/purchase_orders/(\d+)/attachments/(\d+)/(_?)download" description="FGR_APPLIED:Necessary role check added at server side.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true" description="For non login case parameter required."/>
+        </url>
+        <url method="delete" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments">
+            <param min-occurrences="1" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_orders_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+        <url method="post" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_orders_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+        <url method="put" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_orders_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		 <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/export">
+            <throttles key="url.path+url.dynamic_key" name="purchase_order_export" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="export_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(_?)metainfo">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+		</url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)metainfo">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+		</url>
+		<!-- Attachment urls for purchase order ends -->
+		<!-- Purchase API starts -->
+		<url method="post" roles="CreatePurchaseOrder" path="/api/v3/purchase_orders">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="purchase_order" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="purchase_order" name="input_data"/>
+        </url>
+        <url method="delete" roles="DeletePurchaseOrder" path="/api/v3/purchase_orders/(\d+)"/>
+		<url method="delete" roles="DeletePurchaseOrder" path="/api/v3/purchase_orders">
+            <param min-occurrences="1" allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/items/(product|service|category)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/items/(\d+)/(product|service|category)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/items/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder,ViewInventoryWS" path="/api/v3/purchase_orders/(\d+)/assets">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder,ViewInventoryWS" path="/api/v3/purchase_orders/(\d+)/assets/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder,ViewInventoryWS" path="/api/v3/purchase_orders/(\d+)/assets/(_?)metainfo">
+            <param max-len="-1" type="JSONObject" template="metainfo" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder,ViewInventoryWS" path="/api/v3/purchase_orders/assets/(_?)metainfo">
+            <param max-len="-1" type="JSONObject" template="metainfo" name="input_data"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_payment" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_payment" name="input_data"/>
+        </url>
+        <url method="delete" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments/(\d+)"/>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_payment" name="input_data"/>
+            <param min-occurrences="1" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="delete" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments">
+            <param min-occurrences="1" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments/(notify_technicians)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments/(\d+)/(notify_technicians)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/payments/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_invoice" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_invoice" name="input_data"/>
+        </url>
+        <url method="delete" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices/(\d+)"/>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_invoice" name="input_data"/>
+            <param min-occurrences="1" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+        <url method="delete" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices">
+            <param min-occurrences="1" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+		 <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices/(notify_technicians)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices/(\d+)/(notify_technicians)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+		 <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/invoices/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		 <url method="post" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)email_owner">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_notification_template" name="input_data"/>
+        </url>
+        <url method="post" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)email_vendor">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_notification_template" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)email_vendor"/>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)email_owner"/>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)order">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_notification_template" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)order"/>
+        <url method="put" roles="CancelPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)cancel">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_notification_template" name="input_data"/>
+        </url>
+        <url method="get" roles="CancelPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)cancel"/>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)close">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_notification_template" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)close"/>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)receive_invoice">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_notification_template" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)receive_invoice"/>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)payment_done">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="po_notification_template" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)payment_done"/>
+        <url method="put" roles="ModifyPurchaseOrder" path="/api/v3/purchase_orders">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="purchase_order" name="input_data"/>
+            <param min-occurrences="1" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(requested_by|vendor|cost_center|gl_code)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(requested_by|vendor|cost_center|gl_code)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(udf_fields)/([a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(udf_fields)/([a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+		 <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+		 <url method="get" roles="ModifyPurchaseOrder,ModifyPR" path="/api/v3/purchase_orders/(\d+)/purchase_requests">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyPurchaseOrder,ModifyPR" path="/api/v3/purchase_orders/(\d+)/purchase_requests/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" max-len="3600" regex="\d+((\,\d+)?){0,299}" name="ids"/>
+        </url>
+		<!-- For advance filters in the list view -->
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/status/(_?)metainfo"/>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/owner/(_?)metainfo"/>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/requested_by/(_?)metainfo"/>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/vendor/(_?)metainfo"/>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/status">
+			<param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/owner">
+			<param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/requested_by">
+			<param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/vendor">
+			<param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+        <url path="/api/v3/purchase_orders/items/product_type" roles="CreatePurchaseOrder,ModifyPurchaseOrder" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+		<!-- Purchase API ends -->
+        <param regex="json" name="format"/>
+    </urls>
+
+	<!-- Json Templates begins -->
+	<jsontemplates>
+        <jsontemplate name="purchase_order_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="custom_po_id" type="String" max-len="50"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="requested_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="status" template="purchase_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="required_date" template="datefield" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_order_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="custom_po_id" type="String" max-len="50"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="items" template="po_item_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_shipping_include" type="boolean"/>
+            <key name="requested_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="status" template="purchase_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="shipping_address" type="String" max-len="250" secret="true"/>
+            <key name="billing_address" type="String" max-len="250" secret="true"/>
+            <key name="created_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="required_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="received_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="ordered_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="currency" template="currency_unique" type="JSONObject" max-len="-1"/>
+            <key name="exchange_rate" type="double" range=">0"/>
+            <key name="sub_total" type="double" range=">=0"/>
+            <key name="discount" type="double" range=">=0"/>
+            <key name="discount_rate" type="double" range=">=0"/>
+            <key name="net_total" type="double" range=">=0"/>
+            <key name="shipping_price" type="double" range=">=0"/>
+            <key name="sales_tax" type="double" range=">=0"/>
+            <key name="sales_tax_rate" type="double" range="0-99999"/>
+            <key name="additional_tax" type="double" range=">=0"/>
+            <key name="additional_tax_rate" type="double" range="0-99999"/>
+            <key name="price_adjustment" type="double" range=">=0"/>
+            <key name="total_price" type="double" range=">=0"/>
+            <key name="owner" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="cost_center" template="cost_center_unique" type="JSONObject" max-len="-1"/>
+            <key name="gl_code" template="gl_code_unique" type="JSONObject" max-len="-1"/>
+            <key name="udf_fields" template="udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="remarks" type="String" max-len="-1" secret="true"/>
+            <key name="terms" type="String" max-len="-1" secret="true"/>
+            <key name="sign_authority" type="String" max-len="50" secret="true"/>
+            <key name="invoices" template="po_invoice_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="payments" template="po_payment_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="comments" type="String" max-len="500" secret="true"/>
+            <key name="approval_levels" template="approval_level_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_order">
+            <key name="purchase_order" template="purchase_order_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_order_unique_wrapper">
+            <key name="purchase_order" template="purchase_order_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_request_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="title" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_request_base">
+            <key name="id" type="long"/>
+            <key name="title" type="String" max-len="100"/>
+			<key name="status" template="purchase_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="priority" template="pr_priority_base" type="JSONObject" max-len="500"/>
+			<key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+			<key name="owner" template="technician_unique" type="JSONObject" max-len="-1"/>
+			<key name="technician" template="technician_unique" type="JSONObject" max-len="-1"/>
+			<key name="created_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="required_date" template="datefield" type="JSONObject" max-len="-1"/>
+			<key name="due_date" template="datefield" type="JSONObject" max-len="-1"/>
+			<key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+			<key name="comments" type="String" max-len="3500" secret="true"/>
+			<key name="approval_levels" template="approval_level_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+			<key name="requested_by" template="user_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_request">
+            <key name="purchase_request" template="purchase_request_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_request_unique_wrapper">
+            <key name="purchase_request" template="purchase_request_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_status_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_status_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" secret="true" type="String" max-len="250"/>
+            <key name="is_pending" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_status">
+            <key name="purchase_status" template="purchase_status_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_status_unique_wrapper">
+            <key name="purchase_status" template="purchase_status_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="pr_priority_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_category_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" secret="true" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_category_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" secret="true" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_category">
+            <key name="purchase_category" template="purchase_category_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="purchase_category_unique_wrapper">
+            <key name="purchase_category" template="purchase_category_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_invoice_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="invoice_id" type="String" max-len="50"/>
+            <key name="received_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="10000" secret="true"/>
+            <key name="notify_before_days" type="long" range=">0"/>
+            <key name="payment_due_date" template="datefield" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_invoice_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="invoice_id" type="String" max-len="50"/>
+            <key name="received_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="10000" secret="true"/>
+            <key name="purchase_order" template="purchase_order_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_notify" type="boolean" allow-invalid="false"/>
+            <key name="is_escalated" type="boolean" allow-invalid="false"/>
+            <key name="notify_technicians" template="technician_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="notify_before_days" type="long" range=">0"/>
+            <key name="payment_due_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_invoice">
+            <key name="po_invoice" template="po_invoice_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_invoice_unique_wrapper">
+            <key name="po_invoice" template="po_invoice_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_item_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="serial_no" type="long" range=">0"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="service" template="vendor_service_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="purchase_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="item_name" type="String" max-len="150"/>
+            <key name="typeid" template="asset_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100"/>
+            <key name="ordered_quantity" type="double" range=">0"/>
+            <key name="total_received_quantity" type="double" range=">=0"/>
+            <key name="price" type="double" range=">=0"/>
+            <key name="amount" type="double" range=">=0"/>
+            <key name="tax_rate" type="double" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="po_item_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="serial_no" type="long" range=">0"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="service" template="vendor_service_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="purchase_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="item_name" type="String" max-len="150"/>
+            <key name="typeid" template="asset_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100"/>
+            <key name="description" secret="true" type="String" max-len="10000"/>
+            <key name="ordered_quantity" type="double" range=">0"/>
+            <key name="date_received" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="total_received_quantity" type="double" range=">=0"/>
+            <key name="price" type="double" range=">=0"/>
+            <key name="amount" type="double" range=">=0"/>
+            <key name="tax_rate" type="double" range="0-999999"/>
+        </jsontemplate>
+        <jsontemplate name="po_item">
+            <key name="po_item" template="po_item_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_item_unique_wrapper">
+            <key name="po_item" template="po_item_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_payment_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="payment_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="10000" secret="true"/>
+            <key name="amount_paid" type="double" range=">=0"/>
+            <key name="notify_before_days" type="long" range=">0"/>
+            <key name="amount_due" type="double" range=">=0"/>
+            <key name="payment_due_date" template="datefield" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_payment_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="payment_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="10000" secret="true"/>
+            <key name="amount_paid" type="double" range=">=0"/>
+            <key name="exchange_rate" type="double" range=">0"/>
+            <key name="is_notify" type="boolean" allow-invalid="false"/>
+            <key name="is_escalated" type="boolean" allow-invalid="false"/>
+            <key name="notify_technicians" template="technician_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="notify_before_days" type="long" range=">0"/>
+            <key name="amount_due" type="double" range=">=0"/>
+            <key name="payment_due_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="purchase_order" template="purchase_order_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_payment">
+            <key name="po_payment" template="po_payment_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="po_payment_unique_wrapper">
+            <key name="po_payment" template="po_payment_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+         <jsontemplate name="po_notification_template">
+            <key name="notification" type="JSONObject" template="po_notification_base" max-len="-1" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="po_notification_base">
+            <key name="subject" type="String" max-len="500" secret="true" max-occurrences="1"/>
+            <key name="comments" max-len="-1" max-occurrences="1" secret="true" xss="sdpantisamyfilter" description="Notification content description"/>
+            <key name="to" type="JSONArray" template="emailarray" max-len="-1" max-occurrences="1"/>
+            <key name="cc" type="JSONArray" template="emailarray" max-len="-1" max-occurrences="1"/>
+            <key name="bcc" type="JSONArray" template="emailarray" max-len="-1" max-occurrences="1"/>
+            <key name="is_notify" type="boolean" max-occurrences="1"/>
+        </jsontemplate>
+	</jsontemplates>
+	<!-- Json Templates ends -->
+</security>

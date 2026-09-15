@@ -1,0 +1,38 @@
+<!-- Security for Projects module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <regexes>
+        <regex name="id" value="^([0-9]|[null]){1,19}$"/>
+        <regex name="nullable" value="null"/>
+    </regexes>
+    <param-groups>
+        <param-group name="selectFromList">
+            <param min-occurrences="1" max-occurrences="100" name="checkbox" type="long"/>
+            <param max-occurrences="2" name="loadingMsg" type="String"/>
+            <param max-occurrences="2" name="rowcount" type="String"/>
+        </param-group>
+        <param-group name="selectAllFromList">
+            <param min-occurrences="1" max-occurrences="100" name="checkbox" type="long"/>
+            <param max-occurrences="2" name="loadingMsg" type="String"/>
+            <param max-occurrences="2" name="rowcount" type="String"/>
+            <param name="checkbox23" regex="on"/>
+            <param max-occurrences="2" name="pageLength" type="long"/>
+        </param-group>
+        <param-group name="attachments">
+            <param max-occurrences="10" name="attach" regex="filename" max-len="250"/>
+            <param max-occurrences="10" name="attPath" type="String"/>
+            <param max-occurrences="10" name="att_desc" type="String" max-len="250"/>
+            <param max-occurrences="10" name="attSize" type="long"/>
+        </param-group>
+        <param-group name="viewMoreHistory">
+            <param name="viewmore" regex="true"/>
+            <param name="range" type="long"/>
+            <param name="prevDay" type="long"/>
+        </param-group>
+        <param-group name="NotificationContent">
+            <param name="fromAdminPage" type="boolean"/>
+            <param name="subject" type="String" max-len="500"/>
+            <param name="mode" regex="update"/>
+            <param name="content" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+        </param-group>
+    </param-groups>
+</security>

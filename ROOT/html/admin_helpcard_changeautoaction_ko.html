@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>사용자 정의 트리거를 사용하면 스크립트 파일이나 사용자 정의 클래스 파일 또는 사용자 정의 함수를 사용하여 필요한 '<strong>액션</strong>'을 자동으로 트리거할 수 있습니다. '<strong>새 액션</strong>' 창에서 새 액션의 이름과 설명을 입력합니다. 드롭다운 목록에서 액션을 실행해야 하는 조건 기준을 선택합니다. '<strong>기준</strong>' 필드, 관련 조건 및 필드 값을 설정합니다. '<strong>액션 유형</strong>'을 선택하고 해당 스크립트 파일이나 클래스 파일 또는 트리거되어야 하는 사용자 정의 함수를 선택합니다. '<strong>다음 액션 처리 중지</strong>' 확인란의 선택을 취소하면 한 변경에 액션 규칙이 적용된 후에도 연속 액션이 실행됩니다.</p>
+<p><strong>참고 사항</strong>:</p>
+<ul>
+	<li> 이름이 기존 '<strong>액션</strong>' 이름과 충돌하지 않도록 '<strong>새 액션</strong>'에 유일한 이름을 입력해야 합니다.</li >
+	<li>스크립트/class 파일이 지정된 위치에만 저장되어 있는지 확인합니다. 다음 디렉토리에 저장합니다. [SDP_Home]/integration/custom_scripts/</li>
+	<li>기본적으로 '<strong>다음 액션 처리 중지</strong>'는 항상 활성화되어 있으며 작업은 '액션 규칙 순서'에 따라 실행됩니다.</li>
+	<li>'<strong>액션 구성</strong>'을 사용하면 액션이 실행되는 순서를 다시 정렬할 수 있습니다.<br>
+  </li>
+</ul>
+<p><strong>샘플 시나리오</strong>:</p>
+<p>긴급 변경 요청이 발생하면 즉시 변경 요청을 확인하고 승인할 수 있도록 긴급 CAB를 구성해야 합니다. 여기에서 긴급 변경 요청이 발생할 때 사용자 정의 스크립트 또는 사용자 정의 함수를 실행하도록 새 액션을 구성할 수 있습니다.</p>
+<p><strong>기술적 상세 정보</strong>:</p>
+<p><strong>액션 수행</strong>에서 클래스, 스크립트 또는 사용자 정의 함수를 실행할지 여부를 선택하고, 다음 포인터를 사용하여 구성합니다. </p>
+<ul>
+  <li><strong>Class: </strong><strong>Executor</strong> 클래스를 지정합니다. 예: <strong>com.servicedeskplus.integration.ChangeActionImplementation</strong>. </li>
+   <li><strong>Script: </strong>스크립트 실행 내용이 포함된 텍스트 파일의 이름을 지정합니다. 예: <strong>AddApprovers.txt</strong>.
+  <li><strong>Custom Function: </strong> 사용자 정의 함수를 실행하여 ServiceDesk Plus 및 기타 외부 응용 프로그램에서 데이터를 조작할 수 있습니다. 필요한 사용자 정의 함수를 선택하거나 새 함수를 추가하십시오. <strong>changeObj</strong> 및 <strong>context</strong>는 사용자 지정 함수에서 지원되는 인수입니다.</li>
+</ul>
+<p><strong> 참고 사항:</strong>:</p>
+<ol>
+  <li>스크립트나 클래스에서 모든 API 매개변수를 인수로 전달할 수 있습니다(예: py addApprovers.py $TITLE $TYPE $TEMPLATE). 클래스에서 com.servicedeskplus.integration.ChangeActionImplementation $TITLE $TYPE $TEMPLATE를 전달할 수 있습니다.</li>
+   <li>changeObj 및 컨텍스트는 사용자 정의 함수에서 지원되는 인수입니다.</li>
+</ol>
+<p><strong> 스크립트에서 지원되는 기타 매개변수</strong>:</p>
+<p>$COMPLETE_V3_JSON_FILE ---&gt; 전체 요청 개체는 JSON 파일에 저장되고 파일 경로는 문자열 개체로 전달됩니다. 오퍼레이션이 <strong>'변경 사항을 편집할 때'</strong>인 경우 DIFF_JSON(이전 변경 데이터와 새 변경 데이터의 차이)도 JSON 파일에 저장됩니다.</p>
+<div class="alert alert-info icon" role="alert">
+  <span class="msg">$HELPDESK_ID ---&gt; <strong>해당 포털의 ID.</strong> 이 ID는 새 URL 매개변수 'PORTALID'에 대해 모든 SDP API 호출에 해당 값으로 전달되어야 합니다. 이는 ESM 활성화 설정에만 적용됩니다.
+</div>
+<p>JSON File Path  : <em>(SDP_Home\integration\custom_scripts\change\12_1426143538036.json).</em></p>
+<p><strong>Input data for trigger application:</strong></p>
+<blockquote>
+  <p>{<br>INPUT_DATA :<br>{
+    <br>	
+	&quot;login_name&quot; : &quot;logged in user's name&quot;,<br> 
+    &quot;entity&quot; : &quot;module name: here change&quot;,<br>
+    &quot;entity_diff_data&quot; : &quot;difference between the old change data and new change data&quot;,<br>
+    &quot;entity_data&quot; : &quot;GET change API response&quot;
+  <br>}<br>
+  }</p>
+</blockquote>
+<p><strong>Response from trigger application:</strong></p>
+<p>{
+  <br> 'message':"Customized message"   
+  <br>'operations': [<br>
+  
+      {<br>
+  
+          'operation_name': 'UPDATE_ROLES',<br>
+  
+          'input_data': {<br>
+  
+            'change': {<br>
+  
+                  'roles': [<br>
+  
+                      {<br>
+  
+                          'id': ROLE ID,<br>
+  
+                          'name': 'CHANGE ROLE NAME',<br>
+  
+                          'users': [<br>
+  
+                              {<br>
+  
+                                  'email': 'USERMAILID',<br>
+  
+                                  'name': 'USERNAME'<br>
+  
+                              },<br>
+  
+                              {<br>
+  
+                                  'id': USERID,<br>
+  
+                                  'name': 'USERNAME'<br>
+  
+                              }<br>
+  
+                          ]<br>
+  
+                      }<br>
+  
+                  ]<br>
+  
+              }<br>
+  
+          }</p>
+</body>
+</html>

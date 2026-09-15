@@ -1,0 +1,52 @@
+<p>LDAP 통합을 사용하면 Linux 및 Windows 사용자 모두에 대해 LDAP 서버에서 사용자를 가져올 수 있습니다. 가져오기를 예약하고 LDAP를 사용하여 인증을 구성할 수도 있습니다.</p>
+<p>LDAP 가져오기 및 인증을 설정하려면 먼저 가져온 도메인에 대해 <strong>도메인 컨트롤러</strong>를 구성해야 합니다.</p>
+<ol>
+	<li>도메인 컨트롤러 블록에서 <strong>새 도메인 추가</strong>를 클릭합니다.</li>
+	<li>사용자를 가져와야 하는 <strong>도메인 컨트롤러</strong>를 지정합니다.
+		<ul>
+			<li>URL 구문은 다음과 같습니다. <strong>ldap://<서버 이름>:<포트 번호></strong> 여기서 기본 포트는 389입니다.</li>
+			<li>보안 모드에서 LDAP를 연결하려면 다음 URL을 사용하십시오. <strong>ldaps://hostname:636</strong> 여기서 기본 포트는 636입니다. </li>
+		</ul>
+	</li>
+	<li>지정된 필드에 조직 단위(OU)와 함께 <strong>사용자 이름</strong>을 입력합니다.</li>
+	<li>각 필드에 대해 <strong>패스워드</strong>를 지정합니다.</li>
+	<li>고유 기본 이름을 나타내는 <strong>Base DN</strong>을 지정합니다.</li>
+	<li><strong>검색 필터</strong> 필드에서 도메인 컨트롤러에 적용할 기준을 지정합니다. 예: mail=*은 지정된 도메인 컨트롤러의 mail 매개변수에서 사용자를 가져옵니다.</li>
+		<ul>
+			<li>서버 유형을 <strong>Microsoft Active Directory, Novell eDirectory 및 OpenLDAP</strong>와 같은 기본 LDAP로 선택한 경우 다음 필드가 자동으로 채워집니다.</li>
+			<li>LDAP 서버 유형이 <strong>기타</strong>인 경우 <strong>로그인 속성 레이블, 메일 속성 레이블</strong> 및 <strong>고유 이름 속성 레이블</strong>을 지정합니다( Base DN과 유사함)을 해당 필드에 입력합니다.</li>
+		</ul>
+	<li><strong>LDAP 서버 유형</strong>을 선택합니다.</li>
+	<li><strong>저장</strong> 또는 <strong>저장하고 가져오기</strong>를 클릭합니다.</li>
+</ol>
+<p>해당 도메인 컨트롤러에서 <strong>지금 가져오기</strong>를 클릭하여 기존 도메인에서 사용자를 가져올 수도 있습니다. </p>
+<p>사용자를 가져온 후 인증을 구성하고 LDAP 구성에서 가져오기를 예약할 수 있습니다.</p>
+
+<p><strong style="font-weight: bold;">로컬 인증 패스워드 설정</strong></p>
+<p>LDAP를 통해 가져온 사용자의 기본 로컬 인증 패스워드를 설정합니다. 사용자가 <a target="_blank" style="color: blue;"href="https://help.servicedeskplus.com/esm-security-settings">보안 설정</a>에서 처음 로그인한 후 이 비밀번호를 업데이트하도록 강제할 수 있습니다.</p>
+<p>각 사용자에 대해 임의의 패스워드가 생성되도록 하거나 모든 사용자에 대해 미리 정의된 패스워드를 설정할 수 있습니다. 사전 정의된 패스워드가 패스워드 정책의 모든 요구사항을 충족하는지 확인하십시오.</p>
+
+<p><strong style="font-weight: bold;">가져오기 일정 설정</strong></p>
+<p>주기적인 간격으로 LDAP 가져오기를 예약합니다. 애플리케이션에서 사용할 수 있는 모든 도메인의 사용자 및 사용자 세부 정보가 ServiceDesk Plus에 동기화됩니다.</p>
+<ol>
+	<li><strong>LDAP 일정</strong> 필드 위로 마우스를 가져간 다음 <strong>편집</strong>을 클릭합니다.</li>
+	<li><strong>LDAP 가져오는 주기 예약</strong> 옵션을 활성화하고 가져오기 기간을 지정합니다. 일정을 시작할 날짜와 시간을 지정할 수도 있습니다.</li>
+	<li><strong>저장</strong>을 클릭합니다.</li>
+</ol>
+	<p>도메인의 사용자 세부 정보는 시작 날짜 및 시간 이후에 지정된 일수에 따라 주기적으로 가져옵니다. 동일한 도메인에서 연속으로 가져오는 동안 기존 데이터를 덮어씁니다.</p>
+
+	<p><strong style="font-weight: bold;">LDAP 인증 사용</strong></p>
+	<p>사용자가 LDAP 자격 증명을 사용하여 ServiceDesk Plus에 로그인하도록 허용합니다. </p>
+<ol>
+	<li>사용자를 가져온 후 <strong>LDAP 인증</strong> 확인란 위로 마우스를 가져갑니다.</li>
+	<li><strong>편집</strong>을 클릭합니다.</li>
+	<li><strong>LDAP 인증 사용</strong> 확인란을 선택합니다.</li>
+	<li><strong>저장</strong>을 클릭합니다.</li>
+</ol>
+<p>로그인 화면에서 사용자는 LDAP 로그인 자격 증명을 지정하고 <strong>도메인</strong>을 선택하여 ServiceDesk Plus에 로그인할 수 있습니다. 또한 <strong>도메인</strong> 드롭다운에서 <strong>로컬 인증</strong>을 선택하고 로컬 자격 증명을 지정하여 로그인하는 동안 LDAP 인증을 우회할 수 있습니다.</p>
+<p>Windows 사용자의 경우 LDAP 인증이 활성화되면 AD 인증이 자동으로 비활성화됩니다.</p>
+<p><strong>참고:</strong></p>
+<ul>
+	<li>LDAP 인증을 활성화하기 전에 사용자를 이미 애플리케이션으로 가져왔는지 확인하십시오. </li>
+	<li>LDAP 인증은 Linux 및 Windows 사용자 모두에게 지원됩니다.</li>
+</ul>

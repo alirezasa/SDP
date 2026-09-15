@@ -1,0 +1,273 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "path": [
+        "/api/v3/departments"
+      ],
+      "desc": "This operation lets you add a department.",
+      "disp_desc": "Add a department",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\n  \"department\": {\n    \"name\": \"New Department\",\n    \"department_head\": {\n      \"id\": \"5\",\n      \"name\": \"administrator\"\n    },\n    \"site\": {\n      \"id\": \"3\"\n    },\n    \"description\": \"New Department Added\",\n    \"attachments\": [],\n    \"role_associations\": [\n      {\n        \"org_role\": {\n          \"id\": \"12\"\n        },\n        \"user\": {\n          \"id\": \"9\"\n        }\n      },\n      {\n        \"org_role\": {\n          \"id\": \"13\"\n        },\n        \"user\": {\n          \"id\": \"10\"\n        }\n      }\n    ]\n  }\n}"
+      },
+      "output": {
+        "sample": "{\n  \"response_status\": {\n    \"status_code\": 2000,\n    \"status\": \"success\"\n  },\n  \"department\": {\n    \"department_head\": {\n      \"email_id\": null,\n      \"phone\": \"1234455\",\n      \"name\": \"administrator\",\n      \"mobile\": \"1234567890\",\n      \"profile_pic\": {\n        \"content-url\": \"/images/default-profile-pic2.svg\"\n      },\n      \"is_vipuser\": false,\n      \"id\": \"5\",\n      \"department\": null\n    },\n    \"site\": {\n      \"name\": \"Site1\",\n      \"id\": \"3\"\n    },\n    \"deleted\": false,\n    \"attachments\": [],\n    \"name\": \"New Department\",\n    \"description\": \"New Department Added\",\n    \"id\": \"7\",\n    \"role_associations\": [\n      {\n        \"id\": \"3\",\n        \"department\": {\n          \"site\": {\n            \"name\": \"Site1\",\n            \"id\": \"3\"\n          },\n          \"name\": \"New Department\",\n          \"id\": \"7\"\n        },\n        \"org_role\": {\n          \"name\": \"Department Incharge\",\n          \"id\": \"12\",\n          \"display_name\": \"$DEPARTMENT_INCHARGE$\"\n        },\n        \"user\": {\n          \"email_id\": null,\n          \"phone\": \"925-852-2645\",\n          \"name\": \"Howard Stern\",\n          \"mobile\": \"\",\n          \"profile_pic\": {\n            \"content-url\": \"/images/default-profile-pic2.svg\"\n          },\n          \"is_vipuser\": false,\n          \"id\": \"9\",\n          \"department\": null\n        }\n      },\n      {\n        \"id\": \"4\",\n        \"department\": {\n          \"site\": {\n            \"name\": \"Site1\",\n            \"id\": \"3\"\n          },\n          \"name\": \"New Department\",\n          \"id\": \"7\"\n        },\n        \"org_role\": {\n          \"name\": \"Department Approver\",\n          \"id\": \"13\",\n          \"display_name\": \"$DEPARTMENT_APPROVER$\"\n        },\n        \"user\": {\n          \"email_id\": null,\n          \"phone\": \"925-852-2564\",\n          \"name\": \"Jeniffer Doe\",\n          \"mobile\": \"\",\n          \"profile_pic\": {\n            \"content-url\": \"/images/default-profile-pic2.svg\"\n          },\n          \"is_vipuser\": false,\n          \"id\": \"10\",\n          \"department\": null\n        }\n      }\n    ]\n  }\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "moduleName": "Common",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "path": [
+        "/api/v3/departments/{department_id}"
+      ],
+      "desc": "This operation lets you update a department",
+      "disp_desc": "Update a department",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\n  \"department\": {\n    \"name\": \"New Department1\",\n    \"description\": \"New Department Updated\",\n    \"department_head\": {\n      \"id\": \"9\",\n      \"name\": \"Howard Stern\"\n    },\n    \"role_associations\": [\n      {\n        \"org_role\": {\n          \"id\": \"12\"\n        },\n        \"user\": {\n          \"id\": \"8\"\n        },\n        \"id\": \"3\"\n      },\n      {\n        \"org_role\": {\n          \"id\": \"13\"\n        },\n        \"user\": {\n          \"id\": \"7\"\n        },\n        \"id\": \"4\"\n      }\n    ]\n  }\n}"
+      },
+      "output": {
+        "sample": "{\n  \"response_status\": {\n    \"status_code\": 2000,\n    \"status\": \"success\"\n  },\n  \"department\": {\n    \"department_head\": {\n      \"email_id\": null,\n      \"phone\": \"925-852-2645\",\n      \"name\": \"Howard Stern\",\n      \"mobile\": \"\",\n      \"profile_pic\": {\n        \"content-url\": \"/images/default-profile-pic2.svg\"\n      },\n      \"is_vipuser\": false,\n      \"id\": \"9\",\n      \"department\": null\n    },\n    \"site\": {\n      \"name\": \"Site1\",\n      \"id\": \"3\"\n    },\n    \"deleted\": false,\n    \"attachments\": [],\n    \"name\": \"New Department1\",\n    \"description\": \"New Department Updated\",\n    \"id\": \"7\",\n    \"role_associations\": [\n      {\n        \"id\": \"3\",\n        \"department\": {\n          \"site\": {\n            \"name\": \"Site1\",\n            \"id\": \"3\"\n          },\n          \"name\": \"New Department1\",\n          \"id\": \"7\"\n        },\n        \"org_role\": {\n          \"name\": \"Department Incharge\",\n          \"id\": \"12\",\n          \"display_name\": \"$DEPARTMENT_INCHARGE$\"\n        },\n        \"user\": {\n          \"email_id\": null,\n          \"phone\": \"925-852-2592\",\n          \"name\": \"John Roberts\",\n          \"mobile\": \"\",\n          \"profile_pic\": {\n            \"content-url\": \"/images/default-profile-pic2.svg\"\n          },\n          \"is_vipuser\": false,\n          \"id\": \"8\",\n          \"department\": null\n        }\n      },\n      {\n        \"id\": \"4\",\n        \"department\": {\n          \"site\": {\n            \"name\": \"Site1\",\n            \"id\": \"3\"\n          },\n          \"name\": \"New Department1\",\n          \"id\": \"7\"\n        },\n        \"org_role\": {\n          \"name\": \"Department Approver\",\n          \"id\": \"13\",\n          \"display_name\": \"$DEPARTMENT_APPROVER$\"\n        },\n        \"user\": {\n          \"email_id\": null,\n          \"phone\": \"925-852-2602\",\n          \"name\": \"Heather Graham\",\n          \"mobile\": \"\",\n          \"profile_pic\": {\n            \"content-url\": \"/images/default-profile-pic2.svg\"\n          },\n          \"is_vipuser\": false,\n          \"id\": \"7\",\n          \"department\": null\n        }\n      }\n    ]\n  }\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "moduleName": "Common",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": [
+        "/api/v3/departments/{department_id}"
+      ],
+      "desc": "This operation fetches details of a department.",
+      "disp_desc": "Get a department",
+      "workflow": "",
+      "output": {
+        "sample": "{\n  \"response_status\": {\n    \"status_code\": 2000,\n    \"status\": \"success\"\n  },\n  \"department\": {\n    \"department_head\": {\n      \"email_id\": null,\n      \"phone\": \"925-852-2645\",\n      \"name\": \"Howard Stern\",\n      \"mobile\": \"\",\n      \"profile_pic\": {\n        \"content-url\": \"/images/default-profile-pic2.svg\"\n      },\n      \"is_vipuser\": false,\n      \"id\": \"9\",\n      \"department\": null\n    },\n    \"site\": {\n      \"name\": \"Site1\",\n      \"id\": \"3\"\n    },\n    \"deleted\": false,\n    \"attachments\": [],\n    \"name\": \"New Department1\",\n    \"description\": \"New Department Updated\",\n    \"id\": \"7\",\n    \"role_associations\": [\n      {\n        \"id\": \"3\",\n        \"department\": {\n          \"site\": {\n            \"name\": \"Site1\",\n            \"id\": \"3\"\n          },\n          \"name\": \"New Department1\",\n          \"id\": \"7\"\n        },\n        \"org_role\": {\n          \"name\": \"Department Incharge\",\n          \"id\": \"12\",\n          \"display_name\": \"$DEPARTMENT_INCHARGE$\"\n        },\n        \"user\": {\n          \"email_id\": null,\n          \"phone\": \"925-852-2592\",\n          \"name\": \"John Roberts\",\n          \"mobile\": \"\",\n          \"profile_pic\": {\n            \"content-url\": \"/images/default-profile-pic2.svg\"\n          },\n          \"is_vipuser\": false,\n          \"id\": \"8\",\n          \"department\": null\n        }\n      },\n      {\n        \"id\": \"4\",\n        \"department\": {\n          \"site\": {\n            \"name\": \"Site1\",\n            \"id\": \"3\"\n          },\n          \"name\": \"New Department1\",\n          \"id\": \"7\"\n        },\n        \"org_role\": {\n          \"name\": \"Department Approver\",\n          \"id\": \"13\",\n          \"display_name\": \"$DEPARTMENT_APPROVER$\"\n        },\n        \"user\": {\n          \"email_id\": null,\n          \"phone\": \"925-852-2602\",\n          \"name\": \"Heather Graham\",\n          \"mobile\": \"\",\n          \"profile_pic\": {\n            \"content-url\": \"/images/default-profile-pic2.svg\"\n          },\n          \"is_vipuser\": false,\n          \"id\": \"7\",\n          \"department\": null\n        }\n      }\n    ]\n  }\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "moduleName": "Common",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": [
+        "/api/v3/departments"
+      ],
+      "desc": "This operation fetches details of a department.",
+      "disp_desc": "Get all departments",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\n  \"list_info\": {\n    \"row_count\": \"10\",\n    \"start_index\": 1,\n    \"get_total_count\": true,\n    \"fields_required\": [\n      \"department_head\",\n      \"name\",\n      \"description\",\n      \"deleted\"\n    ]\n  }\n}"
+      },
+      "output": {
+        "sample": "{\n  \"response_status\": [\n    {\n      \"status_code\": 2000,\n      \"status\": \"success\"\n    }\n  ],\n  \"list_info\": {\n    \"has_more_rows\": false,\n    \"start_index\": 1,\n    \"fields_required\": [\n      \"department_head\",\n      \"name\",\n      \"description\",\n      \"deleted\"\n    ],\n    \"total_count\": 6,\n    \"page\": 1,\n    \"get_total_count\": \"true\",\n    \"row_count\": 6\n  },\n  \"departments\": [\n    {\n      \"department_head\": null,\n      \"deleted\": false,\n      \"name\": \"Administration\",\n      \"description\": \"Administration Team\",\n      \"id\": \"1\"\n    },\n    {\n      \"department_head\": null,\n      \"deleted\": false,\n      \"name\": \"Engineering\",\n      \"description\": \"Development Team\",\n      \"id\": \"2\"\n    },\n    {\n      \"department_head\": null,\n      \"deleted\": false,\n      \"name\": \"Sales\",\n      \"description\": \"Sales Team\",\n      \"id\": \"3\"\n    },\n    {\n      \"department_head\": null,\n      \"deleted\": false,\n      \"name\": \"Finance\",\n      \"description\": \"Account & Finance Team\",\n      \"id\": \"4\"\n    },\n    {\n      \"department_head\": null,\n      \"deleted\": false,\n      \"name\": \"IT Services\",\n      \"description\": \"System Administration Team\",\n      \"id\": \"5\"\n    },\n    {\n      \"department_head\": {\n        \"email_id\": null,\n        \"phone\": \"925-852-2645\",\n        \"name\": \"Howard Stern\",\n        \"mobile\": \"\",\n        \"profile_pic\": {\n          \"content-url\": \"/images/default-profile-pic2.svg\"\n        },\n        \"is_vipuser\": false,\n        \"id\": \"9\",\n        \"department\": null\n      },\n      \"deleted\": false,\n      \"name\": \"New Department1\",\n      \"description\": \"New Department Updated\",\n      \"id\": \"7\"\n    }\n  ]\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "moduleName": "Common",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "path": [
+        "/api/v3/departments?ids={id1,id2,id3,...}"
+      ],
+      "desc": "This operation lets you delete departments. Up to 100 IDs can be provided in the URL, separated by commas.",
+      "disp_desc": "Delete a department",
+      "workflow": "",
+      "output": {
+        "sample": "{\n  \"response_status\": [\n    {\n      \"status_code\": 2000,\n      \"id\": \"6\",\n      \"status\": \"success\"\n    }\n  ]\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "false",
+      "moduleName": "Common",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "path": [
+        "/api/v3/departments/_metainfo"
+      ],
+      "desc": "Gets the metainfo of fields",
+      "disp_desc": "Metainfo of department entity",
+      "workflow": "",
+      "output": {
+        "sample": "{\n    \"response_status\": {\n        \"status_code\": 2000,\n        \"status\": \"success\"\n    },\n    \"metainfo\": {\n        \"display_key\": \"sdp.admin.technician.listview.department\",\n        \"is_dynamic\": false,\n        \"plural_name\": \"departments\",\n        \"relationship\": false,\n        \"display_name\": \"Department\",\n        \"fields\": {\n            \"linked_instance\": {\n                \"display_key\": \"sdp.cmdb.linked.instance\",\n                \"editable\": false,\n                \"lookup_entity\": \"ci\",\n                \"lookup_field\": \"name\",\n                \"href\": \"/departments/linked_instance\",\n                \"type\": \"lookup\",\n                \"partial_field\": false,\n                \"list_view\": true,\n                \"display_name\": \"Linked Instance\"\n            },\n            \"department_head\": {\n                \"display_type\": \"Pick List\",\n                \"display_key\": \"sdp.common.department.head\",\n                \"editable\": false,\n                \"lookup_entity\": \"orguser\",\n                \"lookup_field\": \"name\",\n                \"href\": \"/departments/department_head\",\n                \"type\": \"lookup\",\n                \"partial_field\": false,\n                \"list_view\": true,\n                \"display_name\": \"Department Head\"\n            },\n            \"site\": {\n                \"display_type\": \"Pick List\",\n                \"display_key\": \"common.site\",\n                \"editable\": false,\n                \"form_field\": false,\n                \"lookup_entity\": \"site\",\n                \"lookup_field\": \"name\",\n                \"href\": \"/departments/site\",\n                \"type\": \"lookup\",\n                \"partial_field\": true,\n                \"list_view\": true,\n                \"display_name\": \"Site\"\n            },\n            \"deleted\": {\n                \"display_type\": \"CheckBox\",\n                \"display_key\": \"department.deleted\",\n                \"editable\": false,\n                \"sortable\": false,\n                \"type\": \"boolean\",\n                \"partial_field\": true,\n                \"list_view\": true,\n                \"display_name\": \"Department not for further usage\"\n            },\n            \"attachments\": {\n                \"display_key\": \"department.attachment\",\n                \"editable\": false,\n                \"multiple\": true,\n                \"form_field\": false,\n                \"lookup_entity\": \"attachment\",\n                \"lookup_field\": \"name\",\n                \"sortable\": false,\n                \"href\": \"/departments/attachments\",\n                \"type\": \"sub_form\",\n                \"partial_field\": false,\n                \"display_name\": \"Attachments\",\n                \"searchable\": false\n            },\n            \"linked_entity\": {\n                \"display_key\": \"sdp.cmdb.linked.entity\",\n                \"editable\": false,\n                \"lookup_entity\": \"module\",\n                \"lookup_field\": \"name\",\n                \"href\": \"/departments/linked_entity\",\n                \"type\": \"lookup\",\n                \"partial_field\": false,\n                \"list_view\": true,\n                \"display_name\": \"Linked Entity\"\n            },\n            \"department_udf_fields\": {\n                \"editable\": false,\n                \"type\": \"udf\",\n                \"partial_field\": false,\n                \"list_view\": false,\n                \"fields\": {}\n            },\n            \"name\": {\n                \"display_type\": \"Single Line\",\n                \"display_key\": \"sdp.common.name\",\n                \"editable\": false,\n                \"type\": \"string\",\n                \"partial_field\": true,\n                \"list_view\": true,\n                \"display_name\": \"Name\",\n                \"mandatory\": true,\n                \"constraints\": {\n                    \"max_length\": 100\n                }\n            },\n            \"description\": {\n                \"display_type\": \"Multi Line\",\n                \"display_key\": \"common.description\",\n                \"editable\": false,\n                \"type\": \"string\",\n                \"partial_field\": false,\n                \"list_view\": true,\n                \"display_name\": \"Description\",\n                \"constraints\": {\n                    \"max_length\": 250\n                }\n            },\n            \"id\": {\n                \"identifier\": true,\n                \"read_only\": true,\n                \"editable\": false,\n                \"form_field\": false,\n                \"type\": \"long\",\n                \"partial_field\": false,\n                \"list_view\": true\n            },\n            \"role_associations\": {\n                \"editable\": false,\n                \"multiple\": true,\n                \"form_field\": false,\n                \"lookup_entity\": \"department_role_association\",\n                \"lookup_field\": \"name\",\n                \"sortable\": false,\n                \"href\": \"/departments/role_associations\",\n                \"type\": \"lookup\",\n                \"partial_field\": false,\n                \"searchable\": false\n            }\n        },\n        \"entity\": \"department\"\n    }\n}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "false",
+      "moduleName": "Common",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier used to identify the department.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Unique name used to identify the department.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Relevant description regarding the department.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Site where the department is located.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "department_head",
+      "type": "Object",
+      "desc": "Head of the department.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "role_associations",
+      "type": "Array of Objects",
+      "desc": "Roles associated with the department such as department incharge, approver, etc.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "attachments",
+      "type": "Array of Objects",
+      "desc": "Attached file list to this department ",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name":"department_udf_fields",
+      "type":"Object",
+      "desc":"Holds udf fields values associated with the department",
+      "graphView":"",
+      "column":"",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly":"false",
+      "inOP":"true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased":"true"
+    },
+    {
+      "name": "deleted",
+      "type": "Boolean",
+      "desc": "Indicates whether the department is deleted or not.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "linked_instance",
+      "type": "Object",
+      "desc": "Indicates the linked instance associated with this department",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "linked_entity",
+      "type": "Object",
+      "desc": "Indicates the entity of the linked instance associated with this department",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ]
+}

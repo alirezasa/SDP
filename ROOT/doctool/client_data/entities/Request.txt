@@ -1,0 +1,2352 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests"
+      ],
+      "desc": "This operation helps you to add new requests. Include accept header <b>application/v3.0+json</b> in V3 API supported URLs.",
+      "disp_desc": "Add Request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"subject\":\"Unable to fetch mails\",\"description\":\"I am unable to fetch mails from the mail server\",\"requester\": {\"id\": \"4\",\"name\": \"administrator\"},\"impact_details\":\"Routine tasks are pending due to mail server problem\",\"resolution\":{\"content\":\"Mail Fetching Server problem has been fixed\"},\"status\":{\"name\":\"Open\"}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"request\":{\"is_first_response_overdue\":false,\"impact_details\":null,\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"urgency\":{\"id\":\"2\",\"name\":\"High\"},\"level\":{\"id\":\"4\",\"name\":\"Tier 4\"},\"description\":\"I am unable to fetch mails from the mail server\",\"priority\":{\"id\":\"4\",\"color\":\"#ff0000\",\"name\":\"High\"},\"sla\":null,\"template\":{\"id\":\"36\",\"name\":\"Request to start the process associated to a new hire\"},\"created_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"requester\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"first_response_due_by_time\":null,\"service_category\":{\"id\":\"8\",\"name\":\"User Management\"},\"is_reopened\":false,\"status\":{\"id\":\"3\",\"color\":\"#006600\",\"name\":\"Closed\"},\"approval_status\":null,\"email_cc\":[],\"due_by_time\":null,\"closure_info\":{\"closure_code\":{\"id\":\"3\",\"name\":\"Canceled\"},\"requester_ack_comments\":null,\"closure_comments\":null,\"requester_ack_resolution\":true},\"is_trashed\":false,\"request_template_task_ids\": [],\"assets\":[],\"category\":{\"id\":\"11\",\"name\":\"Operating System\"},\"editor\":{\"id\":\"5\",\"name\":\"Shawn Adams\",\"email_id\":null},\"time_elapsed\":{\"display_value\":\"0hrs 0min\",\"value\":\"2086\"},\"on_behalf_of\":null,\"is_service_request\":true,\"assigned_time\":{\"display_value\":\"Mar 10, 2017 11:37 AM\",\"value\":\"1489126045447\"},\"technician\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"request_type\":{\"id\":\"2\",\"name\":\"Request For Information\"},\"subject\":\"Unable to fetch mails\",\"department\":null,\"udf_fields\":{\"udf_multiselect_34\": [{\"name\":\"Note\",\"id\":\"217\"},{\"name\":\"Pen\",\"id\":\"219\"}],\"udf_date_601\":{\"display_value\":\"Mar 9, 2017 04:36 PM\",\"value\":\"1489057560000\"},\"udf_pick_20\":{\"name\":\"Admin\",\"id\":\"95\"},\"udf_mline_314\":\"USA\",\"udf_pick_44\":{\"name\":\"Heather Graham\",\"id\":\"386\"},\"udf_long_367\":\"123654789\",\"udf_sline_25\":\"5 th floor\",\"udf_sline_26\":\"6th floor\",\"udf_decimal_42\":\"124.00\"},\"resolution\":null,\"mode\":{\"id\":\"2\",\"name\":\"Web Form\"},\"id\":\"120\",\"resolved_time\":{\"display_value\":\"Mar 10, 2017 11:37 AM\",\"value\":\"1489126047225\"},\"responded_time\":null,\"attachments\":[],\"completed_time\":{\"display_value\":\"Mar 10, 2017 11:37 AM\",\"value\":\"1489126047225\"},\"site\":null,\"email_ids_to_notify\":[\"user2@zylker.com\"],\"is_fcr\":false,\"is_overdue\":false,\"email_to\":[],\"last_updated_time\":null,\"subcategory\":{\"id\":\"24\",\"name\":\"Mac OS X\"},\"item\":null,\"created_time\":{\"display_value\":\"Mar 10, 2017 11:37 AM\",\"value\":\"1489126045139\"},\"group\":{\"id\":\"1\",\"name\":\"Hardware Problems\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}",
+      "desc": "This operation helps you to update the request by using the unique request_id. Include accept header <b>application/v3.0+json</b> in V3 API supported URLs.",
+      "disp_desc": "Update Request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"subject\":\"Please hold off the issuance of macbook as the employee will be joining late\",\"description\":\"Hold off issuance of macbook\",\"impact_details\":\"Routine tasks are pending due to mail server problem\",\"resolution\":{\"content\":\"Mail Fetching Server problem has been fixed\"},\"status\":{\"name\":\"Open\"}}}"
+      },
+      "output": {
+        "sample": "{\"request\":{\"is_first_response_overdue\":false,\"impact_details\":null,\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"urgency\":{\"id\":\"2\",\"name\":\"High\"},\"level\":{\"id\":\"4\",\"name\":\"Tier 4\"},\"description\":\"Hold off issuance of macbook\",\"priority\":{\"id\":\"4\",\"color\":\"#ff0000\",\"name\":\"High\"},\"sla\":null,\"template\":{\"id\":\"36\",\"name\":\"Request to start the process associated to a new hire\"},\"created_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"requester\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"is_editing_completed\":true,\"first_response_due_by_time\":null,\"service_category\":{\"id\":\"8\",\"name\":\"User Management\"},\"is_reopened\":false,\"status\":{\"id\":\"3\",\"color\":\"#006600\",\"name\":\"Onhold\"},\"approval_status\":{\"id\":\"1\",\"name\":\"Pending Approval\"},\"email_cc\":[],\"due_by_time\":null,\"closure_info\":{\"closure_code\":{\"id\":\"3\",\"name\":\"Canceled\"},\"requester_ack_comments\":null,\"closure_comments\":null,\"requester_ack_resolution\":true},\"is_trashed\":false,\"request_template_task_ids\": [],\"assets\":[],\"category\":{\"id\":\"11\",\"name\":\"Operating System\"},\"editor\":{\"id\":\"5\",\"name\":\"Shawn Adams\",\"email_id\":null},\"time_elapsed\":{\"display_value\":\"0hrs 0min\",\"value\":\"960\"},\"on_behalf_of\":null,\"is_service_request\":true,\"assigned_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406493\"},\"technician\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"request_type\":{\"id\":\"2\",\"name\":\"Request For Information\"},\"department\":null,\"subject\":\"Please hold off the issuance of macbook as the employee will be joining late\",\"udf_fields\":{\"udf_multiselect_34\": [{\"name\":\"Note\",\"id\":\"217\"},{\"name\":\"Pen\",\"id\":\"219\"}],\"udf_date_601\":{\"display_value\":\"Mar 9, 2017 04:36 PM\",\"value\":\"1489057560000\"},\"udf_pick_20\":{\"name\":\"Admin\",\"id\":\"95\"},\"udf_mline_314\":\"USA\",\"udf_pick_44\":{\"name\":\"Heather Graham\",\"id\":\"386\"},\"udf_long_367\":\"123654789\",\"udf_sline_25\":\"5 th floor\",\"udf_sline_26\":\"6th floor\",\"udf_decimal_42\":\"124.00\"},\"resolution\":{\"content\":\"Mail Fetching Server problem has been fixed\",\"submitted_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"submitted_on\":{\"display_value\":\"Mar 10, 2017 12:11 PM\",\"value\":\"1489128104538\"}},\"mode\":{\"id\":\"2\",\"name\":\"Web Form\"},\"id\":\"115\",\"resolved_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"responded_time\":null,\"attachments\":[{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"application/xml\",\"id\":\"602\",\"name\":\"requests.xml\",\"content_url\":\"/api/v3/requests/115/attachments/602/download\",\"size\":{\"display_value\":\"12.48KB\",\"value\":12780}},{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"text/plain\",\"id\":\"901\",\"name\":\"_View all requests.md\",\"content_url\":\"/api/v3/requests/115/attachments/901/download\",\"size\":{\"display_value\":\"13.06KB\",\"value\":13383}}],\"completed_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"site\":null,\"email_ids_to_notify\":[\"user2@zylker.com\"],\"is_fcr\":true,\"is_overdue\":false,\"email_to\":[],\"last_updated_time\":{\"display_value\":\"Mar 10, 2017 12:40 PM\",\"value\":\"1489129838452\"},\"subcategory\":{\"id\":\"24\",\"name\":\"Mac OS X\"},\"item\":null,\"created_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406368\"},\"group\":{\"id\":\"1\",\"name\":\"Hardware Problems\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}",
+      "desc": "This operation helps you to view the request details by the unique request id. Include accept header <b>application/v3.0+json</b> in V3 API supported URLs.",
+      "disp_desc": "View Request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"request\":{\"is_first_response_overdue\":false,\"impact_details\":null,\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"urgency\":{\"id\":\"2\",\"name\":\"High\"},\"level\":{\"id\":\"4\",\"name\":\"Tier 4\"},\"description\":\"Please provide the services required for our new employee\",\"priority\":{\"id\":\"4\",\"color\":\"#ff0000\",\"name\":\"High\"},\"sla\":null,\"template\":{\"id\":\"36\",\"name\":\"Request to start the process associated to a new hire\"},\"created_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"requester\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"is_editing_completed\":true,\"first_response_due_by_time\":null,\"service_category\":{\"id\":\"8\",\"name\":\"User Management\"},\"is_reopened\":false,\"status\":{\"id\":\"3\",\"color\":\"#006600\",\"name\":\"Closed\"},\"approval_status\":{\"id\":\"1\",\"name\":\"Pending Approval\"},\"email_cc\":[],\"due_by_time\":null,\"closure_info\":{\"closure_code\":{\"id\":\"3\",\"name\":\"Canceled\"},\"requester_ack_comments\":null,\"closure_comments\":null,\"requester_ack_resolution\":true},\"is_trashed\":false,\"request_template_task_ids\": [],\"assets\":[],\"category\":{\"id\":\"11\",\"name\":\"Operating System\"},\"editor\":{\"id\":\"5\",\"name\":\"Shawn Adams\",\"email_id\":null},\"time_elapsed\":{\"display_value\":\"0hrs 0min\",\"value\":\"960\"},\"on_behalf_of\":null,\"is_service_request\":true,\"assigned_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406493\"},\"technician\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"request_type\":{\"id\":\"2\",\"name\":\"Request For Information\"},\"department\":null,\"subject\":\"Please provide the services required for our new employee\",\"udf_fields\":{\"udf_multiselect_34\": [{\"name\":\"Note\",\"id\":\"217\"},{\"name\":\"Pen\",\"id\":\"219\"}],\"udf_date_601\":{\"display_value\":\"Mar 9, 2017 04:36 PM\",\"value\":\"1489057560000\"},\"udf_pick_20\":{\"name\":\"Admin\",\"id\":\"95\"},\"udf_mline_314\":\"USA\",\"udf_pick_44\":{\"name\":\"Heather Graham\",\"id\":\"386\"},\"udf_long_367\":\"123654789\",\"udf_sline_25\":\"5 th floor\",\"udf_decimal_42\":\"124.00\"},\"resolution\":{\"content\":\"Check with the IT team to provide the required assets for the new joinee. <div><br /></div><div>Check with the HR team to provide credentials for the new joinee. </div>\",\"submitted_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"submitted_on\":{\"display_value\":\"Mar 10, 2017 12:11 PM\",\"value\":\"1489128104538\"}},\"mode\":{\"id\":\"2\",\"name\":\"Web Form\"},\"id\":\"115\",\"resolved_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"responded_time\":null,\"attachments\":[{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"application/xml\",\"id\":\"602\",\"name\":\"requests.xml\",\"content_url\":\"/api/v3/requests/115/attachments/602/download\",\"size\":{\"display_value\":\"12.48KB\",\"value\":12780}},{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"text/plain\",\"id\":\"901\",\"name\":\"_View all requests.md\",\"content_url\":\"/api/v3/requests/115/attachments/901/download\",\"size\":{\"display_value\":\"13.06KB\",\"value\":13383}}],\"completed_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"site\":null,\"email_ids_to_notify\":[\"user2@zylker.com\"],\"is_fcr\":true,\"is_overdue\":false,\"email_to\":[],\"last_updated_time\":{\"display_value\":\"Mar 10, 2017 12:11 PM\",\"value\":\"1489128104849\"},\"subcategory\":{\"id\":\"24\",\"name\":\"Mac OS X\"},\"item\":null,\"created_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406368\"},\"group\":{\"id\":\"1\",\"name\":\"Hardware Problems\"},\"has_project\":false,\"has_problem\":false,\"has_request_initiated_change\":false,\"has_request_caused_by_change\":false,\"has_draft\":false,\"has_linked_requests\":false,\"has_dependency\":false,\"linked_to_request\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+  "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests",
+      "desc": "This operation lets you to view the details of all the requests.",
+      "disp_desc": "View all Requests",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":20,\"start_index\":1,\"sort_field\":\"subject\",\"sort_order\":\"asc\",\"get_total_count\":true,\"search_criteria\": [{\"field\": \"subject\",\"value\": \"New hire\",\"condition\": \"contains\"},{\"field\": \"priority.name\",\"value\": \"high\",\"condition\": \"eq\",\"logical_operator\": \"and\"}],\"filter_by\":{\"name\":\"All_Requests\"}}}"
+        },
+      "output": {
+        "sample":"{\"requests\":[{\"id\":1,\"subject\":\"laptopfornewhire\",\"short_description\":\"NeednewLapTop\",\"created_time\":{\"value\":1482151699905,\"display_value\":\"Dec19,201612:48PM\"},\"created_by\":{\"id\":3,\"email_id\":\"admin@zylker.com\",\"name\":\"administrator\"},\"due_by_time\":{\"value\":1482208200805,\"display_value\":\"Dec20,201610:49AM\"},\"is_service_request\":false,\"technician\":{\"id\":9,\"name\":\"JenifferDoe\"},\"requester\":{\"is_vipuser\":false,\"id\":4,\"name\":\"Guest\"},\"is_overdue\":false},{\"id\":2,\"subject\":\"newhire\",\"short_description\":\"Needlaptopdock\",\"created_time\":{\"value\":1482151699905,\"display_value\":\"Dec19,201612:48PM\"},\"created_by\":{\"id\":3,\"email_id\":\"admin1@zylker.com\",\"name\":\"administrator\"},\"due_by_time\":{\"value\":1482208200905,\"display_value\":\"Dec20,2016\"},\"is_service_request\":false,\"technician\":{\"id\":9,\"name\":\"JenifferDoe\"},\"requester\":{\"is_vipuser\":false,\"id\":4,\"name\":\"Guest\"},\"is_overdue\":false}],\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Successfullyfetched.\",\"status_code\":\"10000\"}]},\"list_info\":{\"row_count\":20,\"start_index\":1,\"sort_field\":\"subject\",\"sort_order\":\"asc\",\"get_total_count\":true,\"search_fields\":{\"subject\":\"newhire\"},\"has_more_rows\":\"false\",\"filter_by\":{\"name\":\"All_Requests\"}}}"},
+      "roles": [
+        "View Requests"
+      ],
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": "/api/v3/list_view_filters/show_all",
+      "desc": "This operation lets you to view all the request filters.",
+      "disp_desc": "View all Request filters",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"module\":\"request\",\"list_info\":{\"row_count\":\"100\",\"search_criteria\": {\"field\": \"module\",\"value\": \"request\",\"condition\": \"contains\"}}}"
+      },
+      "output": {
+        "sample":"{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"show_all\":[{\"name\":\"All Requests\",\"id\":\"29\"},{\"name\":\"Pending Requests\",\"id\":\"30\"},{\"name\":\"Requests Due Today\",\"id\":\"31\"},{\"name\":\"Overdue Requests\",\"id\":\"32\"},{\"name\":\"Open Requests\",\"id\":\"34\"},{\"name\":\"Requests On Hold\",\"id\":\"35\"},{\"name\":\"Unassigned Requests\",\"id\":\"37\"},{\"name\":\"My Open Or Unassigned\",\"id\":\"41\"},{\"name\":\"My Completed Requests\",\"id\":\"42\"},{\"name\":\"My Requests Due Today\",\"id\":\"43\"},{\"name\":\"My Pending Requests\",\"id\":\"44\"},{\"name\":\"My Overdue Requests\",\"id\":\"45\"},{\"name\":\"My Requests On Hold\",\"id\":\"46\"},{\"name\":\"My Open Requests\",\"id\":\"48\"},{\"name\":\"All My Requests\",\"id\":\"49\"},{\"name\":\"Waiting for my update\",\"id\":\"58\"},{\"name\":\"Updated by me\",\"id\":\"59\"},{\"name\":\"Requests Pending Approval\",\"id\":\"85\"},{\"name\":\"Completed Requests\",\"id\":\"87\"},{\"name\":\"Requests Shared with me\",\"id\":\"88\"},{\"name\":\"Pending Requests Shared with me\",\"id\":\"89\"},{\"name\":\"Missed chat requests\",\"id\":\"90\"},{\"name\":\"Closed chat requests\",\"id\":\"91\"},{\"name\":\"Requests Pending My Approval\",\"id\":\"92\"},{\"name\":\"OLA overdue request\",\"id\":\"93\"},{\"name\":\"Requests OLA due today\",\"id\":\"94\"},{\"name\":\"My Group OLA overdue requests\",\"id\":\"95\"},{\"name\":\"My Pending Requests or Tasks\",\"id\":\"96\"}]}"},
+      "roles": [
+        "View Requests"
+      ],
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOD": "false",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/duplicate_request"
+      ],
+      "desc": "This operation will duplicate the request to the given number of copies",
+      "disp_desc": "Duplicate Request",
+      "workflow": "",
+      "isReleased": "false",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"duplicate_request\":{\"number_of_copies\":5}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Request duplicated successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/reply"
+      ],
+      "desc": "This operation allows you to get the data required to populate notification content for performing a reply operation under a Request.",
+      "disp_desc": "Reply Content",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Reply Content fetched successfully\",\"statuscode\":\"2000\"}]},\"notification\":{\"to\":[\"abs@zylker.com\",\"cbs@zylker.com\"],\"cc\":[\"ias@zylker.com\",\"ips@zylker.com\"],\"subject\":\"Re: [Request ID :##71##] : Adding Email Account for New Employee\",\"description\":\"Adding Email Account for New Employee\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/reply"
+      ],
+      "desc": "This operation lets you to perform reply operation within a request",
+      "disp_desc": "Reply To a Request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"notification\":{\"to\":[\"user1@zylker.com\"],\"subject\":\"Re: [Request ID :69] : Mail fetching is not working\",\"description\":\"Mail fetching in our server is not working. Please rectify it as soon as possible, since it's affecting our productivity.\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "isConvenienceOperation": "true",
+      "entityForAttributes": "Notifications",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/forward"
+      ],
+      "desc": "This operation allows you to get the necessary Email content to perform the forward operation under a Request.",
+      "disp_desc": "Forward Content",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Forward Content fetched successfully\",\"statuscode\":\"2000\"}]},\"notification\":{\"subject\":\"Re: [Request ID :##71##] : Adding Email Account for New Employee\",\"description\":\"Adding Email Account for New Employee\",\"attachments\":[{\"file_id\":105,\"file_name\":\"image.png\",\"size\":928375,\"content_type\":\"application/doc\",\"content_url\":\"https://accounts.zylker.com/file?ID=1933117&t=user&fs=thumb\",\"attached_by\":{\"id\":1,\"name\":\"Carlisle Cullen\",\"email\":\"abc@zylker.com\"},\"attached_on\":{\"value\":1459402730964,\"display_value\":\"Mar 31, 2016 11:08 AM\"}}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/forward"
+      ],
+      "desc": "This operation allows you to forward a request",
+      "disp_desc": "Forward Request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"notification\":{\"to\":[\"user1@zylker.com\"],\"subject\":\"Fwd: [Request ID :69] : Mail fetching is not working\",\"description\":\"Mail fetching in our server is not working. Please rectify it as soon as possible, since it's affecting our productivity.\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/submit_approval"
+      ],
+      "desc": "This operation allows you to get the necessary email content  to perform the Submit For Approval operation under a Request.",
+      "disp_desc": "Approval Content",
+      "workflow": "undefined",
+      "isReleased": "false",
+      "output": {
+        "sample": "{\"notification\":{\"subject\":\"Approval required for a Request\",\"description\":\"Your approval is required for a Request to act upon. The details of the Request can be found at $ApprovalLink<br/>\"},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/submit_approval"
+      ],
+      "desc": "This operation allows you to send approval notifications for an incident request. For adding Approvals for service requests, kindly refer Approvals section.",
+      "disp_desc": "Submit For Approval",
+      "workflow": "undefined",
+      "isReleased": "false",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"notification\":{\"to\":[\"user1@zylker.com\"],\"subject\":\"Approval required for a Request\",\"description\":\"Your approval is required for a Request to act upon. The details of the Request can be found at $ApprovalLink<br/>\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Approval Mail Sent \",\"status_code\":2000}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request-id}/close"
+      ],
+      "desc": "This operation allows you to close a single or multiple requests.",
+      "disp_desc": "Close request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{\"request\":{\"closure_info\":{\"requester_ack_resolution\":true,\"requester_ack_comments\":\"Mail fetching is up and running now\",\"closure_comments\":\"Reset the pasword solved the issue\",\"closure_code\": {\"name\":\"success\"}}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":4000,\"status\":\"failed\",\"messages\":[{\"status_code\":4003,\"message\":\"Request cannot be completed. Please fill the closure mandatory fields\",\"type\":\"failed\",\"fields\":[\"tasks\",\"udf_decimal_41\",\"mode\",\"level\",\"technician\",\"resolution\",\"worklog\"]}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true","inOP":"true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/resolve",
+        "/api/v3/requests/resolve?ids=1"
+      ],
+      "desc": "This operation allows you to resolve single or multiple requests",
+      "disp_desc": "Resolve Request",
+      "workflow": "undefined",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"status_change_comments\":\"Resolving the request\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Request(s) resolved successfully.\",\"status_code\":2000}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/pickup"
+      ],
+      "desc": "This operation allows you to pickup request on your name as a technician",
+      "disp_desc": "Pickup Request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample":
+"{\"response_status\":{\"status_code\":2000,\"status\":\"success\",\"messages\":[{\"status_code\":2000,\"message\":\"Request(s) picked up successfully.\",\"type\":\"success\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+       "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/assign"
+      ],
+      "desc": "This Operation allows you to assign a request to a technician",
+      "disp_desc": "Assign request",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"group\":{\"name\":\"Hardware Problems\"},\"technician\":{\"name\":\"heather Graham\"}}}"
+      },
+      "output": {
+        "sample":
+"{\"response_status\":{\"status_code\":2000,\"status\":\"success\",\"messages\":[{\"status_code\":2000,\"message\":\"Assigned successfully.\",\"type\":\"success\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },{
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/resolutions"
+      ],
+      "desc": "This Operation allows you to get a resolution of the request.",
+      "disp_desc": "Get Resolution",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}, \"resolution\": {\"content\": \"Restart the server, reset the port solved the problem\", \"submitted_by\": { \"id\": \"4\", \"name\": \"administrator\",\"email_id\": null},\"submitted_on\": {\"display_value\": \"Oct 4, 2017 12:21 AM\", \"value\": \"1507056660521\"}, \"resolution_attachments\": [ { \"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"application/x-ooxml\",\"id\": \"2102\",\"name\": \"troubleshooting_guideline1.docx\",\"content_url\": \"/api/v3/requests/115/resolution_attachments/2102/download\",\"size\":{\"display_value\":\"13.06KB\",\"value\":13383}},{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"application/x-msoffice\",\"id\": \"2101\",\"name\": \"troubleshooting_guideline1.doc\",\"content_url\": \"/api/v3/requests/115/resolution_attachments/2101/download\",\"size\":{\"display_value\":\"17.07KB\",\"value\":17480}}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },{
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/resolutions"
+      ],
+      "desc": "This Operation allows you to add/update a resolution of the request.",
+      "disp_desc": "Add Resolution",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+     "name": "INPUT_DATA",
+        "sample": "{\"resolution\":{\"content\":\"sample resolution\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\",\"messages\":[{\"status_code\":2000,\"message\":\"Resolution added successfully.\",\"type\":\"success\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}/merge_requests",
+      "desc": "This option lets you merge multiple requests. RequestID in the url should be the supposed parent request after merging.",
+      "disp_desc": "Merge Request(s)",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"merge_requests\":[{\"id\":\"100000000000023013\"},{\"id\":\"100000000000023101\"}]}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000,\"messages\":[{\"type\":\"success\",\"message\":\"Request successfully merged\",\"status_code\":2000}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request-id}/split_requests"
+      ],
+      "desc": "This operation lets you split one of the request's conversation into a new request",
+      "disp_desc": "Split Request",
+      "workflow": "undefined",
+      "isReleased": "false",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"email\":{\"id\":\"100000000000023083\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000,\"messages\":[{\"type\":\"success\",\"message\":\"Request has been split successfully with Request ID : 51\",\"status_code\":2000}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/summary"
+      ],
+      "desc": "This Operation allows you to get the summary of a request.",
+      "disp_desc": "Get Request Summary",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"request_summary\":{\"task_completed_count\":5,\"task_total_count\":1,\"dependency_count\":0,\"note_count\":3,\"link_request_count\":0}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Problem",
+      "path": [
+        "/api/v3/requests/{request_id}/problem"
+      ],
+      "desc": "This operation lets you attach a Problem to a Incident Request",
+      "disp_desc": "Associate Problem",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request_problem_association\":{\"problem\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"request_problem_association\":{\"request\":{\"id\":1},\"problem\":{\"id\":1}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Problem",
+      "path": [
+        "/api/v3/requests/{request_id}/problem"
+      ],
+      "desc": "This Operation allows you to get the associated Problem of a incident request.",
+      "disp_desc": "Get associated problem",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"problem\":[{\"problem\":{\"id\":\"1\",\"title\":\"Problem title\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Problem",
+      "path": "/api/v3/requests/{request_id}/problem",
+      "desc": "This operation lets you detach(already attached) Problem from a Incident Request",
+      "disp_desc": "Dissociate Problem",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request_problem_association\":{\"problem\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/requests/{request_id}/projects"
+      ],
+      "desc": "This operation lets you attach a Project to a Request",
+      "disp_desc": "Associate Project",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"projects\":[{\"project\":{\"id\":\"1\"}}]}"
+      },
+      "output": {
+        "sample": "{\"projects\":{\"request\":{\"id\":1},\"project\":{\"id\":1}},\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/requests/{request_id}/projects"
+      ],
+      "desc": "This Operation allows you to get the associated Project of a request.",
+      "disp_desc": "Get associated project",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"projects\":[{\"project\":{\"id\":\"1\",\"title\":\"Project title\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Project",
+      "path": "/api/v3/requests/{request_id}/projects",
+      "desc": "This operation lets you detach(already attached) Project from a Request",
+      "disp_desc": "Dissociate Project",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"projects\":[{\"project\":{\"id\":\"1\"}}]}"
+      },
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": [
+        "/api/v3/requests/{request_id}/request_initiated_change"
+      ],
+      "desc": "This operation lets you attach a request initiated change to a Request",
+      "disp_desc": "Associate request initiated change",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request_initiated_change\":{\"change\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"request_initiated_change\":{\"request\":{\"id\":1},\"change\":{\"id\":1}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": [
+        "/api/v3/requests/{request_id}/request_initiated_change"
+      ],
+      "desc": "This Operation allows you to get the associated request initiated change of a request.",
+      "disp_desc": "Get associated request initiated change",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"change\":[{\"change\":{\"id\":\"1\",\"title\":\"Change title\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/requests/{request_id}/request_initiated_change",
+      "desc": "This operation lets you detach(already attached) request initiated change from a Request",
+      "disp_desc": "Dissociate request initiated change",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request_initiated_change\":{\"change\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": [
+        "/api/v3/requests/{request_id}/request_caused_by_change"
+      ],
+      "desc": "This operation lets you attach a Change to a Request",
+      "disp_desc": "Associate request caused by change",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request_caused_by_change\":{\"change\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"request_caused_by_change\":{\"request\":{\"id\":1},\"change\":{\"id\":1}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": [
+        "/api/v3/requests/{request_id}/request_caused_by_change"
+      ],
+      "desc": "This Operation allows you to get the associated Change of a request.",
+      "disp_desc": "Get associated request caused by change",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"change\":[{\"change\":{\"id\":\"1\",\"title\":\"Change title\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/requests/{request_id}/request_caused_by_change",
+      "desc": "This operation lets you detach(already attached) request caused by change from a Request",
+      "disp_desc": "Dissociate request caused by change",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request_caused_by_change\":{\"change\":{\"id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Purchase",
+      "path": [
+        "/api/v3/requests/{request_id}/associate_po"
+      ],
+      "desc": "This operation lets you associate Purchase Order(s) to a Service Request",
+      "disp_desc": "Associate Purchase Orders",
+      "workflow": "",
+      "isReleased": "false",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"purchase_orders\":[{\"id\":\"100000000000023369\"},{\"id\":\"100000000000023355\"}]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Purchase Orders associated successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Purchase",
+      "path": [
+        "/api/v3/requests/{request_id}/associate_po"
+      ],
+      "desc": "This operation lets you dissociate(already associated) Purchase Order(s) from a Service Request.",
+      "disp_desc": "Dissociate Purchase Orders",
+      "workflow": "",
+      "isReleased": "false",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"purchase_orders\":[{\"id\":\"100000000000023369\"},{\"id\":\"100000000000023355\"}]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Purchase Order(s) dissociated successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/move_to_trash"
+      ],
+      "desc": "This operation lets you delete(move to trash) request",
+      "disp_desc": "Delete request",
+      "workflow": "undefined",
+      "output": {
+        "sample": "{\"request\":{\"is_trashed\":true,\"is_first_response_overdue\":false,\"impact_details\":null,\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"urgency\":{\"id\":\"2\",\"name\":\"High\"},\"level\":{\"id\":\"4\",\"name\":\"Tier 4\"},\"description\":\"Hold off issuance of macbook\",\"priority\":{\"id\":\"4\",\"color\":\"#ff0000\",\"name\":\"High\"},\"sla\":null,\"template\":{\"id\":\"36\",\"name\":\"Request to start the process associated to a new hire\"},\"created_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"requester\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"is_editing_completed\":true,\"first_response_due_by_time\":null,\"service_category\":{\"id\":\"8\",\"name\":\"User Management\"},\"is_reopened\":false,\"status\":{\"id\":\"3\",\"color\":\"#006600\",\"name\":\"Onhold\"},\"approval_status\":{\"id\":\"1\",\"name\":\"Pending Approval\"},\"email_cc\":[],\"due_by_time\":null,\"closure_info\":{\"closure_code\":{\"id\":\"3\",\"name\":\"Canceled\"},\"requester_ack_comments\":null,\"closure_comments\":null,\"requester_ack_resolution\":true},\"assets\":[],\"category\":{\"id\":\"11\",\"name\":\"Operating System\"},\"editor\":{\"id\":\"5\",\"name\":\"Shawn Adams\",\"email_id\":null},\"time_elapsed\":{\"display_value\":\"0hrs 0min\",\"value\":\"960\"},\"on_behalf_of\":null,\"is_service_request\":true,\"assigned_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406493\"},\"technician\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"request_type\":{\"id\":\"2\",\"name\":\"Request For Information\"},\"department\":null,\"subject\":\"Please hold off the issuance of macbook as the employee will be joining late\",\"udf_fields\":{\"udf_multiselect_34\": [{\"name\":\"Note\",\"id\":\"217\"},{\"name\":\"Pen\",\"id\":\"219\"}],\"udf_date_601\":{\"display_value\":\"Mar 9, 2017 04:36 PM\",\"value\":\"1489057560000\"},\"udf_pick_20\":{\"name\":\"Admin\",\"id\":\"95\"},\"udf_mline_314\":\"USA\",\"udf_pick_44\":{\"name\":\"Heather Graham\",\"id\":\"386\"},\"udf_long_367\":\"123654789\",\"udf_sline_25\":\"5 th floor\",\"udf_sline_26\":\"6th floor\",\"udf_decimal_42\":\"124.00\"},\"resolution\":{\"content\":\"Mail Fetching Server problem has been fixed\",\"submitted_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"submitted_on\":{\"display_value\":\"Mar 10, 2017 12:11 PM\",\"value\":\"1489128104538\"}},\"mode\":{\"id\":\"2\",\"name\":\"Web Form\"},\"id\":\"115\",\"resolved_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"responded_time\":null,\"attachments\":[{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"application/xml\",\"id\":\"602\",\"name\":\"requests.xml\",\"content_url\":\"/api/v3/requests/115/attachments/602/download\",\"size\":{\"display_value\":\"12.48KB\",\"value\":12780}},{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"text/plain\",\"id\":\"901\",\"name\":\"_View all requests.md\",\"content_url\":\"/api/v3/requests/115/attachments/901/download\",\"size\":{\"display_value\":\"13.06KB\",\"value\":13383}}],\"completed_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"site\":null,\"email_ids_to_notify\":[\"user2@zylker.com\"],\"is_fcr\":true,\"is_overdue\":false,\"email_to\":[],\"last_updated_time\":{\"display_value\":\"Mar 10, 2017 12:40 PM\",\"value\":\"1489129838452\"},\"subcategory\":{\"id\":\"24\",\"name\":\"Mac OS X\"},\"item\":null,\"created_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406368\"},\"group\":{\"id\":\"1\",\"name\":\"Hardware Problems\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}"
+      ],
+      "desc": "Operation to delete the request permenantly(from the trash)",
+      "disp_desc": "Delete request from Trash",
+      "workflow": "undefined",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/restore_from_trash"
+      ],
+      "desc": "This operation lets you restore request from trash",
+      "disp_desc": "Restore Request from Trash",
+      "workflow": "undefined",
+      "output": {
+        "sample": "{\"request\":{\"is_trashed\":false,\"is_first_response_overdue\":false,\"impact_details\":null,\"impact\":{\"id\":\"1\",\"name\":\"High\"},\"urgency\":{\"id\":\"2\",\"name\":\"High\"},\"level\":{\"id\":\"4\",\"name\":\"Tier 4\"},\"description\":\"Hold off issuance of macbook\",\"priority\":{\"id\":\"4\",\"color\":\"#ff0000\",\"name\":\"High\"},\"sla\":null,\"template\":{\"id\":\"36\",\"name\":\"Request to start the process associated to a new hire\"},\"created_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"requester\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"is_editing_completed\":true,\"first_response_due_by_time\":null,\"service_category\":{\"id\":\"8\",\"name\":\"User Management\"},\"is_reopened\":false,\"status\":{\"id\":\"3\",\"color\":\"#006600\",\"name\":\"Onhold\"},\"approval_status\":{\"id\":\"1\",\"name\":\"Pending Approval\"},\"email_cc\":[],\"due_by_time\":null,\"closure_info\":{\"closure_code\":{\"id\":\"3\",\"name\":\"Canceled\"},\"requester_ack_comments\":null,\"closure_comments\":null,\"requester_ack_resolution\":true},\"assets\":[],\"category\":{\"id\":\"11\",\"name\":\"Operating System\"},\"editor\":{\"id\":\"5\",\"name\":\"Shawn Adams\",\"email_id\":null},\"time_elapsed\":{\"display_value\":\"0hrs 0min\",\"value\":\"960\"},\"on_behalf_of\":null,\"is_service_request\":true,\"assigned_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406493\"},\"technician\":{\"id\":\"6\",\"name\":\"Heather Graham\",\"email_id\":\"user2@zylker.com\"},\"request_type\":{\"id\":\"2\",\"name\":\"Request For Information\"},\"department\":null,\"subject\":\"Please hold off the issuance of macbook as the employee will be joining late\",\"udf_fields\":{\"udf_multiselect_34\": [{\"name\":\"Note\",\"id\":\"217\"},{\"name\":\"Pen\",\"id\":\"219\"}],\"udf_date_601\":{\"display_value\":\"Mar 9, 2017 04:36 PM\",\"value\":\"1489057560000\"},\"udf_pick_20\":{\"name\":\"Admin\",\"id\":\"95\"},\"udf_mline_314\":\"USA\",\"udf_pick_44\":{\"name\":\"Heather Graham\",\"id\":\"386\"},\"udf_long_367\":\"123654789\",\"udf_sline_25\":\"5 th floor\",\"udf_sline_26\":\"6th floor\",\"udf_decimal_42\":\"124.00\"},\"resolution\":{\"content\":\"Mail Fetching Server problem has been fixed\",\"submitted_by\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null},\"submitted_on\":{\"display_value\":\"Mar 10, 2017 12:11 PM\",\"value\":\"1489128104538\"}},\"mode\":{\"id\":\"2\",\"name\":\"Web Form\"},\"id\":\"115\",\"resolved_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"responded_time\":null,\"attachments\":[{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"application/xml\",\"id\":\"602\",\"name\":\"requests.xml\",\"content_url\":\"/api/v3/requests/115/attachments/602/download\",\"size\":{\"display_value\":\"12.48KB\",\"value\":12780}},{\"module\":\"request\",\"authentication_id\":\"1\",\"content_type\":\"text/plain\",\"id\":\"901\",\"name\":\"_View all requests.md\",\"content_url\":\"/api/v3/requests/115/attachments/901/download\",\"size\":{\"display_value\":\"13.06KB\",\"value\":13383}}],\"completed_time\":{\"display_value\":\"Mar 8, 2017 04:46 PM\",\"value\":\"1488971786156\"},\"site\":null,\"email_ids_to_notify\":[\"user2@zylker.com\"],\"is_fcr\":true,\"is_overdue\":false,\"email_to\":[],\"last_updated_time\":{\"display_value\":\"Mar 10, 2017 12:40 PM\",\"value\":\"1489129838452\"},\"subcategory\":{\"id\":\"24\",\"name\":\"Mac OS X\"},\"item\":null,\"created_time\":{\"display_value\":\"Mar 8, 2017 04:40 PM\",\"value\":\"1488971406368\"},\"group\":{\"id\":\"1\",\"name\":\"Hardware Problems\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/dependency"
+      ],
+      "desc": "This operation lets you add parent requests to a request",
+      "disp_desc": "Add Dependency",
+      "workflow": "",
+      "isReleased": "false",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"parent_request_ids\":[\"123456\",\"654321\"]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Parent requests added successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/dependency"
+      ],
+      "desc": "This operation lets you remove parent requests from a request",
+      "disp_desc": "View Dependecy",
+      "workflow": "",
+      "isReleased": "false",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"dependency list fetched successfully\",\"statuscode\":\"2000\"}]},\"requests\":[{\"id\":\"123456\",\"parent_request_ids\":[\"654321\",\"78901\"]},{\"id\":\"654321\",\"parent_request_ids\":[]},{\"id\":\"78901\",\"parent_request_ids\":[]}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/dependency"
+      ],
+      "desc": "This operation will remove requests from dependency group.",
+      "disp_desc": "Remove Dependency",
+      "workflow": "",
+      "isReleased": "false",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"parent_request_ids\":[\"123456\",\"654321\"]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Requests removed from dependency successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}/remove_parent_requests",
+      "desc": "This operation lets you remove parent requests from a request",
+      "disp_desc": "Remove Parent Requests",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"request\":{\"parent_request_ids\":[\"123456\",\"654321\"]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"messages\":[{\"type\":\"success\",\"message\":\"Parent requests removed successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "isReleased": "false",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name":"",
+      "method":"PUT",
+      "moduleName" : "Request",
+      "path":"/api/v3/requests/{request_id}/tag",
+      "desc":"This operation using to associate tags to request",
+      "disp_desc":"Add tags in request",
+      "workflow":"",
+      "input":{
+        "name":"INPUT_DATA",
+        "sample":"{\"tags\":[{\"id\":\"1\"},{\"name\":\"Test Tag\"}]}"
+      },
+      "output":{"response_status":[{"status_code":2000,"messages":[{"status_code":2000,"type":"success","message":"Request tags are associated successfully"}],"status":"success"}],"tags":[{"name":"Android","id":"2"}]},
+      "inOP":"true",
+      "inOD":"true",
+      "isReleased":"true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "long",
+      "desc": "Id of this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "display_id",
+      "type": "long",
+      "desc": "Display id of this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "subject",
+      "type": "String",
+      "desc": "Subject of this request",
+      "graphView": "",
+      "column": "WORKORDER : TITLE",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "description",
+      "type": "HTML Desc",
+      "desc": "Description of this request",
+      "graphView": "",
+      "column": "WORKORDER : DESCRIPTION",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "short_description",
+      "type": "String",
+      "desc": "A short description of this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "false",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "request_type",
+      "type": "Object",
+      "desc": "Type of this request",
+      "graphView": "",
+      "column": "WORKORDERSTATES : REQUESTTYPEID",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "impact ",
+      "type": "Object",
+      "desc": "Impact of this request\n",
+      "graphView": "",
+      "column": "WORKORDERSTATES : IMPACTID",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "impact_details",
+      "type": "String",
+      "desc": "Description about the impact of this request\n",
+      "graphView": "",
+      "column": "WORKORDERSTATES : IMPACTDETAILS",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "desc": "Indicates the current status of this request\n",
+      "graphView": "",
+      "column": "WORKORDERSTATES : STATUSID",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "mode",
+      "type": "Object",
+      "desc": "The mode in which this request is created. <br/>\nEx :- {\"id\": \"1101\", \"name\": \"E-mail\"}",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "Level",
+      "type": "Object",
+      "desc": "Level of the request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "urgency",
+      "type": "Object",
+      "desc": "Urgency of the request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "priority",
+      "type": "Object",
+      "desc": "Priority of the request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "service_category",
+      "type": "Object",
+      "desc": "Service category to which this request belongs\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "requester",
+      "type": "Object",
+      "desc": "Indicates the requester of this request\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "department",
+      "type": "Object",
+      "desc": "Department to which this requester belongs",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "assets",
+      "type": "Array of Objects",
+      "desc": "Array of asset objects associated to this request.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },{
+      "name": "deleted_assets",
+      "type": "Array of Objects",
+      "desc": "Array of deleted asset names associated to this request.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },{
+      "name": "deleted_on",
+      "type": "Object",
+      "desc": "Indicates the time at which this request is deleted",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },{
+      "name": "deleted_by",
+      "type": "Object",
+      "desc": "Indicates the user who deleted the request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Denotes the site to which this request belongs",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "group",
+      "type": "Object",
+      "desc": "Group to which this request belongs\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "technician ",
+      "type": "Object",
+      "desc": "Technician assigned to this request\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "category",
+      "type": "Object",
+      "desc": "Category to which this request belongs\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "subcategory ",
+      "type": "Object",
+      "desc": "Subcategory to which this request belongs\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "item",
+      "type": "Object",
+      "desc": "Item of this request\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "on_behalf_of",
+      "type": "Object",
+      "desc": "Requests created on behalf of an another user",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "service_approvers",
+      "type": "Array of Objects",
+      "desc": "Array of user objects containing the approver(s) for this request\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "sla",
+      "type": "Object",
+      "desc": "SLA details associated with this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "service_cost",
+      "type": "double",
+      "desc": "Cost involved in the service other than resources.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "total_cost",
+      "type": "double",
+      "desc": "Service cost plus the selected resource cost.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "template",
+      "type": "Object",
+      "desc": "Indicates the template which is used to create this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "request_template_task_ids",
+      "type": "Array of Objects",
+      "desc": "Array of template tasks id objects which are associated to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "my_draft",
+      "type": "Object",
+      "desc": "Contains trimmed draft data of the request saved by the logged in user",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "desc": "Indicates the requester who created this request\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "editor",
+      "type": "Object",
+      "desc": "User having intermediate editing role for this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "email_ids_to_notify",
+      "type": "Array of Objects",
+      "desc": "Array of Email ids, which needs to be notified about the happenings of this request ",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "email_to",
+      "type": "Array",
+      "desc": "List of email addresses(to addresses) which received the request through e-mail",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "email_cc",
+      "type": "Array",
+      "desc": "List of e-mail addresses(cc addresses) which received the request through e-mail.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "update_reason",
+      "type": "String",
+      "desc": "The reason for updating this request\t\n\t",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "status_change_comments",
+      "type": "String",
+      "desc": "Comments added while changing the request's status",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "time_elapsed",
+      "type": "long",
+      "desc": "Indicates the time spent on this request\t",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "approval_status",
+      "type": "String",
+      "desc": "Denotes the approval status of this request.(Approved/Pending Approval/Rejected)\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "notification_status",
+      "type": "String",
+      "desc": "Shows the current status of request's replies, whether last one from requester or technician.<br/>\nExample :- \"requester_reply\"",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "my_task_pending_count",
+      "type": "Number",
+      "desc": "Count of pending tasks related to this request assigned to the logged in user",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "task_pending_count",
+      "type": "Number",
+      "desc": "Count of pending tasks related to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "task_completed_count",
+      "type": "Number",
+      "desc": "Count of completed tasks related to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "my_task_completed_count",
+      "type": "Number",
+      "desc": "Count of completed tasks related to this request assigned to logged in user",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "worklog_timer_count",
+      "type": "Number",
+      "desc": "Count of worklog timers associated to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "linked_requests_count",
+      "type": "Number",
+      "desc": "Count of requests linked to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "attachment_count",
+      "type": "Number",
+      "desc": "Count of attachments attached to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "unreplied_count",
+      "type": "Number",
+      "desc": "Count of mails related to this request which are not responded from the technician's side",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "purchase_order_count",
+      "type": "Number",
+      "desc": "Count of purchase orders associated to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "reminder_count",
+      "type": "Number",
+      "desc": "Count of reminders associated to this request for the logged in user",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "created_time",
+      "type": "Date Object",
+      "desc": "Indicates the time at which this request is created\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "due_by_time",
+      "type": "Date Object",
+      "desc": "Indicates the time at which this request is scheduled to be completed\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "first_response_due_by_time",
+      "type": "Date Object",
+      "desc": "Indicates the time at which the first response for this request is scheduled\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "completed_time",
+      "type": "Date Object",
+      "desc": "Indicates the time at which this request is completed\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "resolved_time",
+      "type": "Date Object",
+      "desc": "Indicates the time at which this request is resolved\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "responded_time",
+      "type": "Date Object",
+      "desc": "Indicates the time  at which this request is responded\n",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "assigned_time",
+      "type": "Date Object",
+      "desc": "Indicates the time at which this request is assigned to a technician",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "last_updated_time",
+      "type": "Date Object",
+      "desc": "Indicates the time when this request is last updated\n\t",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "project",
+      "type": "Object",
+      "desc": "Associated project details. Can be updated via associate/dissociate project operations only",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "request_initiated_change",
+      "type": "Object",
+      "desc": "Associated change details. Can be updated via associate/dissociate change operations only",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "request_caused_by_change",
+      "type": "Object",
+      "desc": "Associated change details. Can be updated via associate/dissociate change operations only",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "false",
+      "inOP": "false"
+    },
+    {
+      "name": "problem",
+      "type": "Object",
+      "desc": "Associated problem details. Can be updated via associate/dissociate problem operations only",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "purchase_orders",
+      "type": "Array of Objects",
+      "desc": "Associated purchase orders details. Can be updated via associate/dissociate purchase orders operations only",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "parent_request_ids",
+      "type": "Array",
+      "desc": "Holds array of request ids, which are parents to this request. Use add parent operation for adding dependencies.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "child_request_ids",
+      "type": "Array",
+      "desc": "Holds array of request ids, which are children to this request. Use add parent operation for adding dependencies.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "is_last_child",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is the last child of a dependency group",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "false"
+    },
+    {
+      "name": "has_request_initiated_change",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is associated to a change or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_request_caused_by_change",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is caused by a change or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_project",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is associated to a project or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_problem",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is associated to a problem or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_purchase_orders",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is associated to Purchase Order(s)",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_draft",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request has drafts or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_reopened",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is reopened or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_dependency",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request has a dependency or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_fcr",
+      "type": "Boolean",
+      "desc": "Boolean value indicating if the request has been marked as First Call Resolution",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_linked_requests",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request has any linked requests or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_attachments",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request has any attachments or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_notes",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request has any notes or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_trashed",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is in trash",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_service_request",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is a service request or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_overdue",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is overdue",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_read",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request's replies are read or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_first_response_overdue",
+      "type": "Boolean",
+      "desc": "Boolean value indicating whether this request is in overdue to make first response",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "has_my_worklog_timer",
+      "type": "Boolean",
+      "desc": "Boolean value indicating if the request has a worklog timer for the logged user",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_editing_completed",
+      "type": "Boolean",
+      "desc": "Boolean value indicating if the configured editor has already completed his editing.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "attachments",
+      "type": "Array of Objects",
+      "desc": "Attached file list to this request ",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "udf_fields",
+      "type": "Object",
+      "desc": "Holds udf fields' values associated with the request. Data sample :- \n\"udf_fields\":{\"udf_multiselect_34\": [{\"name\":\"Note\",\"id\":\"217\"},{\"name\":\"Pen\",\"id\":\"219\"}],\"udf_date_601\":{\"display_value\":\"Mar 9, 2017 04:36 PM\",\"value\":\"1489057560000\"},\"udf_pick_20\":{\"name\":\"Admin\",\"id\":\"95\"},\"udf_mline_314\":\"USA\",\"udf_pick_44\":{\"name\":\"Heather Graham\",\"id\":\"386\"},\"udf_long_367\":\"123654789\",\"udf_sline_25\":\"5 th floor\",\"udf_sline_26\":\"6th floor\",\"udf_decimal_42\":\"124.00\"}",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "requester_reply_count",
+      "type": "Number",
+      "desc": "Denotes number of replies sent by the requester for this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "technician_reply_count",
+      "type": "Number",
+      "desc": "Denotes the number of replies sent by the technician for this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "note_count",
+      "type": "Number",
+      "desc": "Denotes the number of notes added to this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "conversation_count",
+      "type": "Number",
+      "desc": "Denotes the number of conversations on this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "approval_completed_count",
+      "type": "Number",
+      "desc": "Denotes the number of approvals completed for this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "approval_pending_count",
+      "type": "Number",
+      "desc": "Denotes the number of pending approvals for this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "inOP": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "entityName": "Request",
+  "fileName": "Request",
+  "basetable": "WORKORDER",
+  "entityDesc": "",
+  "listeners": [],
+  "page_details": {},
+  "table_name": "",
+  "path": "",
+  "settings_name": "",
+  "settings_relational_mapping": "",
+  "handler": "",
+  "transformer": "",
+  "attachment_module": "",
+  "bean": "",
+  "udf_module_name": "",
+  "syslog_module": "",
+  "cache_key": "",
+  "personality": "",
+  "listview_personality": "",
+  "history_table": "",
+  "history_fkcolumn": "",
+  "history_diff_table": "",
+  "license_to_check": "",
+  "entity_group": "",
+  "optional_tables": [
+    "[object Object]"
+  ],
+  "inOP": "true",
+  "inOD": "true",
+  "subsections": {
+    "resolution": {
+      "desc": "Resolution given for the request will be captured.",
+      "inOD": "true",
+      "inOP": "true",
+      "attributes": [
+        {
+          "name": "content",
+          "type": "String",
+          "desc": "Resolution content provided by the technician to resolve this request.",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOP": "true",
+          "inOD": "true",
+          "isReleased": "true"
+        },
+        {
+          "name": "submitted_on",
+          "type": "Date Object",
+          "desc": "Denotes the submitted time of the resolution",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReadOnly": "true",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "submitted_by",
+          "type": "Object",
+          "desc": "Denotes the technician who provided the resolution.",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReadOnly": "true",
+          "isReleased": "true",
+          "relEntity": {
+            "name": "Technician",
+            "type": "referential",
+            "relation": "1to1"
+          },
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "add_to_linked_requests",
+          "type": "Boolean",
+          "desc": "Boolean value indicating whether to add resolution content to the linked requests",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true"
+        }
+      ],
+      "isReleased": "true"
+    },
+    "closure_info": {
+      "desc": "Information like closure_code, comments while closing request is captured under this subsection",
+      "attributes": [
+        {
+          "name": "closure_code",
+          "type": "Object",
+          "desc": "Denotes the closure code  info of the Request\t",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOP": "true",
+          "isReleased": "true"
+        },
+        {
+          "name": "requester_ack_resolution",
+          "type": "Boolean",
+          "desc": "Denotes if the requester has acknowledged the resolution he/she has been given.",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOP": "true",
+          "inOD": "true",
+          "isReleased": "true"
+        },
+        {
+          "name": "requester_ack_comments",
+          "type": "String",
+          "desc": "Comments from the requester in regards to the resolution he/she has been given",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "closure_comments",
+          "type": "String",
+          "desc": "Comments for closing the request",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOP": "true",
+          "inOD": "true",
+          "isReleased": "true"
+        }
+      ],
+      "inOD": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    "onhold_scheduler": {
+      "desc": "Onhold scheduler details",
+      "inOD": "true",
+      "inOP": "true",
+      "attributes": [
+        {
+          "name": "scheduled_time",
+          "type": "Date Object",
+          "desc": "Denotes the scheduled time for the onhold scheduler to change the Request's status",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "desc": "Comments for the onhold schedule",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOP": "true",
+          "inOD": "true",
+          "isReleased": "true"
+        },
+        {
+          "name": "holded_by",
+          "type": "Object",
+          "desc": "User object of the user who put the request onhold",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReadOnly": "true",
+          "inOP": "true",
+          "inOD": "true",
+          "isReleased": "true"
+        },
+        {
+          "name": "change_to_status",
+          "type": "Object",
+          "desc": "Status object to which the request is scheduled to move to, after the onhold scheduler is completed.",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "inOP": "true",
+          "inOD": "true",
+          "isReleased": "true"
+        }
+      ],
+      "isReleased": "true"
+    },
+    "linked_to_request": {
+      "desc": "Contains linked to request details",
+      "attributes": [
+        {
+          "name": "request",
+          "type": "Object",
+          "desc": "Request object containing minimal request data",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "desc": "Comments added for linking requests",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true",
+          "inOD": "true"
+        }
+      ],
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    }
+  },
+  "lastModified": 1472490832000,
+  "isReleased": "true"
+}

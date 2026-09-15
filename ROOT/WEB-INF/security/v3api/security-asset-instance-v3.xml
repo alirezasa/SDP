@@ -1,0 +1,901 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <regexes>
+        <regex name="api_name" value="(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)"/>
+        <regex name="facility_asset_api_name_regex" value="(asset_asset|asset_coffee_vending_machine|asset_electrical_heater|asset_refrigerator|asset_television|asset_water_dispenser|asset_speaker|asset_stove|asset_gym_equipment|asset_saw|asset_power_generator|asset_power_backup|asset_battery|asset_electrical_panel|asset_transformer|asset_escalator|asset_elevator|asset_switch|asset_fuse|asset_plug|asset_pdu|asset_table|asset_chair|asset_drawer_and_cabinet|asset_locker|asset_sofa|asset_air_conditioner|asset_cooling_fan_and_tower|asset_boiler|asset_environmental_control_console|asset_compressor_and_fan|asset_chiller|asset_warm_air_furnace|asset_pump|asset_window_air_conditioner|asset_air_filter|asset_hot_water_heater|asset_fire_extinguisher|asset_smoke_detector|asset_fire_alarm|asset_safety_mirror|asset_flash_light|asset_first_aid_kit|asset_sign_and_label|asset_receptor_and_mask|asset_surveillance_camera|asset_communicator|asset_biometric|asset_walkie_talkie|asset_alarm_and_detector|asset_padlock|asset_badge|asset_lanyard|asset_tray|asset_ladder|asset_scaffold_and_climbing_equipment|asset_painting_brush|asset_roller|asset_plastic_and_sheet|asset_painters_wear|asset_spray_equipment|asset_vacuum_cleaner|asset_carpet_sweeper|asset_dishwasher|asset_leaf_blower|asset_lawnmower|asset_housekeeping_trolley|asset_floor_polisher|asset_receptacle_and_container|asset_broom|asset_brush|asset_fork_lift|asset_earth_mover|asset_crane|asset_groundskeeping_equipment|asset_faucet|asset_driller|asset_restroom_fitting|asset_pipe_fitting_and_coupling|asset_plumbing_tool)"/>
+        <regex name="facility_asset_api_plural_name_regex" value="(asset_coffee_vending_machines|asset_electrical_heaters|asset_refrigerators|asset_televisions|asset_water_dispensers|asset_speakers|asset_stoves|asset_gym_equipments|asset_saws|asset_power_generators|asset_power_backups|asset_batteries|asset_electrical_panels|asset_transformers|asset_escalators|asset_elevators|asset_switches|asset_fuses|asset_plugs|asset_pdus|asset_tables|asset_chairs|asset_drawers_and_cabinets|asset_lockers|asset_sofas|asset_air_conditioners|asset_cooling_fans_and_towers|asset_boilers|asset_environmental_control_consoles|asset_compressors_and_fans|asset_chillers|asset_warm_air_furnaces|asset_pumps|asset_window_air_conditioners|asset_air_filters|asset_hot_water_heaters|asset_fire_extinguishers|asset_smoke_detectors|asset_fire_alarms|asset_safety_mirrors|asset_flash_lights|asset_first_aid_kits|asset_signs_and_labels|asset_receptors_and_masks|asset_surveillance_cameras|asset_communicators|asset_biometrics|asset_walkie_talkies|asset_alarms_and_detectors|asset_padlocks|asset_badges|asset_lanyards|asset_trays|asset_ladders|asset_scaffold_and_climbing_equipments|asset_painting_brushes|asset_rollers|asset_plastic_and_sheets|asset_painters_wears|asset_spray_equipments|asset_vacuum_cleaners|asset_carpet_sweepers|asset_dishwashers|asset_leaf_blowers|asset_lawnmowers|asset_housekeeping_trolleys|asset_floor_polishers|asset_receptacles_and_containers|asset_brooms|asset_brushes|asset_fork_lifts|asset_earth_movers|asset_cranes|asset_groundskeeping_equipments|asset_faucets|asset_drillers|asset_restroom_fittings|asset_pipe_fittings_and_couplings|asset_plumbing_tools|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="custom_asset_api_name_regex" value="(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))"/>
+        <regex name="it_asset_hierarchy_api_plural_name_regex" value="(asset_assets|asset_computers|asset_workstations|asset_desktops|asset_laptops|asset_2in1tablets|asset_servers|asset_printers|asset_routers|asset_firewalls|asset_storage_devices|asset_access_points|asset_racks|asset_upses|asset_video_encoders|asset_ipses|asset_ntps|asset_room_sensors|asset_mobile_devices|asset_smartphones|asset_tablets|asset_ip_phones|asset_cisco_ip_phones|asset_switches|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="non_it_asset_hierarchy_api_plural_name_regex" value="(asset_projectors|asset_scanners|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="components_hierarchy_api_plural_name_regex" value="(asset_keyboards|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="non_it_components_hierarchy_api_plural_name_regex" value="(asset_keyboards|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="access_point_hierarchy_api_plural_name_regex" value="(asset_access_points|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="computer_hierarchy_api_plural_name_regex" value="(asset_computers|asset_workstations|asset_desktops|asset_laptops|asset_2in1tablets|asset_servers|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="server_hierarchy_api_plural_name_regex" value="(asset_servers|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="workstation_hierarchy_api_plural_name_regex" value="(asset_workstations|asset_2in1tablets|asset_desktops|asset_laptops|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="2_in_1_tablet_hierarchy_api_plural_name_regex" value="(asset_2in1tablets|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="desktop_hierarchy_api_plural_name_regex" value="(asset_desktops|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="laptop_hierarchy_api_plural_name_regex" value="(asset_laptops|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="firewall_hierarchy_api_plural_name_regex" value="(asset_firewalls|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="ip_phone_hierarchy_api_plural_name_regex" value="(asset_ip_phones|asset_cisco_ip_phones|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="cisco_ip_phone_hierarchy_api_plural_name_regex" value="(asset_cisco_ip_phones|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="ips_hierarchy_api_plural_name_regex" value="(asset_ipses|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="mobile_device_hierarchy_api_plural_name_regex" value="(asset_mobile_devices|asset_smartphones|asset_tablets|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="smart_phone_hierarchy_api_plural_name_regex" value="(asset_smartphones|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="tablet_hierarchy_api_plural_name_regex" value="(asset_tablets|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="ntp_hierarchy_api_plural_name_regex" value="(asset_ntps|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="printer_hierarchy_api_plural_name_regex" value="(asset_printers|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="rack_hierarchy_api_plural_name_regex" value="(asset_racks|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="room_sensor_hierarchy_api_plural_name_regex" value="(asset_room_sensors|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="router_hierarchy_api_plural_name_regex" value="(asset_routers|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="storage_device_hierarchy_api_plural_name_regex" value="(asset_storage_devices|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="switch_hierarchy_api_plural_name_regex" value="(asset_switches|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="ups_hierarchy_api_plural_name_regex" value="(asset_upses|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="video_encoder_hierarchy_api_plural_name_regex" value="(asset_video_encoders|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="projector_hierarchy_api_plural_name_regex" value="(asset_projectors|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="scanner_hierarchy_api_plural_name_regex" value="(asset_scanners|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="keyboard_hierarchy_api_plural_name_regex" value="(asset_keyboards|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))"/>
+        <regex name="all_asset_refer_entity_name_regex" value="(product|asset_depreciation_detail|department|site|asset_state|asset_asset|user|vendor|asset_module|asset_category|asset_operation_data_source_info|asset_operation_code|asset_operation_trigger|asset_operation_status|purchase_order|asset_type|storage_device_type)"/>
+        <regex name="all_asset_refer_entity_api_name_regex" value="(product|department|site|state|used_by_asset|user|vendor|module|asset_category|created_by|last_operation_data_source_info|last_operation_status|last_operation_status_code|last_operation_triggered_by|last_scan_status|last_scan_status_code|last_scan_datasource_info|last_scan_triggered_by|last_scan_success_datasource_info|last_scan_success_triggered_by|modified_by|purchase_order|asset_type|space|chassis_type|assigned_to|domain|mobile_os_type|vm_platform|vm_host|storage_device_type|linked_entity|linked_instance|device_type|region_sys_attribute|technician_sys_attribute|site_sys_attribute|region|computer_group)"/>
+        <regex name="asset_refer_entity_api_name_regex" value="(product|depreciation_detail|department|site|state|used_by_asset|user|vendor|module|asset_category|created_by|last_operation_data_source_info|last_operation_status|last_operation_status_code|last_operation_triggered_by|last_scan_status|last_scan_status_code|modified_by|product_depreciation|purchase_order|asset_type|linked_entity|linked_instance|region_sys_attribute|technician_sys_attribute|site_sys_attribute|region)"/>
+        <regex name="computer_refer_entity_api_name_regex" value="(product|depreciation_detail|department|site|state|used_by_asset|user|vendor|module|asset_category|created_by|last_operation_data_source_info|last_operation_status|last_operation_status_code|last_operation_triggered_by|last_scan_status|last_scan_status_code|modified_by|product_depreciation|purchase_order|asset_type|chassis_type|domain|linked_entity|linked_instance|device_type|region_sys_attribute|technician_sys_attribute|site_sys_attribute|region|computer_group)"/>
+        <regex name="virtual_host_refer_entity_api_name_regex" value="(product|depreciation_detail|department|site|state|used_by_asset|user|vendor|module|asset_category|created_by|last_operation_data_source_info|last_operation_status|last_operation_status_code|last_operation_triggered_by|last_scan_status|last_scan_status_code|modified_by|product_depreciation|purchase_order|asset_type|chassis_type|domain|vm_platform|linked_entity|linked_instance|device_type|region_sys_attribute|technician_sys_attribute|site_sys_attribute|region|computer_group)"/>
+        <regex name="virtual_machine_refer_entity_api_name_regex" value="(product|depreciation_detail|department|site|state|used_by_asset|user|vendor|module|asset_category|created_by|last_operation_data_source_info|last_operation_status|last_operation_status_code|last_operation_triggered_by|last_scan_status|last_scan_status_code|modified_by|product_depreciation|purchase_order|asset_type|chassis_type|domain|vm_host|linked_entity|linked_instance|device_type|region_sys_attribute|technician_sys_attribute|site_sys_attribute|region|computer_group)"/>
+        <regex name="mobile_device_refer_entity_api_name_regex" value="(product|depreciation_detail|department|site|state|used_by_asset|user|vendor|module|asset_category|created_by|last_operation_data_source_info|last_operation_status|last_operation_status_code|last_operation_triggered_by|last_scan_status|last_scan_status_code|modified_by|product_depreciation|purchase_order|asset_type|linked_entity|linked_instance|mobile_os_type|region_sys_attribute|technician_sys_attribute|site_sys_attribute|region)"/>
+        <regex name="rack_refer_entity_api_name_regex" value="(product|depreciation_detail|department|site|state|used_by_asset|user|vendor|module|asset_category|created_by|last_operation_data_source_info|last_operation_status|last_operation_status_code|last_operation_triggered_by|last_scan_status|last_scan_status_code|modified_by|product_depreciation|purchase_order|asset_type|linked_entity|linked_instance|assigned_to|region_sys_attribute|technician_sys_attribute|site_sys_attribute|region)"/>
+        <regex name="all_asset_sub_form_api_plural_name_regex" value="(network_adapters|hard_disks|keyboards|logical_drives|memory_modules|monitors|motherboards|mouse_devices|physical_drives|ports|printer_details|processors|sound_cards|usb_controllers|user_accounts|video_cards|switch_ports|virtual_machines|interfaces|cameras|sensors|netapp_volumes|netapp_physical_disks|netapp_aggregators|output_units|marker_sub_units|marker_supply_units|input_units)"/>
+        <regex name="all_asset_sub_entity_api_plural_name_regex" value="(applications)"/>
+        <regex name="all_asset_sub_form_name_regex" value="(asset_sub_network_adapter|asset_sub_hard_disk|asset_sub_keyboard|asset_sub_logical_drive|asset_sub_memory_module|asset_sub_monitor|asset_sub_motherboard|asset_sub_mouse|asset_sub_physical_drive|asset_sub_port|asset_sub_printer|asset_sub_processor|asset_sub_sound_card|asset_sub_usb_controller|asset_sub_user_account|asset_sub_multimedia|asset_sub_switch_port|asset_sub_mobile_application|mobile_application|asset_sub_device_interface|asset_sub_camera|asset_sub_sensor|asset_sub_netapp_volume|asset_sub_netapp_physical_disk|asset_sub_netapp_aggregator|asset_sub_output_unit|asset_sub_marker_sub_unit|asset_sub_marker_supply_unit|asset_sub_input_unit)"/>
+        <regex name="all_asset_sub_entity_name_regex" value="(asset_sub_mobile_application)"/>
+        <regex name="all_it_asset_sub_form_api_plural_name_regex" value="(network_adapters)"/>
+        <regex name="computer_sub_form_api_plural_name_regex" value="(network_adapters|hard_disks|keyboards|logical_drives|memory_modules|monitors|motherboards|mouse_devices|physical_drives|ports|printer_details|processors|sound_cards|usb_controllers|user_accounts|video_cards)"/>
+        <regex name="printer_sub_form_api_plural_name_regex" value="(network_adapters|input_units|marker_supply_units|marker_sub_units|output_units)"/>
+        <regex name="mobile_device_sub_form_api_plural_name_regex" value="(network_adapters|certificates|network)"/>
+        <regex name="mobile_device_sub_entity_api_plural_name_regex" value="(applications)"/>
+        <regex name="room_sensor_sub_form_api_plural_name_regex" value="(network_adapters|sensors)"/>
+        <regex name="router_sub_form_api_plural_name_regex" value="(network_adapters|interfaces)"/>
+        <regex name="storage_device_sub_form_api_plural_name_regex" value="(network_adapters|netapp_aggregators|netapp_physical_disks|netapp_volumes)"/>
+        <regex name="switch_sub_form_api_plural_name_regex" value="(network_adapters|switch_ports)"/>
+        <regex name="video_encoder_sub_form_api_plural_name_regex" value="(network_adapters|cameras)"/>
+        <regex name="all_asset_sub_form_refer_api_plural_name_regex" value="(mobile_os_type)"/>
+        <regex name="computer_hardware_api_plural_name_regex" value="(network_adapters|hard_disks|keyboards|logical_drives|memory_modules|monitors|motherboards|mouse_devices|physical_drives|ports|printer_details|processors|sound_cards|usb_controllers|user_accounts|video_cards)"/>
+        <regex name="computer_sub_form_api_plural_name_regex" value="(hard_disks|keyboards|logical_drives|memory_modules|monitors|motherboards|mouse_devices|physical_drives|ports|printer_details|processors|sound_cards|usb_controllers|user_accounts|video_cards)"/>
+        <regex name="computer_sub_entity_api_name_regex" value="(service_pack|software)"/>
+        <regex name="computer_sub_entity_api_plural_name_regex" value="(service_packs|softwares)"/>
+        <regex name="computer_refer_entity_name_regex" value="(asset_sub_service_pack|asset_sub_software)"/>
+        <regex name="computer_refer_entity_api_name_regex" value="(suggested_user|suggested_department|chassis_type|computer_group|domain)"/>
+        <regex name="history_api_name_regex" value="(remote_session_history)"/>
+        <regex name="mobile_device_refer_entity_name_regex" value="(mobile_os_type)"/>
+        <regex name="mobile_device_refer_api_name_regex" value="(mobile_os_type)"/>
+        <regex name="all_asset_refer_entity_field_api_name_regex" value="(state|product|module|asset_category|asset_type|category|type)"/>
+        <regex name="all_asset_second_order_refer_field_api_name_regex" value="(asset_category|asset_type)"/>
+    </regexes>
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="dynamic_asset" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}">
+            <param name="input_data" type="JSONObject" template="all_asset_template" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}">
+            <param name="input_data" type="JSONObject" template="asset_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}">
+            <param name="input_data" type="JSONObject" template="all_asset_template" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)">
+            <param name="input_data" type="JSONObject" template="all_asset_template" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}">
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)"/>
+        <!-- convenience operation start -->
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_modify_type">
+            <param name="input_data" type="JSONObject" template="all_asset_template" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_assign_to_department">
+            <param name="input_data" type="JSONObject" template="all_asset_template" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_metadata">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_assets/_get_unknown_devices"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/export">
+            <param name="input_data" type="JSONObject" template="asset_export_info" max-len="-1"/>
+        </url>
+        <url method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_upload">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_upload" operation-param="for" operation-value="import">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="theFile" max-size="10240" allowed-extensions="xls,csv,xlsx" content-type-name="xls,csv,xlsx" allow-empty="false">
+                <filename regex="filename" max-len="250"/>
+            </file>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ConfigureCMDB" path="/api/v3/${all_asset_api_plural_name_regex}/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_for_field_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_total_count">
+            <param name="input_data" type="JSONObject" template="asset_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_copy">
+            <param name="input_data" type="JSONObject" template="copy_template" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_modify_type">
+            <param name="input_data" type="JSONObject" template="all_asset_template" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_state_history" />
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_association_filter"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_scan_info"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_metadata">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="post" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_upload">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_upload">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <!-- convenience operation end -->
+    </urls>
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="dynamic_asset_sub_form_urls" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--sub form start-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_sub_form_api_plural_name_regex}">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS,CreateInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_sub_form_api_plural_name_regex}/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_sub_form_api_plural_name_regex}/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/virtual_machines/virtual_machine">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/virtual_machines/virtual_machine">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <!--sub form end-->
+    </urls>
+
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="dynamic_asset_switch_port" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/switch_ports/(admin_state|operational_state)">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/switch_ports/(admin_state|operational_state)">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/switch_ports/(\d+)/(admin_state|operational_state)">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/switch_ports/(admin_state|operational_state)/_metainfo">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/switch_ports/(admin_state|operational_state)/_metainfo">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/switch_ports/(\d+)/(admin_state|operational_state)/_metainfo">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+    </urls>
+
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_refer_entity_urls" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--refer entity start-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_refer_entity_api_name_regex}">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_refer_entity_api_name_regex}/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_refer_entity_api_name_regex}/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_refer_entity_api_name_regex}/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_refer_entity_api_name_regex}/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${all_asset_refer_entity_api_name_regex}/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/user/(\d+)/images/(\d+)"/>
+        <!--refer entity end-->
+        <!-- second order refer entity starts -->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${all_asset_refer_entity_api_name_regex}/${all_asset_second_order_refer_field_api_name_regex}">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <!-- second order refer entity ends -->
+    </urls>
+
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_depreciation_detail_urls" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--depreciation detail start-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_detail">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_detail/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_detail/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_detail/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_detail/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_detail/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/(\d+)/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_detail/depreciation_type/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/depreciation_type/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_detail/(\d+)/depreciation_type/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <!--depreciation detail end-->
+    </urls>
+
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="product_depreciation_detail_urls" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--product depreciation start-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/product_depreciation">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/product_depreciation/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/product_depreciation/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/product_depreciation/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/product_depreciation/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/product_depreciation/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/(\d+)/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/product_depreciation/depreciation_type/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/depreciation_type/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/product_depreciation/(\d+)/depreciation_type/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <!--product depreciation end-->
+    </urls>
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_depreciation_values_urls" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--depreciation values start-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_values">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_values/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/depreciation_values/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_values/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_values/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_values/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/depreciation_values/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <!--depreciation values end-->
+    </urls>
+
+    <!--Asset Attachments and Connections start -->
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_sub_attachments" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--attachments -->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments/(\d+)">
+            <throttles name="attachemnt_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments">
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments/_download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/attachments/(\d+)/_download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments/(\d+)/_download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/attachments/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+
+        <!-- connections -->
+        <url method="post" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections">
+            <param name="input_data" type="JSONObject" template="asset_connection" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(\d+)">
+            <param name="input_data" type="JSONObject" template="asset_connection" max-len="-1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections">
+            <param name="input_data" type="JSONObject" template="asset_connection" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(child_asset|parent_asset)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(child_asset|parent_asset)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(\d+)/(child_asset|parent_asset)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(child_asset|parent_asset)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(\d+)/(child_asset|parent_asset)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_connections/(child_asset|parent_asset)/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <!--business service connections -->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="post" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections">
+            <param name="input_data" type="JSONObject" template="business_service_connection" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(\d+)">
+            <param name="input_data" type="JSONObject" template="business_service_connection" max-len="-1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections">
+            <param name="input_data" type="JSONObject" template="business_service_connection" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(asset|service_category)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(asset|service_category)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(\d+)/(asset|service_category)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(asset|service_category)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(\d+)/(asset|service_category)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/business_service_connections/(asset|service_category)/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <!--asset attachments -->
+        <url method="post" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments">
+            <param name="input_data" type="JSONObject" template="asset_attachment" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments">
+            <param name="input_data" type="JSONObject" template="asset_attachment" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(\d+)">
+            <param name="input_data" type="JSONObject" template="asset_attachment" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(child_asset|parent_asset)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(child_asset|parent_asset)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(\d+)/(child_asset|parent_asset)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(child_asset|parent_asset)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(\d+)/(child_asset|parent_asset)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/asset_attachments/(child_asset|parent_asset)/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <!--component attachments -->
+        <url method="post" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments">
+            <param name="input_data" type="JSONObject" template="asset_attachment" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(\d+)">
+            <param name="input_data" type="JSONObject" template="asset_attachment" max-len="-1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments">
+            <param name="input_data" type="JSONObject" template="asset_attachment" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(child_asset|parent_asset)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(child_asset|parent_asset)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(\d+)/(child_asset|parent_asset)/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(child_asset|parent_asset)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(\d+)/(child_asset|parent_asset)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/component_attachments/(child_asset|parent_asset)/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+    </urls>
+
+    <!--Asset Attachments and Connections end -->
+
+    <!-- child asset start -->
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="child_assets" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/child_assets/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/_total_count">
+            <param name="input_data" type="JSONObject" template="asset_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/child_assets/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+    </urls>
+    <!-- child asset end -->
+
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_history_urls" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--asset history start-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${history_api_name_regex}">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)//${history_api_name_regex}/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${history_api_name_regex}/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${history_api_name_regex}/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${history_api_name_regex}/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_history_diff">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_history_diff/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_operation_source">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <!--asset history end-->
+    </urls>
+
+    <!-- //TODO for advanced filter-->
+
+    <!-- udf fields URL -->
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_udf_fields_urls" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/udf_fields/([a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/udf_fields/([a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/${api_name}(/udf_fields)?/((udf)_[a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${api_name}(/udf_fields)?/((udf)_[a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${api_name}/(\d+)(/udf_fields)?/((udf)_[a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${api_name}/${api_name}(/udf_fields)?/((udf)_[a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${api_name}/(\d+)/${api_name}(/udf_fields)?/((udf)_[a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/${api_name}/(\d+)/${api_name}/(\d+)(/udf_fields)?/((udf)_[a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}(/udf_fields)?/((udf)_[a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+    </urls>
+
+    <!--asset contract start-->
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_contracts" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="ViewContract" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/contracts/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/contracts">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/contracts/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/contracts/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/contracts/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/contracts/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/contracts/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+    </urls>
+    <!--asset contract end-->
+
+    <!-- asset sub entity start -->
+    <!-- asset costs start -->
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_sub_costs" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs">
+            <param name="input_data" type="JSONObject" template="asset_sub_cost" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs">
+            <param name="input_data" type="JSONObject" template="asset_sub_cost" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)">
+            <param name="input_data" type="JSONObject" template="asset_sub_cost" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)"/>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs">
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/costs/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/cost_factor">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)/cost_factor">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/costs/cost_factor/_metainfo">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/cost_factor/_metainfo">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/costs/(\d+)/cost_factor/_metainfo">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+    </urls>
+    <!-- asset costs ends -->
+    <!-- asset sub entity end -->
+
+</security>

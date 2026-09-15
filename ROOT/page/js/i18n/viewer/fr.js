@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = 'Visionneuse';
+i18n["zcpage.builder.viewer.ar"] = 'AR';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = 'Configurer la visionneuse';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = 'Supprimer la visionneuse';
+i18n["zcpage.builder.arviewer.deletetitle"] = 'Supprimer la visionneuse AR';
+i18n["zcpage.builder.arviewer.deletewarning"] = 'Cette action ne peut pas être annulée. Voulez-vous vraiment la supprimer ?';
+i18n["zcpage.builder.viewer.arsetup"] = 'Configuration AR';
+i18n["zcpage.builder.viewer.arsetup.msg"] = 'Cliquez sur « Ajouter une entrée » pour donner une entrée pour la visionneuse.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = 'Ajouter une entrée';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = 'Ensemble AR basé sur marqueur';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = 'Variable de page';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = 'Aucune variable de page à sélectionner. Cependant, vous pouvez ajouter une nouvelle variable de page sous l’onglet <b>Variables de page et script</b>.  <br> <a href=\"https://help.zoho.com/portal/en/kb/creator/developer-guide/pages/page-script-and-variables/articles/page-scripts-and-variable" target=\"_blank\">En savoir plus</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = 'Aucun ensemble AR basé sur marqueur à sélectionner. Cependant, vous pouvez en créer un dans la bibliothèque AR sous la section Microservice. <a href=\"https://www.zoho.com/creator/help/microservices/add-models.html#create_arset" target=\"_blank\">En savoir plus</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = 'C’est une entrée spécifique pour mobile. Pour capturer le marqueur, il utilise votre caméra mobile.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = 'La valeur de la variable de page doit être le nom du modèle 3D utilisé dans la bibliothèque AR.';
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = 'Si vous annulez maintenant, toutes les modifications apportées à cette visionneuse ne seront pas enregistrées.';

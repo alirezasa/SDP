@@ -1,0 +1,444 @@
+<!-- $Id$ -->
+<!-- Security for Projects module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+	<urls authentication="required" user_type="all" description="FGR_APPLIED:Project roles could be dynamically assigned at individual project level also. So we can't specify role in XML statically">
+
+		<throttles name="project_module_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<url method="get" operation-param="submitaction" operation-value="NewProject" path="/ProjectAction.do" >
+			<param name="workorderID" type="long"/>
+			<param name="CHANGEID" type="long" range=">0"/>
+			<param name="from" regex="ProjAssociation"/>
+		</url>
+
+		<url method="get" operation-param="submitaction" operation-value="ViewProject" path="/ProjectAction.do" >
+			<param name="fromListView" regex="true"/>
+			<param name="projectid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="from" regex="gantt|InlineSubmit"/>
+			<param name="showTab" regex="reqAssoc|tasks|milestone"/>
+			<param name="navType" regex="n|p"/>
+		</url>
+
+		<url method="get" operation-param="submitaction" operation-value="EditProject" path="/ProjectAction.do" >
+			<param name="from" regex="InlineSubmit"/>
+			<param name="projectid" type="long" min-occurrences="1" allow-empty="false"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="AddNew,SaveAndAddNew" path="/ProjectAction.do" >
+			<param name="projectid" type="long" max-len="0" />
+			<param name="title" type="String" max-len="250" min-occurrences="1"/>
+			<param-group name="projectDefaultParams"/>
+			<param-group name="projectUDF"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="UpdateProject" path="/ProjectAction.do" >
+			<param name="projectid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="refreshRow" regex="false"/>
+			<param name="entityid" type="long" allow-empty="false"/>
+			<param name="g_color" regex="priority|tasktypes|status"/>
+			<param name="g_row" regex="project|users"/>
+			<param name="Inline_selectattribute" regex="inlineSelectAttributes"/>
+			<param name="from" regex="InlineSubmit|gantt_Inline"/>
+			<param name="g_bar" regex="all_milestone|all_tasks|pending_milestone|completed_milestone|pending_tasks|completed_tasks|MYPENDING|PENDING|COMPLETED|MYOPEN|MYOVERDUE|MYDUETODAY|MYALLTASKS|OPEN|OVERDUE|DUETODAY|GROUPTASKS|UNASSIGNEDTASKS|project"/>
+			<param name="title" type="String" max-len="250"/>
+			<param-group name="projectDefaultParams"/>
+			<param-group name="projectUDF"/>
+			<param name="files" regex="filename" max-occurrences="25"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="ViewProject" path="/ProjectAction.do" >
+			<param name="projectid" regex="id" min-occurrences="1" allow-empty="false"/>
+			<param name="title" type="String" max-len="250" />
+			<param-group name="projectDefaultParams"/>
+			<param-group name="projectUDF"/>
+			<param name="from" regex="InlineSubmit|gantt_Inline"/>
+			<param name="refreshRow" type="boolean"/>
+			<param name="entityid" type="long" allow-empty="false"/>
+			<param name="g_bar" regex="all_milestone|all_tasks|pending_milestone|completed_milestone|pending_tasks|completed_tasks|MYPENDING|PENDING|COMPLETED|MYOPEN|MYOVERDUE|MYDUETODAY|MYALLTASKS|OPEN|OVERDUE|DUETODAY|GROUPTASKS|UNASSIGNEDTASKS|project"/>
+			<param name="g_color" regex="priority|tasktypes|status"/>
+			<param name="g_row" regex="project|users"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="DeleteProject" path="/ProjectAction.do" >
+			<param name="cancelAssocChange" type="boolean"/>
+			<param name="filter" type="long"/>
+			<param name="checkbox23" regex="on"/>
+			<param name="from" regex="projectdetails"/>
+			<param-group name="projectListViewParams"/>
+			<param-group name="selectFromList"/>
+		</url>
+
+		<url method="get" operation-param="submitaction" operation-value="NewMileStone" path="/MileStoneAction.do" >
+			<param name="projectid" type="long" min-occurrences="1" allow-empty="false"/>
+		</url>
+
+		<url method="get" operation-param="submitaction" operation-value="ViewMileStone" path="/MileStoneAction.do" >
+			<param name="projectid" type="long" allow-empty="false"/>
+			<param name="fromListView" regex="true"/>
+			<param name="from" regex="InlineSubmit|gantt"/>
+			<param name="milestoneid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="navType" regex="n|p"/>
+			<param name="showTab" regex="tasks"/>
+		</url>
+
+		<url method="get" operation-param="submitaction" operation-value="ViewMileStoneTasks" path="/MileStoneAction.do" >
+			<param name="projectid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="milestoneid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="addNew" regex="SaveAndAddNew"/>
+		</url>
+
+		<url method="get" operation-param="submitaction" operation-value="EditMileStone" path="/MileStoneAction.do" >
+			<param name="from" regex="InlineSubmit"/>
+			<param name="milestoneid" type="long" min-occurrences="1" allow-empty="false"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="AddNew,SaveAndAddNew" path="/MileStoneAction.do" >
+			<param name="projectid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="milestoneid" type="long" max-len="0"/>
+			<param name="title" type="String" max-len="250" min-occurrences="1"/>
+			<param-group name="milestoneDefaultParams"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="UpdateMileStone" path="/MileStoneAction.do" >
+			<param name="from" regex="InlineSubmit|gantt_Inline"/>
+			<param name="Inline_selectattribute" regex="milestoneInlineSelectAttributes"/>
+			<param name="g_bar" regex="all_milestone|all_tasks|pending_milestone|completed_milestone|pending_tasks|completed_tasks|MYPENDING|PENDING|COMPLETED|MYOPEN|MYOVERDUE|MYDUETODAY|MYALLTASKS|OPEN|OVERDUE|DUETODAY|GROUPTASKS|UNASSIGNEDTASKS"/>
+			<param name="g_color" regex="priority|tasktypes|status"/>
+			<param name="g_row" regex="milestone|users|project"/>
+			<param name="refreshRow" type="boolean"/>
+			<param name="entityid" type="long" description="will be passed only in gantt inline edit" allow-empty="false"/>
+			<param name="projectid" type="long" allow-empty="false"/>
+			<param name="milestoneid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="title" type="String" max-len="250"/>
+			<param-group name="milestoneDefaultParams" />
+			<param name="files" regex="filename" max-occurrences="25"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="ViewMileStone" path="/MileStoneAction.do" >
+			<param name="milestoneid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="entityid" type="long" min-occurrences="1" allow-empty="false"/>
+			<param name="from" regex="gantt_Inline" min-occurrences="1"/>
+			<param name="refreshRow" type="boolean" min-occurrences="1"/>
+			<param name="scheduledstarttime" type="long"/>
+			<param name="scheduledendtime" type="long"/>
+			<param name="actualstarttime" type="long"/>
+			<param name="actualendtime" type="long"/>
+			<param name="ownerid" regex="id"/>
+			<param name="statusid" regex="id"/>
+			<param name="scheduledstarttime_Display" type="String"/>
+			<param name="scheduledendtime_Display" type="String"/>
+			<param name="actualstarttime_Display" type="String"/>
+			<param name="actualendtime_Display" type="String"/>
+			<param name="g_bar" regex="all_milestone|all_tasks|pending_milestone|completed_milestone|pending_tasks|completed_tasks|MYPENDING|PENDING|COMPLETED|MYOPEN|MYOVERDUE|MYDUETODAY|MYALLTASKS|OPEN|OVERDUE|DUETODAY|GROUPTASKS|UNASSIGNEDTASKS" min-occurrences="1"/>
+			<param name="g_color" regex="priority|tasktypes|status" min-occurrences="1"/>
+			<param name="g_row" regex="milestone|users|project" min-occurrences="1"/>
+		</url>
+
+		<url csrf="true" method="post" operation-param="submitaction" operation-value="DeleteMileStone" path="/MileStoneAction.do" >
+			<param-group name="selectAllFromList"/>
+			<param name="from" regex="project|milestonedetails" min-occurrences="1"/>
+			<param name="projectid" type="long" min-occurrences="1" allow-empty="false"/>
+
+			<param name="TITLE" type="String" max-len="250"/>
+			<param name="STATUSID" type="String"/>
+			<param name="PRIORITYID" type="String"/>
+			<param name="OWNERID" type="String" max-len="150" secret="true"/>
+			<param name="PROJECTID" type="long"/>
+			<param name="Milestoneid" type="long"/>
+			<param name="ESTIMATEDHOURS" type="long"/>
+			<param name="ACTUALTASKHOURS" type="long"/>
+		</url>
+
+		<url method="get" operation-param="mode" operation-value="read" path="/GanttAction.do" >
+			<param name="projectid" type="long" allow-empty="false"/>
+			<param name="project_status" type="long"/>
+			<param name="gantt_projectstatus" type="long"/>
+			<param name="gantt_projectid" type="long" allow-empty="false"/>
+			<param name="gantt_milestoneid" type="long" allow-empty="false"/>
+			<param name="gantt_celltype" regex="DAY|HOURS|MONTH"/>
+			<param name="gantt_rowtype" regex="milestone|users|tasks|project"/>
+			<param name="gantt_bartype" regex="milestone|tasks|project"/>
+			<param name="gantt_showactual" type="boolean"/>
+			<param name="gantt_selectrange" regex="0|TY|PY|3M|6M|TW|PW|TM|PM|15D|1M|2M|3D|7D" max-occurrences="4"/>
+			<param name="gantt_startdate" type="String"/>
+			<param name="gantt_enddate" type="String"/>
+			<param name="gantt_colorcode" regex="status|priority|tasktypes"/>
+			<param name="gantt_bar" regex="all_milestone|all_tasks|pending_milestone|completed_milestone|pending_tasks|completed_tasks|project|MYPENDING|PENDING|COMPLETED|MYOPEN|MYOVERDUE|MYDUETODAY|MYALLTASKS|OPEN|OVERDUE|DUETODAY|GROUPTASKS|UNASSIGNEDTASKS"/>
+			<param name="requestFrom" regex="exportPDF"/>
+			<param name="gantt_resize_chart" type="boolean"/>
+			<param name="project_title" type="String" max-len="50"/>
+		</url>
+
+
+
+		<url csrf="true" operation-param="mode" operation-value="edit" method="post" path="/GanttAction.do" >
+			<param name="projectid" type="long" allow-empty="false"/>
+			<param name="project_status" type="long"/>
+			<param name="gantt_projectstatus" type="long"/>
+			<param name="gantt_projectid" type="long" allow-empty="false"/>
+			<param name="gantt_milestoneid" type="long" allow-empty="false"/>
+			<param name="gantt_celltype" regex="DAY|HOURS|MONTH"/>
+			<param name="gantt_rowtype" regex="milestone|users|tasks|project"/>
+			<param name="gantt_bartype" regex="milestone|tasks|project"/>
+			<param name="gantt_showactual" type="boolean"/>
+			<param name="gantt_selectrange" regex="0|TY|PY|3M|6M|TW|PW|TM|PM|15D|1M|2M|3D|7D" max-occurrences="4"/>
+			<param name="gantt_startdate" regex="^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$"/>
+			<param name="gantt_enddate" regex="^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$"/>
+			<param name="gantt_colorcode" regex="status|priority|tasktypes"/>
+			<param name="gantt_bar" regex="all_milestone|all_tasks|pending_milestone|completed_milestone|pending_tasks|completed_tasks|project|MYPENDING|PENDING|COMPLETED|MYOPEN|MYOVERDUE|MYDUETODAY|MYALLTASKS|OPEN|OVERDUE|DUETODAY|GROUPTASKS|UNASSIGNEDTASKS"/>
+			<param name="requestFrom" regex="exportPDF"/>
+			<param name="Disp_gantt_showactual" regex="true"/>
+		</url>
+
+	</urls>
+
+	<!--The below Urls tag can be used for Api based Pages.-->
+	<urls authentication="required" method="get" user_type="all" description="FGR_APPLIED:Project roles could be dynamically assigned at individual project level also. As we can't specify role in XML statically we have handled in server side">
+
+		<throttles name="project_module_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<url path="/project/ProjectMemberListView.jsp">
+			<param name="projectId" regex="id" min-occurrences="1"/>
+			<param name="mode" regex="view|add" min-occurrences="1"/>
+		</url>
+		<url path="/project/ProjectRolesDescription.jsp">
+			<param name="projectId" regex="id" min-occurrences="1"/>
+		</url>
+		<url path="/project/ProjectSettings.jsp">
+			<param name="entityId" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<url path="/project/ProjectHistory.jsp"  operation-param="module" operation-value="projects" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+			<param name="id" type="long" range=">0" min-occurrences="1"/>
+			<param name="parentId" type="long" range=">0"/>
+			<param name="is_new_filter" regex="true" />
+			<param name="is_date_filter" regex="true"/>
+		</url>
+		<url path="/project/ProjectHistory.jsp"  operation-param="module" operation-value="milestones" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+			<param name="id" type="long" range=">0" min-occurrences="1"/>
+			<param name="parentId" type="long" range=">0"/>
+			<param name="projectId" type="long" range=">0"/>
+			<param name="is_new_filter" regex="true"/>
+			<param name="is_date_filter" regex="true"/>
+		</url>
+		<url path="/project/ProjectHistory.jsp"  operation-param="module" operation-value="projectRecentUpdates" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+			<param name="is_slider" regex="true" min-occurrences="1"/>
+			<param name="is_date_filter" regex="true"  min-occurrences="1"/>
+		</url>
+		<url path="/ui/projects" operation-param="mode" operation-value="list">
+			<param name="gsearch" type="String" max-len="5000" secret="true"/>
+			<param name="from" regex="dashboard|request"/>
+			<param name="widgetJSON" template="project_widget_json" type="JSONObject" max-len="2000"/>
+			<param name="fromDetails" regex="true"/>
+		</url>
+		<url path="/ui/projects" operation-param="mode" operation-value="detail">
+			<param name="projectId" type="long" min-occurrences="1" range=">0"/>
+			<param name="from" regex="kanban" min-occurrences="1"/>
+		</url>
+		<url path="/ui/projects" operation-param="mode" operation-value="resource">
+			<param name="projectId" type="long" range=">0"/>
+		</url>
+		<url path="/ui/milestones" operation-param="mode" operation-value="list">
+			<param name="projectId" type="long" min-occurrences="1" range=">0"/>
+		</url>
+		<url path="/project/ProjectAssociation.jsp">
+			<param name="module" regex="change|request"/>
+			<param name="mode" regex="associate|associated" min-occurrences="1"/>
+			<param name="projectId" type="long" min-occurrences="1" range=">0"/>
+			<param name="from" regex="NewProject|actions"/>
+		</url>
+	</urls>
+
+	<urls authentication="required" description="" >
+
+		<throttles name="project_module_admin_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<url method="get" path="/setup/ProjectRoleActions.jsp" roles="SDAdmin,SDSiteAdmin">
+			<param name="module" regex="projectRoleBulkAssociate"/>
+			<param max-occurrences="100" name="user_ids" type="long"/>
+		</url>
+		<url method="get" operation-param="mode" operation-value="read" path="/setup/ProjectNotifications.jsp" roles="SDAdmin"/>
+		<url csrf="true" operation-param="mode" operation-value="edit" method="post" path="/setup/ProjectNotifications.jsp" roles="SDAdmin">
+			<param name="Notify_ProjectAssign" regex="on"/>
+			<param name="Notify_ProjectReAssign" regex="on"/>
+			<param name="Notify_Change_ProjectClosed_Cancelled" regex="on"/>
+			<param name="Notify_Change_to_project_association" regex="on"/>
+			<param name="Notify_Change_to_project_dissociation" regex="on"/>
+			<param name="Notify_Change_on_project_deletion" regex="on"/>
+			<param name="Notify_MileStoneAssign" regex="on"/>
+			<param name="Notify_MileStoneReAssign" regex="on"/>
+			<param name="Notify_MileStoneClose" regex="on"/>
+			<param name="Notify_AllMileStoneClose" regex="on"/>
+			<param name="Notify_Project_MileStoneReScheduled" regex="on"/>
+			<param name="Notify_MileStoneReScheduled" regex="on"/>
+			<param name="Notify_Project_MileStoneProjectionChanged" regex="on"/>
+			<param name="SaveNot" regex="Save" min-occurrences="1"/>
+		</url>
+
+		<url path="/setup/Common_add_fields.jsp" roles="SDAdmin" method="get" operation-param="module" operation-value="project">
+			<param name="[0-9]+" name-regex="true" type="long"/>
+			<param name="from" regex="admin"/>
+			<param name="id" type="long"/>
+		</url>
+
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/RequestAdditionalFieldListView(_HD_[0-9]+)?.cc" method="get" url-type="dynamic" operation-param="udfModule" operation-value="project">
+			<param name="UNIQUE_ID" regex="RequestAdditionalFieldListView(_HD_[0-9]+)?"/>
+			<param name="entityId" type="long"/>
+		</url>
+
+		<!-- Notification Rules -> Project (SDAdmin) -->
+		<url roles="SDAdmin" path="/NotificationContent.do" method="get" operation-param="notifType"
+			 operation-value="Notify_ProjectAssign,Notify_ProjectReAssign,Notify_Change_ProjectClosed_Cancelled,Notify_MileStoneAssign,Notify_MileStoneReAssign,Notify_MileStoneClose,Notify_AllMileStoneClose,Notify_Project_MileStoneReScheduled,Notify_MileStoneReScheduled,Notify_Project_MileStoneProjectionChanged,Notify_MileStoneOverDue,Notify_Change_to_project_association,Notify_Change_to_project_dissociation,Notify_Change_on_project_deletion,Notify_Project_ChangeReject_Closed"/>
+
+		<!-- Notification Rules ::: Project (SDAdmin) -->
+		<url roles="SDAdmin" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType"
+			 operation-value="Notify_ProjectAssign,Notify_ProjectReAssign,Notify_Change_ProjectClosed_Cancelled,Notify_MileStoneAssign,Notify_MileStoneReAssign,Notify_MileStoneClose,Notify_AllMileStoneClose,Notify_Project_MileStoneReScheduled,Notify_MileStoneReScheduled,Notify_Project_MileStoneProjectionChanged,Notify_MileStoneOverDue,Notify_Change_to_project_association,Notify_Change_to_project_dissociation,Notify_Change_on_project_deletion,Notify_Project_ChangeReject_Closed">
+			<param-group name="NotificationContent"/>
+		</url>
+
+		<url path="/RequestExternalAction.do" method="get" operation-param="module" operation-value="project" roles="SDAdmin">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="project_custom_trigger_get" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="method" regex="getTriggerActionData|getAutoActionListView|getAutoActionCritVals|organizeActions|editAutoAction"/>
+			<param name="action_id" type="long"  />
+		</url>
+
+		<url path="/RequestExternalAction.do" operation-param="module" operation-value="project" method="post" csrf="true" roles="SDAdmin">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="project_custom_trigger_post" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="20" lock-period="5m"/>
+			</throttles>
+			<param name="method" regex="saveReOrderActions|saveAutoAction|enableDisableAction|deleteAutoAction" min-occurrences="1"/>
+			<param name="(?i)(action_id)" name-regex="true" type="long"  max-occurrences="2"/>
+			<param name="items" type="JSONObject" template="project_task_custom_trigger_template" max-len="-1" />
+			<param name="reorderItems" regex="ids" />
+		</url>
+
+		<url path="/SetUpWizard.do" roles="SDAdmin"  method="get" operation-param="forwardTo" operation-value="projectautoaction">
+			<param name="isReorder" regex="true|failure"/>
+		</url>
+	</urls>
+
+
+	<jsontemplates>
+
+
+		<jsontemplate name="project_widget_json" disable-extra-key="true">
+			<key name="name" regex="PendingProjByPriorityNType|PendingProjBySiteNDept|OverdueNDueProjByOwner|ProjHourNCostVioaltionByOwner|PendingProjByStatus|ProjectDueThisMonth|ProjectCreatedNClosed|ProjectDelayedNOnSchedule"/>
+			<key name="type" regex="Priority|ProjectType|Site|Department|Due|Overdue|Cost|Hours|Created|Closed|On Sechedule|Delayed|Cost Violation|Hours Violation"/>
+			<key name="criteria" type="JSONObject" template="project_widget_criteria_json" max-len="-1"/>
+			<key name="columnNames" regex="STATUSID|PRIORITYID|PROJECTTYPEID|OWNERID|SITEID|DEPARTMENTID|PRIORITYID|STATUSID,PRIORITYID"/>
+			<key name="columnValues" type="String" max-len="500"/>
+		</jsontemplate>
+
+		<jsontemplate name="project_widget_criteria_json" disable-extra-key="true">
+
+			<key name="due_month" type="int"/>
+			<key name="week" type="int"/>
+			<key name="created_month" type="int"/>
+			<key name="closed_month" type="int"/>
+			<key name="unassigned_column" regex="PRIORITYID|PROJECTTYPEID|SITEID|DEPARTMENTID|OWNERID"/>
+			<key name="others" regex="PRIORITYID|PROJECTTYPEID|SITEID|DEPARTMENTID|OWNERID"/>
+			<key name="added_ids" template="strarray" type="JSONArray" max-len="-1"/>
+		</jsontemplate>
+
+		<jsontemplate name="project_task_custom_trigger_template" disable-extra-key="true">
+			<key name="details" type="JSONArray" template="customTriggerDetails" max-len="-1"/>
+			<key name="criteria" type="JSONArray" template="search_criteria" max-len="-1" array-size="0-20"/>
+			<key name="action" type="JSONArray" template="customTriggerAction" max-len="-1" />
+		</jsontemplate>
+	</jsontemplates>
+
+	<param-groups>
+		<param-group name="projectUDF">
+			<param max-len="3000" max-occurrences="45" name="udf_sline_[0-9]+" name-regex="true" type="String" secret="true"/>
+			<param max-len="3500" max-occurrences="45" name="udf_pick_[0-9]+" name-regex="true" type="String" secret="true"/>
+			<param max-len="5000" max-occurrences="30" name="udf_mline_[0-9]+" name-regex="true" type="String" secret="true"/>
+			<param max-occurrences="30" name="udf_long_[0-9]+" name-regex="true" type="long" secret="true"/>
+			<param max-occurrences="20" name="udf_date_[0-9]+" name-regex="true" type="long" secret="true"/>
+			<param max-occurrences="20" name="udf_decimal_[0-9]+" name-regex="true" type="double" secret="true"/>
+		</param-group>
+		<param-group name="projectDefaultParams">
+			<param name="changeid" regex="id"/>
+			<param name="WORKORDERID" regex="id"/>
+			<param name="statusid" regex="id" allow-empty="false"/>
+			<param name="SITEID" regex="id"/>
+			<param name="ownerid" regex="id"/>
+			<param name="projecttypeid" regex="id"/>
+			<param name="priorityid" regex="id"/>
+			<param name="scheduledstarttime" regex="id"/>
+			<param name="scheduledendtime" regex="id"/>
+			<param name="actualendtime" regex="id"/>
+			<param name="actualstarttime" regex="id"/>
+			<param name="projectedend" regex="id"/>
+			<param name="MOD_IND" regex="project"/>
+			<param name="FORMNAME" regex="ProjectForm"/>
+			<param name="description" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+			<param name="projectcode" type="String" max-len="50" />
+			<param name="scheduledendtime_Display" type="String"/>
+			<param name="scheduledstarttime_Display" type="String"/>
+			<param name="deptName" type="String"/>
+			<param name="reqName" type="String" max-len="150"/>
+			<param name="actualstarttime_Display" type="String"/>
+			<param name="actualendtime_Display" type="String"/>
+			<param name="projectedend_Display" type="String"/>
+			<param name="estimatedhours" type="long"/>
+			<param name="requestedby" type="long"/>
+			<param name="department" type="long"/>
+			<param name="createddate" type="long"/>
+			<param name="actualtaskhours" type="long"/>
+			<param name="estimatedcost" type="double"/>
+			<param name="tot_taskhours_cost" type="double"/>
+			<param name="project_template" type="long"/>
+		</param-group>
+		<param-group name="milestoneDefaultParams">
+			<param name="MOD_IND" regex="milestone"/>
+			<param name="FORMNAME" regex="MileStoneForm"/>
+			<param name="statusid" regex="id"/>
+			<param name="ownerid" regex="id"/>
+			<param name="actualstarttime" regex="id"/>
+			<param name="actualendtime" regex="id"/>
+			<param name="scheduledstarttime" regex="id"/>
+			<param name="scheduledendtime" regex="id"/>
+			<param name="priorityid" regex="id"/>
+			<param name="projectedend" regex="id"/>
+			<param name="createddate" type="long"/>
+			<param name="milestoneindex" type="long"/>
+			<param name="actualtaskhours" type="long"/>
+			<param name="estimatedhours" type="long"/>
+			<param name="actualstarttime_Display" type="String"/>
+			<param name="actualendtime_Display" type="String"/>
+			<param name="scheduledstarttime_Display" type="String"/>
+			<param name="scheduledendtime_Display" type="String"/>
+			<param name="projectedend_Display" type="String"/>
+			<param name="description" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+		</param-group>
+
+		<param-group name="projectListViewParams">
+			<param name="Projectid" type="long"/>
+			<param name="TITLE" type="String" max-len="250"/>
+			<param name="OWNERID" type="String" max-len="150" secret="true"/>
+			<param name="REQUESTEDBY" type="String" max-len="150" secret="true"/>
+			<param name="STATUSID" type="String"/>
+			<param name="DEPARTMENTID" type="String"/>
+			<param name="SITEID" type="String"/>
+			<param name="PRIORITYID" type="String"/>
+			<param name="UDF_LONG[0-9]+" name-regex="true" type="long" max-occurrences="30" secret="true"/>
+			<param name="UDF_DOUBLE[0-9]+" name-regex="true" type="double" max-occurrences="20" secret="true"/>
+			<param name="UDF_CHAR[0-9]+" name-regex="true" type="String" max-len="5000" max-occurrences="45" secret="true"/>
+			<param name="PROJECTTYPEID" type="String" max-len="50"/>
+			<param name="PROJECTCODE" type="String" max-len="50"/>
+		</param-group>
+
+	</param-groups>
+	<regexes>
+		<regex name="inlineSelectAttributes" value="udf_sline_[0-9]+|udf_pick_[0-9]+|udf_mline_[0-9]+|udf_long_[0-9]+|udf_date_[0-9]+|udf_decimal_[0-9]+|projectcode+|statusid+|SITEID+|ownerid+|projecttypeid+|priorityid+|scheduledstarttime+|actualstarttime+|scheduledendtime+|actualendtime+|projectedend+|estimatedhours+|actualtaskhours+|estimatedcost+|tot_taskhours_cost+|requestedby+|department"/>
+		<regex name="milestoneInlineSelectAttributes" value="priorityid+|statusid+|ownerid+|scheduledstarttime+|actualstarttime+|scheduledendtime+|actualendtime+|projectedend+|estimatedhours+|actualtaskhours"/>
+	</regexes>
+</security>

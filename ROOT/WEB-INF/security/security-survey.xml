@@ -1,0 +1,32 @@
+<!-- $Id$ -->
+<!-- Security authentication for Survey module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" disable-extraparam="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_get" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="50" lock-period="5m"/>
+		</throttles>
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="surveyconfig,surveyglobalrules,emailsettings,surveyreports" method="GET"/>
+	</urls>
+
+	<urls authentication="required"  disable-extraparam="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="surveythrottle" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="50" lock-period="5m"/>
+		</throttles>
+		<param name="PORTALID" type="long" />
+		<url roles="SDAdmin" path="/SurveyListView.do" operation-param="action" operation-value="getSurveyConfiguration" method="GET"/>
+		<url roles="SDAdmin" path="/ViewSurvey.do" operation-param="action" operation-value="getEmailConfig" method="GET"/>
+		<url roles="SDAdmin" path="/ViewSurvey.do" operation-param="action" operation-value="viewWorkSpace"  method="GET">
+			<param name="surveyID" type="long" min-occurrences="1" range=">0"/>
+		</url>
+		<url roles="SDAdmin" path="/ViewSurvey.do" operation-param="action" operation-value="getReports" method="GET"/>
+		<url roles="SDAdmin" path="/survey/ViewResponse.jsp" method="GET">
+			<param name="responseID" type="long" min-occurrences="1" range=">0"/>
+		</url>
+		<url roles="SDAdmin" path="/survey/SurveyPreview.jsp" method="GET">
+			<param name="surveyID" type="String"/>
+		</url>
+		<url roles="SDAdmin" path="/survey/question-form.jsp" method="GET"/>
+		<url roles="SDAdmin" path="/survey/survey-template.jsp" method="GET"/>
+	
+	</urls>
+</security>

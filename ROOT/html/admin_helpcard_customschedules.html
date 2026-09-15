@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Help Card - Custom Schedules</title>
+</head>
+<body style="font-family:'Times New Roman'">
+  <p>Custom Schedules enable you to access any data from ServiceDesk Plus and schedule periodic customized actions such
+    as sending notifications, reopening requests or updating asset details. You can specify the actions in a customized
+    script file. ServiceDesk Plus data can be sent to these scripts using Query Reports.</p>
+  <p>Use the pointers below to create a custom schedule:</p>
+  <p><strong>Schedule Details</strong>: Enter a unique <strong>Schedule Name</strong> and a relevant
+    <strong>Description</strong> to explain what the custom schedule action does. You can enable/disable a custom
+    schedule as preferred.
+  </p>
+  <p><strong>Executor</strong>: Specify the action to be executed using scripts. You can execute your script using a
+    third-party application or you can use Zoho's inbuilt propriety scripting application, Deluge. </p>
+  <ul>
+  		<li><strong>Execute Script</strong> - Specify the name of the text file containing the script and save it under <strong>[SDP_Home]/integration/custom_scripts/executor_files</strong> directory. The application will fetch and execute the script from the specified file</li>
+      <strong>[SDP_Home]/integration/custom_scripts/</strong> folder. In the text field, specify the script file name
+      using the command <strong>py filename.py</strong> to fetch the script.
+    </li>
+    <li><strong>Execute Custom Functions</strong> - Create and save your own scripts using Deluge in Custom Schedule
+      Function. Choose the relevant script from the drop-down. You can also create a custom schedule function from the
+      drop-down.</li>
+    <a href="https://help.servicedeskplus.com/custom-schedule-function" target="_blank" class="text-link">Click here</a>
+    to learn how to create a script using Custom Schedule Function.
+  </ul>
+  <p><strong>Arguments:</strong> Select the Query Report whose data is used to pass arguments. Ensure that the reports
+    are stored in a folder under the Reports tab. You can associate up to 3 query reports.</p>
+  <details class="helpdetailstag mb10">
+    <summary class="sb"><span class="detailsarrow top-1"></span>How are query reports converted as arguments?</summary>
+    <div>
+      <p></p>
+      <p>When a schedule starts, the associated query reports will be generated and the results will be saved in a
+        directory under <strong>[SDP_Home]/integration/custom_schedule_reports/</strong> as a JSON file. This JSON
+        file path is passed as an argument to the Custom Schedule Executor.</p>
+      <p>Let's assume the query report <strong>SLA Violated Requests by High Priority</strong> gives the following
+        result:</p>
+      <table align="center" border="1" width="425" bordercolor="#000000" cellpadding="4" cellspacing="0">
+        <tbody>
+          <tr>
+            <th>Request ID</th>
+            <th>Subject</th>
+            <th>Technician</th>
+          </tr>
+          <tr align="center">
+            <td>47</td>
+            <td>Unable to fetch mails</td>
+            <td>Heather Graham</td>
+          </tr>
+          <tr align="center">
+            <td>128</td>
+            <td>Cannot connect to MSSQL server</td>
+            <td>Shawn Adams</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>The result JSON will have the following format:</p>
+      <pre>[
+    {
+        "Request ID":"47",
+        "Subject":"Unable to fetch mails",
+        "Technician":"Heather Graham"
+    },
+    {
+        "Request ID":"128",
+        "Subject":"Cannot connect to MSSQL server",
+        "Technician":"Shawn Adams"
+    }
+  ]
+  </pre>
+      <p>After the action is executed, the JSON file will be deleted.</p>
+    </div>
+  </details>
+  <p><strong>From</strong>: You can start executing the custom schedule by selecting a date range and time from the calendar icon. If the selected date and time is earlier than the created/edited time of the custom schedule, the action will be executed immediately after saving the custom schedule.</p>
+  <p><strong>Repeats</strong>: Choose the frequency to repeat the custom schedule from the drop-down: once, daily, weekly, monthly, or yearly.</p>
+  <p><strong>Advanced Options</strong>: Set the duration to repeat the schedule. Depending on the selected Repeats frequency, you can choose the required day/month to run the schedule.</p>
+  <p><strong>Repeats Ends</strong>: Set when the repeat frequency ends. You can configure the schedule never to end, end after a specified number of occurrences, or on the specified date.</p>
+  <p><strong>Note</strong></p>
+  <p>The <strong>Result</strong> column in the Custom Schedules list view has the latest output of the corresponding
+    action.</p>
+  <p>Detailed results of the executed action can be viewed in the <strong>System Log Viewer</strong> under Quick Actions
+    or from the Community tab.</p>
+</body>
+</html>

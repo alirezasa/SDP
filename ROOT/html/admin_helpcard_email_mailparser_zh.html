@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>admin_helpcard_email_mailparser</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.2  (Linux)">
+	<META NAME="CREATED" CONTENT="20090929;16355000">
+	<META NAME="CHANGED" CONTENT="20090929;17075400">
+	<META NAME="generator-major-version" CONTENT="0.1">
+	<META NAME="generator-minor-version" CONTENT="1">
+	<META NAME="filetype" CONTENT="kadov">
+	<META NAME="filetype-version" CONTENT="1">
+	<!--(==============================================================)-->
+	<!--(Document created with RoboEditor. )============================-->
+	<!--(==============================================================)-->
+	<!--(Meta)==========================================================-->
+	<META NAME="page-count" CONTENT="1">
+	<META NAME="layout-height" CONTENT="1581">
+	<META NAME="layout-width" CONTENT="591">
+	<!--(Body)==========================================================-->
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P>邮件解析器<BR><!--}}end!kadov--><!--kadov_tag{{<implicit_p>}}-->&nbsp;<!--begin!kadov{{-->
+<BR><!--}}end!kadov--><!--kadov_tag{{<implicit_p>}}-->邮件解析器允许技术员对邮件的有效字段进行界定，然后依此对接收的邮件进行解析，从而自动填充请求中的对应字段。 
+</P>
+<P>配置邮件解析器的步骤：</P>
+<P>1. 在邮件服务器页面，点击<B>电子邮件解析器。</B>电子邮件解析器页面将被显示出来。</P>
+<P>2. 点击<B>启用邮件解析器</B>复选框，激活电子邮件解析功能。如果此项未被选中，那么即使被传入的邮件在主题中包含解析字符串，也会被当成普通的邮件，并使用既定的业务规则去处理。</P>
+<P>3. 在<B>邮件的主题包含</B>文本框中，输入有效的主题，它将决定什么样的邮件必须予以解析。如果电子邮件中包含有输入的主题内容的，它将被解析，从而自动设置各种字段。例如：假设主题标识符是@SDP@，则只有主题中包含@SDP@的E-Mail才被解析。</P>
+<P>4. 提供一些特别的字符（@ @，＃＃$ $，％％，＆＆，等）作为<B>解析分隔符</B>，那么在请求创建时，特定分隔符之间字段的值将被分配给对应的字段。例如：假设分隔符@@，需要设置&quot;Category&quot;为&quot;Printer&quot;，那么电子邮件中对应的描述应该是：@@Category=Printer@@。</P>
+<P>注意：</P>
+<UL TYPE=DISC>
+	<LI><P>技术员通过电子邮件可以创建/更新/关闭/提取一个请求。为此，必须选用合适的操作标示字符串，它们可以是：&quot;Operation = AddRequest&quot;， &quot;Operation = EditRequest&quot;，&quot;Operation
+	= CloseRequest&quot; ，&quot;Operation = PickupRequest&quot; 。</P>
+	<LI><P>要通过电子邮件更新、提取、关闭某个请求，必须设置相应的操作字符串（EditRequest / PickupRequest / 
+	CloseRequest），并且指定已有的请求ID。否则，该邮件将被视为普通请求邮件，会创建一个新的请求。</P>
+	<LI><P>当通过邮件更新某个请求时，将不会在该请求的会话中添加记录，因此，不能邮件中的附件和内置图片，将不会被更新。不过，更新的信息将被添加在请求历史中。</P>
+	<LI><P>如果电子邮件中的字段名称是不可用的（不存在），则解析时将排除对它的解析。</P>
+	<LI><P>如果电子邮件中对于某个特定的字段有多个值，则只使用最后的值，其它的值将被丢弃。</P>
+	<LI><P>如果邮件主题中包含有&quot;RequestId ####&quot;等，但是又没有操作字符串（如：EditRequest），则会将此邮件作为对应请求的一个对话（请求线程）添加到该请求中。不会创建新的请求。</P>
+	<LI>
+	  <P>要使用邮件解析功能，邮件发件人（邮箱）必须是系统中可登录人的邮箱。这是因为，解析邮件中用户可处理的各项操作必须依据用户的角色权限的定义来执行。请求授权（关闭要求，提取要求，更新要求，接受请求关闭等）都是由系统中的角色控制。</P>
+	<LI><P>如果邮件中没有指定请求人的姓名，则发件人将被做为请求人。</P>
+	<LI><P>系统支持的权限和参数：</P>
+</UL>
+<OL TYPE=a>
+	<OL TYPE=a>
+		<LI><P>
+		如果邮件发件人只是一个拥有请求人权限的请求人，则字段解析时将受到限制。可以解析的字段只限于请求人创建请求时可以看到的那些字段。</P>
+		<LI><P>如果邮件发件人是一个拥有技术员权限的技术员，可以解析的字段为技术员创建请求时可以看到的字段。</P>
+		<LI><P>可以解析的字段有： 
+		级别、模式、优先级、紧急度、影响、影响明细、分类、子分类、项目、工作组、技术员、技术员邮箱、请求人、请求人邮箱、请求ID，请求模板、请求类型、状态、地点、资产、解决办法，以及请求附加字段（但是邮件中的附加字段的标签必须跟系统中附加字段标签一致）。</P>
+		<LI><P>要更改请求人或技术员的可以解析的字段，可在 管理 --&gt; 请求模板（在帮助台模块下），选择缺省模板，并添加或删除字段。</P>
+	</OL>
+</OL>
+<UL TYPE=DISC>
+	<LI><P>在邮件描述中陈述的请求ID要比邮件主题中的请求ID具有更高的优先权。</P>
+</UL>
+
+</BODY>
+</HTML>

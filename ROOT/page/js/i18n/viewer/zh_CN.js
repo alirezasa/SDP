@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = '查看器';
+i18n["zcpage.builder.viewer.ar"] = 'AR';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = '配置查看器';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = '删除查看器';
+i18n["zcpage.builder.arviewer.deletetitle"] = '删除AR查看器？';
+i18n["zcpage.builder.arviewer.deletewarning"] = '此操作无法撤消。您确定要删除吗？';
+i18n["zcpage.builder.viewer.arsetup"] = 'AR设置';
+i18n["zcpage.builder.viewer.arsetup.msg"] = '单击“添加输入”为AR查看器提供输入。';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = '添加输入';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = '基于标记的AR集';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = '页面变量';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = '没有可选择的页面变量。但是，您可以在<b>页面变量和脚本</b>页签中添加一个新的页面变量。<br> <a href=\"https://help.zoho.com/portal/en/kb/creator/developer-guide/pages/page-script-and-variables/articles/page-scripts-and-variable" target=\"_blank\">了解更多</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = '没有基于标记的AR集可供选择。但是，您可以在AR库的微服务部分下创建。 <a href=\" " target=\"_blank\">了解更多</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = '这是一个特定于移动设备的输入。为了捕捉标记，将使用移动设备相机。';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = '页面参数必须是AR库中使用的3D模型的名称。';
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = '如果现在取消，将不会保存对此查看器所做的任何更改。';

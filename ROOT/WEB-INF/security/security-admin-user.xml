@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id$--> 
+
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" method="get" remote_server="true">
+        <throttles name="admin_user" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="50" lock-period="5M"/>
+        </throttles>
+        <url path="/setup/UserAssociation.jsp" user_type="all" roles="ViewRequester" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="userId" regex="null|[0-9]+"/>
+            <throttles name="user_association" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/setup/RequesterListActions.jsp" user_type="all" roles="SDOrgAdmin,SDSiteAdmin" description="The url is used in ESM Directoroy. So mentioned user type all" >
+            <param name="requesterView" regex="requesterView" />
+            <param name="tech_Id" regex="null|[0-9]+" max-occurrences="100"/>
+            <param name="tm" regex="null|[0-9]+"/>
+            <throttles name="requester_list_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+         </url>
+         <!-- links added to fix the 86363 starts here -->
+        <url roles="ModifyTechnician,SDSiteAdmin" path="/setup/TechnicianListActions.jsp" operation-param="associateToSite" operation-value="associate" >
+            <param name="tech_Id" max-occurrences="100" min-occurrences="1" regex="null|[0-9]+"/>
+            <throttles name="associate_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url roles="ModifyTechnician,SDSiteAdmin" path="/setup/TechnicianListActions.jsp" operation-param="associateToSite" operation-value="dissociate" >
+            <param name="tech_Id" max-occurrences="100" min-occurrences="1" regex="null|[0-9]+"/>
+            <throttles name="dissociate_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+         <!-- links added to fix the 86363 ends here-->
+        
+        <url path="/setup/ESMUserUDF.jsp" user_type="all" roles="SDOrgAdmin"></url><!--ESM directory User additional field-->
+		<url path="/setup/ESMDepartmentUDF.jsp" user_type="all" roles="SDOrgAdmin"></url><!--ESM directory Department additional field-->
+        <url path="/setup/UserDetails.jsp" user_type="all" roles="ViewRequester,SDGuest" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="isUser" type="boolean"/>
+            <param name="showmydetails" type="boolean"/>
+            <param name="fromCMDBAllCIs" type="boolean"/>
+            <param name="fromCMDB" type="boolean"/>
+            <param name="minContent" type="boolean"/>
+            <param name="card" type="boolean"/>
+            <param name="getOrguser" type="boolean"/>
+            <param name="popupmodule" regex="UserGroups|Department|OnBehalfOf_User|WorkOrder_EMailCC|reportingTo|Request|Problem|import_user|QuickReq|requests|Maintenance_EMailCC|chat|cab|tfa"/>
+            <param name="myDetailsEdit" regex="Show|undefined"/>
+            <param name="userViewType" regex="adinactiveUsers|azureinactiveUsers"/>
+            <param name="userId" regex="null|[0-9]+"/>
+        </url>
+        <url path="/setup/TechnicianListview.jsp" roles="ViewTechnician">
+            <param name="userViewType" regex="inactiveUsers|adinactiveUsers|azureinactiveUsers|searchUsers"/>
+            <throttles name="technician_list_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/setup/UsersListview.jsp" user_type="all" roles="ViewRequester,SDGuest" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="userViewType" regex="inactiveUsers|adinactiveUsers|azureinactiveUsers|searchUsers"/>
+            <param name="fromCMDB" type="boolean"/>
+            <param name="apiModuleId" regex="null|[0-9]+" />
+            <param name="apiModule" regex="requests|problems|releases|request_maintenances|chats|cabs|changes"/>
+            <param name="apiEntity" regex="requester|reported_by|editor|on_behalf_of|release_requester|add_users|members|change_requester"/>
+            <throttles name="user_list_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <url path="/setup/UserForm.jsp" user_type="all" roles="ViewRequester,SDGuest" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="isUser" type="boolean"/>
+            <param name="userId" regex="null|[0-9]+"/>
+            <param name="changeTo" regex="deletedUsers|showmydetails|change_as_technician|null"/>
+            <param name="isPopup" type="boolean"/>
+            <param name="popupfor" regex="bulkupdate|searchuser|verify_users|telephony"/>
+             <throttles name="user_form" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <!-- team:G2 - Used in Request Module's Form, Details to view the user detail in popup -->
+        <url path="/setup/UsersPopup.jsp" user_type="all" roles="ViewRequester,SDGuest" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="isUser" type="boolean"/>
+            <param name="isPopup" type="boolean"/>
+            <param name="userId" regex="null|[0-9]+"/>
+            <param name="domainid" regex="null|[0-9]+" />
+            <param name="apiModuleId" regex="null|[0-9]+" />
+            <param name="minContent" type="boolean" />
+            <param name="card" type="boolean" />
+            <param name="getOrguser" type="boolean" />
+            <param name="orguser" type="boolean" />
+            <param name="fromIframe" type="boolean" />
+            <param name="popupfor" regex="bulkupdate|searchuser|adinactiveUsers|azureinactiveUsers|verify_users|include_orgusers|exclude_orgusers|telephony|detailspage" />
+            <param name="[0-9]+" name-regex="true" type="String" max-len="0" description="since we get empty value for this param"/>
+            <param name="viewType" regex="add|mydetails" />
+            <param name="searchText" type="String" max-len="4000" secret="true"/>
+            <param name="mobile" type="String" max-len="30" secret="true"/>
+            <param name="elementId" regex="cDiv|cDiv0" />
+            <param name="getData" regex="Department|Site|Name|Email-Id" />
+	    <param name="apiModule" regex="requests|problems|releases|asset_loans|archive_requests|request_maintenances|chats|cabs|changes|(asset_assets|asset_computers|asset_workstations|asset_desktops|asset_laptops|asset_2in1tablets|asset_servers|asset_virtual_hosts|asset_virtual_machines|asset_printers|asset_routers|asset_firewalls|asset_storage_devices|asset_access_points|asset_racks|asset_upses|asset_video_encoders|asset_ipses|asset_ntps|asset_room_sensors|asset_mobile_devices|asset_smartphones|asset_tablets|asset_ip_phones|asset_cisco_ip_phones|asset_switches|asset_scanners|asset_projectors|asset_keyboards|asset_coffee_vending_machines|asset_electrical_heaters|asset_refrigerators|asset_televisions|asset_water_dispensers|asset_speakers|asset_stoves|asset_gym_equipments|asset_saws|asset_power_generators|asset_power_backups|asset_batteries|asset_electrical_panels|asset_transformers|asset_escalators|asset_elevators|asset_switches|asset_fuses|asset_plugs|asset_pdus|asset_tables|asset_chairs|asset_drawers_and_cabinets|asset_lockers|asset_sofas|asset_air_conditioners|asset_cooling_fans_and_towers|asset_boilers|asset_environmental_control_consoles|asset_compressors_and_fans|asset_chillers|asset_warm_air_furnaces|asset_pumps|asset_window_air_conditioners|asset_air_filters|asset_hot_water_heaters|asset_fire_extinguishers|asset_smoke_detectors|asset_fire_alarms|asset_safety_mirrors|asset_flash_lights|asset_first_aid_kits|asset_signs_and_labels|asset_receptors_and_masks|asset_surveillance_cameras|asset_communicators|asset_biometrics|asset_walkie_talkies|asset_alarms_and_detectors|asset_padlocks|asset_badges|asset_lanyards|asset_trays|asset_ladders|asset_scaffold_and_climbing_equipments|asset_painting_brushes|asset_rollers|asset_plastic_and_sheets|asset_painters_wears|asset_spray_equipments|asset_vacuum_cleaners|asset_carpet_sweepers|asset_dishwashers|asset_leaf_blowers|asset_lawnmowers|asset_housekeeping_trolleys|asset_floor_polishers|asset_receptacles_and_containers|asset_brooms|asset_brushes|asset_fork_lifts|asset_earth_movers|asset_cranes|asset_groundskeeping_equipments|asset_faucets|asset_drillers|asset_restroom_fittings|asset_pipe_fittings_and_couplings|asset_plumbing_tools|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))" />
+            <param name="apiEntity" regex="on_behalf_of|requester|reported_by|editor|release_requester|user|loaned_to|technician|submitted_by|add_technicians|add_users|members|change_requester" />
+            <param name="module" regex="import_user|cab|Problem|UserGroups|reportingTo|Request|QuickReq|WorkOrder_EMailCC|Intermediate_Editing|Release|Department|requests|Maintenance_EMailCC|chat|tfa|Change|Assets"/>
+            <param name="changeTo" regex="change_as_technician|mydetails"/>
+            <param name="externalframe" type="boolean" />
+            <param name="res" regex="50x50|120x120" />
+            <param name="key" type="String" max-len="500" secret="true"/>
+            <param name="url" regex="/api/v3/[a-z0-9_/]+"/>
+             <throttles name="user_popup" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/setup/RoleToTechMapping.jsp" roles="SDAdmin" operation-param="mode" operation-value="viewRoleToTech">
+            <param name="roleName" type="String" max-len="250" secret="true"/>
+            <throttles name="viewRoleToTech" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/UserAPISupportAction.do" roles="SDAdmin,SDSiteAdmin" operation-param="method" operation-value="getDCInfo,isLicenseCountAvailable">
+            <throttles name="user_support_action_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="80" lock-period="5M"/>
+            </throttles>
+        </url>
+	<url path="/UserAPISupportAction.do" user_type="all" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" operation-param="method" operation-value="getUserDCInfo">
+            <throttles name="user_support_action_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="80" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/UserAPISupportAction.do" user_type="all" roles="SDOrgAdmin" operation-param="method" operation-value="getPortalTechnicianHelpdeskDetails" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="user_ids" max-len="1200" regex="ids" secret="true" max-occurrences="100"/>
+            <param name="userIDs" max-len="1200" regex="ids" secret="true" max-occurrences="100"/>
+            <throttles name="user_support_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="80" lock-period="5M"/>
+            </throttles>
+        </url>
+         <url path="/jsp/lockeduserdetails.jsp" user_type="all" roles="SDOrgAdmin" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <throttles name="lock_user" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        <param name="lockid" type="long" range=">0"/>
+	    <param name="userid" type="long" range=">0"/>
+         </url>
+        <url path="/SetUpWizard.do" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="requester" description="The url is used in ESM Directoroy. So mentioned user type all" >
+            <param name="viewType" regex="list|add|details|edit|detail" />
+            <param name="changeTo" regex="change_as_technician|deletedUsers|undefined|addeletedusers|azuredeletedusers" />
+            <param name="from" regex="mdh" />
+            <param name="tab" regex="Admin" />
+            <param name="isUser" type="boolean" />
+            <param name="userId" regex="null|[0-9]+"/>
+        </url>
+        <url path="/SetUpWizard.do" roles="SDAdmin,SDSiteAdmin" operation-param="forwardTo" operation-value="technician">
+            <param name="fromModule" regex="QuickAction"/>
+            <param name="changeTo" regex="change_as_technician"/>
+            <param name="isUser" type="boolean" />
+            <param name="userId" regex="null|[0-9]+"/>
+            <param name="viewType" regex="list|add|details|edit|detail" />
+        </url>
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin,SDAdmin" operation-param="forwardTo" user_type="all" operation-value="requesterUDF" description="The url is used in ESM Directoroy. So mentioned user type all"/>
+        <url path="/common/ViewHistory.jsp" roles="ViewRequester" user_type="all" operation-param="module" operation-value="users,technicians,orgusers" description="The url is used in ESM Directoroy. So mentioned user type all" >
+            <param name="id" type="long" allow-empty="false"/>
+            <param name="key" regex="req_history_sort_order|sort_order_ziaconfigurations|saml_history_sort_order|twoFactorAuth|sort_order_color_settings"/>
+            <param name="print_view" type="boolean"/>
+        </url>
+    </urls>
+
+	<urls authentication="public" method="get" remote_server="true">
+		<!-- Profile -> Change Password -->
+		<url path="/changePwd.do" user_type="all" operation-param="mode" operation-value="view"  description="Roles cannot added for the url as when we changing the password, the credentials will be invalid and then redirection will happen to login page. If we mention the role, then the redirection will not happen to login page.It will say the user does not have role permission">
+			<param name="pwdReset" type="boolean"/>
+			<throttles name="change_pwd_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="10" lock-period="15M"/>
+			</throttles>
+		</url>
+	</urls>
+
+    <urls authentication="required" method="get">
+            <throttles name="user_udf_ci_fields" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+         <url path="/api/v3/users/ci_user_fields/[a-z0-9_/]+" path-regex="true" user_type="all" roles="SDGuest,ViewRequester">
+             <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+         </url>
+        <url path="/api/v3/users/ci_default_fields/[a-z0-9_/]+" path-regex="true" user_type="all" roles="SDGuest,ViewRequester">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/users/ci_citype_fields/[a-z0-9_/]+" path-regex="true" user_type="all" roles="SDGuest,ViewRequester">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/technicians/ci_user_fields/[a-z0-9_/]+" path-regex="true" roles="ViewRequester">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/technicians/technician_fields/[a-z0-9_/]+" path-regex="true" roles="ViewRequester">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/technicians/ci_default_fields/[a-z0-9_/]+" path-regex="true" roles="ViewRequester">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/technicians/ci_citype_fields/[a-z0-9_/]+" path-regex="true" roles="ViewRequester">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/RoleDef.do" operation-param="mode" operation-value="getList" >
+        </url>
+        <url roles="SDAdmin" path="/RoleDef.do" operation-param="mode" operation-value="viewRoleToTech,fetch_tech_dtls,edit" >
+            <param name="id" regex="null|[0-9]+"/>
+        </url>
+        <url path="/ESM.do" operation-param="type" operation-value="users" user_type="all" roles="SDOrgAdmin" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="viewType" regex="details|list|add|edit"/>
+            <param name="userId" regex="null|[0-9]+"/>
+            <param name="changeTo" regex="addeletedusers|azuredeletedusers" />
+        </url>
+        <url path="/ESM.do" operation-param="type" operation-value="users-udf" user_type="all" roles="SDOrgAdmin" description="The url is used in ESM Directoroy. So mentioned user type all">
+        </url>
+    </urls>
+    <urls authentication="required" csrf="true" method="post" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="technician_post_struts" dynamic-throttle="true"  >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url path="/UserAPISupportAction.do" user_type="all" roles="SDOrgAdmin,SDAdmin,SDSiteAdmin" operation-param="method" operation-value="handlePIIForDeletedUsers" description="The url is used in ESM Directoroy. So mentioned user type all">
+            <param name="anonymous_user_map" type="String" max-len="3500" secret="true" />
+            <param name="user_ids" max-len="1200" secret="true" regex="ids" max-occurrences="100"/>
+            <param name="userIDs" max-len="1200" secret="true" regex="ids" max-occurrences="100"/>
+            <throttles name="user_support_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="80" lock-period="5M"/>
+            </throttles>
+        </url>
+         <url roles="CreateRequester,ModifyRequester,ModifyTechnician,CreateTechnician" user_type="all" path="/TechnicianDef.do" operation-param="module" operation-value="CheckLogin" description="The url is used in ESM Directoroy. So mentioned user type all" >
+             <param name="userName" type="String" secret="true" max-len="100" />
+             <param name="techBulkSave" regex="CheckLogin"/>
+             <param name="userDomain" type="String" secret="true" max-len="100" />
+        </url>
+        <url roles="CreateRequester,ModifyRequester,ModifyTechnician,CreateTechnician" user_type="all" path="/TechnicianDef.do" operation-param="module" operation-value="projectRoleBulkAssociate" description="The url is used in ESM Directoroy. So mentioned user type all" >
+            <param name="project_role_id" regex="null|[0-9]+"/>
+            <param name="user_ids" max-occurrences="100" regex="null|[0-9]+"/>
+        </url>
+        <url roles="ModifyTechnician,CreateTechnician" user_type="all" path="/TechnicianDef.do" operation-param="module" operation-value="show_login_details" description="The url is used in ESM Directoroy. So mentioned user type all" >
+            <param name="showUserDetails" type="boolean"/>
+            <param name="loginPresent" type="boolean"/>
+            <param name="id" regex="-1|null|[0-9]+"/>
+        </url>
+        <url roles="ModifyTechnician,CreateTechnician" user_type="all" path="/TechnicianDef.do" operation-param="module" operation-value="associate_techToSite" description="The url is used in ESM Directoroy. So mentioned user type all" >
+            <param name="Site_Id" regex="null|[0-9]+"/>
+            <param name="tech_Id" max-occurrences="100" regex="null|[0-9]+"/>
+            <param name="techBulkSave" regex="Associate|Dissociate"/>
+        </url>
+     </urls>
+    <urls authentication="required" csrf="true" method="post" >
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="role_entity" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1m"/>
+        </throttles>
+        <url roles="SDAdmin" path="/RoleDef.do" operation-param="mode" operation-value="delete" >
+            <param name="id" regex="null|[0-9]+"/>
+            <param name="confirm_delete" type="boolean"/>
+            <param name="enableMailNotify" regex="on|off"/>
+            <param name="mailToAddress" type="String" max-len="200" secret="true"/>
+            <param name="mailccAddress" type="String" max-len="200" secret="true"/>
+            <param name="mailSubject" type="String" max-len="500" secret="true"/>
+            <param name="mailDescription" type="String" max-len="-1" secret="true"/>
+            <param name="techList" regex="null|[0-9]+"/>
+            <param name="Submit1" type="String" max-len="200" description="Language specific value will be passed"/>
+        </url>
+        <!-- Roles related URLs -->
+        <url roles="SDAdmin" path="/RoleDef.do" operation-param="mode" operation-value="add" >
+            <param name="itemID" regex="null|[0-9]+" />
+            <param name="divToShow" regex="listView|detView"/>
+            <param name="name" type="String" max-len="250"/>
+            <param name="description" type="String" secret="true" max-len="250"/>
+            <param name="woFullControl" regex="woFullControl"/>
+            <param name="woControl" regex="ViewRequests|CreateRequests|ModifyRequests|DeleteRequests|ShareRequest|TaskTechnicianViewRequest|TaskGroupTechnicianViewRequest|MoveRequest" max-occurrences="8"/>
+            <param name="prFullControl" regex="checkbox"/>
+            <param name="prControl" regex="ViewProblems|CreateProblems|ModifyProblems|DeleteProblems" max-occurrences="4"/>
+            <param name="chFullControl" regex="checkbox"/>
+            <param name="chControl" regex="ViewChanges|CreateChanges|ModifyChanges|DeleteChanges" max-occurrences="4"/>
+            <param name="relFullControl" regex="checkbox"/>
+            <param name="relControl" regex="ViewReleases|CreateReleases|ModifyReleases|DeleteReleases" max-occurrences="4"/>
+            <param name="spaceFullControl" regex="checkbox"/>
+            <param name="spaceControl" regex="ViewSpace|CreateSpace|ModifySpace|DeleteSpace" max-occurrences="4"/>
+            <param name="maintFullControl" regex="checkbox"/>
+            <param name="maintControl" regex="ViewRequestMaintenances|CreateRequestMaintenances|ModifyRequestMaintenances|DeleteRequestMaintenances" max-occurrences="4"/>
+            <param name="wsFullControl" regex="checkbox"/>
+            <param name="wsControl" regex="ViewInventoryWS|CreateInventoryWS|ModifyInventoryWS|DeleteInventoryWS" max-occurrences="4"/>
+            <param name="purchaseFullControl" regex="purchaseFullControl"/>
+            <param name="purchaseControl" regex="ViewPurchaseOrder|CreatePurchaseOrder|ModifyPurchaseOrder|DeletePurchaseOrder" max-occurrences="4"/>
+            <param name="duplicatedModifyInventory" regex="duplicatedModifyInventory"/>
+            <param name="wsFGAEditControl" regex="InstallAndUnInstall"/>
+            <param name="purchaseRequestFullControl" regex="checkbox"/>
+            <param name="purchaseRequestControl" regex="ViewPR|CreatePR|ModifyPR|DeletePR" max-occurrences="4"/>
+            <param name="contractFullControl" regex="checkbox"/>
+            <param name="contractControl" regex="ViewContract|CreateContract|ModifyContract|DeleteContract" max-occurrences="4"/>
+            <param name="solutionFullControl" regex="checkbox"/>
+            <param name="solutionControl" regex="ViewSolutions|CreateSolutions|ModifySolutions|DeleteSolutions|SolutionsApprove" max-occurrences="5"/>
+            <param name="reportsFullControl" regex="checkbox"/>
+            <param name="reportsControl" regex="ViewReports|CreateReports|ModifyReports|DeleteReports" max-occurrences="4"/>
+            <param name="announcementFullControl" regex="checkbox"/>
+            <param name="announcementControl" regex="ViewAnnouncements|AddAnnouncements|ModifyAnnouncements|DeleteAnnouncements" max-occurrences="4"/>
+            <param name="duplicatedCreateRequests" regex="duplicatedCreateRequests"/>
+            <param name="woFGAAddControl" regex="AddingRequestTasks|AddingRequester|CreateRequester" max-occurrences="2"/>
+            <param name="duplicatedModifyRequests" regex="duplicatedModifyRequests"/>
+            <param name="woFGAEditControl" regex="ResolvingRequest|DisablingStopTimer|MergingRequests|ClosingRequest|ModifyingDueTime|ModifyResolution|ReOpeningRequest|AssigningTechnician|EditingRequester|EditClosedRequest|RunScript|ModifyRequester|AddReqApproval|DeleteReqApproval|CancelRequest" max-occurrences="14"/>
+            <param name="duplicatedDeleteRequests" regex="duplicatedDeleteRequests"/>
+            <param name="woFGADeleteControl" regex="DeletingOthersNotes|DeletingOthersTimeEntry|DeletingRequestTasks|EditDeleteOwnNotes" max-occurrences="4"/>
+            <param name="assetFGAAddControl" regex="AddingNewProduct|AddingNewVendor|BookingTechnician|ViewAssociatedCI" max-occurrences="4"/>
+            <param name="CMDBControl" regex="ViewCI|ModifyCI|DeleteCI|CreateCI" max-occurrences="4"/>
+            <param name="purchaseFGAControl" regex="CancelPurchaseOrder|AddingNewVendorService" max-occurrences="2"/>
+            <param name="discoveryFGAControl" regex="Scan Now"/>
+            <param name="reportsFGAControl" regex="CreateQueryReport"/>
+            <param name="showAssignedRequests" regex="All|Account|Site|Queue|Owned"/>
+            <param name="CMDBFullControl" regex="checkbox"/>
+            <param name="addButton" type="String" max-len="20"/>
+            <param name="addAndAddNew" type="String" max-len="40"/>
+	     <param name="resourcemgmt" regex="ViewResourceManagement"/>
+        </url>
+        <url roles="SDAdmin" path="/RoleDef.do" operation-param="mode" operation-value="update" >
+            <param name="itemID" regex="null|[0-9]+"/>
+            <param name="divToShow" regex="listView|detView"/>
+            <param name="name" type="String" max-len="250"/>
+            <param name="description" type="String" secret="true" max-len="250"/>
+            <param name="woFullControl" regex="woFullControl"/>
+            <param name="woControl" regex="ViewRequests|CreateRequests|ModifyRequests|DeleteRequests|ShareRequest|TaskTechnicianViewRequest|TaskGroupTechnicianViewRequest|MoveRequest" max-occurrences="8"/>
+            <param name="prFullControl" regex="checkbox"/>
+            <param name="prControl" regex="ViewProblems|CreateProblems|ModifyProblems|DeleteProblems" max-occurrences="4"/>
+            <param name="chFullControl" regex="checkbox"/>
+            <param name="chControl" regex="ViewChanges|CreateChanges|ModifyChanges|DeleteChanges" max-occurrences="4"/>
+            <param name="relFullControl" regex="checkbox"/>
+            <param name="relControl" regex="ViewReleases|CreateReleases|ModifyReleases|DeleteReleases" max-occurrences="4"/>
+            <param name="spaceFullControl" regex="checkbox"/>
+            <param name="spaceControl" regex="ViewSpace|CreateSpace|ModifySpace|DeleteSpace" max-occurrences="4"/>
+            <param name="maintFullControl" regex="checkbox"/>
+            <param name="maintControl" regex="ViewRequestMaintenances|CreateRequestMaintenances|ModifyRequestMaintenances|DeleteRequestMaintenances" max-occurrences="4"/>
+            <param name="wsFullControl" regex="checkbox"/>
+            <param name="wsControl" regex="ViewInventoryWS|CreateInventoryWS|ModifyInventoryWS|DeleteInventoryWS" max-occurrences="4"/>
+            <param name="purchaseFullControl" regex="purchaseFullControl"/>
+            <param name="purchaseControl" regex="ViewPurchaseOrder|CreatePurchaseOrder|ModifyPurchaseOrder|DeletePurchaseOrder" max-occurrences="4"/>
+            <param name="duplicatedModifyInventory" regex="duplicatedModifyInventory"/>
+            <param name="wsFGAEditControl" regex="InstallAndUnInstall"/>
+            <param name="purchaseRequestFullControl" regex="checkbox"/>
+            <param name="purchaseRequestControl" regex="ViewPR|CreatePR|ModifyPR|DeletePR" max-occurrences="4"/>
+            <param name="contractFullControl" regex="checkbox"/>
+            <param name="contractControl" regex="ViewContract|CreateContract|ModifyContract|DeleteContract" max-occurrences="4"/>
+            <param name="solutionFullControl" regex="checkbox"/>
+            <param name="solutionControl" regex="ViewSolutions|CreateSolutions|ModifySolutions|DeleteSolutions|SolutionsApprove" max-occurrences="5"/>
+            <param name="reportsFullControl" regex="checkbox"/>
+            <param name="reportsControl" regex="ViewReports|CreateReports|ModifyReports|DeleteReports" max-occurrences="4"/>
+            <param name="announcementFullControl" regex="checkbox"/>
+            <param name="announcementControl" regex="ViewAnnouncements|AddAnnouncements|ModifyAnnouncements|DeleteAnnouncements" max-occurrences="4"/>
+            <param name="duplicatedCreateRequests" regex="duplicatedCreateRequests"/>
+            <param name="woFGAAddControl" regex="AddingRequestTasks|AddingRequester|CreateRequester" max-occurrences="2"/>
+            <param name="duplicatedModifyRequests" regex="duplicatedModifyRequests"/>
+            <param name="woFGAEditControl" regex="ResolvingRequest|DisablingStopTimer|MergingRequests|ClosingRequest|ModifyingDueTime|ModifyResolution|ReOpeningRequest|AssigningTechnician|EditingRequester|EditClosedRequest|RunScript|ModifyRequester|AddReqApproval|DeleteReqApproval|CancelRequest" max-occurrences="14"/>
+            <param name="duplicatedDeleteRequests" regex="duplicatedDeleteRequests"/>
+            <param name="woFGADeleteControl" regex="DeletingOthersNotes|DeletingOthersTimeEntry|DeletingRequestTasks|EditDeleteOwnNotes" max-occurrences="4"/>
+            <param name="assetFGAAddControl" regex="AddingNewProduct|AddingNewVendor|BookingTechnician|ViewAssociatedCI" max-occurrences="4"/>
+            <param name="purchaseFGAControl" regex="CancelPurchaseOrder|AddingNewVendorService" max-occurrences="2"/>
+            <param name="discoveryFGAControl" regex="Scan Now"/>
+            <param name="reportsFGAControl" regex="CreateQueryReport"/>
+            <param name="showAssignedRequests" regex="All|Account|Site|Queue|Owned"/>
+            <param name="CMDBControl" regex="ViewCI|DeleteCI|ModifyCI|CreateCI" max-occurrences="4"/>
+            <param name="CMDBFullControl" regex="checkbox"/>
+            <param name="updateButton" type="String" max-len="20"/>
+            <param name="updateAndAddNew" type="String" max-len="40"/>
+	     <param name="resourcemgmt" regex="ViewResourceManagement"/>
+        </url>
+        <url roles="SDAdmin" path="/RoleDef.do" operation-param="mode" operation-value="cancel" >
+            <param name="itemID" regex="null|[0-9]+"/>
+            <param name="divToShow" regex="listView|detView"/>
+            <param name="name" type="String" max-len="250"/>
+            <param name="description" type="String" secret="true" max-len="250"/>
+            <param name="woFullControl" regex="woFullControl"/>
+            <param name="woControl" regex="ViewRequests|CreateRequests|ModifyRequests|DeleteRequests|ShareRequest|TaskTechnicianViewRequest|TaskGroupTechnicianViewRequest|MoveRequest" max-occurrences="8"/>
+            <param name="prFullControl" regex="checkbox"/>
+            <param name="prControl" regex="ViewProblems|CreateProblems|ModifyProblems|DeleteProblems" max-occurrences="4"/>
+            <param name="chFullControl" regex="checkbox"/>
+            <param name="chControl" regex="ViewChanges|CreateChanges|ModifyChanges|DeleteChanges" max-occurrences="4"/>
+            <param name="relFullControl" regex="checkbox"/>
+            <param name="relControl" regex="ViewReleases|CreateReleases|ModifyReleases|DeleteReleases" max-occurrences="4"/>
+            <param name="spaceFullControl" regex="checkbox"/>
+            <param name="spaceControl" regex="ViewSpace|CreateSpace|ModifySpace|DeleteSpace" max-occurrences="4"/>
+            <param name="maintFullControl" regex="checkbox"/>
+            <param name="maintControl" regex="ViewRequestMaintenances|CreateRequestMaintenances|ModifyRequestMaintenances|DeleteRequestMaintenances" max-occurrences="4"/>
+            <param name="wsFullControl" regex="checkbox"/>
+            <param name="wsControl" regex="ViewInventoryWS|CreateInventoryWS|ModifyInventoryWS|DeleteInventoryWS" max-occurrences="4"/>
+            <param name="purchaseFullControl" regex="purchaseFullControl"/>
+            <param name="purchaseControl" regex="ViewPurchaseOrder|CreatePurchaseOrder|ModifyPurchaseOrder|DeletePurchaseOrder" max-occurrences="4"/>
+            <param name="purchaseRequestFullControl" regex="checkbox"/>
+            <param name="purchaseRequestControl" regex="ViewPR|CreatePR|ModifyPR|DeletePR" max-occurrences="4"/>
+            <param name="contractFullControl" regex="checkbox"/>
+            <param name="contractControl" regex="ViewContract|CreateContract|ModifyContract|DeleteContract" max-occurrences="4"/>
+            <param name="solutionFullControl" regex="checkbox"/>
+            <param name="solutionControl" regex="ViewSolutions|CreateSolutions|ModifySolutions|DeleteSolutions|SolutionsApprove" max-occurrences="5"/>
+            <param name="duplicatedModifyInventory" regex="duplicatedModifyInventory"/>
+            <param name="wsFGAEditControl" regex="InstallAndUnInstall"/>
+            <param name="reportsFullControl" regex="checkbox"/>
+            <param name="reportsControl" regex="ViewReports|CreateReports|ModifyReports|DeleteReports" max-occurrences="4"/>
+            <param name="announcementFullControl" regex="checkbox"/>
+            <param name="announcementControl" regex="ViewAnnouncements|AddAnnouncements|ModifyAnnouncements|DeleteAnnouncements" max-occurrences="4"/>
+            <param name="duplicatedCreateRequests" regex="duplicatedCreateRequests"/>
+            <param name="woFGAAddControl" regex="AddingRequestTasks|AddingRequester|CreateRequester" max-occurrences="2"/>
+            <param name="duplicatedModifyRequests" regex="duplicatedModifyRequests"/>
+            <param name="woFGAEditControl" regex="ResolvingRequest|DisablingStopTimer|MergingRequests|ClosingRequest|ModifyingDueTime|ModifyResolution|ReOpeningRequest|AssigningTechnician|EditingRequester|EditClosedRequest|RunScript|ModifyRequester|AddReqApproval|DeleteReqApproval|CancelRequest" max-occurrences="15"/>
+            <param name="duplicatedDeleteRequests" regex="duplicatedDeleteRequests"/>
+            <param name="woFGADeleteControl" regex="DeletingOthersNotes|DeletingOthersTimeEntry|DeletingRequestTasks|EditDeleteOwnNotes" max-occurrences="4"/>
+            <param name="assetFGAAddControl" regex="AddingNewProduct|AddingNewVendor|BookingTechnician|ViewAssociatedCI" max-occurrences="4"/>
+            <param name="purchaseFGAControl" regex="CancelPurchaseOrder|AddingNewVendorService" max-occurrences="2"/>
+            <param name="discoveryFGAControl" regex="Scan Now"/>
+            <param name="reportsFGAControl" regex="CreateQueryReport"/>
+            <param name="showAssignedRequests" regex="All|Account|Site|Queue|Owned"/>
+            <param name="CMDBControl" regex="ViewCI|DeleteCI|ModifyCI|CreateCI" max-occurrences="4"/>
+            <param name="CMDBFullControl" regex="checkbox"/>
+            <param name="cancel" type="String" max-len="20"/>
+  	     <param name="resourcemgmt" regex="ViewResourceManagement"/>
+        </url>
+    </urls>
+     <jsontemplates>
+        <jsontemplate name="api_key_generation" disable-extra-key="true">
+            <key name="apikey" type="String" max-len="100" secret="true" />
+            <key name="validity" type="long" range="-1,>0"/>
+            <key name="user_id" regex="null|[0-9]+"/>
+        </jsontemplate>
+     </jsontemplates>
+</security>
+
+<!--$Id$-->

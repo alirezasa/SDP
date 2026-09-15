@@ -1,0 +1,21 @@
+<!-- Security for Projects module related api url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required"  api="true" description="For urls with no Roles, role check will be done at server side">
+        <throttles name="project_api_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+
+        <!-- Resource Management urls start-->
+        <url path="/api/v3/projects/members" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- Resource Management urls end-->
+        <!-- Below URL should be retained while removing our old API URL's since it is used in dashboard -->
+        <url path="/api/v3/milestones" roles="" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <param name="TECHNICIAN_KEY|AUTHTOKEN" type="String" max-len="200" name-regex="true" secret="true"/>
+    </urls>
+
+</security>

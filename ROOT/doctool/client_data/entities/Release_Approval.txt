@@ -1,0 +1,244 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"approvals\":[{\"approver\":{\"email_id\":null,\"name\":\"Heather Graham\",\"is_vipuser\":false,\"id\":\"6\",\"department\":null},\"comments\":null,\"deleted\":false,\"sent_by\":null,\"id\":\"601\",\"sent_on\":null,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":null},{\"approver\":{\"email_id\":null,\"name\":\"Shawn Adams\",\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"comments\":null,\"deleted\":false,\"sent_by\":null,\"id\":\"602\",\"sent_on\":null,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":null}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2}}"},
+            "path": ["/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":100}}"
+            },
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get all approvals",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all approval details present in an approval level of a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"approval\":{\"approver\":{\"email_id\":null,\"name\":\"Heather Graham\",\"is_vipuser\":false,\"id\":\"6\",\"department\":null},\"comments\":null,\"deleted\":false,\"sent_by\":null,\"id\":\"601\",\"sent_on\":null,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":null}}"},
+            "path": ["/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals/{approval_id}"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get approval details",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch a particular approval details present in an approval level of a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"601\",\"status\":\"success\"}],\"approvals\":{\"approver\":{\"email_id\":null,\"name\":\"Heather Graham\",\"is_vipuser\":false,\"id\":\"6\",\"department\":null},\"comments\":null,\"deleted\":false,\"sent_by\":null,\"id\":\"601\",\"sent_on\":null,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":null}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approvals\":[{\"approver\":{\"id\":6}}]}"
+            },
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add approval",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to add an approval to an approval level of a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals/{approval_id}",
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete approval",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete an approval in an approval level of a release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Approve",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals/{approval_id}/_approve",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approval\":{\"comments\":\"recommend\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to approve an approval in an approval level of a release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Reject",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals/{approval_id}/_reject",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approval\":{\"comments\":\"reject\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to reject an approval in an approval level of a release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Send Notification",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"approval\":{\"mail_sent_success_approvals\":[901],\"mail_sent_failed_approvals\":[],\"empty_email_approvals\":[601,602]}}"},
+            "path": ["/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals/_send_notification"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approval\":{\"notification\":{\"title\":\"Recommendation required for a Release\",\"description\":\"${submitter} has requested your recommendations for this Release - ${title}. Click here to view Release details <a href='${approval_link}'>${approval_link}<\/a> <br> <br> ${ApprovalEmailAction} <br> The  documents that belong to this Release, if any, are attached in this mail.\",\"attachments\":[]}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to send notification to all approvals in an approval level of a release."
+        },
+        {
+            "output": {"sample": "{\"notification\":{\"description\":\"administrator has requested your recommendations for this Release - asdadad. <br /><br /> Click here to view Release details ${approval_link}\",\"title\":\"Recommendation required for Release with ID: ##2##\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}/approvals/_get_notification_content",
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get notification content",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to get notification content configured in an approval level of a release."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "",
+            "type": "long",
+            "isReleased": "true",
+            "desc": "Id of the approval",
+            "graphView": "ApprovalDetails:APPROVALID"
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "sent_by",
+            "column": "APPROVALDETAILS:SENDER_ID",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": "",
+            "relEntity": {
+                "name": "User_V3",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "sent_on",
+            "column": "APPROVALDETAILS:SENT_TIME",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "Date of approval mail sent",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "status",
+            "column": "APPROVALDETAILS:STATUSID",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Current status of the approval. The possible values for this attribute can be Approved, Rejected, Pending Approval and To Be Sent",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "comments",
+            "column": "APPROVALDETAILS:COMMENTS",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Comments given by the approver when an approval action is taken",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "approver",
+            "column": "APPROVALDETAILS:APPROVERID",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "The user who can take action on the approval",
+            "graphView": "",
+            "relEntity": {
+                "name": "User",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "action_taken_on",
+            "column": "APPROVALDETAILS:ACTION_DATE",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "Date of approval action taken",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "deleted",
+            "column": "APPROVALDETAILS:ISDELETED",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1603990098000
+}

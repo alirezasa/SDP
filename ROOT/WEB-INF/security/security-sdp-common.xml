@@ -1,0 +1,50 @@
+<!--$Id$ -->
+<!-- Security authentication for Change module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+    <urls disable-extraparam="true" authentication="required" user_type="all">
+
+        <param name="_" type="long"  description="To prevent caching"/>
+
+        <url path="/SetUpWizard.do" roles="SDAdmin" operation-param="forwardTo" method="get" operation-value="changeconfiguration">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="changeconfiguration_get" >
+                <throttle duration="1M" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+
+
+
+
+
+
+
+
+        <url path="/setup/CFSaveAndTestView.jsp"  method="get" roles="SDAdmin,HelpdeskConfig">		<!--Custom function Save and Test views -->
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="CFSaveAndTestView_get" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="module" regex="rcf|ccf|pcf|tcf|pbcf|relcf|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" min-occurrences="1"/>
+        </url>
+
+        <url path="/common/PrintPreviewComponent.jsp" method="get" operation-param="module" operation-value="release" remote_server="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PrintPreviewComponent" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="entity_id" type="long" />
+            <param name="isCMDB" type="boolean" />
+            <param name="externalframe" type="boolean" />
+        </url>
+
+        <url path="/common/PrintPreviewComponent.jsp" method="get" operation-param="module" operation-value="change" remote_server="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PrintPreviewComponent" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="entity_id" type="long" />
+            <param name="isCMDB" type="boolean" />
+            <param name="externalframe" type="boolean" />
+        </url>
+
+
+    </urls>
+
+</security>

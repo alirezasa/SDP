@@ -1,0 +1,89 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+        
+	<urls authentication="required" method="get" disable-extraparam="true" >
+	
+		<!-- Only technicians are allowed to view this URL so no need to associate any role. -->
+		<url path="/jsp/externalcachestatistics.jsp" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcachestatistics_get" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="60" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		<url path="/jsp/externalcacheconfig.jsp" roles="SDAdmin"> 
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheconfig_get" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="60" lock-period="1M"/>
+			</throttles>
+		</url>
+
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="getExternalCacheServerStatus" roles="SDAdmin" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_getExternalCacheServerStatus" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="getExternalCacheDetails" roles="SDAdmin" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_getExternalCacheDetails" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		<!-- Only technicians are allowed to view this URL so no need to associate any role. -->
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="getUserCachedViews" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_getUserCachedViews" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		
+	</urls>
+	
+	<urls authentication="required" method="post" disable-extraparam="true" csrf="true">
+	
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="startExternalCacheServer"  roles="SDAdmin">
+			<param name="redisPort" type="long" range="1024-49151" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_startExternalCacheServer" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="stopExternalCacheServer"  roles="SDAdmin" disable-extraparam="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_stopExternalCacheServer" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="saveExternalCacheServerConfigurations" roles="SDAdmin">
+			<param name="numberOfRowsToBeConfigured" type="long" range="100-5000" min-occurrences="1"/>
+			<param name="cacheValidity" type="int" range=">0" min-occurrences="1"/>
+			<param name="dropCacheWhileSort" type="boolean" min-occurrences="1"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_saveExternalCacheServerConfigurations" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="saveExternalCacheServerMemoryConfigurations" roles="SDAdmin">
+			<param name="redisMaxMemory" type="long" range=">0" min-occurrences="1"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_saveExternalCacheServerMemoryConfigurations" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="updateExternalCacheServerIntegrationStatus" roles="SDAdmin">
+			<param name="startRedisServer" type="boolean" min-occurrences="1"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_updateExternalCacheServerIntegrationStatus" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="1M"/>
+			</throttles>
+		</url>
+			
+		<!-- Only technicians are allowed to view this URL so no need to associate any role. -->
+		<url path="/jsp/externalcacheoperation.jsp" operation-param="mode" operation-value="clearcachedviews" >
+			<param name="cachedViews" type="String" min-occurrences="1" max-len="150"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="externalcacheoperation_clearcachedviews" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="15" lock-period="1M"/>
+			</throttles>
+		</url>
+		
+	</urls>
+
+</security>
+<!-- $Id$ -->

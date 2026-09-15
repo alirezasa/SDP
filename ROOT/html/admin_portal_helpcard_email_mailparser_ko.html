@@ -1,0 +1,153 @@
+<p>
+	<strong>이메일 명령</strong><br><br>
+	이메일 명령에서 요청서 구분자를 정의하여 수신되는 모든 이메일을 구문 분석하여, 필요한 요청서 필드를 업데이트하거나, 다양한 작업을 자동으로 수행하도록 합니다.<br>
+	<strong>참고:</strong> 이메일 명령을 사용하도록 승인된 사용자(로그인 권한이 있는)의 이메일만 구문 분석됩니다. 다음 포인터를 사용하여 이메일 명령을 구성하십시오.<br>
+
+	<table border="1" cellpadding="10">
+		<thead>
+			<tr>
+				<th><strong>필드</strong></th>
+				<th><strong>설명</strong></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+<td>
+이메일 명령 활성화
+</td>
+<td>
+이메일 구문 분석을 활성화하려면 이 옵션을 선택하십시오.
+</td>
+</tr>
+<tr>
+<td>
+이메일 제목 포함
+</td>
+<td>
+정확한 구문 분석 식별자를 입력하십시오. 제목에 이 문자열이 없는 이메일은 구문 분석되지 않습니다.
+</td>
+</tr>
+<tr>
+<td>
+명령 구분자
+</td>
+<td>
+필드/연산 및 필요한 구문 분석 작업을 묶는 특수 문자(예: $)를 지정하십시오.<br>
+예를 들어, 요청서에 높은 우선 순위를 할당해야 하는 경우 이메일 내용은 다음과 같습니다.<br>
+<strong>$Priority=High$</strong><br>
+새 요청서를 추가하려면 이메일 내용에 다음이 포함됩니다.<br>
+<strong>$Operation=AddRequest$</strong>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	<strong>필드 파싱 규칙</strong><br><br>
+	이메일에 지정되었지만 SDP 애플리케이션에 없는 필드는 구문 분석되지 않습니다. 이메일이 필드에 대해 둘 이상의 값을 지정하는 경우 마지막 값만 고려됩니다. 다른 값은 삭제됩니다.<br>
+	이메일에 요청자 이름이 지정되지 않은 경우 이메일 발신자가 요청자로 간주됩니다.<br><br>
+
+	<strong>연산 문자열</strong><br>
+	다양한 요청서 관련 작업의 경우, 이메일 콘텐츠에서, 지정된 명령 구분 기호로 묶인 다음 문자열을 사용하십시오.<br>
+	<table border="1" cellpadding="10">
+		<thead>
+<tr>
+<th><strong>액션</strong></th>
+<th><strong>연산 문자열</strong></th>
+</tr>
+</thead>
+	<tbody>
+			<tr>
+				<td>
+					새 요청서 생성
+				</td>
+				<td>
+					Operation=AddRequest
+				</td>
+			</tr>
+			<tr>
+				<td>
+					요청서 수정 또는 업데이트*
+				</td>
+				<td>
+					Operation=EditRequest
+				</td>
+			</tr>
+			<tr>
+				<td>
+					요청서 종료
+				</td>
+				<td>
+					Operation=CloseRequest
+				</td>
+			</tr>
+			<tr>
+				<td>
+					요청서* 선택/배정
+				</td>
+				<td>
+					Operation=PickupRequest
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+	*이메일에는 수행할 오퍼레이션에 대한 요청서 ID가 포함되어야 합니다.
+	제목 줄에 요청서 ID가 있지만 이메일 본문에 오퍼레이션 문자열이 없는 이메일은 새 요청서를 생성하지 않습니다. 또한 이메일 설명에 있는 요청서 ID는 제목 줄의 요청서 ID보다 우선합니다.<br><br>
+
+	<strong>요청서 작업: 역할 및 권한</strong><br><br>
+	이미지 및 첨부 파일을 포함한 모든 업데이트 정보는 대화가 아닌 기록 탭에만 추가됩니다.<br>
+	요청자/기술자 권한만 있는 사용자의 이메일은 요청서가 생성될 때, 사용자에게 허용되었던(사용할 수 있었던) 필드에 대해서만 구문 분석됩니다. 요청서 선택, 업데이트 또는 종료와 같은 액션은 요청자에게 허용된 권한을 기반으로 합니다.<br>
+	사용자 권한에 따라 다음 필드들이 구문 분석될 수 있습니다.<br>
+	<table border="1" cellpadding="10">
+		<tbody>
+			<tr>
+				<td>Level</td>
+				<td>Mode</td>
+			</tr>
+			<tr>
+				<td>Priority</td>
+				<td>Urgency</td>
+			</tr>
+			<tr>
+				<td>Impact</td>
+				<td>ImpactDetails</td>
+			</tr>
+			<tr>
+				<td>Category</td>
+				<td>SubCategory</td>
+			</tr>
+			<tr>
+				<td>Item</td>
+				<td>Group</td>
+			</tr>
+			<tr>
+				<td>Technician</td>
+				<td>TechnicianEmail</td>
+			</tr>
+			<tr>
+				<td>Requester</td>
+				<td>RequesterEmail</td>
+			</tr>
+			<tr>
+				<td>RequestID</td>
+				<td>RequestTemplate</td>
+			</tr>
+			<tr>
+				<td>RequestType</td>
+				<td>Status</td>
+			</tr>
+			<tr>
+				<td>Site</td>
+				<td>Asset</td>
+			</tr>
+			<tr>
+				<td>Resolution</td>
+				<td>Additional Field Label</td>
+			</tr>
+		</tbody>
+	</table>
+	<br>
+
+	Admin 관리자는 <strong>관리설정>>요청서 템플릿</strong><br> 의 기본 템플릿에서 기술자 또는 요청자가 사용할 수 있는 필드를 변경할 수 있습니다.
+	메일 서버가 보안 프로토콜에서 실행되는 경우 자체 서명된 인증서를 생성 및 설치하여 ServiceDesk Plus와 메일 서버 간의 연결을 설정합니다. <a target="_blank" class="text-link" href="https://help.servicedeskplus.com/introduction/install-ssl.html">여기</a>에서 자세히 알아보십시오.
+</p>

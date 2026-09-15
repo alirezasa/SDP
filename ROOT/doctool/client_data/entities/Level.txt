@@ -1,0 +1,155 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the request level",
+      "graphView": "",
+      "column": "LEVELDEFINITION : LEVELID",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Unique name that is used to identify each level.",
+      "graphView": "",
+      "column": "LEVELDEFINITION : LEVELNAME",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "A short description about the level which will help in figuring out which requests can be classified under this level, unless, the level name itself is explanatory. ",
+      "graphView": "",
+      "column": "LEVELDEFINITION : LEVELDESCRIPTION",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "deleted",
+      "type": "Boolean",
+      "desc": "Indicates whether the level is still in use in the application.",
+      "graphView": "",
+      "column": "LEVELDEFINITION : ISDELETED",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Common",
+      "path": "/api/v3/levels",
+      "desc": "This operation lets you add a level.",
+      "disp_desc": "Add Level",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"level\":{\"name\":\"Custom Tier 1\",\"description\":\"Info level\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"level\":{\"id\":\"1008003\",\"name\":\"Custom Tier 1\",\"description\":\"Info level\",\"deleted\":false}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": "/api/v3/levels/{level_id}",
+      "desc": "This operation lets you update a level",
+      "disp_desc": "Update Level",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"level\":{\"name\":\"Custom Tier 1\",\"description\":\"Info level\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"level\":{\"id\":\"11008003\",\"name\":\"Custom Tier 1\",\"description\":\"Info level\",\"deleted\":false}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": "/api/v3/levels/{level_id}",
+      "desc": "This operation lets you delete a level",
+      "disp_desc": "Delete Level",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": "/api/v3/levels/{level_id}",
+      "desc": "This operation fetches details of a level",
+      "disp_desc": "View Level",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"level\":{\"id\":\"100673\",\"name\":\"Tier 1\",\"description\":\"Info level\",\"deleted\":false}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/levels"
+      ],
+      "desc": "This operation fetches all levels .",
+      "disp_desc": "View All Levels",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":2,\"start_index\":1,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"levels\":[{\"id\":\"178008003\",\"name\":\"Tier 1\",\"description\":\"Info level\",\"deleted\":false},{\"id\":\"178008005\",\"name\":\"Tier 2\",\"description\":\"Info level-2\",\"deleted\":false}],\"list_info\":{\"row_count\":2,\"start_index\":1,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true,\"has_more_rows\":true}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [],
+  "path": "/levels",
+  "handler": "CachedEntityHandler",
+  "syslog_module": "Admin",
+  "cache_key": "ADMIN_CONF.LEVEL_DO",
+  "entity_group": "Admin",
+  "Additional Elements": [],
+  "isReleased": "true"
+}

@@ -1,0 +1,44 @@
+﻿
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<br>
+<div>使用字段及表单规则，您可以定义在请求表单中要执行的规则。这些规则的执行时机为：请求表单加载之后且提交请求之前。它们只在客户端一侧执行，而不会在服务器端执行。您也可以根据需要，禁用或启用这些规则，而被禁用的规则将不会对表单起作用。</div>
+<br>
+<div>字段及表单规则中支持以下事件：</div>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">表单加载时</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">
+当请求表单被加载时，执行这类规则。针对该事件定义的规则应至少包含一个要执行的动作。可以为动作定义匹配条件，则动作将在检查匹配条件，并满足条件时执行。而如果没有定义匹配条件，则动作将直接被执行。</p> 
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">字段变更时</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">
+当字段的值发生变更时，执行这类规则。针对该事件定义的规则应至少包含一个要执行的动作。可以为动作定义匹配条件，则动作将在检查匹配条件，并满足条件时执行。而如果没有定义匹配条件，则动作将直接被执行。这类规则将应用于相应字段的值的变更。</p>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">表单提交时</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">
+当提交表单时，执行这类规则。这里，执行的脚本只有该事件允许的动作。针对该事件定义的规则应包含一个有效的脚本，脚本将在检查匹配条件，并满足条件时执行。而如果没有定义匹配条件，则脚本将直接被执行。</p>
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">可应用到用户</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">
+这里规则可以应用到请求人、技术员、或者所有用户。只应用到请求人的规则不适用于技术员，反之，只应用到技术员的规则也不适用于请求人。</p> 
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">规则执行</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">
+规则可以在创建新请求或者编辑已有的请求时被执行。也可以规定在两种场合都执行规则。</p>
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">复制规则到其它模板 </p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">
+您可以利用动作菜单中的复制规则，将一个或多个规则从一个模板复制到另一个模板。在复制规则时，如果在目标模板中不存在规则中涉及的字段，则该字段将不被复制。同样地，如果目标模板中不存在规则中定义的条件和动作，则这类规则也不被复制。 </p> 
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">从请求表单移除字段</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">
+从模板中移除某个字段，则规则中的这些字段也会自动被移除。而在删除这些字段之后，如果有规则中使用这些被删除字段作为条件和动作，则这类规则也将被删除。</p> 
+<br>
+<div>字段及表单规则支持以下动作：</div>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>显示字段:&nbsp;</b>这类动作被应用时，将在请求表单中显示所指定的字段。</p>
+<p style="margin-top:5pt;margin-bottom: 5pt;"><b>隐藏字段:&nbsp;</b>这类动作被应用时，将在请求表单中隐藏（不显示）所指定的字段。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>启用字段:&nbsp;</b>这类动作被应用时，将在请求表单中启用所指定的字段。用户可以编辑这些字段。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>禁用字段:&nbsp;</b>这类动作被应用时，将在请求表单中禁用所指定的字段。用户不能编辑这些字段。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>必填字段:&nbsp;</b>这类动作被应用时，将会在请求表单中，将所指定的字段设置为必填字段，用户如果不为这些字段指定值，将不能提交表单。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>非必填字段:&nbsp;</b>这类动作被应用时，将会在请求表单中，将所指定的字段设置为非必填字段（移除必填字段的属性），用户即使不为这些字段指定值，也可以提交表单。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>执行脚本:&nbsp;</b>这类动作将执行请求表单的脚本，脚本必须是有效的Java脚本，否则不能执行。在执行脚本时，会默认支持一些常见的方法，如：要隐藏Category和Level字段，您可以进行以下调用：<code> 
+$CS.hideField([&quot;CATEGORY&quot;,&quot;LEVEL&quot;]);</code></p>

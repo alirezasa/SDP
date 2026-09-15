@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true">
+        <throttles name="scatalog_api_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="10" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/service_template_sla_associations" roles="ServiceRequestConfig" method="post">
+            <param name="input_data" template="service_template_sla_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations/(\d+)" roles="ServiceRequestConfig" method="put">
+            <param name="input_data" template="service_template_sla_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations/(\d+)" roles="ServiceRequestConfig" method="delete"/>
+        <url path="/api/v3/service_template_sla_associations/(\d+)" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations" roles="ServiceRequestConfig" method="get">
+		<throttles name="template_sla_associations" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations" roles="ServiceRequestConfig" method="put">
+            <param name="input_data" template="service_template_sla_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations" roles="ServiceRequestConfig" method="delete">
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations/(\d+)/(template|sla|user_groups)/(\d+)" roles="ServiceRequestConfig" method="get"/>
+        <url path="/api/v3/service_template_sla_associations/(template|sla|user_groups)" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations/(\d+)/(template|sla|user_groups)" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations/(template|sla|user_groups)/(\d+)" roles="ServiceRequestConfig" method="get"/>
+        <url path="/api/v3/service_template_sla_associations/(\d+)/_links" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations/_links" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/service_template_sla_associations/_total_count" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/requests/(\d+)/service_sla/(\d+)" roles="ViewRequests" method="get" user_type="all"/>
+        <url path="/api/v3/requests/service_category" roles="ViewRequests" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="service_category_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/requests/service_category/(\d+)/images/(\d+)" roles="" method="get" user_type="all" description="FGR_APPLIED:Necessary role check added at server side.">
+            <throttles key="url.path+url.dynamic_key" name="service_categories_icon_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+
+        <!-- service category urls-->
+
+        <url path="/api/v3/service_categories/(\d+)" roles="ServiceRequestConfig" method="get">
+       		<throttles name="service_categories_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="25" lock-period="5M"/>
+			</throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_categories" roles="ServiceRequestConfig" method="get">
+        	<throttles name="service_categories_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+	        	<throttle duration="1M" threshold="25" lock-period="5M"/>
+			</throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_categories/(\d+)/(templates)/(\d+)" roles="ServiceRequestConfig" method="get"/>
+        <url path="/api/v3/service_categories/(\d+)/_links" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/service_categories/_links" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/service_categories/_total_count" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_categories/(_?)metainfo" roles="ServiceRequestConfig,SDCMDBAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="service_categories_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+		</url>
+
+        <url path="/api/v3/service_categories" roles="ServiceRequestConfig" method="post">
+            <throttles name="service_category_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="service_category" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/service_categories/(\d+)" roles="ServiceRequestConfig" method="put">
+            <throttles name="service_category_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="service_category" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/service_categories" roles="ServiceRequestConfig" method="put">
+            <throttles name="service_category_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="service_category" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/service_categories/(\d+)" roles="ServiceRequestConfig" method="delete">
+            <throttles name="service_category_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/service_categories" roles="ServiceRequestConfig" method="delete">
+            <throttles name="service_category_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/service_categories/(\d+)/images" roles="ServiceRequestConfig" method="post">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/service_categories/images" roles="ServiceRequestConfig" method="post">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/service_categories/images/(\d+)" roles="" method="get" description="FGR_APPLIED:Necessary role check added at server side.">
+            <throttles name="service_category_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/service_categories/(\d+)/images/(\d+)" roles="" method="get" description="FGR_APPLIED:Necessary role check added at server side.">
+            <throttles name="service_category_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <url path="/api/v3/service_categories/icon_name" roles="ServiceRequestConfig" method="get">
+            <throttles name="service_category_icon_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+		<url path="/api/v3/service_categories/(\d+)/linked_instance/(\d+)" roles="ServiceRequestConfig" method="get">
+       		<throttles name="service_categories_linked_instance_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5M"/>
+			</throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/service_categories/(_?)history" method="get" roles="ServiceRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="service_categories_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/service_categories/(_?)get_records_for_history" method="get" roles="ServiceRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="service_categories_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/service_categories/(_?)get_performed_by_for_history" method="get" roles="ServiceRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="service_categories_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/template_layout_settings" roles="" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/template_layout_settings" roles="HelpdeskConfig" method="put">
+            <param name="input_data" template="template_layout_settings_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/template_layout_settings/(\d+)/(_?)allowed_values_for_fields" roles="HelpdeskConfig" method="get">
+            <param name="input_data" template="template_layout_settings_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/template_layout_settings/_links" roles="HelpdeskConfig" method="get" user_type="all">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+
+        <!-- Resource Sections-->
+        <url path="/api/v3/resource_sections" roles="ServiceRequestConfig" method="post">
+            <throttles name="resource_sections_key_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="resource_section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/resource_sections/(\d+)" roles="ServiceRequestConfig" method="put">
+            <throttles name="resource_sections_key_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="resource_section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/resource_sections/(\d+)" roles="ServiceRequestConfig" method="get">
+            <throttles name="resource_sections_key_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_sections" roles="ServiceRequestConfig" method="get">
+            <throttles name="resource_sections_key_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_sections/(\d+)" roles="ServiceRequestConfig" method="delete">
+            <throttles name="resource_sections_key_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/resource_sections/(\d+)/(_?)enable_associations" roles="ServiceRequestConfig" method="put">
+            <throttles name="resource_sections_key_enable_associations" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/resource_sections" roles="ServiceRequestConfig" method="put">
+            <param name="input_data" template="resource_section" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/resource_sections" roles="ServiceRequestConfig" method="delete">
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/resource_sections/_total_count" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_section_question_associations/(\d+)" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_sections/(\d+)/question_associations/(\d+)" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_section_question_associations" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_sections/(\d+)/question_associations" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_section_question_associations/_total_count" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_sections/(\d+)/question_associations/_total_count" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_section_question_associations/(_?)get_question_resource_association_count/(\d+)" roles="ServiceRequestConfig" method="get">
+            <throttles key="url.path+url.dynamic_key" name="question_resource_association_count" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/resource_section_question_associations/(_?)enable_question_association/(\d+)" roles="ServiceRequestConfig" method="put">
+            <throttles key="url.path+url.dynamic_key" name="question_resource_enable_association" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/resource_section_template_association" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_section_template_association/_total_count" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/resource_sections/(_?)metainfo" roles="ServiceRequestConfig" method="get"/>
+
+        <url path="/api/v3/resource_sections/(_?)history" method="get" roles="ServiceRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resource_section_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/resource_sections/(_?)get_records_for_history" method="get" roles="ServiceRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resource_section_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/resource_sections/(_?)get_performed_by_for_history" method="get" roles="ServiceRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resource_section_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!--Resource Sections-->
+        <!--SLA-->
+        <url path="/api/v3/slas/(\d+)/template_associations" roles="ServiceRequestConfig" method="post">
+            <param name="input_data" template="service_template_sla_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/(\d+)" roles="ServiceRequestConfig" method="put">
+            <param name="input_data" template="service_template_sla_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/(\d+)" roles="ServiceRequestConfig" method="delete"/>
+        <url path="/api/v3/slas/(\d+)/template_associations/(\d+)" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/(_?)allowed_values_for_fields" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/(\d+)/(_?)allowed_values_for_fields" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations" roles="ServiceRequestConfig" method="put">
+            <param name="input_data" template="service_template_sla_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations" roles="ServiceRequestConfig" method="delete">
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/(\d+)/(template|sla|user_groups)/(\d+)" roles="ServiceRequestConfig" method="get"/>
+        <url path="/api/v3/slas/(\d+)/template_associations/(template|sla|user_groups)" roles="ServiceRequestConfig" method="get">
+            <throttles key="url.path+url.dynamic_key" name="template_associations_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/(\d+)/(template|sla|user_groups)" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/(template|sla|user_groups)/(\d+)" roles="ServiceRequestConfig" method="get"/>
+        <url path="/api/v3/slas/(\d+)/template_associations/(\d+)/_links" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/_links" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/template_associations/_total_count" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/slas/(\d+)/(_?)associated_workflows" roles="ServiceRequestConfig" method="get">
+            <param name="input_data" template="list_info_template" type="JSONObject" max-len="-1"/>
+            <throttles name="sla_associated_workflows" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--SLA-->
+        <url path="/api/v3/slas/(_?)user_selection" roles="ServiceRequestConfig" method="put">
+            <param name="is_enabled" type="boolean" min-occurrences="1"/>
+            <throttles name="sla_user_selection_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/slas/(_?)user_selection" roles="ServiceRequestConfig" method="get">
+            <throttles name="sla_user_selection_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- BR SLA Association -->
+        
+        <param name-regex="true" max-len="250" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+        <!--Mobile Devices-->
+        <url path="/api/v3/mobile_devices" roles="" method="post" user_type="all" description="Roles are not defined as any user can use mobile apps">
+            <param name="input_data" template="mobile_device" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/mobile_devices/(\d+)" roles="" method="delete" user_type="all" description="Roles are not defined as any user can use mobile apps"/>
+        <url path="/api/v3/mobile_devices" roles="" method="delete" user_type="all" description="Roles are not defined as any user can use mobile apps">
+            <param name="ids" max-len="1500" regex="ids"/>
+        </url>
+    </urls>
+</security>

@@ -1,0 +1,2 @@
+// $Id$
+jQuery.noConflict();

@@ -1,0 +1,374 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="OrgDetailsThrottle" dynamic-throttle="true"  >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="orgdetails,location" method="GET"/>
+        <url path="/SetUpWizard.do" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="site" method="GET"/>
+
+        <url path="/SetUpWizard.do" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="site" method="POST" csrf="true">
+            <param name="isActive" type="boolean"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="ophours,holidays" method="GET"/>
+        <url roles="SDAdmin,SDSiteAdmin,HelpdeskConfig" path="/servlet/AJaxServlet" operation-param="action" operation-value="checkReferSite" method="POST" csrf="true">
+            <param name="siteID" type="long"  range=">=-1" allow-empty="false" min-occurrences="1" />
+            <param name="configID" regex="1|2|3|4|6|7" allow-empty="false" min-occurrences="1"/>
+        </url>
+
+        <!-- ESM Directory URLS Start -->
+        <url path="/ESM.do" operation-param="type" operation-value="organizationdetails" user_type="all" method="GET" roles="SDOrgAdmin"/>
+        <url path="/ESM.do" operation-param="type" operation-value="regions" user_type="all" method="GET" roles="SDOrgAdmin"/>
+        <url path="/ESM.do" operation-param="type" operation-value="sites" user_type="all" method="GET" roles="SDOrgAdmin"/>
+        <url path="/ESM.do" operation-param="type" operation-value="userauditlog" user_type="all" method="GET" roles="SDOrgAdmin"/>
+        <!-- ESM Directory URLS End -->
+
+        <!-- Org Details starts -->
+        <url roles="SDOrgAdmin" path="/OrgDef.do" operation-param="mode" operation-value="update" method="POST" csrf="true" user_type="all">
+            <file name="organizationLogo" max-size="10240" allowed-extensions="jpg,jpeg,gif,png" content-type-name="image" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <param name="organizationName" type="String" max-len="250"/>
+            <param name="organizationDesc" type="String" max-len="2500" secret="true"/>
+            <param name="doorNumber" type="String" max-len="50" secret="true"/>
+            <param name="street" type="String" max-len="50" secret="true"/>
+            <param name="landmark" type="String" max-len="50" secret="true"/>
+            <param name="city" type="String" max-len="50" secret="true"/>
+            <param name="postalCode" type="String" max-len="20" secret="true"/>
+            <param name="state" type="String" max-len="50" secret="true"/>
+            <param name="country" type="String" max-len="50" secret="true"/>
+            <param name="organizationEmail" regex="emailstring" type="String" max-len="200" secret="true"/>
+            <param name="organizationPhone" type="String" max-len="30" secret="true"/>
+            <param name="organizationFax" type="String" max-len="30" secret="true"/>
+            <param name="organizationUrl" type="String" max-len="255" secret="true"/>
+            <param name="organizationLogoSubmit" type="String"/>
+            <param name="imageSelect" regex="on|off"/>
+            <param name="updateButton" type="String" max-len="50"/>
+        </url>
+        <!-- Org Details ends -->
+
+        <!-- Sites starts -->
+        <url roles="SDOrgAdmin,SDAdmin" path="/SiteDef.do" operation-param="mode" operation-value="edit" method="GET" user_type="all">
+            <param name="forwardfrom" regex="ESM"/>
+            <param name="id" type="long" range=">=-1"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/SiteDef.do" operation-param="mode" operation-value="add" method="POST" csrf="true" user_type="all">
+            <param name="itemID" type="long" range=">=0"/>
+            <param name="divToShow" regex="detView|listView"/>
+            <param name="siteName" type="String" max-len="250"/>
+            <param name="description" type="String" max-len="2500" secret="true"/>
+            <param name="region" type="String"/>
+            <param name="timeZone" type="String" secret="true"/>
+            <param name="doorNumber" type="String" max-len="50" secret="true"/>
+            <param name="street" type="String" max-len="50" secret="true"/>
+            <param name="landmark" type="String" max-len="50" secret="true"/>
+            <param name="city" type="String" max-len="50" secret="true"/>
+            <param name="postalCode" type="String" max-len="20" secret="true"/>
+            <param name="state" type="String" max-len="50" secret="true"/>
+            <param name="country" type="String" max-len="50" secret="true"/>
+            <param name="organizationEmail" regex="emailstring" type="String" max-len="200" secret="true"/>
+            <param name="organizationPhone" type="String" max-len="30" secret="true"/>
+            <param name="organizationFax" type="String" max-len="30" secret="true"/>
+            <param name="organizationUrl" type="String" max-len="255" secret="true"/>
+            <param name="roleDetails" type="JSONObject" template="site_role_details_template" max-len="20000"/>
+            <param name="org_role_user" type="String" max-occurrences="100"/>
+            <param name="relatedSettings" regex="refer|custom"/>
+            <param name="operationalHoursSetting" regex="refer|custom"/>
+            <param name="siteReferOper" type="long" range=">=0"/>
+            <param name="holidaysSetting" regex="refer|custom"/>
+            <param name="siteReferHoli" type="long" range=">=0"/>
+            <param name="departmentsSetting" regex="refer|custom"/>
+            <param name="assocTechSetting" regex="refer|custom"/>
+            <param name="siteRefer" type="long" range=">=0"/>
+            <param name="groupsSetting" regex="refer|custom"/>
+            <param name="slaSetting" regex="refer|custom"/>
+            <param name="addButton" type="String" max-len="50"/>
+            <param name="addAndAddNew" type="String" max-len="50"/>
+        </url>
+        <url roles="SDOrgAdmin,SDAdmin" path="/SiteDef.do" operation-param="mode" operation-value="update" method="POST" csrf="true" user_type="all">
+            <param name="siteisDeleted" regex="on"/>
+            <param name="itemID" type="long" range=">=0"/>
+            <param name="divToShow" regex="detView|listView"/>
+            <param name="siteName" type="String" max-len="250"/>
+            <param name="description" type="String" max-len="2500" secret="true"/>
+            <param name="region" type="String"/>
+            <param name="timeZone" type="String" secret="true"/>
+            <param name="doorNumber" type="String" max-len="50" secret="true"/>
+            <param name="street" type="String" max-len="50" secret="true"/>
+            <param name="landmark" type="String" max-len="50" secret="true"/>
+            <param name="city" type="String" max-len="50" secret="true"/>
+            <param name="postalCode" type="String" max-len="20" secret="true"/>
+            <param name="state" type="String" max-len="50" secret="true"/>
+            <param name="country" type="String" max-len="50" secret="true"/>
+            <param name="organizationEmail" regex="emailstring" type="String" max-len="200" secret="true"/>
+            <param name="organizationPhone" type="String" max-len="30" secret="true"/>
+            <param name="organizationFax" type="String" max-len="30" secret="true"/>
+            <param name="organizationUrl" type="String" max-len="255" secret="true"/>
+            <param name="roleDetails" type="JSONObject" template="site_role_details_template" max-len="20000"/>
+            <param name="org_role_user" type="String" max-occurrences="100"/>
+            <param name="relatedSettings" regex="refer|custom"/>
+            <param name="operationalHoursSetting" regex="refer|custom"/>
+            <param name="siteReferOper" type="long" range=">=0"/>
+            <param name="holidaysSetting" regex="refer|custom"/>
+            <param name="siteReferHoli" type="long" range=">=0"/>
+            <param name="departmentsSetting" regex="refer|custom"/>
+            <param name="assocTechSetting" regex="refer|custom"/>
+            <param name="siteRefer" type="long" range=">=0"/>
+            <param name="groupsSetting" regex="refer|custom"/>
+            <param name="slaSetting" regex="refer|custom"/>
+            <param name="updateButton" type="String" max-len="50"/>
+            <param name="updateAndAddNew" type="String" max-len="50"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/SiteDef.do" operation-param="mode" operation-value="markAsActiveSite" method="POST" csrf="true" user_type="all">
+            <param name="siteID" type="long" range=">=-1" max-occurrences="250"/>
+        </url>
+
+        <url roles="SDAdmin" path="/setup/SiteListActions.jsp" operation-param="mode" operation-value="bulkedit" method="GET">
+            <param name="checkbox" type="long" range=">=0" max-occurrences="250"/>
+        </url>
+        <url roles="SDAdmin" path="/setup/SiteListActions.jsp" operation-param="mode" operation-value="save" method="POST" csrf="true">
+            <param name="siteIds" type="long" range=">=-1" max-occurrences="250"/>
+            <param name="relatedSettings" regex="refer|custom"/>
+            <param name="operationalHoursSetting" regex="refer|custom"/>
+            <param name="bulkSiteReferOper" type="long"  range=">=0" />
+            <param name="holidaysSetting" regex="refer|custom"/>
+            <param name="bulkSiteReferHoli" type="long"  range=">=0" />
+            <param name="departmentsSetting" regex="refer|custom"/>
+            <param name="assocTechSetting" regex="refer|custom" max-occurrences="2"/>
+            <param name="bulkSiteRefer" type="long"  range=">=0" />
+            <param name="groupsSetting" regex="refer|custom"/>
+            <param name="slaSetting" regex="refer|custom"/>
+            <param name="updateButton" type="String" max-len="50"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="(/STATE_ID/[0-9]+)?/SiteListView(_HD_[0-9]+)?.cc" method="GET" user_type="all" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SiteListView(_HD_[0-9]+)?"/>
+            <param name="isActive" type="boolean"/>
+        </url>
+        <!-- delete operation is handled using v3 api call (urls related to v3 api are in security-site-v3.xml)-->
+
+        <!--SearchSiteView STARTS-->
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="CreateProblems,ModifyProblems,ModifyRequests,CreateRequests" operation-param="configID" operation-value="0" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="SDSiteAdmin,SDAdmin" operation-param="configID" operation-value="1,2,4,7" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="SDSiteAdmin,SDAdmin,SDOrgAdmin" operation-param="configID" operation-value="3" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="IncidentBusinessRuleConfig" operation-param="configID" operation-value="5" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="ServiceLevelAgreementConfig" operation-param="configID" operation-value="6" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="SDAdmin,SDSiteAdmin,SDCo-ordinator" operation-param="configID" operation-value="101" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="CreatePurchaseOrder,ModifyPurchaseOrder" operation-param="configID" operation-value="102" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="ViewCI,ViewInventoryWS,SDChangeManager" operation-param="configID" operation-value="104,500" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="ModifyRequests,CreateRequests,ViewInventoryWS,SDChangeManager" operation-param="configID" operation-value="108" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url path="(/STATE_ID/[0-9]+)?/SearchSiteView(_HD_[0-9]+)?.cc" method="GET" roles="ModifyInventoryWS" operation-param="configID" operation-value="110" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="SearchSiteView(_HD_[0-9]+)?"/>
+            <param name="userConfigID" type="long"  range=">=0" />
+            <!--param name="PORTALID" type="long" range=">=0"/-->
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <!--SearchSiteView ENDS-->
+
+        <!--SITE AJAX STARTS-->
+        <url path="/setup/SiteAjax.jsp" roles="CreateProblems,ModifyProblems,ModifyRequests,CreateRequests" operation-param="configID" operation-value="0" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="SDSiteAdmin,SDAdmin" operation-param="configID" operation-value="1,2,4,7" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="SDSiteAdmin,SDAdmin,SDOrgAdmin" operation-param="configID" operation-value="3" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="IncidentBusinessRuleConfig" operation-param="configID" operation-value="5" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="ServiceLevelAgreementConfig" operation-param="configID" operation-value="6" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="SDAdmin,SDSiteAdmin,SDCo-ordinator" operation-param="configID" operation-value="101" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="CreatePurchaseOrder,ModifyPurchaseOrder" operation-param="configID" operation-value="102" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite|search_billingAddress"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="ViewCI,ViewInventoryWS,SDChangeManager" operation-param="configID" operation-value="104,500" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="ModifyRequests,CreateRequests,ViewInventoryWS,SDChangeManager" operation-param="configID" operation-value="108" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <url path="/setup/SiteAjax.jsp" roles="ModifyInventoryWS" operation-param="configID" operation-value="110" method="POST" csrf="true">
+            <param name="siteName" type="String"/>
+            <param name="SELECTEDSITEID" type="String"/>
+            <param name="SELECTEDSITENAME" type="String" max-len="250"/>
+            <param name="USERMODULE" regex="Assets"/>
+            <param name="SELECTSITE" type="String"/>
+            <param name="action" regex="searchSite"/>
+        </url>
+        <!--SITE AJAX ENDS-->
+        <!--SD-86153-->
+        <url path="/setup/SiteDetails.jsp"  method="GET" roles="ViewRequests">
+            <param name="SITEID" type="long" range=">=-1" allow-empty="false" min-occurrences="1" />
+            <param name="WOID" type="long" range=">=0" allow-empty="false" min-occurrences="1" />
+        </url>
+
+        <!-- Sites ends -->
+
+
+        <!-- Op hrs starts -->
+        <url roles="SDAdmin,SDSiteAdmin" path="/OperHoursDef.do" operation-param="mode" operation-value="getValue" method="GET">
+            <param name="SITEID" type="long" range=">=-1"/>
+            <param name="[0-9]+" name-regex="true" type="String"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin" path="/OperHoursDef.do" operation-param="mode" operation-value="addValue" method="POST" csrf="true">
+            <param name="SITEID" type="long" range=">=-1" max-occurrences="2"/>
+            <param name="is24X7" regex="on|off"/>
+            <param name="startHours" type="long" range="0-24"/>
+            <param name="startMinutes" type="long" range="0-60"/>
+            <param name="endHours" type="long" range="0-24"/>
+            <param name="endMinutes" type="long" range="0-60"/>
+            <param name="monday" regex="on|off"/>
+            <param name="tuesday" regex="on|off"/>
+            <param name="wednesday" regex="on|off"/>
+            <param name="thursday" regex="on|off"/>
+            <param name="friday" regex="on|off"/>
+            <param name="saturday" regex="on|off"/>
+            <param name="sunday" regex="on|off"/>
+        </url>
+        <!-- Op hrs ends -->
+
+        <!-- Holidays starts -->
+        <url roles="SDAdmin,SDSiteAdmin" path="/HolidayDef.do" operation-param="mode" operation-value="edit" method="GET">
+            <param name="itemID" type="long" range=">=0"/>
+            <param name="[0-9]+" name-regex="true" type="String"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin" path="/HolidayDef.do" operation-param="mode" operation-value="delete" method="POST" csrf="true">
+            <param name="holidayID" type="long" range=">=0" max-occurrences="250"/>
+            <param name="[0-9]+" name-regex="true" type="String"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin" path="/HolidayDef.do" operation-param="mode" operation-value="add" method="POST" csrf="true">
+            <param name="itemID" type="long" range=">=0"/>
+            <param name="date" type="String"/>
+            <param name="siteID" regex="[0-9]+|null" max-len="19"/>
+            <param name="description" type="String" max-len="250" secret="true"/>
+            <param name="isRecurring" type="String"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin" path="/HolidayDef.do" operation-param="mode" operation-value="update" method="POST" csrf="true">
+            <param name="itemID" type="long" range=">=0"/>
+            <param name="date" type="String"/>
+            <param name="siteID" regex="[0-9]+|null" max-len="19"/>
+            <param name="description" type="String" max-len="250" secret="true"/>
+            <param name="isRecurring" type="String"/>
+        </url>
+        <url roles="SDAdmin,SDSiteAdmin" path="(/STATE_ID/[0-9]+)?/HolidayListView(_HD_[0-9]+)?.cc" method="GET" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="HolidayListView(_HD_[0-9]+)?"/>
+            <param name="SITEID" regex="[0-9]+|null" max-len="19"/>
+        </url>
+        <!-- Holidays ends -->
+    </urls>
+
+    <jsontemplates>
+        <jsontemplate name="site_role_details_template">
+            <key name="orgroles" type="JSONArray" template="site_orgroles_array_template" max-len="20000"/>
+        </jsontemplate>
+        <jsontemplate name="site_orgroles_array_template">
+            <key name="config_details" regex="[0-9]+|null"/>
+            <key name="config_type" regex="SITE"/>
+            <key name="role_details" type="JSONArray" template="site_role_association_base" max-len="20000"/>
+        </jsontemplate>
+        <jsontemplate name="region_role_details_template">
+            <key name="orgroles" type="JSONArray" template="region_orgroles_array_template" max-len="20000"/>
+        </jsontemplate>
+        <jsontemplate name="region_orgroles_array_template">
+            <key name="config_details" regex="[0-9]+|null"/>
+            <key name="config_type" regex="REGION"/>
+            <key name="role_details" type="JSONArray" template="region_role_association_base" max-len="20000"/>
+        </jsontemplate>
+
+    </jsontemplates>
+
+</security>

@@ -1,0 +1,135 @@
+{
+  "operations": [
+    {
+      
+      "method": "POST",
+      "moduleName" : "Change",
+      "path": "/api/v3/cabs",
+      "desc": "You can add a CAB here.",
+      "disp_desc": "Add a CAB",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+       "sample": "{\"cab\": {\"description\": \"\",\"name\": \"Cab Team 1\",\"members\": [{\"id\": \"6\"},{\"id\": \"4\"}]}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"cab\": {\"id\": \"308\",\"description\": \"\",\"name\": \"Cab Team 1\",\"members\": [{\"id\": \"6\",\"name\": \"Heather Graham\",\"email_id\": null,\"is_vipuser\": false},{\"id\": \"4\",\"name\": \"administrator\",\"email_id\": \"acme@zylker.com\",\"is_vipuser\": false}]},\"response_status\": {\"status_code\": 2000,\"status\": \"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/cabs/{id}",
+      "desc": "You can view the details of a specific CAB here.",
+      "disp_desc": "View a CAB",
+      "workflow": "",
+      "output": {
+        "sample": "{\"cab\": {\"id\": \"308\",\"description\": \"\",\"name\": \"Cab Team 1\",\"members\": [{\"id\": \"6\",\"name\": \"Heather Graham\",\"email_id\": null,\"is_vipuser\": false},{\"id\": \"4\",\"name\": \"administrator\",\"email_id\": \"acme@zylker.com\",\"is_vipuser\": false}]},\"response_status\": {\"status_code\": 2000,\"status\": \"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/cabs",
+      "desc": "You can get the details of all available CABS here.",
+      "disp_desc": "View All CABs",
+      "workflow": "",
+      "output": {
+        "sample": "{\"cabs\": [{\"id\": \"308\",\"description\": \"\",\"name\": \"Cab Team 1\"},{\"id\": \"309\",\"description\": \"\",\"name\": \"Cab Team 2\"}],\"response_status\": [{\"status_code\": 2000,\"status\": \"success\"}],\"list_info\": {\"has_more_rows\": false,\"row_count\": 2,\"sort_order\": \"asc\",\"sort_field\": \"name\"}}"
+      },
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },     
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/cabs/{id}",
+      "desc": "You can edit the CABs here.",
+      "disp_desc": "Update a CAB",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"cab\": {\"description\": \"This contains the CAB members for department so and so.\",\"name\": \"Cab Team 1\",\"members\": [{\"id\": \"6\",\"name\": \"Heather Graham\",\"email_id\": null},{\"id\": \"4\",\"name\": \"administrator\",\"email_id\": \"acme@zylker.com\"}]}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"cab\": {\"description\": \"This contains the CAB members for department so and so.\",\"name\": \"Cab Team 1\",\"members\": [{\"id\": \"6\",\"name\": \"Heather Graham\",\"email_id\": null,\"is_vipuser\": false},{\"id\": \"4\",\"name\": \"administrator\",\"email_id\": \"acme@zylker.com\",\"is_vipuser\": false}]},\"response_status\": {\"status_code\": 2000,\"status\": \"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "path": "/api/v3/cabs/{id}",
+      "desc": "You can delete the CABS here.",
+      "disp_desc": "Delete a CAB",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+
+ {
+      "name": "id",
+      "type": "Number",
+      "inOP": "true",
+      "desc": "The unique identifier assigned upon creation",
+      "graphView": "",
+      "column": "CABDEFINITION:CABID",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "inOP": "true",
+      "desc": "The name of the CAB",
+      "graphView": "",
+      "column": "CABDEFINITION:NAME",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "The description of the CAB",
+      "graphView": "",
+      "column": "CABDEFINITION:DESCRIPTION",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "members",
+      "isDefault": "true",
+      "type": "Array Of Objects",
+      "column": "CABMembers:USERID",
+      "desc": "Array of user objects denoting the members of the CAB.",
+      "graphView": "",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+    
+  ],
+  "isReleased": "false"
+}

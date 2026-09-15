@@ -1,0 +1,136 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <!--
+    All release related url entries should be specified here.
+    -->
+	<urls authentication="required" disable-extraparam="true" description="Roles are not configured for release URL's since roles are dynamically defined as release roles. Release roles checks are done at code level.">
+
+      <!-- Common Release Module Security Configurations Start -->
+      <param name="noheader" regex="true|false"/>
+      <throttles name="release_jsp_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+        <throttle duration="1M" threshold="60" lock-period="5M"/>
+      </throttles>
+      <!-- Common Release Module Security Configurations End -->
+
+      <!-- Notification Rules->Release  -->
+      <url roles="SDAdmin" path="/setup/ReleaseNotifications.jsp" operation-param="SaveNot" operation-value="view" method="get"/>
+      <url roles="SDAdmin" path="/setup/ReleaseNotifications.jsp" operation-param="SaveNot" operation-value="Save" method="post" csrf="true">
+        <throttles name="release_notification_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+          <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <param name="Notify_Release|Approval_Release|Notify_Release_NoteAddition|ReleaseStatus_E-Mail_Default|Release_RoleAssigned|ReleaseRoleRemoved|Release_Updated|Release_ChangeAssociated|Release_ChangeDissociated|Release_ProjectAssociated|Release_ProjectDissociated" name-regex="true"  max-occurrences="16" regex="on"/>
+      </url>
+
+      <url path="/release/ReleaseList.jsp" method="get" user_type="all" description="ROLE_NOT_REQUIRED">
+        <param name="module" regex="release"/>
+        <param name="associatedEntityID" regex="id" />
+        <param name="from" regex="change|project|asset|services|workflow" />
+        <param name="operation" regex="associated|associateto" />
+        <param name="mode" regex="get|list" />
+        <param name="fromActions"  type="boolean" />
+        <param name="preview"  type="boolean" />
+
+      </url>
+
+      <url path="/release/ReleaseDetails.jsp" method="get" user_type="all" description="ROLE_NOT_REQUIRED">
+        <param name="module" regex="release"/>
+        <param name="tabName" regex="[a-zA-Z\/_]*" />
+        <param name="printPreview" type="boolean" />
+        <param name="id" regex="id" />
+        <param name="entity_id" type="long" range=">0"/>
+        <param name="mode" regex="detail" />
+      </url>
+
+      <!-- For release new page -->
+      <url path="/release/ReleaseForm.jsp" roles="CreateReleases" method="get" operation-param="mode" operation-value="add" >
+        <param name="module" regex="release"/>
+        <param name="id" type="long" range=">0"/>
+        <param name="from" regex="change|project" />
+        <param name="associatedEntityId" type="long" range=">0"/>
+        <param name="operation" regex="associated|associateto" />
+        <param name="overwrite"  regex="overwriteNo|overwriteEmpty|overwriteAll" />
+      </url>
+
+      <url path="/release/ReleaseForm.jsp" user_type="all" method="get" operation-param="mode" operation-value="edit" description="ROLE_NOT_REQUIRED">
+        <param name="module" regex="release"/>
+        <param name="id" type="long" range=">0"/>
+      </url>
+
+      <!-- Change Associations new page start-->
+      <url path="/change/ChangeListViewWeb.jsp" method="get" user_type="all" description="ROLE_NOT_REQUIRED">
+        <param name="module"  regex="release|workflow"/>
+        <param name="module_id" regex="id" />
+        <param name="canmanageassociation" type="boolean" />
+      </url>
+      <!-- Change Associations new page End -->
+
+      <!-- Project Associations new page start-->
+      <url path="/project/ProjectListViewWeb.jsp" method="get" user_type="all" operation-param="module" operation-value="release,change" description="ROLE_NOT_REQUIRED">
+        <param name="module_id" regex="id" />
+        <param name="canmanageassociation" type="boolean" />
+        <param name="initiatedby" regex="project|change" />
+        <param name="canCreateProject" type="boolean"/>
+        <param name="canEditProject" type="boolean"/>
+      </url>
+      <!-- Project Associations new page End -->
+
+      <url path="/ui/releases" method="get" user_type="all" operation-param="mode" operation-value="get" description="ROLE_NOT_REQUIRED">
+        <param name="gsearch" type="String" max-len="5000" secret="true"/>
+        <param name="module" regex="release"/>
+        <param name="associatedEntityID" regex="id" />
+        <param name="from" regex="asset|services|workflow" />
+        <param name="operation" regex="associated" />
+        <!-- To access url_search param -->
+        <param name="url_search" template="list_info" type="JSONObject" max-len="-1"/>
+      </url>
+      <url path="/ui/releases" method="get" roles="CreateReleases" operation-param="mode" operation-value="add">
+        <param name="view" regex="preview"/>
+      </url>
+      <url path="/ui/releases" method="get" user_type="all" operation-param="mode" operation-value="detail" description="ROLE_NOT_REQUIRED">
+        <param name="entity_id" type="long" range=">0"/>
+      </url>
+      <url path="/ui/releases" method="get" user_type="all" operation-param="mode" operation-value="edit" description="ROLE_NOT_REQUIRED">
+        <param name="entity_id" type="long" range=">0"/>
+      </url>
+
+      <!-- View History JSP URL -->
+      <url path="/common/ViewHistory.jsp" user_type="all" remote_server="true" operation-param="module" operation-value="releases" description="ROLE_NOT_REQUIRED">
+        <param name="id" type="long" allow-empty="false"/>
+        <param name="key" regex="release_history_sort_order"/>
+        <param name="print_view" type="boolean"/>
+      </url>
+
+      <!-- Notification Rules -> Release (SDAdmin) -->
+      <url roles="SDAdmin" path="/NotificationContent.do" method="get" operation-param="notifType"
+           operation-value="Notify_Release,Approval_Release,Notify_Release_NoteAddition,ReleaseStatus_E-Mail_Default,Release_RoleAssigned,ReleaseRoleRemoved,Release_Updated,Release_ChangeAssociated,Release_ChangeDissociated,Release_ProjectAssociated,Release_ProjectDissociated"/>
+      <url roles="SDAdmin" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType"
+           operation-value="Notify_Release,Approval_Release,Notify_Release_NoteAddition,ReleaseStatus_E-Mail_Default,Release_RoleAssigned,ReleaseRoleRemoved,Release_Updated,Release_ChangeAssociated,Release_ChangeDissociated,Release_ProjectAssociated,Release_ProjectDissociated">
+        <param name="fromAdminPage" type="boolean"/>
+        <param name="subject" type="String" max-len="500" secret="true"/>
+        <param name="content" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+        <param name="mode" regex="update"/>
+        <throttles name="release_notification_content_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+          <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+      </url>
+
+      <!-- fetching user details from release edit page from requester login-->
+      <url path="/servlet/Select2Servlet" user_type="all" operation-param="module" operation-value="release_user" method="get" description="ROLE NOT REQUIRED Since both requester and technician can access this url in change module , role check should not be added here " >
+        <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+          <throttle duration="30s" threshold="60" lock-period="5M"/>
+        </throttles>
+        <param name="fromModule" regex="release" min-occurrences="1"/>
+        <param name="fromModuleId" type="long" range=">0"/>
+        <param name="user_type" regex="release_requester|release_engineer|release_manager"/>
+        <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+      </url>
+       <!-- Print preview url(moved from security-allmodules file)-->
+        <url path="/ui/print" method="get" operation-param="module" operation-value="release" user_type="all" description="ROLE_NOT_REQUIRED">
+            <param name="entity_id" type="long" range=">0" />
+            <param name="externalframe" type="boolean" />
+            <param name="approvals_level" regex="id" />
+            <param name="approval" regex="id" />
+            <param name="printMode" type="boolean"  max-occurrences="1"  />
+        </url>
+    </urls>
+</security>
+<!-- $Id$ -->

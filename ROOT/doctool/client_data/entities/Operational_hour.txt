@@ -1,0 +1,150 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the operational hour",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Site to which the operational hour is associated to. Different sites can have different operational hours",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "working_days",
+      "type": "Array",
+      "desc": "Array of days considered to be working days",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "is_round_the_clock",
+      "type": "Boolean",
+      "desc": "Indicates whether the site operates around the clock or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "start_time_hrs",
+      "type": "Number",
+      "desc": "Starting hour of a working day",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "start_time_mins",
+      "type": "Number",
+      "desc": "Starting minute of a working day",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "end_time_hrs",
+      "type": "Number",
+      "desc": "Ending hour of a working day",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "end_time_mins",
+      "type": "Number",
+      "desc": "Ending minute of a working day",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/operational_hours"
+      ],
+      "desc": "This operation lets you update operational hours of a site",
+      "disp_desc": "Update operational hours",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"operational_hours\":{\"is_round_the_clock\":true,\"start_time_hrs\":\"9\",\"start_time_mins\":\"0\",\"end_time_hrs\":\"6\",\"end_time_mins\":\"30\",\"working_days\":[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\"],\"site\":{\"id\":\"99999000000025039\",\"name\":\"Chennai\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"operational_hours\":{\"is_round_the_clock\":true,\"start_time_hrs\":\"9\",\"start_time_mins\":\"0\",\"end_time_hrs\":\"6\",\"end_time_mins\":\"30\",\"working_days\":[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\"],\"site\":{\"id\":\"99999000000025039\",\"name\":\"Chennai\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/operational_hours/"
+      ],
+      "desc": "This operation fetches operational hours details of a site",
+      "disp_desc": "View operational hours",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"operational_hours\":{\"is_round_the_clock\":true,\"start_time_hrs\":\"9\",\"start_time_mins\":\"0\",\"end_time_hrs\":\"6\",\"end_time_mins\":\"30\",\"working_days\":[\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\"],\"site\":{\"id\":\"99999000000025039\",\"name\":\"Chennai\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [],
+  "path": "/operational_hours",
+  "handler": "OperationalHourHandler",
+  "isReleased": "true",
+  "lastModified": 1473327488000
+}

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id$--> 
+ 
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd"> 
+<urls  authentication="required">
+    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="barcode" dynamic-throttle="true" >
+        <throttle lock-period="5m" threshold="80" duration="1m"/>
+    </throttles>
+    <url path="/BarcodeScanAction.do" roles="ModifyInventoryWS,CreateInventoryWS" operation-param="method" method="get" operation-value="showHome"> 
+        <param name="from"  regex="listView"/>        
+    </url> 
+ 
+    <url path="/BarcodeScanAction.do" roles="ModifyInventoryWS,CreateInventoryWS" operation-param="method" method="get" operation-value="loadBarcode"/> 
+ 
+    <url path="/BarcodeScanAction.do" roles="ModifyInventoryWS,CreateInventoryWS" operation-param="method" method="post" csrf="true" operation-value="createLoadBarcode"> 
+        <param name="mode"  regex="productTypeChange|productChange|loadLabelProperty"/>
+        <param name="isAssoBarcode"  type="boolean"/>
+        <param name="isOnlySiteList"  type="boolean"/>
+        <param name="productType"  type="long" range=">0"/>
+        <param name="product"  type="long" range=">0"/>
+    </url>
+ 
+    <url path="/BarcodeScanAction.do" roles="ModifyInventoryWS,CreateInventoryWS" operation-param="method" method="get" operation-value="vendorBarcode"/> 
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS" operation-param="method" method="post" csrf="true" operation-value="createVendorBarcode"> 
+     <param name="data" template="vendor_barcode" type="JSONObject" max-len="-1" max-occurrences="1" min-occurrences="0"/>
+    </url> 
+ 
+    <url path="/BarcodeScanAction.do" roles="ModifyInventoryWS,CreateInventoryWS" operation-param="method" method="get" operation-value="ownBarcode"/> 
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="method" method="post" csrf="true" operation-value="createOwnBarcode"> 
+        <param name="mode"  regex="getSequence|setPrintLater|printBarcodes|generateBarcodes"/>
+        <param name="productType"  type="long" range=">0"/>
+        <param name="isAssoBarcode"  type="boolean"/>
+        <param name="site"  type="long" range=">=-1"/>
+        <param name="historyId"  type="long" range=">0"/>
+        <param name="data" template="barcode_template" type="JSONObject" max-len="-1"/>
+    </url>
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="method" method="get" operation-value="existingAssets"/> 
+ 
+    <url path="/BarcodeScanAction.do" roles="ModifyInventoryWS" operation-param="method" method="post" csrf="true" operation-value="createExistingAssets"> 
+        <param name="mode"  regex="generateBarcodes|loadMappingFields|generateMappingDoc"/>
+        <param name="historyId"  type="long" range=">0"/>
+        <param name="productType" type="long" range=">0"/>
+        <param name="site" type="long" range=">=-1"/>
+        <param name="data" template="barcode_template" type="JSONObject" max-len="-1"/>
+    </url>
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="method" method="get" operation-value="print">
+        <param name="barcode" type="String" max-len="150" secret="true" description="to print a given barcode, one barcode at a time"/>
+    </url>
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="method" method="post" csrf="true" operation-value="loadHistoryPrint"> 
+        <param name="mode"  regex="loadHistory"/>
+        <param name="data" template="barcode_template" type="JSONObject" max-len="-1"/>
+    </url>
+
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="method" method="post" csrf="true" operation-value="updateHistoryPrint"> 
+        <param name="mode"  regex="updateHistory"/>
+        <param name="data" type="long" range=">=0"/>
+    </url>
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="method" method="get" operation-value="history"> </url>
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="method" method="get" operation-value="labelProperty"> </url>
+ 
+    <url path="/BarcodeScanAction.do" roles="CreateInventoryWS" operation-param="method" operation-value="createLabelProperty" method="post" csrf="true"> 
+        <param name="mode"  regex="add|edit|delete|update"/>
+        <param name="propertyId" type="long" range=">0"/>
+        <param name="data" template="labelProperty_template" type="JSONObject" max-len="-1"/>
+    </url>
+</urls>
+<urls authentication="required">
+    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="barcode" dynamic-throttle="true" >
+        <throttle lock-period="5m" threshold="100" duration="1m"/>
+    </throttles>
+    <!--  Dynamically generated barcode Directory  -->
+    <url roles="ViewInventoryWS" url-type="dynamic" path="^/barcodes/[0-9]+/[0-9]+\.svg$" description="Dynamically generated barcode images">
+        <param name="[0-9]+" name-regex="true" type="String"  max-len="0"/>
+    </url>
+    <url url-type="dynamic" path="^/barcodes/[0-9]+/mappingFile/AssetBarcodeMapping.html$" description="Dynamically generated barcode mapping file">
+        <param name="[0-9]+" name-regex="true" type="String" max-len="0"/>
+    </url>
+</urls>
+
+<jsontemplates>
+    <!-- Barcode URl's template -->
+    <jsontemplate name="vendor_barcode">
+        <key name="isVendorBarcode" type="boolean" />
+        <key name="isWorkstation" type="boolean" />
+        <key name="vendor-bc" type="String" max-len="51000" secret="true" description="max size of barcode is 100 and maximum of 500 barcodes will be given from UI"/>
+        <key name="barcodes" type="String" max-len="51000" description="max size of barcode is 100 and maximum of 500 barcodes will be given from UI" secret="true" />
+        <key name="productType" type="long" range=">0"/>
+        <key name="site" type="long" range=">=-1"/>
+        <key name="product" type="long" range=">0"/>
+        <key name="location" type="String" max-len="250" secret="true"/>
+        <key name="comments" type="String" max-len="-1" description="comments length can't be predefined" secret="true"/>
+        <key name="isServiceTag" type="boolean" />
+        <key name="serviceTag" type="String" max-len="100" secret="true"/>
+        <key name="allowedBarcodesCount" type="long" range=">0"/>
+ </jsontemplate>
+ <jsontemplate name="barcode_template">
+        <key name="isVendorBarcode" type="boolean" />
+        <key name="isWorkstation" type="boolean" />
+        <key name="prefix" type="String" max-len="250" />
+        <key name="barcodes" type="String" max-len="51000" description="max size of barcode is 100 and maximum of 500 barcodes will be given from UI" secret="true"/>
+        <key name="productType" type="long" range=">0"/>
+        <key name="site" type="long" range=">=-1"/>
+        <key name="product" type="long" range=">0"/>
+        <key name="location" type="String" max-len="250" secret="true" />
+        <key name="isSequence" type="boolean" />
+        <key name="comments" type="String" max-len="250"/>
+        <key name="isServiceTag" type="boolean" />
+        <key name="serviceTag" type="String" max-len="100" secret="true"/>
+        <key name="from" regex="[0-9]+"/>
+        <key name="count" type="long" range=">=0"/>
+        <key name="sufix" type="String" max-len="250" />
+        <key name="labelProperty" type="String" max-len="250" />
+        <key name="historyId" type="long" range=">0"/>
+        <key name="isTest" type="boolean" />
+        <key name="mappingField" type="long" range=">=-1"/>
+        <key name="isSequential" type="boolean" />
+        <key name="isManual" type="boolean" />
+        <key name="isPrintLater" type="boolean" />
+        <key name="manualCodes" type="String" max-len="51000" description="max size of barcode is 100 and maximum of 500 barcodes will be given from UI" secret="true"/>
+        <key name="searchText" type="String" max-len="250"/>
+        <key name="startIndex" type="long" range=">0"/>
+        <key name="allowedBarcodesCount" type="long" range=">0"/>
+    </jsontemplate>
+    <jsontemplate name="labelProperty_template">
+        <key name="propertyName" type="String" max-len="250" allow-invalid="false"/>
+        <key name="propertyId" type="long" range=">0" />
+        <key name="description" type="String" max-len="-1" description="since they provided -1 in data-dictionary.xml" secret="true"/>
+        <key name="width" type="double" range=">0.0" allow-invalid="false"/>
+        <key name="height" type="double" range=">0.0" allow-invalid="false"/>
+        <key name="dpi" type="long" range=">0" allow-invalid="false"/>
+        <key name="columns" type="long" range=">=0"/>
+        <key name="gap" type="double" range=">=0" />
+        <key name="labelSite" type="long" range=">=-1"/>
+    </jsontemplate>
+</jsontemplates>
+</security>
+ 
+<!--$Id$-->

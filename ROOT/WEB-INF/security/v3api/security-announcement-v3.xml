@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles name="announcement_crud_operaions" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="20" lock-period="5m"/>
+        </throttles>
+        <url path="/api/v3/announcements/(\d+)" roles="" method="get" user_type="all" description="All users can use this url, hence no role configured">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/announcements" roles="" method="get" user_type="all" description="All users can use this url, hence no role configured">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/announcements" roles="AddAnnouncements" method="post">
+            <param name="input_data" template="announcement" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/announcements/(\d+)" roles="ModifyAnnouncements" method="put">
+            <param name="input_data" template="announcement" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/announcements/(\d+)" roles="DeleteAnnouncements" method="delete"/>
+        <url path="/api/v3/announcements/(user_groups|priority|announcement_type|service_category)" roles="" method="get" description="All users can use this url, hence no role configured">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <param name-regex="true" max-len="250" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles name="announcement_bulk_operations" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        <url path="/api/v3/announcements" roles="ModifyAnnouncements" method="put">
+            <param name="input_data" template="announcement" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/announcements" roles="DeleteAnnouncements" method="delete">
+            <param name="ids" regex="ids" max-len="1000" description="Bulk operation can be done only for 100 announcements from UI"/>
+        </url>
+        <url path="/api/v3/announcements/(user_groups|priority|announcement_type|service_category)/(\d+)" roles="" method="get" description="All users can use this url, hence no role configured"/>
+        <url path="/api/v3/announcements/_links" roles="" method="get" user_type="all" description="All users can use this url, hence no role configured">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000" description="Bulk operation can be done only for 100 announcements from UI"/>
+        </url>
+        <url path="/api/v3/announcements/_total_count" roles="" method="get" user_type="all" description="All users can use this url, hence no role configured">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/announcements/(_?)metainfo" roles="" user_type="all" method="get" description="ROLE_NOT_REQUIRED - All users can use this url, hence no role configured ">
+            <throttles name="ann_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <param name-regex="true" max-len="250" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+</security>

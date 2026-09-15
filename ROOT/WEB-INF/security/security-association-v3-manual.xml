@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <regexes>
+        <regex name="association" value="(assoc_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" />
+        <regex name="api_name" value="(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)" />
+    </regexes>
+    <jsontemplates>
+        <!--template for associations-->
+        <jsontemplate name="instance_relationship_base">
+            <key allow-invalid="false" name="id" range=">0" type="long"/>
+            <key allow-invalid="false" name="source" template="association_instance_unique" type="JSONObject" max-len="-1"/>
+            <key allow-invalid="false" name="destination" template="association_instance_unique" type="JSONObject" max-len="-1"/>
+            <key max-len="50" type="JSONObject" template="association_type_unique" name="relationship_type"/>
+            <key allow-invalid="false" type="boolean" name="is_inverse"/>
+            <key name="udf_fields" template="common_udf_fields_ref" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="instance_relationship">
+            <key name="association" name-regex="true" template="instance_relationship_base" type="JSONObject|JSONArray" max-len="-1" array-size="0-100" max-occurrences="1"/>
+            <key name="(association_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" name-regex="true" template="instance_relationship_base" type="JSONObject|JSONArray" max-len="-1" array-size="0-100" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="module_relationship_base">
+            <key allow-invalid="false" type="long" range=">0" name="id"/>
+            <key allow-invalid="false" max-len="50" secret="true" regex="association" name="source_api_name"/>
+            <key allow-invalid="false" max-len="50" secret="true" regex="association" name="source_api_plural_name"/>
+            <key allow-invalid="false" max-len="100" type="String" name="source_display_name" description="not possible to add regex as this param accepts i18N values"/>
+            <key allow-invalid="false" max-len="50" secret="true" regex="association" name="destination_api_name"/>
+            <key allow-invalid="false" max-len="50" secret="true" regex="association" name="destination_api_plural_name"/>
+            <key allow-invalid="false" max-len="100" type="String" name="destination_display_name" description="not possible to add regex as this param accepts i18N values"/>
+            <key array-size="0-10" max-len="50000" secret="true" type="JSONArray" template="search_criteria" name="source_criteria"/>
+            <key array-size="0-10" max-len="50000" secret="true" type="JSONArray" template="search_criteria" name="destination_criteria"/>
+            <key array-size="0-3" max-len="3000" type="JSONArray" template="filter_field" name="source_filter"/>
+            <key array-size="0-3" max-len="3000" type="JSONArray" template="filter_field" name="destination_filter"/>
+            <key allow-invalid="false" max-len="-1" type="JSONObject" template="entity_category_unique" name="category"/>
+            <key allow-invalid="false" max-len="-1" type="JSONObject" template="module_unique" name="source_module"/>
+            <key allow-invalid="false" max-len="-1" type="JSONObject" template="module_unique" name="destination_module"/>
+            <key max-len="50" type="JSONObject" template="association_type_unique" name="association_type"/>
+            <key allow-invalid="false" type="boolean" name="is_inverse"/>
+            <key allow-invalid="false" regex="one_to_one|one_to_many|many_to_one|many_to_many" name="cardinality"/>
+            <key allow-invalid="false" array-size="0-90" max-len="-1" type="JSONArray" template="udf_field_base" name="fields"/>
+        </jsontemplate>
+        <jsontemplate name="association_instance_unique">
+            <key allow-invalid="false" type="long" range=">0" name="id"/>
+        </jsontemplate>
+        <jsontemplate name="filter_field">
+            <key name="name" regex="api_name" max-len="300" min-occurrences="1" />
+            <key name="display_name" type="String" max-len="500" description="not possible to add regex as this param accepts i18N values"/>
+        </jsontemplate>
+        <jsontemplate name="module_relationship">
+            <key max-len="-1" type="JSONObject" template="module_relationship_base" name="module_relationship"/>
+        </jsontemplate>
+        <jsontemplate name="module_relationship_unique">
+            <key allow-invalid="false" type="long" range=">0" name="id"/>
+        </jsontemplate>
+
+        <!-- association type template -->
+        <jsontemplate name="association_type_unique">
+            <key allow-invalid="false" name="id" range=">0" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="association_type_base">
+            <key allow-invalid="false" name="id" range=">0" type="long"/>
+            <key name="name" type="String" max-len="100" description="not possible to add regex as this param accepts i18N values"/>
+            <key name="inverse_name" type="String" max-len="100" description="not possible to add regex as this param accepts i18N values"/>
+            <key name="inactive" type="boolean" allow-invalid="false"/>
+            <key name="description" secret="true" type="String" max-len="250" description="not possible to add regex as this param accepts i18N values"/>
+        </jsontemplate>
+        <jsontemplate name="association_type">
+            <key name="association_type" template="association_type_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <!-- association type template ends -->
+
+    </jsontemplates>
+    <urls authentication="required" api="true" >
+        <throttles name="association_apis" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <!--Custom module association-->
+        <!--admin url-->
+        <url method="post" roles="SDAdmin"  path="/api/v3/module_relationships">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="module_relationship_add" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="module_relationship" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/module_relationships/(_?)metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/module_relationships">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/module_relationships/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/module_relationships/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="module_relationship_put" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="module_relationship" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/module_relationships/(source_module|destination_module|association_type)">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/module_relationships/(\d+)/fields">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="delete" roles="SDAdmin"  path="/api/v3/module_relationships/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="module_relationship_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/module_relationships" method="delete" roles="SDAdmin">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="module_relationship_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param name="ids" max-len="1200" min-occurrences="1" regex="ids"/>
+        </url>
+        <url path="/api/v3/module_relationships/(_?)history" method="get" roles="SDAdmin">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/module_relationships/(_?)get_performed_by_for_history" roles="SDAdmin" method="get">
+            <param allow-invalid="false" name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/module_relationships/(_?)get_records_for_history" roles="SDAdmin" method="get">
+            <param allow-invalid="false" name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!--association type start-->
+        <url method="get" roles="SDAdmin" path="/api/v3/association_types/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/association_types">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/association_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="association_type_add" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="association_type" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/association_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="association_type_edit" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="association_type" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/association_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="association_type_bulk_edit" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="association_type" name="input_data"/>
+            <param regex="ids" max-len="1200" min-occurrences="1" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/association_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="association_type_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/association_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="association_type_bulk_delete" dynamic-throttle="true" >
+                <throttle lock-period="5M" threshold="30" duration="1M"/>
+            </throttles>
+            <param regex="ids" max-len="1200" min-occurrences="1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/association_types/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        <url path="/api/v3/association_types/(_?)metainfo" roles="SDAdmin" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/association_types/(_?)get_records_for_history" roles="SDAdmin" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        <url path="/api/v3/association_types/(_?)get_performed_by_for_history" roles="SDAdmin" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        <!--association type end-->
+
+    </urls>
+</security>

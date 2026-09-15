@@ -1,0 +1,311 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/business_rules"
+      ],
+      "desc": "This operation lets you add a business rules",
+      "disp_desc": "Add a business rule",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"business_rule\":{\"name\":\"Hardware Dispatch\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"Dispatch requests to Hardware group. Requests might need analysis to further classify as hardware or network problem\",\"is_enabled\":true,\"is_cascade_execution_enabled\":true,\"override_request_values\":true,\"execute_configuration\":{\"when_request_created\":true,\"when_request_edited\":false,\"execute_time\":\"anytime\"},\"rule_match_type\":\"all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10000011223322\",\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"subject\",\"condition\":\"contains\",\"value\":[{\"id\":\"10000000221101\",\"name\":\"Application\"}]}],\"actions\":[{\"field_name\":\"status\",\"value\":{\"id\":\"10000000027401\",\"name\":\"Open\"}},{\"field_name\":\"category\",\"value\":{\"id\":\"10000000009245\",\"name\":\"Hardware\"}}],\"notifications\":{\"is_email_notification_enabled\":true,\"email_technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"is_sms_notification_enabled\":true,\"sms_technicians\":[{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"}]}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"business_rule\":{\"id\":\"10000000028834\",\"name\":\"Hardware Dispatch\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"Dispatch requests to Hardware group. Requests might need analysis to further classify as hardware or network problem\",\"is_enabled\":true,\"is_cascade_execution_enabled\":true,\"override_request_values\":true,\"execute_configuration\":{\"when_request_created\":true,\"when_request_edited\":false,\"execute_time\":\"anytime\"},\"rule_match_type\":\"all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10000011223322\",\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"subject\",\"condition\":\"contains\",\"value\":[{\"id\":\"10000000221101\",\"name\":\"Application\"}]}],\"actions\":[{\"field_name\":\"status\",\"value\":{\"id\":\"10000000027401\",\"name\":\"Open\"}},{\"field_name\":\"category\",\"value\":{\"id\":\"10000000009245\",\"name\":\"Hardware\"}}],\"notifications\":{\"is_email_notification_enabled\":true,\"email_technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"is_sms_notification_enabled\":true,\"sms_technicians\":[{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"}]}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/business_rules"
+      ],
+      "desc": "This operation fetches you details of all business rules",
+      "disp_desc": "View all business rules",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":2,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"business_rule\":[{\"id\":\"10000000028834\",\"name\":\"Hardware Dispatch\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"Dispatch requests to Hardware group. Requests might need analysis to further classify as hardware or network problem\",\"is_enabled\":true,\"is_cascade_execution_enabled\":true,\"override_request_values\":true,\"execute_configuration\":{\"when_request_created\":true,\"when_request_edited\":false,\"execute_time\":\"anytime\"},\"rule_match_type\":\"all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10000011223322\",\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"subject\",\"condition\":\"contains\",\"value\":[{\"id\":\"10000000221101\",\"name\":\"Application\"}]}],\"actions\":[{\"field_name\":\"status\",\"value\":{\"id\":\"10000000027401\",\"name\":\"Open\"}},{\"field_name\":\"category\",\"value\":{\"id\":\"10000000009245\",\"name\":\"Hardware\"}}],\"notifications\":{\"is_email_notification_enabled\":true,\"email_technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"is_sms_notification_enabled\":true,\"sms_technicians\":[{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"}]}}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/business_rules/{rule_id}"
+      ],
+      "desc": "This operation fetches you details of a business rules",
+      "disp_desc": "View a business rule",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"business_rule\":{\"id\":\"10000000028834\",\"name\":\"Hardware Dispatch\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"Dispatch requests to Hardware group. Requests might need analysis to further classify as hardware or network problem\",\"is_enabled\":true,\"is_cascade_execution_enabled\":true,\"override_request_values\":true,\"execute_configuration\":{\"when_request_created\":true,\"when_request_edited\":false,\"execute_time\":\"anytime\"},\"rule_match_type\":\"all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10000011223322\",\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"subject\",\"condition\":\"contains\",\"value\":[{\"id\":\"10000000221101\",\"name\":\"Application\"}]}],\"actions\":[{\"field_name\":\"status\",\"value\":{\"id\":\"10000000027401\",\"name\":\"Open\"}},{\"field_name\":\"category\",\"value\":{\"id\":\"10000000009245\",\"name\":\"Hardware\"}}],\"notifications\":{\"is_email_notification_enabled\":true,\"email_technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"is_sms_notification_enabled\":true,\"sms_technicians\":[{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"}]}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/business_rules/{rule_id}"
+      ],
+      "desc": "This operation lets you update details of a business rules",
+      "disp_desc": "Update a business rule",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"business_rule\":{\"name\":\"Hardware Dispatch\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"Dispatch requests to Hardware group. Requests might need analysis to further classify as hardware or network problem\",\"is_enabled\":true,\"is_cascade_execution_enabled\":true,\"override_request_values\":true,\"execute_configuration\":{\"when_request_created\":true,\"when_request_edited\":false,\"execute_time\":\"anytime\"},\"rule_match_type\":\"all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10000011223322\",\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"subject\",\"condition\":\"contains\",\"value\":[{\"id\":\"10000000221101\",\"name\":\"Application\"}]}],\"actions\":[{\"field_name\":\"status\",\"value\":{\"id\":\"10000000027401\",\"name\":\"Open\"}},{\"field_name\":\"category\",\"value\":{\"id\":\"10000000009245\",\"name\":\"Hardware\"}}],\"notifications\":{\"is_email_notification_enabled\":true,\"email_technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"is_sms_notification_enabled\":true,\"sms_technicians\":[{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"}]}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"business_rule\":{\"id\":\"10000000028834\",\"name\":\"Hardware Dispatch\",\"site\":{\"id\":\"1101\",\"name\":\"Chennai\"},\"description\":\"Dispatch requests to Hardware group. Requests might need analysis to further classify as hardware or network problem\",\"is_enabled\":true,\"is_cascade_execution_enabled\":true,\"override_request_values\":true,\"execute_configuration\":{\"when_request_created\":true,\"when_request_edited\":false,\"execute_time\":\"anytime\"},\"rule_match_type\":\"all\",\"rules\":[{\"logical_operator\":\"\",\"field_name\":\"category\",\"condition\":\"is\",\"value\":[{\"id\":\"10000011223322\",\"name\":\"Hardware\"}]},{\"logical_operator\":\"and\",\"field_name\":\"subject\",\"condition\":\"contains\",\"value\":[{\"id\":\"10000000221101\",\"name\":\"Application\"}]}],\"actions\":[{\"field_name\":\"status\",\"value\":{\"id\":\"10000000027401\",\"name\":\"Open\"}},{\"field_name\":\"category\",\"value\":{\"id\":\"10000000009245\",\"name\":\"Hardware\"}}],\"notifications\":{\"is_email_notification_enabled\":true,\"email_technicians\":[{\"id\":\"10000000022837\",\"name\":\"Shawn Adams\",\"email_id\":\"abc@zylker.com\"}],\"is_sms_notification_enabled\":true,\"sms_technicians\":[{\"id\":\"10000000091937\",\"name\":\"Jennifer Doe\",\"email_id\":\"abc@zylker.com\"}]}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/business_rules/{rule_id}"
+      ],
+      "desc": "This operation lets you delete a business rules",
+      "disp_desc": "Delete a business rule",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Business rule deleted successfully.\",\"statuscode\":\"2000\"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the business rule",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Name of the business rule",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Site to which the business rule is associated to. The Business Rules are site specific.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "relEntity": {
+        "name": "Site",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "inOD": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "A brief description about the business rule",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "is_enabled",
+      "type": "Boolean",
+      "desc": "Indicates whether is the business rule is enabled or not",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "is_cascade_execution_enabled",
+      "type": "Boolean",
+      "desc": "Indicates whether execution of successive business rules will continue (as per the business rule order) even after a business rule is applied on a request.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "override_request_values",
+      "type": "Boolean",
+      "desc": "Indicates whether the values in the request will be overriden with values mentioned in the Business Rule. ",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "rule_match_type",
+      "type": "String",
+      "desc": "Indicates whether the business rule will be applied upon matching all of the rules or matching any of the rules",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "rules",
+      "type": "Array of Objects",
+      "desc": "Business rule will be applied upon matching all of the rules or matching any of the rules, based on the rule_match_type option.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "actions",
+      "type": "Array of Objects",
+      "desc": "Set the appropriate action that need to be performed on the requests that match the rule criterias.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOD": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "subsections": {
+    "execute_configuration": {
+      "desc": "The Business Rule can be executed on a request when it is created via web form (or received via mail), edited or both . Operational hours also can determine the application of the BR",
+      "inOD": "true",
+      "attributes": [
+        {
+          "name": "when_request_created",
+          "type": "Boolean",
+          "desc": "Indicates whether the business rule will be applied upon creation of request",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "when_request_edited",
+          "type": "Boolean",
+          "desc": "Indicates whether the business rule will be applied upon updation of request",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "execute_time",
+          "type": "String",
+          "desc": "Indicates whether the business rule will be applied upon requests created or edited anytime, or within operational hours or outside operational hours",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOP": "true"
+        }
+      ]
+    },
+    "notifications": {
+      "desc": "You can send Email and SMS notification to technicians once a business rule is applied.",
+      "inOD": "true",
+      "attributes": [
+        {
+          "name": "is_email_notification_enabled",
+          "type": "Boolean",
+          "desc": "Indicates whether email notifications are enabled or not.",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "is_sms_notification_enabled",
+          "type": "Boolean",
+          "desc": "Indicates whether SMS notifications are enabled or not",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "sms_technicians",
+          "type": "Array of Objects",
+          "desc": "List of technicians to notify via SMS once the business rules are applied",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOD": "true"
+        },
+        {
+          "name": "email_technicians",
+          "type": "Array of Objects",
+          "desc": "List of technicians to notify via email once the business rules are applied",
+          "graphView": "",
+          "column": "",
+          "odcolumn": "",
+          "html_type": "",
+          "isReleased": "true",
+          "inOD": "true"
+        }
+      ]
+    }
+  },
+  "lastModified": 1474020059000
+}

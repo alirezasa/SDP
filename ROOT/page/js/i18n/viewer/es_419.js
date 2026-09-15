@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = 'Visor';
+i18n["zcpage.builder.viewer.ar"] = 'Arkansas';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = 'Configurar visor';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = 'Eliminar visor';
+i18n["zcpage.builder.arviewer.deletetitle"] = 'Eliminar visor AR';
+i18n["zcpage.builder.arviewer.deletewarning"] = 'No es posible deshacer la acción. ¿Está seguro de que desea eliminarlo?';
+i18n["zcpage.builder.viewer.arsetup"] = 'Configuración de AR';
+i18n["zcpage.builder.viewer.arsetup.msg"] = 'Haga clic en “Agregar entrada” para proporcionar una entrada para el visor.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = 'Agregar entrada';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = 'Conjunto AR basado en marcadores';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = 'Variables de página';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = 'No hay variables de página para seleccionar. Sin embargo, puede agregar una nueva variable de página en la pestaña <b>Variables de página y secuencia de comandos</b>. <br> <a href=\"https://help.zoho.com/portal/en/kb/creator/developer-guide/pages/page-script-and-variables/articles/page-scripts-and-variable" target=\"_blank\">Más información</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = 'No hay conjuntos AR basados ​​​​en marcadores para seleccionar. Sin embargo, puede crear uno en la Biblioteca AR de la sección Microservicio. <a href=\"https://www.zoho.com/creator/help/microservices/add-models.html#create_arset" target=\"_blank\">Más información</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = 'Esta es una entrada específica para celulares. Para capturar el marcador, utilice la cámara de su celular.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = 'El valor de las variables de página debe ser el nombre del modelo 3D utilizado en la Biblioteca AR.';
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = 'Si cancela ahora, los cambios que haya realizado en este visor no se guardarán.';

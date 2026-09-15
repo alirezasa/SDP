@@ -1,0 +1,133 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"vendor_service_types\":[{\"name\":\"Annual Maintenance Services\",\"description\":\"Annual Maintenance Services\",\"id\":\"1\",\"view_only\":true},{\"name\":\"Infrastructure\",\"description\":\"Infrastructure related services\",\"id\":\"4\",\"view_only\":true},{\"name\":\"Labour\",\"description\":\"Labour related services\",\"id\":\"2\",\"view_only\":true},{\"name\":\"Others\",\"description\":\"Other services\",\"id\":\"5\",\"view_only\":true},{\"name\":\"test_type\",\"description\":\"test desc\",\"id\":\"301\"},{\"name\":\"Training/Consultancy\",\"description\":\"Training/Consultancy services\",\"id\":\"3\",\"view_only\":true}],\"list_info\":{\"has_more_rows\":false,\"sort_field\":\"name\",\"start_index\":1,\"sort_order\":\"asc\",\"row_count\":6}}"},
+            "path": "/api/v3/vendor_service_types",
+            "method": "GET",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "View all vendor service types",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"vendor_service_type\":{\"name\":\"Annual Maintenance Services\",\"description\":\"Annual Maintenance Services\",\"id\":\"1\",\"view_only\":true}}"},
+            "path": "/api/v3/vendor_service_types/{id}",
+            "method": "GET",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "View a vendor service type",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Add a vendor service type",
+            "defaultAttributes": [],
+            "inOD": "true",
+			"isAsset": "true",
+            "output": {"sample": "{\"vendor_service_types\":{\"name\":\"abc\",\"description\":null,\"id\":\"302\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/vendor_service_types",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"vendor_service_type\":{\"name\":\"abc\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Update a vendor service type",
+            "defaultAttributes": [],
+            "inOD": "true",
+			"isAsset": "true",
+            "output": {"sample": "{\"vendor_service_types\":{\"name\":\"abc123\",\"description\":null,\"id\":\"302\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/vendor_service_types/{id}",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"vendor_service_type\":{\"name\":\"abc123\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "Default vendor service type can't be edited."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/vendor_service_types/{id}"],
+            "method": "DELETE",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Delete a vendor service type",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "Default vendor service type can't be deleted."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "id",
+            "column": "",
+            "inOD": "true",
+            "type": "Number",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Unique identifier used to identify the vendor service type",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "name",
+            "column": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Name of the vendor service type which will uniquely identify the individual service type.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "description",
+            "column": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Short description about the vendor service type.",
+            "graphView": ""
+        }
+    ]
+}

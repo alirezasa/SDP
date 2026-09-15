@@ -1,0 +1,842 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" description="ROLE_NOT_REQUIRED:Roles are not defined as roles will be created dynamically and role check will be done at server side">
+        <throttles name="all_approvals" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="50" lock-period="5M"/>
+        </throttles>
+        <!-- change module related entries-->
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals"  method="post" user_type="all">
+            <param name="input_data" template="approval" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approvals_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)"  method="put" user_type="all">
+            <param name="input_data" template="approval" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approvals_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)"  method="delete" user_type="all">
+            <throttles name="change_approvals_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)"  method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+            <throttles name="change_approvals_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals"  method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="change_approvals_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)approve"  method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approvals_approve_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)reject"  method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approvals_reject_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(_?)send_notification"  method="put" user_type="all">
+            <param name="ids" max-len="1200" secret="true"  regex="ids" min-occurrences="1"/>
+            <param name="input_data" template="approvals_send_notification" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approvals_send_notification" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(_?)get_notification_content"  method="get" user_type="all">
+            <throttles name="change_approvals_get_notif_content" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(_?)allowed_values_for_fields"  method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approvals_allowed_values" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)allowed_values_for_fields"  method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approval_allowed_values" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url-->
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals"  method="put" user_type="all">
+            <param name="input_data" template="approval" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="change_approvals_bulk_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals"  method="delete" user_type="all">
+            <param name="ids" max-len="1200" secret="true" regex="ids" min-occurrences="1"/>
+            <throttles name="change_approvals_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(sent_by|status|approver|action_by|obo_approver)/(\d+)"  method="get" user_type="all">
+			<throttles name="change_approvals_get_ref" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(sent_by|status|approver|action_by|obo_approver)"  method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approvals_get_ref_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(sent_by|status|approver|action_by|obo_approver)"  method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approval_get_ref_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(sent_by|status|approver|action_by|obo_approver)/(\d+)"  method="get" user_type="all">
+			<throttles name="change_approval_get_ref" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+		</url-->
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/(\d+)/_links"  method="get" user_type="all">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="change_approval_get_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/_links"  method="get" user_type="all">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="change_approvals_get_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/_total_count"  method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="change_approvals_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/changes/(\d+)/approval_levels"  method="post" user_type="all">
+            <param name="input_data" template="change_approval_level" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approval_levels_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)"  method="put" user_type="all">
+            <param name="input_data" template="change_approval_level" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approval_levels_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)"  method="delete" user_type="all">
+            <throttles name="change_approval_levels_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)"  method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+            <throttles name="change_approval_levels_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels"  method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="change_approval_levels_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/(_?)approve"  method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approval_levels_approve" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/(_?)reject"  method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approval_levels_reject" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(_?)reset_levels"  method="put" user_type="all">
+            <param name="input_data" template="approvals_reset_levels" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="change_approval_levels_reset" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(_?)approval_summary"  method="get" user_type="all">
+            <throttles name="change_approval_levels_summary" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--url path="/api/v3/changes/(\d+)/approval_levels/(_?)allowed_values_for_fields" roles="" method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approval_levels_allowed_values" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/(_?)allowed_values_for_fields"  method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approval_level_allowed_values" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url-->
+        <url path="/api/v3/changes/(\d+)/approval_levels"  method="put" user_type="all">
+            <param name="input_data" template="change_approval_level" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="change_approval_levels_bulk_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels"  method="delete" user_type="all">
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="change_approval_levels_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/(status|action_taken_by)/(\d+)"  method="get" user_type="all">
+			<throttles name="change_approval_level_ref_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(status|action_taken_by)"  method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approval_levels_ref_get_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/(status|action_taken_by)"  method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+			<throttles name="change_approval_level_ref_get_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(status|action_taken_by)/(\d+)"  method="get" user_type="all">
+			<throttles name="change_approval_levels_ref_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+		</url-->
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/_links"  method="get" user_type="all">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="change_approval_level_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/_links"  method="get" user_type="all">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="change_approval_levels_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/_total_count"  method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="change_approval_levels_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/approvals/approver"  method="get" user_type="all">
+            <throttles name="change_approvals_allowed_value_1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/approval_levels/(\d+)/approvals/approver"  method="get" user_type="all">
+            <throttles name="change_approvals_allowed_value_2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!-- change module related entries ends-->
+
+        <!-- Release approval related -->
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals" method="post" user_type="all">
+            <param name="input_data" template="release_approval" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="release_approvals_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/(\d+)" method="put" user_type="all">
+            <param name="input_data" template="release_approval" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="release_approvals_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/(\d+)" method="delete" user_type="all">
+            <throttles name="release_approvals_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/(\d+)" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="release_approvals_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="release_approvals_get_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)approve" method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+            <throttles name="release_approvals_approve" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)reject" method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+            <throttles name="release_approvals_reject" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/(_?)send_notification" method="put" user_type="all">
+            <param name="ids" max-len="1200" secret="true" regex="ids" min-occurrences="1"/>
+            <param name="input_data" template="approvals_send_notification" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+            <throttles name="release_approvals_send_notif" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/(_?)get_notification_content" method="get" user_type="all">
+            <throttles name="release_approvals_get_notif" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals" method="put" user_type="all">
+            <param name="input_data" template="release_approval" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="release_approvals_bulk_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals" method="delete" user_type="all">
+            <throttles name="release_approvals_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels" method="post" user_type="all">
+            <param name="input_data" template="release_approval_level" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="release_approval_levels_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)" method="put" user_type="all">
+            <param name="input_data" template="release_approval_level" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="release_approval_levels_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)" method="delete" user_type="all">
+            <throttles name="release_approval_levels_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="release_approval_levels_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="release_approval_levels_get_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/(_?)approve" method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+            <throttles name="release_approval_levels_approve" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/(_?)reject" method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+            <throttles name="release_approval_levels_reject" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(_?)reset_levels" method="put" user_type="all">
+            <param name="input_data" template="approvals_reset_levels" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="release_approval_levels_reset_level" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(_?)approval_summary" method="get" user_type="all">
+            <throttles name="release_approval_levels_summary" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels" method="put" user_type="all">
+            <param name="input_data" template="release_approval_level" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="release_approval_levels_bulk_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels" method="delete" user_type="all">
+            <throttles name="release_approval_levels_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/approvals/approver"  method="get" user_type="all">
+            <throttles name="release_approvals_allowed_value_1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/approval_levels/(\d+)/approvals/approver"  method="get" user_type="all">
+            <throttles name="release_approvals_allowed_value_2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- Release approval related end-->
+
+        <!-- Approval History Related -->
+        <url user_type="all" method="get"  path="/api/v3/approval_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="approval_history_template" name="input_data"/>
+            <throttles name="approval_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <param name="format" regex="json"/>
+
+        <url path="/api/v3/approval_statuses" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="approval_statuses_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- My Pending Approvals -->
+        <url path="/api/v3/approvals" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="all_approvals_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/approvals/_total_count" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="all_approvals_list_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/approvals/_module_approval_count" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="all_approvals_list_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/approvals/(_?)approve" method="put" user_type="all">
+            <param name="input_data" template="bulk_approvals_approve_reject" type="JSONObject" max-len="-1"/>
+            <throttles name="bulk_approvals_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/approvals/(_?)reject" method="put" user_type="all">
+            <param name="input_data" template="bulk_approvals_approve_reject" type="JSONObject" max-len="-1"/>
+            <throttles name="bulk_approvals_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!-- Purchase Approval urls starts -->
+        <url method="post" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval" name="input_data"/>
+            <throttles name="purchase_orders_approvals_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval" name="input_data"/>
+            <throttles name="purchase_orders_approvals_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(\d+)"/>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            <throttles name="purchase_order_approvals" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put"  path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)approve" description="ROLE_NOT_REQUIRED:As url is used for requester also, no role configured.">
+            <throttles name="purchase_order_approvals_accept" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approvals_approve_reject" name="input_data"/>
+        </url>
+        <url user_type="all" method="put"  path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)reject" description="ROLE_NOT_REQUIRED:As url is used for requester also, no role configured.">
+            <throttles name="purchase_orders_approvals_reject" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approvals_approve_reject" name="input_data"/>
+        </url>
+        <url method="put" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(_?)send_notification">
+            <param regex="ids" max-len="1200" name="ids" secret="true"/>
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approvals_send_notification" name="input_data"/>
+            <throttles name="purchase_order_approvals_send_notification" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(_?)get_notification_content"/>
+        <url method="put" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids" secret="true"/>
+            <throttles name="purchase_order_approvals_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals">
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids" secret="true"/>
+
+            <throttles name="purchase_order_approvals_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(sent_by|status|approver|action_by|obo_approver)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(sent_by|status|approver|action_by|obo_approver)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids" secret="true"/>
+            <throttles name="purchase_order_approval_levels_get_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids" secret="true"/>
+            <throttles name="purchase_order_approval_levels_get_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/approvals/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval_level" name="input_data"/>
+            <throttles name="purchase_order_approval_levels_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval_level" name="input_data"/>
+            <throttles name="purchase_order_approval_level_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)">
+            <throttles name="purchase_order_approval_level_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(_?)approval_summary"/>
+        <url method="put" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval_level" name="input_data"/>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids" secret="true"/>
+            <throttles name="purchase_order_approval_levels_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="CreatePurchaseOrder,ModifyPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels">
+            <throttles name="purchase_order_approval_levels_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+            <param min-occurrences="1" regex="ids" max-len="1200" name="ids" secret="true"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(status|action_taken_by)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/(status|action_taken_by)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids" secret="true"/>
+            <throttles name="purchase_order_approvals_get_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids" secret="true"/>
+            <throttles name="purchase_order_approvals_get_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="50" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewPurchaseOrder" path="/api/v3/purchase_orders/(\d+)/approval_levels/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- Purchase Approval urls ends -->
+
+		<!-- PR Approval urls starts -->
+
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/approval_levels">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals/(_?)get_notification_content"/>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="post" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/approval_levels">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval_level" name="input_data"/>
+            <throttles name="purchase_request_approval_levels_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+
+        </url>
+        <url method="post" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval" name="input_data"/>
+            <throttles name="purchase_request_approvals_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url method="put" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval_level" name="input_data"/>
+            <throttles name="purchase_request_approval_level_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approval" name="input_data"/>
+            <throttles name="purchase_request_approval_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals/(_?)send_notification">
+            <param regex="ids" max-len="1200" name="ids" secret="true"/>
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approvals_send_notification" name="input_data"/>
+            <throttles name="purchase_request_approvals_send_notification" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url user_type="all" method="put"  path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)approve" description="ROLE_NOT_REQUIRED:Any user can approve in nonLogin">
+            <throttles name="purchase_request_approvals_accept" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approvals_approve_reject" name="input_data"/>
+        </url>
+        <url user_type="all" method="put"  path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)reject" description="ROLE_NOT_REQUIRED:Any user can reject in nonLogin">
+            <throttles name="purchase_request_approvals_reject" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="approvals_approve_reject" name="input_data"/>
+        </url>
+
+        <url method="delete" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)">
+            <throttles name="purchase_request_approval_level_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="CreatePR,ModifyPR" path="/api/v3/purchase_requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)">
+            <throttles name="purchase_request_approval_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!-- PR Approval urls ends-->
+
+    </urls>
+    <!--Request Approvals Related Changes-->
+    <urls authentication="required" disable-extraparam="true" api="true" description="ROLE_NOT_REQUIRED">
+        <throttles name="request_approvals" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="100" lock-period="5M"/>
+        </throttles>
+        <!-- Approval level/approval Get URLs-->
+        <url path="/api/v3/requests/(\d+)/approval_levels" roles="ViewRequests" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)" roles="ViewRequests" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals" roles="ViewRequests" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+		<url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/_total_count" roles="ViewRequests" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)" roles="ViewRequests" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <!--Approval Notification content URLs-->
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(_?)get_notification_content" roles="AddReqApproval" method="get"/>
+        <url path="/api/v3/requests/(\d+)/(_?)get_approval_notification_content" roles="AddReqApproval" method="get">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/(_?)approval_preview" roles="ViewRequests" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!--Approver Allowed Values URLs-->
+        <url path="/api/v3/requests/(\d+)/approval_levels/approvals/approver" roles="AddReqApproval" method="get">
+            <throttles name="request_approvals_allowed_value_1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!--Refer entity URLs-->
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/approver" roles="AddReqApproval" method="get">
+            <throttles name="request_approvals_allowed_value_2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- Post API URLs-->
+        <url path="/api/v3/requests/(\d+)/approval_levels" roles="AddReqApproval" method="post">
+            <throttles name="request_approval_levels_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="approval_level" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals" roles="AddReqApproval" method="post">
+            <throttles name="request_approvals_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="approval" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/requests/(\d+)/(_?)submit_for_approval" roles="AddReqApproval" method="post">
+            <throttles name="request_approval_submit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="submit_for_approval" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <!-- Put API URLs-->
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(_?)send_notification" roles="AddReqApproval" method="put">
+            <param name="ids" max-len="-1" regex="ids"/>
+            <param name="input_data" template="approvals_send_notification" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="request_approvals_send_notification" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/(_?)(approve|reject)" roles="ViewRequests" method="put" user_type="all">
+            <param name="input_data" template="approvals_approve_reject" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="request_approval_action" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- Delete API URLs-->
+        <url path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)" roles="DeleteReqApproval" method="delete">
+            <throttles name="request_approval_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!--approval pending clarification urls -->
+
+        <url user_type="all" method="put" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)/(_?)mark_as_resolved">
+            <throttles name="request_approval_clarification_resolved" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)/(_?)mark_as_pending">
+            <throttles name="request_approval_clarification_pending" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url user_type="all" method="post" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="approval_clarification" name="input_data"/>
+            <throttles name="request_approval_clarification_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="approval_clarification" name="input_data"/>
+            <throttles name="request_approval_clarification_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--url user_type="all" method="delete"  path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)"/-->
+        <url user_type="all" method="get" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequests" path="/api/v3/approval_clarifications">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="approval_clarification_list_template" name="input_data"/>
+            <throttles name="request_approvals" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="200" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get"  path="/api/v3/approval_clarifications/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="approval_clarification_list_template" name="input_data"/>
+        </url>
+        <url user_type="all" method="get"  path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="post" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)/(_?)reply">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="approval_clarification_reply" name="input_data"/>
+            <throttles name="request_approval_clarification_reply_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get"  path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)/(_?)replies">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!--url user_type="all" method="put"  path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="approval_clarification" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url-->
+        <!--url user_type="all" method="delete"  path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications">
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url-->
+        <url user_type="all" method="get" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequests" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get"  path="/api/v3/approval_clarifications/get_approvers_having_clarifications">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="approval_clarification_approver_template" name="input_data"/>
+        </url>
+    </urls>
+    <!--Request Approvals Related Changes ends-->
+    <!-- approval admin configuration urls start -->
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <url method="get" path="/api/v3/approval_configurations" user_type="all" roles="" description="FGR_APPLIED:Necessary role check added at server side.">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_approval_configurations" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+    </urls>
+    <!-- approval admin configuration urls end -->
+</security>

@@ -1,0 +1,125 @@
+<div class="pb30">
+  <div>
+    您可以使用内置的图形化工具来配置基础信息，以及工作流的指向路径。
+  </div>
+  <div class="mt10">
+创建一个工作流，输入以下信息：
+  </div>
+  <ul class="mt10">
+     <li>工作流名称</li>
+        <li>描述</li>
+        <li>类型 (常规/紧急)</li>
+  </ul>
+  <div class="mt10">工作里编辑器提供了一个可扩展、可滚动的画布，用于创建工作流和其组件。它的组件面板包含各种节点，如阶段、条件、切换、通知、审批和字段更新。可以使用简单的拖放动作将节点添加到画布。将节点添加到画布后，将弹出一个窗口，您可指定节点的属性。</div>
+    <div class="mt10">参阅以下要点说明来了解各种节点的使用，点击一个指针来展开了解更多信息。</div>
+  <details class="mt10 helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">阶段</span> - 添加一个变更阶段到您的工作流。</summary>
+    <ul class="mt10">
+      <li>从其对应的下拉列表中选择阶段和状态。</li>
+        <li>您可以在一个阶段中选择多个状态，节点上的输入和输出端点数量，基于您所选择的状态的数量。</li>
+                    <li>默认情况下，全局配置的状态通知不会收到变更工作流的影响，将继续按照<span class="sb">管理</span>下的配置工作。基于工作流的运用场景使用个性化的通知，可将光标放置到一个状态上，点击对应的<span class="sb">邮件</span>图标。按需配置通知并保存。</li>
+                    <li>被重新定义了通知的状态，邮件图标将会被标以黄色。</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">条件</span>  - 指定一个变更在进行到下一阶段前所需满足的条件。</summary>
+    <ul class="mt10">
+      <li>为节点输入一个名称。</li>
+      <li>选择列、标准和值来指定条件。 </li>
+                    <li>点击<span class="sb">添加</span>图标，可添加多个条件，使用和/或（AND/OR）运算符，处理复杂条件。您也可以将一个条件拖放到一个条件下，其将成为一个子条件，并在其父条件下缩进列出。</li>
+                    <li>条件节点包含一个输入端点和两个输出端点（是Yes/否No）。</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">切换</span>  - 切换是一个多通路的节点，通过参考某字段的值来决定工作流的走向。</summary>
+    <ul class="mt10">
+      <li>选择字段来应用切换条件。</li>
+      <li>添加所需参考的字段值，您可以为每个字段值设置不同的工作流路径。</li>
+      <li>切换节点包含了一个输入端点，以及N个（基于选择的字段值）输出端点。</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">通知</span> - 为您的变更工作流配置一个自定义的通知。</summary>
+    <ul class="mt10">
+     <li>选择一个现有的自定义通知或添加新的通知，在<span class="sb">通知名称</span>下拉菜单中，您也可以通过<span class="sb">编辑</span>图标编辑选择的通知。
+                        <ul>
+                            <li>添加/编辑一个通知，输入通知的名称以及描述。</li>
+                            <li>选择要发送通知到的变更角色/机构角色。选择用户，可输入用户名，从列表中选择对应的用户。</li>
+                            <li>输入通知邮件的标题和消息内容。</li>
+                            <li>点击<span class="sb">保存</span>。</li>
+                        </ul>
+                    </li>
+                    <li>如果您选择一个现有的通知，通知到、描述以及主题会基于所选的通知自动填充。</li>
+                    <li>通知节点包含了一个输入端点和一个输出端点。</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">审批</span> - 在阶段之间配置一个审批级别以及审批邮件通知。</summary>
+    <ul class="mt10">
+     <li>输入审批的名称。</li>
+                    <li>从<span class="sb">等待</span>下拉表中选择审批条件 - 您可以按需选择任意人/所有人审批。您也可以选择从任意审批人那里采用第一个响应的审批结果。</li>
+                    <li>选择变更角色/机构角色作为审批人，选择用户，输入用户名称，并从列表中选择对的用户。</li>
+                    <li>输入您的审批通知主题和消息内容。您也可以按需添加变量。</li>
+                    <li>审批阶段包含一个输入端点和两个输出端点（批准/拒绝）。</li>
+    </ul>
+  </details>
+  <hr class="m0 hr-medium">
+  <details class="helpdetailstag">
+    <summary><span class="detailsarrow top-1"></span><span class="sb">字段更新</span> - 工作流在进入下一个阶段之前，更新一个字段的值。</summary>
+    <ul class="mt10">
+     <li>从<span class="sb">字段更新名称</span>下来菜单中选择一个现有配置或新增一个字段更新动作。您可以使用<span class="sb">编辑</span>图标来编辑选择的配置。 
+                       <ul>
+                            <li>添加/编辑一个字段配置，输入字段更新名称和描述。</li>
+                            <li>选择字段更新时所必需应用的字段和值，您可以使用<span class="sb">添加</span>图标来添加多个字段。</li>
+                            <li>点击<span class="sb">保存</span>。</li>
+                       </ul>
+                    </li>
+                    <li>如果您选择一个现有的配置，描述将会基于选择的字段自动填充。</li>
+                    <li>字段更新节点包含一个输入和一个输出端点。</li>
+    </ul>
+  </details>
+  <div class="mt10">
+   在添加了节点后，通过连接节点的输入和输出端点来定义工作流的方向路径。光标放置到一个节点上来查看它的输入和输出端点，点击源节点的输出端点，拖动鼠标，将连线放到所需目的节点的输入端点上。默认情况下，提交和关闭阶段已放置在画布上，并相应的连接到了开始和结束节点。尽管缺省的阶段不可编辑，但您可以编辑添加节点/路径，如下：
+  </div>
+  <ul class="mt10">
+    <li>光标放置到一个节点上来编辑或删除它。</li>
+        <li>拖动一个阶段或路径连接按需在画布上重新连接、定位。</li>
+        <li>将光标放到一个路径链接上，点击添加折点，或使用<span class="sb">关闭</span>图标，删除折点。</li>
+        <li>将光标放到一个路径链接上，查看源节点、目的节点和折点。</li>
+        <li>路径链接的源或目的节点，可以通过拖放输入或输出端点上的圆圈来进行修改。</li>
+  </ul>
+  <h4 class="sb">节点面板操作
+    <hr>
+  </h4>
+  <div>
+    <span class="sb">移动节点面板</span> - 使用节点面板左上角的<span class="sb">拖曳</span>图标，将其移动到画布的任何位置。
+  </div>
+  <div class="mt10">
+        <span class="sb">撤销/重做工作流</span> -  使用节点面板顶部对应的图标来撤销/重做工作流上任何动作或转换。
+     </div>
+     <div class="mt10">
+        <span class="sb">重置工作流</span> -  使用节点面板上的<span class="sb">关闭</span>图标，将一个新的工作流重置到其缺省状态。如果工作流之前已保存，那么重置动作将会将其回退到最近一次更新时的状态。
+     </div>
+     <div class="mt10">
+        <span class="sb">收起节点面板</span> - 节点面板可以使用其右上角的箭头图标展开或收起。
+  </div>
+  <h4 class="sb">工作流动作
+    <hr>
+  </h4>
+  <div>
+    <span class="sb"> 保存工作流</span>- 点击工作流顶部的<span class="sb">保存</span>。注意，仅
+    <a class="cur-ptr text-link"
+      href="https://help.servicedeskplus.com/configurations/release_management/configuring_release_workflows.html$validate-workflow"
+      target="_blank">有效的工作流</a>可被保存。如果工作流配置包含错误，将显示描述性警告消息来通知您。
+  </div>
+ <div class="mt10">
+        <span class="sb">放大/缩小工作流</span> - 使用画布左侧的缩放组件，可放到或缩小画布。
+     </div>
+     <div class="mt10">
+        <span class="sb">保存的工作流动作</span> - 在保存的工作流上，您可以点击<span class="sb">动作</span>图标来查看工作流属性、历史、导出工作流图片为PDF。
+  </div>
+</div>

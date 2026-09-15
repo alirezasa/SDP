@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <!-- Note : All "description" , "email" and "key" params/keys have been set secret="true" -->
+    <regexes>
+        <regex name="notificationToneName" value="None|bell|cue|electric|ting|wink" />
+    </regexes>
+    <jsontemplates>
+        <jsontemplate name="personalize_userTheme">
+            <key name="user_personalize" template="personalize_userTheme_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_userTheme_base">
+            <key name="key" regex="userTheme" />
+            <key name="data" type="JSONObject" template="personalize_userTheme_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_userTheme_data">
+            <key name="theme" regex="Red|Green|Blue|Violet" />
+            <key name="fontFamily" type="String" max-len="250" />
+            <key name="layout" regex="topbar|sidebar|sidebarlite" />
+            <key name="nightMode" type="boolean" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_OD_AVAILABLE_BANNER">
+            <key name="user_personalize" template="personalize_OD_AVAILABLE_BANNER_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_OD_AVAILABLE_BANNER_base">
+            <key name="key" regex="OD_AVAILABLE_BANNER" />
+            <key name="data" type="JSONObject" template="personalize_OD_AVAILABLE_BANNER_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_OD_AVAILABLE_BANNER_data">
+            <key name="DONT_SHOW" type="boolean" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_WidgetFilterGraph">
+            <key name="user_personalize" template="personalize_WidgetFilterGraph_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_WidgetFilterGraph_base">
+            <key name="key" regex="(WidgetFilter|WidgetGraphType)-[a-zA-Z0-9_]+" max-len="250" />
+            <key name="data" type="JSONObject" template="personalize_WidgetFilterGraph_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_WidgetFilterGraph_data">
+            <key name="selected" regex="[a-zA-Z0-9_]+" max-len="250" />
+            <key name="selectedColumns" type="JSONArray" template="strarray" max-len="1000" array-size="1-8" />
+            <key name="graphType" regex="Bar|Line|StackedBar|Area|StepLine|HorizontalBar|Pie|Doughnut|Funnel|Pyramid" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_Dashboard_Settings">
+            <key name="user_personalize" template="personalize_Dashboard_Settings_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_Dashboard_Settings_base">
+            <key name="key" regex="Dashboard_Settings" />
+            <key name="data" type="JSONObject" template="personalize_Dashboard_Settings_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_Dashboard_Settings_data">
+            <key name="siteGroupFilter" regex="dashboard_specific|all_dashboard" />
+            <key name="site_selected_(Dashboard1|BirdsView|\d+)?" name-regex="true" type="JSONObject" template="IDStrTextJson" max-len="1000" max-occurrences="100" />
+            <key name="group_selected_(Dashboard1|BirdsView|\d+)?" name-regex="true" type="JSONArray" template="IDStrTextJson" max-len="-1" array-size="0-100" max-occurrences="100" />
+        </jsontemplate>
+        <jsontemplate name="IDStrTextJson">
+            <key name="id" type="String" max-len="300" />
+            <key name="text" type="String" max-len="300" secret="true"/>
+        </jsontemplate>
+
+        <jsontemplate name="personalize_home_view">
+            <key name="user_personalize" template="personalize_home_view_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_home_view_base">
+            <key name="key" regex="home_view" />
+            <key name="data" type="JSONObject" template="personalize_home_view_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_home_view_data">
+            <key name="view" regex="my_view|calendar|backupapprover|resource|tasks|approvals|announcements|reminders|(home-view-\d+)|schedular" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_mysummary">
+            <key name="user_personalize" template="personalize_mysummary_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_mysummary_base">
+            <key name="key" regex="mysummary_(my_view|home-view-\d+)" />
+            <key name="data" type="JSONObject" template="personalize_mysummary_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_mysummary_data">
+            <key name="filters" type="JSONArray" max-len="-1" array-size="1-10" template="strarray" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_DrillDown_ChangeFilter">
+            <key name="user_personalize" template="personalize_DrillDown_ChangeFilter_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_DrillDown_ChangeFilter_base">
+            <key name="key" regex="DrillDown_ChangeFilter" />
+            <key name="data" type="JSONObject" template="personalize_DrillDown_ChangeFilter_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_DrillDown_ChangeFilter_data">
+            <key name="filter_by" regex="created_time|responded_time|due_by_time|completed_time" />
+            <key name="startTime" type="long" />
+            <key name="endTime" type="long" />
+            <key name="period" regex="TODAY|YESTERDAY|LAST_7_DAYS|LAST_30_DAYS|THIS_WEEK|LAST_MONTH|THIS_MONTH|SPECIFIC_DATE|CUSTOM_RANGE" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_is_esm_viewed">
+            <key name="user_personalize" template="personalize_is_esm_viewed_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_is_esm_viewed_base">
+            <key name="key" regex="is_esm_viewed" />
+            <key name="data" type="boolean"/>
+        </jsontemplate>
+        
+        <jsontemplate name="personalize_notification_tone">
+            <key name="user_personalize" template="personalize_notification_tone_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_notification_tone_base">
+            <key name="key" regex="notificationTone" />
+            <key name="data" type="JSONObject" template="personalize_notification_tone_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_notification_tone_data">
+            <key name="chat" type="JSONObject" template="chat_notofication_tone_temp" max-len="1000"  />
+            <key name="GeneralNotifications" type="JSONObject" template="general_notofication_tone_temp" max-len="1000" />
+            <key name="DynamicNotifications" type="JSONObject" template="dynamic_notofication_tone_temp" max-len="1000" />
+        </jsontemplate>
+         <jsontemplate name="chat_notofication_tone_temp">
+            <key name="new_chat_request" regex="notificationToneName" />
+            <key name="new_chat_message" regex="notificationToneName" />
+        </jsontemplate>
+        <jsontemplate name="general_notofication_tone_temp">
+            <key name="Announcement" regex="notificationToneName" />
+            <key name="broad_cast_mesg" regex="notificationToneName" />
+        </jsontemplate>
+        <jsontemplate name="dynamic_notofication_tone_temp">
+            <key name="notifCount" regex="notificationToneName" />
+        </jsontemplate>
+        <jsontemplate name="personalize_dont_disturb_controller">
+            <key name="user_personalize" template="personalize_dont_disturb_controller_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_dont_disturb_controller_base">
+            <key name="key" regex="dont_disturb_controller" />
+            <key name="data" type="JSONObject" template="personalize_dont_disturb_controller_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_dont_disturb_controller_data">
+            <key name="is_enabled" type="boolean" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_organizetabs">
+            <key name="user_personalize" template="personalize_organizetabs_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_organizetabs_base">
+            <key name="key" regex="organizetabs" />
+            <key name="data" type="JSONObject" template="personalize_organizetabs_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_organizetabs_data">
+            <key name="selectedTabs" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+            <key name="deSelectedTabs" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_kanban">
+            <key name="user_personalize" template="personalize_kanban_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_kanban_base">
+            <key name="key" regex="kanban_[a-zA-Z0-9_]+" />
+            <key name="data" type="JSONObject" template="personalize_kanban_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_kanban_data">
+            <key name="selected_group" regex="status|technician|priority|owner|type" />
+            <key name="groups" type="JSONObject" template="kanban_groups" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="kanban_groups">
+            <key name="technician" type="JSONObject" template="kanban_groups_details" max-len="-1" />
+            <key name="status" type="JSONObject" template="kanban_groups_details" max-len="-1" />
+            <key name="priority" type="JSONObject" template="kanban_groups_details" max-len="-1" />
+            <key name="owner" type="JSONObject" template="kanban_groups_details" max-len="-1" />
+            <key name="type" type="JSONObject" template="kanban_groups_details" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="kanban_groups_details">
+            <key name="manage_group_pinned" type="boolean" />
+            <key name="pinned" type="JSONArray" template="strarray" array-size="0-100" max-len="-1" />
+            <key name="unpinned" type="JSONArray" template="strarray" array-size="0-100" max-len="-1" />
+            <key name="sort_field" type="String" />
+            <key name="sort_order" type="String" />
+            <key name="row_count" type="long" />
+            <key name="fields_required" type="JSONObject" template="kanban_fieldsrequired" max-len="-1" />
+            <key name="column_order" type="JSONArray" template="strarray" array-size="0-100" max-len="-1" />
+            <key name="misort" type="String" />
+        </jsontemplate>
+        <jsontemplate name="kanban_fieldsrequired">
+            <key name="[a-zA-Z0-9_\.]+" name-regex="true" type="String" max-occurrences="100"/>
+        </jsontemplate>
+        
+        <jsontemplate name="personalize_listfilter">
+            <key name="user_personalize" template="personalize_listfilter_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_listfilter_base">
+            <key name="key" regex="(change_view|taskview_sidebar|[a-zA-Z0-9_]+_filter_views)" />
+            <key name="data" type="JSONObject" template="personalize_listfilter_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_listfilter_data">
+            <key name="favFilters" type="JSONArray" template="strarray" array-size="0-100" max-len="-1" />
+            <key name="unfavFilters" type="JSONArray" template="strlongarray_1000" array-size="0-1000" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="strlongarray_1000">
+            <key index="0-999" regex="[0-9]+" max-len="30" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_req_search">
+            <key name="user_personalize" template="personalize_req_search_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_req_search_base">
+            <key name="key" regex="req_search" />
+            <key name="data" type="JSONObject" template="personalize_req_search_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_req_search_data">
+            <key name="search_keyword" regex="default|notes|worklog|resolution|requestid|tags" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_user_rta_config">
+            <key name="user_personalize" template="personalize_user_rta_config_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_user_rta_config_base">
+            <key name="key" regex="user_rta_config" />
+            <key name="data" type="JSONObject" template="personalize_user_rta_config_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_user_rta_config_data">
+            <key name="defaultImageOption" regex="smallfit|bestfit|original|fitToWidth" />
+            <key name="editHtml" type="boolean"/>
+            <key name="fontFamily" type="String" max-len="250" />
+            <key name="fontSize" type="String" max-len="2" />
+            <key name="tabKeyHandling" type="boolean" />
+            <key name="fontColor" type="String" max-len="10" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_sol_search">
+            <key name="user_personalize" template="personalize_sol_search_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_sol_search_base">
+            <key name="key" regex="sol_search" />
+            <key name="data" type="JSONObject" template="personalize_sol_search_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_sol_search_data">
+            <key name="search_keyword" regex="default|title|description|topic|keywords" />
+        </jsontemplate>
+
+        <jsontemplate name="personalize_history_sortOrder">
+            <key name="user_personalize" template="personalize_history_sortOrder_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_history_sortOrder_base">
+            <key name="key" regex="[a-zA-Z0-9_-]+" />
+            <key name="data" type="JSONObject" template="personalize_history_sortOrder_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_history_sortOrder_data">
+            <key name="sort_order" regex="asc|desc" />
+        </jsontemplate>
+
+        <jsontemplate name="admin_ui_settings">
+            <key name="user_personalize" template="admin_ui_settings_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="admin_ui_settings_base">
+            <key name="key" regex="admin_json" />
+            <key name="data" type="JSONObject" template="admin_ui_settings_base_key" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="admin_ui_settings_base_key">
+            <key name="mode" regex="old|new" />
+        </jsontemplate>
+
+        <jsontemplate name="listview_color_user_personalize_setting">
+            <key name="user_personalize" template="listview_color_user_personalize_key" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="listview_color_user_personalize_key">
+            <key name="key" regex="Color_myPersonalize_(request|change|release)" />
+            <key name="data" template="listview_color_user_personalize_options" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="listview_color_user_personalize_options">
+            <key name="id" type="long"/>
+            <key name="is_enabled" type="boolean" allow-invalid="false"/>
+            <key name="tech_personalized" type="boolean" allow-invalid="false"/>
+            <key name="color_json" template="color_settings_json" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="req_details_layout_settings">
+            <key name="user_personalize" template="req_details_layout_settings_key" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="req_details_layout_settings_key">
+            <key name="key" regex="req_details_layout" />
+            <key name="data" template="req_details_layout_settings_options" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="req_details_layout_settings_options">
+            <key name="can_tech_edit" type="boolean" allow-invalid="false"/>
+            <key name="details" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="properties" type="JSONArray" template="strarray" array-size="0-500" max-len="-1"/>
+            <key name="rlc_position" regex="top|bottom"/>
+            <key name="rpanel" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="show_rpanel" type="boolean" allow-invalid="false"/>
+            <key name="tabs" type="JSONArray" template="strarray" array-size="0-100" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="cm_static_filter">
+            <key name="user_personalize" template="cm_filter_key" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="cm_filter_key">
+            <!-- (cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)) regex copied form ${"cm_api_name"} -->
+            <key name="key" regex="(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))_filter" />
+            <key name="data" template="cm_filter_options" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="cm_filter_options">
+            <key name="is_trash" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+
+        <jsontemplate name="cm_static_listview">
+            <key name="user_personalize" template="cm_listview_key" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="cm_listview_key">
+            <!-- (cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)) regex copied form ${"cm_api_name"} -->
+            <key name="key" regex="(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))_(table|classic)_listview" />
+            <key name="data" template="cm_listview_options" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="cm_listview_options">
+            <key name="mode" type="String" max-len="50"/>
+        </jsontemplate>
+
+        <jsontemplate name="pinnable_sidebar_pinview">
+            <key name="user_personalize" template="pinnable_sidebar_key" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="pinnable_sidebar_key">
+            <!-- (cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)) regex copied form ${"cm_api_name"} -->
+            <key name="key" regex="(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))_pinview" />
+            <key name="data" template="pinnable_sidebar_options" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="pinnable_sidebar_options">
+            <key name="pinview" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+         <!-- Table Component start -->
+        <jsontemplate name="personalize_table_component">
+            <key name="user_personalize" template="personalize_table_component_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        
+        <jsontemplate name="personalize_table_component_base">
+            <key name="key" regex="[0-9a-zA-Z_\.-]+" />
+            <key name="data" type="JSONObject" template="personalize_table_component_data" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="personalize_table_component_data">
+            <key name="fields_required" template="tbl_field_requried" type="JSONObject" max-len="-1"/>
+            <key name="list_info" template="tbl_list_info" type="JSONObject" max-len="-1"/>
+            <key name="list_settings" type="JSONObject" template="tbl_list_setting" max-len="-1" />
+            <key name="refresh_time" type="String" max-len="10" />
+            <key name="column_order" type="JSONArray" template="strarray" max-len="-1" array-size="0-100"/>
+            <key name="combined_modules_object" type="JSONObject" template="tbl_combined_object" max-len="-1" />
+            <key name="site_data" type="JSONObject" template="site_personalize_data" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="site_personalize_data" disable-extra-key="true">
+            <key name="id" type="long" />
+            <key name="text" type="String" max-len="500" />
+        </jsontemplate>
+        <jsontemplate name="tbl_list_setting">
+            <key name="display_density" regex="comfortable|compact" />
+            <key name="compact" type="String" />
+            <key name="text_wrapping" type="String" />
+        </jsontemplate>
+        <jsontemplate name="tbl_combined_object">
+            <key name="[a-zA-Z0-9_-]+" name-regex="true" type="JSONObject" template="tbl_combined_object_template" max-occurrences="100" max-len="-1" />
+        </jsontemplate>
+
+        <jsontemplate name="tbl_combined_object_template">
+            <key name="column_order" type="JSONArray" template="strarray" max-len="-1" array-size="0-100"/>
+            <key name="fields_required" type="JSONObject" template="tbl_field_requried" max-len="-1" />
+        </jsontemplate>
+
+        <jsontemplate name="tbl_field_requried">
+            <key name="[a-zA-Z0-9_\.-:]+" name-regex="true" type="JSONObject" template="tbl_fieldrequried_field" max-len="-1" max-occurrences="100"/>
+        </jsontemplate>
+
+        <jsontemplate name="tbl_fieldrequried_field">
+            <key name="width" type="String" max-len="10" />
+            <key name="is_inmeta" type="boolean" />
+        </jsontemplate>
+        
+        <jsontemplate name="tbl_list_info">
+            <key name="start_index" type="int" />
+            <key name="row_count" type="int" />
+            <key name="sort_field" type="String" />
+            <key name="sort_order" regex="asc|desc|A|D" />
+            <key name="filter_by" type="JSONObject" template="IDNameJson" />
+            <key name="custom" type="String" />
+        </jsontemplate>
+        <!-- Table Component  ends-->
+    </jsontemplates>
+</security>

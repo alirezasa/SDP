@@ -1,0 +1,919 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" remote_server="false" authentication="required">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="user_api" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments/(\d+)"/>
+        <url method="delete" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments/(\d+)"/>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param regex="ids" max-len="100" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+        <url method="delete" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+         <url path="/api/v3/users/(\d+)/images" roles="ViewRequester,SDGuest" method="put" user_type="all" >
+             <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                 <throttle duration="1m" threshold="30" lock-period="5m"/>
+             </throttles>
+             <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                 <filename regex="filename" max-len="100"/>
+             </file>
+         </url>
+         <url path="/api/v3/users/(\d+)/images/(\d+)" roles="ViewRequester,SDGuest" method="get" user_type="all" >
+             <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                 <throttle duration="1m" threshold="100" lock-period="5m"/>
+             </throttles>
+             <param regex="50x50|120x120" name="res"/>
+         </url>
+         <url path="/api/v3/users/(\d+)/(_?)profile_images" roles="ViewRequester,SDGuest" method="delete" user_type="all" >
+             <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                 <throttle duration="1m" threshold="30" lock-period="5m"/>
+             </throttles>
+         </url>
+
+    </urls>
+    <urls api="true" authentication="required">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="admin_api" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1m"/>
+        </throttles>
+        <!--User group api url start-->
+        <url method="post" roles="SDAdmin" path="/api/v3/user_groups">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="user_group" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/user_groups/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="user_group" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/user_groups/(\d+)">
+        </url>
+        <url method="get" roles="SDAdmin,ModifySolutions,CreateSolutions" path="/api/v3/user_groups/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,ModifySolutions,CreateSolutions" path="/api/v3/user_groups">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/user_groups">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="user_group" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/user_groups">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/user_groups/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/user_groups/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <!--User group api url end-->
+        <!--Roles api url start-->
+        <!--SDSiteAdmin not allowed for roles-->
+        <url method="get" roles="SDAdmin" path="/api/v3/roles/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/roles">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/roles/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/roles/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/roles/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/roles/(_?)history" method="get" roles="SDAdmin">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/roles/(_?)get_records_for_history" method="get" roles="SDAdmin">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/roles/(_?)get_performed_by_for_history" method="get" roles="SDAdmin">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/roles/_metainfo">
+            <param max-len="-1" type="JSONObject" template="metainfo" name="input_data"/>
+        </url>
+        <!--Roles api url end-->
+    </urls>
+
+    <urls api="true" remote_server="true" authentication="required">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="user_api_remote_true" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url path="/api/v3/technicians/(\d+)/images/(\d+)" roles="ViewTechnician" method="get"  >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+            <param regex="50x50|120x120" name="res"/>
+        </url>
+
+        <url method="post" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="users_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" secret="true" name="description"/>
+            <param name="for" regex="import" />
+        </url>
+        <url method="post" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="users_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" secret="true" name="description"/>
+        </url>
+        <url method="put" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="users_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" secret="true" name="description"/>
+        </url>
+        <url method="get" roles="ViewTechnician" path="/api/v3/technicians/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewTechnician" path="/api/v3/technicians">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="CreateTechnician" path="/api/v3/technicians">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="technician" name="input_data"/>
+            <throttles name="technician_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="ModifyTechnician,SDSiteAdmin" path="/api/v3/technicians/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="technician" name="input_data"/>
+            <throttles name="technician_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="DeleteTechnician" path="/api/v3/technicians/(\d+)">
+            <param max-len="-1" type="JSONObject" template="anonymous_user_delete" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(\d+)/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/users/_history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin,SDSiteAdmin" path="/api/v3/technicians/(_?)change_as_user">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewRequester" path="/api/v3/technicians/(_?)loggedin_user_details"/>
+
+        <url method="put" roles="ModifyTechnician,SDSiteAdmin" path="/api/v3/technicians">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="technician" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles name="technician_bulk_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="DeleteTechnician" path="/api/v3/technicians">
+            <param max-len="-1" type="JSONObject" template="anonymous_user_delete" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ModifyTechnician,CreateTechnician" path="/api/v3/technicians/(associated_sites|support_group|associated_roles|project_roles|region_sys_attribute|technician_sys_attribute|site_sys_attribute|reporting_to|department|domain)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyTechnician,CreateTechnician" path="/api/v3/technicians/(\d+)/(associated_sites|support_group|associated_roles|project_roles|region_sys_attribute|technician_sys_attribute|site_sys_attribute|reporting_to|department|domain)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyTechnician,CreateTechnician" path="/api/v3/technicians(/user_udf_fields|/technician_udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyTechnician,CreateTechnician" path="/api/v3/technicians/(\d+)(/user_udf_fields|/technician_udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewTechnician" path="/api/v3/technicians/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewTechnician" path="/api/v3/technicians/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewTechnician" path="/api/v3/technicians/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/users/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/users">
+            <param max-len="-1" type="JSONObject" template="user_list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="CreateRequester" path="/api/v3/users">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="user" name="input_data"/>
+        </url>
+        <url user_type="all" method="put" roles="ModifyRequester,SDGuest" path="/api/v3/users/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="user" name="input_data"/>
+        </url>
+        <url method="delete" roles="DeleteRequester" path="/api/v3/users/(\d+)">
+            <param max-len="-1" type="JSONObject" template="anonymous_user_delete" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="CreateTechnician" path="/api/v3/users/(_?)change_as_technician">
+            <param max-len="-1" type="JSONObject" template="technician" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/users/(\d+)/(_?)associated_assets">
+            <param max-len="-1" type="JSONObject" template="associated_assets_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/users/(\d+)/(_?)software_licenses">
+            <param max-len="-1" type="JSONObject" template="associated_assets_info" name="input_data"/>
+        </url>
+        <url method="post" roles="CreateRequester" path="/api/v3/users/(\d+)/(_?)associate_to_instance"/>
+        <url method="put" roles="CreateTechnician" path="/api/v3/users/(\d+)/(_?)change_as_technician">
+            <param max-len="-1" type="JSONObject" template="technician" name="input_data"/>
+        </url>
+
+        <url method="delete" roles="SDAdmin" path="/api/v3/users/(\d+)/(_?)dissociate_from_instance"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/users/(_?)dissociate_from_instance">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url path="/api/v3/users/(_?)acknowledge" roles="SDAdmin" method="put">
+            <param name="input_data" template="acknowledge" type="JSONObject" max-len="-1"/>
+        </url>
+        <url user_type="all" method="put" roles="ModifyRequester,SDGuest" path="/api/v3/users">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="user" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="DeleteRequester" path="/api/v3/users">
+            <param max-len="-1" type="JSONObject" template="anonymous_user_delete" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="CreateRequester,ModifyRequester,SDGuest" path="/api/v3/users/(associated_roles|project_roles|region_sys_attribute|technician_sys_attribute|site_sys_attribute|reporting_to|department|domain)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/users/created_by">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="CreateRequester,ModifyRequester,SDGuest" path="/api/v3/users/(\d+)/(associated_roles|project_roles|region_sys_attribute|technician_sys_attribute|site_sys_attribute|reporting_to|department|domain)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="CreateRequester,ModifyRequester,SDGuest" path="/api/v3/users(/user_udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="CreateRequester,ModifyRequester,SDGuest" path="/api/v3/users/(\d+)(/user_udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/users/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/users/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/users/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <param name-regex="true" max-len="100" type="String" secret="true" name="TECHNICIAN_KEY|AUTHTOKEN" max-occurrences="1"/>
+        <param name="format" max-len="4" regex="json"/>
+        <url method="post" roles="SDSiteAdmin,SDAdmin" path="/api/v3/users/(\d+)/(_?)reset_password" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="resetpassword" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="2" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" user_type="all" roles="SDGuest,ViewRequester,SDOrgAdmin" path="/api/v3/users/_generate_authtoken">
+            <param min-occurrences="1" max-len="100" type="JSONObject" template="generate_authtoken" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="generateauthtoken" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="5" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" user_type="all" roles="SDGuest,ViewRequester,SDOrgAdmin" path="/api/v3/users/_change_password">
+            <param min-occurrences="1" max-len="2000" type="JSONObject" template="change_password" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="changepassword" dynamic-throttle="true" >
+                <throttle lock-period="15m" threshold="10" duration="10m"/>
+            </throttles>
+        </url>
+    </urls>
+    <urls authentication="required" api="true" is_esm="true">
+        <throttles name="orgusr_mdh" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <!--Org user urls start-->
+        <url path="/api/v3/orgusers/(\d+)/images" roles="SDOrgAdmin" method="put" user_type="all">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/orgusers/(\d+)/images/(\d+)" roles="SDOrgAdmin,SDGuest" method="get" user_type="all" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="100" lock-period="5m"/>
+            </throttles>
+            <param regex="50x50|120x120" name="res"/>
+        </url>
+        <url path="/api/v3/orgusers/(\d+)/(_?)profile_images" roles="SDOrgAdmin" user_type="all" method="delete">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+            <throttles name="orguser_attachment_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="delete" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments/(\d+)">
+            <throttles name="orguser_attachment_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            <throttles name="orguser_attachment_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="view" max-len="100" name="mode"/>
+        </url>
+        <url user_type="all" method="delete" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments">
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_attachment_delete_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_attachment_single_links" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_attachment_links" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_attachment_total_count" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orgusers_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" secret="true" name="description"/>
+            <param name="for" regex="import" />
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/orgusers/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="100" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester" path="/api/v3/orgusers">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="post" roles="CreateRequester" path="/api/v3/orgusers">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="orguser" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="80" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put" roles="ModifyRequester,SDGuest" path="/api/v3/orgusers/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="orguser" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_update" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="80" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="delete" roles="DeleteRequester" path="/api/v3/orgusers/(\d+)">
+            <param max-len="-1" type="JSONObject" template="anonymous_user_delete" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester" path="/api/v3/orgusers/(\d+)/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_history" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+
+        <url user_type="all" method="put" roles="ModifyRequester,SDGuest" path="/api/v3/orgusers">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="orguser" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_bulk_update" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="delete" roles="DeleteRequester" path="/api/v3/orgusers">
+            <param max-len="-1" type="JSONObject" template="anonymous_user_delete" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_bulk_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/orgusers/(reporting_to|department|domain)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_allowed_url" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/orgusers/(\d+)/(reporting_to|department|domain)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_single_allowed_url" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/orgusers(/user_udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_allowed_url_udf" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/orgusers/(\d+)(/user_udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_single_allowed_url_udf" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/orgusers/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_single_allowed_url_link" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester" path="/api/v3/orgusers/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_allowed_url_link" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester" path="/api/v3/orgusers/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orguser_total_count" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="post" roles="SDOrgAdmin" path="/api/v3/orgusers/(\d+)/(_?)reset_password"  user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="resetpassword" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="2" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="post" roles="SDOrgAdmin" path="/api/v3/orgusers/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="orgusers_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="for" regex="import" />
+        </url>
+        <!--Org user urls end-->
+    </urls>
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="user_related_metainfo" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1m"/>
+        </throttles>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/users/(_?)metainfo">
+            <param regex="ids" max-len="1200" name="ids"/>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url user_type="all" method="get" roles="ViewRequester,SDGuest" path="/api/v3/users/(\d+)/(_?)metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!--    URL used in report advance filter    -->
+        <url method="get" roles="ViewReports" path="/api/v3/users/(created_by|department|domain|linked_entity|linked_instance|project_roles|reporting_to)/(_?)metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewRequester" path="/api/v3/technicians/(_?)metainfo">
+            <param regex="ids" max-len="1200" name="ids"/>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewRequester" path="/api/v3/technicians/(\d+)/(_?)metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!--    URL used in report advance filter    -->
+        <url method="get" roles="ViewReports" path="/api/v3/technicians/(support_group|created_by|department|domain|linked_entity|linked_instance|project_roles|reporting_to)/_metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url user_type="all" method="get" roles="Common_Role" path="/api/v3/orgusers/(_?)metainfo">
+            <param regex="ids" max-len="1200" name="ids"/>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url user_type="all" method="get" roles="Common_Role" path="/api/v3/orgusers/(\d+)/(_?)metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin" path="/api/v3/user_groups/(_?)metainfo">
+            <param regex="ids" max-len="1200" name="ids"/>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin" path="/api/v3/user_groups/(\d+)/(_?)metainfo">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url method="get" path="/api/v3/user_groups/(_?)history" roles="SDAdmin">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="user_group_get_list_history" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="80" duration="1m"/>
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/user_groups/(_?)get_records_for_history" roles="SDAdmin">
+            <throttles key="url.path+url.dynamic_key" name="user_groups_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/user_groups/(_?)get_performed_by_for_history" roles="SDAdmin">
+            <throttles key="url.path+url.dynamic_key" name="user_group_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="anonymous_user_delete">
+            <key name-regex="true" name="long_regex" type="String" max-occurrences="100"/>
+        </jsontemplate>
+        <jsontemplate name="associated_assets_info">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base"/>
+        </jsontemplate>
+        <!--Template to acknowledge users start-->
+        <jsontemplate name="acknowledge">
+            <key name="acknowledge" type="JSONArray" template="user_base" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <!--Template to acknowledge users end-->
+        <!-- list_info for user entity. For user group previow option, framework only allow 25 object in search criteria. But for currently cx has upto 100 criteria. So api Framework will not increase search criteria object size. So as per Bharath suggestion, we added list_info template. Cannot use children object as migration can not be handled -->
+        <jsontemplate name="user_list_info">
+            <key name="list_info" type="JSONObject" max-len="-1" template="user_list_info_base" />
+            <key name="include" type="JSONArray" template="strarray" max-len="-1" />
+            <key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+        </jsontemplate>
+        <jsontemplate name="user_list_info_base">
+            <key name="row_count" type="int" />
+            <key name="start_index" type="int" />
+            <key name="sort_field" type="String" />
+            <key name="sort_fields" type="JSONArray" template="sort_fields_json" max-len="-1" array-size="0-3" />
+            <key name="sort_order" regex="asc|desc|A|D" />
+            <key name="filter" type="String" />
+            <key name="filter_by" type="JSONObject" template="IDNameJson" />
+            <key name="search_fields" type="JSONObject" max-len="-1" template="search_field_json" />
+            <key name="search_criteria" type="JSONObject|JSONArray" max-len="-1" array-size="0-100" template="search_criteria" />
+            <key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+            <key name="group_by" type="JSONArray" array-size="0-100" template="strarray" />
+            <key name="get_total_count" regex="true|false" />
+            <key name="search_fields_condition" regex="or|and" />
+            <key name="gsearch" type="String" secret="true" max-len="5000" />
+        </jsontemplate>
+        <!--List info end-->
+        <jsontemplate name="orguser_unique">
+            <key name="id" regex="null|[0-9]+"/>
+            <key name="name" type="String" max-len="150" secret="true" />
+            <key name="email_id"  type="String" max-len="200" description="In some customer environment, users are getting auto created through third party system. So Email Id may be contains any special char in customer end. If we restricted using regex here, that may lead to mail server stopping issue during user creation. So for now, we added character validation in server side for (, @ and .) symbol" secret="true" />
+            <key name="phone" type="String" max-len="30" secret="true" />
+            <key name="mobile" type="String" max-len="30" secret="true" />
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="login_name" type="String" max-len="100" secret="true" />
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_vipuser" type="boolean" secret="true" />
+            <key name="profile_pic" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="sip_user" type="String" secret="true" max-len="250"/>
+            <key name="extension" type="String" secret="true" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="orguser_base">
+            <key name="id" regex="null|[0-9]+"/>
+            <key name="first_name" type="String" max-len="150" secret="true" />
+            <key name="middle_name" type="String" max-len="150" secret="true" />
+            <key name="last_name" type="String" max-len="150" secret="true" />
+            <key name="employee_id" type="String" max-len="50" secret="true" />
+            <key name="org_user_status" regex="ACTIVE|RESIGNED"/>
+            <key name="reporting_to" template="orguser_unique" type="JSONObject" max-len="-1"/>
+            <key name="jobtitle" type="String" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="name" type="String" max-len="150" secret="true" />
+            <key name="email_id"  type="String" max-len="200" description="In some customer environment, users are getting auto created through third party system. So Email Id may be contains any special char in customer end. If we restricted using regex here, that may lead to mail server stopping issue during user creation. So for now, we added character validation in server side for (, @ and .) symbol" secret="true" />
+            <key name="phone" type="String" max-len="30" secret="true" />
+            <key name="mobile" type="String" max-len="30" secret="true" />
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="login_name" type="String" max-len="100" secret="true" />
+            <key name="password" regex="password" max-len="500" secret="true"/>
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_vipuser" type="boolean" allow-invalid="false" secret="true" />
+            <key name="can_generate_authtoken" type="boolean" allow-invalid="false" secret="true" />
+            <key name="sms_mail_id" type="String" max-len="150" secret="true" />
+            <key name="is_user_anonymized" regex="null|[0-9]+"/>
+            <key name="secondary_emailids" template="strarray" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_org_admin" type="boolean" allow-invalid="false"/>
+            <key name="profile_pic_url" type="String" secret="true" max-len="2000"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="sip_user" type="String" secret="true" max-len="250"/>
+            <key name="extension" type="String" secret="true" max-len="50"/>
+            <key name="enable_telephony" type="boolean" allow-invalid="false"/>
+            <key name="user_udf_fields" template="udf_fields_ref_user" type="JSONObject" max-len="-1" max-occurrences="15"/>
+            <key name="operation_type" regex="user_list_for_acknowledge|user_suggestions"/>
+        </jsontemplate>
+        <jsontemplate name="orguser">
+            <key name="orguser" template="orguser_base" type="JSONObject" max-len="-1"/>
+            <key name="orgusers" template="orguser_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="user_unique">
+            <key name="id" regex="null|[0-9]+"/>
+            <key name="name" type="String" max-len="150" secret="true" />
+            <key name="email_id" type="String" max-len="200" description="In some customer environment, users are getting auto created through third party system. So Email Id may be contains any special char in customer end. If we restricted using regex here, that may lead to mail server stopping issue during user creation. So for now, we added character validation in server side for (, @ and .) symbol" secret="true" />
+            <key name="phone" type="String" max-len="30" secret="true" />
+            <key name="mobile" type="String" max-len="30" secret="true" />
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="login_name" type="String" max-len="100" secret="true" />
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_vipuser" type="boolean" secret="true" />
+            <key name="profile_pic" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="sip_user" type="String" max-len="250" secret="true"/>
+            <key name="extension" type="String" max-len="50" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="user_base">
+            <key name="id" regex="null|[0-9]+"/>
+            <key name="ciid" regex="null|[0-9]+"/>
+            <key name="purchase_approver" type="boolean" allow-invalid="false" secret="true" />
+            <key name="purchase_approval_limit" regex="null|-1|[0-9]+.[0-9]+" secret="true" />
+            <key name="service_request_approver" type="boolean" allow-invalid="false"/>
+            <key name="associated_roles" template="role_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="cost_per_hour" regex="null|-1|([0-9]+)?(.)?[0-9]+" secret="true" />
+            <key name="status" regex="ACTIVE|RESIGNED"/>
+            <key name="project_roles" template="project_role_unique" type="JSONObject" max-len="-1"/>
+            <key name="requester_allowed_to_view" regex="null|[0-9]+"/>
+            <key name="region_sys_attribute" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="technician_sys_attribute" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="site_sys_attribute" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_technician" type="boolean" allow-invalid="false"/>
+            <key name="citype_id" regex="null|[0-9]+"/>
+            <key name="type" regex="User|Technician"/>
+            <key name="entity" type="String"/>
+            <key name="citype" type="String"/>
+            <key name=".+_fields" name-regex="true" template="udf_fields_ref_user" type="JSONObject" max-len="-1"/>
+            <key name="first_name" type="String" max-len="150" secret="true" />
+            <key name="middle_name" type="String" max-len="150" secret="true" />
+            <key name="last_name" type="String" max-len="150" secret="true" />
+            <key name="employee_id" type="String" max-len="50" secret="true" />
+            <key name="org_user_status" regex="ACTIVE|RESIGNED"/>
+            <key name="reporting_to" template="orguser_unique" type="JSONObject" max-len="-1"/>
+            <key name="jobtitle" type="String" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="name" type="String" max-len="150" secret="true" />
+            <key name="email_id" type="String" max-len="200" description="In some customer environment, users are getting auto created through third party system. So Email Id may be contains any special char in customer end. If we restricted using regex here, that may lead to mail server stopping issue during user creation. So for now, we added character validation in server side for (, @ and .) symbol" secret="true" />
+            <key name="phone" type="String" max-len="30" secret="true" />
+            <key name="mobile" type="String" max-len="30" secret="true" />
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="login_name" type="String" max-len="100" secret="true" />
+            <key name="password" regex="password" max-len="500" secret="true"/>
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_vipuser" type="boolean" allow-invalid="false" secret="true" />
+            <key name="can_generate_authtoken" type="boolean" allow-invalid="false" secret="true" />
+            <key name="sms_mail_id" type="String" max-len="150" secret="true" />
+            <key name="is_user_anonymized" regex="null|[0-9]+"/>
+            <key name="profile_pic" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="secondary_emailids" template="strarray" type="JSONArray" max-len="-1"  array-size="0-100"/>
+            <key name="is_org_admin" type="boolean" allow-invalid="false"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="sip_user" type="String" max-len="250" secret="true"/>
+            <key name="extension" type="String" max-len="50" secret="true"/>
+            <key name="enable_telephony" type="boolean" allow-invalid="false"/>
+            <key name="operation_type" regex="user_list_for_acknowledge|user_suggestions"/>
+        </jsontemplate>
+        <jsontemplate name="user">
+            <key name="user" template="user_base" type="JSONObject" max-len="-1"/>
+            <key name="users" template="user_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="user_group_unique">
+            <key name="id" regex="null|[0-9]+"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="user_group_base">
+            <key regex="null|[0-9]+" name="id"/>
+            <key max-len="250" type="String" name="name"/>
+            <key max-len="250" type="String" secret="true" name="description"/>
+            <key array-size="0-100" max-len="50000" type="JSONObject|JSONArray" template="search_criteria" name="criteria"/>
+            <key type="String" secret="true" name="mickey_criteria"/>
+        </jsontemplate>
+        <jsontemplate name="user_group">
+            <key name="user_group" template="user_group_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="usercriteria_base">
+            <key name="field" regex="Department|Site|User"/>
+            <key name="condition" regex="is|is not"/>
+            <key name="logical_operator" regex="OR|AND|-"/>
+            <key name="values" template="largestrarray" type="JSONArray" max-len="-1" array-size="0-1500"/>
+        </jsontemplate>
+        <jsontemplate name="usercriteria">
+            <key name="usercriteria" template="usercriteria_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="technician_unique">
+            <key name="id" type="long" range=">=0"/>
+            <key name="name" type="String" max-len="150" secret="true" />
+            <key name="email_id"  type="String" max-len="200" description="In some customer environment, users are getting auto created through third party system. So Email Id may be contains any special char in customer end. If we restricted using regex here, that may lead to mail server stopping issue during user creation. So for now, we added character validation in server side for (, @ and .) symbol" secret="true" />
+            <key name="phone" type="String" max-len="30" secret="true" />
+            <key name="mobile" type="String" max-len="30" secret="true" />
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="login_name" type="String" max-len="100" secret="true" />
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_vipuser" type="boolean" secret="true" />
+            <key name="profile_pic" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="sip_user" type="String" max-len="250" secret="true" />
+            <key name="extension" type="String" max-len="50" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="technician_base">
+            <key name="id" regex="null|[0-9]+"/>
+            <key name="allowed_to_view_cost" type="boolean" allow-invalid="false"/>
+            <key name="associated_sites" template="site_unique" type="JSONArray" max-len="-1" array-size="&gt;=0"/>
+            <key name="is_online" regex="null|[0-9]+"/>
+            <key name="support_group" template="support_group_unique" type="JSONArray" max-len="-1" array-size="&gt;=0"/>
+            <key name="technician_udf_fields" template="udf_fields_ref_user" type="JSONObject" max-len="-1"/>
+            <key name="ciid" regex="null|[0-9]+"/>
+            <key name="purchase_approver" type="boolean" secret="true"  allow-invalid="false"/>
+            <key name="purchase_approval_limit" regex="null|-1|[0-9]+.[0-9]+" secret="true" />
+            <key name="service_request_approver" type="boolean" secret="true" allow-invalid="false"/>
+            <key name="associated_roles" template="role_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="cost_per_hour" regex="null|-1|([0-9]+)?(.)?[0-9]+" secret="true" />
+            <key name="status" regex="ACTIVE|RESIGNED"/>
+            <key name="project_roles" template="project_role_unique" type="JSONObject" max-len="-1"/>
+            <key name="requester_allowed_to_view" regex="null|[0-9]+"/>
+            <key name="region_sys_attribute" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="technician_sys_attribute" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="site_sys_attribute" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_technician" type="boolean" allow-invalid="false"/>
+            <key name="citype_id" regex="null|[0-9]+"/>
+            <key name="type" regex="User|Technician"/>
+            <key name="entity" type="String"/>
+            <key name="employeeId" type="String" secret="true" max-len="50"/>
+            <key name="citype" type="String"/>
+            <key name=".+_fields" name-regex="true" template="udf_fields_ref_user" type="JSONObject" max-len="-1"/>
+            <key name="first_name" type="String" max-len="150" secret="true" />
+            <key name="middle_name" type="String" max-len="150" secret="true" />
+            <key name="last_name" type="String" max-len="150" secret="true" />
+            <key name="employee_id" type="String" max-len="50" secret="true" />
+            <key name="org_user_status" regex="ACTIVE|RESIGNED"/>
+            <key name="reporting_to" template="orguser_unique" type="JSONObject" max-len="-1"/>
+            <key name="jobtitle" type="String" secret="true" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="name" type="String" max-len="150" secret="true" />
+            <key name="email_id"  type="String" max-len="200" description="In some customer environment, users are getting auto created through third party system. So Email Id may be contains any special char in customer end. If we restricted using regex here, that may lead to mail server stopping issue during user creation. So for now, we added character validation in server side for (, @ and .) symbol" secret="true" />
+            <key name="phone" type="String" max-len="30" secret="true" />
+            <key name="mobile" type="String" max-len="30" secret="true" />
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="login_name" type="String" max-len="100" secret="true" />
+            <key name="password" regex="password" max-len="500" secret="true" />
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_vipuser" type="boolean" allow-invalid="false" secret="true" />
+            <key name="can_generate_authtoken" type="boolean" allow-invalid="false" secret="true" />
+            <key name="sms_mail_id" type="String" max-len="150" secret="true" />
+            <key name="is_user_anonymized" regex="null|[0-9]+"/>
+            <key name="secondary_emailids" template="strarray" type="JSONArray" max-len="-1"  array-size="0-100"/>
+            <key name="is_org_admin" type="boolean" allow-invalid="false"/>
+            <key name="profile_pic" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="sip_user" type="String" max-len="250" secret="true"/>
+            <key name="extension" type="String" secret="true" max-len="50"/>
+            <key name="enable_telephony" type="boolean" allow-invalid="false"/>
+            <key name="operation_type" regex="user_list_for_acknowledge|user_suggestions"/>
+        </jsontemplate>
+        <jsontemplate name="technician">
+            <key name="technician" template="technician_base" type="JSONObject" max-len="-1"/>
+            <key name="technicians" template="technician_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="role_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" secret="true"  max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="role_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" secret="true" max-len="250"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="role">
+            <key name="role" template="role_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="user_restriction_field_template">
+            <key index="0-500" type="String" regex="citype|department|description|employee_id|first_name|jobtitle|last_name|middle_name|mobile|phone|email_id|profile_pic|reporting_to|secondary_emailids|is_vipuser|can_generate_authtoken|linked_instance|linked_entity|(ci_((citype_([0-9]+))|user|default)_fields.udf_(sline|mline|pick|pickref|long|date)_([0-9]+))|(user_udf_fields.udf_(sline|mline|pick|long|date|char|pickref|decimal|multiselect)_([0-9]+))|(technician_udf_fields.udf_(sline|mline|pick|long|date|char|pickref|decimal|multiselect)_([0-9]+))"/>
+        </jsontemplate>
+        <jsontemplate name="ae_tech_restriction_field_template">
+            <key index="0-500" type="String" regex="associated_roles|associated_sites|citype|description|employee_id|first_name|jobtitle|last_name|login_name|domain|middle_name|mobile|phone|profile_pic|purchase_approval_limit|secondary_emailids|can_generate_authtoken|linked_instance|linked_entity|(ci_((citype_([0-9]+))|user|default)_fields.udf_(sline|mline|pick|pickref|long|date)_([0-9]+))|(user_udf_fields.udf_(sline|mline|pick|long|date|char|pickref|decimal|multiselect)_([0-9]+))|(technician_udf_fields.udf_(sline|mline|pick|long|date|char|pickref|decimal|multiselect)_([0-9]+))"/>
+        </jsontemplate>
+        <jsontemplate name="sdp_tech_restriction_field_template">
+            <key index="0-500" type="String" regex="associated_roles|support_group|associated_sites|citype|description|employee_id|first_name|jobtitle|last_name|login_name|domain|middle_name|mobile|phone|profile_pic|purchase_approval_limit|secondary_emailids|is_vipuser|can_generate_authtoken|linked_instance|linked_entity|(ci_((citype_([0-9]+))|user|default)_fields.udf_(sline|mline|pick|pickref|long|date)_([0-9]+))|(user_udf_fields.udf_(sline|mline|pick|long|date|char|pickref|decimal|multiselect)_([0-9]+))|(technician_udf_fields.udf_(sline|mline|pick|long|date|char|pickref|decimal|multiselect)_([0-9]+))"/>
+        </jsontemplate>
+        <jsontemplate name="generate_authtoken">
+            <key min-occurrences="1" name="expiry_time" template="datefield" type="JSONObject" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="change_password">
+            <key min-occurrences="1" name="old_password" type="String" secret="true" max-len="500" />
+            <key min-occurrences="1" name="new_password" type="String" secret="true" max-len="500" />
+            <key min-occurrences="1" name="confirm_password" type="String" secret="true" max-len="500" />
+        </jsontemplate>
+        <jsontemplate name="udf_fields_ref_user">
+            <key name-regex="true" name="udf_char" max-len="3500" type="String" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_sline" max-len="250" type="String" secret="true"  max-occurrences="200" />
+            <key name-regex="true" name="udf_mline" max-len="4000" type="String" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_pick" max-len="250" type="String" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_pickref" type="JSONObject" template="IDNameJson" max-occurrences="200" />
+            <key name-regex="true" name="udf_long" type="long" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_decimal" secret="true" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="200" />
+            <key name-regex="true" name="udf_date" type="JSONObject" template="datefield" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_multiselect" type="JSONArray" template="multiselect_array" max-occurrences="120" max-len="-1" array-size="0-25" />
+        </jsontemplate>
+        <jsontemplate name="udf_fields_ref_user_csv">
+            <key name-regex="true" name="udf_char" max-len="3500" type="String" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_sline" max-len="250" type="String" secret="true"  max-occurrences="200" />
+            <key name-regex="true" name="udf_mline" max-len="4000" type="String" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_pick" max-len="250" type="String" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_pickref" type="JSONObject" template="IDNameJson" max-occurrences="200" />
+            <key name-regex="true" name="udf_long" type="long" secret="true" max-occurrences="200" />
+            <key name-regex="true" name="udf_decimal" secret="true" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="200" />
+            <key name-regex="true" name="udf_date" type="String" secret="true" max-len="250" max-occurrences="200" />
+            <key name-regex="true" name="udf_multiselect" type="JSONArray" template="multiselect_array" max-occurrences="120" max-len="-1" array-size="0-25" />
+        </jsontemplate>
+    </jsontemplates>
+</security>

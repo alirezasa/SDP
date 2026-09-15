@@ -1,0 +1,223 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"initiated_requests\":[{\"request\":{\"subject\":\"Unable to fetch mails\",\"id\":\"2\"}},{\"request\":{\"subject\":\"Unable to fetch mails\",\"id\":\"1\"}}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2}}"},
+            "path": ["/api/v3/changes/{change_id}/initiated_requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View all Requests Initiated by a Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"request_caused_by_change\":{\"request\":{\"id\":\"1\"},\"change\":{\"id\":\"1\"}}}"},
+            "path": ["/api/v3/changes/{change_id}/initiated_requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"request_caused_by_change\":{\"request\":{\"id\":\"1\"}}}"
+            },
+            "method": "POST",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Associate a Request initiated by a Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+	    "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/initiated_requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"request_caused_by_change\":{\"request\":{\"id\":\"1\"}}}"
+            },
+            "method": "DELETE",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Dissociate a Request initiated by a Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2},\"initiated_by_requests\":[{\"request\":{\"subject\":\"Unable to fetch mails\",\"id\":\"3\"}},{\"request\":{\"subject\":\"Unable to fetch mails\",\"id\":\"4\"}}]}"},
+            "path": ["/api/v3/changes/{change_id}/initiated_by_requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View all Requests that Initiated the Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"request_initiated_change\":{\"request\":{\"id\":\"1\"},\"change\":{\"id\":\"1\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/initiated_by_requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"request_initiated_change\":{\"request\":{\"id\":\"1\"}}}"
+            },
+            "method": "POST",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Associate a Request that initiated the Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/initiated_by_requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"request_initiated_change\":{\"request\":{\"id\":\"1\"}}}"
+            },
+            "method": "DELETE",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Dissociate a Request that initiated the Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1},\"problems\":[{\"problem\":{\"id\":\"1\",\"title\":\"Problem 1\"}}]}"},
+            "path": ["/api/v3/changes/{change_id}/problems"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View all Problems associated to a Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"change_problem_association\":{\"problem\":{\"id\":\"1\"},\"change\":{\"id\":\"1\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/problems"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"change_problem_association\":{\"problem\":{\"id\":\"1\"}}}"
+            },
+            "method": "POST",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Associate a Problem with Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/problems"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"change_problem_association\":{\"problem\":{\"id\":\"1\"}}}"
+            },
+            "method": "DELETE",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Dissociate a Problem from Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"projects\":[{\"initiated_by\":\"project\",\"change\":{\"short_description\":\"\",\"id\":\"1\",\"title\":\"Sample\"},\"project\":{\"id\":\"2\",\"title\":\"Project 2\"},\"id\":\"2\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"},
+            "path": ["/api/v3/changes/{change_id}/projects"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View all Projects associated to a change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"change_project_association\":{\"initiated_by\":\"change\",\"change\":{\"short_description\":\"\",\"id\":\"1\",\"title\":\"Sample\"},\"project\":{\"id\":\"1\",\"title\":\"Project 1\"},\"id\":\"301\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/projects"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"projects\":[{\"project\":{\"id\":\"3\"},\"initiated_by\":\"change\"}]}"
+            },
+            "method": "POST",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Associate a Project with Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/projects"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"projects\":[{\"project\":{\"id\":\"1\"},\"initiated_by\":\"change\"}]}"
+            },
+            "method": "DELETE",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Dissociate a Project from Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [],
+    "lastModified": 1599811931000
+}

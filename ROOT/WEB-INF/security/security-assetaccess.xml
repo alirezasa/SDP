@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id$-->
+
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+     <urls  authentication="required"  method="get">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="group_and_asset_entities" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+
+        <!-- Admin Entities listviews end -->
+        <!-- Group entity urls start -->
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupListView.do" operation-param="mode" operation-value="get" >
+            <param name="Group" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+        </url>
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupListView.do" operation-param="mode" operation-value="addpage" >
+            <param name="addToGroup" type="boolean"/>
+        </url>
+        <url roles="CreateInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupResourcesDef.do" operation-param="mode" operation-value="get" />
+        <url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupResourcesDef.do" operation-param="mode" operation-value="showeditpage" >
+            <param name="isEdit" type="boolean"/>
+            <param name="groupId" type="long" range=">0" min-occurrences="1"/>
+        </url>
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/DynamicGroupPopUp.do" >
+            <param name="element1" type="String" max-len="50" min-occurrences="1"/>
+            <param name="element2" type="String" max-len="50" min-occurrences="1"/>
+            <param name="selVal" type="long" range=">0" min-occurrences="1"/>
+            <param name="resourceType" regex="Resource|workstation"/>
+            <param name="mode" regex="add|edit"/>
+            <param name="from" regex="rule"/>
+        </url>
+
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/ManageGroups.do"  operation-param="mode" operation-value="get" />
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupView.cc" >
+            <param name="UNIQUE_ID" regex="GroupView"/>
+            <param name="TYPE" regex="1|2"/>
+            <param name="STATE" type="long" range=">=0"/>
+            <param name="GROUPID" type="long" range=">=0"/>
+            <param name="SEARCHSTRING" type="String" max-len="1000" description="since it is a search string we can't specify length"/>
+        </url>
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupDisplayView.cc"  >
+            <param name="UNIQUE_ID" regex="GroupDisplayView"/>
+        </url>
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupsView.cc"  >
+            <param name="UNIQUE_ID" regex="GroupsView"/>
+        </url>
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/Groups.cc"  >
+            <param name="UNIQUE_ID" regex="Groups"/>
+            <param name="SEARCHSTRING" type="String" max-len="1000"/>
+            <param name="GROUPID" type="long" range=">0"/>
+        </url>
+        <!-- Group entity urls end -->
+        <!-- loan attachment urls start-->
+        <url roles="ViewInventoryWS" path="/common/AEFileAttachment.jsp" operation-param="module" operation-value="LoanNotification_attachment">
+			<param name="type"  regex="new"/>
+			<param name="[0-9]+" name-regex="true" type="boolean" max-occurrences="1"/>
+	    </url>
+
+         <url roles="BookingAdmin,BookingTechnician" path="/common/AEFileAttachment.jsp" operation-param="module" operation-value="BookingNotification_attachment">
+             <param name="type"  regex="new"/>
+             <param name="[0-9]+" name-regex="true" type="boolean" max-occurrences="1"/>
+         </url>
+        <!-- loan attachment urls end-->
+    </urls>
+
+	<!-- Asset list view Starts here -->
+	<urls  authentication="required"  method="get" allowed_portals="it" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="loan_entities" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+		<url roles="SDAdmin,SDSiteAdmin" path="(/STATE_ID/[0-9]+)?/AutoAssignWsView.cc" >
+			<param name="UNIQUE_ID" regex="AutoAssignWsView"/>
+		</url>
+
+		<!-- Loan list views -->
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanRegistryListView.cc">
+			<param name="UNIQUE_ID" regex="LoanRegistryListView"/>
+			<param name="loanStatus"  type="long" range=">=0"/>
+			<param name="site"  type="long" range=">=-1"/>
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanedAssetsListView.cc">
+			<param name="UNIQUE_ID" regex="LoanedAssetsListView"/>
+			<param name="expireIn" type="long" range=">=0"/>
+			<param name="product" type="long" range=">=0"/>
+			<param name="productType"  type="long" range=">=0"/>
+			<param name="site" type="long" range=">=-1"/>
+			<param name="assetType" regex="LoanedAssets"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanableAssetsListView.cc">
+			<param name="UNIQUE_ID" regex="LoanableAssetsListView"/>
+			<param name="expireIn" type="long" range=">=0"/>
+			<param name="product" type="long" range=">=0"/>
+			<param name="productType" type="long" range=">=0"/>
+			<param name="site"  type="long" range=">=-1"/>
+			<param name="assetType" regex="LoanableAssets"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanSelectResourcesView.cc">
+			<param name="UNIQUE_ID" regex="LoanSelectResourcesView"/>
+			<param name="product"  type="long" range=">=0"/>
+			<param name="productType"  type="long" range=">=0"/>
+			<param name="searchString" type="String" max-len="100"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanExpiredAssetsListView.cc">
+			<param name="UNIQUE_ID" regex="LoanExpiredAssetsListView"/>
+			<param name="product"   type="long" range=">=0"/>
+			<param name="productType"   type="long" range=">=0"/>
+			<param name="site"   type="long" range=">=-1"/>
+			<param name="expireIn" type="long" range=">=0"/>
+			<param name="assetType" regex="LoanExpiredAssets"/>
+		</url>
+	</urls>
+
+	<urls  authentication="required"  method="get" remote_server="true" allowed_portals="it" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="assets" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+<!--		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/AssetView.cc"  >-->
+<!--			<param name="UNIQUE_ID" regex="AssetView"/>-->
+<!--			<param name="ciTypeId"  regex="null|[0-9]+"/>-->
+<!--			<param name="fromTab" type="String" max-len="100"/>-->
+<!--		</url>-->
+
+<!--		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/FailedWsListView.cc"  >-->
+<!--			<param name="UNIQUE_ID" regex="FailedWsListView"/>-->
+<!--			<param name="auditFilter" type="String" max-len="25"/>-->
+<!--		</url>-->
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/WorkstationViewForGraph.cc"  >
+			<param name="UNIQUE_ID" regex="WorkstationViewForGraph"/>
+		</url>
+
+<!--		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/MobileApplicationsView.cc" >-->
+<!--			<param name="UNIQUE_ID" regex="MobileApplicationsView"/>-->
+<!--		</url>-->
+
+	</urls>
+	<!-- Asset list views end -->
+
+	<urls  authentication="required"  method="get" allowed_portals="facility,hr,blank">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="loan_group" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanRegistryListView_HD_[0-9]+.cc"  path-regex="true">
+			<param name="UNIQUE_ID" regex="LoanRegistryListView_HD_[0-9]+"/>
+			<param name="loanStatus"  type="long" range=">=0"/>
+			<param name="site"  type="long" range=">=-1"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanedAssetsListView_HD_[0-9]+.cc"  path-regex="true">
+			<param name="UNIQUE_ID" regex="LoanedAssetsListView_HD_[0-9]+"/>
+			<param name="expireIn"  type="long" range=">=0"/>
+			<param name="product"  type="long" range=">=0"/>
+			<param name="productType"  type="long" range=">=0"/>
+			<param name="site"  type="long" range=">=-1"/>
+			<param name="assetType" regex="LoanedAssets"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanableAssetsListView_HD_[0-9]+.cc"  path-regex="true">
+			<param name="UNIQUE_ID" regex="LoanableAssetsListView_HD_[0-9]+"/>
+			<param name="product"  type="long" range=">=0"/>
+			<param name="productType"  type="long" range=">=0"/>
+			<param name="site"  type="long" range=">=-1"/>
+			<param name="assetType" regex="LoanableAssets"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanSelectResourcesView_HD_[0-9]+.cc"  path-regex="true">
+			<param name="UNIQUE_ID" regex="LoanSelectResourcesView_HD_[0-9]+"/>
+			<param name="product"  type="long" range=">=0"/>
+			<param name="productType"  type="long" range=">=0"/>
+			<param name="searchString" type="String" max-len="1000"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanExpiredAssetsListView_HD_[0-9]+.cc" path-regex="true">
+			<param name="UNIQUE_ID" regex="LoanExpiredAssetsListView_HD_[0-9]+"/>
+			<param name="product" type="long" range=">=0"/>
+			<param name="productType"  type="long" range=">=0"/>
+			<param name="site"  type="long" range=">=-1"/>
+			<param name="assetType" regex="LoanExpiredAssets"/>
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupView_HD_[0-9]+.cc" path-regex="true">
+			<param name="UNIQUE_ID" regex="GroupView_HD_[0-9]+"/>
+			<param name="TYPE" regex="1|2"/>
+            <param name="STATE" type="long" range=">=0"/>
+            <param name="GROUPID" type="long" range=">=0"/>
+            <param name="SEARCHSTRING" type="String" max-len="1000" description="since it is a search string we can't specify length"/>
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupDisplayView_HD_[0-9]+.cc" path-regex="true" >
+			<param name="UNIQUE_ID" regex="GroupDisplayView_HD_[0-9]+"/>
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupsView_HD_[0-9]+.cc" path-regex="true" >
+			<param name="UNIQUE_ID" regex="GroupsView_HD_[0-9]+"/>
+			<param name="TYPE" type="long" range=">=0"/>
+			<param name="STATE" type="long" range=">=0"/>
+			<param name="GROUPID" type="long" range=">=0"/>
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/Groups_HD_[0-9]+.cc" path-regex="true" >
+			<param name="UNIQUE_ID" regex="Groups_HD_[0-9]+"/>
+			<param name="GROUPID" type="long" range=">=0"/>
+		</url>
+	</urls>
+	<!-- Non-IT portal list views end-->
+
+	<!-- Asset Module related URLs starts -->
+	<urls  authentication="required"  method="get" remote_server="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_view" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+<!--		<url path="(/STATE_ID/[0-9]+)?/FailedWsListView.do" roles="ViewInventoryWS" operation-param="mode" operation-value="get" >-->
+<!--			<param name="displayAll" type="boolean"/>-->
+<!--			<param name="auditFilter" regex="7 days|30 days"/>-->
+<!--			<param name="wsType" type="long" range=">=0"/>-->
+<!--		</url>-->
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/ViewWSAuditDetails.do" operation-param="mode" operation-value="get" >
+			<param name="wsId" type="long" range=">=0"/>
+			<param name="opmanager" type="boolean"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/ViewWSAuditDetails.do" operation-param="mode" operation-value="morehistory">
+			<param name="wsId" type="long" range=">=0"/>
+			<param name="startIndex" type="long" range=">=0"/>
+			<param name="loadAuditDetails"  type="boolean"/>
+			<param name="remoteStartIndex" type="long" range=">=0"/>
+			<param name="remoteLoadAuditDetails"  type="boolean"/>
+		</url>
+
+		<url path="/AssetHomePage.do" roles="ViewInventoryWS,ViewPurchaseOrder,ViewPR,ViewInventory,ViewContract,ViewReports,ViewCI" >
+			<param name="requiredGraph" regex="AssetSummary|ContractSummary|POSummary|WSByOS|WSByManufacturer|WSByProcessorType|WSByDepartment|WSBySite|WSByRegion|WSByDomain|WSByStates||WSUnaudited|ITAssetsByDepartment|ITAssetsBySite|ITAssetsByRegion||ITAssetsByState|SWVendorsByVolume|MicrosoftCompliance|AllSWCompliance|SWVendorNC|SWByCategory|SWRarelyUsed|ResourcesBySite|ResourcesByRegion|ResourcesByState"/>
+			<param name="layoutPosition"   regex="first|second|third|fourth"/>
+			<param name="frame"  regex="first|second|third|fourth"/>
+			<param name="id" regex="table_\d*" />
+			<param name="logout" type="boolean"/>
+			<param name="logoutSkipNV2Filter" type="boolean"/>
+			<param name="pwdReset" type="boolean"/>
+	    <!-- Below params are applicable only for demo server -->
+            <param name="username" regex="demo|guest"/>
+            <param name="password" regex="demo|guest"/>
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/InventoryHome.do">
+			<param name="mode" regex="listView"/>
+			<param name="module" regex="summary"/>
+		</url>
+		<url path="(/STATE_ID/[0-9]+)?/ViewWSDetails.do" roles="ViewInventoryWS" >
+			<param name="wsId"  type="long" range=">0"/>
+			<param name="opmanager" type="boolean"/>
+			<param name="deallocated" type="String" max-len="50"/>
+		</url>
+
+
+		<!-- asset ui/print url is moved from security-allmodules.xml to security-assetaccess.xml -->
+		<url path="/ui/print" method="get" operation-param="module" operation-value="assets" roles="ViewInventoryWS" >
+			<param name="entity_id" type="long" range=">=0"/>
+			<param name="isCMDB" type="boolean" />
+			<param name="printMode" type="boolean"  max-occurrences="1"  />
+			<param name="apiModule" regex="requests|problems|releases|assets|workstations|asset_loans|archive_requests|request_maintenances|(asset_assets|asset_computers|asset_workstations|asset_desktops|asset_laptops|asset_2in1tablets|asset_servers|asset_printers|asset_routers|asset_firewalls|asset_storage_devices|asset_access_points|asset_racks|asset_upses|asset_video_encoders|asset_ipses|asset_ntps|asset_room_sensors|asset_mobile_devices|asset_smartphones|asset_tablets|asset_ip_phones|asset_cisco_ip_phones|asset_switches|asset_scanners|asset_projectors|asset_keyboards|asset_coffee_vending_machines|asset_electrical_heaters|asset_refrigerators|asset_televisions|asset_water_dispensers|asset_speakers|asset_stoves|asset_gym_equipments|asset_saws|asset_power_generators|asset_power_backups|asset_batteries|asset_electrical_panels|asset_transformers|asset_escalators|asset_elevators|asset_switches|asset_fuses|asset_plugs|asset_pdus|asset_tables|asset_chairs|asset_drawers_and_cabinets|asset_lockers|asset_sofas|asset_air_conditioners|asset_cooling_fans_and_towers|asset_boilers|asset_environmental_control_consoles|asset_compressors_and_fans|asset_chillers|asset_warm_air_furnaces|asset_pumps|asset_window_air_conditioners|asset_air_filters|asset_hot_water_heaters|asset_fire_extinguishers|asset_smoke_detectors|asset_fire_alarms|asset_safety_mirrors|asset_flash_lights|asset_first_aid_kits|asset_signs_and_labels|asset_receptors_and_masks|asset_surveillance_cameras|asset_communicators|asset_biometrics|asset_walkie_talkies|asset_alarms_and_detectors|asset_padlocks|asset_badges|asset_lanyards|asset_trays|asset_ladders|asset_scaffold_and_climbing_equipments|asset_painting_brushes|asset_rollers|asset_plastic_and_sheets|asset_painters_wears|asset_spray_equipments|asset_vacuum_cleaners|asset_carpet_sweepers|asset_dishwashers|asset_leaf_blowers|asset_lawnmowers|asset_housekeeping_trolleys|asset_floor_polishers|asset_receptacles_and_containers|asset_brooms|asset_brushes|asset_fork_lifts|asset_earth_movers|asset_cranes|asset_groundskeeping_equipments|asset_faucets|asset_drillers|asset_restroom_fittings|asset_pipe_fittings_and_couplings|asset_plumbing_tools|(custom_asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)))" />
+		</url>
+
+	</urls>
+	<urls  authentication="required"  method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ws_view" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/WsRequestHistory.do" operation-param="mode" operation-value="get" >
+			<param name="wsId" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+			<param name="opmanager" type="boolean"/>
+		</url>
+		<url roles="SDAdmin" path="/jsp/GettingStarted.jsp"/>
+		<url path="/purchase/POReconcileConfirm.jsp" roles="ModifyInventoryWS">
+			<param name="resource1" type="long" range=">=0"/>
+			<param name="resource2" type="long" range=">=0"/>
+			<param name="assetType" type="String" max-len="250"/>
+		</url>
+		<url path="/servlet/AJaxServlet" operation-param="action" operation-value="getUserDetailsForAsset" roles="SDAdmin,SDSiteAdmin">
+			<param name="search" type="String" max-len="250"/>
+			<param name="mappedId" regex="[0-9]+|null"/>
+		</url>
+		<url roles="SDAdmin,SDSiteAdmin" path="(/STATE_ID/[0-9]+)?/AutoAssign.do" operation-param="mode" operation-value="get">
+			<param name="checkbox" type="long" range=">=0" max-occurrences="500"/>
+		</url>
+
+		<!-- Asset Actions Ends here -->
+	</urls>
+	<!-- Asset Module related URLs end-->
+
+     <urls  authentication="required"  method="post" csrf="true">
+
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="Group_add" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+		 <url roles="SDAdmin,SDSiteAdmin" path="(/STATE_ID/[0-9]+)?/AutoAssign.do" operation-param="mode" operation-value="post">
+			 <param name="assign" type="boolean"/>
+			 <param name="retainUserSiteToAsset" regex="on|off|null"/>
+			 <param name="suggestedUsersOnly" regex="on|off|null"/>
+			 <param name="pageLength" type="long" range=">0" max-occurrences="500"/>
+			 <param name="loadingMsg" regex="Loading. Please wait ..." max-occurrences="500"/>
+			 <param name="rowcount" regex="Row Count" max-occurrences="500"/>
+			 <param name="Workstation" type="String" max-len="250"/>
+			 <param name="SuggestedDept" type="String" max-len="250"/>
+			 <param name="checkbox" type="long" range=">0" max-occurrences="500"/>
+			 <param name="checkbox([0-9]+)" name-regex="true" regex="on" max-occurrences="500"/>
+			 <param name="userName_([0-9]+)" name-regex="true" type="String" max-len="250" secret="true" max-occurrences="500"/>
+			 <param name="userId_([0-9]+)" name-regex="true" type="long" range=">0" max-occurrences="500"/>
+		 </url>
+
+		 <url roles="SDAdmin,SDSiteAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="searchUserForAutoAssign" method="post" csrf="true">
+			 <param name="reqName" type="String" max-len="150" secret="true"/>
+		 </url>
+
+        <!-- Group entity POST URLs start-->
+        <url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupListView.do" operation-param="mode" operation-value="add" >
+            <param name="groupIds" type="String" max-len="2000" secret="true"/>
+            <param name="groupType" regex="ExistingGroup|NewGroup"/>
+            <param name="group" type="long" range=">=0"/>
+            <param name="newGroup" type="String" max-len="100"/>
+            <param name="newGroupDescription" type="String" max-len="250" secret="true"/>
+            <param name="addResourcesToGroup" type="String" max-len="25" description="language specific"/>
+        </url>
+
+        <url roles="DeleteInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupListView.do" operation-param="mode" operation-value="delete" >
+            <param name="delete" type="boolean" />
+            <param name="group" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+            <param name="pageLength" type="long" range=">=0" max-occurrences="500"/>
+            <param name="loadingMsg" type="String" max-len="200" max-occurrences="500"/>
+            <param name="rowcount" type="String" max-len="200" max-occurrences="500"/>
+            <param name="AssetName" type="String" max-len="250" secret="true"/>
+            <param name="ProductName" type="String" max-len="250" secret="true"/>
+            <param name="AssetState" type="String" max-len="100"/>
+            <param name="AssociatedTo" type="String" max-len="250"/>
+            <param name="User" type="String" max-len="250" secret="true"/>
+            <param name="Department" type="String" max-len="100"/>
+			<param name="checkbox23" regex="on" />
+			<param name="checkbox" type="long" range=">0" min-occurrences="1" max-occurrences="500" description="to delete multiple assets and as list view supports 500"/>
+        </url>
+
+        <url roles="CreateInventoryWS,ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupResourcesDef.do" operation-param="mode" operation-value="add" >
+            <param name="groupName" type="String" max-len="100" min-occurrences="1" allow-empty="false"/>
+            <param name="groupDescription" type="String" max-len="250" secret="true"/>
+            <param name="groupType" regex="DynamicGroup|StaticGroup" min-occurrences="1" allow-empty="false"/>
+            <param name="createGroup" type="boolean" min-occurrences="1"/>
+        </url>
+
+        <url roles="CreateInventoryWS,ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupResourcesDef.do" operation-param="mode" operation-value="updateGroup" >
+            <param name="groupName" type="String" max-len="100" min-occurrences="1" allow-empty="false"/>
+            <param name="groupDescription" type="String" max-len="250" secret="true"/>
+            <param name="groupId" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+            <param name="editGroup" type="String" max-len="100" description="since it is language specfic we can't provide regex to it" min-occurrences="1" allow-empty="false"/>
+        </url>
+
+        <url roles="CreateInventoryWS,ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupResourcesDef.do" operation-param="mode" operation-value="delete" >
+            <param name="groupId" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+            <param name="deleteResources" type="String" max-len="200" min-occurrences="1" description="language specific"/>
+            <param name="checkbox" type="long" range=">=0" max-occurrences="500"/>
+            <param name="pageLength" type="long" range=">=0" max-occurrences="2"/>
+            <param name="loadingMsg" type="String" max-len="200" max-occurrences="2" description="language specific"/>
+            <param name="rowcount" type="String" max-len="200" max-occurrences="2" description="language specific"/>
+            <param name="checkbox([0-9]+)" name-regex="true" type="String" max-len="1000" max-occurrences="500"/>
+        </url>
+
+        <url roles="CreateInventoryWS,ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupResourcesDef.do" operation-param="mode" operation-value="saveOrSearch" >
+
+            <param name="groupId" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+            <param name="handleTypeOrStateChange" type="String" max-len="1000"/>
+            <param name="resourceType" type="long" range=">=0" min-occurrences="1" allow-empty="false"/>
+            <param name="resourceState" type="long" range=">=0" min-occurrences="1" allow-empty="false"/>
+            <param name="searchString" type="String" max-len="1000"/>
+            <param name="search" type="String" max-len="1000"/>
+            <param name="checkbox" type="long" range=">=0" max-occurrences="500"/>
+            <param name="addResources" type="String" max-len="1000" description="language specific"/>
+            <param name="pageLength" type="long" range=">=0" max-occurrences="2"/>
+            <param name="loadingMsg" type="String" max-len="200" max-occurrences="2" description="language specific"/>
+            <param name="rowcount" type="String" max-len="200" max-occurrences="2" description="language specific"/>
+            <param name="checkbox([0-9]+)" name-regex="true" type="String" max-len="1000" max-occurrences="500"/>
+        </url>
+
+        <url roles="CreateInventoryWS,ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/GroupResourcesDef.do" operation-param="mode" operation-value="saveDynamicGroup" >
+            <param name="groupId" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+            <param name="selectCriteria" type="long" range=">=0" />
+            <param name="selectConditions" type="long" range=">=0" />
+            <param name="hid([0-9]+)" name-regex="true" type="String" max-len="200" max-occurrences="20"/>
+            <param name="andor" regex="and|or"/>
+            <param name="operator([0-9]+)" name-regex="true" regex="and|or" max-occurrences="20"/>
+            <param name="rowCond([0-9]+)" name-regex="true" type="String" max-len="200" max-occurrences="20"/>
+            <param name="rowName([0-9]+)" name-regex="true" type="String" max-len="-1" max-occurrences="20" description="since we it may contain any number of products or product types we can't specify max lenght for it" secret="true"/>
+            <param name="rowVal([0-9]+)" name-regex="true" type="String" max-len="-1" max-occurrences="20" description="since we it may contain any number of ids we can't specify max lenght for it" secret="true"/>
+            <param name="rowCondVal([0-9]+)" name-regex="true" type="String" max-len="200" max-occurrences="20"/>
+            <param name="addDynamicGroup" type="String" max-len="200"/>
+            <param name="editDynamicGroup" type="String" max-len="200"/>
+        </url>
+
+        <url roles="DeleteInventoryWS" path="(/STATE_ID/[0-9]+)?/ManageGroups.do" operation-param="mode" operation-value="delete" >
+            <param name="groupId" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+            <param name="delete" type="boolean"/>
+        </url>
+        <!-- Group entity POST URLs end-->
+
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/WsRequestHistory.do" operation-param="mode" operation-value="submit" >
+            <param name="wsId" type="long" range=">0" min-occurrences="1"  allow-empty="false"/>
+            <param name="opmanager" type="boolean"/>
+        </url>
+	</urls>
+
+    <urls  authentication="required"  method="get">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="AJaxServlet_apiservlet" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url roles="ModifyInventoryWS" path="/Notify.do"  operation-param="notifyModule" operation-value="Loan" >
+            <param name="mode" type="String" max-len="100"/>
+            <param name="id" type="long" range=">=0"/>
+            <param name="notifyTo" regex="0" description="This param is used by other modules,so it cannot be removed now."/>
+            <param name="attach" regex="filename"/>
+        <param name="loanIds" regex="\d+((\,\d+)?){0,249}" max-len="3000"/>
+		</url>
+		<url roles="BookingTechnician,BookingAdmin" path="/Notify.do"  operation-param="notifyModule" operation-value="Booking">
+			<param name="mode" type="String" max-len="100"/>
+			<param name="id" type="long" range=">=0"/>
+			<param name="notifyTo" regex="0" description="This param is used by other modules,so it cannot be removed now."/>
+			<param name="attach" regex="filename"/>
+		</url>
+<url path="/servlet/AdminApiServlet" roles="SDAdmin" operation-param="action" operation-value="notification_fields" >
+            <param name="notifType" type="String" max-len="100"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="notification_fields" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        </url>
+    </urls>
+
+    <urls  authentication="required"  method="post" csrf="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="servlet_reconcile" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url roles="ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="reconcile" >
+            <param name="resource1"  type="long" range=">=0"/>
+            <param name="resource2"  type="long" range=">=0"/>
+            <param name="assetType" type="String" max-len="250"/>
+        </url>
+
+
+        <url roles="ModifyInventoryWS" path="/Notify.do"  operation-param="notifyModule" operation-value="notifyLoanUser" >
+            <param name="to" type="String" max-len="200" secret="true" min-occurrences="1" allow-empty="false"/>
+            <param name="ccAddress" type="String" max-len="200" secret="true"/>
+            <param name="id" type="long" range=">=0"/>
+            <param name="contentType" regex="text/html"/>
+            <param name="isForward" type="String" max-len="0" description="empty value is passed"/>
+            <param name="orgReqIDStr" type="long" range=">=0"/>
+            <param name="userID"  type="long" range=">0"/>
+            <param name="notifyTo" regex="0" description="This Param is used by other modules,so it cannot be removed now."/>
+            <param name="module" regex="Loan"/>
+            <param name="enableNotify" type="boolean"/>
+            <param name="subject" type="String" max-len="1000" secret="true"/>
+			<param name="desc" max-len="-1" xss="sdpantisamyfilter" description="since it a html content" secret="true"/>
+			<param name="att_file_id" type="long" range=">0" max-occurrences="25"/>
+            <param name="attach" regex="filename" max-occurrences="25"/>
+            <param name="attSize" type="long" range=">=0" max-occurrences="25"/>
+			<param name="att_desc" type="String" max-len="1000" secret="true"/>
+			<param name="poPDFName" type="String" max-len="100"/>
+			<param name="submit" type="String" max-len="100" description="language specific"/>
+		</url>
+		<url roles="BookingAdmin,BookingTechnician" path="/Notify.do"  operation-param="notifyModule" operation-value="notifyBookingUser">
+		        <param name="to" type="String" max-len="200" secret="true" min-occurrences="1" allow-empty="false"/>
+		        <param name="ccAddress" type="String" max-len="200" secret="true"/>
+		        <param name="id" type="long" range=">=0"/>
+		        <param name="contentType" regex="text/html"/>
+		        <param name="isForward" type="String" max-len="0" description="empty value is passed"/>
+		        <param name="orgReqIDStr" type="long" range=">=0"/>
+		        <param name="userID"  type="long" range=">0"/>
+				<param name="notifyTo" regex="0" description="This Param is used by other modules,so it cannot be removed now."/>
+		        <param name="module" regex="Booking" min-occurrences="1"/>
+		        <param name="enableNotify" type="boolean"/>
+		        <param name="subject" type="String" max-len="1000" secret="true"/>
+		        <param name="desc" max-len="-1" xss="sdpantisamyfilter" description="since it a html content" secret="true"/>
+		        <param name="att_file_id" type="long" range=">0" max-occurrences="25"/>
+		        <param name="attach" regex="filename" max-occurrences="25"/>
+		        <param name="attSize" type="long" range=">=0" max-occurrences="25"/>
+		        <param name="att_desc" type="String" max-len="1000" secret="true"/>
+		        <param name="poPDFName" type="String" max-len="100"/>
+		        <param name="submit" type="String" max-len="100" description="language specific"/>
+		</url>
+
+        <url path="/servlet/AdminApiServlet" roles="SDAdmin" operation-param="action" operation-value="get_selected_notification_fields" >
+            <param name="notifType" type="String" max-len="100"/>
+			<param name="showList" type="JSONArray" template="strarray" max-len="-1" array-size="0-50"/>
+			<param name="hideList" type="JSONArray" template="largestrarray" max-len="-1" array-size="0-1500"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_selected_notification_fields" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+    </urls>
+    <!-- common URLs with no new-urls attribute -->
+
+    <!-- URLs with implemented disable extra params -->
+    <urls  authentication="required" method="get">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="loan_view" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+        <url roles="ModifyInventoryWS" path="/loan/NewAssetLoan.jsp" />
+        <url roles="ModifyInventoryWS" path="/loan/ReturnLoan.jsp" />
+        <url roles="ModifyInventoryWS" path="/loan/EditLoanDate.jsp" />
+
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/AssetLoanListView.do">
+            <param name="assetType" regex="LoanRegistry|LoanableAssets|LoanedAssets|LoanExpiredAssets" />
+        </url>
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LoanSelectResources.do"/>
+        <url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/AssetLoanDef.do" operation-param="mode" operation-value="viewLoan">
+            <param name="loanId" type="long" range=">0" min-occurrences="1" allow-empty="false"/>
+        </url>
+        <url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/AssetLoanDef.do" operation-param="mode" operation-value="editLoanDate">
+            <param name="loanId" type="long" range=">0"/>
+            <param name="resourceIds" type="JSONArray" template="id_array" max-len="-1" array-size="0-100" />
+        </url>
+
+        <url path="/servlet/AdminApiServlet" roles="SDAdmin" operation-param="action" operation-value="get_product_po_pr_associations">
+            <param name="id" type="long" range=">0"/>
+            <param name="old_product_name" type="String" max-len="160"/>
+            <param name="old_producttype_id" type="long" range=">0"/>
+            <param name="new_product_name" type="String" max-len="160"/>
+            <param name="new_producttype_id" type="long" range=">0"/>
+            <param name="new_part" type="String" max-len="160"/>
+            <param name="old_part" type="String" max-len="160"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_product_po_pr_associations" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="70" lock-period="5m"/>
+            </throttles>
+        </url>
+		
+	<!-- Bookings page -->
+	<url  path="/ui/assets/bookings" user_type="all" roles="SDGuest,ViewRequester" method="get" operation-param="mode" operation-value="add">
+	</url>
+
+	<url path="/ui/assets/bookings" roles="BookingTechnician,BookingAdmin" method="get" operation-param="mode" operation-value="list">
+	</url>
+
+	<url path="/ui/assets/bookings" roles="BookingTechnician,BookingAdmin" method="get" operation-param="mode" operation-value="details">
+		<param name="entity_id"  type="long" range=">0" />
+	</url>
+
+	<url path="/ui/assets/bookings" roles="BookingAdmin" method="get" operation-param="mode" operation-value="settings">
+	</url>
+
+	<url method="get" user_type="all" roles="SDGuest,ViewRequester" path="/bookingassets/AssetBookings.jsp"/>
+	<url path="/common/ViewHistory.jsp" operation-param="module" operation-value="asset_booking_settings" roles="BookingAdmin">
+		<param name="id" type="long" range=">0"/>
+		<param name="key" regex="setting_history_sort_order"/>
+	</url>
+	<url path="/common/ViewHistory.jsp" operation-param="module" operation-value="asset_bookings" method="get" roles="BookingTechnician,BookingAdmin">
+		<param name="id" type="long" range=">0"/>
+		<param name="key" regex="booking_history_sort_order"/>
+	</url>
+	<!--Bookings page -->
+
+	</urls>
+	<!-- Asset API Related URL's start here -->
+	<urls  authentication="required"  method="get" remote_server="true" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="AssetCMDB.list.details" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="70" lock-period="5m"/>
+		</throttles>
+
+		<!-- Asset UI revamp URLs -->
+
+
+        <!-- TODO: redirect to ui/asset in structs-config.xml and remove below entries -->
+		<url roles="ViewInventoryWS" path="/Assets.do">
+			<!-- below entries for list view -->
+            <!-- <param name="module" regex="assets|workstations|virtual_hosts|virtual_machines"/> -->
+            <param name="module" regex="^[a-z_0-9]*$"/>
+			<param name="TypeID" regex="long_regex"/>
+            <param name="from" regex="dashboard|space|showdetails"/>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+			<param name="criteriafor" type="String" max-len="100"/>
+			<param name="computer_group" type="long" range=">0"/>
+			<param name="is_server" type="boolean"/>
+			<param name="isCMDB" type="boolean"/>
+			<!-- below entries for details view -->
+			<param name="entity_id" type="long" range=">0"/>
+			<param name="tab" regex="ciinfo"/><!-- view details  -->
+			<!-- for edit page -->
+			<param name="Type" type="String" max-len="250"/>
+			<!-- below entries common for application -->
+			<param name="externalframe" type="boolean"/>
+			<param name="noheader" type="boolean"/>
+			<param name="mode" regex="get|addpage"/>
+		</url>
+
+        <url user_type="all" path="/asset/AssetPopup.jsp" operation-param="forwardTo" operation-value="list" description="ROLE_NOT_REQUIRED: This JSP is used for Asset Popup in Request and Maintenance.So Role Check is handled in assetRedirectionHandling.jspf" >
+            <param name="module" regex="asset_attachments|component_attachments|asset_connections|asset_assets|attached_assets|attached_components|connected_assets"/>
+            <param name="TypeID" regex="long_regex"/>
+            <param name="searchText" type="String" max-len="1000"/>
+            <param name="from" regex="showdetails|purchase|release|change|request_maintenance|request|view_user_assets|user|problem|contracts|modify_state|changes"/>
+            <param name="entity_id" type="long" range=">0"/>
+            <param name="isCMDB" type="boolean"/>
+            <param name="externalframe" type="boolean" />
+			<param name="bulkIds" regex="ids" max-len="1200" />
+			<param name="userId" type="long" range=">0"/>
+			<param name="enableFilter" type="boolean" />
+			<param name="canShowLeftPanel" type="boolean" />
+        </url>
+        <url roles="ViewInventoryWS" path="/asset/AssetPopup.jsp" operation-param="forwardTo" operation-value="detail">
+            <param name="module" regex="^[a-z_0-9]*$"/>
+            <param name="TypeID" regex="long_regex"/>
+            <param name="searchText" type="String" max-len="1000"/>
+            <param name="from" regex="showdetails"/>
+            <param name="entity_id" type="long" range=">0"/>
+            <param name="isCMDB" type="boolean"/>
+            <param name="externalframe" type="boolean" />
+			<param name="bulkIds" regex="ids" max-len="1200" />
+            <param name="tabName" regex="assetinfo|hardwares|applications|virtual_machines|softwares|system|relationship|contracts|financials|associations|history" />
+        </url>
+
+		<url roles="ModifyInventoryWS" path="/asset/AssetPopup.jsp" operation-param="forwardTo" operation-value="form">
+            <param name="module" regex="^[a-z_0-9]*$"/>
+			<param name="TypeID" regex="long_regex"/>
+			<param name="searchText" type="String" max-len="1000"/>
+			<param name="from" regex="showdetails|bulkedit"/>
+			<param name="entity_id" type="long" range=">0"/>
+			<param name="isCMDB" type="boolean"/>
+			<param name="externalframe" type="boolean" />
+			<param name="bulkIds" regex="ids" max-len="1200" />
+		</url>
+
+        <!-- <url user_type="all" path="/asset/AssetsListView.jsp"  description="ROLE_NOT_REQUIRED: This JSP is used for Asset Popup in Request and Maintenance.So Role Check is handled in AssetsListView.jsp"  >
+            <param name="isPopup" type="boolean" />
+            <param name="isCMDB" type="boolean" />
+            <param name="module" regex="^[a-z_0-9]*$" />
+            <param name="moduleType" regex="computer_group|workstation|server|asset" />
+            <param name="from" regex="print|left_panel|dashboard|purchase|release|change|space|request_maintenance|request|view_user_assets|user|problem|contracts|changes" />
+            <param name="TypeID" type="long"  range=">0"/>
+            <param name="gsearch" type="String" max-len="1000"/>
+            <param name="externalframe" type="boolean" />
+			<param name="canShowLeftPanel" type="boolean" />
+        </url> -->
+
+        <!-- <url roles="ViewInventoryWS" path="/asset/AssetDetailsView.jsp">
+            <param name="isCMDB" type="boolean" />
+            <param name="id" type="long" range=">0"/>
+            <param name="tabName" regex="assetinfo|hardwares|applications|virtual_machines|softwares|system|relationship|contracts|financials|associations|history|attach_asset|attach_component" />
+            <param name="module" regex="^[a-z_0-9]*$"  />
+            <param name="moduleType" regex="server|workstation" />
+            <param name="isPopup" type="boolean" />
+            <param name="from" regex="showdetails|view_user_assets" />
+            <param name="ciTypeId" type="long" range=">0"/>
+            <param name="printPreview" type="boolean" />
+            <param name="externalframe" type="boolean" />
+        </url> -->
+
+		<!-- <url roles="ModifyInventoryWS" path="/asset/AssetForm.jsp">
+            <param name="id" type="long" range=">0"/>
+            <param name="module" regex="workstations|assets" />
+            <param name="moduleType" regex="workstation" />
+            <param name="printPreview" type="boolean" />
+            <param name="externalframe" type="boolean" />
+            <param name="isPopup" type="boolean" />
+            <param name="isCMDB" type="boolean" />
+		</url> -->
+
+		<!-- <url roles="ViewInventoryWS" path="/asset/AssetsListRightSection.jsp">
+            <param name="module" regex="assets|workstations|virtual_hosts|virtual_machines" />
+            <param name="TypeID" regex="long_regex"/>
+            <param name="moduleType" regex="computer_group|workstation|server" />
+            <param name="from" regex="left_panel" />
+            <param name="searchText" type="String" max-len="5000" secret="true"/>
+            <param name="externalframe" type="boolean" />
+		</url> -->
+
+        <url path="/servlet/ClientUtilServlet" roles="CreateInventoryWS,ModifyInventoryWS" operation-param="mode" operation-value="checkGroupName">
+            <param name="groupName" type="String" max-len="100"/>
+        </url>
+        <url path="/servlet/ClientUtilServlet" roles="ViewInventoryWS" operation-param="mode" operation-value="checkLicenseCount">
+            <param name="componentId" type="long" range=">0"/>
+        </url>
+        <url path="/servlet/ClientUtilServlet" roles="ViewInventoryWS" operation-param="mode" operation-value="getScanFailedWS">
+            <param name="scanFailedWS" regex="7|30" />
+        </url>
+        <url path="/servlet/ClientUtilServlet" roles="ViewInventoryWS" operation-param="mode" operation-value="fetchGroups">
+            <param name="fetchGroups" type="String" max-len="250"/>
+        </url>
+        <url path="/servlet/ClientUtilServlet" roles="ViewInventoryWS" operation-param="mode" operation-value="getResourcesCount">
+            <param name="resourceState" type="String" max-len="30"/>
+            <param name="resourcesCount" type="boolean" />
+        </url>
+        <url path="/servlet/ClientUtilServlet" roles="ViewInventoryWS" operation-param="mode" operation-value="getLeasedAssetsCount">
+            <param name="leasedAssetsCount" type="boolean" />
+        </url>
+
+    </urls>
+
+	<urls  authentication="required" method="get" remote_server="false">
+		<throttles name="asset_replenishment_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+			<throttle duration="1m" threshold="80" lock-period="5m"/>
+		</throttles>
+		<url roles="ViewInventoryWS" path="/ui/asset_replenishment"/>
+		<url path="/common/ViewHistory.jsp" operation-param="module" operation-value="asset_replenishments" roles="ViewInventoryWS">
+			<param name="id" type="long" range=">0"/>
+			<param name="key" regex="repln_sort_order"/>
+		</url>
+	</urls>
+
+	<urls authentication="required" method="get">
+		<url path="/setup/AssetNotifications.jsp" remote_server="true" roles="SDAdmin">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="setup_asset_notifications" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+	</urls>
+    <!-- URLs with implemented disable extra params end-->
+
+    <!-- templates for asset api -->
+    <jsontemplates>
+        <jsontemplate name="copy_template">
+            <key name="copy" template="copy" type="JSONObject"/>
+        </jsontemplate>
+        <jsontemplate name="copy">
+            <key name="number_copies" regex="^([1-9]|10)$" range="1-10"/>
+        </jsontemplate>
+	<!-- templates for asset replenishment -->
+		<jsontemplate name="replenishment_inventory_count">
+    		<key name="site" type="JSONObject" max-occurrences="1" template="only_id"/>
+    		<key name="product" type="JSONObject" max-occurrences="1" template="only_id"/>
+    		<key name="product_type" type="JSONObject" max-occurrences="1" template="only_id"/>
+			<key name="asset_module" type="JSONObject" max-occurrences="1" template="only_id"/>
+    	</jsontemplate>
+    	<jsontemplate name="only_id">
+            <key name="id" type="long" max-occurrences="1" range=">=-1"/>
+        </jsontemplate>
+        <jsontemplate name="replenishment_filter_values">
+            <key name="site" type="long" max-occurrences="1" range=">=-1"/>
+			<key name="product_type" type="long" max-occurrences="1" range=">0"/>
+			<key name="asset_module" type="long" max-occurrences="1" range=">0"/>
+        </jsontemplate>
+		<jsontemplate name="replenishment_allowed_values">
+    		<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="for" type="String" max-len="100"/>
+			<key name="include_inactive_value" type="boolean" max-occurrences="1" />
+			<key name="filter_criteria" type="JSONObject" template="replenishment_filter_values" max-occurrences="1"/>
+    	</jsontemplate>
+		<!-- templates for asset replenishment ends-->
+         <jsontemplate name="configure_depreciation_template">
+                <key name="config" template="configure_depreciation" type="JSONObject" max-len="-1" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="configure_depreciation"  >
+            <key name="type" regex="product|asset" min-occurrences="1" max-occurrences="1"/>
+            <key name="purchase_cost" type="double" max-occurrences="1" range=">=0.0"/>
+            <key name="acquisition_date" template="datefield" type="JSONObject" max-len="-1" max-occurrences="1"/>
+            <key name="depreciation" template="depreciation_detail_config" type="JSONObject" max-len="-1" min-occurrences="1" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_detail_config" disable-extra-key="true">
+            <key name="id" type="long" range=">0" max-occurrences="1"/>
+            <key name="salvage_value" type="double" range=">=0" max-occurrences="1"/>
+            <key name="useful_life" type="long"  range="0-999" max-occurrences="1"/>
+            <key name="depreciation_percent" type="double" range="0-100" max-occurrences="1"/>
+             <key name="decline_percent" type="double" range="0-100" max-occurrences="1"/>
+            <key name="asset_id" type="long" range=">0" max-occurrences="1"/>
+            <key name="component_id" type="long" range=">0" max-occurrences="1"/>
+            <key name="depreciation_type" template="depreciation_type_unique" type="JSONObject" max-len="-1" max-occurrences="1"/>
+        </jsontemplate>
+
+        <jsontemplate name="remote_session_history_template">
+            <key name="name" type="String" max-len="250"/>
+            <key name="description" type="String" max-len="1000" secret="true"/>
+            <key name="isenabled" type="boolean"/>
+            <key name="canedit" type="boolean"/>
+            <key name="candelete" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="rds_template">
+            <key name="client_os" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="ci_attributes_template">
+            <key name="ci_attributes" name-regex="true" template="ci_attribute_name_template" type="JSONObject" max-len="-1"/>
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base"/>
+            <key name="include" type="JSONArray" template="strarray" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="ci_attribute_name_template">
+            <key name="ci_.+_fields.udf_.+" name-regex="true" type="String" max-len="3500" max-occurrences="20" secret="true"/>
+        </jsontemplate>
+
+<!-- JSON TEMPLATES FOR ASSET GROUP HOLDERS -->
+        <jsontemplate name="memory_template">
+            <key name="physical_memory" type="long" range=">0" max-occurrences="1"/>
+            <key name="virtual_memory" type="long" range=">0" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="keyboard_template">
+            <key name="keyboard_type" type="String" max-len="100" max-occurrences="1"/>
+            <key name="keyboard_serial_number" type="String" max-len="100" max-occurrences="1" secret="true"/>
+            <key name="keyboard_manufacturer" type="String" max-len="100" max-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="computer_system_template">
+			<key name="bios_name" type="String" max-occurrences="1" max-len="100"/>
+            <key name="bios_date" type="String" max-occurrences="1" max-len="100"/>
+            <key name="bios_version" type="String" max-occurrences="1" max-len="100"/>
+			<key name="sm_bios_version" type="String" max-occurrences="1" max-len="100"/>
+			<key name="bios_manufacturer" type="String" max-occurrences="1" max-len="100"/>
+			<key name="ram_slots_count" type="String" max-occurrences="1" max-len="5"/>
+            <key name="service_tag" type="String" max-occurrences="1" max-len="100"/>
+            <key name="model" type="String" max-occurrences="1" max-len="100"/>
+            <key name="system_manufacturer" type="String" max-occurrences="1" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="operating_system_template">
+            <key name="os" type="String" max-occurrences="1" max-len="100"/>
+            <key name="version" type="String" max-occurrences="1" max-len="50"/>
+            <key name="build_number" type="String" max-occurrences="1" max-len="50"/>
+            <key name="product_id" type="String" max-occurrences="1" max-len="50"/>
+            <key name="service_pack" type="String" max-occurrences="1" max-len="50"/>
+			<key name="system_type" type="String" max-occurrences="1" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="sound_card_template">
+            <key name="sound_card_name" type="String" max-occurrences="1" max-len="100"/>
+        </jsontemplate>
+        <!-- Loan Templates-->
+        <jsontemplate name="extend_loan">
+            <key name="id" type="long" range=">0"/>
+            <key name="extend_to" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="loan_asset_json">
+            <key name="id" type="long" range=">0"/>
+            <key name="state" type="JSONObject" template="asset_state_unique"/>
+        </jsontemplate>
+        <jsontemplate name="return_asset">
+            <key name="asset" type="JSONArray" template="loan_asset_json" max-len="-1" array-size="0-100"/>
+            <key name="returned_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="returned_on" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="extend_asset_loan">
+            <key name="asset" type="JSONArray" template="loan_asset_json" max-len="-1" array-size="0-100"/>
+            <key name="extend_to" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+        </jsontemplate>
+
+        <jsontemplate name="unassociated_products_template">
+                <key name="vendor" template="vendor_unique" type="JSONObject" max-occurrences="1"/>
+            <key name="list_info" template="list_info_base" type="JSONObject" max-occurrences="1"/>
+            </jsontemplate>
+
+        <jsontemplate name="unassociated_vendors_template">
+                <key name="product" template="product_unique" type="JSONObject" max-occurrences="1"/>
+            <key name="vendor_service" template="vendor_service_unique" type="JSONObject" max-occurrences="1"/>
+            <key name="list_info" template="list_info_base" type="JSONObject" max-occurrences="1"/>
+                </jsontemplate>
+
+        <jsontemplate name="unassociated_services_template">
+                <key name="vendor" template="vendor_unique" type="JSONObject" max-occurrences="1"/>
+            <key name="list_info" template="list_info_base" type="JSONObject" max-occurrences="1"/>
+            </jsontemplate>
+        <jsontemplate name="assetform_data_template">
+            <key name="notifyAuditChanges" type="boolean"/>
+            <key name="selectedNotifyAuditChanges_TechList" regex="\d+((\,\d+)?){0,499}" max-len="6000" secret="true"/>
+            <key name="notifyAuditChangesEmailIDs" type="String" max-len="-1" secret="true" description="since we can't predefine number of emails are entered"/>
+            <key name="notifySWUnderCompliance" type="boolean"/>
+            <key name="selectedNotifySWUnderCompliance_TechList" regex="\d+((\,\d+)?){0,499}" max-len="6000" secret="true"/>
+            <key name="notifySWUnderComplianceEmailIDs" type="String" max-len="-1" secret="true" description="since we can't predefine number of emails are entered"/>
+            <key name="notifyProhibitedSoftware" type="boolean"/>
+            <key name="selectedNotifyProhibitedSoftware_TechList" regex="\d+((\,\d+)?){0,499}" max-len="6000" secret="true"/>
+            <key name="notifyProhibitedSoftwareEmailIDs" type="String" max-len="-1" secret="true" description="since we can't predefine number of emails are entered"/>
+            <key name="notifyProhibitedSWToUsers" type="boolean"/>
+            <key name="notifyAssetWarrantyExpiry" type="boolean"/>
+            <key name="selectedNotifyAssetWarrantyExpiry_TechList" regex="\d+((\,\d+)?){0,499}" max-len="6000" secret="true"/>
+            <key name="notifyAssetWarrantyExpiryEmailIDs" type="String" max-len="-1" secret="true" description="since we can't predefine number of emails are entered"/>
+            <key name="notifyAssetWarrantyExpiryBefore" type="long" range=">0"/>
+            <key name="notifyAssetWarrantyExpiryAfter" type="long" range=">0"/>
+            <key name="notifyAssetWarrantyExpiryFrequency" type="long" range=">0"/>
+            <key name="notifyAssetExpiry" type="boolean"/>
+            <key name="selectedNotifyAssetExpiry_TechList" regex="\d+((\,\d+)?){0,499}" max-len="6000" secret="true"/>
+            <key name="notifyAssetExpiryEmailIDs" type="String" max-len="-1" secret="true" description="since we can't predefine number of emails are entered"/>
+            <key name="notifyAssetExpiryBefore" type="long" range=">0"/>
+            <key name="notifyAssetExpiryAfter" type="long" range=">0"/>
+            <key name="notifyAssetExpiryFrequency" type="long" range=">0"/>
+            <key name="notifyThresholdCountCrossover" type="boolean"/>
+            <key name="notifyThresholdCountCrossoverEmailIDs" type="String" max-len="-1" secret="true" description="since we can't predefine number of emails are entered"/>
+            <key name="notifyLeaseExpiry" type="boolean"/>
+            <key name="selectedLeaseExpiry_TechList" regex="\d+((\,\d+)?){0,499}" max-len="6000" secret="true"/>
+            <key name="notifyLeaseExpiryEmailIDs" type="String" max-len="-1" secret="true" description="since we can't predefine number of emails are entered"/>
+            <key name="notifyLeaseExpiryBefore" type="long" range=">0"/>
+            <key name="notifyLeaseExpiryAfter" type="long" range=">0"/>
+            <key name="notifyLeaseExpiryFrequency" type="long" range=">0"/>
+            <key name="notifyNewLoan" type="boolean"/>
+            <key name="notifyReturnLoan" type="boolean"/>
+            <key name="notifyExtendLoan" type="boolean"/>
+            <key name="notifyAssignOwner" type="boolean"/>
+            <key name="notifyDeAssignOwner" type="boolean"/>
+            <key name="selectedNotifyThresholdCountCrossover_TechList" regex="\d+((\,\d+)?){0,499}" secret="true" max-len="6000"/>
+			<key name="notifyNewBooking" type="boolean"/>
+			<key name="notifyRescheduleBooking" type="boolean"/>
+			<key name="notifyToPickupAssets" type="boolean"/>
+			<key name="notifyCancelBooking" type="boolean"/>
+			<key name="notifyBookingAllocateAsset" type="boolean"/>
+			<key name="notifyBookingAllocateBefore" type="long" range="1-5"/>
+			<key name="notifySccmFailure" type="boolean"/>
+			<key name="notifySccmFailure_TechList" regex="ids_500" max-len="6000" secret="true"/>
+			<key name="notifySccmFailure_EmailIDsList" type="String" max-len="5000" secret="true" description="since we can't predefine number of emails are entered"/>
+			<key name="notifySolarwindsFailure" type="boolean"/>
+			<key name="notifySolarwindsFailure_TechList" regex="ids_500" max-len="6000" secret="true"/>
+			<key name="notifySolarwindsFailure_EmailIDsList" type="String" max-len="5000" secret="true" description="since we can't predefine number of emails are entered"/>
+		</jsontemplate>
+
+	</jsontemplates>
+
+	<!-- Manual URL's needed for V3 API-->
+	<urls  authentication="required" remote_server="true" method="get" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_api_manual_urls" dynamic-throttle="true"  >
+			<throttle duration="1m" threshold="70" lock-period="5m"/>
+		</throttles>
+		<url path="/api/v3/assets/(\d+)/asset_attachments/(child_asset|parent_asset)" roles="ModifyInventoryWS" >
+			<param name="input_data" template="ci_attributes_template" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/workstations/(\d+)/asset_attachments/(child_asset|parent_asset)" roles="ModifyInventoryWS">
+			<param name="input_data" template="ci_attributes_template" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/assets/(\d+)/component_attachments/(child_asset|parent_asset)" roles="ModifyInventoryWS">
+			<param name="input_data" template="ci_attributes_template" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/workstations/(\d+)/component_attachments/(child_asset|parent_asset)" roles="ModifyInventoryWS">
+			<param name="input_data" template="ci_attributes_template" type="JSONObject" max-len="-1"/>
+		</url>
+		<!-- Since the framework has deprecated the support for allowed values of readonly fields, these entries have been added manually -->
+
+		<url path="/api/v3/assets/(product_type|type|category|region|device_type)" roles="ViewInventoryWS">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/assets/(\d+)/(product_type|type|category|region|device_type)" roles="ViewInventoryWS">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/assets/(product_type|type|category|region|device_type)/(\d+)" roles="ViewInventoryWS"/>
+
+		<url path="/api/v3/assets/(\d+)/(product_type|type|category|region|device_type)/(\d+)" roles="ViewInventoryWS"/>
+
+		<url path="/api/v3/workstations/(product_type|type|category|region|domain|device_type)" roles="ViewInventoryWS">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/workstations/(\d+)/(product_type|type|category|region|domain|device_type)" roles="ViewInventoryWS">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/workstations/(product_type|type|category|region|domain|device_type)/(\d+)" roles="ViewInventoryWS"/>
+
+		<url path="/api/v3/workstations/(\d+)/(product_type|type|category|region|domain|device_type)/(\d+)" roles="ViewInventoryWS"/>
+
+	</urls>
+
+	<urls  authentication="required"  method="post" csrf="true" remote_server="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="delete_ci" dynamic-throttle="true">
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+		<url path="/common/ChooserListTypeInline.cc" roles="ViewInventoryWS" >
+			<param name="UNIQUE_ID" regex="ChooserListTypeInline"/>
+			<param name="View_Name" type="String" max-len="100" allow-empty="false"/>
+			<param name="SHOW_LIST" type="String" max-len="100" allow-empty="false" max-occurrences="100"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="column_chooser" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/asset/ChooserListTypeInline.cc" roles="ViewInventoryWS" >
+			<param name="UNIQUE_ID" regex="ChooserListTypeInline"/>
+			<param name="View_Name" type="String" max-len="100" allow-empty="false"/>
+			<param name="SHOW_LIST" type="String" max-len="100" allow-empty="false" max-occurrences="100"/>
+			<param name="HIDE_LIST" type="String" max-len="100" max-occurrences="100"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="column_chooser_assets" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<urls  authentication="required" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_notification_get_urls" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+		<!--Notification Rules -> Asset (SDAdmin) -->
+		<url roles="SDAdmin" path="/NotificationContent.do" method="get" operation-param="notifType"
+			 operation-value="notifyProhibitedSWToUsers,Notify_Asset_Warranty_Expiry,Notify_Asset_Expiry,notifyThresholdCountCrossover" remote_server="true" >
+			<param name="onlyContentPage" regex="yes" min-occurrences="1"/>
+			<param name="fromPR" type="boolean" min-occurrences="1"/>
+		</url>
+		<!--Notification Rules -> Asset Ownership and Loan Notifications (SDAdmin) -->
+		<url roles="SDAdmin" path="/NotificationContent.do" method="get" operation-param="notifType"
+			 operation-value="AssignOwnerNotification,ExtendLoanNotification,DeAssignOwnerNotification,NewLoanNotification,ReturnAssetNotification,LoanExpiryNotification" >
+			<param name="onlyContentPage" regex="yes" min-occurrences="1"/>
+			<param name="fromPR" type="boolean" min-occurrences="1"/>
+		</url>
+		<!--Notification Rules -> Asset Booking (SDAdmin) -->
+	        <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType" operation-value="New_Booking_Notification,Reschedule_Booking_Notification,Cancel_Booking_Notification,Notify_Ready_For_Pickup_Asset,Booking_Allocate_Notification">
+	         	<param name="onlyContentPage" regex="yes" min-occurrences="1"/>
+	         	<param name="fromPR" type="boolean" min-occurrences="1"/>
+	        </url>
+    </urls>
+
+    <urls  authentication="required" method="post" csrf="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_notification_post_urls" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!--Notification Rules ::: Asset (SDAdmin) -->
+        <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType"
+            operation-value="notifyProhibitedSWToUsers,Notify_Asset_Warranty_Expiry,Notify_Asset_Expiry,notifyThresholdCountCrossover" remote_server="true" >
+            <param name="element1" type="String" max-len="100"/>
+            <param name="element2" type="String" max-len="100"/>
+            <param name="subject" type="String" max-len="1000" min-occurrences="1" secret="true"/>
+            <param name="content" max-len="-1" description="since we send as html content" min-occurrences="1" xss="sdpantisamyfilter" secret="true"/>
+            <param name="mode" regex="update|add" min-occurrences="1"/>
+            </url>
+            <!--Notification Rules ::: Asset Ownership and Loan Notifications (SDAdmin) -->
+        <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType"
+            operation-value="AssignOwnerNotification,ExtendLoanNotification,DeAssignOwnerNotification,NewLoanNotification,ReturnAssetNotification,LoanExpiryNotification" >
+            <param name="element1" type="String" max-len="100"/>
+            <param name="element2" type="String" max-len="100"/>
+            <param name="subject" type="String" max-len="1000" min-occurrences="1" secret="true"/>
+            <param name="content" max-len="-1" description="since we send as html content" min-occurrences="1" xss="sdpantisamyfilter" secret="true"/>
+            <param name="mode" regex="update|add" min-occurrences="1"/>
+            </url>
+        <url roles="SDAdmin" path="/AssetDefaultConfigDef.do" operation-param="formName" operation-value="assetForm" remote_server="true">
+            <param name="isAjaxSubmit" regex="ajaxSubmit"/>
+            <param name="data" type="JSONObject" template="assetform_data_template" max-len="-1"/>
+        </url>
+	<!--Notification Rules -> Asset Booking (SDAdmin) -->
+        <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType" operation-value="New_Booking_Notification,Reschedule_Booking_Notification,Cancel_Booking_Notification,Notify_Ready_For_Pickup_Asset,Booking_Allocate_Notification">
+        	<param name="element1" type="String" max-len="100"/>
+            <param name="element2" type="String" max-len="100"/>
+            <param name="subject" type="String" max-len="1000" min-occurrences="1" secret="true"/>
+            <param name="content" max-len="-1" description="since we send as html content" min-occurrences="1" xss="sdpantisamyfilter" secret="true"/>
+            <param name="mode" regex="update|add" min-occurrences="1"/>
+        </url>
+    </urls>
+
+    <!-- Asset API Related URL's end here -->
+    <urls  authentication="required"  method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="Register_get" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        <url path="/jsp/Register.jsp" roles="SDAdmin" operation-param="mode" operation-value="get" remote_server="true"/>
+    </urls>
+    <urls authentication="required"  method="post" csrf="true">
+        <url path="/jsp/Register.jsp" roles="SDAdmin" operation-param="mode" operation-value="save" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="Register_save" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+			<file name="browse" max-size="500" allowed-extensions="xml" content-type-name="xml" allow-empty="false">
+				<filename regex="filename" max-len="250"/>
+            </file>
+            <param name="attach" type="String" max-len="0" description="since we always get empty value for it"/>
+        </url>
+    </urls>
+
+</security>
+
+<!--$Id$-->

@@ -1,0 +1,192 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/service_templates/{template_id}/resources"
+      ],
+      "desc": "This operation lets you add a new resource",
+      "disp_desc": "Add a resource",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"resource\":{\"title\":\"Laptop Specifications\",\"description\":\"Desc\",\"questions\":[{\"id\":2967},{\"id\":2968}]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"resource\":{\"id\":\"8796\",\"title\":\"Laptop Specifications\",\"description\":\"Desc\",\"field_key\":\"resource_8796 \",\"service_template\":{\"id\":\"876544\",\"name\":\"Custom1\"},\"questions\":[{\"id\":2967,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/service_templates/{template_id}/resources/{resource_id}"
+      ],
+      "desc": "This operation lets you update a resource",
+      "disp_desc": "Update a resource",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"resource\":{\"title\":\"Laptop Specifications\",\"description\":\"Desc\",\"questions\":[{\"id\":2967}]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"resource\":{\"id\":\"8796\",\"title\":\"Laptop Specifications\",\"description\":\"Desc\",\"field_key\":\"resource_8796 \",\"service_template\":{\"id\":\"876544\",\"name\":\"Custom1\"},\"questions\":[{\"id\":2967,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/service_templates/{template_id}/resources/{resource_id}"
+      ],
+      "desc": "This operation lets you fetch details of a resource",
+      "disp_desc": "View a resource",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"resource\":{\"id\":\"8796\",\"title\":\"Laptop Specifications\",\"description\":\"Desc\",\"field_key\":\"resource_8796 \",\"service_template\":{\"id\":\"876544\",\"name\":\"Custom1\"},\"questions\":[{\"id\":2967,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/service_templates/{template_id}/resources"
+      ],
+      "desc": "This operation lets you fetch all resources details",
+      "disp_desc": "View All Resources",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"resource\":[{\"id\":\"8796\",\"title\":\"Laptop Specifications\",\"description\":\"Desc\",\"field_key\":\"resource_8796 \",\"service_template\":{\"id\":\"876544\",\"name\":\"Custom1\"},\"questions\":[{\"id\":2967,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \"}]}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/service_templates/{template_id}/resources/{resource_id}"
+      ],
+      "desc": "This operation lets you delete a resource",
+      "disp_desc": "Delete a resource",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the resource",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "title",
+      "type": "String",
+      "desc": "Title of the resource",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "questions",
+      "type": "Array of Objects",
+      "desc": "Collection of questions related to the resource",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "relEntity": {
+        "name": "Questions",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "field_key",
+      "type": "String",
+      "desc": "Used under request to provide the questions and answers under the resource",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Description string about the details of the resource",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "service_template",
+      "type": "Object",
+      "desc": "Service template under which the resource is been added",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1479118247000
+}

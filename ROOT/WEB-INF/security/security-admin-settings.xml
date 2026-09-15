@@ -1,0 +1,132 @@
+<!-- $Id$ -->
+<!-- Security authentication for Admin->General Settings related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls  authentication="required">
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="backupschedule" method="GET" remote_server="true"/>
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin,SDAdmin,ReportConfigAdmin" operation-param="forwardTo" user_type="all" operation-value="PrivacySettings" method="GET"/>
+        
+
+        <!-- Privacy Settings -->
+
+        <url roles="SDAdmin,ReportConfigAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="updateFileProtectionSettings" csrf="true" method="POST">
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="file_protection_update" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+            <param name="FileProtectionSettings" type="JSONObject" template="file_protection_data" min-occurrences="1" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,ReportConfigAdmin,SDSiteAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getFileProtectionSettings" method="POST" csrf="true">
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="file_protection_get" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+        <url roles="SDAdmin,SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="disableAdminAuditScheduleBanner" method="POST" csrf="true" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_aa_banner" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="5" lock-period="5m"/>
+            </throttles>
+        </url>
+        
+    </urls>
+
+    <urls disable-extraparam="true" authentication="required">
+        <!-- Backup Scheduling -->
+        <url roles="SDOrgAdmin" path="/BackupSchedule.do" operation-param="module" operation-value="delete_backup" method="POST" csrf="true" user_type="all" remote_server="true">
+            <param name="backup_ids" regex="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DeleteScheduleBackups" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDOrgAdmin" path="/BackupSchedule.do" operation-param="module" operation-value="save_schedule" method="POST" csrf="true" user_type="all" remote_server="true">
+            <param name="days" type="long" min-occurrences="1"/>
+            <param name="backupStartDate" type="String" min-occurrences="1"/>
+            <param name="hours" type="long" min-occurrences="1"/>
+            <param name="minutes" type="long" min-occurrences="1"/>
+            <param name="mailto" type="String" max-len="500" secret="true"/>
+            <param name="cleanupInterval" type="String" max-len="500"/>
+            <param name="attachment" regex="attachment"/>
+            <param name="database" regex="database"/>
+            <param name="backupstatus" regex="enabled|disabled" min-occurrences="1"/>
+            <param name="backupLocation" type="String" max-len="500" min-occurrences="1" secret="true"/>
+            <param name="backupPassword" type="String" max-len="1000" min-occurrences="1" secret="true"/>
+            <param name="clientTimeZoneOffset" type="long"/>
+            <param name="notifyPassword" regex="Yes|No"/>
+            <param name="passwordMailto" type="String" max-len="500" secret="true"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SaveBackupSchedule" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+
+    </urls>
+
+
+     <!-- SD-89679 starts-->
+      <!-- FOS related urls starts-->
+    <urls disable-extraparam="true" authentication="required" method="POST" csrf="true">
+		<url path="/servlet/AJaxServlet" roles="SDOrgAdmin" operation-param="action" operation-value="haConfig"  user_type="all"  remote_server="true">
+		<param name="haConfig" type="JSONObject" template="Configuration" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_haConfig" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+		</url>
+		<url path="/servlet/AJaxServlet" roles="SDOrgAdmin" operation-param="action" operation-value="haConfig_repl"  user_type="all" remote_server="true">
+		<param name="haConfigRepl" type="JSONObject" template="Replication" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_haConfigRepl" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+		</url>
+	</urls>
+	<urls disable-extraparam="true" authentication="required" method="GET">
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin" user_type="all" operation-param="forwardTo" operation-value="fosconfiguration" remote_server="true" />
+		<url path="/SetUpWizard.do" roles="SDOrgAdmin" user_type="all" operation-param="forwardTo" operation-value="fosreplication" remote_server="true"/>
+		<url path="/servlet/AJaxServlet" roles="SDOrgAdmin" operation-param="action" operation-value="getHAConfig"  user_type="all" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_getHAConfig" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        </url>
+		<url path="/servlet/AJaxServlet" roles="SDOrgAdmin" operation-param="action" operation-value="getHAConfigrepl"  user_type="all" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_getHAConfigrepl" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        </url>
+		<url path="/servlet/AJaxServlet" roles="SDOrgAdmin" operation-param="action" operation-value="getHAHistory"  user_type="all" remote_server="true">
+		<param name="operationmode" type="String" regex="fosConfiguration|fosReplication"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_getHAHistory" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+		</url>
+        <url path="/servlet/AJaxServlet" roles="SDAdmin" operation-param="action" operation-value="getFjarList"  remote_server="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_getFjarList" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+	</urls>
+ <!-- FOS related urls ends-->
+	<jsontemplates>
+
+	<jsontemplate name="Configuration">
+                <key name="primary_server_IP" regex="ipaddress" secret="true" max-len="15" min-occurrences="1"/>
+				<key name="subnet_primary_server" regex="[0-9.]+" secret="true" max-len="15" />
+				<key name="secondary_server_IP" regex="ipaddress" secret="true" max-len="15" min-occurrences="1"/>
+				<key name="subnet_secondary_server" regex="[0-9.]+" secret="true" max-len="15"/>
+				<key name="nic_primary_server" type="String" secret="true" max-len="250"/>
+				<key name="nic_secondary_server" type="String" secret="true" max-len="250"/>
+				<key name="virtual_IP" regex="ipaddress"  secret="true" max-len="15"/>
+				<key name="email_addresses" type="String" secret="true" max-len="500"/>
+				<key name="common_alias_name" type="String" secret="true" max-len="250"/>
+				<key name="is_HA_enabled" regex="Enabled|Disabled" min-occurrences="1"/>
+				<key name="action" regex="haConfig" min-occurrences="1"/>
+                <key name="mode_of_operation" regex="FOS|DR" min-occurrences="1"/>
+    </jsontemplate>
+
+	<jsontemplate name="Replication">
+                <key name="primary_server_IP"  regex="[0-9.]+" secret="true" max-len="15" min-occurrences="1"/>
+				<key name="secondary_server_IP" regex="[0-9.]+" secret="true" max-len="15" min-occurrences="1"/>
+				<key name="username_primary_server" type="String" secret="true" max-len="250" min-occurrences="1"/>
+				<key name="password_primary_server" type="String" secret="true" max-len="1000" min-occurrences="1"/>
+				<key name="username_secondary_server" type="String" secret="true" max-len="250" min-occurrences="1"/>
+				<key name="password_secondary_server" type="String" secret="true" max-len="1000" min-occurrences="1"/>	
+				<key name="action" regex="haConfig_repl" min-occurrences="1"/>
+    </jsontemplate>
+
+	</jsontemplates>
+	<!-- SD-89679 ends-->
+</security>

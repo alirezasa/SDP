@@ -1,0 +1,273 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier used to identify the Software.",
+      "graphView": "",
+      "column": "SoftwareList:SOFTWAREID",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Name of the software.",
+      "graphView": "",
+      "column": "SoftwareList:SOFTWARENAME",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "file_version",
+      "type": "String",
+      "desc": "Version of the file",
+      "graphView": "",
+      "column": "SoftwareList:FILEVERSION",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "product_version",
+      "type": "String",
+      "desc": "Version of the Software",
+      "graphView": "",
+      "column": "SoftwareList:PRODUCTVERSION",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+
+    {
+      "name": "type",
+      "type": "Number",
+      "desc": "Software type to categorize the software.",
+      "graphView": "",
+      "column": "SoftwareList:SOFTWARETYPEID",
+      "odcolumn": "",
+      "html_type": "",
+      "relEntity": {
+        "name": "Software Type",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "category",
+      "type": "Number",
+      "desc": "Software category to indentify the software's usage.",
+      "graphView": "",
+      "column": "SoftwareList:SOFTWARECATEGORYID",
+      "odcolumn": "",
+      "html_type": "",
+      "relEntity": {
+        "name": "Software Category",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "manufacturer",
+      "type": "Number",
+      "desc": "Software category to indentify the software's usage.",
+      "graphView": "",
+      "column": "SoftwareList:SWMANUFACTURERID",
+      "odcolumn": "",
+      "html_type": "",
+      "relEntity": {
+        "name": "Software Manufacturer",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Description for the software.",
+      "graphView": "",
+      "column": "SoftwareList:DESCRIPTION",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "false",
+      "inOD": "true",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+        {
+      "name": "cost",
+      "type": "Double",
+      "desc": "Denotes the cost of the software.",
+      "graphView": "",
+      "column": "SoftwareList:COST",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Software",
+      "path": [
+        "/api/v3/softwares/{software_id}"
+      ],
+      "desc": "This operation fetches details of a software.",
+      "disp_desc": "View a Software",
+      "workflow": "",
+      "output": {
+        "sample": "{\"software\":{\"file_version\":\"-\",\"product_version\":\"1.0.2\",\"cost\":\"0.00\",\"attachments\":[],\"name\":\"ManageEngine\",\"description\":null,\"id\":\"9\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Graphics\",\"id\":\"5\"},\"product_name\":\"-\",\"software_image\":[],\"manufacturer\":{\"name\":\"Microsoft Corporation\",\"id\":\"1\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Software",
+      "path": [
+        "/api/v3/softwares"
+      ],
+      "desc": "This operation fetches all softwares.",
+      "disp_desc": "View All Software",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"softwares\":[{\"file_version\":\"-\",\"product_version\":\"1.0.2\",\"cost\":\"0.00\",\"name\":\"ServiceDesk Plus\",\"description\":\"manage assets and requests\",\"id\":\"1\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Accounting\",\"id\":\"8\"},\"product_name\":\"-\",\"manufacturer\":{\"name\":\"Zoho Corporation\",\"id\":\"301\"}},{\"file_version\":\"-\",\"product_version\":\"1.0.2\",\"cost\":\"0.00\",\"name\":\"ServiceDesk Plus1\",\"description\":\"manage assets and requests\",\"id\":\"2\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Accounting\",\"id\":\"8\"},\"product_name\":\"-\",\"manufacturer\":{\"name\":\"Zoho Corporation\",\"id\":\"301\"}},{\"file_version\":\"-\",\"product_version\":\"1.0.2\",\"cost\":\"0.00\",\"name\":\"ServiceDesk Plus2\",\"description\":\"manage assets and requests\",\"id\":\"3\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Accounting\",\"id\":\"8\"},\"product_name\":\"-\",\"manufacturer\":{\"name\":\"Siva\",\"id\":\"302\"}},{\"file_version\":\"-\",\"product_version\":\"1.0.2\",\"cost\":\"0.00\",\"name\":\"ServiceDesk Plus23\",\"description\":\"manage assets and requests\",\"id\":\"4\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Accounting\",\"id\":\"8\"},\"product_name\":\"-\",\"manufacturer\":{\"name\":\"ManageEngine\",\"id\":\"303\"}},{\"file_version\":\"-\",\"product_version\":\"-\",\"cost\":\"0.00\",\"name\":\"sw1\",\"description\":null,\"id\":\"5\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Database\",\"id\":\"1\"},\"product_name\":\"-\",\"manufacturer\":{\"name\":\"Microsoft Corporation\",\"id\":\"1\"}},{\"file_version\":\"-\",\"product_version\":\"-\",\"cost\":\"0.00\",\"name\":\"sw2\",\"description\":null,\"id\":\"6\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Development\",\"id\":\"2\"},\"product_name\":\"-\",\"manufacturer\":{\"name\":\"Microsoft Corporation\",\"id\":\"1\"}},{\"file_version\":\"-\",\"product_version\":\"1.0.2\",\"cost\":\"0.00\",\"name\":\"ManageEngine\",\"description\":null,\"id\":\"9\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Graphics\",\"id\":\"5\"},\"product_name\":\"-\",\"manufacturer\":{\"name\":\"Microsoft Corporation\",\"id\":\"1\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"sort_field\":\"id\",\"total_count\":7,\"page\":1,\"sort_order\":\"asc\",\"get_total_count\":\"true\",\"row_count\":7}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName": "Software",
+      "path": [
+        "/api/v3/softwares"
+      ],
+      "desc": "This operation lets you add a software.",
+      "disp_desc": "Add A Software",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"software\":{\"product_version\":\"1.0.2\",\"name\":\"ServiceDesk Plus\",\"description\":\"manage assets and requests\",\"type\":{\"name\":\"Managed\"},\"category\":{\"name\":\"Accounting\"},\"manufacturer\":{\"name\":\"ManageEngine\"}}}"
+      },
+      "output": {
+        "sample": "{\"software\":{\"file_version\":\"-\",\"product_version\":\"1.0.2\",\"cost\":\"0.00\",\"attachments\":[],\"name\":\"ServiceDesk Plus\",\"description\":\"manage assets and requests\",\"id\":\"301\",\"type\":{\"name\":\"Managed\",\"id\":\"2\"},\"category\":{\"name\":\"Accounting\",\"id\":\"8\"},\"product_name\":\"-\",\"software_image\":[],\"manufacturer\":{\"name\":\"ManageEngine\",\"id\":\"303\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName": "Software",
+      "path": [
+        "/api/v3/softwares/{software_id}"
+      ],
+      "desc": "This operation lets you update a software.",
+      "disp_desc": "Update A Software",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"software\":{\"product_version\":\"1.0.3\"}}"
+      },
+      "output": {
+        "sample": "{\"software\":{ \"file_version\": \"-\", \"product_version\": \"1.0.3\", \"cost\": \"0.00\", \"attachments\": [], \"name\": \"ServiceDesk Plus11\", \"description\": \"manage assets and requests\", \"id\": \"301\", \"type\": { \"name\": \"Managed\", \"id\": \"2\" }, \"category\": { \"name\": \"Accounting\", \"id\": \"8\" }, \"product_name\": \"-\", \"software_image\": [], \"manufacturer\": { \"name\": \"ManageEngine\", \"id\": \"303\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName": "Software",
+      "path": [
+        "/api/v3/softwares/{software_id}"
+      ],
+      "desc": "This operation lets you delete a software.",
+      "disp_desc": "Delete A Software",
+      "workflow": "",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName": "Software",
+      "path": [
+        "api/v3/asset_computers/{entity_id}/softwares"
+      ],
+      "desc": "This operation lets you add a software Installation.",
+      "disp_desc": "Add A Software Installation",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"softwares\":[{\"software\":{\"id\":\"301\"}},{\"software\":{\"id\":\"9\"}}]}"
+      },
+      "output": {
+        "sample": "{\"softwares\":[{\"linked_instance\":null,\"software\":{\"name\":\"ManageEngine\",\"id\":\"9\",\"type\":{\"id\":\"2\"},\"category\":{\"id\":\"5\"},\"manufacturer\":{\"id\":\"1\"}},\"usage\":null,\"workstation\":{\"part_no\":\"-\",\"product\":{\"id\":\"1\"},\"site\":null,\"chassis_type\":null,\"module\":{\"parent\":{\"api_plural_name\":\"asset_assets\",\"name\":\"asset_asset\",\"id\":\"67\",\"display_name\":\"Asset\",\"display_plural_name\":\"Assets\"},\"api_plural_name\":\"asset_computers\",\"name\":\"asset_computer\",\"icon\":{\"content-url\":\"/api/v3/asset_modules/68/images/47\",\"id\":\"47\"},\"id\":\"68\",\"display_name\":\"Computer\",\"display_plural_name\":\"Computers\"},\"name\":\"localhost\",\"id\":\"1\",\"state\":{\"id\":\"1\"},\"barcode\":null,\"manufacturer\":null},\"version\":\"-\",\"file_size\":\"-\",\"license\":null,\"product_key\":\"-\",\"linked_entity\":null,\"added_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"2\",\"department\":null},\"product_id\":\"-\",\"location\":\"-\",\"installed_on\":null,\"id\":\"2\"},{\"linked_instance\":null,\"software\":{\"name\":\"ServiceDesk Plus\",\"id\":\"1\",\"type\":{\"id\":\"2\"},\"category\":{\"id\":\"8\"},\"manufacturer\":{\"id\":\"301\"}},\"usage\":null,\"workstation\":{\"part_no\":\"-\",\"product\":{\"id\":\"1\"},\"site\":null,\"chassis_type\":null,\"module\":{\"parent\":{\"api_plural_name\":\"asset_assets\",\"name\":\"asset_asset\",\"id\":\"67\",\"display_name\":\"Asset\",\"display_plural_name\":\"Assets\"},\"api_plural_name\":\"asset_computers\",\"name\":\"asset_computer\",\"icon\":{\"content-url\":\"/api/v3/asset_modules/68/images/47\",\"id\":\"47\"},\"id\":\"68\",\"display_name\":\"Computer\",\"display_plural_name\":\"Computers\"},\"name\":\"localhost\",\"id\":\"1\",\"state\":{\"id\":\"1\"},\"barcode\":null,\"manufacturer\":null},\"version\":\"-\",\"file_size\":\"-\",\"license\":null,\"product_key\":\"-\",\"linked_entity\":null,\"added_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"2\",\"department\":null},\"product_id\":\"-\",\"location\":\"-\",\"installed_on\":null,\"id\":\"3\"},{\"linked_instance\":null,\"software\":{\"name\":\"ServiceDesk Plus1\",\"id\":\"2\",\"type\":{\"id\":\"2\"},\"category\":{\"id\":\"8\"},\"manufacturer\":{\"id\":\"301\"}},\"usage\":null,\"workstation\":{\"part_no\":\"-\",\"product\":{\"id\":\"1\"},\"site\":null,\"chassis_type\":null,\"module\":{\"parent\":{\"api_plural_name\":\"asset_assets\",\"name\":\"asset_asset\",\"id\":\"67\",\"display_name\":\"Asset\",\"display_plural_name\":\"Assets\"},\"api_plural_name\":\"asset_computers\",\"name\":\"asset_computer\",\"icon\":{\"content-url\":\"/api/v3/asset_modules/68/images/47\",\"id\":\"47\"},\"id\":\"68\",\"display_name\":\"Computer\",\"display_plural_name\":\"Computers\"},\"name\":\"localhost\",\"id\":\"1\",\"state\":{\"id\":\"1\"},\"barcode\":null,\"manufacturer\":null},\"version\":\"-\",\"file_size\":\"-\",\"license\":null,\"product_key\":\"-\",\"linked_entity\":null,\"added_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"2\",\"department\":null},\"product_id\":\"-\",\"location\":\"-\",\"installed_on\":null,\"id\":\"4\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":3}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true"
+}

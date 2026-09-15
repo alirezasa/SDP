@@ -1,0 +1,227 @@
+{
+  "operations": [
+    {
+      "method": "GET",
+      "moduleName" : "Release",
+      "workflow": "",
+      "disp_desc": "View Stage Data",
+      "defaultAttributes": [],
+      "inOD": "true",
+      "output": {
+         "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"stage_data\":{\"stage\":{\"internal_name\":\"testing\",\"inactive\":false,\"stage_index\":4,\"name\":\"Testing\",\"id\":\"3\"},\"stage_data_updated_on\":null,\"actual_end_time\":null,\"description\": \"stage description\",\"id\":\"153\",\"actual_start_time\":null,\"stage_data_updated_by\":null,\"scheduled_start_time\":{\"display_value\":\"Mar 28, 2020 09:58 PM\",\"value\":\"1585412880000\"},\"scheduled_end_time\":null}}"
+      },
+      "path": [
+        "/api/v3/releases/{release_id}/stage_data/{stage_data_id}"
+      ],
+      "inOP": "true",
+      "name": "",
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation helps you to view the release stage details by the unique release stage id."
+    }, 
+     {
+      "method": "GET",
+      "moduleName" : "Release",
+      "workflow": "",
+      "disp_desc": "View All Stage Data",
+      "defaultAttributes": [],
+      "inOD": "true",
+      "output": {
+         "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1},\"stage_data\":[{\"stage\":{\"internal_name\":\"implementation\",\"stage_index\":3,\"name\":\"Development\",\"id\":\"3\"},\"stage_data_updated_on\":{\"display_value\":\"Aug 13, 2020 12:10 PM\",\"value\":\"1597300826722\"},\"actual_end_time\":null,\"id\":\"3\",\"actual_start_time\":null,\"stage_data_updated_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"scheduled_start_time\":{\"display_value\":\"Mar 28, 2020 09:58 PM\",\"value\":\"1585412880000\"},\"scheduled_end_time\":null}]}"
+      },
+      "path": [
+        "/api/v3/releases/{release_id}/stage_data/"
+      ],
+      "inOP": "true",
+      "name": "",
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation helps you to view all the release stage details by the unique release id."
+    },
+    {
+      "method": "POST",
+      "moduleName" : "Release",
+      "workflow": "",
+      "disp_desc": "Add Stage Data",
+      "defaultAttributes": [],
+      "inOD": "true",
+      "output": {
+       "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"stage_data\":{\"stage\":{\"internal_name\":\"testing\",\"inactive\":false,\"stage_index\":4,\"name\":\"Testing\",\"id\":\"3\"},\"stage_data_updated_on\":null,\"actual_end_time\":null,\"description\": \"stage description\",\"id\":\"145\",\"actual_start_time\":null,\"stage_data_updated_by\":null,\"scheduled_start_time\":{\"display_value\":\"Mar 28, 2020 09:58 PM\",\"value\":\"1585412880000\"},\"scheduled_end_time\":null}}"
+      },
+      "path": [
+        "/api/v3/releases/{release_id}/stage_data/"
+      ],
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"stage_data\": {\"scheduled_start_time\": {\"value\": 1585412880000}, \"stage\": {\"id\": \"3\"},\"description\": \"stage description\"}}"
+      },
+      "inOP": "true",
+      "name": "",
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation helps you to add release stage data."
+    },
+    {
+      "method": "PUT",
+      "moduleName" : "Release",
+      "workflow": "",
+      "disp_desc": "Update Stage Data",
+      "defaultAttributes": [],
+      "inOD": "true",
+      "output": {
+       "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"stage_data\":{\"stage\":{\"internal_name\":\"testing\",\"inactive\":false,\"stage_index\":4,\"name\":\"Testing\",\"id\":\"3\"},\"stage_data_updated_on\":null,\"actual_end_time\":null,\"description\": \"stage description\",\"id\":\"155\",\"actual_start_time\":null,\"stage_data_updated_by\":null,\"scheduled_start_time\":{\"display_value\":\"Mar 28, 2020 09:58 PM\",\"value\":\"1585412880000\"},\"scheduled_end_time\":null}}"
+      },
+      "path": [
+        "/api/v3/releases/{release_id}/stage_data/{stage_data_id}"
+      ],
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"stage_data\": {\"scheduled_start_time\": {\"value\": 1585412880000}, \"stage\": {\"id\": \"3\"},\"description\": \"stage description\"}}"     
+      },
+      "inOP": "true",
+      "name": "",
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation helps you to delete a release stage data."
+    }
+  ],
+  "Additional Elements": [],
+  "attributes": [
+    {
+      "isDefault": "true",
+      "isReadOnly": "true",
+      "html_type": "",
+      "inOP": "true",
+      "name": "id",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "long",
+      "isReleased": "true",
+      "desc": "Id of this release stage data",
+      "graphView": ""
+    },
+  
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "description",
+      "column": "WORKORDER : DESCRIPTION",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "HTML Desc",
+      "isReleased": "true",
+      "desc": "Description of this release",
+      "graphView": ""
+    },
+   
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "assets",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Array of Objects",
+      "isReleased": "true",
+      "desc": "Array of asset objects associated to this release.",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "site",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Object",
+      "isReleased": "true",
+      "desc": "Denotes the site to which this release belongs",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "group",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Object",
+      "isReleased": "true",
+      "desc": "Group to which this release belongs\n",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "technician ",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Object",
+      "isReleased": "true",
+      "desc": "Technician assigned to this release\n",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "category",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Object",
+      "isReleased": "true",
+      "desc": "Category to which this release belongs\n",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "subcategory ",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Object",
+      "isReleased": "true",
+      "desc": "Subcategory to which this release belongs\n",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "item",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Object",
+      "isReleased": "true",
+      "desc": "Item of this release\n",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "template",
+      "column": "",
+      "odcolumn": "",
+      "inOD": "true",
+      "type": "Object",
+      "isReleased": "true",
+      "desc": "Indicates the template which is used to create this release",
+      "graphView": ""
+    },
+    {
+      "html_type": "",
+      "inOP": "true",
+      "name": "status_change_comments",
+      "column": "",
+      "odcolumn": "",
+      "type": "String",
+      "isReleased": "true",
+      "desc": "Comments added while changing the release's status",
+      "graphView": ""
+    }
+  ],
+  "lastModified": 1582292262000
+}

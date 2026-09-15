@@ -1,0 +1,886 @@
+#/KOPIA PROGRAMU WEB EDIT
+#/CZAS: 2009-10-06, 12:10:09
+#/PLIK: admin_api_helpcard_pl.html
+#/SCIEZKA: \\192.168.99.158\e$\AdventNet\ME\ServiceDesk\applications\extracted\AdventNetServiceDesk.eear\AdventNetServiceDeskWC.ear\AdventNetServiceDesk.war\html\
+#/KONIEC
+﻿<table width="98%" cellpadding="5" cellspacing="0" align="center">
+	<tr>
+		<td>
+		<h1>ServiceDesk Plus API</h1>
+		<p>Ten dokument wyjaśni użycie API w ServiceDesk Plus, do wykonywania operacji na zgłoszeniach   poprzez protokół Http.</p>
+
+<h2>Wytyczne API</h2>
+
+<p>SDP wspiera API poprzez protokół Http dla wykonywania opercji na zgłoszeniach. Wartości pól do ustawienia w zgłoszeniu, będą dodawana jako parametry w szczegółach żądania. Formularz musi być wysłany do  <strong>/servlets/RequestServlet</strong> (jako <strong>http://nazwa_serwera:Numer_Portu/servlets/RequestServlet</strong>). Pola niedostępne jako parametry w żądaniu będą ustawione jako puste (lub domyślne). Autoryzacja do SDP oparta jest o nazwę użytkownika i hasło. Można wykonać akcje <strong>Dodania zgłoszenia, Poprawy zgłoszenia, Przydzielenia/Podjęcia zgłoszenia, Zamknięcia zgłoszenia, Usunięcia zgłoszenia, Dodania notatki, Podglądu szczegółów zgłoszenia</strong> poprzez API. Przeprawadzane akcje będą rozpoznawane w oparciu o paramerty http <strong>'akcje'</strong>. Zwróć uwagę, że akcje i atrybuty są wrażliwe na wielkość znaków i powinny być używane tak jak zostały zdefiniowane.
+</p>
+<p align='center'>
+<img src='../images/admin_api_chart.jpg'></img>
+</p>
+
+
+<h2>Dodaj zgłoszenie:</h2>
+
+<p>Szczegóły niezbędne dla dodania zgłoszenia powinny być ustawione w parametrach zgłoszenia, a wartość parametru zgłoszenia dla <strong>'akcji'</strong> powinna być <strong>'AddRequest'</strong>.</p>
+
+<h2>Atrybuty:</h2>
+'Atrybuty' podane poniżej są nazwami parametrów zgłoszenia określającymi dodawane zgłoszenie.
+<TABLE WIDTH=800 CELLPADDING=4 style="border:1px #ccc solid;" CELLSPACING=0>
+	<THEAD>
+		<TR VALIGN=TOP>
+			<TD width="200">
+				<strong>Atrybut</strong>
+			</TD>
+			<TD>
+				<strong>Opis</strong>
+			</TD>
+		</TR>
+	</THEAD>
+	<TBODY>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				AddRequest
+			
+			<TD>
+				Polecenie akcji dodania zgłoszenia
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				reqTemplate
+			</TD>
+			<TD>
+				Nazwa szablonu
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				description
+			</TD>
+			<TD>
+				Opis
+			</TD>
+		</TR>
+	
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				resolution
+			</TD>
+			<TD>
+				Rozwiązanie
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				requester
+			</TD>
+			<TD>
+				Zgłaszający
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				requesterEmail
+			</TD>
+			<TD>
+				Email zgłaszającego
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				priority
+			</TD>
+			<TD>
+				Priorytet
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				level
+			</TD>
+			<TD>
+				Poziom
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				status
+			</TD>
+			<TD>
+				Status
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				mode
+			</TD>
+			<TD>
+				Tryb
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				urgency
+			</TD>
+			<TD>
+				Pilność
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				impact
+			</TD>
+			<TD>
+				Wpływ
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				impactDetails
+			</TD>
+			<TD>
+				Szczegóły wpływu
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				requesttype
+			</TD>
+			<TD>
+				Typ zgłoszenia
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				site
+			</TD>
+			<TD>
+				Lokalizacja
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				category
+			</TD>
+			<TD>
+				Kategoria
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				subcategory
+			</TD>
+			<TD>
+				Podkategoria
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				item
+			</TD>
+			<TD>
+				Pozycja
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				group
+			</TD>
+			<TD>
+				Grupa
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				technician
+			</TD>
+			<TD>
+				Nazwa serwisanta
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				technicianEmail
+			</TD>
+			<TD>
+				Email serwisanta
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				Nazwa dodatkowego pola UDF
+			</TD>
+			<TD>
+				Nazwa dodatkowego pola ustawiona w aplikacji UDF - user defined fileds
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				username
+			</TD>
+			<TD>
+				Nazwa logowania dla autentykacji SDP
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				password
+			</TD>
+			<TD>
+				Hasło dla autentykacji SDP
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				DOMAIN_NAME
+			</TD>
+			<TD>
+				Nazwa domeny do której należy użytkownik
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				logonDomainName
+			</TD>
+			<TD>
+				Tryb autentykacji [AD
+				lub autentykacji lokalnej].</P>
+				&ldquo;AD_AUTH&rdquo; 
+				odnosi się do autentykacji Active Directory.</P>
+				&ldquo;Lokalna autentykacja&rdquo; lub puste pole odnosi się do autentykacji lokalnej.  
+				
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<br>
+<a href='/html/admin_api_newrequest.html' target="_blank"><strong>Kliknij tutaj</strong></a> aby otworzyć przykładowy formularz dla tworzenia zgłoszenia.
+<h2>Popraw zgłoszenie :</h2>
+
+<p>Szczegóły do zmiany powinny być ustawione w parametrach żądania http razem z parametrem <strong>'workOrderID'</strong>
+[ten atrybut jest wymagany dla dokonania zmiany w zgłoszeniu] i wartość paramertu <strong>'operation'</strong> powinna być <strong>'UpdateRequest'</strong>. </p>
+<br>
+'Atrybuty' podane poniżej są nazwami parametrów zgłoszenia określającymi zgłoszenie, które ma zostać poprawione.
+
+<TABLE WIDTH=800 CELLPADDING=4 style="border:1px #ccc solid;" CELLSPACING=0>
+	<THEAD>
+		<TR VALIGN=TOP>
+			<TD width="200">
+				<strong>Atrybut</strong>
+				
+			</TD>
+			<TD>
+				<strong>	Opis</strong>
+			</TD>
+		</TR>
+	</THEAD>
+	<TBODY>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				UpdateRequest
+			</TD>
+			<TD>
+				Polecenie akcji poprawy zgłoszenia
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				workOrderID
+			</TD>
+			<TD>
+				Id zgłoszenia, które ma być poprawione
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				reqTemplate
+			</TD>
+			<TD>
+				Nazwa szablonu
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				description
+			</TD>
+			<TD>
+				Opis
+			</TD>
+		</TR>
+		
+	
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				resolution
+			</TD>
+			<TD>
+				Rozwiązanie
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				requester
+			</TD>
+			<TD>
+				Zgłaszający
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				requesterEmail
+			</TD>
+			<TD>
+				Email zgłaszającego
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				priority
+			</TD>
+			<TD>
+				Priorytet
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				level
+			</TD>
+			<TD>
+				Poziom
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				status
+			</TD>
+			<TD>
+				Status
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				mode
+			</TD>
+			<TD>
+				Tryb
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				urgency
+			</TD>
+			<TD>
+				Pilność
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				impact
+			</TD>
+			<TD>
+				Wpływ
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				impactDetails
+			</TD>
+			<TD>
+				Szczegóły wpływu
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				requesttype
+			</TD>
+			<TD>
+				Typ zgłoszenia
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				site
+			</TD>
+			<TD>
+				Lokalizacja
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				category
+			</TD>
+			<TD>
+				Kategoria
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				subcategory
+			</TD>
+			<TD>
+				Podkategoria
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				item
+			</TD>
+			<TD>
+				Pozycja
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				group
+			</TD>
+			<TD>
+				Grupa
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				technician
+			</TD>
+			<TD>
+				Nazwa serwisanta
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				technicianEmail
+			</TD>
+			<TD>
+				Email serwisanta
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				Nazwa dodatkowego pola UDF 
+			</TD>
+			<TD>
+				Nazwa dodatkowego pola ustawiona w aplikacji UDF - user defined fileds 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				username
+			</TD>
+			<TD>
+				Nazwa logowania dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				password
+			</TD>
+			<TD>
+				Hasło dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				DOMAIN_NAME
+			</TD>
+			<TD>
+				Nazwa domeny do której należy użytkownik 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				logonDomainName
+			</TD>
+			<TD>
+				Tryb autentykacji [AD lub autentykacji lokalnej].</P>
+				&ldquo;AD_AUTH&rdquo; odnosi się do autentykacji Active Directory</P>
+				&ldquo;Lokalna autentykacja&rdquo; lub puste pole odnosi się do autentykacji lokalnej
+				
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<br>
+<a href='/html/admin_api_updaterequest.html' target="_blank"><strong>Kliknij tutaj</strong></a> 
+aby otworzyć przykładowy formularz dla poprawy zgłoszenia.
+
+<h2>Zamknij zgłoszenie :</h2>
+
+<p> Zgłoszenie może zostać zamknięte na dwa sposoby</p>
+
+<ol>
+	<li>Ustaw wartość paramertu <strong>'Status'</strong> jako <strong>'Closed'</strong>, atrybut <strong>operation</strong> jako <strong>'UpdateRequest'</strong> razem z <strong>'workOrderID'</strong> [ten parametr jest wymagany].</li>
+	<li>Ustaw wartość parametru <strong>'operation'</strong> jako <strong>'CloseRequest'</strong> razem z <strong>'workOrderID'</strong></li>
+</ol>
+
+
+<br>
+
+'Atrybuty' podane poniżej są nazwami parametrów zgłoszenia określającymi zgłoszenie, które ma zostać zamknięte.
+
+<TABLE WIDTH=800 CELLPADDING=4 style="border:1px #ccc solid;" CELLSPACING=0>
+	<THEAD>
+		<TR VALIGN=TOP>
+			<TD width="200">
+				<strong>Atrybut</strong> 
+				
+			</TD>
+			<TD>
+				<strong>Opis</strong>
+			</TD>
+		</TR>
+	</THEAD>
+	<TBODY>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				CloseRequest
+			</TD>
+			<TD>
+				Polecenie akcji zamknięcia zgłoszenia
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				workOrderID
+			</TD>
+			<TD>
+				Id zgłoszenia do zamknięcia.
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				closeComment
+			</TD>
+			<TD>
+				Komentarz zamknięcia 
+				
+			</TD>
+		</TR>
+	
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				username
+			</TD>
+			<TD>
+				Nazwa logowania dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				password
+			</TD>
+			<TD>
+				Hasło dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				DOMAIN_NAME
+			</TD>
+			<TD>
+				Nazwa domeny do której należy użytkownik 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				logonDomainName
+			</TD>
+			<TD>
+				Tryb autentykacji [AD lub autentykacji lokalnej].<br><br>
+				&ldquo;AD_AUTH&rdquo; odnosi się do autentykacji Active Directory.
+				<br><br>&ldquo;Lokalna autentykacja&rdquo; lub puste pole odnosi się do autentykacji lokalnej 
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<br>
+<a href='/html/admin_api_closerequest.html' target="_blank"><strong>Kliknij tutaj</strong></a> aby otworzyć przykładowy formularz dla zamknięcia zgłoszenia
+
+<h2>Usuń zgłoszenie :</h2>
+<p>Ustaw parametr dla atrybutu <strong>'operation'</strong> jako <strong>'DeleteRequest'</strong> razem z parametrem <strong>'workOrderID'</strong>.</p>
+
+'Atrybuty' podane poniżej są nazwami parametrów zgłoszenia określającymi zgłoszenie, które ma zostać usunięte. 
+
+<TABLE WIDTH=800 CELLPADDING=4 style="border:1px #ccc solid;" CELLSPACING=0>
+	<THEAD>
+		<TR VALIGN=TOP>
+			<TD width="200">
+				<strong>Atrybut</strong> 
+				
+			</TD>
+			<TD>
+				<strong>Opis</strong>
+			</TD>
+		</TR>
+	</THEAD>
+	<TBODY>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				DeleteRequest
+			</TD>
+			<TD>
+				Polecenie akcji usunięcia zgłoszenia
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				workOrderID
+			</TD>
+			<TD>
+				Id zgłoszenia do usunięcia
+			</TD>
+		</TR>
+		
+	
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				username
+			</TD>
+			<TD>
+				Nazwa logowania dla autentykacji SDP
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				password
+			</TD>
+			<TD>
+				Hasło dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				DOMAIN_NAME
+			</TD>
+			<TD>
+				Nazwa domeny do której należy użytkownik 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				logonDomainNamey
+			<TD>Tryb autentykacji [AD lub autentykacji lokalnej].<br><br>
+				&ldquo;AD_AUTH&rdquo; odnosi się do autentykacji Active Directory
+				<br><br>
+				&ldquo;Lokalna autentykacja&rdquo; lub puste pole odnosi się do autentykacji lokalnej 
+				
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<br>
+<a href='/html/admin_api_deleterequest.html' target="_blank"><strong>Kliknij tutaj</strong></a> aby otworzyć przykładowy formularz dla poprawy zgłoszenia.
+
+<h2>Dodaj notatkę :</h2>
+
+<p>Ustaw parametr dla atrybutu <strong>'operation'</strong> jako <strong>'AddNotes'</strong> razem z parametrem <strong>'workOrderID'</strong>.</p>
+<br>
+'Atrybuty' podane poniżej są nazwami parametrów zgłoszenia określającymi zgłoszenie, do którego ma zostać dodana notatka. 
+
+
+<TABLE WIDTH=800 CELLPADDING=4 style="border:1px #ccc solid;" CELLSPACING=0>
+	<THEAD>
+		<TR VALIGN=TOP>
+			<TD width="200">
+				Atrybut 
+				
+			</TD>
+			<TD>
+				Opis
+			</TD>
+		</TR>
+	</THEAD>
+	<TBODY>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				AddNotes
+			</TD>
+			<TD>
+				Polecenie akcji dla dodania notatki
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				workOrderID
+			</TD>
+			<TD>
+				Id zgłoszenia do którego ma zostać dodana notatka
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				notesText
+			</TD>
+			<TD>
+				Treść notatki, jaka ma zostać dodana do zgłoszenia o podanym Id
+			</TD>
+		</TR>
+
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				isPublic
+			</TD>
+			<TD>
+				isPublic=true notatka będzie miała status pubiczny</P>
+				<P>isPublic=false notatka będzie miała status prywatny</P>
+				<P>Notatka będzie 'publiczna' jeśli użytkownik doda ją do zgłoszenia.
+						
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				username
+			</TD>
+			<TD>
+				Nazwa logowania dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				password
+			</TD>
+			<TD>
+				Hasło dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				DOMAIN_NAME
+			</TD>
+			<TD>
+				Nazwa domeny do której należy użytkownik 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				logonDomainName
+			</TD>
+			<TD>
+				Tryb autentykacji [AD lub autentykacji lokalnej].<br><br>&ldquo;AD_AUTH&rdquo; odnosi się do autentykacji Active Directory
+			<br><br>&ldquo;Lokalna autentykacja&rdquo; lub puste pole odnosi się do autentykacji lokalnej 
+				
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+<br>
+<a href='/html/admin_api_addnotes.html' target="_blank"><strong>Kliknij tutaj</strong></a> aby otworzyć przykładowy formularz dla poprawy zgłoszenia.
+
+<h2>Wyświetl zgłoszenie: </h2>
+<p>Ustaw parametr dla atrybutu <strong>'operation'</strong> jako <strong>'GetRequestDetails'</strong> razem z parametrem <strong>'workOrderID'</strong>.</p>
+<br>
+'Atrybuty' podane poniżej są nazwami parametrów zgłoszenia określającymi zgłoszenie, dla którego mają zostać wyświetlone szczegóły. 
+
+
+<TABLE WIDTH=800 CELLPADDING=4 style="border:1px #ccc solid;" CELLSPACING=0>
+	<THEAD>
+		<TR VALIGN=TOP>
+			<TD width="200">
+				<strong>Atrybuty</strong> 
+				
+			</TD>
+			<TD>
+				<strong>Opis</strong>
+			</TD>
+		</TR>
+	</THEAD>
+	<TBODY>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				GetRequestDetails
+			</TD>
+			<TD>
+				Polecenie akcji wyświetlenia szczegółów zgłoszenia
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				workOrderID
+			</TD>
+			<TD>
+				Id zgłoszenia
+			</TD>
+		</TR>
+		
+	
+		
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				username
+			</TD>
+			<TD>
+				Nazwa logowania dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				password
+			</TD>
+			<TD>
+				Hasło dla autentykacji SDP 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="oddRow">
+			<TD>
+				DOMAIN_NAME
+			</TD>
+			<TD>
+				Nazwa domeny do której należy użytkownik 
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="evenRow">
+			<TD>
+				logonDomainName
+			</TD>
+			<TD>
+				Tryb autentykacji [AD lub autentykacji lokalnej]<br><br>
+				&ldquo;AD_AUTH&rdquo; odnosi się do autentykacji Active Directory. 
+				<br><br>&ldquo;Lokalna autentykacja&rdquo; lub puste pole odnosi się do autentykacji lokalnej 
+				
+			</TD>
+		</TR>
+	</TBODY>
+</TABLE>
+
+<br>
+<a href='/html/admin_api_getrequest.html' target="_blank"><strong>Kliknij tutaj</strong></a> aby otworzyć przykładowy formularz dla wyświetlania szczegółów zgłoszenia. 
+
+<h2>Oddzwoń :</h2>
+
+
+
+<p>Statusem operacji na servletach będzie plik xml zawierający <strong>'OPERATIONSTATUS'</strong>, <strong>'MESSAGE'</strong>, <strong>'WORKORDERID'</strong> [tylko dla nowych zgłoszeń]</p>
+
+<h2>Rozwiązywanie problemów :</h2>
+<br>
+Tworząc nowe zgłoszenie :
+<ol>
+	<li>Zgłoszenie będzie utworzone z dostępnymi informacjami wprowadzonymi przez użytkownika. </li>
+	<li>Podczas tworzenia zgłoszenia w części login zgłaszającego, 'lokalizacja' dla użytkownika będzie ustawiona jako lokalizacja do której zgłaszający należy.</li>
+	<li>W żadnej lokalizacji, może byc określone jako puste pole lub 'NULL' dla lokalizacji [tylko logowanie serwisanta].</li>
+	<li>Podczas tworzenia zgłoszenia, zgłaszający będzie ograniczony do utworzenia zgłoszenie dla zasobu przydzielonego do niego, jeśli opcja 'Pokaż komputery przydzielone do zgłaszającego w Portalu pomocy technicznej' będzie zaznaczona w module Administracja -> Ustawienia portalu pomocy technicznej.</li>
+	<li>Jeśli serwisant z ograniczonym dostępem do lokalizacji, utworzy zgłoszenie dla lokalizacji do której nie jest przydzielony, wtedy lokalizacja w zgłoszeniu zostanie ustawiona jako 'W żadnej lokalizacji' .</li>
+	<li>Jeśli 'Temat' nie jest wprowadzony podczas tworzenia zgłoszenia, '(bez tematu)' zostanie ustawione jako temat zgłoszenia.</li>
+	<li>Jeśli informacja 'requester' nie zostanie podana, wtedy pole zgłaszający zostanie ustawione jako 'Zgłaszający' w zgłoszeniu.</li>
+	<li>Jeśli wymagane pole, określone w 'Szablonie zgłoszenia' nie zostaną wprowadzone podczas dodawania zgłoszenia, zgłoszenie zostanie utworzone z informacjami wysłanymi do 'RequestServlet' i pojawią się błędy w 'System Log'.</li>
+</ol>
+Podczas poprawy zgłoszenia :
+<ol>
+	<li>Zgłaszający nie mają uprawnień do poprawy w zgłoszeniach.</li>
+	<li>Pusta wartość dla pola może być określona jako 'NULL'.</li>
+</ol>
+
+
+<p>Jeśli logowanie się nie powiedzie dla poprawnej 'Nazwy użytkownika' i 'Hasła',</p>
+
+<ol>
+	<li>Sprawdź czy użytkownik został zaimportowany z 'Active Directory'.</li>
+	<li>Jeśli użytkownik nie jest zaimportowany z 'Active Directory' upewnij się, że 'nazwa użytkownika' i 'hasło' jest wysyłane do 'http://nazwa_serwera:numer_portu/servlets/RequestServlet' do autentykacji.</li>
+	<li>Jeśli użytkownik jest zaimportowany z 'Active Directory', wtedy 'nazwa użytkownika' i 'hasło' jest wysyłane razem z 'nazwą domeny' i 'nazwą logowania' do 'http://nazwa_serwera:numer_portu/servlets/RequestServlet' do autentykacji. Nazwa domeny 'DOMAIN_NAME' reprezentuje domenę do której należy użytkownik. Nazwa logowania 'logonDomainName' reprezentuje tryb autentykacji. 'Lokalna autentykacja' lub puste pole odnosi się do lokalnej autentykacji, 'AD_AUTH' odnosi się do trybu autentykacji Active Directory.</li>
+</ol>
+ 
+
+W tym momecie wspiera są tylko formaty daty <strong>dd MMM yyyy, HH:mm:ss[21 Jan 2009, 21:15:26]</strong>
+
+
+		</td>
+	</tr>
+</table>
+

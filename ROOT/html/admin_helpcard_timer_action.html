@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+<div>
+    Request timer actions allow you to execute time-delayed automated actions. You can configure ServiceDesk Plus to calculate the wait time for all requests that satisfy a precondition and schedule the timer actions to be executed.
+</div>
+<br>
+<div>Configuring <span style="font-weight: bold;">During</span> and <span style="font-weight: bold;">After</span> rules is essential for the smooth execution of timer actions.</div>
+
+<font size="-1"><br></font>
+<span style="font-weight: bold;">Configure Timer Actions</span>
+
+<ul class="mt10">
+    <li>Click <span style="font-weight: bold;">New Timer Action</span>.</li>
+    <li><span style="font-weight: bold;">Name and Description:</span> Provide a name and description for the timer action.</li>
+    <li><span style="font-weight: bold;">Action applies for:</span> You can apply the action for all templates or for selected templates.</li>
+    <li><span style="font-weight: bold;">Conditions:</span> Configure the criteria-conditions to be satisfied by the request from the drop-down list.</li>
+    <li><span style="font-weight: bold;">Stage:</span> After defining the criteria-conditions, you can configure stages that will be executed sequentially.
+        <ul>
+            <li><span style="font-weight: bold;">Initial delay:</span> Set the delay time to hold execution of during and after rules.</li>
+            <li><span style="font-weight: bold;">Repeat Every: </span>Choose whether, when, and how many times to repeat the timer action.</li>
+            <li><span style="font-weight: bold;">Consider delay time on:</span> Choose whether to consider the initial delay time only during business hours or SLA hours. If you choose SLA hours, you can pause the timer when the request moves to onhold, completed, or resolved states. If the delay time is not configured, the timer will run 24x7.</li>
+            <li>Configure <span class="sb">During rules</span> and <span class="sb">After Rules</span>. They will be executed sequentially.</li>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">During Rules and After Rules.</span></summary>
+                <div class="p15 pt5">
+                    <div class="mt10">
+                        <span class="sb mt5">During Rules</span>
+                        <div>During rules are used to automate actions on requests when the stage scheduled time is reached for a request. For each stage, you can add up to 5 during rules which will be executed in sequence. The request data modified by a during rule will be considered when the next rule is validated.</div>
+                        <br>
+                        <div><span style="font-style: italic;"><strong>Note:</strong> You can reuse during rules for other stages and timer actions.</span></div>
+                        <br>
+                        <span style="font-weight: bold;">Create During Rules</span>
+                        <ul class="mt10">
+                            <li>Click <span class="sb">Add New Rule</span> and fill out the form. If the rules already exist, select the rules you want to associate from the available list and click <span class="sb">Associate</span>.</li>
+                            <li><span class="sb">Rule name and Description:</span> Provide a name and description for the rule.</li>
+                            <li><span class="sb">Execute during:</span> Choose when to apply the rule: <span class="sb">Anytime, Within Operational Hours,</span> or <span class="sb">Outside Operational Hours.</span></li>
+                            <li><span class="sb">Criteria:</span> Configure the criteria to match the requests from the drop-down list. You can create up to 50 criteria using AND/OR combinations.</li>
+                            <li><span class="sb">When a request arrives:</span> Choose to execute custom action or abort process execution.
+                                <ul type="circle">
+                                    <li><span class="sb">Execute custom actions -</span> Select the custom actions from the available options: Field Update, Custom scripts, Custom Functions, If-If action, or If-Else action. You can configure a maximum of 5 actions in a during rule. Script/custom function (1), field update (2), If-If (1), and If-else (1).</li>
+                                    <li><span class="sb">Abort process execution -</span> This option stops current stage execution. In case of stage repetition, executes actions after the wait time and proceeds to the next stage.</li>
+                                </ul>
+                            </li>
+                            <li>Click <span class="sb">Save and Associate</span> or <span class="sb">Save.</span></li>
+                        </ul>
+                        <div class="mt10">
+                            <span style="font-weight: bold;">List View Actions</span>
+                            <ul>
+                                <li>Click <span style="font-weight: bold;">Edit</span> to modify the details of during rules.</li>
+                                <li>You can delete, enable, or disable rules in bulk. Select the during rules, click <span style="font-weight: bold;">Actions</span> and select the required action.</li>
+                            </ul>
+                        </div><br>
+                    </div>
+                    <div class="mt10"><span class="sb">After Rules</span>
+                        <div class="mt10">
+                            <div>After rules are used to automate actions within ServiceDesk Plus or third-party applications when the stage scheduled time is reached for a request. For each stage, you can add up to 5 after rules which will be executed in sequence.</div>
+                            <br>
+                            <div><span style="font-style: italic;"><strong>Note:</strong> You can reuse after rules for other stages and timer actions.</span></div>
+                            <br>
+                            <span style="font-weight: bold;">Create After Rules</span>
+                            <ul class="mt10">
+                                <li>Click <span class="sb">Add New Rule</span> and fill out the form. If the after rules already exist, select the rules you want to associate from the available list and click <span class="sb">Associate.</span></li>
+                                <li><span class="sb">Rule name and Description:</span> Provide a name and description for the rule.</li>
+                                <li><span class="sb">Execute during:</span> Choose when to apply the rule: <span class="sb">Anytime, Within Operational Hours,</span> or <span class="sb">Outside Operational Hours.</span></li>
+                                <li><span class="sb">Criteria:</span> Configure the criteria for requests from the drop-down list. You can create up to 50 criteria using AND/OR combinations.</li>
+                                <li><span class="sb">Select Custom Action:</span> Choose the custom action to be executed on a request that satisfies specified criteria. You can configure email/SMS notifications, custom scripts, custom function, webhook, If-If action, or If-Else action as custom action on requests. You can configure a maximum of 24 actions in a after rule. Script/custom function (1), webhook (1), notification action (20), If-If (1), and If-else (1).</li>
+                                <li>Click <span class="sb">Save and Associate</span> or <span class="sb">Save.</span></li>
+                            </ul>
+                            <div class="mt10">
+                                <span style="font-weight: bold;">List View Actions</span>
+                                <ul>
+                                    <li>Click <span style="font-weight: bold;">Edit</span> to modify the details of after rules.</li>
+                                    <li>You can delete, enable, or disable rules in bulk. Select the after rules, click <span style="font-weight: bold;">Actions</span> and select the required action.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <li>After configuring the during/after rules,
+                <ul>
+                    <li>Use <span class="sb">Cascade</span> icon to turn ON or OFF the cascade execution for during/after rules.</li>
+                    <li>Click <span class="sb">Dissociate</span> to remove the rule and </li>
+                    <li>Use <span class="sb">Reorder</span> to organize the during/after rules.</li>
+                </ul>
+            </li>
+        </ul></li>
+
+    <li>Click <span style="font-weight: bold;">New Stage</span> to add another stage. You can add up to 10 stages.</li>
+    <li>Click <span class="sb">Save</span> or <span class="sb">Save and Add New</span>. </li>
+</ul>
+<div><span style="font-style: italic;"><strong>Note:</strong> Admins can add up to 50 timer actions.</span></div>
+<br>
+<div>To learn more about the workflow and scenario of request timer actions, click <a href="https://help.servicedeskplus.com/request-timer-actions" target="_blank" rel="noopener noreferrer" style="color: blue;">here</a>.</div>
+<br>
+<div class="mt10">
+    <span style="font-weight: bold;">List View Actions</span>
+    <ul>
+        <li>Use the <span style="font-weight: bold;">Toggle</span> button to enable or disable the timer action.</li>
+        <li>Use <span style="font-weight: bold;">Edit</span> to modify the details of the timer action.</li>
+        <li>To delete, enable, or disable timer actions in bulk, select the timer actions and click <span style="font-weight: bold;">Actions</span>.</li>
+    </ul>
+</div>
+
+<div>
+    <span style="font-style: italic;"><strong>Note:</strong> When a timer action is deleted, the timers associated with the requests are removed.</span></div>
+</body>
+
+</html>

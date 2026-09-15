@@ -1,0 +1,62 @@
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Add Notes Form</title>
+	<link href="/style/api-style.css" type="text/css" rel="stylesheet">
+</head>
+
+<body>
+	<h4>Configuring Zia</h4>
+	<p>On this page, you can enable Zia to perform the following actions:
+	<ul>
+		<li><strong>Validate Request Reopening</strong> - Evaluate user responses to closed requests and reopen only the
+			requests that need further processing. </li>
+		<li><strong>Assign/Suggest Category Prediction</strong> - Suggest an appropriate category for a request based on
+			Zia's prediction. For requests created through webform, Zia will only suggest a category. Whereas for
+			requests created via API and Email, Zia will automatically apply the suggested category to the requests.</li>
+		<li><strong>Suggest Template Prediction</strong> - Suggest an appropriate template for a request using Zia's
+			predictive abilities. Zia will only suggest templates for requests created using the default template.</li>
+		<li><strong>User's Approval Action</strong> - Deduce each approver's decision from the response to the approval
+			mail and execute the approval action. The approval will be processed through the corresponding module
+			settings and configurations in the self-service portal settings.</li>
+		<li><strong>Zia Parser</strong> - Analyzes information in incoming emails and performs various request actions or updates request properties. Zia will parse the fields and actions mentioned in the email only if it is trained with the relevant content.</li>
+	</ul>
+	</p>
+	<p>Note: Zia can now inspect user responses that are in English, Spanish and Swedish to execute a user's
+		approval action. However, for request reopening, assigning, category suggestions, template predictions or parsing emails,
+		Zia will continue to inspect only English user responses. To activate <strong>Assign/Suggest Category</strong>
+		and <strong>Suggest Template</strong> predictions, a minimum of 500 requests are required to train Zia first. If
+		the count is less than 500 but the prediction is enabled, Zia will verify for the count on a daily basis. Once
+		the request count reaches 500, 	Zia will start the training for the prediction and the same will be notified via
+		technician space. To activate <strong>Zia Parser</strong>, a minimum of 50 requests are required to train. If the count is less than 50 but the prediction is enabled, Zia will verify for the count on a daily basis. Once the required count is reached, Zia will start training and the same will be notified via technician space.</p>
+
+	<h4>Customizing Training Data</h4>
+	<p>Under <strong>Customize Data</strong> of each action, you can test Zia with the corresponding action-related
+		keywords, phrases, or complete sentences. If Zia prediction is inaccurate or unavailable, you can manually add
+		relevant information to the training data set. Zia will immediately train herself with the new data.</p>
+	<p>For Zia's Request Reopening prediction training, make sure the custom data contains equal or almost equal number
+		of entries for the actions.</p>
+	<p>For customizing the Execute User's Approval Action data, you can add datasets in English, Spanish, and Swedish.
+		Under <strong>Show Dataset</strong>, click on <strong>For specific language</strong> and select the language of your
+		choice. Under <strong>Added by email</strong> section, data from email replies will be automatically
+		used to train Zia. You cannot add or modify these training dataset entries (from email replies). However, you
+		can delete these entries.</p>
+	<p>While adding or modifying the dataset, make sure there are no duplicates across languages.</p>
+	<p>At anytime, you want to remove all custom training data, click <strong>Restore Default.</strong></p>
+
+	<h4>User Feedback</h4>
+	<p>Technicians can evaluate each of Zia's predictions and mark whether it is correct in <strong>Zia
+			Notifications</strong>. This feedback will be used to re-equip Zia's training data and enable Zia to make
+		informed decisions in the future. Zia trains herself with the data submitted through user feedback once every 15
+		minutes. For Category, Template prediction and Zia Parser, Zia will undergo training every night based on the latest request
+		data and improve her prediction accuracy.</p>
+	<p>User feedback also helps in determining Zia's <strong>Accuracy Rate</strong>, which in turn allows you to track
+		her learning.</p>
+
+	<h4>History</h4>
+	<p>The <strong>History</strong> tab captures all the activities related to Zia configuration.</p>
+
+</body>
+
+</html>

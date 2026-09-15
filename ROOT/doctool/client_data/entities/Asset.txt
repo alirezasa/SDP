@@ -1,0 +1,917 @@
+{
+    "operations": [{
+            "name": "",
+            "method": "POST",
+            "path": [
+                "/api/v3/assets"
+            ],
+            "desc": "Asset can be added using this syntax with asset details and ownership details.",
+            "disp_desc": "Add an asset",
+            "moduleName" : "Asset",
+            "workflow": "",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"asset\":{\"name\":\"asset-auto-lab1\",\"org_serial_number\":\"UEUEUED\",\"product\":{\"name\":\"HP LaserJet M1005\"},\"barcode\":\"YD-KKE-KDKKD\",\"asset_tag\":\"393939KDEK\",\"description\":\"Asset added via API Doc tool\",\"acquisition_date\":{\"value\":\"1588617009000\"},\"purchase_cost\":\"1000.00\",\"expiry_date\":{\"value\":\"1588617940000\"},\"warranty_expiry\":{\"value\":\"1588617200800\"},\"state\":{\"name\":\"In Store\"},\"location\":\"Amador\"}}"
+            },
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"asset\":{\"total_cost\":\"1000.00\",\"org_serial_number\":\"UEUEUED\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"1\",\"state\":{\"is_scan_required\":true,\"name\":\"In Store\",\"id\":\"1\",\"is_ownership_mandatory\":false},\"barcode\":\"YD-KKE-KDKKD\",\"product_depreciation\":null,\"operational_cost\":\"0.00\",\"loan_end\":null,\"asset_tag\":\"393939KDEK\",\"part_no\":\"\",\"purchase_order\":null,\"network_adapters\":[],\"name\":\"asset-auto-lab1\",\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"description\":null,\"manufacturer\":\"\",\"acquisition_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617009000\"},\"current_cost\":\"0.00\",\"vendor\":null,\"purchase_cost\":\"1000.00\",\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[{\"date\":{\"display_value\":\"Jun 3, 2021\",\"value\":\"1622717467413\"},\"cost_factor\":{\"name\":\"Purchase Cost\",\"id\":\"1\"},\"amount\":\"1000.00\",\"description\":null,\"id\":\"1\"}],\"product\":{\"part_no\":\"\",\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":\"\"},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"asset-auto-lab1\",\"id\":\"7\"},\"expiry_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617940000\"},\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617200800\"},\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":\"Amador\",\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null}}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "POST",
+            "path": [
+                "/api/v3/assets"
+            ],
+            "desc": "Asset can be added in bulk using this syntax. All the fields can be given in the input_data. Maximum of 100 assets can be added in this operation",
+            "disp_desc": "Bulk add of assets",
+            "moduleName" : "Asset",
+            "workflow": "",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"assets\":[{\"product\":{\"name\":\"HP LaserJet M1005\"},\"name\":\"sdp-asset-1\"},{\"product\":{\"name\":\"HP LaserJet M1005\"},\"name\":\"sdp-asset-2\"},{\"product\":{\"name\":\"HP LaserJet M1005\"},\"name\":\"sdp-asset2-3\"},{\"product\":{\"name\":\"HP LaserJet M1005\"},\"name\":\"sdp-asset3-4\"}]}"
+            },
+            "output": {
+                "sample": "{\"assets\":[{\"total_cost\":\"0.00\",\"org_serial_number\":null,\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"26\",\"state\":{\"is_scan_required\":true,\"name\":\"In Store\",\"id\":\"1\",\"is_ownership_mandatory\":false},\"barcode\":null,\"product_depreciation\":null,\"operational_cost\":null,\"loan_end\":null,\"asset_tag\":null,\"part_no\":null,\"purchase_order\":null,\"network_adapters\":[],\"name\":\"sdp-asset-1\",\"udf_fields\":{\"udf_pick_1\":null,\"udf_long_2\":null,\"udf_date_3\":null},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"description\":null,\"manufacturer\":null,\"acquisition_date\":null,\"current_cost\":null,\"vendor\":null,\"purchase_cost\":null,\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[],\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"sdp-asset-1\",\"id\":\"32\"},\"expiry_date\":null,\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":null,\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":null,\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null},{\"total_cost\":\"0.00\",\"org_serial_number\":null,\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"27\",\"state\":{\"is_scan_required\":true,\"name\":\"In Store\",\"id\":\"1\",\"is_ownership_mandatory\":false},\"barcode\":null,\"product_depreciation\":null,\"operational_cost\":null,\"loan_end\":null,\"asset_tag\":null,\"part_no\":null,\"purchase_order\":null,\"network_adapters\":[],\"name\":\"sdp-asset-2\",\"udf_fields\":{\"udf_pick_1\":null,\"udf_long_2\":null,\"udf_date_3\":null},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"description\":null,\"manufacturer\":null,\"acquisition_date\":null,\"current_cost\":null,\"vendor\":null,\"purchase_cost\":null,\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[],\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"sdp-asset-2\",\"id\":\"33\"},\"expiry_date\":null,\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":null,\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":null,\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null},{\"total_cost\":\"0.00\",\"org_serial_number\":null,\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"28\",\"state\":{\"is_scan_required\":true,\"name\":\"In Store\",\"id\":\"1\",\"is_ownership_mandatory\":false},\"barcode\":null,\"product_depreciation\":null,\"operational_cost\":null,\"loan_end\":null,\"asset_tag\":null,\"part_no\":null,\"purchase_order\":null,\"network_adapters\":[],\"name\":\"sdp-asset2-3\",\"udf_fields\":{\"udf_pick_1\":null,\"udf_long_2\":null,\"udf_date_3\":null},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"description\":null,\"manufacturer\":null,\"acquisition_date\":null,\"current_cost\":null,\"vendor\":null,\"purchase_cost\":null,\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[],\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"sdp-asset2-3\",\"id\":\"34\"},\"expiry_date\":null,\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":null,\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":null,\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null},{\"total_cost\":\"0.00\",\"org_serial_number\":null,\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"29\",\"state\":{\"is_scan_required\":true,\"name\":\"In Store\",\"id\":\"1\",\"is_ownership_mandatory\":false},\"barcode\":null,\"product_depreciation\":null,\"operational_cost\":null,\"loan_end\":null,\"asset_tag\":null,\"part_no\":null,\"purchase_order\":null,\"network_adapters\":[],\"name\":\"sdp-asset3-4\",\"udf_fields\":{\"udf_pick_1\":null,\"udf_long_2\":null,\"udf_date_3\":null},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"description\":null,\"manufacturer\":null,\"acquisition_date\":null,\"current_cost\":null,\"vendor\":null,\"purchase_cost\":null,\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[],\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"sdp-asset3-4\",\"id\":\"35\"},\"expiry_date\":null,\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":null,\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":null,\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null}],\"response_status\":[{\"status_code\":2000,\"id\":\"26\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"27\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"28\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"29\",\"status\":\"success\"}]}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "PUT",
+            "path": [
+                "/api/v3/assets/{asset_id}"
+            ],
+            "desc": "Assets can be updated with this syntax, all the available fields can be updated in this syntax. Provide the value In Use for state field while assigning ownership details(user/department/asset)",
+            "disp_desc": "Update an asset",
+            "moduleName" : "Asset",
+            "workflow": "",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"asset\":{\"name\":\"asset-auto-lab-3\",\"org_serial_number\":\"Y773UEUEUED\",\"product\":{\"name\":\"HP LaserJet M1005\"},\"barcode\":\"672YD-KKE-KDKKD\",\"asset_tag\":\"KOE393939KDEK\",\"description\":\"Asset updated via API Doc tool\",\"acquisition_date\":{\"value\":\"1588619009000\"}, \"purchase_cost\":\"2000.00\",\"expiry_date\":{\"value\":\"1588617944000\"},\"warranty_expiry\":{\"value\":\"1588617209800\"},\"state\":{\"name\":\"Expired\"}, \"location\":\"Chennai\"}}"
+            },
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"asset\":{\"total_cost\":\"2000.00\",\"org_serial_number\":\"Y773UEUEUED\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"4\",\"state\":{\"is_scan_required\":false,\"name\":\"Expired\",\"id\":\"4\",\"is_ownership_mandatory\":false},\"barcode\":\"672YD-K3KE-KDKKD\",\"product_depreciation\":null,\"operational_cost\":\"0.00\",\"loan_end\":null,\"asset_tag\":\"KOE393939KDEK\",\"part_no\":\"\",\"purchase_order\":null,\"network_adapters\":[],\"name\":\"asset-auto-lab-5\",\"udf_fields\":{\"udf_pick_1\":null,\"udf_long_2\":null,\"udf_date_3\":null},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"description\":null,\"manufacturer\":\"\",\"acquisition_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588619009000\"},\"current_cost\":\"0.00\",\"vendor\":null,\"purchase_cost\":\"2000.00\",\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[{\"date\":{\"display_value\":\"Jun 3, 2021\",\"value\":\"1622718089287\"},\"cost_factor\":{\"name\":\"Purchase Cost\",\"id\":\"1\"},\"amount\":\"2000.00\",\"description\":null,\"id\":\"4\"}],\"product\":{\"part_no\":\"\",\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":\"\"},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"asset-auto-lab-5\",\"id\":\"10\"},\"expiry_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617944000\"},\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617209800\"},\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":\"Chennai\",\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null}}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "PUT",
+            "path": [
+                "/api/v3/assets?ids={id1,id2,id3}"
+            ],
+            "desc": "Assets can be updated in bulk with this syntax, all the available fields can be updated in this syntax. Maximum of 100 ids can be given in the URL separated by comma.",
+            "disp_desc": "Bulk update of assets",
+            "moduleName" : "Asset",
+            "workflow": "",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{ \"asset\":{ \"purchase_cost\":\"300\",\"warranty_expiry\":{ \"value\":\"1622658600000\"}, \"udf_fields\":{ \"udf_pick_1\":\"Just Received\",\"udf_date_3\":{ \"value\":\"1624620720000\"}}}}"
+            },
+            "output": {
+                "sample": "{\"assets\":[{\"total_cost\":\"300.00\",\"org_serial_number\":\"Y773UEUEUED\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"12\",\"state\":{\"is_scan_required\":true,\"name\":\"In Store\",\"id\":\"1\",\"is_ownership_mandatory\":false},\"barcode\":null,\"product_depreciation\":null,\"operational_cost\":null,\"loan_end\":null,\"asset_tag\":\"KOE393939KDEK\",\"part_no\":null,\"purchase_order\":null,\"network_adapters\":[],\"name\":\"Copy of asset-auto-la3b-3-12\",\"udf_fields\":{\"udf_pick_1\":\"Just Received\",\"udf_long_2\":null,\"udf_date_3\":{\"display_value\":\"Jun 25, 2021 05:02 PM\",\"value\":\"1624620720000\"}},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"is_asset_association_possible\":true,\"description\":null,\"manufacturer\":null,\"acquisition_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588619009000\"},\"current_cost\":null,\"vendor\":null,\"purchase_cost\":\"300.00\",\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[{\"date\":{\"display_value\":\"Jun 3, 2021\",\"value\":\"1622718555116\"},\"cost_factor\":{\"name\":\"Purchase Cost\",\"id\":\"1\"},\"amount\":\"300.00\",\"description\":null,\"id\":\"12\"}],\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"Copy of asset-auto-la3b-3-12\",\"id\":\"18\"},\"expiry_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617944000\"},\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":{\"display_value\":\"Jun 3, 2021\",\"value\":\"1622658600000\"},\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":null,\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null},{\"total_cost\":\"2000.00\",\"org_serial_number\":\"Y773UEUEUED\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"13\",\"state\":{\"is_scan_required\":true,\"name\":\"In Store\",\"id\":\"1\",\"is_ownership_mandatory\":false},\"barcode\":null,\"product_depreciation\":null,\"operational_cost\":null,\"loan_end\":null,\"asset_tag\":\"KOE393939KDEK\",\"part_no\":null,\"purchase_order\":null,\"network_adapters\":[],\"name\":\"Copy of asset-auto-la3b-3-13\",\"udf_fields\":{\"udf_pick_1\":\"Just Received\",\"udf_long_2\":null,\"udf_date_3\":{\"display_value\":\"Jun 25, 2021 05:02 PM\",\"value\":\"1624620720000\"}},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"is_asset_association_possible\":true,\"description\":null,\"manufacturer\":null,\"acquisition_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588619009000\"},\"current_cost\":\"0.00\",\"vendor\":null,\"purchase_cost\":\"300.00\",\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[{\"date\":{\"display_value\":\"Jun 3, 2021\",\"value\":\"1622718555131\"},\"cost_factor\":{\"name\":\"Purchase Cost\",\"id\":\"1\"},\"amount\":\"300.00\",\"description\":null,\"id\":\"13\"}],\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"Copy of asset-auto-la3b-3-13\",\"id\":\"19\"},\"expiry_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617944000\"},\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":{\"display_value\":\"Jun 3, 2021\",\"value\":\"1622658600000\"},\"sys_uptime\":null,\"site\":null,\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":null,\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":null,\"purchase_order_no\":null,\"sys_location\":null}],\"response_status\":[{\"status_code\":2000,\"id\":\"12\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"13\",\"status\":\"success\"}]}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+
+        {
+            "name": "",
+            "method": "GET",
+            "path": [
+                "/api/v3/assets/{asset_id}"
+            ],
+            "desc": "This operation fetches the complete details of an asset including asset additional fields and CI Attributes",
+            "disp_desc": "Get asset",
+            "moduleName" : "Asset",
+            "workflow": "",
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"asset\":{\"total_cost\":\"300.00\",\"org_serial_number\":\"UEUEUED\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"},\"sys_name\":null,\"id\":\"4\",\"state\":{\"is_scan_required\":true,\"name\":\"In Use\",\"id\":\"2\",\"is_ownership_mandatory\":true},\"barcode\":\"YD-KKE-K2DKKD\",\"product_depreciation\":null,\"operational_cost\":null,\"loan_end\":null,\"asset_tag\":\"393939KDEK\",\"part_no\":null,\"purchase_order\":null,\"network_adapters\":[],\"name\":\"asset-auto-lab2\",\"udf_fields\":{\"udf_sline_27\":null,\"udf_mline_28\":\"Asset purchased forzoho corp.\",\"udf_date_31\":{\"display_value\":\"May 27, 2021 12:21 PM\",\"value\":\"1622098260000\"},\"udf_pick_29\":\"HR\",\"udf_long_30\":\"83939939\"},\"is_depreciation_configured\":false,\"region\":null,\"is_depreciation_calculated\":false,\"attachments\":[],\"ip_addresses\":null,\"is_asset_association_possible\":true,\"description\":null,\"manufacturer\":null,\"acquisition_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617009000\"},\"ci_printerci_fields\":{\"udf_sline_88\":\"KDKKEKKD7393KDKD\",\"udf_sline_158\":\"Printer cartridge is low\",\"udf_long_159\":1002,\"udf_date_160\":{\"display_value\":\"May 13, 2021\",\"value\":1620888660000}},\"ci_default_fields\":{\"udf_pickref_1\":{\"name\":\"High\",\"id\":1}},\"current_cost\":null,\"vendor\":{\"name\":\"ZOHO\",\"currency\":{\"id\":\"2\"},\"id\":\"2\"},\"purchase_cost\":\"300.00\",\"department\":null,\"loan_start\":null,\"depreciation\":null,\"costs\":[{\"date\":{\"display_value\":\"May 14, 2021\",\"value\":\"1620973284602\"},\"cost_factor\":{\"name\":\"Purchase Cost\",\"id\":\"1\"},\"amount\":\"300.00\",\"description\":null,\"id\":\"2\"}],\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"asset_depreciation\":null,\"ci\":{\"ci_type\":{\"id\":\"6\"},\"name\":\"asset-auto-lab2\",\"id\":\"35\"},\"expiry_date\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617940000\"},\"used_by_asset\":null,\"sys_description\":null,\"warranty_expiry\":{\"display_value\":\"May 5, 2020\",\"value\":\"1588617200800\"},\"sys_uptime\":null,\"site\":{\"name\":\"Pleasanton, CA\",\"id\":\"3\"},\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"discovered_serial_number\":null,\"location\":\"madurai1\",\"is_loaned\":false,\"is_loanable\":false,\"category\":{\"name\":\"IT\",\"id\":\"2\"},\"user\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"purchase_order_no\":null,\"sys_location\":null}}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "GET",
+            "path": [
+                "/api/v3/assets"
+            ],
+            "disp_desc": "Get all assets",
+            "moduleName" : "Asset",
+            "desc": "Get Asset details without providing the id in the API URL, this will list all the one-to-one fields of asset details. Required fields can be mentioned in the fields_required key, array of objects cannot be fetched in this API.",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":5,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+            },
+            "workflow": "",
+            "output": {
+                "sample": "{\"assets\":[{\"product\":{\"part_no\":\"-\",\"product_type\":{\"id\":\"10\"},\"name\":\"Unknown Server\",\"id\":\"1\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":\"-\"},\"product_type\":{\"internal_name\":\"Server\",\"name\":\"Server\",\"id\":\"10\",\"type\":{\"id\":\"1\"}},\"name\":\"sdp-workstation\",\"udf_fields\":{\"udf_sline_27\":\"Zoho China\",\"udf_mline_28\":\"Purchased for Zoho Hub\",\"udf_date_31\":{\"display_value\":\"Jun 1, 2021 12:34 PM\",\"value\":\"1622531040000\"},\"udf_pick_29\":\"HR\",\"udf_long_30\":\"838383\"},\"id\":\"1\"},{\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"12\"},\"name\":\"Cisco ASA 5585-S20X-K9\",\"id\":\"3\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"product_type\":{\"internal_name\":\"Firewall\",\"name\":\"Firewall\",\"id\":\"12\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"name\":\"asset-auto-lab-33\",\"udf_fields\":{\"udf_sline_27\":\"Zoho Corp\",\"udf_mline_28\":\"Purchased for the zoho tenkasi.\",\"udf_date_31\":{\"display_value\":\"May 19, 2021 12:33 PM\",\"value\":\"1621407780000\"},\"udf_pick_29\":\"HR\",\"udf_long_30\":\"39393\"},\"id\":\"2\"},{\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"12\"},\"name\":\"Cisco ASA 5585-S20X-K9\",\"id\":\"3\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"product_type\":{\"internal_name\":\"Firewall\",\"name\":\"Firewall\",\"id\":\"12\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"name\":\"asset-auto-lab-3\",\"udf_fields\":{\"udf_sline_27\":\"Zoho Corp\",\"udf_mline_28\":\"Purchased for the zoho tenkasi.\",\"udf_date_31\":{\"display_value\":\"May 19, 2021 12:33 PM\",\"value\":\"1621407780000\"},\"udf_pick_29\":\"HR\",\"udf_long_30\":\"39393\"},\"id\":\"3\"},{\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"name\":\"asset-auto-lab2\",\"udf_fields\":{\"udf_sline_27\":null,\"udf_mline_28\":\"Asset purchased forzoho corp.\",\"udf_date_31\":{\"display_value\":\"May 27, 2021 12:21 PM\",\"value\":\"1622098260000\"},\"udf_pick_29\":\"HR\",\"udf_long_30\":\"83939939\"},\"id\":\"4\"},{\"product\":{\"part_no\":null,\"product_type\":{\"id\":\"2\"},\"name\":\"HP LaserJet M1005\",\"id\":\"2\",\"type\":{\"id\":\"1\"},\"category\":{\"id\":\"2\"},\"manufacturer\":null},\"product_type\":{\"internal_name\":\"Printer\",\"name\":\"Printer\",\"id\":\"2\",\"type\":{\"name\":\"Asset\",\"id\":\"1\"}},\"name\":\"Copy of asset-auto-lab2-5\",\"udf_fields\":{\"udf_sline_27\":null,\"udf_mline_28\":\"Asset purchased forzoho corp.\",\"udf_date_31\":{\"display_value\":\"May 27, 2021 12:21 PM\",\"value\":\"1622098260000\"},\"udf_pick_29\":\"HR\",\"udf_long_30\":\"83939939\"},\"id\":\"5\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"sort_fields\":[{\"field\":\"name\",\"order\":\"asc\"}],\"has_more_rows\":true,\"start_index\":1,\"sort_field\":\"id\",\"fields_required\":[\"name\",\"product\",\"udf_fields\",\"product_type\"],\"total_count\":7,\"sort_order\":\"asc\",\"get_total_count\":\"true\",\"row_count\":5}}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "MetaInfo API",
+            "method": "GET",
+            "path": [
+                "/api/v3/assets/metainfo"
+            ],
+            "disp_desc": "Get asset metainfo",
+            "desc": "Metainfo api provides the meta data of Asset Additional fields and CI Attributes. CI Attributes of an asset can be added updated by passing the Product Type ID as an argument to this API. By passing the product type id of Printer, we can get the meta data of ci attributes of Printer and asset additional fields. Product Type ID of Printer can be fetched from /api/v3/product_types",
+            "input": {
+                "name": "input_data",
+                "sample": "{\"template\":{\"id\":\"{product_type_id}\"}}"
+            },
+            "workflow": "",
+            "moduleName" : "Asset",
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"metainfo\":{\"is_dynamic\":false,\"plural_name\":\"assets\",\"relationship\":false,\"fields\":{\"total_cost\":{\"read_only\":true,\"form_field\":false,\"type\":\"double\",\"partial_field\":false,\"display_name\":\"TCO\",\"searchable\":false},\"org_serial_number\":{\"display_type\":\"Single Line\",\"type\":\"string\",\"partial_field\":false,\"display_name\":\"Org Serial Number\",\"constraints\":{\"max_length\":50}},\"region_sys_attribute\":{\"lookup_entity\":\"region\",\"lookup_field\":\"name\",\"sortable\":false,\"href\":\"/assets/region_sys_attribute\",\"type\":\"lookup\",\"partial_field\":false,\"searchable\":false},\"type\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"asset_type\",\"lookup_field\":\"name\",\"href\":\"/assets/type\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"Asset Type\"},\"sys_name\":{\"display_type\":\"Single Line\",\"type\":\"string\",\"partial_field\":false,\"constraints\":{\"max_length\":150}},\"technician_sys_attribute\":{\"lookup_entity\":\"technician\",\"lookup_field\":\"name\",\"sortable\":false,\"href\":\"/assets/technician_sys_attribute\",\"type\":\"lookup\",\"partial_field\":false,\"searchable\":false},\"id\":{\"identifier\":true,\"read_only\":true,\"form_field\":false,\"type\":\"long\",\"partial_field\":false},\"state\":{\"lookup_entity\":\"asset_state\",\"lookup_field\":\"name\",\"href\":\"/assets/state\",\"type\":\"lookup\",\"partial_field\":true,\"display_name\":\"Asset State\"},\"barcode\":{\"display_type\":\"Single Line\",\"unique\":true,\"type\":\"string\",\"partial_field\":true,\"display_name\":\"Barcode\",\"constraints\":{\"max_length\":100}},\"product_depreciation\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"depreciation_detail\",\"lookup_field\":\"name\",\"href\":\"/assets/product_depreciation\",\"type\":\"lookup\",\"partial_field\":false},\"operational_cost\":{\"read_only\":true,\"form_field\":false,\"type\":\"double\",\"partial_field\":false,\"display_name\":\"Operational Cost(s)\",\"searchable\":false},\"loan_end\":{\"type\":\"date\",\"partial_field\":false,\"display_name\":\"Loan End\",\"searchable\":false},\"asset_tag\":{\"display_type\":\"Single Line\",\"type\":\"string\",\"partial_field\":false,\"display_name\":\"Asset Tag\",\"constraints\":{\"max_length\":50}},\"part_no\":{\"read_only\":true,\"form_field\":false,\"type\":\"string\",\"partial_field\":true,\"display_name\":\"Part No.\"},\"name\":{\"display_type\":\"Single Line\",\"unique\":true,\"type\":\"string\",\"partial_field\":true,\"display_name\":\"Asset\",\"mandatory\":true,\"constraints\":{\"max_length\":200}},\"udf_fields\":{\"type\":\"udf\",\"fields\":{\"udf_sline_27\":{\"display_type\":\"Single Line\",\"is_encrypted\":false,\"description\":\"\",\"default_value\":null,\"id\":\"27\",\"type\":\"string\",\"display_name\":\"Asset Vendor Name\",\"constraints\":{\"max_length\":\"3500\"}},\"udf_mline_28\":{\"display_type\":\"Multi Line\",\"is_encrypted\":false,\"description\":\"\",\"default_value\":null,\"id\":\"28\",\"type\":\"string\",\"display_name\":\"Asset Purchase Description\",\"constraints\":{\"max_length\":\"3500\"}},\"udf_date_31\":{\"display_type\":\"Date/Time Field\",\"is_encrypted\":false,\"description\":\"\",\"default_value\":null,\"id\":\"31\",\"type\":\"datetime\",\"display_name\":\"Asset-Repaired-Date\",\"constraints\":{},\"searchable\":false},\"udf_pick_29\":{\"display_type\":\"Pick List\",\"is_encrypted\":false,\"description\":\"\",\"default_value\":null,\"id\":\"29\",\"href\":\"/assets/udf_fields/udf_pick_29\",\"type\":\"string\",\"display_name\":\"Asset Internal Department\",\"constraints\":{}},\"udf_long_30\":{\"display_type\":\"Numeric Field\",\"is_encrypted\":false,\"description\":\"\",\"default_value\":null,\"id\":\"30\",\"type\":\"long\",\"display_name\":\"Asset-PO-ID\",\"constraints\":{}}},\"constraints\":{}},\"is_depreciation_configured\":{\"read_only\":true,\"form_field\":false,\"sortable\":false,\"type\":\"boolean\",\"partial_field\":false},\"region\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"region\",\"lookup_field\":\"name\",\"href\":\"/assets/region\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"Region\"},\"is_depreciation_calculated\":{\"read_only\":true,\"form_field\":false,\"sortable\":false,\"type\":\"boolean\",\"partial_field\":false},\"ip_addresses\":{\"read_only\":true,\"form_field\":false,\"type\":\"string\",\"partial_field\":false,\"display_name\":\"IP Address\"},\"description\":{\"sortable\":false,\"type\":\"string\",\"partial_field\":false,\"display_name\":\"Description\",\"searchable\":false},\"manufacturer\":{\"read_only\":true,\"form_field\":false,\"type\":\"string\",\"partial_field\":true,\"display_name\":\"Manufacturer\"},\"acquisition_date\":{\"type\":\"date\",\"partial_field\":false,\"display_name\":\"Acquisition Date\",\"searchable\":false},\"ci_printerci_fields\":{\"fields\":{\"udf_sline_88\":{\"display_type\":\"Single Line\",\"id\":88,\"sortable\":false,\"display_name\":\"Printer Serial Number\",\"type\":\"string\",\"constraints\":{\"max_length\":250},\"searchable\":false},\"udf_sline_158\":{\"display_type\":\"Single Line\",\"id\":158,\"sortable\":false,\"display_name\":\"Printer CI Attribute - single Line\",\"type\":\"string\",\"constraints\":{\"max_length\":250},\"searchable\":false},\"udf_long_159\":{\"display_type\":\"Numeric\",\"id\":159,\"sortable\":false,\"display_name\":\"Printer CI Attribute -Number Attribute\",\"type\":\"long\",\"searchable\":false},\"udf_date_160\":{\"display_type\":\"Date/Time\",\"id\":160,\"sortable\":false,\"display_name\":\"Printer CI Attribute - Date Field\",\"type\":\"datetime\",\"searchable\":false}},\"type\":\"udf\"},\"ci_default_fields\":{\"fields\":{\"udf_pickref_1\":{\"display_type\":\"Pick List\",\"id\":1,\"sortable\":false,\"href\":\"/assets/ci_default_fields/1\",\"display_name\":\"Business Impact\",\"type\":\"string\",\"searchable\":false}},\"type\":\"udf\"},\"current_cost\":{\"read_only\":true,\"form_field\":false,\"type\":\"double\",\"partial_field\":false,\"display_name\":\"Current Book Value\",\"searchable\":false},\"vendor\":{\"lookup_entity\":\"vendor\",\"lookup_field\":\"name\",\"href\":\"/assets/vendor\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"Vendor\"},\"mac_address\":{\"sortable\":false,\"type\":\"string\",\"partial_field\":false,\"display_name\":\"Mac Addresses\",\"searchable\":false},\"purchase_cost\":{\"type\":\"double\",\"partial_field\":false,\"display_name\":\"Purchase Cost\",\"searchable\":false},\"department\":{\"lookup_entity\":\"department\",\"lookup_field\":\"name\",\"href\":\"/assets/department\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"Department\"},\"loan_start\":{\"type\":\"date\",\"partial_field\":false,\"display_name\":\"Loan Start\",\"searchable\":false},\"product\":{\"lookup_entity\":\"product\",\"lookup_field\":\"name\",\"href\":\"/assets/product\",\"type\":\"lookup\",\"partial_field\":true,\"display_name\":\"Product\",\"mandatory\":true},\"asset_depreciation\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"depreciation_detail\",\"lookup_field\":\"name\",\"href\":\"/assets/asset_depreciation\",\"type\":\"lookup\",\"partial_field\":false},\"ci\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"ci\",\"lookup_field\":\"name\",\"href\":\"/assets/ci\",\"type\":\"lookup\",\"partial_field\":true,\"display_name\":\"CI\"},\"expiry_date\":{\"type\":\"date\",\"partial_field\":false,\"display_name\":\"Expiry Date\",\"searchable\":false},\"used_by_asset\":{\"lookup_entity\":\"asset\",\"lookup_field\":\"name\",\"href\":\"/assets/used_by_asset\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"Associated to Assets\"},\"sys_description\":{\"display_type\":\"Multi Line\",\"type\":\"string\",\"partial_field\":false,\"display_name\":\"sysDescription\",\"constraints\":{\"max_length\":500}},\"warranty_expiry\":{\"type\":\"date\",\"partial_field\":false,\"display_name\":\"Warranty Expiry Date\",\"searchable\":false},\"sys_uptime\":{\"display_type\":\"Single Line\",\"type\":\"string\",\"partial_field\":false,\"display_name\":\"sysUpTime\",\"constraints\":{\"max_length\":100}},\"asset_fields\":{\"sortable\":false,\"type\":\"unknown\",\"partial_field\":false,\"searchable\":false},\"site_sys_attribute\":{\"lookup_entity\":\"site\",\"lookup_field\":\"name\",\"sortable\":false,\"href\":\"/assets/site_sys_attribute\",\"type\":\"lookup\",\"partial_field\":false,\"searchable\":false},\"site\":{\"lookup_entity\":\"site\",\"lookup_field\":\"name\",\"href\":\"/assets/site\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"Site\"},\"product_type\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"product_type\",\"lookup_field\":\"name\",\"href\":\"/assets/product_type\",\"type\":\"lookup\",\"partial_field\":true,\"display_name\":\"Product Type\"},\"discovered_serial_number\":{\"display_type\":\"Single Line\",\"type\":\"string\",\"partial_field\":false,\"display_name\":\"Manufacturer Serial Number\",\"constraints\":{\"max_length\":150}},\"location\":{\"display_type\":\"Single Line\",\"type\":\"string\",\"partial_field\":false,\"display_name\":\"Location\",\"constraints\":{\"max_length\":250}},\"is_loaned\":{\"read_only\":true,\"form_field\":false,\"sortable\":false,\"type\":\"boolean\",\"partial_field\":false,\"display_name\":\"Is Loaned\",\"searchable\":false},\"is_loanable\":{\"default_value\":\"false\",\"sortable\":false,\"type\":\"boolean\",\"partial_field\":false},\"category\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"asset_category\",\"lookup_field\":\"name\",\"href\":\"/assets/category\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"Asset Category\"},\"user\":{\"lookup_entity\":\"user\",\"lookup_field\":\"name\",\"href\":\"/assets/user\",\"type\":\"lookup\",\"partial_field\":false,\"display_name\":\"User\"},\"purchase_order_no\":{\"sortable\":false,\"type\":\"string\",\"partial_field\":false,\"display_name\":\"Purchase Order No.\",\"searchable\":false},\"state_history_comments\":{\"sortable\":false,\"type\":\"string\",\"partial_field\":false,\"display_name\":\"comment\",\"constraints\":{\"max_length\":100},\"searchable\":false},\"sys_location\":{\"display_type\":\"Single Line\",\"type\":\"string\",\"partial_field\":false,\"display_name\":\"sysLocation\",\"constraints\":{\"max_length\":50}}},\"entity\":\"asset\"}}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "DELETE",
+            "moduleName" : "Asset",
+            "path": [
+                "/api/v3/assets/{asset}"
+            ],
+            "desc": "Assets can be deleted using this operation",
+            "disp_desc": "Delete asset",
+            "workflow": "",
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "false",
+            "isReleased": "true"
+        },
+        {
+            "name": "",
+            "method": "DELETE",
+            "moduleName" : "Asset",
+            "path": [
+                "/api/v3/assets?ids={id1,id2}"
+            ],
+            "desc": "Assets can be deleted in bulk using this operation",
+            "disp_desc": "Delete assets",
+            "workflow": "",
+            "output": {
+                "sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"5\",\"status\":\"success\"},{\"status_code\":2000,\"id\":\"6\",\"status\":\"success\"}]}"
+            },
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "false",
+            "isReleased": "true"
+        }
+    ],
+    "attributes": [{
+            "name": "id",
+            "type": "Number",
+            "desc": "Unique identifier used to identify the asset.",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "isMandatory": "true",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "name",
+            "type": "String",
+            "desc": "Unique name used to identify the asset.",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "isMandatory": "true",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "udf_fields",
+            "type": "Object",
+            "desc": "Holds the asset additional fields data. Refer the metainfo API of asset using /api/v3/assets/metainfo to get the alias name of the udf_field. All asset additional fields can be added/updated/fetched by using the below format.  Here udf_sline_27 refers to a field under Admin/Asset Additional fields.      <br><br>  <b>Sample Data </b> <br>             \"udf_fields\":{\"udf_sline_27\":\"Zoho Corp\",\"udf_mline_28\":\"Sample multi line data\",\"udf_date_31\":{\"display_value\":\"May 13, 2021 02:51 PM\",\"value\":\"1620897660000\"},\"udf_pick_29\":\"HR\",\"udf_long_30\":\"39393\"},",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "product",
+            "type": "Object",
+            "desc": "Product name of an asset, name or id of a product can be given.",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "isMandatory": "true",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "part_no",
+            "type": "String",
+            "desc": "Part Number field from the asset's Product",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "manufacturer",
+            "type": "String",
+            "desc": "Manufacturer field from the asset's Product",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+
+        {
+            "name": "product_type",
+            "type": "Object",
+            "desc": "Product Type of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isReadOnly": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "type",
+            "type": "Object",
+            "desc": "Type of an asset - <b> Asset/Component</b>",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "isReadOnly": "true",
+            "inOD": "false",
+
+            "isReleased": "true"
+        },
+        {
+            "name": "category",
+            "type": "Object",
+            "desc": "Category of the Product Type - <b>IT/Non-IT</b>",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "false",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "asset_tag",
+            "type": "String",
+            "desc": "Asset tag of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "org_serial_number",
+            "type": "String",
+            "desc": "Organization Serial Number field to track assets",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "barcode",
+            "type": "String",
+            "desc": "Barcode string to track assets",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "vendor",
+            "type": "Object",
+            "desc": "Vendor of an asset, name or id of a vendor can be given.",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "acquisition_date",
+            "type": "Date Object",
+            "desc": "Acquisition date of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "warranty_expiry",
+            "type": "Date Object",
+            "desc": "Warranty Expiry date of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "expiry_date",
+            "type": "Date Object",
+            "desc": "Expiry date of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "location",
+            "type": "String",
+            "desc": "Location of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "site",
+            "type": "Object",
+            "desc": "Physical site of an asset, name or id of a site can be given.",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "region",
+            "type": "Object",
+            "desc": "Region of an asset's site",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "purchase_cost",
+            "type": "Number",
+            "desc": "Purchase cost of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "operational_cost",
+            "type": "Number",
+            "desc": "Operation cost of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "total_cost",
+            "type": "Number",
+            "desc": "Total cost of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "current_cost",
+            "type": "Number",
+            "desc": "Current cost of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "costs",
+            "type": "Array of Object",
+            "desc": "Various cost of an asset configured under the Financials tab",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "asset_depreciation",
+            "type": "Object",
+            "desc": "Depreciation details configured for an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "product_depreciation",
+            "type": "Object",
+            "desc": "Depreciation details configured for the asset's product",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "network_adapters",
+            "type": "Array of Object",
+            "desc": "Holds the network details of the asset, it includes the fields name (nic_name), description, ip_address, mac_address, ipnet_mask, network, gateway, dhcp, dhcp_server, nic_lease. Network details alone can be fetched using /api/v3/workstations/{workstation_id}/network_adapters . Network adapters can be added by adding this syntax in the input_data {\"network_adapters\":[{\"mac_address\":\"fe80::e4d:e9ff:fea5:b377\",\"ip_address\":\"127.168.10.72\"}]}",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "is_depreciation_configured",
+            "type": "Boolean",
+            "desc": "Can be used to check whether depreciation has configured for this asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "is_depreciation_calculated",
+            "type": "Boolean",
+            "desc": "Can be used to check whether depreciation has calculated for this asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "discovered_serial_number",
+            "type": "String",
+            "desc": "Serial number fetched from discovery",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "sys_uptime",
+            "type": "String",
+            "desc": "sysUpTime - SNMP Attribute which can be fetched only for IT Assets except Workstations, Servers, Smart Phones and Tablets",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "sys_name",
+            "type": "String",
+            "desc": "sysName - SNMP Attribute which can be fetched only for IT Assets except Workstations, Servers, Smart Phones and Tablets",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "sys_location",
+            "type": "String",
+            "desc": "sysLocation - SNMP Attribute which can be fetched only for IT Assets except Workstations, Servers, Smart Phones and Tablets",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "sys_description",
+            "type": "String",
+            "desc": "sysDescription - SNMP Attribute which can be fetched only for IT Assets",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "user",
+            "type": "Object",
+            "desc": "Owner of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "department",
+            "type": "Object",
+            "desc": "Dpeartment of user assigned to the asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "loan_start",
+            "type": "Date Object",
+            "desc": "Start date of the Asset Loan, can be given to asset having User as owner",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "loan_end",
+            "type": "Date Object",
+            "desc": "End date of the Asset Loan, can be given to asset having User as owner",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "used_by_asset",
+            "type": "Object",
+            "desc": "Associate to Asset Field, asset can be assigned to another asset using this field",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "component_attachments",
+            "type": "Array of Object",
+            "desc": "Lists the components attached to an asset using Attach Components option in the UI using the URL /api/v3/assets/{asset_id}/component_attachments",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "asset_attachments",
+            "type": "Array of Object",
+            "desc": "Lists the assets attached to an asset using Attach Assets option in the UI using the URL /api/v3/assets/{asset_id}/asset_attachments",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "depreciation_values",
+            "type": "Array of Object",
+            "desc": "Lists the depreciation details of an asset using /api/v3/assets/{asset_id}/depreciation_values",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "state",
+            "type": "Object",
+            "desc": "Current state of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "is_personal",
+            "type": "Boolean",
+            "desc": "To know whether the device is a personal device, avilable only for Smart Phone devices",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+
+        {
+            "name": "contracts",
+            "type": "Array Of Object",
+            "desc": "To show the list of contracts where the asset is associated, can be fetched from /api/v3/assets/{asset_id}/contracts",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "is_loanable",
+            "type": "Boolean",
+            "desc": "To know whether the asset is loaned or not",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "state_history",
+            "type": "Array Of Object",
+            "desc": "To list the history of asset state changes",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "ci",
+            "type": "Object",
+            "desc": "To know the CI ID and the CI Type of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "ip_addresses",
+            "type": "String",
+            "desc": "Concatenated string of all IP Address seperated by comma",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "is_loaned",
+            "type": "Boolean",
+            "desc": "To know whether an asset is loaned or not",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "attachments",
+            "type": "Array Of Object",
+            "desc": "Lists the attachments added to an asset using /api/v3/assets/{asset_id}/attachments using GET",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "asset_fields",
+            "type": "Object",
+            "desc": "Shows the CI Attributes of an asset based on its CI Type",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "description",
+            "type": "String",
+            "desc": "Description of an asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReleased": "true"
+        },
+        {
+            "name": "purchase_order_no",
+            "type": "String",
+            "desc": "Purchase Order Number associated to the asset",
+            "graphView": "",
+            "column": "",
+            "odcolumn": "",
+            "html_type": "",
+            "inOP": "true",
+            "isAsset": "true",
+            "inOD": "true",
+            "isReadOnly": "true",
+            "isReleased": "true"
+        }
+    ],
+    "Additional Elements": [],
+    "isReleased": "true"
+}

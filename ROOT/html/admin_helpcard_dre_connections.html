@@ -1,0 +1,66 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+</head>
+<body>
+<span style="font-weight: bold;">CONNECTIONS</span>
+<br>
+<br>
+Connections are an authentication mechanism used to integrate ServiceDesk Plus with external applications. You can use connections to integrate with any third-party application and access the data stored there.
+<br>
+<br>
+You can set up connections after registering the third party application as a service in ServiceDesk Plus.
+<br>
+<br>
+Connections are equipped with three modes of authentication - API key, basic authentication, and OAuth 2.0.
+<br>
+<br>
+<strong>Create Service</strong>
+<br>
+<br>
+The third party application details are stored as custom services. Under Connections pane, select <strong>Custom Services</strong> and click <strong>Create Service</strong>.
+<ul>
+    <li>Provide a display name for the service.</li>
+    <li>Provide a unique link name to identify the custom service. The link name must contain only alphanumeric characters in snake_case.</li>
+    <li>Choose an authentication type based on the third-party service's API documentation:</li>
+    <ul>
+        <li><strong>API Key</strong> - Specify the parameter type, key, and display name to connect with the service.</li>
+        <li><strong>Basic Authentication</strong> - The service is authenticated using the username and password details.</li>
+        <li><strong>OAuth2</strong> - Specify the identity provider details. Ensure the callback URL is: <strong>{sdp_base_URL}/integration/oauth/callback</strong> and the domain name is the alias URL configured under Advanced Portal Settings.</li>
+    </ul>
+    <li>Click <strong>Create Service</strong>.</li>
+</ul>
+<br>
+<br>
+<strong>Create Connection</strong>
+<br>
+<br>
+You can authenticate the service integrated via connections. Under Connections pane, select <strong>My Connections</strong> and click <strong>Create Connection</strong>.
+<br>
+<br>
+Pick the service for which the connection must be created. You can also create a new service.
+<ui>
+    <li>Provide a display name for the connection.</li>
+    <li>Provide a unique link name to identify the connection. The link name must contain only alphanumeric characters in snake_case.</li>
+    <li>For services authenticated via OAuth2, choose the relevant permissions.</li>
+    <li>Click <strong>Create and Connect</strong>.</li>
+    <li>Provide the relevant authentication details.</li>
+</ui>
+<br>
+<br>
+<strong>List View Operations</strong>
+<ul>
+    <li>In the list view, hover over a connection or service to edit/delete/revoke it.</li>
+    <li>Use the <strong>Filter</strong> icon to view only connected or revoked services.</li>
+</ul>
+<br>
+<br>
+<strong>Note:</strong>
+<ul>
+    <li>You can also edit/delete a connection or service by clicking the <strong>Ellipsis</strong> icon on the details page. Similarly, you can also revoke a connection from the connection details page.</li>
+    <li>Services with existing connections cannot be deleted or edited, except for Service Name field and Separator field (if OAuth2 is configured).</li>
+    <li>You can edit or delete any connection created by you. SDAdmins can connect (authenticate) any connections available.</li>
+    <li>Connections can be revoked only by authenticated users or by the user who created the connection.</li>
+</ul>
+</body>
+</html>

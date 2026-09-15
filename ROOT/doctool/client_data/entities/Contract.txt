@@ -1,0 +1,508 @@
+{
+   "attributes":[
+      {
+         "name":"id",
+         "type":"Number",
+         "desc":"Unique identifier used to identify the contract.",
+         "graphView":"",
+         "column":"MaintenanceContract:CONTRACTID",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isMandatory": "true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true", 
+	 "isReleased":"true"
+      },
+      {
+         "name":"name",
+         "type":"String",
+         "desc":"Name of the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:CONTRACTNAME",
+         "odcolumn": "",
+	 "html_type": "",
+         "isMandatory":"true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"custom_contract_id",
+         "type":"String",
+         "desc":"Contract custom id.",
+         "graphView":"",
+	 "column":"MaintenanceContract:CUSTOMCONTRACTID",
+         "odcolumn": "",
+	 "html_type": "",
+         "isMandatory":"true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"type",
+         "type":"Number",
+         "desc":"Contract Type id to categorize the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:CATEGORYID",
+         "odcolumn": "",
+	 "html_type": "",
+         "relEntity":{
+           "name":"Contract Type",
+           "type":"referential",
+           "relation":"1to1"
+        },
+         "isMandatory":"true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"created_by",
+         "type":"Object",
+         "desc":"Denotes the technician who created the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:CREATEDBY",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"true",
+         "relEntity":{
+            "name":"User",
+            "type":"referential",
+            "relation":"1to1"
+         },
+	 "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+      	"name": "is_renewed",
+      	"type": "Boolean",
+      	"desc": "Boolean value indicating whether this contract is the renewed contract.",
+      	"graphView": "",
+      	"column": "MaintenanceContract:ISRENEWED",
+      	"odcolumn": "",
+      	"html_type": "",
+      	"isReadOnly": "false",
+	"inOD": "true",
+      	"inOP": "true",
+	"isAsset": "true",
+      	"isReleased": "true"
+     },
+     {
+      	"name": "comments",
+      	"type": "String",
+      	"desc": "Comments for the contract.",
+      	"graphView": "",
+      	"column": "MaintenanceContract:COMMENTS",
+      	"odcolumn": "",
+      	"html_type": "",
+      	"isReadOnly": "false",
+	"inOD": "true",
+      	"inOP": "true",
+	"isAsset": "true",
+      	"isReleased": "true"
+     },
+     {
+      	"name": "support",
+      	"type": "String",
+      	"desc": "Support for the contract.",
+      	"graphView": "",
+      	"column": "MaintenanceContract:SUPPORT",
+      	"odcolumn": "",
+      	"html_type": "",
+      	"isReadOnly": "false",
+	"inOD": "true",
+      	"inOP": "true",
+	"isAsset": "true",
+      	"isReleased": "true"
+     },
+     {
+        "name":"vendor",
+        "type":"Object",
+        "desc":"Denotes the vendor of the contract.",
+        "graphView":"",
+ 	"column":"MaintenanceContract:MAINTENANCEVENDOR",
+	"odcolumn": "",
+	"html_type": "",
+        "isReadOnly":"false",
+        "relEntity":{
+           "name":"Vendor",
+           "type":"referential",
+           "relation":"1to1"
+        },
+	"inOP":"true",
+	"inOD": "true",
+	"isAsset": "true",
+        "isReleased":"true"
+      },
+      {
+         "name":"created_date",
+         "type":"Number",
+         "desc":"Denotes the created date of the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:CREATEDDATE",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"assets",
+         "type":"Object",
+         "desc":"Denotes the associated assets to the contract.",
+         "graphView":"",
+	 "column":"",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"false",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"from_date",
+         "type":"Number",
+         "desc":"Denotes the start date of the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:FROMDATE",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"to_date",
+         "type":"Number",
+         "desc":"Denotes the end date of the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:TODATE",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"total_price",
+         "type":"Double",
+         "desc":"Denotes the end date of the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:TOTALPRICE",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"status",
+         "type":"Number",
+         "desc":"Denotes the status of the contract.",
+         "graphView":"",
+	 "column":"MaintenanceContract:STATUSID",
+         "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"true",
+	 "relEntity":{
+           "name":"Contract Status",
+           "type":"referential",
+           "relation":"1to1"
+        },
+         "isMandatory":"true",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"notification_email",
+         "type":"String",
+         "desc":"Emails to notify for expiry of the contract.",
+         "graphView":"",
+	 "column":"",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"false",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"notify_users",
+         "type":"Object",
+         "desc":"Users to notify for expiry of the contract.",
+         "graphView":"",
+	 "column":"",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"false",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"contract_notify_before_days",
+         "type":"Object",
+         "desc":"Number of days before to notify for expiry of the contract.",
+         "graphView":"",
+	 "column":"",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"false",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+      	"name": "is_escalated",
+      	"type": "Boolean",
+      	"desc": "Denotes expiry notification notifies",
+      	"graphView": "",
+      	"column": "MaintenanceContract:ISESCALATED",
+      	"odcolumn": "",
+      	"html_type": "",
+      	"isReadOnly": "true",
+	"inOD": "true",
+      	"inOP": "true",
+	"isAsset": "true",
+      	"isReleased": "true"
+      },
+      {
+         "name":"udf_fields",
+         "type":"Object",
+         "desc":"Holds udf fields values associated with the contract",
+         "graphView":"",
+	 "column":"",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"false",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"contract_renewals",
+         "type":"Object",
+         "desc":"Denotes the renewal contract.",
+         "graphView":"",
+	 "column":"",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"false",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      },
+      {
+         "name":"attachments",
+         "type":"Object",
+         "desc":"Denotes the attachment.",
+         "graphView":"",
+	 "column":"",
+	 "odcolumn": "",
+	 "html_type": "",
+         "isReadOnly":"false",
+         "inOP":"true",
+	 "inOD": "true",
+	 "isAsset": "true",
+         "isReleased":"true"
+      }
+   ],
+   "operations":[
+      {
+         "name":"",
+         "method":"GET",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts/{contract_id}"],
+         "desc":"This operation fetches details of a contract.",
+         "disp_desc":"View A Contract",
+         "workflow":"",
+         "output":{"sample":"{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"contract\": { \"attachments\": [], \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"assets\": [], \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"custom_contract_id\": \"Contract-100\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"parent_contract\": null, \"id\": \"3301\", \"is_renewed\": false, \"comments\": \"Contract description\", \"notification_email\": null, \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"total_price\": \"0.00\", \"created_by\": { \"email_id\": \"user1@zylker.com\", \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null }, \"contract_notify_before_days\": [], \"notify_users\": [], \"name\": \"Contract\", \"created_date\": { \"display_value\": \"May 18, 2021\", \"value\": \"1621331141617\" }, \"support\": \"Contract Support Description\", \"status\": { \"id\": \"1\", \"status\": \"Active\" } } }"},
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"GET",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts"],
+         "desc":"This operation fetches all contracts.",
+         "disp_desc":"View All Contracts",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{\"list_info\":{\"row_count\":10,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}",
+            "showattr":"true"
+         },
+         "output":{
+            "sample":"{ \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": false, \"start_index\": 1, \"row_count\": 7 }, \"contracts\": [ { \"from_date\": { \"display_value\": \"Apr 17, 2021\", \"value\": \"1618601341000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"1000.00\", \"custom_contract_id\": \"Contract With Notification Data\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"name\": \"Contract With Notification Data\", \"id\": \"3305\", \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"status\": { \"id\": \"1\", \"status\": \"Active\" } }, { \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"0.00\", \"custom_contract_id\": \"Contract-100\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"name\": \"Contract\", \"id\": \"3301\", \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"status\": { \"id\": \"1\", \"status\": \"Active\" } }, { \"from_date\": { \"display_value\": \"Nov 1, 2020\", \"value\": \"1604172541000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"10000.00\", \"custom_contract_id\": \"TestContract-Renew\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"name\": \"TestContract-Renew\", \"id\": \"3307\", \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"status\": { \"id\": \"1\", \"status\": \"Active\" } }, { \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"0.00\", \"custom_contract_id\": \"Contract with parent contract data\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"name\": \"Contract with parent contract data1\", \"id\": \"3306\", \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"status\": { \"id\": \"1\", \"status\": \"Active\" } }, { \"from_date\": { \"display_value\": \"Apr 17, 2021\", \"value\": \"1618601341000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"10000.00\", \"custom_contract_id\": \"Contract With Assets\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"name\": \"Contract With Assets\", \"id\": \"3304\", \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"status\": { \"id\": \"1\", \"status\": \"Active\" } }, { \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"0.00\", \"custom_contract_id\": \"Contract-2\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"name\": \"Contract-2\", \"id\": \"3303\", \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"status\": { \"id\": \"1\", \"status\": \"Active\" } }, { \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"0.00\", \"custom_contract_id\": \"Contract-1\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"name\": \"Contract-1\", \"id\": \"3302\", \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"status\": { \"id\": \"1\", \"status\": \"Active\" } } ] }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"POST",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts"],
+         "desc":"This operation lets you add a contract.",
+         "disp_desc":"Add A Contract",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{ \"contract\": { \"name\": \"Contract-2\", \"type\": { \"id\": \"1\" }, \"vendor\": { \"id\": \"301\" }, \"custom_contract_id\": \"Contract-2\", \"comments\": \"Contract description\", \"support\": \"Contract Support Description\", \"from_date\": { \"value\": \"1612167460000\" }, \"to_date\": { \"value\": \"1650181445000\" } } }"
+         },
+         "output":{
+            "sample":"{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"contract\": { \"attachments\": [], \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"assets\": [], \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"custom_contract_id\": \"Contract-2\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"parent_contract\": null, \"id\": \"3303\", \"is_renewed\": false, \"comments\": \"Contract description\", \"notification_email\": null, \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"total_price\": \"0.00\", \"created_by\": { \"email_id\": \"user1@zylker.com\", \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null }, \"contract_notify_before_days\": [], \"notify_users\": [], \"name\": \"Contract-2\", \"created_date\": { \"display_value\": \"May 18, 2021\", \"value\": \"1621331202616\" }, \"support\": \"Contract Support Description\", \"status\": { \"id\": \"1\", \"status\": \"Active\" } } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"PUT",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts/{contract_id}"],
+         "desc":"This operation lets you update a contract.",
+         "disp_desc":"Update A Contract",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{ \"contract\": { \"assets\": [ { \"id\": 303 }, { \"id\": 304 } ] } }"
+         },
+         "output":{
+            "sample":"{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"contract\": { \"attachments\": [], \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"assets\": [ { \"part_no\": null, \"product\": { \"id\": \"303\" }, \"product_type\": { \"id\": \"2\" }, \"ci\": { \"id\": \"303\" }, \"name\": \"Printer Floor 11\", \"id\": \"303\", \"state\": { \"id\": \"1\" }, \"barcode\": null, \"manufacturer\": \"\" }, { \"part_no\": null, \"product\": { \"id\": \"304\" }, \"product_type\": { \"id\": \"3\" }, \"ci\": { \"id\": \"304\" }, \"name\": \"Router TN\", \"id\": \"304\", \"state\": { \"id\": \"1\" }, \"barcode\": null, \"manufacturer\": \"\" } ], \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"custom_contract_id\": \"Contract-2\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"parent_contract\": null, \"id\": \"3303\", \"is_renewed\": false, \"comments\": \"Contract description\", \"notification_email\": null, \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"total_price\": \"0.00\", \"created_by\": { \"email_id\": \"user1@zylker.com\", \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null }, \"contract_notify_before_days\": [], \"notify_users\": [], \"name\": \"Contract-2\", \"created_date\": { \"display_value\": \"May 18, 2021\", \"value\": \"1621331202616\" }, \"support\": \"Contract Support Description\", \"status\": { \"id\": \"1\", \"status\": \"Active\" } } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"POST",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts/{contract_id}/_renew_contract"],
+         "desc":"This operation lets you renew a contract.",
+         "disp_desc":"Renew A Contract",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{ \"contract\": { \"name\": \"TestContract-Renew\", \"type\": { \"id\": \"1\" }, \"vendor\": { \"id\": \"301\" }, \"is_renewed\":true, \"custom_contract_id\": \"TestContract-Renew\", \"comments\": \"Contract description\", \"support\": \"Contract support\", \"from_date\": { \"value\": \"1604212231000\" }, \"to_date\": { \"value\": \"1650181445000\" }, \"total_price\": \"10000\" } }"
+         },
+         "output":{
+            "sample":"{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"contract\": { \"attachments\": [], \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"assets\": [], \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"custom_contract_id\": \"TestContract-Renew\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"parent_contract\": null, \"id\": \"3307\", \"is_renewed\": true, \"comments\": \"Contract description\", \"notification_email\": null, \"from_date\": { \"display_value\": \"Nov 1, 2020\", \"value\": \"1604172541000\" }, \"total_price\": \"10000.00\", \"created_by\": { \"email_id\": \"user1@zylker.com\", \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null }, \"contract_notify_before_days\": [], \"notify_users\": [], \"name\": \"TestContract-Renew\", \"created_date\": { \"display_value\": \"May 18, 2021\", \"value\": \"1621332208914\" }, \"support\": \"Contract support\", \"status\": { \"id\": \"1\", \"status\": \"Active\" } } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"POST",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts"],
+         "desc":"This operation lets you to add parent contract to a contract.",
+         "disp_desc":"Add Parent To A Contract",
+         "workflow":"",
+	 "input":{
+            "name":"INPUT_DATA",
+            "sample":"{ \"contract\": { \"name\": \"Contract with parent contract data\", \"type\": { \"id\": \"1\" }, \"vendor\": { \"id\": \"301\" }, \"custom_contract_id\": \"Contract with parent contract data\", \"comments\": \"Contract description\", \"support\": \"Contract Support Description\", \"from_date\": { \"value\": \"1612167460000\" }, \"to_date\": { \"value\": \"1650181445000\" }, \"parent_contract\":{\"id\":3303} } }"
+         },
+         "output":{
+            "sample":"{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"contract\": { \"attachments\": [], \"type\": { \"name\": \"Maintenance\", \"id\": \"1\" }, \"assets\": [], \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"custom_contract_id\": \"Contract with parent contract data\", \"vendor\": { \"name\": \"Vendor1\", \"currency\": { \"id\": \"2\" }, \"id\": \"301\" }, \"parent_contract\": { \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"to_date\": { \"display_value\": \"Apr 17, 2022\", \"value\": \"1650220199000\" }, \"total_price\": \"0.00\", \"custom_contract_id\": \"Contract-2\", \"vendor\": { \"id\": \"301\" }, \"name\": \"Contract-2\", \"id\": \"3303\", \"type\": { \"id\": \"1\" } }, \"id\": \"3306\", \"is_renewed\": false, \"comments\": \"Contract description\", \"notification_email\": null, \"from_date\": { \"display_value\": \"Feb 1, 2021\", \"value\": \"1612121341000\" }, \"total_price\": \"0.00\", \"created_by\": { \"email_id\": \"user1@zylker.com\", \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"is_vipuser\": false, \"id\": \"2\", \"department\": null }, \"contract_notify_before_days\": [], \"notify_users\": [], \"name\": \"Contract with parent contract data\", \"created_date\": { \"display_value\": \"May 18, 2021\", \"value\": \"1621332093251\" }, \"support\": \"Contract Support Description\", \"status\": { \"id\": \"1\", \"status\": \"Active\" } } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"POST",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts/{contract_id}/_email_owner"],
+         "desc":"This operation lets you to email to owner of a contract.",
+         "disp_desc":"Email To Owner",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{ \"notification\": { \"description\": \"Contract Notification to Owner\", \"subject\": \"Testing\" } }"
+         },
+         "output":{
+            "sample":"{ \"response_status\": { \"status_code\": 2000, \"messages\": [ { \"status_code\": 2000, \"type\": \"success\", \"message\": \"Notification sent successfully.\" } ], \"status\": \"success\" } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"POST",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts/{contract_id}/_email_vendor"],
+         "desc":"This operation lets you to email to vendor of a contract.",
+         "disp_desc":"Email To Vendor",
+         "workflow":"",
+         "input":{
+            "name":"INPUT_DATA",
+            "sample":"{ \"notification\": { \"description\": \"Contract Notification to Vendor\", \"subject\": \"Testing\" } }"
+         },
+         "output":{
+            "sample":"{ \"response_status\": { \"status_code\": 2000, \"messages\": [ { \"status_code\": 2000, \"type\": \"success\", \"message\": \"Notification sent successfully.\" } ], \"status\": \"success\" } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      },
+      {
+         "name":"",
+         "method":"DELETE",
+         "moduleName" : "Contract",
+         "path":["/api/v3/contracts/{contract_id}"],
+         "desc":"This operation lets you delete a contract.",
+         "disp_desc":"Delete A Contract",
+         "workflow":"",
+         "output":{
+            "sample":"{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" } }"
+         },
+         "inOP":"true",
+         "inOD":"true",
+         "isAsset": "true",
+	 "isReleased":"true"
+      }
+   ],
+   "Additional Elements": [],
+   "isReleased":"true"
+}

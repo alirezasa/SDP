@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <url path="/api/v3/request_lifecycles/(\d+)" roles="RLCConfig" method="get">
+            <throttles name="rlc_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_lifecycles" roles="RLCConfig" method="post">
+            <throttles name="rlc_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="request_lifecycle" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/request_lifecycles" roles="RLCConfig" method="get">
+            <throttles name="rlc_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)drafts" roles="RLCConfig" method="get">
+            <throttles name="rlc_drafts_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)drafts" roles="RLCConfig" method="post">
+            <throttles name="rlc_drafts_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="lifecycle_draft_template" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)drafts" roles="RLCConfig" method="put">
+            <throttles name="rlc_drafts_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="lifecycle_draft_template" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)drafts" roles="RLCConfig" method="delete">
+            <throttles name="rlc_drafts_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)publish" roles="RLCConfig" method="put">
+            <throttles name="rlc_publish" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)" roles="RLCConfig" method="delete">
+            <throttles name="rlc_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)get_connected_nodes" roles="ViewRequests" method="get" user_type="all">
+            <throttles name="rlc_get_connected_nodes" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="lifecycle_get_connected_nodes" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)validate_draft" roles="RLCConfig" method="get">
+            <throttles name="rlc_validate_draft_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)mark_as_active" roles="RLCConfig" method="put">
+            <throttles name="rlc_mark_as_active_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_lifecycles/(\d+)/(_?)mark_as_inactive" roles="RLCConfig" method="put">
+            <throttles name="rlc_mark_as_inactive_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_lifecycles" roles="RLCConfig" method="delete">
+            <throttles name="rlc_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" regex="ids"/>
+        </url>
+        <param name-regex="true" max-len="250" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="positionJSON" disable-extra-key="true">
+            <key name="x" type="double" />
+            <key name="y" type="double" />
+        </jsontemplate>
+    </jsontemplates>
+</security>

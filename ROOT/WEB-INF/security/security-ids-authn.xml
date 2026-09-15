@@ -1,0 +1,105 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+	<urls authentication="required" method="post" csrf="true"
+		remote_server="true" roles="SDOrgAdmin,SDAdmin,HelpdeskConfig" user_type="all">
+
+		<throttles key="url.path+url.dynamic_key" dynamic-throttle="true" 
+			name="tfa_admin_configurations_post_common_throttle" scope="APPSERVER"
+			window="ROLLING">
+			<throttle duration="1m" lock-period="5m" threshold="30" />
+		</throttles>
+
+		<url path="/ids-authn/v1/wc/mfa/preauthn">
+			<param-group name="IDS_PREAUTHN_PARAMS" />
+		</url>
+
+
+		<url path="/ids-authn/v1/wc/mfa/authenticate">
+			<param-group name="IDS_AUTHENTICATE_PARAMS" />
+		</url>
+		
+
+	</urls>
+	
+	<urls authentication="required" method="put" csrf="true" remote_server="true" roles="SDOrgAdmin,SDAdmin" user_type="all">
+		
+		<throttles key="url.path+url.dynamic_key" dynamic-throttle="true" 
+			name="tfa_admin_configurations_put_common_throttle" scope="APPSERVER"
+			window="ROLLING">
+			<throttle duration="1m" lock-period="5m" threshold="30" />
+		</throttles>
+		
+		<url path="/ids-authn/v1/wc/accessrules" path-regex="true" ids-url-id = "saveAdminConfigTFA">
+			<inputstream type="JSONObject"  max-len="-1" template="IDS_ACCESSRULE_AUTHNSETTINGS_JSONAPI_PAYLOAD" />
+		</url>
+		
+	</urls>
+
+	<urls authentication="required" method="get" remote_server="true" user_type="all">
+	
+		<throttles key="url.path+url.dynamic_key" dynamic-throttle="true" 
+			name="tfa_admin_configurations_get_common_throttle" scope="APPSERVER"
+			window="ROLLING">
+			<throttle duration="1m" lock-period="5m" threshold="30" />
+		</throttles>
+	
+		<url path="/ids-authn/v1/wc/mfa/authenticate" roles="SDOrgAdmin,SDAdmin,HelpdeskConfig"  >
+			<param name="txn_id"  max-len="32" min-occurrences="1" regex="fwalphanumeric" secret="true" />
+		</url>
+
+		<url path="/ids-authn/v1/wc/accessrules" roles="SDOrgAdmin,SDAdmin,HelpdeskConfig" />
+
+	</urls>
+
+	<param-groups>
+	
+		<param-group name="IDS_PREAUTHN_PARAMS">
+			<param name="user_name" max-len="125" regex="fwtextpattern" secret="true"/>
+			<param name="domain_name" max-len="125" regex="fwtextpattern" secret="true" />
+			<param name="module_name" max-len="18" min-occurrences="1" regex="(\bLogin\b|\bSensitiveResources\b)" />
+			<param name="resource" min-occurrences="1" max-len="201" regex="fwtextpattern" />
+		</param-group>
+		
+		<param-group name="IDS_AUTHENTICATE_PARAMS">
+			<param name="txn_id" max-len="32" min-occurrences="1" regex="fwalphanumeric" secret="true" />
+			<param name="totp" type="long" max-len="6" secret="true"/>
+			<param name="otp" type="long" max-len="6" secret="true"/>
+			<param name="resend" type="boolean" />
+			<param name="trust_browser" type="boolean" />
+			<param name="cancel" type="boolean" />
+		</param-group>
+		
+	</param-groups>
+
+	<jsontemplates>
+	
+		<jsontemplate name="IDS_ACCESSRULE_AUTHNSETTINGS_JSONAPI_PAYLOAD">
+			<key name="data" type="JSONObject" max-len="-1" template="IDS_ACCESSRULE_AUTHNSETTINGS_DATA" />
+		</jsontemplate>
+		
+		<jsontemplate name="IDS_ACCESSRULE_AUTHNSETTINGS_DATA">
+			<key name="attributes" type="JSONObject" max-len="-1" template="IDS_ACCESSRULE_AUTHNSETTINGS" />
+			<key name="type" type="String" max-len="20"/>
+		</jsontemplate>
+		
+		<jsontemplate name="IDS_ACCESSRULE_AUTHNSETTINGS">
+			<key name="is_mfa_enabled" type="boolean" />
+			<key name="action_not_enrolled" type="int" range="1-2" />
+			<key name="is_mfa_trust_allowed" type="boolean" />
+			<key name="mfa_trust_period" type="int" range="1-60"/>
+			<key name="mfa_trust_period_unit_type" type="int" range="2-4" />
+			<key name="resources" type="JSONArray" template="STRING_ARRAY_JSON" max-len="-1" array-size="0-100" />
+		</jsontemplate>
+		
+		<jsontemplate name="STRING_ARRAY_JSON">
+			<key index="0-100" max-len="2000" regex="fwtextpattern" />
+		</jsontemplate>
+		
+	</jsontemplates>
+	
+	<regexes>
+		<regex name="fwtextpattern" value="^[0-9a-zA-Z_\-\.\$@\?\,\:\'\/\!\[\{\]\}\\\|\;\`\~\#\%\^\\*\(\)\+\=&quot;&amp;\P{InBasicLatin}\s]+$" />
+		<regex name="fwalphanumeric" value="^[A-Za-z0-9]+$" />
+	</regexes>
+	
+</security>

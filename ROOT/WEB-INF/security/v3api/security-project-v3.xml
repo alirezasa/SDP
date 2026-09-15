@@ -1,0 +1,1426 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" description="FGR_APPLIED:Roles are not defined as role check will be done at server side" user_type="all">
+        <throttles name="project_api_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/attachments/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/attachments/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/attachments/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/attachments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(_?)metainfo" method="get">
+		    <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(_?)metainfo"  method="get">
+             <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/attachments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/attachments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/attachments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/attachments/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/attachments/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/attachments/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/attachments/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode"  regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode"  regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="project_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="project_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="project_milestone_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="project_milestone_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode"  regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/attachments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/attachments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/attachments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/attachments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_milestones_tasks_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_milestones_tasks_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_milestones_tasks_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_tasks_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_tasks_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_tasks_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_milestones_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_milestones_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_milestones_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(_?)upload" method="post" user_type="all" operation-param="for" operation-value="import" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_upload_import_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <file name="theFile" max-size="10240" allowed-extensions="xls,xlsx,csv" content-type-name="xls,xlsx,csv" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(_?)upload" method="post" user_type="all" operation-param="for" operation-value="mpp_import" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="projects_upload_mpp_import_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <file name="theFile" max-size="10240" allowed-extensions="mpp" content-type-name="mpp" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments/(\d+)"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/comments/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/(_?)reply"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/(_?)reply"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/(_?)reply"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments/(\d+)/(_?)reply"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/comments/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones"  method="post" >
+            <throttles name="milestone_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="120" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="milestone" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)"  method="put" >
+            <param name="input_data" template="milestone" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(_?)assign"  method="put" >
+            <param name="input_data" template="assign_milestone_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(_?)assign"  method="put" >
+            <param name="input_data" template="assign_milestone_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/_total_count"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones"  method="put" >
+            <param name="input_data" template="milestone" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(owner|priority|status)/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/milestones/(owner|priority|status)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(owner|priority|status)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(owner|priority|status)/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects"  method="post" >
+            <param name="input_data" template="project" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)"  method="put" >
+            <param name="input_data" template="project" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" path="/api/v3/projects/(\d+)/owner/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url  method="post" path="/api/v3/projects/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false"
+                  max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/owner/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/projects"  method="put" >
+            <param name="input_data" template="project" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+            <param name="cancelChanges" regex="true"/>
+        </url>
+        <url path="/api/v3/projects/_total_count"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(status|priority|requester|owner|site|department|type|template)/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(status|priority|requester|owner|site|department|type|template|created_by|tags)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(status|priority|requester|owner|site|department|type|template|tags)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(status|priority|requester|owner|site|department|type|template)/(\d+)"  method="get" />
+        <url path="/api/v3/projects/template/(\d+)/images/(\d+)"  method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/projects/(udf_pick_[a-z0-9_]+)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(udf_fields)/([a-z0-9_]+)/(\d+)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(udf_fields)/([a-z0-9_]+)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(udf_fields)/([a-z0-9_]+)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members"  method="post" >
+            <param name="input_data" template="project_member" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members/(_?)metainfo"  method="get" />
+        <url path="/api/v3/projects/(\d+)/members/(\d+)"  method="put" >
+            <param name="input_data" template="project_member" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/members"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members"  method="put" >
+            <param name="input_data" template="project_member" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members/(user|role)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members/(\d+)/(user|role)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/members/(user|role)/(_?)metainfo"  method="get" />
+
+        <url method="get" path="/api/v3/projects/(\d+)/members/(\d+)/user/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/members/(\d+)/user/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <!--For comment mentions allowed values profile pic-->
+        <url method="get" path="/api/v3/projects/(\d+)/comments/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <!--For comment mentions user popup window profile pic-->
+        <url method="get" path="/api/v3/projects/(\d+)/comments/(\d+)/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/comments/(\d+)/mentions/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mentions_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/mentions/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mentions_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mentions_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mentions_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <!--For comment created_by user popup window profile pic-->
+        <url method="get" path="/api/v3/projects/(\d+)/comments/(\d+)/created_by/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/created_by/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/comments/(\d+)/created_by/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="created_by_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/created_by/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="created_by_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="created_by_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="created_by_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/members/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(_?)assign"  method="put" >
+            <param name="input_data" template="assign_task_without_group_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(_?)assign"  method="put" >
+            <param name="input_data" template="assign_task_without_group_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(_?)mark"  method="put" >
+            <param name="input_data" template="mark_task_without_group_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(_?)mark"  method="put" >
+            <param name="input_data" template="mark_task_without_group_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks"  method="post" >
+            <param name="input_data" template="project_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks"  method="post" >
+            <param name="input_data" template="project_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)"  method="put" >
+            <param name="input_data" template="project_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)"  method="put" >
+            <param name="input_data" template="project_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks"  method="get" >
+            <throttles name="milestone_task_getlist" key="url.path+url.dynamic_key+param.for" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="for" regex="dep"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks"  method="get" >
+            <throttles name="project_task_getlist" key="url.path+url.dynamic_key+param.for" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="for" regex="dep"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(_?)trigger"  method="put" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(_?)trigger"  method="put" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(_?)close"  method="put" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(_?)close"  method="put" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(_?)organize"  method="put" >
+            <param name="ids" max-len="10000" min-occurrences="1" regex="ids_500"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)assign"  method="put" >
+            <param name="input_data" template="assign_task_without_group_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)assign"  method="put" >
+            <param name="input_data" template="assign_task_without_group_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)mark"  method="put" >
+            <param name="input_data" template="mark_task_without_group_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)mark"  method="put" >
+            <param name="input_data" template="mark_task_without_group_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)trigger"  method="put" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)trigger"  method="put" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)close"  method="put" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)close"  method="put" />
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks"  method="put" >
+            <param name="input_data" template="project_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks"  method="put" >
+            <param name="input_data" template="project_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/template/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/template/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(owner|marked_owner|milestone|status|priority|type|template)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(owner|marked_owner|milestone|status|priority|type|template)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/template/(_?)metainfo" method="get"></url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/template/(_?)metainfo" method="get"></url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(owner|marked_owner|milestone|status|priority|type|template|tags)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(owner|marked_owner|milestone|status|priority|type|template|tags)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(owner|marked_owner|milestone|status|priority|type|template)/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/(owner|marked_owner|milestone|status|priority|type|template)/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/_total_count" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/_total_count" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/_links"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/_links"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(_?)metainfo"  method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)metainfo"  method="get">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(_?)metainfo"  method="get" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)metainfo"  method="get" >
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/template/(\d+)/images/(\d+)"  method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/template/(\d+)/images/(\d+)"  method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url  method="post" roles="ModifyReleases" path="/api/v3/projects/(\d+)/releases">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_project_association_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_project_association" name="input_data"/>
+        </url>
+        <url  method="delete" roles="ModifyReleases" path="/api/v3/projects/(\d+)/releases">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_project_association_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="release_project_association" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="3000" name="ids"/>
+        </url>
+        <url  method="get" roles="ViewReleases" path="/api/v3/projects/(\d+)/releases">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_project_association_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+
+        <url path="/api/v3/projects/(\d+)/releases/release/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="metainfo" />
+        </url>
+
+        <url  method="get" roles="ViewReleases" path="/api/v3/projects/(\d+)/releases/release">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url  method="get"  path="/api/v3/projects/(\d+)/releases/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="3000" name="ids"/>
+        </url>
+        <!-- Task Dependency starts -->
+        <url path="/api/v3/projects/(\d+)/task_dependencies" method="post" >
+            <param name="input_data" template="task_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/projects/(\d+)/task_dependencies/(\d+)" method="delete" />
+        <url path="/api/v3/projects/(\d+)/task_dependencies" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/task_dependencies" method="post" >
+            <param name="input_data" template="task_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/task_dependencies/(\d+)" method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/task_dependencies" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+
+        <!-- Task Dependency ends -->
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs"  method="post" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs"  method="post" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="delete" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(_?)get_time_spent"  method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(_?)get_time_spent"  method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)get_time_spent"  method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)get_time_spent"  method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs"  method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs"  method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/template/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/template/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(owner|type|template)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(owner|type|template)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/(owner|type)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/(owner|type)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/template/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/template/(\d+)"  method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/template/(\d+)/images/(\d+)" user_type="all" method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/template/(\d+)/images/(\d+)" user_type="all" method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)/(\d+)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)/(\d+)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(_?)metainfo"  method="get" >
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)metainfo"  method="get" >
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(_?)metainfo"  method="get" >
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)metainfo"  method="get" >
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+
+        <url path="/api/v3/projects/summary" method ="get">
+            <param name="ids" max-len="3000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(_?)summary" method="get" />
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(_?)summary" method="get" />
+
+        <url path="/api/v3/projects/(\d+)/(_?)timesheet" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(_?)timesheet" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(_?)create_template" method="post" roles="SDAdmin">
+            <param name="input_data" template="create_template_from_project" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/tasks/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/owner/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/tasks/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/worklogs/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/worklogs/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/comments/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/comments/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/comments/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/comments/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+
+        <url method="post" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/tasks/(\d+)/comments/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/comments/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/milestones/(\d+)/comments/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/(_?)metainfo"  method="get">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(_?)metainfo"  method="get" >
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <!--project history-->
+        <url path="/api/v3/projects/(_?)history"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/(_?)history"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/(_?)history"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/tasks/(\d+)/(_?)history"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/milestones/(\d+)/tasks/(\d+)/(_?)history"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="put" path="/api/v3/projects/(\d+)/settings/(\d+)">
+            <param name="input_data" template="project_settings" type="JSONObject" max-len="1500" min-occurrences="1"/>
+        </url>
+        <url method="get" path="/api/v3/projects/(\d+)/settings"/>
+
+        <!-- Project Change association URL start -->
+        <url path="/api/v3/projects/(\d+)/changes" method="post" >
+            <param name="input_data" template="change_project_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/changes" method="delete" >
+            <param name="input_data" template="change_project_association" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url method="get"  path="/api/v3/projects/(\d+)/changes/_links">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/associated_changes" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/changes/change" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+
+        <url path="/api/v3/projects/(\d+)/changes/change/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <!-- Project Change association URL ends -->
+        <!-- Project Request association URL starts -->
+        <url path="/api/v3/projects/(\d+)/requests" method="post" >
+            <param name="input_data" template="project_request_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/requests" method="delete" >
+            <param name="input_data" template="project_request_association" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/associated_requests" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/requests/request" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url method="get"  path="/api/v3/projects/(\d+)/requests/_links">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/requests/request/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url path="/api/v3/projects/(\d+)/archived_requests" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <!-- Project Request association URL ends -->
+
+        <param name="TECHNICIAN_KEY|AUTHTOKEN" type="String" max-len="200" name-regex="true" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+</security>

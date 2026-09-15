@@ -1,0 +1,142 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": "api/v3/requests/{request_id}/worklog_timers",
+      "desc": "This operation lets you start the worklog timer for a Request",
+      "disp_desc": "Start Worklog Timer",
+      "operWorkflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"worklog_timer\":{\"comment\":\"Started working on this request\"}}"
+      },
+      "output": {
+        "sample": "{\"worklog_timer\":{\"id\":\"100000000000043105\",\"owner\":{\"id\":\"100000000000020684\",\"name\":\"tamilamudhan.s\"},\"comment\":\"Started working on this request\",\"start_time\":{\"value\":\"1459752160140\",\"display_value\":\"Apr 4, 2016 12:12 PM\"}},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": "api/v3/requests/{request_id}/worklog_timers/{timer_id}",
+      "desc": "This operation lets you view the details of a timer under a Request",
+      "disp_desc": "View Timer Details",
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"worklog_timer\":{\"id\":\"100000000000043105\",\"owner\":{\"id\":\"100000000000020684\",\"name\":\"tamilamudhan.s\"},\"comment\":\"Started working on this request\",\"start_time\":{\"value\":\"1459752160140\",\"display_value\":\"Apr 4, 2016 12:12 PM\"}},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "api/v3/requests/{request_id}/worklog_timers"
+      ],
+      "desc": "This operation lets you view the details of all timers under a specific Request.",
+      "disp_desc": "View All Timer",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"worklog_timers\":[{\"id\":\"100000000000037009\",\"owner\":{\"id\":\"100000000000020684\",\"name\":\"tamilamudhan.s\"},\"comment\":\"Started working on this request\",\"start_time\":{\"value\":\"1459488826444\",\"display_value\":\"Apr 1, 2016 11:03 AM\"}}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1},\"response_status\":[{\"status\":\"success\",\"status_code\":2000}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identity number of the worklog timer.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "identifier": true,
+      "isReleased": "true"
+    },
+    {
+      "name": "owner",
+      "type": "Object",
+      "desc": "Object of user who started the timer.<br/>\nExample :- { \"id\": \"100000000000020684\", \"name\": \"tamilamudhan.s\" }",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "comment",
+      "type": "String",
+      "desc": "Comment added when the timer is started.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "start_time",
+      "type": "Date Object",
+      "desc": "Object of time details, of when the timer is started.<br/>\nExample :- { \"value\": \"1459752160140\", \"display_value\": \"Apr 4, 2016 12:12 PM\" }",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1466749188000
+}

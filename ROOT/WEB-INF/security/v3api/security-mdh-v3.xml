@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" is_esm="true">
+	<throttles name="mdh" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+	
+	<url path="/api/v3/portals/(_?)history" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+   	<url path="/api/v3/portals/(_?)get_records_for_history" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    <url path="/api/v3/portals/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+	
+	<url path="/api/v3/change_portal" user_type="all" method="put" api="true" description="ROLE_NOT_REQUIRED: Users can access this URL when they have access to multiple portals">
+		<param name="portalid" type="long" range=">0" min-occurrences="1"/>
+		<param name="current_tab" type="String" max-len="20"/>
+	</url>
+        <url path="/api/v3/accessibleportals" roles="Common_Role" method="get" user_type="all" description="ROLE_NOT_REQUIRED: This URL retrieves the portals that are accessible for the logged-in user">
+            <param name="fetch_large_size_logo" type="boolean"/>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/accessibleportals/_links" roles="Common_Role" method="get" user_type="all">
+            <param name="fetch_large_size_logo" type="boolean"/>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="100" regex="ids"/>
+        </url>
+        <url path="/api/v3/accessibleportals/_total_count" roles="Common_Role" method="get" user_type="all">
+            <param name="fetch_large_size_logo" type="boolean" />
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/admin/(_?)history" roles="SDOrgAdmin,SDAdmin,SDSiteAdmin,HelpdeskConfig" method="get" user_type="all">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/associate_portal_requesters/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="associate_portal_requester" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/associate_portal_requesters/(\d+)" roles="SDAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/associate_portal_requesters/(\d+)/(_?)allowed_values_for_fields" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/associate_portal_requesters" roles="SDAdmin" method="put">
+            <param name="input_data" template="associate_portal_requester" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="2000" regex="ids"/>
+        </url>
+        <url path="/api/v3/associate_portal_requesters/(\d+)/(requester_conditions)/(\d+)" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/associate_portal_requesters/(\d+)/(requester_conditions)" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/associate_portal_requesters/(\d+)/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="2000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/portals/(\d+)" roles="SDAdmin,SDOrgAdmin" method="delete" user_type="all"/>
+        <url path="/api/v3/portals/(\d+)" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals" roles="Common_Role" method="get" user_type="all" description="ROLE_NOT_REQUIRED: This URL is used in the request move feature, so specific roles cannot be applied">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals/(\d+)" roles="SDAdmin,SDOrgAdmin" method="put" user_type="all">
+            <param name="input_data" template="portal" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/portals" roles="SDOrgAdmin" method="post" user_type="all">
+            <param name="input_data" template="portal" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/portals/(_?)toggle_default" roles="Common_Role" method="put" user_type="all" description="ROLE_NOT_REQUIRED: all users can select the default landing portal">
+            <param name="input_data" template="toggle_default_portal" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/portals/(_?)get_landing_config" roles="Common_Role" method="get" user_type="all" description="ROLE_NOT_REQUIRED: This URL is used for the ESM landing page feature, which is accessible to all users"/>
+        <url path="/api/v3/portals/(_?)update_landing_config" roles="SDOrgAdmin" method="put" user_type="all">
+            <param name="input_data" template="portal_landing_config" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/portals/(_?)search" roles="Common_Role" method="get" user_type="all" description="ROLE_NOT_REQUIRED: This URL is used for the portal global search feature, which is accessible to all users">
+            <param name="input_data" template="portal_search" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals/(_?)get_all_portals" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals/(_?)reorder" roles="Common_Role" method="put" user_type="all">
+            <param name="input_data" template="reorder_portal" type="JSONObject" max-len="-1"/>
+	    <param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+        </url>
+		<url path="/api/v3/portals/logo_url" roles="SDOrgAdmin" method="get" user_type="all"/>
+		<url path="/api/v3/portals/images/(\d+)" roles="SDOrgAdmin" method="get" user_type="all"/>
+        <url path="/api/v3/portals/(\d+)/images" roles="SDAdmin,SDOrgAdmin" method="put" user_type="all">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+	<url path="/api/v3/portals/images" roles="SDOrgAdmin" method="put" user_type="all">
+		<throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="10" lock-period="5m"/>
+		</throttles>
+		<file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg">
+			<filename regex="filename" max-len="100"/>
+		</file>
+	</url>
+       <url path="/api/v3/portals/(\d+)/images/(\d+)" roles="" method="get" user_type="all" description="ROLE_NOT_REQUIRED the url dynamically generated when getting the allowed portals for users. So no one can access not allowed portal images. Hence need no roles also becauseit is used by all users">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" max-len="2000" regex="[a-z0-9]+" secret="true" max-occurrences="1"/>
+            <param regex="50x50|120x120" name="res" max-occurrences="1" />
+       </url>
+        <url path="/api/v3/portals/(_?)allowed_values_for_fields" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals/(\d+)/(_?)allowed_values_for_fields" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals" roles="SDAdmin,SDOrgAdmin" method="put" user_type="all">
+            <param name="input_data" template="portal" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="2000" regex="ids"/>
+        </url>
+        <url path="/api/v3/portals" roles="SDAdmin,SDOrgAdmin" method="delete" user_type="all">
+            <param name="ids" max-len="2000" regex="ids"/>
+        </url>
+        <url path="/api/v3/portals/(\d+)/(type|status|owners)/(\d+)" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all"/>
+        <url path="/api/v3/portals/(type|status|owners)" roles="SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals/(\d+)/(type|status|owners)" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/portals/(type|status|owners)/(\d+)" roles="SDOrgAdmin" method="get" user_type="all"/>
+        <url path="/api/v3/portals/(\d+)/_links" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="2000" regex="ids"/>
+        </url>
+        <url path="/api/v3/portals/_links" roles="Common_Role" method="get" user_type="all">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="2000" regex="ids"/>
+        </url>
+        <url path="/api/v3/portals/_total_count" roles="Common_Role" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/udf_fields/_metainfo" roles="Common_Role" method="get" user_type="all" disable-extraparam="true">
+            <throttles name="udf_metainfo_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options/images" roles="Common_Role" method="post" user_type="all">
+            <throttles name="udf_fields_options_id_images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m" />
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg" content-type-name="image_inline" allow-empty="false" max-size="5120" name="input_image" remove-exif="true">
+                <filename max-len="250" regex="filename"/>
+            </file>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/udf_fields/(\d+)/options/images/(\d+)" roles="" description="ROLE_NOT_REQUIRED : As image_token (key) will be used or Entity authorization will be invoked">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param name="res" regex="48x48|100x80|450x350" max-occurrences="1"/>
+            <param name="key" regex="file_token" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/udf_fields/(\d+)/options/(\d+)/images/(\d+)" roles="" description="ROLE_NOT_REQUIRED : As image_token (key) will be used or Entity authorization will be invoked">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param name="res" regex="48x48|100x80|450x350" max-occurrences="1"/>
+            <param name="key" regex="file_token" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+
+        <url path="/api/v3/udf_fields/(\d+)/options" roles="Common_Role" method="get" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options/(\d+)" roles="Common_Role" method="get" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options" roles="Common_Role" method="post" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="option" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options/(\d+)" roles="Common_Role" method="put" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="option" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options/(\d+)" roles="Common_Role" method="delete" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options/(_?)organize" roles="Common_Role" method="put" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_organize" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="organize_option" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options" roles="Common_Role" method="put" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="option" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/options" roles="Common_Role" method="delete" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="option_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/udf_fields" roles="Common_Role" method="get" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="udf_fields_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)" roles="Common_Role" method="get" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/udf_fields" roles="Common_Role" method="post" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="udf_field" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)" roles="Common_Role" method="put" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="udf_field" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)" roles="Common_Role" method="delete" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/udf_fields/(_?)type_wise_count" roles="Common_Role" method="get" user_type="all" description="Used to get usage of udf fields used in a module">
+            <throttles name="udf_field_type_wise_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="type_wise_count" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(_?)get_config" roles="Common_Role" method="get" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_get_config" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="get_config" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/udf_fields" roles="Common_Role" method="put" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="udf_field" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/udf_fields" roles="Common_Role" method="delete" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <throttles name="udf_field_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/udf_fields/(reference_entity|refer_field)" roles="Common_Role" method="get" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/udf_fields/(\d+)/(reference_entity|refer_field)" roles="Common_Role" method="get" user_type="all" description="Used both inside portal -release module and in esm directory -user module">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/udf_fields+/(_?)metainfo" roles="Common_Role" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url path="/api/v3/udf_fields/(_?)history" roles="Common_Role" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="udf_field_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="udf_fields_get" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/udf_fields/(_?)get_records_for_history" roles="Common_Role" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="udf_field_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="udf_fields_get" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/udf_fields/(_?)get_performed_by_for_history" roles="Common_Role" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="udf_field_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="udf_fields_get" name="input_data"/>
+        </url>
+
+         <url path="/api/v3/udf_fields/(\d+)/options/(_?)upload" method="post" user_type="all" operation-param="for" operation-value="import" >
+         	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="udf_fields_options_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <file name="theFile" max-size="10240" allowed-extensions="xls,csv,xlsx" content-type-name="xls,csv,xlsx" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+
+       <url path="/api/v3/udf_fields/(\d+)/options/(_?)export" user_type="all" method="get" roles="Common_Role">
+            <throttles key="url.path+url.dynamic_key" name="options_export" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="10"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/udf_fields/reference_entity_preview" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="udf_fields_reference_entity_preview" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="udf_reference_entity_preview" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <!--OrgRoles urls start-->
+        <url path="/api/v3/org_roles/(\d+)" roles="SDAdmin,SDOrgAdmin" method="get" user_type="all">
+            <throttles name="org_role_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/org_roles" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" method="get" user_type="all">
+            <throttles name="org_role_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/org_roles/(_?)history" method="get" roles="SDOrgAdmin" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="org_role_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/org_roles/(_?)get_records_for_history" method="get" roles="SDOrgAdmin" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="org_role_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+       </url>
+
+        <url path="/api/v3/org_roles/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="org_role_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!--OrgRoles urls end-->
+
+        <url path="/api/v3/throttle_exceeding_histories" roles="Common_Role" method="get" user_type="all" description="ROLE_NOT_REQUIRED: This URL can be accessed by low-privileged technicians">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="1000"/>
+        </url>
+        <url path="/api/v3/throttle_exceeding_histories/(\d+)" url-type="dynamic" roles="Common_Role" method="get" user_type="all" description="ROLE_NOT_REQUIRED: This URL can be accessed by low-privileged technicians">
+        </url>
+
+    </urls>
+
+</security>

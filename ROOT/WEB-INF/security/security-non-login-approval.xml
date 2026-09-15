@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="public" method="get" >
+		<url path="/PRApproval" user_type="all" operation-param="operation" operation-value="get" description="Url accessed by requester also in non login.">
+			<param name="KEY" type="String" max-len="100" secret="true"/>
+			<param name="FROM" regex="HOME|nonLogin|BELL|allApprovals|approvalsList|pendingApprovalsList"/>
+			<param name="approval_status" regex="Approved|Denied"/>
+			<param name="approval_id" type="long" range=">0"/>
+			<param name="approval_level_id" type="long" range=">0"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="externalframe" regex="true"/>
+		</url>
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pr_entity" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+	</urls>
+
+	<urls authentication="public" method="post" csrf="true">
+		<url path="/PRApproval" operation-param="operation" operation-value="approve,reject" user_type="all" description="Url accessed by requester also in non login.">
+			<param name="requestId" type="long" range=">0" min-occurrences="1"/>
+			<param name="approverId" type="long" range=">0" min-occurrences="1"/>
+			<param name="approvalLevel" type="long" range="0-10" min-occurrences="1"/>
+			<param name="oboApprId" regex="null|[0-9]+"/>
+			<param name="from" regex="HOME|nonLogin|BELL|null"/>
+			<param name="mailIds" regex="emailList" max-len="5000" secret="true"/>
+			<param name="description" type="String" secret="true" max-len="2000" description="As provided in data-dictionary"/>
+		</url>
+
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pr_entity_post" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+	</urls>
+
+	<urls authentication="public">
+		<url path="/approval/Approve.jsp" user_type="all" method="get" description="non-login url for request approvals">
+			<param name="KEY" type="String" max-len="200" secret="true"/>
+			<param name="USERID" type="String" max-len="3500" secret="true"/>
+			<param name="woID" type="long"/>
+			<param name="ITEMID" type="long"/>
+			<param name="MODULE" type="String"/>
+			<param name="approval_id" type="long" range=">0"/>
+			<param name="approval_level_id" type="long" range=">0"/>
+			<param name="FROM" regex="HOME|zia_bot|allApprovals|approvalsList|pendingApprovalsList"/>
+			<param name="approval_status" regex="Approved|Denied"/>
+			<param name="externalframe" regex="true"/>
+			<param name="action" regex="approve|reject"/>
+		</url>
+
+		<url path="/approval/ApproveRequest.jsp" user_type="all" method="post" csrf="true" description="non-login url for request approvals">
+			<param name="KEY" type="String" max-len="200" secret="true"/>
+			<param name="USERID" type="String" max-len="3500" secret="true"/>
+			<param name="BY" type="String" max-len="3500" secret="true"/>
+			<param name="ITEMID" type="long"/>
+			<param name="Action" regex="Approve|Reject"/>
+			<param name="COMMENTS" type="String" max-len="2000" secret="true"/>
+			<param name="approval_id" type="long" range=">0"/>
+			<param name="FROM" regex="HOME|zia_bot|allApprovals|approvalsList|pendingApprovalsList"/>
+			<param name="approval_status" regex="Approved|Denied"/>
+		</url>
+
+		<url path="/approval/MyApproval.jsp" user_type="all" method="get" description="non-login url for release, change and purchase approvals">
+			<param name="module" regex="release|change|purchase_request" />
+			<param name="entity_id" type="long" range=">0" />
+			<param name="stageId" type="long" range=">0"/>
+			<param name="approval_level_id" type="long" range=">0"/>
+			<param name="approval_id" type="long" range=">0"/>
+			<param name="PORTALID" type="long"  range=">0"/>
+			<param name="FROM" regex="allApprovals|approvalsList|pendingApprovalsList"/>
+			<param name="approval_status" regex="Approved|Denied"/>
+			<param name="externalframe" type="boolean" />
+		</url>
+
+		<throttles name="request_approval_nonlogin_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+	</urls>
+
+	<urls authentication="public">
+		<!-- Non login Close link - dcID is a Auth Token -->
+		<!-- roles can't be added as it is non login page -->
+		<url path="/workorder/CloseWorkOrder.jsp" user_type="all" method="get" description="ROLE_NOT_REQUIRED: AS IT IS NON LOGIN PAGE">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="CloseWorkOrder_get" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="dcID" type="String" secret="true"/>
+		</url>
+		<!-- roles can't be added as it is non login page -->
+
+		<url path="/workorder/CloseWorkOrder.jsp" user_type="all" method="post" csrf="true" description="ROLE_NOT_REQUIRED: AS IT IS NON LOGIN PAGE">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="CloseWorkOrder_Post" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="closeComment" type="String" max-len="1000"/>
+			<param name="dcID" type="String" secret="true"/>
+			<param name="submit" type="String"/>
+		</url>
+	</urls>
+
+	<urls authentication="public" method="get">
+		<url user_type="all" path="/POApproval" operation-param="module" operation-value="get" description="ROLE_NOT_REQUIRED:Url accessed by requester also in non login.">
+			<param name="dId" type="String" max-len="100"/>
+			<param name="app" type="String" max-len="100"/>
+			<param name="KEY" type="String" max-len="100" secret="true"/>
+			<param name="approval_id" type="long" range=">0"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="FROM" regex="HOME|nonLogin|BELL|allApprovals|approvalsList|pendingApprovalsList"/>
+			<param name="approval_status" regex="Approved|Denied"/>
+			<param name="externalframe" regex="true"/>
+			<param name="approval_level_id" type="long" range=">0"/>
+		</url>
+
+		<url user_type="all" path="/purchase/ApprovalDetails.jsp" description="ROLE_NOT_REQUIRED:Url accessed by requester also in non login.">
+			<param name="dId" type="String" max-len="100"/>
+			<param name="app" type="String" max-len="100"/>
+			<param name="module" regex="get"/>
+			<param name="FROM" regex="HOME|nonLogin|allApprovals|approvalsList|pendingApprovalsList"/>
+			<param name="approval_status" regex="Approved|Denied"/>
+			<param name="KEY" type="String" max-len="100" secret="true"/>
+			<param name="approval_id" type="long" range=">0"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="poID" type="long" range=">0"/>
+			<param name="customId" type="String" max-len="50" description="POcustomID configured by customer which holds string value"/>
+			<param name="isApprovalCostLimitExceed" type="boolean"/>
+			<param name="poStatus" type="String" max-len="50"/>
+			<param name="requestFrom" regex="viewPage|nonLogin"/>
+			<param name="mailRecepientId" regex="null|[0-9]+"/>
+			<param name="approval_level_id" type="long" range=">0"/>
+			<param name="externalframe" regex="true"/>
+		</url>
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="po_entity_urls" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+	</urls>
+
+	<urls authentication="public" method="POST" csrf="true">
+		<url user_type="all" path="/POApproval" operation-param="module" operation-value="approve,reject" description="ROLE_NOT_REQUIRED:Url accessed by requester also in non login.">
+			<param name="approval_status" type="String" max-len="100"/>
+			<param name="dId" type="String" max-len="300"/>
+			<param name="app" type="String" max-len="100"/>
+			<param name="mail_ids" regex="emailList" max-len="5000" secret="true"/>
+			<param name="subject" type="String" secret="true" max-len="500"/>
+			<param name="description" type="String" secret="true" max-len="2000"/>
+			<param name="FROM" regex="HOME|nonLogin"/>
+			<param name="fromWidget" regex="no|yes"/>
+			<param name="approval_id" type="String" max-len="100"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="oboApprId" regex="null|[0-9]+"/>
+			<param name="KEY" type="String" max-len="100" secret="true"/>
+		</url>
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="po_entity" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+	</urls>
+
+	<!-- This URL is used for user profile picture in Request's non-login approval page -->
+	<urls api="true" remote_server="false" authentication="public">
+		<url path="/api/v3/users/(\d+)/(_?)images/[a-z0-9_]{32,42}\.(jpeg|jpg|png|gif|bmp)$" method="get" user_type="all" description="Role not need. API framework is taking care of url validation by loginid,userid and created time">
+			<throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" max-len="2000" min-occurrences="1" regex="[a-z0-9]+"/>
+		</url>
+	</urls>
+	<!--approval non-login urls are applicable to both requester and technician users-->
+	<urls authentication="public" user_type="all">
+		<!-- urls for clarifications -->
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_get_all" method="get" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_get_all_key" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="50" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+			<param name="approval_id" type="long"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_total_count" method="get" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_total_count_key" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+			<param name="approval_id" type="long"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_get" method="get" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_get" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+			<param name="approval_id" type="long"/>
+			<param name="approval_clarification_id" type="long" min-occurrences="1"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_entity_get" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_entity_get" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_entity_total_count" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_entity_total_count_key" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="get_approvers_having_clarifications" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_approvers_having_clarifications" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="20" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_add" method="post" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_add" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="approval_clarification" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_update" method="put" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_update" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_clarification_id" type="long" min-occurrences="1"/>
+			<param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="approval_clarification" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_reply" method="post" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_reply" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_clarification_id" type="long" min-occurrences="1"/>
+			<param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="approval_clarification_reply" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_get_replies" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_get_replies" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="50" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long" />
+			<param name="approval_id" type="long"/>
+			<param name="approval_clarification_id" type="long" min-occurrences="1"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_mark_as_resolved" method="put" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_mark_as_resolved" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_clarification_id" type="long" min-occurrences="1"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="clarification_mark_as_pending" method="put" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="clarification_mark_as_pending" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_clarification_id" type="long" min-occurrences="1"/>
+		</url>
+
+		<!-- approval urls -->
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="approval_get_all" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_get_all" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="approval_get" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_get" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+			<param name="approval_id" type="long"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="approval_entity_get" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_entity_get" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="approval_level_get_all" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_level_get_all" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="approval_level_get" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_level_get" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param name="approval_level_id" type="long"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="approval_approve" method="put" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_approve_key" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="approvals_approve_reject" name="input_data"/>
+		</url>
+		<url path="/servlets/ApprovalServlet" operation-param="operation" operation-value="approval_reject" method="put" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_reject_key" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="request" min-occurrences="1" />
+			<param name="module_id" type="long" min-occurrences="1" />
+			<param name="key" type="String" max-len="200" secret="true" min-occurrences="1"/>
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="approvals_approve_reject" name="input_data"/>
+		</url>
+
+		<url user_type="all" method="get" path="/api/v3/approval_clarifications/(\d+)/created_by/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+			<throttles name="approval_clarification_images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="50" lock-period="5m"/>
+			</throttles>
+	        <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+	    </url>
+
+	    <url user_type="all" method="get" path="/api/v3/requests/(\d+)/approval_levels/(\d+)/approvals/(\d+)/clarifications/(\d+)/replies/(\d+)/created_by/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+			<throttles name="approval_clarification_replies_images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="50" lock-period="5m"/>
+			</throttles>
+	        <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+	    </url>
+
+	</urls>
+</security>

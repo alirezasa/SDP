@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Security authentication for SPS module related url entries -->
+
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd" >
+
+<urls authentication="required" >
+
+		<url path="/SetUpWizard.do" roles="SDAdmin,ReportConfigAdmin" operation-param="forwardTo" user_type="all" method="get" operation-value="PerformanceSettings">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceSettings_Admin" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="10" lock-period="10M"/>
+				</throttles>
+		</url>
+
+		<url roles="SDOrgAdmin,ReportConfigAdmin" path="setup/PerformanceSettings.jsp" method="GET" user_type="all">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="Setup_PerformanceSettings" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="10" lock-period="10M"/>
+		</throttles>
+		</url>
+
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug" dynamic-throttle="true"  >
+				<throttle duration="2M" threshold="5" lock-period="2M"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="checkmemory" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_checkmemory" dynamic-throttle="true"  >
+				<throttle duration="2H" threshold="5" lock-period="2H"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="collectQueryMonitoring" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_collectQueryMonitoring" dynamic-throttle="true"  >
+				<throttle duration="2H" threshold="5" lock-period="2H"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="checkdiskio" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_checkdiskio" dynamic-throttle="true"  >
+				<throttle duration="2H" threshold="5" lock-period="2H"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="createheapdump" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_createheapdump" dynamic-throttle="true"  >
+				<throttle duration="2H" threshold="2" lock-period="2H"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="collectRunningQueries" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_collectrunningqueries" dynamic-throttle="true"  >
+			<throttle duration="2H" threshold="2" lock-period="2H"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="collectConnectionDump" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_collectconnectiondump" dynamic-throttle="true"  >
+			<throttle duration="2H" threshold="2" lock-period="2H"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="collectThreadDump" method="get">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_collectthreaddump" dynamic-throttle="true"  >
+			<throttle duration="2H" threshold="2" lock-period="2H"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/jsp/ThreadDump.jsp" remote_server="true" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ThreadDump" dynamic-throttle="true"  >
+				<throttle duration="2M" threshold="5" lock-period="2M"/>
+			</throttles>
+		</url>
+	    <url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="getfragmentationratio" method="get">
+		    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_getfragmentationratio" dynamic-throttle="true"  >
+			    <throttle duration="2H" threshold="5" lock-period="2H"/>
+		    </throttles>
+	    </url>
+	     <url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="rqalldb" method="get">
+		    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_rqalldb" dynamic-throttle="true"  >
+			   <throttle duration="2H" threshold="10" lock-period="2H"/>
+		    </throttles>
+	     </url>
+		<url roles="SDAdmin" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="resolveOOM" method="put" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_rqalldb" dynamic-throttle="true"  >
+				<throttle duration="1D" threshold="5" lock-period="1H"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="resolveNMC" method="put" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_rqalldb" dynamic-throttle="true"  >
+				<throttle duration="1D" threshold="5" lock-period="1H"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin,HelpdeskConfig" path="/servlet/PerformanceDebug" operation-param="operation" operation-value="cpumemstats" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="PerformanceDebug_cpumemstats" dynamic-throttle="true" >
+				<throttle duration="2H" threshold="5" lock-period="2H"/>
+			</throttles>
+		</url>
+</urls>
+
+
+	<urls authentication="required" >
+		<url roles="SDAdmin,ReportConfigAdmin" path="/servlet/ConfigurePerformance" method="GET"  user_type="all" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ConfigurePerformance" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="10" lock-period="10M"/>
+		</throttles>
+		</url>
+		<url roles="SDAdmin,ReportConfigAdmin" path="/servlet/ConfigurePerformance" method="POST" csrf="true"  user_type="all">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ConfigurePerformance_POST" dynamic-throttle="true"  >
+				<throttle duration="1M" threshold="10" lock-period="10M"/>
+		</throttles>
+			<param name="input_data" template="ConfigurePerformance" type="JSONObject" max-len="-1" />
+		</url>
+	</urls>
+	<jsontemplates>
+		<!-- Performance Settings -->
+		<jsontemplate name="ConfigurePerformance" disable-extra-key="true">
+			<key name="operation" regex="configure_GeneralPerformanceSettings|configure_ReportsStabilitySettings|disable_UpdateDBStatisticsBanner|disable_AntiVirusCustomizationBanner"/>
+			<key name="GeneralPerformanceSettings" type="JSONObject" template="updateDBStatisticsSettingsTemplate" max-len="-1" max-occurrences="1" />
+			<key name="reportsSettings" type="JSONObject" template="reportsSettingsTemplate" max-len="-1" max-occurrences="1" />
+		</jsontemplate>
+		<jsontemplate name="updateDBStatisticsSettingsTemplate" disable-extra-key="true">
+			<key name="enableType" regex="enable|disable" />
+			<key name="scheduleFrequency" regex="weekly|daily" />
+			<key name="scheduleHour" regex="^(2[0-3]|1[0-9]|[0-9])$" />
+			<key name="scheduleMinutes" regex="^[1-5]?[0-9]$" />
+			<key name="weekDay" regex="[1-7]" />
+			<key name="diskspaceThreshold" regex="^(100|[1-9][0-9]?)$" />
+			<key name="databaseLogFileSizeThreshold" regex="[1-9]\d*" />
+			<key name="cpuThreshold" type="int" regex="^(100|[1-9][0-9]?)$" />
+			<key name="isPerformanceEmailEnabled" type="boolean" />
+			<key name="memoryThreshold" type="int" regex="[1-9]\d*"/>
+			<key name="selectedRoleOrUser" type="JSONArray" max-len="-1" template="selectedRoleOrUserTemplate" array-size="0-500"/>
+		</jsontemplate>
+		<jsontemplate name="selectedRoleOrUserTemplate">
+		   <key name="id" type="int" range=">0"/>
+		   <key name="email_id" type="String" max-len="200" secret="true" />
+		   <key name="type"  regex="userrole|User" />
+		   <key name="text" type="String" max-len="200" />
+		   <key name="employee_id" type="String" max-len="200" />
+
+
+		</jsontemplate>
+		<jsontemplate name="reportsSettingsTemplate" disable-extra-key="true">
+			<key name="maxReportUsers" type="int" range=">0"/>
+			<key name="reportTimeOut" type="int" range=">0"/>
+			<key name="maxRowsLimit" type="int" range=">0"/>
+			<key name="descRowsLimit" type="int" range=">0"/>
+			<key name="udfCharRowsLimit" type="int" range=">0"/>
+			<!--SD-89681 : ReportStability for audit history by workstation report -->
+			<key name="maxWorkstation" type="int" range=">=0"/>
+			<!--SD-99938 : Maximum number of report criteria values to be displayed -->
+			<!--SD-129893 : Maximum number of report criteria values to be displayed in the UI limited to 200000 -->
+			<key name="criteriaValuesLimit" type="int" range="0-200000"/>
+			<!-- SD-99068: Maximum number of characters to be displayed for Description/Resolution columns -->
+			<key name="descCharactersSizeLimit" type="int" range=">=0"/>
+			<key name="maxRowsPerPage" type="int" range=">0"/>
+			<key name="maxRowsToBeExported" type="int" range=">=0"/>
+			<key name="maxFieldsCount" type="int" range=">0"/>
+			<key name="reportLinkExpiry" type="int" range=">0"/>
+		</jsontemplate>
+		<!-- End of Performance Settings -->
+	</jsontemplates>
+
+
+</security>
+

@@ -1,0 +1,181 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier used to identify the priority.",
+      "graphView": "",
+      "column": "PRIORITYDEFINITION : PRIORITYID",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Unique name of the priority.",
+      "graphView": "",
+      "column": "PRIORITYDEFINITION : PRIORITYNAME",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "A short description which will help in understanding the kind of priority associated with the name mentioned in the priority name.",
+      "graphView": "",
+      "column": "PRIORITYDEFINITION : PRIORITYDESCRIPTION",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "deleted",
+      "type": "Boolean",
+      "desc": "Indicates whether the priority is still in use in the application.",
+      "graphView": "",
+      "column": "PRIORITYDEFINITION : ISDELETED",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReadOnly": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "color",
+      "type": "String",
+      "desc": "A color to denote the priority.",
+      "graphView": "",
+      "column": "PRIORITYDEFINITION : PRIORITYCOLOR",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "priority_order",
+      "type": "Number",
+      "desc": "Helps to organize the priority.",
+      "graphView": "",
+      "column": "PRIORITYDEFINITION : PRIORITYORDER",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Common",
+      "path": "/api/v3/priorities",
+      "desc": "This operation lets you add a priority.",
+      "disp_desc": "Add Priority",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"priority\":{\"name\":\"High\",\"description\":\"Affects Business\",\"color\":\"#ff0000\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priority\":{\"id\":\"10108137\",\"name\":\"High\",\"description\":\"Affects Business\",\"deleted\":false,\"color\":\"#ff0000\"}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": "/api/v3/priorities/{priority_id}",
+      "desc": "This operation lets you update a priority.",
+      "disp_desc": "Update Priority",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"priority\":{\"name\":\"High\",\"description\":\"Affects Business\",\"color\":\"#ff0000\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priority\":{\"id\":\"10097137\",\"name\":\"High\",\"description\":\"Affects Business\",\"deleted\":false,\"color\":\"#ff0000\"}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/priorities/{priority_id}"
+      ],
+      "desc": "This operation lets you delete a priority",
+      "disp_desc": "Delete Priority",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": "/api/v3/priorities/{priority_id}",
+      "desc": "This operation fetches details of a priority.",
+      "disp_desc": "View Priority",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priority\":{\"id\":\"10067137\",\"name\":\"High\",\"description\":\"Affects Business\",\"deleted\":false,\"color\":\"#ff0000\"}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": "/api/v3/priorities",
+      "desc": "This operation fetches all priorities.",
+      "disp_desc": "View All Priorities",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":2,\"start_index\":1,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"priorities\":[{\"id\":\"108137\",\"name\":\"High\",\"description\":\"Affects Business\",\"deleted\":false,\"color\":\"#ff0000\"},{\"id\":\"109137\",\"name\":\"Low\",\"description\":\"Affects Individual\",\"deleted\":false,\"color\":\"#666666\"}],\"list_info\":{\"row_count\":2,\"start_index\":1,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true,\"has_more_rows\":true}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [],
+  "path": "/priorities",
+  "handler": "PriorityAPIHandler",
+  "syslog_module": "Admin",
+  "cache_key": "ADMIN_CONF.PRIORITY_DO",
+  "entity_group": "Admin",
+  "listeners": [
+    "PriorityMatrixListener"
+  ],
+  "Additional Elements": [],
+  "isReleased": "true"
+}

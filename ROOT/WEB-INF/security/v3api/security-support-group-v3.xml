@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true">
+        <throttles name="support_group" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+
+        <url path="/api/v3/support_groups" roles="SDAdmin,SDSiteAdmin" method="post">
+            <param name="input_data" template="support_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+
+        <url path="/api/v3/support_groups/(\d+)" roles="SDAdmin,SDSiteAdmin" method="put">
+            <param name="input_data" template="support_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/support_groups" roles="SDAdmin,SDSiteAdmin" method="put">
+            <param name="input_data" template="support_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" min-occurrences="1" max-len="2000" regex="ids" secret="true"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/linked_entity">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/linked_instance">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+
+        <url path="/api/v3/support_groups/(\d+)" roles="SDAdmin,SDSiteAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_groups" roles="SDAdmin,SDSiteAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <url path="/api/v3/support_groups/(\d+)" roles="SDAdmin,SDSiteAdmin" method="delete"/>
+        <url path="/api/v3/support_groups" roles="SDAdmin,SDSiteAdmin" method="delete">
+            <param name="ids" min-occurrences="1" max-len="2000" regex="ids" secret="true"/>
+        </url>
+
+        <url path="/api/v3/support_groups/(\d+)/(_?)history" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_groups/(_?)history" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_groups/(_?)get_records_for_history" roles="SDAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="support_groups_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_groups/(_?)get_performed_by_for_history" roles="SDAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="support_groups_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(technicians|site)">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" path="/api/v3/support_groups/(_?)metainfo" roles="SDAdmin,SDSiteAdmin" >
+            <param name="_" type="long" range=">0"/>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+
+        <url path="/api/v3/support_groups/udf_[a-z0-9_]+" roles="SDAdmin,SDSiteAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+
+
+        <!--support group attachment api url start-->
+        <url method="post" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(_?)upload"/>
+
+        <url method="post" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(\d+)/(_?)upload"/>
+
+        <url method="put" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(\d+)/(_?)upload"/>
+
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(\d+)/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+        </url>
+
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+        </url>
+
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(\d+)/attachments/(_?)download">
+            <param regex="view" name="mode"/>
+            <param name="ids" max-len="2000" regex="ids" />
+        </url>
+
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(\d+)/attachments/(\d+)"/>
+        <url method="delete" roles="SDAdmin,SDSiteAdmin" path="/api/v3/support_groups/(\d+)/attachments/(\d+)"/>
+        <!--support group attachment api url end-->
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- templates configurations -->
+    <jsontemplates>
+        <jsontemplate name="support_group_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="support_group_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="sender_name" type="String" max-len="250"/>
+            <key name="sender_email_id" regex="emailstring" max-len="250" secret="true"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="description" type="String" max-len="250"/>
+            <key name="technicians" template="technician_unique" type="JSONArray" max-len="-1" array-size="0-2000"/>
+            <key name="group_email_id" template="emailarray" type="JSONArray" max-len="-1" array-size="0-100" secret="true"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="role_associations" template="support_group_role_association_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="request_add_notify" template="group_escalation_base" type="JSONObject" max-len="-1" max-occurrences="1"/>
+            <key name="request_edit_notify" template="group_escalation_base" type="JSONObject" max-len="-1" max-occurrences="1"/>
+            <key name="request_unpick_notify" template="group_escalation_base" type="JSONObject" max-len="-1" max-occurrences="1"/>
+            <key name="udf_fields" type="JSONObject" dynamic-json-template="true" max-len="-1"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="support_group">
+            <key name="support_group" template="support_group_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="support_group_unique_wrapper">
+            <key name="support_group" template="support_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="support_group_role_association_unique">
+            <key name="id" type="long"/>
+            <key name="group_role" template="group_role_unique" type="JSONObject" max-len="-1"/>
+            <key name="support_group" template="support_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="support_group_role_association_base">
+            <key name="id" type="long"/>
+            <key name="group_role" template="group_role_unique" type="JSONObject" max-len="-1"/>
+            <key name="user" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="support_group" template="support_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="support_group_role_association">
+            <key name="support_group_role_association" template="support_group_role_association_base" type="JSONObject" max-len="-1"/>
+            <key name="support_group_role_associations" template="support_group_role_association_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="role_associations" template="support_group_role_association_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="support_group_role_association_unique_wrapper">
+            <key name="support_group_role_association" template="support_group_role_association_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

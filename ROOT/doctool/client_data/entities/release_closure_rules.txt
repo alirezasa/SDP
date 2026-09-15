@@ -1,0 +1,110 @@
+{
+    "Additional Elements": [],
+    "operations": [
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Release Closure Rules",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"release_closure_rules\":{\"stage\":{\"internal_name\":\"submission\",\"stage_index\":1,\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"category\",\"id\":\"1\",\"display_name\":\"Category\",\"mandatory\":false},\"response_status\":[{\"status_code\":2000,\"id\":\"1\",\"status\":\"success\"}]}"},
+            "path": "/api/v3/release_closure_rules",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":100,\"start_index\":1,\"get_total_count\":true}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch release closure rules."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Update Release Closure Rules",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"release_closure_rules\":{\"stage\":{\"internal_name\":\"submission\",\"stage_index\":1,\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"category\",\"id\":\"1\",\"display_name\":\"Category\",\"mandatory\":false},\"response_status\":[{\"status_code\":2000,\"id\":\"1\",\"status\":\"success\"}]}"},
+            "path": ["/api/v3/release_closure_rules"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"release_closure_rules\":[{\"id\":\"1\",\"mandatory\":false}]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to update release closure rules."
+        }
+    ],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "",
+            "inOD": "true",
+            "type": "long",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Unique identifier used to identify the release closure rule.",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "display_name",
+            "column": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Display name of the release field",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "column_name",
+            "column": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Column name of the release field",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "mandatory",
+            "column": "",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Indicates whether the release field can be left empty",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "stage",
+            "column": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Stage info in which stage the entity is associated.",
+            "graphView": "",
+            "relEntity": {
+                "name": "release_stage",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        }
+    ],
+    "lastModified": 1608112047000
+}

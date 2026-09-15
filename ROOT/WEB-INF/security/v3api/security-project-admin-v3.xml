@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+
+    <urls authentication="required" api="true" roles="SDAdmin">
+
+        <throttles name="project_admin_config" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+
+        <url path="/api/v3/project_roles/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/project_roles"  method="post">
+            <param name="input_data" template="project_role" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_roles/(\d+)"  method="put">
+            <param name="input_data" template="project_role" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_roles/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/project_roles/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_roles"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_roles"  method="put">
+            <param name="input_data" template="project_role" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_roles"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_roles/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_roles/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_roles/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_statuses/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/project_statuses"  method="post">
+            <param name="input_data" template="project_status" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_statuses/(\d+)"  method="put">
+            <param name="input_data" template="project_status" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_statuses/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/project_statuses/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_statuses"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_statuses"  method="put">
+            <param name="input_data" template="project_status" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_statuses"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_statuses/(_?)history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_statuses/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_statuses/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_types/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/project_types"  method="post">
+            <param name="input_data" template="project_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_types/(\d+)"  method="put">
+            <param name="input_data" template="project_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_types/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/project_types/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_types"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_types"  method="put">
+            <param name="input_data" template="project_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_types"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_types/(_?)history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_types/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_types/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(_?)metainfo" method="get"/>
+        <!--Project Settings Starts-->
+        <url path="/api/v3/project_settings/(\d+)" method="put" >
+            <param name="input_data" template="project_settings" type="JSONObject" max-len="1500" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_settings" method="get" >
+            <throttles name="project_settings_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="2M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_settings/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/project_settings/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!--Project Settings Ends-->
+
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates"  method="post">
+            <param name="input_data" template="milestone_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)"  method="put">
+            <param name="input_data" template="milestone_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates"  method="put">
+            <param name="input_data" template="milestone_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/(project_template|priority|status)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(project_template|priority|status)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/(project_template|priority|status)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(project_template|priority|status)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_task_templates"  method="post">
+            <param name="input_data" template="project_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(_?)history"  method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+         </url>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/project_task_templates/(\d+)"  method="put">
+            <param name="input_data" template="project_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_task_templates/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/project_task_templates/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_task_templates"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_task_templates/(\d+)/(_?)associations"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/(\d+)/(_?)associations"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/(\d+)/(_?)associations"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_task_templates"  method="put">
+            <param name="input_data" template="project_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_task_templates"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_task_templates/(\d+)/(project_template|task_template|milestone_template|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/(\d+)/(project_template|task_template|milestone_template|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/(\d+)/(project_template|task_template|milestone_template|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_task_templates/(project_template|task_template|milestone_template|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/(project_template|task_template|milestone_template|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/task_template/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/(project_template|task_template|milestone_template|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/task_template/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/project_task_templates/(\d+)/(project_template|task_template|milestone_template|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/(\d+)/(project_template|task_template|milestone_template|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/(\d+)/(project_template|task_template|milestone_template|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_task_templates/(project_template|task_template|milestone_template|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/(project_template|task_template|milestone_template|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(\d+)/task_templates/(project_template|task_template|milestone_template|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/project_templates"  method="post">
+            <param name="input_data" template="project_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)"  method="put">
+            <param name="input_data" template="project_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/project_templates/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates"  method="put">
+            <param name="input_data" template="project_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_templates"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/(type|priority|status|site)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(type|priority|status|site)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/(type|priority|status|site)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(type|priority|status|site)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/project_templates/(\d+)/members"  method="post">
+            <param name="input_data" template="project_template_member" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/members/(\d+)"  method="put">
+            <param name="input_data" template="project_template_member" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/members/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/project_templates/(\d+)/members"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/members"  method="put">
+            <param name="input_data" template="project_template_member" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/members"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/members/(user|role)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)/members/(\d+)/(user|role)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates(/udf_fields)?/(udf_pick_[a-z0-9_]+)" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_templates/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_custom_triggers/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_custom_triggers/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/project_custom_triggers/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/project_templates/(\d+)/task_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/project_templates/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/project_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+
+
+    <urls authentication="required" api="true" description="ROLE_NOT_REQUIRED: Authenticated via image token">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1m"/>
+        </throttles>
+        <url method="get" path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/images/(\d+)">
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/project_templates/(\d+)/milestone_templates/images/(\d+)"/>
+
+        <url method="get" path="/api/v3/project_templates/(\d+)/task_templates/images/(\d+)" />
+        <url method="get" path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_templates/images/(\d+)" />
+        <url method="get" path="/api/v3/project_templates/(\d+)/images/(\d+)">
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/project_templates/images/(\d+)" />
+
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+</security>

@@ -1,0 +1,380 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/reminders",
+        "/api/v3/requests/{request_id}/reminders",
+        "/api/v3/changes/{change_id}/reminders",
+        "/api/v3/releases/{release_id}/reminders",
+        "/api/v3/problems/{problem_id}/reminders"
+      ],
+      "desc": "This operation lets you add a reminder under a particular entity",
+      "disp_desc": "Add Reminder",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"reminder\":{\"summary\":\"Request with id 25 needs to be completed in 15 minutes\",\"date\":{\"value\":\"1674631500000\"},\"remind_before\":\"3600000\"}}"
+      },
+      "output": {
+        "sample": "{\"reminder\":{\"date\":{\"display_value\":\"Nov 9, 2020 11:00 PM\",\"value\":\"1604943000000\"},\"request\":{\"id\":\"1\"},\"associated_module\":\"request\",\"remind_before\":\"3600000\",\"summary\":\"Request with id 25 needs to be completed in 15 minutes\",\"id\":\"1\",\"status\":\"Open\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/reminders/{reminder_id}",
+        "/api/v3/requests/{request_id}/reminders/{reminder_id}",
+        "/api/v3/changes/{change_id}/reminders/{reminder_id}",
+        "/api/v3/releases/{release_id}/reminders/{reminder_id}",
+        "/api/v3/problems/{problem_id}/reminders/{reminder_id}"
+      ],
+      "desc": "This operation lets you update the details of a existing reminder under request.",
+      "disp_desc": "Update Reminder",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"reminder\": { \"summary\": \"Request with id 25 needs to be completed in 30 minutes\",\"date\":{\"value\":\"1674631500000\"},\"remind_before\":\"3600000\", \"status\": \"Open\" } }"
+      },
+      "output": {
+        "sample": "{\"reminder\":{\"date\":{\"display_value\":\"Nov 9, 2020 11:00 PM\",\"value\":\"1604943000000\"},\"request\":{\"id\":\"1\"},\"associated_module\":\"request\",\"remind_before\":\"1800000\",\"summary\":\"Request with id 25 needs to be completed in 25 minutes\",\"id\":\"1\",\"status\":\"Open\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/reminders/{reminder_id}",
+        "/api/v3/requests/{request_id}/reminders/{reminder_id}",
+        "/api/v3/changes/{change_id}/reminders/{reminder_id}",
+        "/api/v3/releases/{release_id}/reminders/{reminder_id}",
+        "/api/v3/problems/{problem_id}/reminders/{reminder_id}"
+      ],
+      "desc": "This operation lets you view the details of a single reminder under a request",
+      "disp_desc": "View Reminder",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"reminder\":{\"date\":{\"display_value\":\"Nov 9, 2020 11:00 PM\",\"value\":\"1604943000000\"},\"request\":{\"id\":\"1\"},\"associated_module\":\"request\",\"remind_before\":\"1800000\",\"summary\":\"Request with id 25 needs to be completed in 25 minutes\",\"id\":\"1\",\"status\":\"Open\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/reminders",
+        "/api/v3/requests/{request_id}/reminders/",
+        "/api/v3/changes/{change_id}/reminders/",
+        "/api/v3/releases/{release_id}/reminders/",
+        "/api/v3/problems/{problem_id}/reminders/"
+      ],
+      "desc": "This operation lets you view the details of all the reminders under a request",
+      "disp_desc": "View All Reminders",
+      "workflow": "undefined",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":2}}"
+      },
+      "output": {
+        "sample": "{\"reminders\": [ { \"date\": { \"display_value\": \"Nov 9, 2020 11:00 PM\", \"value\": \"1604943000000\" }, \"request\": { \"id\": \"1\" },\"associated_module\":\"request\", \"remind_before\": \"3600000\" , \"summary\": \"Request with id 25 needs to be completed in 45 minutes\", \"id\": \"2\",\"status\": \"Open\" }, { \"date\": { \"display_value\": \"Nov 9, 2020 11:00 PM\", \"value\": \"1604943000000\" }, \"request\": {\"id\": \"1\" },\"associated_module\":\"request\", \"remind_before\": \"1800000\", \"summary\": \"Request with id 25 needs to be completed in 30 minutes\", \"id\": \"1\",\"status\": \"Open\" } ], \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": true, \"start_index\": 1, \"row_count\": 2 } }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/reminders/{reminder_id}",
+        "/api/v3/reminders/?ids={reminder_ids}"
+      ],
+      "desc": "This operation lets you delete a reminder",
+      "disp_desc": "Delete Reminder",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status \": { \"status_code \": 2000, \"status \": \"success \" } }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/reminders/{reminder_id}/_close",
+        "/api/v3/reminders/close?ids={reminder_ids}"
+      ],
+      "desc": "This operation lets you close a reminder",
+      "disp_desc": "Close Reminder",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"reminders\": { \"date\": { \"display_value\": \"Nov 15, 2020 11:00 PM\", \"value\": \"1605461400000\" }, \"summary\": \"This is sample\", \"associated_module\":\"general\", \"remind_before\": \"1800000\", \"id\": \"3601\", \"status\": \"Closed\" }, \"response_status\": [ { \"status_code\": 2000, \"id\": \"3601\", \"status\": \"success\" } ] }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/reminders/{reminder_id}/_open",
+        "/api/v3/reminders/open?ids={reminder_ids}"
+      ],
+      "desc": "This operation lets you open a reminder",
+      "disp_desc": "Open Reminder",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"reminders\": { \"date\": { \"display_value\": \"Nov 15, 2020 11:00 PM\", \"value\": \"1605461400000\" }, \"summary\": \"This is sample\", \"associated_module\":\"general\", \"remind_before\": \"1800000\",\"id\": \"3601\", \"status\": \"Open\" }, \"response_status\": [ { \"status_code\": 2000, \"id\": \"3601\", \"status\": \"success\" } ] }"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Id of the reminder",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "TASKTALE:TASKID",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "summary",
+      "type": "String",
+      "desc": "Summary about the reminder",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "TASKTABLE:TASKTEXT",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "date",
+      "type": "Date Object",
+      "desc": "DateTime in long to remind",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "TASKTABLE:TASKDATE",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "scheduler",
+      "type": "Object",
+      "desc": "Schedule for reminder",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "remind_before",
+      "type": "Number",
+      "desc": "Holds the value of, how many hours,minutes in milliseconds before we have to remind. ",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "TASKTABLE:REMINDBEFORE",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "status",
+      "type": "String",
+      "desc": "Current status of the reminder(Open/Closed)",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "TASKTABLE:TASKSTATUS",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "desc": "Created user detail",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "TASKTABLE:USERID",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "associated_module",
+      "type": "String",
+      "desc": "associated_module details [Request, Problem, Change, Release] and General if not associated to any entity.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_active",
+      "type": "Boolean",
+      "desc": "Read Only Attribute; value set only when associated module's data deleted(ex:- reminder associated request got deleted)",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_trashed",
+      "type": "Boolean",
+      "desc": "Read Only Attribute; value set only when a module's data trashed(ex:- reminder associated request got trashed)",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "request",
+      "type": "Object",
+      "desc": "Reminder associated request details",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "problem",
+      "type": "Object",
+      "desc": "Reminder associated problem details",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "change",
+      "type": "Object",
+      "desc": "Reminder associated change details",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "relational_mapping": "",
+      "autofill": "",
+      "dfs_module_name": "",
+      "delete": "none",
+      "trim_length": "",
+      "suffix": "",
+      "group_holder": "",
+      "group": "",
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+        "name": "release",
+       "type": "Object",
+       "desc": "Reminder associated release details",
+       "graphView": "",
+       "column": "",
+       "html_type": "",
+       "inOP": "true",
+       "inOD": "true",
+       "relational_mapping": "",
+       "autofill": "",
+       "dfs_module_name": "",
+       "delete": "none",
+       "trim_length": "",
+       "suffix": "",
+       "group_holder": "",
+       "group": "",
+       "validation_rules": [],
+       "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1466776675000
+}

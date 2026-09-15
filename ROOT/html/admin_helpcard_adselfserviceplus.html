@@ -1,0 +1,29 @@
+<p><span class="helpheading"><strong>Integrate with ADSelfService Plus</strong></span></p>
+<p>Integrate ServiceDesk Plus with ManageEngine ADSelfService Plus and allow your Active Directory users to self-service their Active Directory passwords and Active Directory accounts easily. ADSelfService Plus is a secure, web-based, end-user password reset management program. This software helps domain users perform  password self service,  account self service, and self service their personal details (e.g telephone number, e-mail id etc) in Microsoft Windows Active Directory. If you have installed both these products, you just have to provide the details of the computer where ADSelfService Plus is installed along with its Port Number.</p>
+<p><strong>Set Up the Integration</strong></p>
+
+<ol>
+   <li>Enter the URL where the application is currently hosted.</li>
+   <li>Select <strong> Enable ADSelfService Plus menu for Technician</strong>  to display ADSelfService Plus menu for technicians. This menu will be shown irrespective of the integration status of ServiceDesk Plus with ADSelfService Plus product.</li>
+   <li>Select <strong> Enable ADSelfService Plus tab for Requester</strong>  to display ADSelfService Plus tab for requesters in Self Service Portal. This tab will be shown to requesters only if ServiceDesk Plus is integrated with ADSelfService Plus product.</li>
+   <li>Click <strong> Test Connection and Save</strong>  to check for an established connection between ServiceDesk Plus and ADSelfService Plus in their respective ports.</li>
+</ol>
+
+<br>
+<div id="integ-https">
+<p><span class="helpheading"><strong>Integrating with Other ME Products (running in HTTPS mode)</strong></span></p>
+<ol>
+  <li>Download the <strong>.zip</strong> file from the link given below and extract it to "<em>ManageEngine\ServiceDesk"</em>:</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><a class="wb-bw" href="https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip" target="_blank" rel="noopener noreferrer">https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip</a></p>
+  <p style="margin-left: 50px;"><strong>For Windows:</strong> <a class="wb-bw" href="https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip" target="_blank" rel="noopener noreferrer">https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip</a> </p>
+  <li>Connect to the command prompt. Go to "<em>ManageEngine\ServiceDesk"</em> and run the batch file with following format:</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>On running the command, you will receive an exception <strong>PKIX</strong> and then it will ask you to enter a value. Provide value 1 which will generate a file named <strong>jssecacerts</strong> under <em>"ManageEngine\ServiceDesk"</em>.</p>
+  </li>
+  <li>Copy the <strong>jssecacerts</strong> file under "<em>ManageEngine\ServiceDesk\jre\lib\security"</em> folder and then restart the ServiceDesk Plus application.</li>
+</ol>
+</div>

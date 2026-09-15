@@ -1,0 +1,2474 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <!--Announcment_Type URLS Start -->
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="announcement_type_URLS" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+        <url path="/api/v3/modules"  roles="SDAdmin,HelpdeskConfig" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/modules/(\d+)/layouts"  roles="SDAdmin,HelpdeskConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="post" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="announcement_type" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="announcement_type" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="announcement_type_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1M"/>
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="announcement_type_get_list" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1M"/>
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/(\d+)"/>
+        <url method="get" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/(\d+)/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="announcement_type" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types">
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin,HelpdeskConfig" path="/api/v3/announcement_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/announcement_types/(_?)metainfo" roles="SDAdmin,HelpdeskConfig" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="announcement_type_metainfo" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url path="/api/v3/announcement_types/(_?)history" method="get"  roles="SDAdmin,HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="announcement_type_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/announcement_types/(_?)get_records_for_history" method="get"  roles="SDAdmin,HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="announcement_type_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/announcement_types/(_?)get_performed_by_for_history" method="get"  roles="SDAdmin,HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="announcement_type_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+                   </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+    <!--Announcment_Type URLS End -->
+
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <url path="/api/v3/request_task_templates" roles="HelpdeskConfig" method="post">
+            <throttles name="task_template_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="request_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+
+        <url path="/api/v3/request_templates/(\d+)/task_templates/(_?organize)" roles="HelpdeskConfig" method="PUT">
+            <throttles name="task_template_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="ids" max-len="1000" min-occurrences="1" regex="ids"/>
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/task_templates/(\d+)" roles="TaskConfig" method="put">
+            <throttles name="task_template_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="request_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/request_task_templates/(\d+)" roles="HelpdeskConfig" method="delete">
+            <throttles name="task_template_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_task_templates/(\d+)" roles="TaskConfig" method="get">
+            <throttles name="task_template_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/task_templates/(\d+)" roles="HelpdeskConfig" method="get">
+            <throttles name="task_template_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_task_templates" roles="HelpdeskConfig" method="get">
+            <throttles name="task_template_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/task_templates" roles="HelpdeskConfig" method="get">
+            <throttles name="task_template_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="post" roles="HelpdeskConfig" path="/api/v3/request_templates/(\d+)/task_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/request_templates/(\d+)/task_templates/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/request_task_templates" roles="HelpdeskConfig" method="put">
+            <throttles name="request_task_templates" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="request_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/request_task_templates" roles="HelpdeskConfig" method="delete">
+            <throttles name="request_task_templates" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/task_templates/(request_template|task_template|udf_fields|system_fields|owner|marked_owner|group|marked_group|status|priority|type)" roles="HelpdeskConfig" method="get">
+            <throttles name="task_templates" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/task_templates/task_template/(_?)metainfo" roles="HelpdeskConfig" method="get">
+            <throttles name="request_task_templates_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/task_templates/(\d+)/(request_template|task_template|udf_fields|system_fields|owner|marked_owner|group|marked_group|status|priority|type)" roles="HelpdeskConfig" method="get">
+            <throttles name="task_templates" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/request_templates/(\d+)/task_templates/(_?)metainfo" roles="HelpdeskConfig" method="get">
+            <throttles name="task_template_get_list_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <!--category crud operations -->
+        <url method="post" path="/api/v3/categories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="category" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/categories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="category" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/categories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(_?)metainfo" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="csi_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <!--category convenience operations -->
+        <url method="get" path="/api/v3/categories/(_?)get_csi_model" roles="CreateRequests,ModifyRequests,CSIConfig,IncidentBusinessRuleConfig" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="category_get_csi_model" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="post" path="/api/v3/categories/(_?)add_csi_model" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_add_csi_model" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="csi_model_template" type="JSONObject"/>
+        </url>
+        <!--category Additional operations -->
+        <url method="put" path="/api/v3/categories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="category" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/categories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/change_manager/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/categories/(technician|change_manager)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/change_manager" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/change_manager/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+
+        <url method="get" path="/api/v3/categories/(_?)history" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(_?)get_records_for_history" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/categories/(_?)get_performed_by_for_history" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="category_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--
+        <url method="get" path="/api/v3/categories/_total_count" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>-->
+        <!--subcategory crud operations -->
+        <url method="post" path="/api/v3/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="subcategory" type="JSONObject"/>
+        </url>
+        <url method="post" path="/api/v3/categories/(\d+)/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="subcategory" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/subcategories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="subcategory" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/categories/(\d+)/subcategories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="subcategory" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/subcategories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="delete" path="/api/v3/categories/(\d+)/subcategories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcategory_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="subcategory" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="put" path="/api/v3/categories/(\d+)/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="subcategory" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/categories/(\d+)/subcategories" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/(category)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/(category)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(category)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(category)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/(category)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/(category)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(category)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(category)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(_?)metainfo" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcat_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+        </url>
+        <url method="get" path="/api/v3/subcategories/(_?)metainfo" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="subcat_metainfo1" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+        </url>
+        <!--<url method="get" path="/api/v3/subcategories/_total_count" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/_total_count" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>-->
+        <!--item crud operations -->
+        <url method="post" path="/api/v3/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+        </url>
+        <url method="post" path="/api/v3/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+        </url>
+        <url method="post" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/subcategories/(\d+)/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="delete" path="/api/v3/subcategories/(\d+)/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="delete" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="put" path="/api/v3/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="put" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="item" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/items/(\d+)/(subcategory)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(\d+)/(subcategory)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(\d+)/(subcategory)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/items/(subcategory)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(subcategory)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(subcategory)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/items/(\d+)/(subcategory)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(\d+)/(subcategory)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(\d+)/(subcategory)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/items/(subcategory)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(subcategory)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(subcategory)/(\d+)" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/items/(\d+)/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(\d+)/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(\d+)/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/items/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/_links" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(_?)metainfo" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(_?)metainfo" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_metainfo2" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/items/(_?)metainfo" roles="CSIConfig">
+            <throttles key="url.path+url.dynamic_key" name="item_metainfo1" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+        </url>
+        <!--<url method="get" path="/api/v3/items/_total_count" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/_total_count" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/_total_count" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/items/(\d+)/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(\d+)/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(\d+)/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/items/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/subcategories/(\d+)/items/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/categories/(\d+)/subcategories/(\d+)/items/(_?)history" roles="CSIConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>-->
+        <!-- support group roles and associations start-->
+        <url path="/api/v3/group_roles" roles="SDAdmin,SDSiteAdmin" method="post">
+            <throttles name="group_role_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="group_role" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/group_roles/(\d+)" roles="SDAdmin,SDSiteAdmin" method="put">
+            <throttles name="group_role_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="group_role" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/group_roles/(\d+)" roles="SDAdmin" method="delete">
+            <throttles name="group_role_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/group_roles/(\d+)" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="group_role_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/group_roles" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="group_role_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/group_roles/(_?)metainfo" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="group_role_meta" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/group_roles" roles="SDAdmin,SDSiteAdmin" method="put">
+            <throttles name="group_role_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="group_role" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="-1" regex="ids"/>
+        </url>
+        <url path="/api/v3/group_roles" roles="SDAdmin" method="delete">
+            <throttles name="group_role_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="-1" regex="ids"/>
+        </url>
+        <url path="/api/v3/group_roles/(\d+)/_links" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="2000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/group_roles/(_?)history" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="group_role_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/group_roles/(_?)get_records_for_history" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="group_role_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/group_roles/(_?)get_performed_by_for_history" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="group_role_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!--Associations-->
+        <url path="/api/v3/support_group_role_associations" roles="SDAdmin,SDSiteAdmin" method="post">
+            <throttles name="grouprole_assoc_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="support_group_role_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(\d+)" roles="SDAdmin,SDSiteAdmin" method="put">
+            <throttles name="grouprole_assoc_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="support_group_role_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(\d+)" roles="SDAdmin,SDSiteAdmin" method="delete">
+            <throttles name="grouprole_assoc_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(\d+)" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="grouprole_assoc_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="grouprole_assoc_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(_?)metainfo" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="grouprole_assoc_meta" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(_?)remove_grouproletouser_associations" roles="SDAdmin,SDSiteAdmin" method="delete">
+            <throttles name="grouprole_delete_assoc" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="roleAssociations_delete" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(_?)get_unassociated_supportgroups" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="grouprole_get_unassocgroups" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations" roles="SDAdmin,SDSiteAdmin" method="delete">
+            <param name="ids" max-len="2000" regex="ids"/>
+            <throttles name="grouprole_assoc_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(\d+)/(group_role|user|support_group)/(\d+)" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="refer_entities" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(group_role|user|support_group)" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="refer_entities" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(\d+)/(group_role|user|support_group)" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="refer_entities" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/support_group_role_associations/(group_role|user|support_group)/(\d+)" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="refer_entities" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/support_group_role_associations/_total_count" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles name="roleassociations_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="1M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!--impact crud operations -->
+        <url method="post" path="/api/v3/impacts" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="impact_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="impact" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/impacts/(\d+)" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="impact_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="impact" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/impacts/(\d+)" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="impact_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/impacts/(\d+)" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="impact_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/impacts" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="impact_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <!--impact additional operations -->
+
+        <url method="put" path="/api/v3/impacts" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="impact" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/impacts" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/impacts/(\d+)/_links" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/impacts/_links" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/impacts/(_?)metainfo" roles="ImpactConfig,ConfigureCMDB">
+            <throttles key="url.path+url.dynamic_key" name="impact_meta" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/impacts/(_?)history" method="get" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="impact_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url method="get" path="/api/v3/impacts/(_?)get_records_for_history" roles="ImpactConfig" >
+            <throttles key="url.path+url.dynamic_key" name="impact_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/impacts/(_?)get_performed_by_for_history" roles="ImpactConfig">
+            <throttles key="url.path+url.dynamic_key" name="impact_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!--
+        <url method="get" path="/api/v3/impacts/_total_count" roles="ImpactConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/impacts/(_?)history" roles="ImpactConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>-->
+        <!--level crud operations -->
+        <url method="post" path="/api/v3/levels" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="level" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/levels/(\d+)" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="level" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/levels/(\d+)" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/levels/(\d+)" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/levels" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/levels" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="level" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/levels" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/levels/(\d+)/_links" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/levels/_links" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/levels/(_?)metainfo" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="levels_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <url method="get" path="/api/v3/levels/(_?)history" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/levels/(_?)get_records_for_history" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/levels/(_?)get_performed_by_for_history" roles="LevelConfig">
+            <throttles key="url.path+url.dynamic_key" name="level_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!--<url method="get" path="/api/v3/levels/_total_count" roles="LevelConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/levels/(\d+)/(_?)history" roles="LevelConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+       -->
+        <!--mode crud operations -->
+        <url method="post" path="/api/v3/modes" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="mode" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/modes/(\d+)" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="mode" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/modes/(\d+)" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/modes/(\d+)" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/modes" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+
+        <url method="put" path="/api/v3/modes" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="mode" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/modes" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/modes/(\d+)/_links" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/modes/_links" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/modes/(_?)metainfo" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/modes/(_?)history" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" path="/api/v3/modes/(_?)get_records_for_history" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/modes/(_?)get_performed_by_for_history" roles="ModeConfig">
+            <throttles key="url.path+url.dynamic_key" name="mode_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--<url method="get" path="/api/v3/modes/_total_count" roles="ModeConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/modes/(\d+)/(_?)history" roles="ModeConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        -->
+        <!--notification_template crud operations -->
+        <url method="post" path="/api/v3/notification_templates" roles="HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="notification_template_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="notification_template" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/notification_templates/(\d+)" roles="HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="notification_template_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="notification_template" type="JSONObject"/>
+        </url>
+
+        <url method="get" path="/api/v3/notification_templates/(\d+)" roles="HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="notification_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/notification_templates" roles="HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="notification_template_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url  method="delete" path="/api/v3/notification_templates/(\d+)" roles="HelpdeskConfig">
+            <throttles name="notification_template_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/notification_templates/(_?)subject_dollar_variables" roles="HelpdeskConfig" method="get">
+            <throttles name="subject_dv_no_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="notification_dollar_var_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/notification_templates/(_?)content_dollar_variables" roles="HelpdeskConfig" method="get">
+            <throttles name="content_dv_no_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="notification_dollar_var_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/(_?)subject_dollar_variables" roles="HelpdeskConfig" method="get">
+            <throttles name="subject_dv_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="notification_dollar_var_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/(_?)content_dollar_variables" roles="HelpdeskConfig" method="get">
+            <throttles name="content_dv_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="notification_dollar_var_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/attachments/(\d+)" roles="HelpdeskConfig" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/attachments/(\d+)" roles="HelpdeskConfig" method="delete" user_type="all">
+             <throttles key="url.path+url.dynamic_key" name="attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+         </url>
+        <url path="/api/v3/notification_templates/(\d+)/attachments" roles="HelpdeskConfig" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/attachments/(_?)download" roles="HelpdeskConfig" method="get" user_type="all">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+            <param name="ids" max-len="3000" regex="ids"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/attachments/(\d+)/(_?)download" roles="HelpdeskConfig" method="get" user_type="all">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/attachments" roles="HelpdeskConfig" method="delete" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param name="ids" max-len="3000" regex="ids"/>
+        </url>
+        <url path="/api/v3/notification_templates/attachments/(\d+)/(_?)download" roles="HelpdeskConfig" method="get" user_type="all">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/notification_templates/(_?)upload" method="post" user_type="all">
+        	<throttles key="url.path+url.dynamic_key" name="notification_template_upload_post" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="15"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/(_?)upload" method="post" user_type="all">
+        	<throttles key="url.path+url.dynamic_key" name="notification_template_id_upload_post" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="15"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/notification_templates/(\d+)/(_?)upload" method="put" user_type="all">
+        	<throttles key="url.path+url.dynamic_key" name="notification_template_id_upload_put" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="15"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+
+        <url method="put" path="/api/v3/notification_templates" roles="HelpdeskConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="notification_template" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <!--notification templates image operations -->
+        <!--Role not mentioned here as Entity Authorization will be invoked.
+        User can access the image using key independent of role/user_type-->
+        <url method="get" roles="" path="/api/v3/notification_templates/(\d+)/images/(\d+)" user_type="all" >
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <!--Role not mentioned here as Entity Authorization will be invoked. This image can be accessed only by the user who uploaded.-->
+        <url method="get" roles="" path="/api/v3/notification_templates/images/(\d+)">
+            <throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="post" roles="HelpdeskConfig" path="/api/v3/notification_templates/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" roles="HelpdeskConfig" path="/api/v3/notification_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <!--priority crud operations -->
+        <url method="post" path="/api/v3/priorities" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="priority" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/priorities/(\d+)" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="priority" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/priorities/(\d+)" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/priorities/(\d+)" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/priorities" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <!--priority crud operations -->
+
+        <url method="put" path="/api/v3/priorities" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="priority" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/priorities" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/priorities/(\d+)/_links" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/priorities/_links" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/priorities/(_?)metainfo" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <url method="get" path="/api/v3/priorities/(_?)history" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/priorities/(_?)get_records_for_history" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/priorities/(_?)get_performed_by_for_history" roles="PriorityConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--<url method="get" path="/api/v3/priorities/_total_count" roles="PriorityConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/priorities/(\d+)/(_?)history" roles="PriorityConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        -->
+        <!--priority matrix crud operations -->
+        <url method="post" path="/api/v3/priority_matrices" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_matrix_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="priority_matrix" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/priority_matrices/(\d+)" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_matrix_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="priority_matrix" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/priority_matrices" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_matrix_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="priority_matrix" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/priority_matrices" roles="PriorityMatrixConfig,CreateRequests,ModifyRequests" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="priority_matrix_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/priority_matrices/(_?)allow_override" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_matrix_get_allow_override" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="put" path="/api/v3/priority_matrices/(_?)allow_override" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="priority_matrix_edit_allow_override" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="priority_matrix_allow_override" type="JSONObject"/>
+        </url>
+        <!--priority matrix additional operations -->
+
+        <url method="put" path="/api/v3/priority_matrices" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="priority_matrix" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/priority_matrices/(impact|urgency|priority)" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/priority_matrices/(\d+)/(impact|urgency|priority)" roles="PriorityMatrixConfig">
+            <throttles key="url.path+url.dynamic_key" name="refer_entities" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="allowed_values_list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/priority_matrices/_links" roles="PriorityMatrixConfig" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+
+        <!--request_closure_codes crud operations -->
+        <url method="post" path="/api/v3/request_closure_codes" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="request_closure_code" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/request_closure_codes/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="request_closure_code" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/request_closure_codes/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/request_closure_codes/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/request_closure_codes" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/request_closure_codes" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="request_closure_code" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/request_closure_codes" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/request_closure_codes/(\d+)/_links" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/request_closure_codes/_links" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/request_closure_codes/(_?)metainfo" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_codes_meta" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <url method="get" path="/api/v3/request_closure_codes/(_?)history" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/request_closure_codes/(_?)get_records_for_history" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/request_closure_codes/(_?)get_performed_by_for_history" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_closure_code_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--<url method="get" path="/api/v3/request_closure_codes/_total_count" roles="CommonRequestConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/request_closure_codes/(\d+)/(_?)history" roles="CommonRequestConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        -->
+        <!--request_types crud operations -->
+        <url method="post" path="/api/v3/request_types" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="request_type" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/request_types/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="request_type" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/request_types/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/request_types/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/request_types" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/request_types" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="request_type" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/request_types" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/request_types/(\d+)/_links" roles="CommonRequestConfig">
+             <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/request_types/_links" roles="CommonRequestConfig">
+             <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/request_types/(_?)metainfo" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="requesttypr_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <url method="get" path="/api/v3/request_types/(_?)history" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/request_types/(_?)get_records_for_history" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/request_types/(_?)get_performed_by_for_history" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="request_type_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--<url method="get" path="/api/v3/request_types/_total_count" roles="CommonRequestConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/request_types/(\d+)/(_?)history" roles="CommonRequestConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        -->
+        <!--resolution_templates crud operations -->
+        <url method="post" path="/api/v3/resolution_templates" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="resolution_template" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/resolution_templates/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="resolution_template" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/resolution_templates/(\d+)" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <!--ModifyResolution is added for resolution template selection in the request details page-->
+        <url method="get" path="/api/v3/resolution_templates/(\d+)" roles="ModifyResolution,CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/resolution_templates" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/resolution_templates" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="resolution_template" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/resolution_templates" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/resolution_templates/(\d+)/_links" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/resolution_templates/_links" roles="CommonRequestConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+
+        <!-- resolution_templates metainfo -->
+        <url roles="CommonRequestConfig" path="/api/v3/resolution_templates/(_?)metainfo" method="get">
+            <throttles name="resolution_templates_metainfo_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!-- Resolution Template image operation -->
+        <!--ModifyResolution is added for resolution template selection in the request details page-->
+        <url method="get" roles="ModifyResolution,CommonRequestConfig" path="/api/v3/resolution_templates/(\d+)/images/(\d+)">
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_get_image" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <!--Role not mentioned here as Media Authorization should be invoked and this image can be accessed only by the user who uploaded.-->
+        <url method="get" roles="" path="/api/v3/resolution_templates/images/(\d+)" description="ROLE_NOT_REQUIRED: As Media Authorization should be invoked and this image can be accessed only by the user who uploaded">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_view_uploaded_image" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="post" roles="CommonRequestConfig" path="/api/v3/resolution_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="resolution_template_upload_image" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image"  remove-exif="true">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <!-- Resolution Template image operation End-->
+
+        <!-- Resolution Template history-->
+        <url path="/api/v3/resolution_templates/(_?)history" roles="CommonRequestConfig" method="get">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_get_list_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/resolution_templates/(_?)get_records_for_history" roles="CommonRequestConfig" method="get" >
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/resolution_templates/(_?)get_performed_by_for_history" roles="CommonRequestConfig" method="get">
+            <throttles key="url.path+url.dynamic_key" name="resolution_template_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!--status crud operations -->
+        <url method="post" path="/api/v3/statuses" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="status" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/statuses/(\d+)" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="status" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/statuses/(\d+)" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/statuses/(\d+)" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/statuses" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/statuses" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="status" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/statuses" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/statuses/(\d+)/_links" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/statuses/_links" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/statuses/(_?)metainfo" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" path="/api/v3/statuses/(_?)history" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/statuses/(_?)get_records_for_history" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/statuses/(_?)get_performed_by_for_history" roles="StatusConfig">
+            <throttles key="url.path+url.dynamic_key" name="status_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!--<url method="get" path="/api/v3/statuses/_total_count" roles="StatusConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/statuses/(\d+)/(_?)history" roles="StatusConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+       -->
+        <!--urgency crud operations -->
+        <url method="post" path="/api/v3/urgencies" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_add" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="urgency" type="JSONObject"/>
+        </url>
+        <url method="put" path="/api/v3/urgencies/(\d+)" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="urgency" type="JSONObject"/>
+        </url>
+        <url method="delete" path="/api/v3/urgencies/(\d+)" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/urgencies/(\d+)" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="include" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/urgencies" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_get_list" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+
+        <url method="put" path="/api/v3/urgencies" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_edit" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="-1" min-occurrences="1" name="input_data" template="urgency" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="delete" path="/api/v3/urgencies" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="bulk_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/urgencies/(\d+)/_links" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/urgencies/_links" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param max-len="-1" name="input_data" template="links_input" type="JSONObject"/>
+            <param max-len="3000" name="ids" regex="ids"/>
+        </url>
+        <url method="get" path="/api/v3/urgencies/(_?)metainfo" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/urgencies/(_?)history" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/urgencies/(_?)get_records_for_history" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/urgencies/(_?)get_performed_by_for_history" roles="UrgencyConfig">
+            <throttles key="url.path+url.dynamic_key" name="urgency_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--<url method="get" path="/api/v3/urgencies/_total_count" roles="UrgencyConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        <url method="get" path="/api/v3/urgencies/(\d+)/(_?)history" roles="UrgencyConfig">
+            <param max-len="-1" name="input_data" template="list_info" type="JSONObject"/>
+        </url>
+        -->
+        <url user_type="all" method="get" roles="" path="/api/v3/recent_items">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="" path="/api/v3/recent_items/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="" path="/api/v3/recent_items/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+
+        <!-- roles are given as empty for operational hr get/get all as common role cant be mentioned across module combination but handled in api isauthorized method-->
+        <url path="/api/v3/operational_hours/(\d+)" roles="" method="get" user_type="all" description="Roles are empty as no common role available due to multiple module usage based on criteria and handled in API authorization method">
+            <param name="input_data" template="include" type="JSONObject" max-len="500"/>
+            <throttles name="operational_hour_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/operational_hours" roles="" method="get" user_type="all" description="Roles are empty as no common role available due to multiple module usage based on criteria and handled in API authorization method">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="5000"/>
+            <throttles name="operational_hour_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/operational_hours" roles="SDAdmin,SDSiteAdmin" method="post">
+            <param name="input_data" template="operational_hour" type="JSONObject" max-len="5000" min-occurrences="1"/>
+            <throttles name="operational_hour_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/operational_hours/(\d+)" roles="SDAdmin,SDSiteAdmin" method="put">
+            <param name="input_data" template="operational_hour" type="JSONObject" max-len="5000" min-occurrences="1"/>
+            <throttles name="operational_hour_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/operational_hours/(_?)history" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="operational_hour_get_list_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="80" duration="1m"/>
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/operational_hours/(_?)get_records_for_history" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="operational_hour_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/operational_hours/(_?)get_performed_by_for_history" roles="SDAdmin,SDSiteAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="operational_hour_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/leave_types/(_?)history" roles="SDAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="leave_types_get_list_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/leave_types/(_?)get_records_for_history" roles="SDAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="leave_types_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/leave_types/(_?)get_performed_by_for_history" roles="SDAdmin" method="get">
+            <throttles key="url.path+url.dynamic_key" name="leave_types_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/organization_details/(_?)history" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="organization_details_get_list_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/organization_details/(_?)get_performed_by_for_history" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="organization_details_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/user_merges/(_?)history" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="user_merges_get_list_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/user_merges/(_?)get_records_for_history" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="user_merges_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/user_merges/(_?)get_performed_by_for_history" roles="SDOrgAdmin" method="get" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="user_merges_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!--Integration_keys-->
+
+        <url path="/api/v3/integration_keys" roles="SDAdmin" method="post" remote_server="true">
+            <throttles name="integration_key_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="integration_key" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/integration_keys/(\d+)" roles="SDAdmin" method="put" remote_server="true">
+            <throttles name="integration_key_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="integration_key" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/integration_keys/(\d+)" roles="SDAdmin" method="delete" remote_server="true">
+            <throttles name="integration_key_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/integration_keys/(\d+)" roles="SDAdmin" method="get" remote_server="true">
+            <throttles name="integration_key_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/integration_keys" roles="SDAdmin" method="get" remote_server="true">
+            <throttles name="integration_key_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/integration_keys/(\d+)/(_?)decrypt" roles="SDAdmin" method="post" remote_server="true">
+            <throttles name="integration_key_decrypt" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="5" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/integration_keys/(_?)reassign" roles="SDAdmin" method="put" remote_server="true">
+            <throttles name="integration_key_reassign" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="integration_key_reassign" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="-1" regex="ids"/>
+        </url>
+        <url path="/api/v3/integration_keys" roles="SDAdmin" method="delete" remote_server="true">
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="integration_keys_delete_throttle" >
+				<throttle duration="1m" threshold="15" lock-period="5m"/>
+			</throttles>
+            <param name="ids" max-len="-1" regex="ids"/>
+        </url>
+    	<url path="/api/v3/integration_keys/(_?)get_notification_settings" roles="SDAdmin" method="get" remote_server="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_notification_settings" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+        </url>
+	<url path="/api/v3/integration_keys/(_?)update_notification_settings" roles="SDAdmin" method="put" remote_server="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="update_notification_settings" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+		<param name="input_data" template="notification_settings_update" type="JSONObject" max-len="5000" min-occurrences="1"/>
+	</url>
+
+        <!-- Reply templates -->
+        <url path="/api/v3/reply_templates/(_?)metainfo" roles="ViewRequests,HelpdeskConfig" method="get" user_type="all">
+            <throttles name="reply_templates_metainfo_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reply_templates" roles="ViewRequests,HelpdeskConfig" method="post">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_Template_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reply_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/reply_templates/(\d+)" roles="ViewRequests,HelpdeskConfig" method="put">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_Template_PUT" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reply_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/reply_templates/(\d+)" roles="ViewRequests,HelpdeskConfig" method="delete">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_Template_DELETE" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/reply_templates/(\d+)" roles="ViewRequests,HelpdeskConfig" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_Template_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/reply_templates" roles="ViewRequests,HelpdeskConfig" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_Template_GET_ALL" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/reply_templates" roles="ViewRequests,HelpdeskConfig" method="put">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_Template_PUT_BULK" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="reply_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="3000" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/reply_templates" roles="ViewRequests,HelpdeskConfig" method="delete">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_Template_DELETE_BULK" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="3000" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/reply_templates/(_?)history" roles="HelpdeskConfig" method="get">
+            <throttles key="url.path+url.dynamic_key" name="reply_template_get_list_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/reply_templates/(_?)get_records_for_history" roles="HelpdeskConfig" method="get">
+            <throttles key="url.path+url.dynamic_key" name="reply_template_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/reply_templates/(_?)get_performed_by_for_history" roles="HelpdeskConfig" method="get">
+            <throttles key="url.path+url.dynamic_key" name="reply_template_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!-- Reply templates ends here-->
+        <!--Reply template images-->
+        <url method="get" roles="ViewRequests,HelpdeskConfig" path="/api/v3/reply_templates/(\d+)/images/(\d+)">
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <!--Role not mentioned here as Media Authorization should be invoked and this image can be accessed only by the user who uploaded.-->
+        <url method="get" roles="" path="/api/v3/reply_templates/images/(\d+)">
+            <throttles key="url.path+url.dynamic_key" name="images" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url method="post" roles="ViewRequests,HelpdeskConfig" path="/api/v3/reply_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+	<!-- Locked accounts -->
+	<url path="/api/v3/locked_accounts" roles="SDOrgAdmin" method="get" user_type="all">
+		<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		<throttles name="locked_account_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/api/v3/locked_accounts/(_?)metainfo" roles="SDOrgAdmin" method="get" user_type="all">
+		<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+		<throttles name="locked_account_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/api/v3/locked_accounts" roles="SDOrgAdmin" method="delete" user_type="all">
+            <param name="ids" max-len="1000" regex="ids"/>
+	    <throttles name="locked_account_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+		    <throttle duration="1m" threshold="10" lock-period="5m"/>
+	    </throttles>
+    </url>
+
+        <!--Reply template images-->
+
+<!--        Problem Template urls-->
+
+        <url method="post" roles="SDAdmin" path="/api/v3/problem_templates">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <!-- Unable to calculate max-length due to default values -->
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="problem_template" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_PUT" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <!-- Unable to calculate max-length due to default values -->
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="problem_template" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_DELETE" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_GETLIST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="CreateProblems" path="/api/v3/problem_templates/(_?)default"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_Default" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/(_?)mark_default"  >
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_MarkDefault" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/(_?)copy_template"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_Copy" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <!-- Unable to calculate max-length due to default values -->
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="template_copy" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/problem_templates">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_PUT" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="problem_template" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1000" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/problem_templates">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Problem_Template_DELETE" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="1000" name="ids"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/problem_templates/(_?)images"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+             <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/(_?)images"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+             <file  allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" roles="CreateProblems,ModifyProblems" path="/api/v3/problem_templates/(\d+)/(_?)images/(\d+)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(_?)images/(\d+)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(_?)allowed_values_for_fields"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="allowed_values" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/(_?)allowed_values_for_fields"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="allowed_values" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(problem|module|fields|sections)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="allowed_values" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/(problem|module|fields|sections)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="allowed_values" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/_links">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="links" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/_total_count">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="total_count" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/(_?)history"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="history" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(_?)history"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="history" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/problem_templates/(_?)get_records_for_history" method="get"  roles="SDAdmin">
+            <throttles key="url.path+url.dynamic_key" name="problem_templates_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_templates/(_?)get_performed_by_for_history" method="get"  roles="SDAdmin">
+            <throttles key="url.path+url.dynamic_key" name="problem_templates_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+                   </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+<!--        Problem Template urls ends-->
+        <param name-regex="true" max-len="250" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="exclude_weeks_template">
+            <key name="id" regex="1|2|3|4|5"/>
+            <key name="name" regex="first|second|third|fourth|last"/>
+        </jsontemplate>
+        <jsontemplate name="operational_time_template">
+            <key name="hours" type="int" range="0-23"/>
+            <key name="minutes" type="int" range="0-59"/>
+        </jsontemplate>
+
+	<jsontemplate name="notification_settings_update">
+		<key name="is_enabled" type="boolean" allow-invalid="false" min-occurrences="1"/>
+		<key name="no_of_days" type="int" range="1-15" min-occurrences="1"/>
+		<key name="is_notify_to_owner" type="boolean" allow-invalid="false" min-occurrences="1"/>
+		<key name="notify_technicians" type="JSONArray" template="user_unique" max-len="3000" min-occurrences="1" array-size="0-10" allow-invalid="false"/>
+	</jsontemplate>
+    </jsontemplates>
+</security>

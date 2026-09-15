@@ -1,0 +1,249 @@
+{
+    "handler": "StatusAPIHandler",
+    "listeners": ["StatusListener"],
+    "workflow": [],
+    "cache_key": "ADMIN_CONF.STATUS_DO",
+    "entity_group": "Admin",
+    "path": "/statuses",
+    "Additional Elements": [],
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"status\":{\"id\":\"100054\",\"name\":\"Custom Open\",\"internal_name\":\"Custom Open\",\"description\":\"Custom status for Request open\",\"in_progress\":true,\"stop_timer\":false,\"deleted\":false,\"color\":\"#005600\"}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"status\":{\"name\":\"Custom Open\",\"description\":\"Custom status for Request open\",\"in_progress\":true,\"stop_timer\":false,\"color\":\"#005600\"}}"
+            },
+            "path": "/api/v3/statuses",
+            "method": "POST",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Add Status",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation lets you add a new status"
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"status\":{\"id\":\"1080054\",\"name\":\"Custom Open\",\"internal_name\":\"Custom Open\",\"description\":\"Custom status for Request open\",\"in_progress\":true,\"stop_timer\":false,\"deleted\":false,\"color\":\"#005600\"}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"status\":{\"name\":\"Custom Open\",\"description\":\"Custom status for Request open\",\"in_progress\":true,\"stop_timer\":false,\"color\":\"#005600\"}}"
+            },
+            "path": "/api/v3/statuses/{status_id}",
+            "method": "PUT",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Update Status",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation lets you update a status details"
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"},
+            "path": "/api/v3/statuses/{status_id}",
+            "method": "DELETE",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Delete Status",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation lets you delete a status"
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"status\":{\"id\":\"10800354\",\"name\":\"Custom Open\",\"internal_name\":\"Custom Open\",\"description\":\"Custom status for Request open\",\"in_progress\":true,\"stop_timer\":false,\"deleted\":false,\"color\":\"#005600\"}}"},
+            "path": "/api/v3/statuses/{status_id}",
+            "method": "GET",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "View Status",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation fetches details of a status"
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"statuses\":[{\"id\":\"17993\",\"name\":\"Closed\",\"internal_name\":\"Closed\",\"description\":\"Request Completed\",\"in_progress\":false,\"stop_timer\":false,\"deleted\":false,\"color\":\"#006600\"}]}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":1,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+            },
+            "path": ["/api/v3/statuses"],
+            "method": "GET",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "View All Statuses",
+            "inOP": "true",
+            "name": "",
+            "inOD": "true",
+            "isReleased": "true",
+            "desc": "This operation fetches all statuses available in the application."
+        }
+    ],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "id",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Number",
+            "isMandatory": "true",
+            "desc": "Unique identifier of the status",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "STATUSDEFINITION : STATUSNAME",
+            "name": "name",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "String",
+            "isMandatory": "true",
+            "desc": "Unique name that is used to identify the status.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "column": "",
+            "name": "internal_name",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "String",
+            "isReadOnly": "true",
+            "desc": "Name used to identify the status inside the application.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "STATUSDEFINITION : INTERNALNAME",
+            "name": "internal_name",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "String",
+            "isReadOnly": "true",
+            "desc": "Name used to identify the status inside the application.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "STATUSDEFINITION : STATUSDESCRIPTION",
+            "name": "description",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Short description about the Status",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "column": "",
+            "name": "in_progress",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Boolean",
+            "desc": "Indicates whether the status that you are adding is still in progress and hence should be a part of the open requests or should be moved to the closed requests.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "STATUSDEFINITION : ISPENDING",
+            "name": "in_progress",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Boolean",
+            "desc": "Indicates whether the status that you are adding is still in progress and hence should be a part of the open requests or should be moved to the closed requests.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "column": "",
+            "name": "stop_timer",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Boolean",
+            "desc": "Indicates if the status requires the timer of the request to be stopped.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "STATUSDEFINITION : STATUSSTOPCLOCK",
+            "name": "stop_timer",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Boolean",
+            "desc": "Indicates if the status requires the timer of the request to be stopped.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "STATUSDEFINITION : ISDELETED",
+            "name": "deleted",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "Boolean",
+            "isReadOnly": "true",
+            "desc": "Indicates whether the status is still in use in the application.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "STATUSDEFINITION : STATUSCOLOR",
+            "name": "color",
+            "inOD": "true",
+            "odcolumn": "",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "A color to denote the status ",
+            "graphView": ""
+        }
+    ],
+    "isReleased": "true",
+    "bean": "StatusBean",
+    "write_protect_criteria": [
+        {
+            "field": "internal_name",
+            "value": "Open",
+            "operator": "="
+        },
+        "or",
+        {
+            "field": "internal_name",
+            "value": "Closed",
+            "operator": "="
+        },
+        "or",
+        {
+            "field": "internal_name",
+            "value": "Resolved",
+            "operator": "="
+        },
+        "or",
+        {
+            "field": "internal_name",
+            "value": "Onhold",
+            "operator": "="
+        }
+    ],
+    "syslog_module": "Admin"
+}

@@ -1,0 +1,39 @@
+<p><span class="helpheading"><strong>集成Desktop Central </strong></span></p>
+<p align="right" style="margin-top: 0.5pt; margin-bottom: 0.5pt;" ><b>这里是集成步骤的</b> : <a href="#" sdpJs="js-event-admin_helpcard_desktopcentral_zh-0" style="color:blue;text-decoration:underline;" >视频</a> | <a href="#" sdpJs="js-event-admin_helpcard_desktopcentral_zh-1" style="color:blue;text-decoration:underline;" >文档</a></p>
+
+<p>将ServiceDesk Plus与ManageEngine Desktop Central集成，可以帮助您实现所有桌面机和移动设备的管理。Desktop Central可以将日常桌面机管理的活动（如：安装补丁，部署软件，远程控制，发起聊天、客户端机器安全化、USB设备的限制使用等）实现自动化管理，也可以管理移动设备（配置文件管理、App管理、安全管理和资产管理）。如果您已经安装了这两款产品，只需要在此指定运行Desktop Central的计算机名称和Web端口，即可完成集成。 </p>
+<p><strong>注意:</strong> Desktop Central的版本必须是8.1或以上版本。</p>
+<p><strong>需要提供的信息:</strong></p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>服务器名称:</strong> 输入安装了<span style="font-weight: bold;">
+  Desktop Central</span>的服务器的名称或IP地址。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>服务器端口:</strong> 输入访问Desktop Central的<span style="font-weight: bold;">端口号</span>。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>协议设置:</strong> 选择访问Desktop Central的<span style="font-weight: bold;">协议</span>，如：http 或 https。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>注意:</strong> 要显示<strong>桌面管理</strong>和<strong>移动设备管理（MDM）</strong> 下拉菜单，需要分别选中“启用桌面管理菜单”和“启用移动设备管理菜单”的选项。如果不想显示这些菜单，可以反选上述选项，然后保存。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">点击 <span style="font-weight: bold;">保存</span>按钮，保存设置的信息，ServiceDesk Plus将尝试与Desktop Central 服务器进行链接，一旦连接建立，就可以从Desktop Central获取资产的软件明细。
+</p>
+
+<br>
+<p><span class="helpheading"><strong>集成(运行在HTTPS模式)ME产品</strong></span></p>
+<ol>
+  <li>从以下链接，下载<strong>.zip</strong>文件，并将下载的文件解压到"<em>ManageEngine\ServiceDesk"</em>:</li>
+  <p style="margin-left: 50px;"><strong>对于Linux: </strong>https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip </p>
+  <p style="margin-left: 50px;"><strong>对于Windows:</strong> https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip </p>
+  <li>打开命令行窗口，导航到"<em>ManageEngine\ServiceDesk"</em>目录，以以下格式执行命令：</li>
+  <p style="margin-left: 50px;"><strong>对于Linux: </strong><br>
+    \ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>执行命令后，将会提示一个<strong>PKIX</strong>例外，然后要求您输入一个值，输入1，将在<em>"ManageEngine\ServiceDesk"</em>目录下生成文件名为 <strong>jssecacerts</strong>的文件。</p>
+  </li>
+  <li>将文件<strong>jssecacerts</strong>复制到"<em>ManageEngine\ServiceDesk\jre\lib\security"</em> 目录下，然后重启ServiceDesk Plus 。</li>
+</ol>
+
+<script nonce="${{sdpNonce}}">
+document.querySelector('[sdpJs="js-event-admin_helpcard_desktopcentral_zh-0"]').addEventListener("click", function(event) { return appendDID('http://www.manageengine.com/products/desktop-central/demo/desktop-management-videos.html?integration',true) });
+document.querySelector('[sdpJs="js-event-admin_helpcard_desktopcentral_zh-1"]').addEventListener("click", function(event) { return appendDID('http://www.manageengine.com/products/desktop-central/help/configuring_desktop_central/dc_sdp_integration.html',true) });
+</script>

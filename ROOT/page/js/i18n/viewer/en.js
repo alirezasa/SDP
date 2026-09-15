@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = 'Viewer';
+i18n["zcpage.builder.viewer.ar"] = 'AR';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = 'Configure Viewer';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = 'Delete Viewer';
+i18n["zcpage.builder.arviewer.deletetitle"] = 'Delete AR Viewer?';
+i18n["zcpage.builder.arviewer.deletewarning"] = 'This action cannot be undone. Are you sure you want to delete it?';
+i18n["zcpage.builder.viewer.arsetup"] = 'AR Setup';
+i18n["zcpage.builder.viewer.arsetup.msg"] = 'Click "Add Input" to give an input for the Viewer.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = 'Add Input';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = 'Marker-based AR set';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = 'Page Variable';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = 'No page variables to select. However, you can add a new page variable under <b>Page Variables and Script</b> tab. <br> <a href=\"https://help.zoho.com/portal/en/kb/creator/developer-guide/pages/page-script-and-variables/articles/page-scripts-and-variable" target=\"_blank\">Learn More</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = 'No marker-based AR sets to select. However, you can create one in the AR Library under the Microservice section. <a href=\"https://www.zoho.com/creator/help/microservices/add-models.html#create_arset" target=\"_blank\">Learn More</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = 'This is a mobile-specific input. To capture the marker, it uses your mobile camera.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = "The page variable's value must be the 3D model's name used in the AR Library.";
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = "If you cancel now, any changes you've made to this viewer won't be saved.";

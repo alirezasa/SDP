@@ -1,0 +1,181 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the subcategory",
+      "graphView": "",
+      "column": "SUBCATEGORYDEFINITION : SUBCATEGORYID",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Name of the subcategory",
+      "graphView": "",
+      "column": "SUBCATEGORYDEFINITION : NAME",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Relevant information about the  subcategory",
+      "graphView": "",
+      "column": "SUBCATEGORYDEFINITION : DESCRIPTION",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "deleted",
+      "type": "Boolean",
+      "desc": "Indicated whether the subcategory is still in use in the product",
+      "graphView": "",
+      "isReadOnly": "true",
+      "column": "SUBCATEGORYDEFINITION : ISDELETED",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "category",
+      "type": "Object",
+      "desc": "Indicated the category under which the subcategory belongs to.<br/>\nEx :- {\"id\": \"1\", \"name\": \"Hardware Problems\"}",
+      "graphView": "",
+      "column": "SUBCATEGORYDEFINITION : CATEGORYID",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true",
+      "relEntity": {
+        "name": "Category",
+        "type": "referential",
+        "relation": "1to1"
+      }
+    }
+  ],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/subcategories",
+        "/api/v3/categories/{category_id}/subcategories"
+      ],
+      "desc": "This operation lets you add a new subcategory",
+      "disp_desc": "Add Subcategory",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"subcategory\":{\"name\":\"Mac OS X-1\",\"description\":\"Mac OS X related queries / issues\",\"category\":{\"id\":\"108037\",\"name\":\"Operating System\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"subcategory\":{\"id\":\"108037\",\"name\":\"Mac OS X-1\",\"description\":\"Mac OS X related queries / issues\",\"deleted\":false,\"category\":{\"id\":\"18037\",\"name\":\"Operating System\"}}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/subcategories/{subcategory_id}"
+      ],
+      "desc": "This operation lets you update details of a subcategory",
+      "disp_desc": "Update Subcategory",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"subcategory\":{\"name\":\"Mac OS X-1\",\"description\":\"Mac OS X related queries / issues\",\"category\":{\"id\":\"108037\",\"name\":\"Operating System\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"subcategory\":{\"id\":\"48087\",\"name\":\"Mac OS X-1\",\"description\":\"Mac OS X related queries / issues\",\"deleted\":false,\"category\":{\"id\":\"108037\",\"name\":\"Operating System\"}}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/subcategories/{subcategory_id}"
+      ],
+      "desc": "This operation lets you delete a subcategory",
+      "disp_desc": "Delete a subcategory",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": "/api/v3/subcategories/{subcategory_id}",
+      "desc": "This operation fetches details of a subcategory",
+      "disp_desc": "View Subcategory",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"subcategory\":{\"id\":\"187087\",\"name\":\"Mac OS X-1\",\"description\":\"Mac OS X related queries / issues\",\"deleted\":false,\"category\":{\"id\":\"108037\",\"name\":\"Operating System\"}}}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Common",
+      "path": [
+        "/api/v3/categories/{category_id}/subcategories",
+        "/api/v3/subcategories"
+      ],
+      "desc": "This operation fetches all subcategories.",
+      "disp_desc": "View All Subcategories",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":1,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"subcategories\":[{\"id\":\"198087\",\"name\":\"Mac OS X-1\",\"description\":\"Mac OS X related queries / issues\",\"deleted\":false,\"category\":{\"id\":\"15437\",\"name\":\"Operating System\"}}]}"
+      },
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "workflow": [],
+  "write_protect_criteria": [],
+  "path": "/subcategories",
+  "handler": "CachedEntityHandler",
+  "syslog_module": "Admin",
+  "cache_key": "ADMIN_CONF.SUBCATEGORY_DO",
+  "entity_group": "Admin",
+  "Additional Elements": [],
+  "isReleased": "true"
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Microsoft Entra ID (Azure AD)</title>
+</head>
+
+<body>
+<p><strong>Microsoft Entra ID (Azure AD) User Sync</strong></p>
+<p>Follow these steps to import users from Microsoft Entra ID:</p>
+
+
+<p><strong>Step 1: Add Domains</strong></p>
+Add domains to sync users from Microsoft Entra ID. You can set up multiple domains for importing users.
+<ul>
+    <li>Under Domain Details, click <strong>New Domain</strong>.</li>
+    <li>Enter the <strong>Domain Name, Client ID, Client Secret,</strong> and <strong>Token URL</strong></li>
+    <li>Click <strong>Save and Test Connection.</strong></li>
+</ul>
+After the test connection is successful, the Field Mapping and User Import Settings section will appear in the Add Domain pop-up.
+
+
+<p><strong>Step 2: Field Mapping</strong></p>
+<ul>
+    <li>Select the application fields and map them to the corresponding user fields in Microsoft Entra ID.</li>
+    <li>Add or remove fields using the <strong>+</strong> and <strong>-</strong> icons.</li>
+</ul>
+<strong>Note:</strong>
+<ul>
+    <li><strong>Name</strong> and <strong>Login Name</strong> fields are mandatory for fetching Azure users and cannot be removed.</li>
+    <li>The <strong>Reporting To</strong> field can be mapped only to the <strong>manager</strong> field in Azure AD. The user's manager will be automatically included as a user. </li>
+    <li><strong>Object ID, userPrincipalName, onPremisesUserPrincipalName, onPremisesDomainName, and onPremisesSamAccountName</strong> are imported by default.</li>
+    <li>Additional fields can also be used for field mapping.</li>
+</ul>
+
+
+<p><strong>Step 3: User Import Settings</strong></p>
+Schedule the user import for periodic sync or import users manually.
+<ul>
+    <li><strong>Scheduled Import:</strong></li>
+    <ul>
+        <li>In the <strong>Schedule Configuration</strong> tab, choose to import users with or without criteria.</li>
+        <li><strong>Without Criteria:</strong> Imports all users automatically at the scheduled time.</li>
+        <li><strong>Based on Criteria:</strong> Imports users based on specified criteria. Select the criteria from the available drop-downs.</li>
+    </ul>
+    <li><strong>Manual Import:</strong></li>
+    <ul>
+        <li>In the <strong>Import Once</strong> tab, enter the User Principal Name of users in the text box. You can import up to five users at a time.</li>
+        <li>Click <strong>Import Now</strong>. This import will be executed instantly without any scheduling.</li>
+    </ul>
+</ul>
+
+
+<p><strong>Step 4: Set a local authentication password for imported users</strong></p>
+Set a default local authentication password for users imported from Microsoft Entra ID. Users can change this password after their first login.
+<ul>
+    <li>Hover over the <strong>Local Authentication Password</strong> section, and click <strong>Edit.</strong></li>
+    <li>Choose to generate a random password for each user or set a predefined password.</li>
+    <li>Click <strong>Save</strong>.</li>
+</ul>
+<strong>Note:</strong>
+<ul>
+    <li>Ensure the predefined password meets all password policy requirements.</li>
+    <li>Users will receive their password details via email. Configure email notifications for users under <strong>Admin > Automation > Notification Rules > Request > Send Self-service login details.</strong></li>
+    <li>You can mandate users to update the default password after their first login under <strong>Admin > Security Settings > Password Policy</strong> for non-ESM setups and <strong>ESM Directory > Security Settings > Password Policy</strong> for ESM Setups.</li>
+    <li>The local authentication password set for Microsoft Entra ID imported users is also applicable for users imported from AD, LDAP, and CSV files.</li>
+</ul>
+
+
+<p><strong>Step 5: Schedule Microsoft Entra ID import</strong></p>
+Schedule user import to synchronize the user details periodically. Users and their details are synchronized with the application in two ways:
+<ul>
+    <li><strong>Full Import:</strong> Syncs all user data.</li>
+    <li><strong>Delta Import:</strong> Syncs updated user details and newly added user accounts every hour.</li>
+</ul>
+When the schedule is enabled, both Full import and Delta import are automatically enabled. To enable the import schedule,
+<ul>
+    <li>Hover over the <strong>Import Schedule</strong> field, and click <strong>Edit.</strong></li>
+    <li>Enable the schedule using the check box and specify the import frequency.</li>
+    <li>Set the start date and time for the schedule.</li>
+    <li>Click <strong>Save.</strong></li>
+</ul>
+The users will be imported per the schedule, and the user information will be updated every hour.<br>
+The import summary will be notified to the Organization Admin (for ESM setup) and SDAdmins (for non-ESM setup) through bell notifications. It can be viewed under bell icon, along with the count of users added, updated, and failed. Additionally, a CSV file containing the User Principal Name of the failed users will be included.
+
+<p><strong>Step 6: Sync deleted users from Microsoft Entra ID</strong></p>
+Configure what happens to the user data in the application when they are deleted in Microsoft Entra ID.<br>
+You can either delete the users automatically or manually. Deleted users will be synced with the application during the configured full/delta import schedule.<br>
+To configure the syncing of deleted users,
+<ul>
+    <li>Hover over the <strong>Sync Deleted Users</strong> section, and click <strong>Edit.</strong></li>
+    <li>Choose your deletion method: automatic or manual. Note that automatic deletion is only applicable to non-technician users.</li>
+    <li>Click <strong>Save.</strong></li>
+</ul>
+If manual deletion is chosen, the SDAdmin/Organization Admin will receive a bell notification and a list of deleted users will be displayed upon clicking the notification.<br>
+If automatic deletion is chosen,
+<ul>
+    <li>Non-technicians will be automatically removed, and a bell notification indicating the number of deleted users will be sent to the SDAdmin/Organization Admin. Clicking the notification will open the system log with the deleted user information in a CSV file.</li>
+    <li>Technicians will not be deleted automatically. Instead, the SDAdmin/Organization Admin will receive a bell notification and a list of deleted users will be displayed upon clicking the notification.</li>
+</ul>
+Additionally, the link to the deleted users list will be displayed on the Microsoft Entra ID integration page in the application and also under <strong>Admin > Users & Permission > Users/Technician</strong> tab. The SDAdmin/Organization Admin can review the list before removing the users from the application.
+
+</body>
+
+</html>

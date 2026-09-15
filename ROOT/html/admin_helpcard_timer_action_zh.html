@@ -1,0 +1,117 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+
+<head>
+
+</head>
+
+<body>
+<div>
+   请求计时器动作允许您执行延时的自动动作。您可以配置ServiceDesk Plus来计算所有满足前提条件的请求的等待时间，并安排计时器动作的执行。
+</div>
+<br>
+<div>配置<span style="font-weight: bold;">期间</span>和<span style="font-weight: bold;">之后</span>规则对于顺利执行定时器动作至关重要。</div>
+
+<font size="-1"><br></font>
+<span style="font-weight: bold;">配置计时器动作</span>
+
+<ul class="mt10">
+    <li>点击<span style="font-weight: bold;">新建计时器动作</span>。</li>
+    <li><span style="font-weight: bold;">名称和描述：</span>为计时器提供一个名称和描述。</li>
+    <li><span style="font-weight: bold;">操作适用于：</span>您可以对所有模板或选定的模板应用该操作。</li>
+    <li><span style="font-weight: bold;">条件：</span>从下拉列表中配置请求要满足的标准-条件。</li>
+    <li><span style="font-weight: bold;">阶段：</span>在定义了标准条件后，您可以配置将按顺序执行的阶段。
+        <ul>
+          <li><span style="font-weight: bold;">启动延迟：</span>设置延迟时间，以保持期间和之后规则的执行。</li>
+            <li><span style="font-weight: bold;">重复频率（每）：</span>选择是否、何时、以及重复多少次定时器动作。</li>
+            <li><span style="font-weight: bold;">延迟时间参考</span>选择是否仅工作时间或SLA时间参考初始延迟时间。如果您选择SLA时间，您可以在请求转移到保持、完成或解决状态时暂停计时器。如果没有配置延迟时间，计时器将24小时运行。</li>
+            <li>配置<span class="sb">期间规则</span>和<span class="sb">之后规则</span>。它们将被按顺序执行。</li>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">期间和之后规则</span></summary>
+                <div class="p15 pt5">
+                    <div class="mt10">
+                        <span class="sb mt5">期间规则</span>
+                        <div>期间规则是用来在一个请求达到阶段预定时间时对请求进行自动操作。对于每个阶段，您最多可以添加5条期间规则，这些规则将被依次执行。当下一个规则被验证时，由一个期间规则修改的请求数据将被考虑。</div>
+                        <br>
+                        <div><span style="font-style: italic;"><strong>注意：</strong>您可以在其他阶段和计时器动作中重复使用规则。</span></div>
+                        <br>
+                        <span style="font-weight: bold;">创建期间规则</span>
+                        <ul class="mt10">
+                            <li>点击<span class="sb">新规则</span>并填写完整表单。如果规则已经存在，从可用的列表中选择您要关联的规则，然后点击<span class="sb">关联</span>。</li>
+                            <li><span class="sb">规则名称和描述：</span>为规则提供一个名称和描述。</li>
+                            <li><span class="sb">执行期间：</span>选择何时应用规则：<span class="sb">任意时间、工作时间之内</span>或<span class="sb">工作时间之外。</span></li>
+                            <li><span class="sb">匹配条件：</span>配置标准以匹配下拉列表中的请求。您可以使用AND/OR组合创建多达50个标准。</li>
+                            <li><span class="sb">当收到请求时：</span>选择执行自定义动作或中止进程执行。
+                                <ul type="circle">
+                                    <li><span class="sb">执行自定义动作-</span>从可用的选项中选择自定义动作。字段更新、自定义脚本、自定义函数、If-If动作或If-Else动作。在一条规则中，您最多可以配置5个动作。脚本/自定义函数（1），字段更新（2），If-If（1），和If-else（1）。</li>
+                                    <li><span class="sb">终止进程的执行-</span>该选项停止当前阶段的执行。在阶段重复的情况下，在等待时间后执行行动，并进入下一个阶段。</li>
+                                </ul>
+                            </li>
+                            <li>点击<span class="sb">保存并关联</span>或者<span class="sb">保存。</span></li>
+                        </ul>
+                        <div class="mt10">
+                            <span style="font-weight: bold;">动作列表视图</span>
+                            <ul>
+                                <li>点击<span style="font-weight: bold;">编辑</span>来修改规则中的信息。</li>
+                                <li>您可以批量删除、启用或停用规则。选择期间规则，点击<span style="font-weight: bold;">动作</span>并选择所需动作。</li>
+                            </ul>
+                        </div><br>
+                    </div>
+                    <div class="mt10"><span class="sb">之后规则</span>
+                        <div class="mt10">
+                            <div>之后规则用于在请求达到阶段预定时间时，在ServiceDesk Plus或第三方应用程序中自动采取行动。对于每个阶段，您最多可以添加5条之后规则，这些规则将被依次执行。</div>
+                            <br>
+                            <div><span style="font-style: italic;"><strong>注意：</strong>您可以在其他阶段和计时器动作中重复使用之后规则。</span></div>
+                            <br>
+                            <span style="font-weight: bold;">创建之后规则</span>
+                            <ul class="mt10">
+                                <li>点击<span class="sb">新规则</span>并填写表单。如果之后已经存在，从可用的列表中选择您要关联的规则，然后点击<span class="sb">关联。</span></li>
+                                <li><span class="sb">规则名称和描述：</span>为规则提供一个名称和描述。</li>
+                                <li><span class="sb">执行期间：</span>选择何时应用规则：<span class="sb">任意时间、工作时间之内</span>或<span class="sb">工作时间之外。</span></li>
+                                <li><span class="sb">匹配条件：</span>配置标准以匹配下拉列表中的请求。您可以使用AND/OR组合创建多达50个标准。</li>
+                                <li><span class="sb">选择自定义动作：</span>选择要在满足指定条件的请求上执行的自定义动作。您可以配置电子邮件/短信通知，自定义脚本，自定义函数，webhook，If-If动作，或If-Else动作作为请求的自定义动作。您最多可以在一条规则后配置24个动作。脚本/自定义函数（1），webhook（1），通知动作（20），If-If（1），和If-else（1）。</li>
+                                <li>点击<span class="sb">保存并关联</span>或<span class="sb">保存。</span></li>
+                            </ul>
+                            <div class="mt10">
+                                <span style="font-weight: bold;">动作列表视图</span>
+                                <ul>
+                                    <li>点击<span style="font-weight: bold;">编辑</span>来修改规则中的信息。</li>
+                                    <li>您可以批量删除、启用或停用规则。选择之后规则，点击<span style="font-weight: bold;">动作</span>并选择所需动作。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <li>在配置期间/之后的规则之后，
+                <ul>
+                    <li>使用<span class="sb">级联执行</span>图标来打开或关闭规则期间/之后的级联执行。</li>
+                    <li>点击<span class="sb">取消关联</span>移除该规则和</li>
+                    <li>使用<span class="sb">重新排序</span>来组织期间/之后规则。</li>
+                </ul>
+            </li>
+        </ul></li>
+
+    <li>点击<span style="font-weight: bold;">新阶段</span>以添加新阶段，您最多可以增加10个阶段。</li>
+    <li>点击<span class="sb">保存</span>或<span class="sb">保存并新添</span>。</li>
+</ul>
+<div><span style="font-style: italic;"><strong>注意：</strong>管理员可以添加多达50个计时器动作。</span></div>
+<br>
+<div>要了解更多关于请求计时器动作的工作流和场景，请点击<a href="https://help.servicedeskplus.com/request-timer-actions" target="_blank" rel="noopener noreferrer" style="color: blue;">这里</a>。</div>
+<br>
+<div class="mt10">
+    <span style="font-weight: bold;">动作列表视图</span>
+    <ul>
+        <li>使用<span style="font-weight: bold;">切换</span>按钮来启用或禁用计时器动作。</li>
+        <li>使用<span style="font-weight: bold;">编辑</span>以修改计时器动作信息。</li>
+        <li>要想批量删除、启用或禁用计时器动作，选择计时器动作并点击<span style="font-weight: bold;">动作</span>。</li>
+    </ul>
+</div>
+
+<div>
+    <span style="font-style: italic;"><strong>注意：</strong>当一个计时器动作被删除时，与请求相关的计时器也被删除。</span></div>
+</body>
+
+</html>

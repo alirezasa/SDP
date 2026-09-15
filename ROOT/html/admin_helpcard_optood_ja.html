@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>optood</title>
+</head>
+
+<body>
+    <p class="helpheading"><strong>オンプレミス版からクラウド版への移行</strong></p>
+    <p>このページでは、ServiceDesk Plusオンプレミス版の管理タブのデータをServiceDesk Plusクラウド版に移行することができます。移行を開始する前に、一度<strong>利用規約</strong>を読み、自動的に移行されるエンティティと、手動で移行する必要のあるエンティティの一覧を確認してください。</p>
+    <p>ServiceDesk Plusは、オンプレミス版とクラウド版のサーバー間の通信に、OAuth 2.0を採用しています。OAuth 2.0は、パスワードの代わりにwebトークンを使用して、保護されたアクセスへのリソースを提供する認証方法です。</p>
+     <p> <br>
+        必要なエンティティの手動での移行が完了したら、以降画面に表示される以下のフィールドを入力し、自動以降を開始します。<br>
+    </p>
+    <table border="1px" cellpadding="10">
+      <thead>
+      <tr>
+        <th><strong>フィールド</strong></th>
+        <th><strong>説明</strong></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>ServiceDesk Plus Cloudデータセンター</td>
+        <td>ServiceDesk Plus CloudのドメインURLを入力するために、データセンターを選択します。</td>
+      </tr>
+      <tr>
+        <td>ドメインURL</td>
+        <td>ドメインURLはデータセンターから自動的に取得されます。</td>
+      </tr>
+      <tr>
+        <td>クライアントID、クライアントシークレット</td>
+        <td>認可サーバーで作成された、クライアントIDとクライアントシークレットを入力します。</td>
+      </tr>
+      <tr>
+        <td>リダイレクトURL</td>
+        <td>提供されたリダイレクトURLは、クライアントIDとクライアントシークレットを作成するために、認可サーバーにコピーする必要があります。</td>
+    </tr>
+      <tr>
+        <td>モード</td>
+        <td>ServiceDesk Plusのデータの移行モードを選択します。管理者、資産、ソリューションのデータには適用されないことに注意してください。
+          <ul>
+            <li><strong>トライアルモード</strong> - 直近30日で作成されたデータが移行されます。</li>
+            <li><strong>フルモード</strong> - 移行するデータの範囲を選択します。このモードでは、1年間で作成されたデータを移行することができます。この範囲は、最大5年まで拡張することが可能です。詳しくは<a class="text-link" target="_blank" href="https://servicedeskplus.helpdocsonline.com/op-to-od-migration">こちら</a>をご覧ください。</li>
+          </ul>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <p><strong>［Next］</strong>をクリックすると、ServiceDesk Plus Cloudにログインして、同意を得る必要があるポップアップが表示されます。データを移行したいServiceDesk Plus Cloudのインスタンスを選択します。移行するエンティティを選択し、<strong>［データの移行］</strong>をクリックします。その後、移行プロセスのレポートが表示されます。</p>
+    <p>一度管理データが移行すると、システムによって移行できない管理のエンティティを手動で移行できるようするために、移行プロセスが一時停止します。［再開］をクリックすることで、モジュールデータの移行を再開します。</p>
+    <p>移行後は、<strong>［ServiceDesk Plus Cloudへ］</strong>をクリックすることで、クラウド版のインスタンスにアクセスできます。</p>
+    <p>移行中にServiceDesk Plus Cloudに追加・更新されたステータスを閲覧するには、<strong>［設定］>［データのインポート］>［インポート履歴］</strong>に移動します。</p>
+    <p>オンプレミス版からクラウド版にデータを移行するための前提条件などの詳細については、<a class="text-link" target="_blank" href="https://servicedeskplus.helpdocsonline.com/op-to-od-migration">こちら</a>をご覧ください。</p>
+    <p>&nbsp;</p>
+    <p><strong><u>注意</u></strong></p>
+    <ul>
+      <li>オンプレミス版で特定のエンティティ/モジュールのライセンスを有効化していない場合、それぞれのエンティティ/モジュールは移行されません。</li>
+      <li>インライン画像、添付ファイル、サブエンティティ（例：タスクテンプレート、リソース、リクエストテンプレート内の質問など）はエンティティデータとともに移行されます。</li>
+      <li>非アクティブなエンティティも問題なくインポートされます。</li>
+      <li>ServiceDesk Plus Cloudで実装されていない機能に関するデータは、移行されません。</li>
+      <li>オンプレミス版からクラウド版に移行中に、データベースの操作を行わないでください。移行に失敗する可能性があります。</li>
+      <li>移行するデータは全て圧縮され、「Conversion」フォルダー内にzipファイルとして配置されますが、インポートの成功後には削除されます。</li>
+      <li>インスタンス間の移行は可能です。つまり、特定のServiceDesk Plusオンプレミス版のインスタンスの1つのデータを、ServiceDesk Plus Cloudで選択したインスタンスのフォームに移行することができます。</li>
+      <li>2つのインスタンスの移行を同時に開始することはできません。一度に処理可能な移行プロセスは1つだけです。</li>
+      <li>添付ファイルの追加数に制限はありませんが、すべての添付ファイルを含めて、1つのエンティティは合計48MB未満にする必要があります。48MBを超えた添付ファイルは移行されません。</li>
+      <li>ライセンスの確認、技術担当者の数、追加フィールドの数は移行開始前に、クラウド版で有効かどうかを手動で確認する必要があります。</li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,2292 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+
+    <urls authentication="required" disable-extraparam="true" api="true" user_type="all" description="Roles are not configured for release URL's since roles are dynamically defined as release roles. Release roles checks are done at code level.">
+
+        <!-- Common Release Module Security Configurations Start -->
+        <param name="format" regex="json"/>
+        <throttles name="release_api_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <!-- Common Release Module Security Configurations End -->
+
+        <!-- Release MetaInfo URLs - Start-->
+
+        <url path="/api/v3/releases/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)metainfo" method="get">
+            <throttles name="release_get_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+        <url path="/api/v3/releases/configuration_items/module" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases/configuration_items/site" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(\d+)/(_?)metainfo" method="get"/>
+        <url path="/api/v3/releases/(\d+)/downtimes/(_?)metainfo" method="get"/>
+        <url path="/api/v3/releases/(\d+)/downtimes/(\d+)/(_?)metainfo" method="get"/>
+        <url path="/api/v3/releases/(\d+)/stage_data/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/releases/(\d+)/changes/change/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/projects/project/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+
+        <url path="/api/v3/releases/(\d+)/tasks/(_?)metainfo" method="get"/>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)metainfo" method="get" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+        <url path="/api/v3/releases/assets/(_?)metainfo" method="get"/>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="release_metainfo_template"/>
+        </url>
+
+        <!-- Release MetaInfo URLs for Reports module -->
+        <url path="/api/v3/releases/(configuration_items|category|closure_code|group|impact|item|priority|release_engineer|release_manager|release_requester|risk|services|stage|status|subcategory|template|release_type|urgency|workflow)/(_?)metainfo" method="get" roles="ModifyReports,CreateReports"/>
+        <!-- Release MetaInfo URLs - End-->
+
+        <url path="/api/v3/releases/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/back_out_plan/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/roll_out_plan/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/impact_details/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/checklist/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/close_details/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/attachments/(\d+)" method="delete" />
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)/attachments/(\d+)" method="delete" />
+
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/attachments" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)/attachments" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/attachments" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/attachments" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)/attachments" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachments" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="release_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="release_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+	<url path="/api/v3/releases/(\d+)/notes/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)/attachments/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+	<url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/attachments/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+	<url path="/api/v3/releases/(\d+)/back_out_plan/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/roll_out_plan/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/impact_details/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/checklist/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/close_details/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+	<url path="/api/v3/releases/(\d+)/tasks/(_?)upload" method="post" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_tasks_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_tasks_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_tasks_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_notes_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_notes_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_notes_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_descriptive_fields_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_descriptive_fields_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_descriptive_fields_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_notifications_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_notifications_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_notifications_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_attachment_fields_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_attachment_fields_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_attachment_fields_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)/attachments/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(_?)upload" method="post" roles="CreateReleases" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="releases_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/attachments/(\d+)/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachments/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/attachments/(_?)download" method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments" method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="comments" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)" method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="comments" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)" method="delete">
+            <throttles name="comments" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)" method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)/(_?)reply" method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="comments" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments" method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="comments" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/comments" method="delete" >
+            <throttles name="comments" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases" roles="CreateReleases" method="post" >
+            <throttles name="release_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)" method="put" >
+            <throttles name="release_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)" method="get" >
+            <throttles name="release_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases" method="get" >
+            <throttles name="release_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)" roles="DeleteReleases" method="delete">
+            <throttles name="release_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(_?)assign" method="put" >
+            <throttles name="release_assign" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_engineer_assign_template" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/releases/(_?)pickup" method="put">
+            <throttles name="release_pickup" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)close" method="put" >
+            <throttles name="release_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="close_release_template" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(_?)move_to_trash" roles="DeleteReleases" method="delete">
+            <throttles name="release_move_to_trash" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(_?)restore_from_trash" roles="DeleteReleases" method="put">
+            <throttles name="release_restore_from_trash" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)make_announcement" roles="AddAnnouncements" method="post">
+            <throttles name="release_make_announcement" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="announcement" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)notification_templates" method="get" >
+            <throttles name="release_get_notification_templates" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="notification_template_convenice_oper" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)get_permissions" method="get" >
+            <throttles name="release_get_permissions" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)get_properties" method="get" >
+            <throttles name="release_get_properties" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)conversations" method="get" >
+            <throttles name="release_get_conversations" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="req_conversations" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases" method="put" >
+            <throttles name="release_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases" roles="DeleteReleases" method="delete">
+            <throttles name="release_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)move_to_trash" roles="DeleteReleases" method="delete">
+            <throttles name="release_move_to_trash" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)restore_from_trash" roles="DeleteReleases" method="put">
+            <throttles name="release_restore_from_trash" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(_?)images" roles="CreateReleases" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <!-- Used in release template, release add & edit form -->
+        <url path="/api/v3/releases/(_?)allowed_values_for_fields" roles="ViewReleases" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)allowed_values_for_fields" method="get" description="FGR_APPLIED:Roles are not configured for release URL's since roles are dynamically defined as release roles. Release roles checks are done at code level." >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <!-- Used in advanced search, so role cannot be specified -->
+        <url path="/api/v3/releases/(template|workflow|stage|status|impact|priority|category|subcategory|item|release_type|urgency|services|assets|site|group|risk|closure_code|configuration_items)/(_?)metainfo" method="get" />
+
+        <url path="/api/v3/releases/(template|workflow|impact|priority|category|subcategory|item|release_type|urgency|services|assets|site|group|risk|closure_code|configuration_items)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(stage|status)"  method="get" user_type="all">
+            <param name="input_data" template="stage_status_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(template|workflow|impact|priority|category|subcategory|item|release_type|urgency|services|assets|site|group|risk|closure_code|configuration_items)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(stage|status)"  method="get" user_type="all">
+            <param name="input_data" template="stage_status_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" roles="ViewReleases" method="get"  >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" method="get" description="FGR_APPLIED:Roles are not configured for release URL's since roles are dynamically defined as release roles. Release roles checks are done at code level." >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/_total_count" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/release_requester/_total_count" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/release_requester/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(_?)history" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields" method="post" >
+            <throttles name="release_attachment_field_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_attachment_field" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)" method="put" >
+            <throttles name="release_attachment_field_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_attachment_field" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields" method="get" >
+            <throttles name="release_attachment_field_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields/(\d+)" method="get" >
+            <throttles name="release_attachment_field_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/attachment_fields" method="put" >
+            <throttles name="release_attachment_field_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_attachment_field" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/changes" roles="ModifyChanges" method="post" >
+            <throttles name="release_change_association_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_change_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/changes" roles="ModifyChanges" method="delete" >
+            <throttles name="release_change_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_change_association" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/changes" roles="ViewChanges" method="get" >
+            <throttles name="release_change_association_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/changes/change" roles="ViewChanges" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields" method="post" >
+            <throttles name="release_descriptive_field_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_descriptive_field" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)" method="put" >
+            <throttles name="release_descriptive_field_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_descriptive_field" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields" method="get" >
+            <throttles name="release_descriptive_field_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)" method="get" >
+            <throttles name="release_descriptive_field_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields" method="put" >
+            <throttles name="release_descriptive_field_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_descriptive_field" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(_?)images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/(_?)images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes" method="post" >
+            <throttles name="release_downtime_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_downtime" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/(\d+)" method="put" >
+            <throttles name="release_downtime_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_downtime" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/(\d+)" method="delete" >
+            <throttles name="release_downtime_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/(\d+)" method="get" >
+            <throttles name="release_downtime_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes" method="get" >
+            <throttles name="release_downtime_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="downtime_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/(_?)copy_scheduled_to_actual" method="put" >
+            <throttles name="release_downtime_copy" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes" method="put" >
+            <throttles name="release_downtime_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_downtime" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes" method="delete" >
+            <throttles name="release_downtime_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/(downtime_type|service_to_be_down|configuration_items)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/(\d+)/(downtime_type|service_to_be_down|configuration_items)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/(\d+)/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/downtimes/_links" method="get" >
+            <param name="input_data" template="downtime_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes" method="post" >
+            <throttles name="release_note_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="release_note" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)" method="put" >
+            <throttles name="release_note_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="release_note" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)" method="delete" >
+            <throttles name="release_note_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)" method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_note_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes" method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_note_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes" method="put" >
+            <throttles name="release_note_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="release_note" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes" method="delete" >
+            <throttles name="release_note_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(_?)images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(\d+)/(_?)images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notes/(stage)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications" method="post" >
+            <throttles name="release_notification_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_notification" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)" method="get" >
+            <throttles name="release_notification_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications" method="get" >
+            <throttles name="release_notification_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/images" roles="" method="get" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" max-len="500" min-occurrences="1" regex="[a-z0-9]{32}" secret="true"/>
+            <param name="file_name" min-occurrences="1" regex="[a-z0-9]{1,32}\.(jpeg|jpg|png|gif)"/>
+        </url>
+         <url user_type="all" method="get" path="/api/v3/releases/(\d+)/notifications/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/notifications/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+
+	
+
+        <url path="/api/v3/releases/(\d+)/notifications/(\d+)/_links" roles="" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/notifications/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/projects" method="post" >
+            <throttles name="release_project_association_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_project_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/projects" method="delete" >
+            <throttles name="release_project_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_project_association" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/projects" method="get" >
+            <throttles name="release_project_association_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/projects/project" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/stage_data" method="post" >
+            <throttles name="release_stage_data_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_stage_data" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/stage_data/(\d+)" method="put" >
+            <throttles name="release_stage_data_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_stage_data" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/stage_data/(\d+)" method="get" >
+            <throttles name="release_stage_data_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/stage_data" method="get" >
+            <throttles name="release_stage_data_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/stage_data" method="put" >
+            <throttles name="release_stage_data_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_stage_data" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/stage_data/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/stage_data/(\d+)/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+ 	   <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" path="/api/v3/releases/(\d+)/stage_data/(\d+)/images" method="get" description="ROLE_NOT_REQUIRED">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" max-len="500" min-occurrences="1" regex="[a-z0-9]{32}" secret="true"/>
+            <param name="file_name" min-occurrences="1" regex="[a-z0-9]{1,32}\.(jpeg|jpg|png|gif)"/>
+        </url>
+         <url user_type="all" method="get" path="/api/v3/releases/(\d+)/stage_data/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/stage_data/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/status_comments" method="get" >
+            <throttles name="release_status_comments_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/summary" method="get" >
+            <throttles name="release_summary_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks" method="post" >
+            <param name="input_data" template="release_task" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)" method="put" >
+            <param name="input_data" template="release_task" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)" method="delete">
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)" method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks" method="get" >
+            <throttles name="release_task_getlist" key="url.path+url.dynamic_key+param.for" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="for" regex="dep"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(_?)assign" method="put" >
+            <param name="input_data" template="assign_task_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(_?)mark" method="put" >
+            <param name="input_data" template="mark_task_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(_?)trigger" method="put" >
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(_?)close" method="put" >
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(_?)organize" method="put" >
+            <param name="ids" max-len="10000" min-occurrences="1" regex="ids_500"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks" method="put" >
+            <param name="input_data" template="release_task" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks" method="delete" >
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)assign" method="put" >
+            <param name="input_data" template="assign_task_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)mark" method="put" >
+            <param name="input_data" template="mark_task_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)trigger" method="put">
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)close" method="put">
+            <throttles name="tasks" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(_?)history"  method="get" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+            <throttles name="task_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(stage|group|marked_group|status|owner|marked_owner|priority|type|template)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/template/(_?)metainfo" method="get"></url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/template/(\d+)" method="get">
+            <throttles name="task_allowed_val_single_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/(stage|group|marked_group|status|owner|marked_owner|priority|type|template|tags)" method="get" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/template/(\d+)" method="get">
+            <throttles name="task_allowed_val_field_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <url user_type="all" path="/api/v3/releases/(\d+)/tasks/template/(\d+)/images/(\d+)" method="get" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/_links" method="get" >
+            <param name="input_data" template="release_stage" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <!-- Task Dependency starts -->
+        <url path="/api/v3/releases/(\d+)/task_dependencies"  method="post" >
+            <throttles name="task_dependency_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="release_task_dependency_add" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/releases/(\d+)/task_dependencies/(\d+)"  method="delete" >
+            <throttles name="task_dependency_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="release_task_dependency_delete" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/releases/(\d+)/task_dependencies"  method="get" >
+            <throttles name="task_dependency_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="release_task_dependency_get" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+
+        <!-- Task Dependency ends -->
+
+        <url path="/api/v3/releases/(\d+)/roles" method="post" >
+            <throttles name="release_to_release_role_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="release_to_release_role" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/roles/(\d+)" method="delete" >
+            <throttles name="release_to_release_role_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/roles/(\d+)" method="get" >
+            <throttles name="release_to_release_role_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/roles" method="get" >
+            <throttles name="release_to_release_role_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/roles" method="delete" >
+            <throttles name="release_to_release_role_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="3500" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs" method="post" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs" method="post" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)" method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)" method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)" method="delete">
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)" method="delete">
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)" method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)" method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(_?)get_time_spent" method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(_?)get_time_spent" method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(_?)summary" method="get" />
+        <url path="/api/v3/releases/(\d+)/worklogs/(_?)summary" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs" method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs" method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs" method="delete" >
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs" method="delete" >
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+            <throttles name="worklogs" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)get_time_spent" method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)/(_?)get_time_spent" method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(owner|type|template)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(owner|type|template)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/(owner|type)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)/(owner|type)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/template/(\d+)" method="get" />
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/template/(\d+)" method="get"/>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)/template/(\d+)" method="get"/>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/template/(\d+)" method="get"/>
+        <url path="/api/v3/releases/(\d+)/worklogs/template/(\d+)/images/(\d+)" method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/template/(\d+)/images/(\d+)" method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))" method="get" description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))" method="get" description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done."  >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))" method="get" description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))" method="get" description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/_links" method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <!-- Release additional urls start -->
+        <url path="/api/v3/releases/(\d+)/(_?)notification_templates/(\d+)" method="get"  />
+
+        <url path="/api/v3/releases/summary" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <!-- Used in advanced search, hence usertype-all given -->
+        <url path="/api/v3/releases/(release_requester|release_manager|release_engineer)/(_?)metainfo" method="get" />
+
+        <url path="/api/v3/releases/(release_requester|release_manager|release_engineer)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/releases/(\d+)/(release_requester|release_manager|release_engineer)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <!-- Used in release add page -->
+        <url path="/api/v3/releases/template/(\d+)" roles="CreateReleases" method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- Used in release edit/details page -->
+        <url path="/api/v3/releases/(\d+)/template/(\d+)" method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/releases/site/(\d+)" method="get" />
+
+        <url path="/api/v3/releases/(\d+)/stage/(\d+)" method="get" />
+        <!-- Used in add task page -->
+        <url path="/api/v3/releases/(\d+)/tasks/(stage|template)/(\d+)" method="get" />
+        <!-- Release additional urls end -->
+        <url path="/api/v3/releases/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/images/(\d+)" description="ROLE_NOT_REQUIRED">
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/images" roles="" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/descriptive_fields/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/descriptive_fields/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+        <url user_type="all" method="post" path="/api/v3/releases/(\d+)/notes/images" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="post" path="/api/v3/releases/(\d+)/notes/(\d+)/images" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/notes/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/notes/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+            <param max-occurrences="1" max-len="7" type="String" name="res"/>
+        </url>
+
+        <url method="post" path="/api/v3/releases/(\d+)/worklogs/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/releases/(\d+)/worklogs/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/worklogs/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/worklogs/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url method="post" path="/api/v3/releases/(\d+)/tasks/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/releases/(\d+)/tasks/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url method="post" path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/worklogs/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="post" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/owner/(\d+)/images/(\d+)" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <!--For comment mentions allowed values profile pic-->
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/mentions/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <!--For comment mentions user popup window profile pic-->
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mentions_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <!--For comment created_by user popup window profile pic-->
+        <url user_type="all" method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/releases/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="created_by_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+
+        <!-- Release module admin urls start -->
+
+        <!-- Closure Code -->
+
+        <url method="post" roles="SDAdmin" path="/api/v3/closure_codes">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="closure_code_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="closure_code" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/closure_codes/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="closure_code_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="closure_code" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/closure_codes/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="closure_code_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/closure_codes/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="closure_code_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/closure_codes">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="closure_code_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/closure_codes">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="closure_code_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="closure_code" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/closure_codes">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="closure_code_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="12" name="ids"/>
+        </url>
+        <url path="/api/v3/closure_codes/(_?)metainfo" method="get" roles="SDAdmin"/>
+        <url method="get" roles="SDAdmin" path="/api/v3/closure_codes/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/closure_codes/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/closure_codes/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/closure_codes/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="closure_code_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/closure_codes/(_?)get_performed_by_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="closure_code_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!-- Downtime types -->
+
+        <url method="post" roles="SDAdmin" path="/api/v3/downtime_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="downtime_type_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="downtime_type" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/downtime_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="downtime_type_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="downtime_type" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/downtime_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="downtime_type_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/downtime_types/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="downtime_type_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/downtime_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="downtime_type_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/downtime_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="downtime_type_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="downtime_type" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/downtime_types">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="downtime_type_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="12" name="ids"/>
+        </url>
+        <url path="/api/v3/downtime_types/(_?)metainfo" method="get" roles="SDAdmin"/>
+        <url method="get" roles="SDAdmin" path="/api/v3/downtime_types/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/downtime_types/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/downtime_types/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+                <url method="get" roles="SDAdmin" path="/api/v3/downtime_types/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="downtime_type_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/downtime_types/(_?)get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="downtime_type_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <url method="put" roles="SDAdmin" path="/api/v3/release_closure_rules/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_closure_rules_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_closure_rule" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_closure_rules">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_closure_rules_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_closure_rules">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_closure_rules_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_closure_rule" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_closure_rules/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_closure_rules/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_closure_rules/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_closure_rule_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_closure_rules/(_?)get_performed_by_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="release_closure_rule_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="post" roles="SDAdmin" path="/api/v3/release_roles">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_role_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_role" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_roles/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_role_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_role" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/release_roles/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_role_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_roles/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_role_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_roles">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_role_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_roles">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_role_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_role" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/release_roles">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_role_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="12" name="ids"/>
+        </url>
+        <url path="/api/v3/release_roles/(_?)metainfo" method="get" roles="SDAdmin"/>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_roles/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_roles/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_roles/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/release_roles/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_role_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_roles/(_?)get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_role_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <url method="put" roles="SDAdmin" path="/api/v3/release_stages/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_stage_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_stage" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_stage_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_stage_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_stages">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_stage_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_stage" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_stage_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(_?)get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_stage_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/release_stages/(_?)metainfo" method="get" roles="SDAdmin"/>
+
+        <url method="post" roles="SDAdmin" path="/api/v3/release_statuses">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_status" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_status" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_statuses/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_status" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_status" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/release_statuses/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_statuses/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_statuses">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_statuses">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_status" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_status" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_status_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="12" name="ids"/>
+        </url>
+        <url path="/api/v3/release_statuses/(_?)metainfo" method="get" roles="SDAdmin"/>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_statuses/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_statuses/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_statuses/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_statuses/(_?)get_records_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="release_status_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_statuses/(_?)get_performed_by_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="release_status_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_stage_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_stages/(\d+)/statuses/(_?)get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_stage_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/release_stages/(\d+)/statuses/(_?)metainfo" method="get" roles="SDAdmin"/>
+
+        <url method="post" roles="SDAdmin" path="/api/v3/release_templates">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_add" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_template" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_templates/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_template" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/release_templates/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_templates/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_templates">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_getlist" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin,CreateReleases" path="/api/v3/release_templates/(_?)default">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_default" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_templates/(\d+)/(_?)mark_default">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_mark_default" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_templates/(\d+)/(_?)enable">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_enable" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_templates/(\d+)/(_?)disable">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_disable" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/release_templates/(\d+)/(_?)copy_template">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_copy" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="template_copy" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/release_templates">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_edit" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="release_template" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/release_templates">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="release_template_delete" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param allow-empty="false" regex="ids" max-len="12" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_templates/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_templates/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_templates/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_template_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/release_templates/(_?)get_performed_by_for_history">
+            <throttles key="url.path+url.dynamic_key" name="release_template_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!-- Release CT URLs Starts -->
+        <url path="/api/v3/release_custom_triggers/(\d+)" roles="SDAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/release_custom_triggers/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="release_custom_trigger" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="release_ct_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers" roles="SDAdmin" method="post">
+            <param name="input_data" template="release_custom_trigger" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="release_ct_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/release_custom_triggers/(\d+)" roles="SDAdmin" method="delete">
+            <throttles name="release_ct_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers/(_?)metainfo" roles="SDAdmin" method="get">
+            <param name="input_data" template="rule_metainfo_template" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+            <throttles name="release_ct_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers/(_?)organize" roles="SDAdmin" method="put">
+            <param name="input_data" template="organize_rules_groups" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="release_ct_organise" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers" roles="SDAdmin" method="put">
+            <param name="input_data" template="release_custom_trigger" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids"/>
+            <throttles name="release_ct_put_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers" roles="SDAdmin" method="delete">
+            <param name="ids" regex="ids"/>
+            <throttles name="release_ct_delete_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers/(group|events)" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/release_custom_triggers/(\d+)/(_?)metainfo" roles="SDAdmin" method="get">
+            <param name="input_data" template="rule_metainfo_template" type="JSONObject" max-len="-1"/>
+            <throttles name="release_ct_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_triggers/(\d+)/(group|events)" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/release_custom_trigger_groups/(_?)metainfo" roles="SDAdmin" method="get">
+            <param name="input_data" template="rule_metainfo_template" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="3000" regex="ids"/>
+            <throttles name="release_ct_meta" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups/(\d+)" roles="SDAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="release_custom_trigger_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="release_ctg_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups" roles="SDAdmin" method="post">
+            <param name="input_data" template="release_custom_trigger_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="release_ctg_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups/(\d+)" roles="SDAdmin" method="delete">
+            <throttles name="release_ctg_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups/(_?)organize" roles="SDAdmin" method="put">
+            <param name="input_data" template="organize_rules_groups" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="release_ctg_organize" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups" roles="SDAdmin" method="put">
+            <param name="input_data" template="release_custom_trigger_group" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids"/>
+            <throttles name="release_ctg_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups" roles="SDAdmin" method="delete">
+            <param name="ids" regex="ids"/>
+            <throttles name="release_ctg_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/release_custom_trigger_groups/(\d+)/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids"/>
+        </url>
+        <!-- Release CT URLs Ends -->
+
+        <url method="post" roles="SDAdmin" path="/api/v3/release_templates/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/release_templates/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/release_templates/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/release_templates/images/(\d+)">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/releases/template/(\d+)/images/(\d+)" description="ROLE_NOT_REQUIRED">
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <!-- Release module admin urls end -->
+    </urls>
+
+</security>

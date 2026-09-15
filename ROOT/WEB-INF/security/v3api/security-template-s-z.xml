@@ -1,0 +1,1634 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+<!-- Note : All "description" , "email" and "key" params/keys have been set secret="true" -->
+    <jsontemplates>
+        <jsontemplate name="sdp_approval_status_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="section_unique">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key type="String" name="name"/>
+        </jsontemplate>
+        <jsontemplate name="section_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key type="String" name="name" max-len="100"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="cm_layout_field" name="fields"/>
+            <key max-len="-1" type="JSONObject" template="template_style_properties" name="style_properties"/>
+            <key max-len="-1" type="JSONObject" template="section_attributes" name="attributes"/>
+            <key max-len="250" type="String" name="help_text"/>
+            <key name="column_count" regex="1|2|3|4|12"/>
+            <key allow-invalid="false" type="boolean" name="is_common"/>
+            <key name="is_subform" allow-invalid="false" type="boolean" />
+            <key name="entity" max-len="-1" type="JSONObject" template="module_unique"/>
+        </jsontemplate>
+        <jsontemplate name="section">
+            <key max-len="-1" type="JSONObject" template="section_base" name="section"/>
+        </jsontemplate>
+        <jsontemplate name="section_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="section_unique" name="section"/>
+        </jsontemplate>
+        <jsontemplate name="service_category_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="ciid" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="service_category_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250" max-occurrences="1"/>
+            <key name="status" type="String" max-len="20"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="sort_index" type="long"/>
+            <key name="icon_name" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="templates" template="request_template_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="service_category">
+            <key name="service_category" template="service_category_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="service_category_unique_wrapper">
+            <key name="service_category" template="service_category_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="service_template_sla_association_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="template" template="request_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="sla" template="sla_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="service_template_sla_association_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="template" template="request_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="sla" template="sla_unique" type="JSONObject" max-len="-1"/>
+            <key name="info" type="String" max-len="2000" secret="true"/>
+            <key name="is_default_sla" type="boolean" allow-invalid="false"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="user_groups" template="user_group_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="service_template_sla_association">
+            <key name="service_template_sla_association" template="service_template_sla_association_base" type="JSONObject" max-len="-1"/>
+            <key name="template_association" template="service_template_sla_association_base" type="JSONObject" max-len="-1"/>
+            <key name="sla_association" template="service_template_sla_association_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="service_template_sla_association_unique_wrapper">
+            <key name="service_template_sla_association" template="service_template_sla_association_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="site_unique">
+            <key name="id" type="long" range=">-2"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="site_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="description" type="String" max-len="250"/>
+            <key name="region" template="region_unique" type="JSONObject" max-len="500"/>
+            <key name="timezone" template="timezone_unique" type="JSONObject" max-len="500" secret="true"/>
+            <key name="door_no" type="String" max-len="50" secret="true"/>
+            <key name="street" type="String" max-len="50" secret="true"/>
+            <key name="landmark" type="String" max-len="50" secret="true"/>
+            <key name="city" type="String" max-len="50" secret="true"/>
+            <key name="postal_code" type="String" max-len="20" secret="true"/>
+            <key name="state" type="String" max-len="50" secret="true"/>
+            <key name="country" type="String" max-len="250" secret="true"/>
+            <key name="email_id" regex="emailstring" max-len="250" secret="true"/>
+            <key name="landline" type="String" max-len="30" secret="true"/>
+            <key name="fax" type="String" max-len="30" secret="true"/>
+            <key name="web_url" regex="url" max-len="255" secret="true"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="2500"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="settings" template="site_settings" type="JSONObject" max-len="2500"/>
+            <key name="role_associations" template="site_role_association_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="site">
+            <key name="site" template="site_base" type="JSONObject" max-len="50000"/>
+        </jsontemplate>
+        <jsontemplate name="sites">
+            <key name="sites" template="site_base" type="JSONArray" max-len="50000"/>
+            <key name="site" template="site_base" type="JSONObject" max-len="50000"/>
+        </jsontemplate>
+        <jsontemplate name="site_unique_wrapper">
+            <key name="site" template="site_unique" type="JSONObject" max-len="50000"/>
+        </jsontemplate>
+        <jsontemplate name="site_role_association_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="org_role" template="org_role_unique" type="JSONObject" max-len="50000"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="50000"/>
+        </jsontemplate>
+        <jsontemplate name="site_role_association_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="org_role" template="org_role_unique" type="JSONObject" max-len="50000"/>
+            <key name="user" template="orguser_unique" type="JSONObject" max-len="50000"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="50000"/>
+        </jsontemplate>
+        <jsontemplate name="site_role_association">
+            <key name="site_role_association" template="site_role_association_base" type="JSONObject" max-len="50000"/>
+        </jsontemplate>
+        <jsontemplate name="site_role_association_unique_wrapper">
+            <key name="site_role_association" template="site_role_association_unique" type="JSONObject" max-len="50000"/>
+        </jsontemplate>
+        <jsontemplate name="sla_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="sla_unique_wrapper">
+            <key name="sla" template="sla_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="slide_detail_unique">
+            <key name="id" type="long"/>
+            <key name="roles" template="strarray" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="slide_detail_base">
+            <key name="id" type="long"/>
+            <key name="tour" template="tour_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="order" type="long"/>
+            <key name="roles" template="strarray" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_enabled" type="boolean" allow-invalid="false"/>
+            <key name="is_draft" type="boolean" allow-invalid="false"/>
+            <key name="title" type="String" max-len="500" secret="true"/>
+            <key name="name" type="String" max-len="500" secret="true"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="500"/>
+            <key name="link" type="String" max-len="1000"/>
+            <key name="type" regex="image|embed" />
+            <key name="alignment" regex="top|right|left|bottom" />
+            <key max-len="-1" type="JSONObject" template="media_unique" name="slide_image"/>
+        </jsontemplate>
+        <jsontemplate name="slide_detail">
+            <key name="slide_detail" template="slide_detail_base" type="JSONObject" max-len="-1"/>
+            <key name="slide_details" template="slide_detail_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="slide_detail_unique_wrapper">
+            <key name="slide_detail" template="slide_detail_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="software_audit_history_base">
+            <key name="id" type="long" range=">0" />
+            <key name="audit_id" type="long" range=">0" />
+            <key name="name" template="software_unique" type="JSONObject" max-len="-1"/>
+            <key name="operation" type="String" max-len="19"/>
+            <key name="operation_name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="software_audit_history">
+            <key name="software_audit_history" template="software_audit_history_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="software_audit_history_unique_wrapper">
+            <key name="software_audit_history" template="software_audit_history_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="stage_status_list_info">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+            <key name="workflow_id" type="long" range=">0"/>
+            <key name="for" type="String" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="status_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="internal_name" type="String" max-len="100"/>
+            <key name="color" regex="color"/>
+        </jsontemplate>
+        <jsontemplate name="status_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="in_progress" type="boolean" allow-invalid="false"/>
+            <key name="stop_timer" type="boolean" allow-invalid="false"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="internal_name" type="String" max-len="100"/>
+            <key name="color" regex="color"/>
+        </jsontemplate>
+        <jsontemplate name="status">
+            <key name="status" template="status_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="status_unique_wrapper">
+            <key name="status" template="status_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="sticky_properties_template">
+            <key name="top" type="String" max-len="10"/>
+            <key name="left" type="String" max-len="10"/>
+            <key name="height" type="String" max-len="10"/>
+            <key name="width" type="String" max-len="10"/>
+        </jsontemplate>
+        <jsontemplate name="sticky_note_base">
+            <key name="id" type="long"/>
+            <key name="title" type="String" max-len="500"/>
+            <key name="content" max-len="-1" xss="sdpantisamyfilter" secret="true" />
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="properties" template="sticky_properties_template" type="JSONObject" max-len="1000"/>
+            <key name="images" template="inline_img_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="sticky_note">
+            <key name="sticky_note" template="sticky_note_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="sticky_note_unique_wrapper">
+            <key name="sticky_note" template="sticky_note_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="structure_parent_instance_base" disable-extra-key="true">
+            <key name="structure_type" type="String" max-len="20"/>
+            <key name="building_type" regex="Floors and Rooms|Rooms Only" max-len="20"/>
+        </jsontemplate>
+        <jsontemplate name="structure_parent_instance" disable-extra-key="true">
+            <key name="structure_parent_instance" template="structure_parent_instance_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="subcategory_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="category" template="category_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="subcategory_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="category" template="category_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="subcategory">
+            <key name="subcategory" template="subcategory_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="subcategory_unique_wrapper">
+            <key name="subcategory" template="subcategory_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="symptoms_base" disable-extra-key="true">
+            <key name="id" type="long" range=">0"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" max-len="-1" xss="sdpantisamyfilter"/>
+            <key name="problem" template="problem_unique" type="JSONObject" max-len="-1"/>
+            <key name="updated_on" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="updated_by" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="images" template="inline_img_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="symptoms" disable-extra-key="true">
+            <key name="symptoms" template="symptoms_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="tag_unique">
+            <key name="id" type="long"/>
+            <key name="name" regex="[^@]+" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="tag_base">
+            <key name="id" type="long"/>
+            <key name="name" regex="[^@]+" max-len="100"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="tag">
+            <key name="tag" template="tag_base" type="JSONObject" max-len="-1"/>
+            <key name="tags" template="tag_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="tag_unique_wrapper">
+            <key name="tag" template="tag_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="task_unique">
+            <key name="id" type="long"/>
+            <key name="title" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="task_base">
+            <key name="group" template="support_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="marked_group" template="support_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="link" type="String"/>
+            <key name="request" template="request_unique" type="JSONObject" max-len="-1"/>
+            <key name="problem" template="problem_unique" type="JSONObject" max-len="-1"/>
+            <key name="change" template="change_unique" type="JSONObject" max-len="-1"/>
+            <key name="release" template="release_unique" type="JSONObject" max-len="-1"/>
+            <key name="project" template="project_unique" type="JSONObject" max-len="-1"/>
+            <key name="milestone" template="milestone_unique" type="JSONObject" max-len="-1"/>
+            <key name="id" type="long"/>
+            <key name="title" type="String" max-len="250"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" max-len="-1" xss="sdpantisamyfilter"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="scheduled_start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="scheduled_end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="actual_start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="actual_end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="status" template="status_unique" type="JSONObject" max-len="-1"/>
+            <key name="email_before" type="long"/>
+            <key name="owner" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="marked_owner" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="priority" template="priority_unique" type="JSONObject" max-len="-1"/>
+            <key name="percentage_completion" type="int"  range="0-100"/>
+            <key name="comments" template="comment_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="additional_cost" type="double"/>
+            <key name="estimated_effort" template="task_estimated_effort_template" type="JSONObject" max-len="-1"/>
+            <key name="worklogs" template="worklog_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="type" template="task_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="index" type="long"/>
+            <key name="overdue" type="boolean" allow-invalid="false"/>
+            <key name="associated_entity" regex="general|request|problem|change|project|release|milestone"/>
+            <key name="template" template="task_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="due_by_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="udf_fields" template="project_module_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="tags" template="task_tag_base" type="JSONArray" max-len="-1" array-size="0-10"/>
+        </jsontemplate>
+        <jsontemplate name="task">
+            <key name="task" template="task_base" type="JSONObject" max-len="-1"/>
+            <key name="tasks" template="task_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="task_unique_wrapper">
+            <key name="task" template="task_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="task_closure_field_unique">
+            <key name="id" type="long"/>
+            <key name="field_name" regex="group|owner|scheduled_start_time|scheduled_end_time|type|additional_cost|estimated_effort|comments|worklogs|description|close_as_complete|priority|actual_end_time|actual_start_time"/>
+        </jsontemplate>
+        <jsontemplate name="task_closure_field_base">
+            <key name="id" type="long"/>
+            <key name="field_name" regex="group|owner|scheduled_start_time|scheduled_end_time|type|additional_cost|estimated_effort|comments|worklogs|description|close_as_complete|priority|actual_end_time|actual_start_time"/>
+            <key name="display_name" regex="Group|Owner|Scheduled Start|Scheduled End|Task Type|Additional Cost|Estimated Effort|Comments|Worklog|Description|Only Closed status of task will be considered as Task Completed status|Priority|Actual End|Actual Start"/>
+            <key name="mandatory" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="task_closure_field">
+            <key name="task_closure_field" template="task_closure_field_base" type="JSONObject" max-len="-1"/>
+            <key name="task_closure_fields" template="task_closure_field_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="task_closure_field_unique_wrapper">
+            <key name="task_closure_field" template="task_closure_field_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <!-- Task Dependency api templates starts  -->
+        <jsontemplate name="task_dependency_base" >
+            <key name="id" type="long" allow-invalid="false" />
+            <key name="parent_task" template="task_unique" type="JSONObject" max-len="-1" />
+            <key name="child_task" template="task_unique" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="task_dependency" >
+            <key name="task_dependency" template="task_dependency_base" type="JSONObject" max-len="-1" array-size="0-100" allow-invalid="false"/>
+        </jsontemplate>
+        <!-- Task Dependency api templates ends -->
+        <!-- Task tag api templates starts  -->
+        <jsontemplate name="task_tag_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" regex="[^@]+" max-len="100"/>
+            <key name="module" template="task_tag_module" type="JSONObject" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="task_tag_module">
+            <key name="name" regex="task"/>
+        </jsontemplate>
+        <!-- Task tag api templates ends  -->
+        <jsontemplate name="task_template_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="task_template_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="title" type="String" max-len="250"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" max-len="-1" xss="sdpantisamyfilter"/>
+            <key name="associated_entity" regex="general|request|project|problem"/>
+            <key name="owner" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="marked_owner" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="group" template="support_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="marked_group" template="support_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="status" template="status_unique" type="JSONObject" max-len="-1"/>
+            <key name="priority" template="priority_unique" type="JSONObject" max-len="-1"/>
+            <key name="estimated_effort" template="task_template_estimated_effort_template" type="JSONObject" max-len="-1"/>
+            <key name="additional_cost" type="double"/>
+            <key name="type" template="task_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="inactive" type="boolean" allow-invalid="false"/>
+            <key name="index" type="long"/>
+            <key name="associated_modules" template="strarray" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="image_token" regex="[0-9a-z]+" max-len="300"/>
+            <key name="udf_fields" template="project_module_udf_fields_ref" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="task_template">
+            <key name="task_template" template="task_template_base" type="JSONObject" max-len="-1"/>
+            <key name="task_templates" template="task_template_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="task_template_unique_wrapper">
+            <key name="task_template" template="task_template_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="task_type_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="color" regex="color"/>
+        </jsontemplate>
+        <jsontemplate name="task_type_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="color" regex="color"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="task_type">
+            <key name="task_type" template="task_type_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="task_type_unique_wrapper">
+            <key name="task_type" template="task_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="technician_unique_wrapper">
+            <key name="technician" template="technician_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="template_checklist_unique">
+            <key name="id" type="long"/>
+            <key name="order" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="template_checklist_base">
+            <key name="id" type="long"/>
+            <key name="request_template" template="request_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="checklist" template="checklist_unique" type="JSONObject" max-len="-1"/>
+            <key name="order" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="template_checklist">
+            <key name="template_checklist" template="template_checklist_base" type="JSONObject" max-len="-1"/>
+            <key name="template_checklists" template="template_checklist_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="checklists" template="template_checklist_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="template_checklist_unique_wrapper">
+            <key name="template_checklist" template="template_checklist_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="template_layout_setting_unique">
+            <key name="parameter" regex="ViewType|Show_Desc_By_Default|Expand_All"/>
+        </jsontemplate>
+        <jsontemplate name="template_layout_setting_base">
+            <key name="parameter" regex="ViewType|Show_Desc_By_Default|Expand_All"/>
+            <key name="paramvalue" regex="true|false|CardView|PanelView|ListView"/>
+        </jsontemplate>
+        <jsontemplate name="template_layout_setting">
+            <key name="template_layout_setting" template="template_layout_setting_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="template_layout_setting_unique_wrapper">
+            <key name="template_layout_setting" template="template_layout_setting_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="template_tfa_login_rules">
+            <key name="tfa_login_rules" template="template_tfa_login_rules_condition" type="JSONArray" max-len="-1" array-size="0-2"/>
+        </jsontemplate>
+        <jsontemplate name="template_tfa_login_rules_condition">
+            <key name="field" regex="user|user_type" min-occurrences="1" allow-invalid="false"/>
+            <key name="condition" regex="is|is not" min-occurrences="1" allow-invalid="false"/>
+            <key name="values" type="JSONArray" template="strarray_500" max-len="-1" min-occurrences="1"/>
+            <key name="logical_operator" regex="and|or|AND|OR" min-occurrences="1" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="timezone_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="timezone_code" type="String"/>
+            <key name="display_name" type="String"/>
+            <key name="gmt_offset" type="long" range="-86400000-86400000"/>
+        </jsontemplate>
+        <jsontemplate name="timezone_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="timezone_code" type="String"/>
+            <key name="display_name" type="String"/>
+            <key name="gmt_offset" type="long" range="-86400000-86400000"/>
+        </jsontemplate>
+        <jsontemplate name="timezone">
+            <key name="timezone" template="timezone_base" type="JSONObject" max-len="500"/>
+        </jsontemplate>
+        <jsontemplate name="timezone_unique_wrapper">
+            <key name="timezone" template="timezone_unique" type="JSONObject" max-len="500"/>
+        </jsontemplate>
+        <jsontemplate name="tour_detail_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="250" secret="true" />
+            <key name="(?i)(description)" name-regex="true" regex="SSP|CMDB|Project|Change|Request" />
+            <key name="roles" template="strarray" type="JSONArray" max-len="-1" array-size="0-100" secret="true"/>
+            <key name="language" type="String" max-len="100"/>
+            <key name="module" regex="SSP|cmdb|project|change|request" />
+            <key name="tour_settings" template="IDNameJson" type="JSONObject" max-len="-1"/>
+            <key name="is_enabled" type="boolean" allow-invalid="false"/>
+            <key name="is_published" type="boolean" allow-invalid="false"/>
+            <key name="has_draft" type="boolean" allow-invalid="false"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1" />
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="published_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="published_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="views" type="long"/>
+            <key name="is_default" type="boolean" allow-invalid="false"/>
+            <key name="slide_details" template="slide_detail_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="progresses" template="tour_progress_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="tour_detail">
+            <key name="tour_detail" template="tour_detail_base" type="JSONObject" max-len="-1"/>
+            <key name="tour_details" template="tour_detail_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="tour_detail_unique">
+            <key name="id" type="long"/>
+            <key name="roles" template="strarray" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="tour_detail_unique_wrapper">
+            <key name="tour_detail" template="tour_detail_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="tour_progress_base">
+            <key name="id" type="long"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="tour" template="tour_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_slide" template="slide_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="viewed_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="duration" type="long"/>
+            <key name="tour_state" regex="Finished|Skipped|Started" />
+        </jsontemplate>
+        <jsontemplate name="tour_progress">
+            <key name="tour_progress" template="tour_progress_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="tour_progress_unique_wrapper">
+            <key name="tour_progress" template="tour_progress_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="transition_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="(?i)(key)" name-regex="true" secret="true" type="String"/>
+            <key name="ui_attributes" template="transition_ui_attributes" type="JSONObject" max-len="-1"/>
+            <key name="source_node" template="node_unique" type="JSONObject" max-len="-1"/>
+            <key name="target_node" template="node_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="transition_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="(?i)(key)" name-regex="true" secret="true" type="String"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="ui_attributes" template="transition_ui_attributes" type="JSONObject" max-len="-1"/>
+            <key name="help_text" type="String" max-len="250"/>
+            <key name="source_node" template="node_unique" type="JSONObject" max-len="-1"/>
+            <key name="target_node" template="node_unique" type="JSONObject" max-len="-1"/>
+            <key name="before" template="before" type="JSONObject" max-len="-1"/>
+            <key name="during" template="during" type="JSONObject" max-len="-1"/>
+            <key name="after" template="after" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="transition">
+            <key name="transition" template="transition_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="transition_unique_wrapper">
+            <key name="transition" template="transition_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="udf_field_unique">
+            <key name="id" type="long"/>
+            <key name="display_name" type="String" max-len="2000" secret="true"/>
+            <key name="field_type" regex="Single Line|Multi Line|Pick List|MultiSelect|Radio|CheckBox|Decimal|Numeric|Date/Time|Date|Boolean|Percentage|Phone|Html|Url|Email|Attachment|Color|Memory" max-len="30"/>
+            <key name="default_value" type="String" max-len="3500" secret="true"/>
+            <key name="category" template="entity_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="name" regex="api_name" max-len="2000"/>
+            <key name="only_numeric" type="boolean" allow-invalid="false"/>
+            <key name="additional_attributes" template="fields_additional_attributes" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="udf_field_base">
+            <key name="id" type="long"/>
+            <key name="table_name" type="String" max-len="100"/>
+            <key name="column_name" type="String" max-len="100"/>
+            <key name="display_name" type="String" max-len="2000" secret="true"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="field_type" regex="Single Line|Multi Line|Pick List|MultiSelect|Radio|CheckBox|Decimal|Numeric|Date/Time|Date|Boolean|Percentage|Phone|Html|Url|Email|Attachment|Color|Memory" max-len="30"/>
+            <key name="default_value" type="String" max-len="4000" secret="true"/>
+            <key name="fixed_length" type="int"/>
+            <key name="only_numeric" type="boolean" allow-invalid="false"/>
+            <key name="is_common" type="boolean" allow-invalid="false"/>
+            <key name="is_pii" type="boolean" allow-invalid="false"/>
+            <key name="to_delete" type="boolean" allow-invalid="false"/>
+            <key name="is_encrypted" type="boolean" allow-invalid="false"/>
+            <key name="additional_attributes" template="fields_additional_attributes" type="JSONObject" max-len="-1"/>
+            <key name="category" template="entity_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="name" regex="api_name" max-len="2000"/>
+            <key name="reference_entity" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="refer_field" template="udf_field_unique" type="JSONObject" max-len="-1"/>
+            <key name="fk_constraint" regex="SET_NULL|RESTRICT|set_null|restrict"/>
+            <key name="criteria" template="search_criteria" type="JSONObject|JSONArray" max-len="-1"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="options_additional_attribute_config" template="options_additional_attribute_config" type="JSONObject" max-len="-1"/>
+            <key name="options_has_image" type="boolean" allow-invalid="false"/>
+            <key name="field_group" type="String"/>
+            <key name="status" type="JSONObject" template="entity_status_unique" max-len="-1"/>
+            <key name="portal" template="portal_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="udf_field">
+            <key name="udf_field" template="udf_field_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="udf_field_unique_wrapper">
+            <key name="udf_field" template="udf_field_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="udf_reference_entity_preview">
+            <key name="name" regex="api_name" min-occurrences="1"/>
+            <key name="reference_entity" template="module_unique" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1" />
+            <key name="category" template="entity_category_unique" type="JSONObject" max-len="-1" />
+            <key name="list_info" template="list_info_base" type="JSONObject" max-len="-1" />
+            <key name="additional_attributes" template="fields_additional_attributes" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="unified_worklog_template">
+            <key name="list_info" type="JSONObject" template="list_info_base"  max-len="-1"/>
+            <key name="module" regex="request|problem|change|project|release|task|milestone"/>
+            <key name="moduleId" type="long"/>
+            <key name="for" regex="projectTimesheet|milestoneTimesheet|template" min-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="urgency_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="urgency_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="500"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="urgency">
+            <key name="urgency" template="urgency_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="urgency_unique_wrapper">
+            <key name="urgency" template="urgency_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="telephony_history_base">
+            <key name="id" allow-invalid="false" type="long"/>
+            <key name="status" regex="missed|completed|active|success|failed|ringing"/>
+            <key name="type" regex="incoming|outgoing"/>
+            <key name="start_time" type="JSONObject" template="datefield"/>
+            <key name="finish_time" type="JSONObject" template="datefield"/>
+            <key name="caller_number" max-len="25" type="String" secret="true"/>
+            <key name="receiver_number" max-len="25" type="String" secret="true"/>
+            <key name="external_call_id" max-len="100" type="String" secret="true"/>
+            <key name="entity" regex="request"/>
+            <key name="entity_id" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="telephony_history">
+            <key max-len="-1" type="JSONObject" template="telephony_history_base" name="telephony_history"/>
+        </jsontemplate>
+        <jsontemplate name="telephony_history_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="telephony_history_unique" name="telephony_history"/>
+        </jsontemplate>
+        <jsontemplate name="wfaction_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="extended_module" type="JSONObject" template="module_unique" max-len="-1"/>
+            <key name="type" regex="field_update|negate|custom_function|script|execute_class|webhook|notification|sub_rules"/>
+            <key name="sub_type" regex="action|if_if|if_else|conditional_action"/>
+            <key name="is_active" type="boolean"/>
+            <key name="script_action" template="wfexternalaction_base" type="JSONObject" max-len="-1"/>
+            <key name="negate_action" template="wfnegateaction_base" type="JSONObject" max-len="-1"/>
+            <key name="custom_function" template="custom_function_unique" type="JSONObject" max-len="-1"/>
+            <key name="notification_action" template="wfnotificationaction_base" type="JSONObject" max-len="-1"/>
+            <key array-size="0-20" max-len="-1" type="JSONArray" template="wfrule_base" name="sub_rules"/>
+            <key name="is_override" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="wfaction_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="extended_module" type="JSONObject" template="module_unique" max-len="-1"/>
+            <key name="type" regex="field_update|negate|custom_function|script|execute_class|webhook|notification|sub_rules"/>
+            <key name="sub_type" regex="action|if_if|if_else|conditional_action"/>
+            <key name="is_active" type="boolean" allow-invalid="false"/>
+            <key name="field_update" template="wffieldupdateaction_base" type="JSONArray" max-len="-1" array-size="0-30"/>
+            <key name="script_action" template="wfexternalaction_base" type="JSONObject" max-len="-1"/>
+            <key name="negate_action" template="wfnegateaction_base" type="JSONObject" max-len="-1"/>
+            <key name="custom_function" template="custom_function_unique" type="JSONObject" max-len="-1"/>
+            <key name="notification_action" template="wfnotificationaction_base" type="JSONObject" max-len="-1"/>
+            <key array-size="0-20" max-len="-1" type="JSONArray" template="wfrule_base" name="sub_rules"/>
+            <key name="is_override" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="wfaction">
+            <key name="wfaction" template="wfaction_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfaction_unique_wrapper">
+            <key name="wfaction" template="wfaction_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfevent_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="display_name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="wfevent_unique_wrapper">
+            <key name="wfevent" template="wfevent_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfexternalaction_base">
+            <key name="id" type="long"/>
+            <key name="command" type="String" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="update_config">
+            <key name="operation" regex="append_value|remove_value|set_value|remove_all"/>
+        </jsontemplate>
+        <jsontemplate name="wffieldupdateaction_base">
+            <key name="name" type="String" max-len="50"/>
+            <key name="update_config" template="update_config" type="JSONObject" max-len="30" secret="true"/>
+            <key name="value" type="String" max-len="35000" secret="true"/>
+            <key name="order" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="wfgroup_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="module_type" type="String" max-len="50"/>
+            <key name="order" type="long"/>
+            <key name="type" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="wfgroup_unique_wrapper">
+            <key name="wfgroup" template="wfgroup_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfnegateaction_base">
+            <key name="id" type="long"/>
+            <key name="reason" type="String" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotificationaction_base">
+            <key name="id" type="long"/>
+            <key name="notification_template" template="notification_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="notify_to" template="wfnotify" type="JSONObject" max-len="-1"/>
+            <key name="notify_cc" template="wfnotify" type="JSONObject" max-len="-1"/>
+            <key name="notify_users" template="user_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="notify_placeholders" template="placeholder_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="notify_org_roles" template="org_role_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="(?i)(key)" name-regex="true" secret="true" type="String"/>
+            <key name="mode" regex="E-Mail|SMS"/>
+        </jsontemplate>
+        <jsontemplate name="wfrule_base">
+          <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="2500"/>
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="extended_module" type="JSONObject" template="module_unique" max-len="-1"/>
+            <key name="module_type" type="String" max-len="50"/>
+            <key name="is_enabled" type="boolean" allow-invalid="false"/>
+            <key name="is_cascade" type="boolean" allow-invalid="false"/>
+            <key name="cascade_to_next_group" type="boolean" allow-invalid="false"/>
+            <key name="order" type="long"/>
+            <key name="rule_type" type="String" max-len="100"/>
+            <key name="rule_sub_type" type="String" max-len="100"/>
+            <key name="events" template="wfevent_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="execute_during" type="String" max-len="50"/>
+            <key name="execute_on_first_match" type="boolean" allow-invalid="false"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="criteria" template="search_criteria" type="JSONArray" max-len="-1" array-size="0-50"/>
+            <key name="actions" template="rule_action_base" type="JSONArray" max-len="-1" array-size="0-10"/>
+            <key name="group" template="wfgroup_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_subrule" allow-invalid="false" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_template_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_base_group">
+            <key-group name="worklog_base" />
+        </jsontemplate>
+        <jsontemplate name="worklog_base">
+            <key name="worklog" template="worklog_base_group" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_template_base">
+            <key-group name="template_base" />
+            <key name="base_worklog" template="worklog_base_group" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="worklog_template">
+            <key name="worklog_template" template="worklog_template_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_timer_base">
+            <key name="id" type="long"/>
+            <key name="owner" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="comment" type="String" max-len="500"/>
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="request" template="request_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_timer">
+            <key name="worklog_timer" template="worklog_timer_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_type_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="color" regex="color"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_type_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="color" regex="color"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_type">
+            <key name="worklog_type" template="worklog_type_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_type_unique_wrapper">
+            <key name="worklog_type" template="worklog_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="task_estimated_effort_template">
+            <key name="days" type="long"/>
+            <key name="hours" type="long"/>
+            <key name="minutes" type="long"/>
+        </jsontemplate>
+          <jsontemplate name="solution_base">
+            <key name="id" type="long"/>
+            <key name="title" type="String" max-len="2000"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" max-len="-1" xss="sdpantisamyfilter"/>
+            <key name="topic" template="topic_unique" type="JSONObject" max-len="-1"/>
+            <key name="approval_status" template="solution_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="keywords" type="String" max-len="3500" secret="true"/>
+            <key name="is_public" type="boolean" allow-invalid="false"/>
+            <key name="owner" template="user_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="last_updated_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="no_of_hits" type="long"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="has_attachments" type="boolean" allow-invalid="false"/>
+            <key name="has_user_group" type="boolean" allow-invalid="false"/>
+            <key name="user_group_mapping" template="user_group_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_expiry_date_elapsed" type="boolean" allow-invalid="false"/>
+            <key name="is_review_date_elapsed" type="boolean" allow-invalid="false"/>
+            <key name="is_expiry_notified" type="boolean" allow-invalid="false"/>
+            <key name="is_review_notified" type="boolean" allow-invalid="false"/>
+            <key name="review_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="expiry_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="operation_comment" type="String" max-len="-1" secret="true" description="NO_MAXLEN : As provided in data-dictionary"/>
+            <key name="images" template="inline_img_template" type="JSONObject" max-len="-1"/>
+              <key name="short_description" type="String" max-len="250"/>
+              <key name="type" regex="Solution|WorkAround|WORKAROUND"/>
+              <key name="solution_association"  template="solution_association" type="JSONObject"/>
+        </jsontemplate>
+
+        <jsontemplate name="solution_unique">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="solution_relation_base">
+            <key name="relationid" template="solution_unique"  max-len="1200" type="JSONObject" secret="true"/>
+        </jsontemplate>
+
+        <jsontemplate name="solution_relation">
+            <key name="solution_relation" template="solution_relation_base" type="JSONArray" max-len="-1" array-size="0-100" secret="true"/>
+        </jsontemplate>
+
+        <jsontemplate name="solution_relation_unique_wrapper">
+            <key name="solution_relation" template="solution_relation_unique" type="JSONArray" max-len="-1" secret="true"/>
+        </jsontemplate>
+
+        <jsontemplate name="solution_association">
+            <key name="associate_id" type="long" />
+            <key name="module" type="String" />
+        </jsontemplate>
+
+        <jsontemplate name="solution_include_convenice_oper">
+            <key name="solution_include" type="JSONObject" max-len="-1" template="solution_include_base" />
+        </jsontemplate>
+        <jsontemplate name="solution_include_base">
+            <key name="copy_to_notification" regex="RequestReply_E-Mail" />
+            <key name="moduleId" type="long" range=">0"/>
+        </jsontemplate>
+
+        <jsontemplate name="solution">
+            <key name="solution" template="solution_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="solution_unique_wrapper">
+            <key name="solution" template="solution_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="solution_status_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="solution_setting_base">
+			<key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="category" type="String" max-len="2000"/>
+            <key name="parameter" type="String" max-len="2000"/>
+            <key name="paramvalue" type="String" max-len="2000"/>
+        </jsontemplate>
+        <jsontemplate name="solution_setting">
+            <key name="solution_setting" template="solution_setting_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="solution_setting_unique_wrapper">
+            <key name="solution_setting" template="solution_setting_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="solution_status_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="solution_status">
+            <key name="solution_status" template="solution_status_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="solution_status_unique_wrapper">
+            <key name="solution_status" template="solution_status_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="solution_metainfo_template">
+            <key name="for" regex="history_filter|advanced_search_filter|list_view_filter"/>
+        </jsontemplate>
+
+        <jsontemplate name="solutioncomment">
+            <key name="comment" template="solutioncomment_base" type="JSONObject" max-len="-1" min-occurrences="1" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="solutioncomment_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="content" name-regex="true" secret="true" max-len="-1" xss="sdpantisamyfilter" />
+            <key name="parent" template="comment_unique" type="JSONObject" max-len="-1" secret="true"/>
+            <key name="solution" template="solution_unique" type="JSONObject" max-len="-1" secret="true"/>
+            <key name="show_to_requester" type="boolean" allow-invalid="false"/>
+            <key name="images" template="inline_img_template" type="JSONObject" max-len="-1" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name = "solution_to_request">
+            <key name="solution_to_request" template="solution_to_request_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="solution_to_request_base">
+            <key name="request" template="sol_to_req_id" type="JSONObject" max-len="-1"/>
+            <key name="solution" template="sol_to_req_id" type="JSONObject" max-len="-1"/>
+            <key name="association_type" max-len="100" type="String"/>
+            <key name="comments" type="String" max-len="3000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="sol_to_req_id">
+            <key name="id" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="space_amenity_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="250"/>
+            <key name="icon_name" template="media_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_amenity_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="250"/>
+            <key name="icon_name" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="space_amenity" disable-extra-key="true">
+            <key name="space_amenity" template="space_amenity_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_amenity_unique_wrapper" disable-extra-key="true">
+            <key name="space_amenity" template="space_amenity_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_asset_association_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="asset" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_asset_association_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="asset" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_asset_association" disable-extra-key="true">
+            <key name="space_asset_association" template="space_asset_association_base" type="JSONObject" max-len="-1"/>
+            <key name="space_asset_associations" template="space_asset_association_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="space_asset_association_unique_wrapper" disable-extra-key="true">
+            <key name="space_asset_association" template="space_asset_association_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_criticality_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" max-len="250" type="String"/>
+            <key name="icon_name" template="media_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_criticality_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" max-len="250" type="String"/>
+            <key name="icon_name" template="media_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="space_criticality" disable-extra-key="true">
+            <key name="space_criticality" template="space_criticality_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_criticality_unique_wrapper" disable-extra-key="true">
+            <key name="space_criticality" template="space_criticality_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_document_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="space_document_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="100"/>
+            <key name="space" template="space_instance_unique" type="JSONObject" max-len="-1"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_by" template="user_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_document" disable-extra-key="true">
+            <key name="space_document" template="space_document_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_document_unique_wrapper" disable-extra-key="true">
+            <key name="space_document" template="space_document_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_facility_service_association_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="facility_service" template="facility_service_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_facility_service_association_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="facility_service" template="facility_service_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_facility_service_association" disable-extra-key="true">
+            <key name="space_facility_service_association" template="space_facility_service_association_base" type="JSONObject" max-len="-1"/>
+            <key name="space_facility_service_associations" template="space_facility_service_association_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="space_facility_service_association_unique_wrapper" disable-extra-key="true">
+            <key name="space_facility_service_association" template="space_facility_service_association_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_instance_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="type" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="template" template="space_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="space_code" type="String" max-len="250"/>
+            <key name="display_image" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="space_instance_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="description" type="String" max-len="500"/>
+            <key name="type" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="template" template="space_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="space_code" type="String" max-len="250"/>
+            <key name="display_image" type="String" max-len="100"/>
+            <key name="total_capacity" type="int" max-len="10"/>
+            <key name="occupied_capacity" type="int" max-len="10"/>
+            <key name="available_capacity" type="int"/>
+            <key name="area" template="space_area_group" type="JSONObject" max-len="-1"/>
+            <key name="udf_fields" template="space_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="common_module" type="String"/>
+            <key name="amenities" template="space_amenity_unique" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="criticalities" template="space_criticality_unique" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="room_layouts" template="space_room_layout_association_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="status" template="space_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="request" template="request_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="facility_service" template="facility_service_unique" type="JSONObject" max-len="-1"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1" max-occurrences="1" />
+            <key name="space_campus" template="space_instance_unique" type="JSONObject" max-len="-1" max-occurrences="1" />
+            <key name="space_building" template="space_instance_unique" type="JSONObject" max-len="-1" max-occurrences="1" />
+            <key name="space_floor" template="space_instance_unique" type="JSONObject" max-len="-1" max-occurrences="1" />
+            <key name="space_room" template="space_instance_unique" type="JSONObject" max-len="-1" max-occurrences="1" />
+            <key name="supervisors" template="technician_unique" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="building_count" type="long"/>
+            <key name="nonbuilding_count" type="long"/>
+            <key name="floor_count" type="long"/>
+            <key name="room_count" type="long"/>
+            <key name="request_count" type="long"/>
+            <key name="building_type" regex="Floors and Rooms|Rooms Only" max-len="20"/>
+            <key name="is_room_partitionable" type="boolean" allow-invalid="false"/>
+            <key name="is_floating_capacity" type="boolean" allow-invalid="false"/>
+            <key name="partition_capacity" type="long"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_instance" disable-extra-key="true">
+            <key name="space_instance" template="space_instance_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_instance_unique_wrapper" disable-extra-key="true">
+            <key name="space_instance" template="space_instance_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_request_association_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="request" template="request_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_request_association_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="request" template="request_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_request_association" disable-extra-key="true">
+            <key name="space_request_association" template="space_request_association_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_request_association_unique_wrapper" disable-extra-key="true">
+            <key name="space_request_association" template="space_request_association_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_room_layout_association_base" disable-extra-key="true">
+            <key name="room_layout" template="room_layout_unique" type="JSONObject" max-len="-1"/>
+            <key name="capacity" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="space_room_layout_association" disable-extra-key="true">
+            <key name="space_room_layout_association" template="space_room_layout_association_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_status_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="color" regex="color"/>
+            <key name="internal_name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="space_status_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="250"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="color" regex="color"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="prominent" type="boolean" allow-invalid="false"/>
+            <key name="internal_name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="space_status" disable-extra-key="true">
+            <key name="space_status" template="space_status_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_status_unique_wrapper" disable-extra-key="true">
+            <key name="space_status" template="space_status_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_summary_base" disable-extra-key="true">
+            <key name="requests" type="long"/>
+            <key name="assets" type="long"/>
+            <key name="services" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="space_summary" disable-extra-key="true">
+            <key name="space_summary" template="space_summary_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_template_unique" disable-extra-key="true">
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="space_template_base" disable-extra-key="true">
+            <key name="module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="space_campus" template="space_instance_base" type="JSONObject" max-len="-1"/>
+            <key name="space_building" template="space_instance_base" type="JSONObject" max-len="-1"/>
+            <key name="space_nonbuilding" template="space_instance_base" type="JSONObject" max-len="-1"/>
+            <key name="space_floor" template="space_instance_base" type="JSONObject" max-len="-1"/>
+            <key name="space_room" template="space_instance_base" type="JSONObject" max-len="-1"/>
+            <key name="layouts" template="layout_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="comment" type="String" max-len="1000"/>
+            <key name="is_default" type="boolean" allow-invalid="false"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="updated_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="fields" template="udf_field_unique" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="sections" template="section_unique" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="style_properties" template="template_style_properties" type="JSONObject" max-len="-1"/>
+            <key name="draft" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="space_template" disable-extra-key="true">
+            <key name="space_template" template="space_template_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_template_unique_wrapper" disable-extra-key="true">
+            <key name="space_template" template="space_template_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_unit_unique" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="is_default" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="space_unit_base" disable-extra-key="true">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="deleted" type="boolean" allow-invalid="false"/>
+            <key name="unit_group" type="String" max-len="100"/>
+            <key name="is_default" type="boolean" allow-invalid="false"/>
+            <key name="prominent" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="space_unit" disable-extra-key="true">
+            <key name="space_unit" template="space_unit_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="space_unit_unique_wrapper" disable-extra-key="true">
+            <key name="space_unit" template="space_unit_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="topic_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="topic_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="parent" template="topic_unique" type="JSONObject" max-len="-1"/>
+            <key name="solution_count" type="long"/>
+        </jsontemplate>
+        <jsontemplate name="topic">
+            <key name="topic" template="topic_base" type="JSONObject" max-len="-1"/>
+            <key name="include_inactive_value" type="boolean" max-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="topic_unique_wrapper">
+            <key name="topic" template="topic_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="topic_restore">
+            <key name="restore_solutions" type="boolean"/>
+        </jsontemplate>
+    <!-- security settings related templates starts here-->
+    <jsontemplate name="security_settings_template">
+        <key name="security_settings" type="JSONObject" template="security_settings_template_base" min-occurrences="1" max-len="-1"/>
+    </jsontemplate>
+    <jsontemplate name="security_settings_template_base">
+        <key name="inactive_session_timeout" type="int"/>
+        <key name="fetch_user_domain_inlogin_page" regex="yes|no"  />
+        <key name="enable_domain_dropdown" regex="yes|no"  />
+        <key name="stop_uploading_scanned_xml" regex="yes|no"  />
+        <key name="response_headers" type="JSONObject" template="security_settings_resp_headers"  max-len="-1"/>
+        <key name="bad_login_configuration" type="JSONObject" template="security_settings_bad_login_config"  max-len="-1"/>
+        <key name="server_configuration" type="JSONObject" template="security_settings_server_config"  max-len="-1"/>
+        <key name="enable_keep_me_sign" type="boolean"/>
+        <key name="enable_forgot_password" type="boolean"/>
+        <key name="disable_local_ip" type="boolean"/>
+        <key name="rememberme_expiry_date" type="long" />
+        <key name="disableClipboardContentOnPasswordFields" type="boolean" />
+        <key name="disableDataCompression" type="boolean" />
+        <key name="disableConcurrentLogin" type="boolean" />
+        <key name="removeExifMetadata" type="boolean" />
+        <key name="disableThrottles" type="boolean" />
+        <key name="secure_attachments" type="JSONObject" template="security_settings_secure_attachments" max-len="-1"/>
+        <key name="avConfig" type="JSONObject" template="avConfig_template" max-len="-1"/>
+        <key name="disableLastLogin" type="boolean"/>
+        <key name="enablePushNotificationForURLAccessViolation" type="boolean" />
+	<key name="user_restricted_fields" type="JSONObject" template="security_settings_user_restricted_fields" max-len="-1"/>
+    </jsontemplate>
+    <jsontemplate name="avConfig_template">
+        <key name="enable_AV"  type="boolean" min-occurrences="1"/>
+        <key name="av_service"  type="String" min-occurrences="1"/>
+        <key name="av_host"  type="String" min-occurrences="1"/>
+        <key name="av_port"  type="long" min-occurrences="1"/>
+    </jsontemplate>
+    <jsontemplate name="security_settings_resp_headers">
+        <key name-regex="true" name="(?i)Cache-Control" type="String" max-occurrences="1"  />
+        <key name-regex="true" name="(?i)Content-Security-Policy" type="String" max-occurrences="1"  max-len="1500"/>
+        <key name-regex="true" name="(?i)Content-Security-Policy-Report-Only" type="String" max-occurrences="1"  max-len="1500"/>
+        <key name-regex="true" name="(?i)X-Content-Type-Options" type="String" max-occurrences="1"   />
+        <key name-regex="true" name="(?i)X-Frame-Options" type="String" max-occurrences="1"  />
+        <key name-regex="true" name="(?i)Strict-Transport-Security" type="String" max-occurrences="1"  />
+        <key name-regex="true" name="(?i)X-XSS-Protection" type="String" max-occurrences="1"  />
+        <key name-regex="true" name="(?i)Access-Control-Allow-Origin"  type="String" max-occurrences="1" max-len="600"/>
+        <key name-regex="true" name="(?i)Referrer-Policy" type="String"  max-occurrences="1" />
+        <key name-regex="true" name="(?i)Expect-CT" type="String"  max-occurrences="1" max-len="250"/>
+        <key name-regex="true" name="(?i)Feature-Policy" type="String" max-occurrences="1" max-len="700"/>
+	<key name-regex="true" name="[a-zA-Z-]+" type="String" max-occurrences="10" max-len="500"/>
+    </jsontemplate>
+    <jsontemplate name="security_settings_bad_login_config">
+        <key name="no_of_bad_login_allowed" regex="[0-9]+" />
+        <key name="auto_unlock_interval_time" regex="[0-9]+" />
+    <key name="message_for_locked_account" type="String"  max-len="250" secret="true"/>
+        <key name="notify_locked_account_to" type="JSONArray" template="IDNameEmailJson"  max-len="-1"/>
+        <key name="email_notify" type="boolean" />
+        <key name="technician_space_notify" type="boolean" />
+        <key name="is_user_based_lock" type="boolean" />
+    </jsontemplate>
+    <jsontemplate name="security_settings_server_config">
+        <key name="port" type="int" />
+        <key name="nio_port" type="int"/>
+        <key name="protocol" regex="http|https"/>
+        <key name="supported_tls" type="JSONArray" template="strarray" max-len="-1" array-size=">0"/>
+        <key name="supported_ciphers" type="JSONArray" template="strarray" max-len="-1" array-size=">0" secret="true"/>
+    </jsontemplate>
+    <jsontemplate name="security_settings_secure_attachments">
+        <key name="is_enabled" regex="yes|no" min-occurrences="1"/>
+        <key name="authkey" type="String" max-len="500" secret="true"/>
+    </jsontemplate>
+        <jsontemplate name="security_settings_user_restricted_fields">
+            <key name="restricted_fields" type="JSONArray" template="ae_tech_restriction_field_template" max-len="-1" array-size="0-500"/>
+            <key name="restriction_type" regex="all|include|exclude"/>
+        </jsontemplate>
+        <jsontemplate name="statement_unique">
+            <key name="id" type="long"/>
+            <key name="(?i)(key)" name-regex="true" secret="true" regex="statementKey" max-len="250"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="2000"/>
+        </jsontemplate>
+        <jsontemplate name="statement_base">
+            <key name="id" type="long"/>
+            <key name="(?i)(key)" name-regex="true" secret="true" regex="statementKey" max-len="250"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="type" template="statement_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="2000"/>
+            <key name="action" template="workflow_action_unique" type="JSONObject" max-len="-1"/>
+            <key name="position" template="point2d" type="JSONObject" max-len="-1"/>
+            <key name="statuses" template="workflow_stage_status_attribute" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="stage_id" type="long" range=">=0"/>
+            <key name="stage_index" type="int" range=">=0"/>
+            <key name="stage_internal_name" type="String" max-len="100"/>
+            <key name="field" type="String" max-len="100"/>
+            <key name="options" template="workflow_switch_options" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_udf" type="boolean" allow-invalid="false"/>
+            <key name="internal_name" type="String" max-len="100" secret="true"/>
+            <key name="criteria" template="workflow_criteria" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="subject" type="String" max-len="500" secret="true"/>
+            <key name="content" max-len="-1" xss="sdpantisamyfilter" secret="true"/>
+            <key name="notify_to" template="notify_to" type="JSONObject" max-len="-1"/>
+            <key name="approval_rule" template="approval_rule_base" type="JSONObject" max-len="-1"/>
+            <key name="approval_rule_value" template="approval_rule_value_base" type="JSONObject" max-len="-1"/>
+            <key name="notification_content_id" type="long" range=">=0"/>
+            <key name="is_start_node" type="boolean" allow-invalid="false"/>
+            <key name="images" template="inline_img_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="statement">
+            <key name="statement" template="statement_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="statement_unique_wrapper">
+            <key name="statement" template="statement_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="statement_attribute_unique">
+            <key name="id" type="long"/>
+            <key name="(?i)(key)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="value" type="String" max-len="2000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="statement_attribute_base">
+            <key name="id" type="long"/>
+            <key name="(?i)(key)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="value" type="String" max-len="2000" secret="true" />
+        </jsontemplate>
+        <jsontemplate name="statement_attribute">
+            <key name="statement_attribute" template="statement_attribute_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="statement_attribute_unique_wrapper">
+            <key name="statement_attribute" template="statement_attribute_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="statement_type_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="statement_type_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="is_action" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="statement_type">
+            <key name="statement_type" template="statement_type_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="statement_type_unique_wrapper">
+            <key name="statement_type" template="statement_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+
+
+        <jsontemplate name="user_notification_template_base">
+            <key name="notify_to" template="notify_to" type="JSONObject" max-len="-1"/>
+            <key name="module" type="String" max-len="20"/>
+            <key name="id" type="long"/>
+            <key name="type" type="String" max-len="150"/>
+            <key name="subject" type="String" max-len="150" secret="true"/>
+            <key name="mode" type="String" max-len="10"/>
+            <key name="content" max-len="-1" xss="sdpantisamyfilter"/>
+            <key name="isenabled" type="boolean" allow-invalid="false"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100" allow-invalid="false"/>
+            <key name="images" template="inline_img_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="user_notification_template">
+            <key name="user_notification_template" template="user_notification_template_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="wffieldupdate_unique">
+            <key name="name" type="String" max-len="50"/>
+            <key name="display_name" type="String"/>
+            <key name="value" regex="tagsRestricted" />
+            <key name="display_value" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="wffieldupdate_base">
+            <key name="name" type="String" max-len="50"/>
+            <key name="display_name" type="String"/>
+            <key name="value" max-len="5000" xss="sdpantisamyfilter"/>
+            <key name="display_value" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="wffieldupdate">
+            <key name="wffieldupdate" template="wffieldupdate_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wffieldupdate_unique_wrapper">
+            <key name="wffieldupdate" template="wffieldupdate_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="wfnotification_unique">
+            <key name="notify_to" template="workflow_notify_to" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotification_base">
+            <key name="mode" regex="email|sms|EMAIL|SMS"/>
+            <key name="subject" type="String" max-len="500" secret="true"/>
+            <key name="content" max-len="-1" xss="sdpantisamyfilter" secret="true"/>
+            <key name="notify_to" template="workflow_notify_to" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotification">
+            <key name="wfnotification" template="wfnotification_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotification_unique_wrapper">
+            <key name="wfnotification" template="wfnotification_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotification_group_unique">
+            <key name="module" regex="change|release"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotification_group_base">
+            <key name="module" regex="change|release"/>
+            <key name="custom_groups" template="notification_custom_group" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotification_group">
+            <key name="wfnotification_group" template="wfnotification_group_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="wfnotification_group_unique_wrapper">
+            <key name="wfnotification_group" template="wfnotification_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="module" template="workflow_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="validated" type="boolean"/>
+            <key name="type" regex="General|Emergency" />
+            <key name="allowed_stages_config" regex="ALL_STAGES|ONLY_WF_STAGES" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="type" regex="General|Emergency"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="inactive" type="boolean" allow-invalid="false"/>
+            <key name="is_default" type="boolean" allow-invalid="false"/>
+            <key name="module" template="workflow_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="validated" type="boolean" allow-invalid="false"/>
+            <key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="statements" template="statement_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="connectors" template="connector_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="allowed_stages_config" regex="ALL_STAGES|ONLY_WF_STAGES" allow-invalid="false" />
+        </jsontemplate>
+        <jsontemplate name="workflow">
+            <key name="workflow" template="workflow_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_unique_wrapper">
+            <key name="workflow" template="workflow_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_action_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="2000"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="statement_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="module" template="workflow_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_active" type="boolean"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_action_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="2000"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="statement_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="module" template="workflow_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_active" type="boolean" allow-invalid="false"/>
+            <key name="notification" template="wfnotification_base" type="JSONObject" max-len="-1"/>
+            <key name="field_update" template="wffieldupdate_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="workflows" template="action_associated_workflows_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_action">
+            <key name="workflow_action" template="workflow_action_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_action_unique_wrapper">
+            <key name="workflow_action" template="workflow_action_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_module_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="display_name_plural" type="String" max-len="250"/>
+            <key name="api_plural_name" type="String" max-len="250"/>
+            <key name="icon_name" regex="icon_name" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_module_base">
+            <key name="id" type="long"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="display_name" type="String" max-len="250"/>
+            <key name="display_name_plural" type="String" max-len="250"/>
+            <key name="api_plural_name" type="String" max-len="250"/>
+            <key name="icon_name" regex="icon_name" max-len="250"/>
+            <key name="category" regex="CMDB"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="2000"/>
+            <key name="available_udf_count" type="long"/>
+            <key name="total_udf_count" type="long"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_updated_time" template="datefield" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_module">
+            <key name="workflow_module" template="workflow_module_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_module_unique_wrapper">
+            <key name="workflow_module" template="workflow_module_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="worklog_metainfo_template">
+            <key name="for" regex="form|list_view|history_filter|template|workflow"/>
+        </jsontemplate>
+        <jsontemplate name="task_template_estimated_effort_template">
+            <key name="days" type="long"/>
+            <key name="hours" type="long"/>
+            <key name="minutes" type="long"/>
+            <key name="value" type="long"/>
+        </jsontemplate> 
+        <jsontemplate  name="UpdateTemplateConfiguration_inputFormat">
+            <key name="domainName" type="String" max-len="100" />
+            <key name="tempId" type="long"  />
+        </jsontemplate>
+        <jsontemplate  name="UpdateUserCreationFields_field_list">
+            <key name="id" type="String" max-len="250" />
+            <key name="name" type="String" max-len="250" />
+            <key name="value" type="String" max-len="250" />
+        </jsontemplate>
+        <jsontemplate name="timesheet_configurations">
+            <key max-len="-1" name="timesheet_configurations" template="timesheet_configurations_base" type="JSONArray"/>
+        </jsontemplate>
+		<jsontemplate name="timesheet_configurations_base">
+			<key name="add_worklog_after_timesheet_approval" regex="true|false" min-occurrences="1"/>
+			<key name="total_hours_per_period" min-occurrences="1" regex="[0-9]+"/>
+			<key name="period" regex="Daily|Week|2 Weeks" min-occurrences="1"/>
+			<key name="total_hours_per_day" min-occurrences="1" regex="[0-9]+"/>
+			<key name="exclude_technicians" max-len="-1" array-size="0-100" template="IDNameTextJson" type="JSONArray" min-occurrences="1"/>
+			<key name="multiday_worklog_addition" regex="true|false" min-occurrences="1"/>
+			<key name="timezone" regex="true|false" min-occurrences="1"/>
+			<key name="start_of_period" regex="Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday" min-occurrences="1"/>
+			<key name="is_enabled" regex="true|false" min-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="timecard_unique">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key type="long" name="entityid"/>
+            <key max-len="100" type="String" name="module"/>
+            <key max-len="100" type="String" name="account"/>
+            <key max-len="100" type="String" name="project"/>
+            <key max-len="200" type="String" name="title"/>
+            <key max-len="100" type="String" name="status"/>
+            <key allow-invalid="false" type="boolean" name="is_reviewed"/>
+            <key allow-invalid="false" type="boolean" name="is_dirty"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="reviewed_owner"/>
+        </jsontemplate>
+        <jsontemplate name="timecard_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key type="long" name="entityid"/>
+            <key max-len="100" type="String" name="module"/>
+            <key max-len="100" type="String" name="account"/>
+            <key max-len="100" type="String" name="project"/>
+            <key max-len="200" type="String" name="title"/>
+            <key max-len="100" type="String" name="status"/>
+            <key allow-invalid="false" type="boolean" name="is_reviewed"/>
+            <key allow-invalid="false" type="boolean" name="is_dirty"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="reviewed_owner"/>
+        </jsontemplate>
+        <jsontemplate name="timecard">
+            <key max-len="-1" type="JSONObject" template="timecard_base" name="timecard"/>
+        </jsontemplate>
+        <jsontemplate name="timecard_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="timecard_unique" name="timecard"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="-1" type="JSONObject" template="timesheet_status_unique" name="status"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="start_date"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="end_date"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="technician"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="approver"/>
+            <key max-len="-1" type="JSONObject" template="timediff" name="timespent"/>
+            <key max-len="-1" type="JSONObject" template="timediff" name="billable_time"/>
+            <key max-len="-1" type="JSONObject" template="timediff" name="nonbillable_time"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="timecard_unique" name="timecards"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet">
+            <key max-len="-1" type="JSONObject" template="timesheet_base" name="timesheet"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="timesheet_unique" name="timesheet"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet_status_unique">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="100" type="String" name="name"/>
+            <key max-len="100" type="String" name="displayname"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet_status_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="100" type="String" name="name"/>
+            <key max-len="100" type="String" name="displayname"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet_status">
+            <key max-len="-1" type="JSONObject" template="timesheet_status_base" name="timesheet_status"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet_status_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="timesheet_status_unique" name="timesheet_status"/>
+        </jsontemplate>
+        <!-- software_license attachment ends -->
+         <jsontemplate name="update_scope_template">
+            <key name="is_public" type="boolean" min-occurrences="1" allow-invalid="false"/>
+            <key name="type" regex="Notification|Conversation" min-occurrences="1"/>
+        </jsontemplate>
+        <!-- Request WF SLA update action starts -->
+        <jsontemplate name="wfslaaction_base">
+            <key name="sla" template="sla_unique" type="JSONObject" max-len="150"/>
+        </jsontemplate>
+        <jsontemplate name="wfslaaction">
+            <key name="wfslaaction" template="wfslaaction_base" type="JSONObject" max-len="150"/>
+        </jsontemplate>
+        <!-- Request WF SLA update action ends -->
+        <jsontemplate name="solution_summary_template">
+            <key name="list_info" type="JSONObject" max-len="-1" template="sol_summary_list_info" />
+        </jsontemplate>
+        <jsontemplate name="sol_summary_list_info">
+            <key name="fields_required" type="JSONArray" max-len="-1" array-size="0-30" template="strarray" secret="true" />
+        </jsontemplate>
+		<!-- Custom module Sub entity -->
+		<jsontemplate name="sub_entity_unique">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key type="String" name="name" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="sub_entity_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key regex="api_name" name="name" max-len="50"/>
+            <key regex="api_name" name="singular_name" max-len="50"/>
+            <key name="sub_entity" max-len="-1" type="JSONObject" template="module_unique"/>
+            <key allow-invalid="false" type="boolean" name="collection"/>
+            <key allow-invalid="false" type="boolean" name="is_subform"/>
+            <key allow-invalid="false" type="boolean" name="is_removable"/>
+            <key max-len="-1" type="JSONObject" template="cm_tuple_properties" name="tuple_properties"/>
+        </jsontemplate>
+        <jsontemplate name="sub_entity">
+            <key max-len="-1" type="JSONObject" template="sub_entity_base" name="sub_entity"/>
+        </jsontemplate>
+        <jsontemplate name="sub_entity_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="sub_entity_unique" name="sub_entity"/>
+        </jsontemplate>
+        <jsontemplate name="workflow_list_template">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+            <key name="for" regex="request|problem"/>
+        </jsontemplate>
+		<!-- Custom module Sub entity ends -->
+    </jsontemplates>
+</security>

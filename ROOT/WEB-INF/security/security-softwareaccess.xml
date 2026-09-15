@@ -1,0 +1,977 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Security authentication for software module related url entries -->
+
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd" >
+	<urls authentication="required" method="get" allowed_portals="it" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_get" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="softwareTypeView,softwareCategoryView,licenseTypes,importswlicenses,licenseudf,agreementudf,softwareMetering"/>
+		<!--software-->
+		<!-- Used to get the next schedule time for SW Metering schedule to show in success message for SW Metering Configuration -->
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getNextScheduleForSwMetering" />
+
+		<!-- Used to get the components' usage details for the Suite Software to show in installations tab -->
+		<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="getUsageDetailsForSuiteInstallationTab" >
+			<param name="wsId" type="long" range=">0" min-occurrences="1" />
+			<param name="swInfoId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SWUnlicencedInstallationView.cc" >
+			<param name="UNIQUE_ID" regex="SWUnlicencedInstallationView" min-occurrences="1" />
+			<param name="swId" type="long" range=">0" />
+			<param name="softwareId" type="long" range=">0" />
+			<param name="selectedSiteId" type="long" range=">=-2" />
+			<param name="noInitSearch" type="long" range=">0" />
+			<param name="softwareType" type="String" max-len="50" />
+			<param name="isFromLicenseDetailsPage" type="boolean" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SWLicencedInstallationView.cc" >
+			<param name="UNIQUE_ID" regex="SWLicencedInstallationView" min-occurrences="1" />
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="(/STATE_ID/[0-9]+)?/SuiteInstallations.cc" remote_server="true" >
+			<param name="UNIQUE_ID" regex="SuiteInstallations" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="suiteScanRuleId" type="long" range=">=0" />
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/software/pendingsoftwarelist.jsp" remote_server="true" />
+		<url roles="ViewInventoryWS" path="/software/softwaretypescount.jsp" remote_server="true" />
+		<url roles="CreateInventoryWS" path="/software/addsoftwareinstallation.jsp" remote_server="true">
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="/software/showsuitesoftwares.jsp" remote_server="true">
+			<param name="swId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="createnewsuite" type="boolean" />
+			<param name="date" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/software/addtosuitesoftware.jsp" remote_server="true" >
+			<param name="manufacturerId" type="long" range=">0" min-occurrences="1" />
+			<param name="date" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="/software/showsuitecomponentinstallation.jsp" remote_server="true">
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/software/addmanagedsoftware.jsp">
+			<param name="softwareManufacturer" type="long" range=">0" />
+			<param name="date" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/software/compliance.jsp" remote_server="true" />
+		<url roles="CreateInventoryWS" path="/software/addmanufacturer.jsp" />	
+		<url roles="ViewInventoryWS" path="/NotifySWUsers.do" operation-param="action" operation-value="view" remote_server="true">
+			<param name="swId" type="long" range=">0" min-occurrences="1" />
+			<param name="wsId" type="long" range=">0" max-occurrences="300" />
+		</url>
+		
+		<url roles="ViewInventoryWS" path="/SoftwareListView.do" remote_server="true" >
+			<param name="softwareManufacturer" type="long" range=">0,-1" />
+			<param name="site" type="long" range=">=-2" />
+			<param name="swType" type="long" range=">=0" />
+			<param name="swComplianceType" type="long" range=">=-1" />
+			<param name="fromSoftwareHome" type="boolean" />
+			<param name="showZeroCount" type="boolean" />
+			<param name="unusedlicenses" type="boolean" />
+			<param name="fromRarelyUsedLink" type="boolean" />
+			<param name="attribute" regex="software" />
+			<param name="searchText" type="String" />
+			<param name="SC-[a-zA-z]+-[a-zA-z]+" name-regex="true" type="String" max-len="100" allow-empty="false" />
+		</url>
+		<url roles="CreateInventoryWS" path="/SoftwareListViewAction.do" remote_server="true" >
+			<param name="add" regex="New" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0,-1" max-occurrences="500" min-occurrences="1" />
+			<param name="isSuite" type="boolean" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SWWorkstationListView.do" remote_server="true">
+			<param name="criteria" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedSite" type="long" range=">=-2" />
+			<param name="showDetailsOf" type="String" max-len="30" allow-empty="false" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showhomepage" />
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showautoallocatepage,showSuiteInstallations,showSuiteSettingsPage" remote_server="true">
+ 			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>	
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="editSoftwareDetails" remote_server="true" >
+ 			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+		</url>	
+	 	<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showsitebasedcompliance" remote_server="true">
+ 			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteFilter" regex="violatedsites|overlicensedsites" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showCompleteLicenseDetails" >
+ 			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+ 			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="showAllocatedDetails" type="boolean" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/ChangeSWManufacturer.do" remote_server="true">
+			<param name="changeSWManu" regex="true" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/ChangeSWCategory.do" remote_server="true">
+			<param name="changeSWCatg" regex="true" min-occurrences="1" />
+		</url>
+		
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="doesSwHaveSameMfg" >
+			<param name="softwareId" regex="[0-9]+,([0-9]+,?){0,299}" max-len="3500" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="ViewInventoryWS" path="/swmanufacturers.do" remote_server="true">
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+" max-len="50" min-occurrences="1" allow-empty="false"/>
+			<param name="searchText" type="String" max-len="150" secret="true"/>
+			<param name="page" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<!--license-->
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/CALListView.cc" >
+			<param name="UNIQUE_ID" regex="CALListView" min-occurrences="1" />
+			<param name="swId" type="long" range=">0" />
+			<param name="siteId" type="long" range=">=-2" />
+			<param name="licenseId" type="long" range=">0" />
+			<param name="calrequest" type="String" max-len="100" allow-empty="false" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/UpgradeDowngradeLicenses.cc" >
+			<param name="UNIQUE_ID" regex="UpgradeDowngradeLicenses" min-occurrences="1" />
+			<param name="softwareLicenseId" type="long" range=">0" min-occurrences="1" />
+			<param name="isupgradelicenseview" type="boolean" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/SoftwareLicenseTypes.cc" >
+			<param name="UNIQUE_ID" regex="SoftwareLicenseTypes" min-occurrences="1" />
+			<param name="SWMANUFACTURERID" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="/software/softwarelicensetypeinclude.jsp">
+			<param name="swManufacturerId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="/software/addlicenseoption.jsp">
+			<param name="swmanufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseTypeId" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseFor" type="String" max-len="150" min-occurrences="1" allow-empty="false" />
+			<param name="licenseType" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="ViewInventoryWS" path="/software/showlicenses.jsp" >
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" />
+			<param name="date" type="long" range=">0" min-occurrences="1" />
+			<param name="rowIndex" type="long" range=">=-1" min-occurrences="1" />
+			<param name="poLotId" type="String" max-len="10" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="CreateInventoryWS" path="/software/addnewlicensepage.jsp" >
+			<param name="swManufacturerId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/software/AllocateSWLicense.jsp" >
+			<param name="LICENSEID" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0" />
+			<param name="fromSWDetailsPage" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseOption" type="String" max-len="250" />
+		</url>
+		<url roles="SDAdmin" path="/SoftwareLicense.do" operation-param="operation" operation-value="failedlicenseslistwitherrors,failedlicenseslist">
+			<param name="time" type="long" range=">0" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SoftwareLicense_failedlicenses.runCompliance" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m" />
+			</throttles>
+		</url>
+		
+		<url roles="CreateInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="new">
+			<param name="softwareID" type="long" range=">0" />
+			<param name="site" type="long" range=">=-2" />
+			<param name="licenseCategory" regex="upgrade" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="edit">
+			<param name="licenseID" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="importswlicensewizard1" />
+		<url roles="ModifyInventoryWS" path="/AllocateSoftwareLicense.do" operation-param="action" operation-value="view">
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="fromUserPage" type="boolean" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="showunlicensedinstallations">
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="/SoftwareLicenseListView.do" operation-param="action" operation-value="view">
+			<param name="columnName" type="String" max-len="100" allow-empty="false" />
+			<param name="poCustomID" type="long" range=">0" />
+		</url>
+		<!--agreement-->
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/Agreements.cc" >
+			<param name="UNIQUE_ID" regex="Agreements" />
+			<param name="softwareId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="expiresIn" type="long" range="-2-90" min-occurrences="1" />
+			<param name="mfgId" type="long" range=">0" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/LicenseAgreementListView.cc" >
+			<param name="UNIQUE_ID" regex="LicenseAgreementListView" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0,-1" />
+			<param name="expirein" type="long" range="-2-90" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/AllSoftwareLicenceView.cc" >
+			<param name="UNIQUE_ID" regex="AllSoftwareLicenceView" min-occurrences="1" />
+			<param name="softwareManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="fromLALicenseSearch" type="boolean" min-occurrences="1" />
+			<param name="agreementId" type="long" range=">0" />
+			<param name="addedlicenses" type="String" regex="[0-9]+(,[0-9]+){0,199}" max-len="2500" secret="true" allow-empty="false" />
+			<param name="softwareId" type="long" range=">0" />
+ 			<param name="fromSearchFilter" regex="true" />
+ 			<param name="siteId" type="long" range=">=-2" />
+		</url>
+		
+		<url roles="ViewInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="showlist" />
+		<url roles="CreateInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="newagreement">
+			<param name="softwareId" type="long" range=">0" />
+			<param name="softwareManufacturer" type="long" range=">0" />
+		</url>
+		<url roles="ViewInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="printpreview">
+			<param name="agreementId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="showLicenseSearchWindow">
+			<param name="swManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="agreementId" type="long" range=">0" />
+			<param name="fromLAActionMenu" type="boolean" />
+		</url>
+		<!--service pack-->
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixListView.cc" remote_server="true" >
+			<param name="UNIQUE_ID" regex="HotfixListView" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixWorkstationListView.cc" remote_server="true">
+			<param name="UNIQUE_ID" regex="HotfixWorkstationListView" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/HfWsToInstallListView.cc" remote_server="true">
+			<param name="UNIQUE_ID" regex="HfWsToInstallListView" min-occurrences="1" />
+		</url>
+		
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixListView.do" operation-param="action" operation-value="view" remote_server="true" />
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixDetailView.do" operation-param="action" operation-value="view" remote_server="true">
+			<param name="criteria" type="long" range=">0" min-occurrences="1" />	
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixDetailView.do" operation-param="action" operation-value="edit" remote_server="true" >
+			<param name="criteria" type="long" range=">0" min-occurrences="1" />	
+		</url>
+		<!---->
+		<url roles="ViewInventoryWS" path="/FlexiListView.ls" operation-param="viewName" operation-value="ExportsoftwareList,Exportalllicenses,ExportsoftwareInstallations,Exportsoftwareusers,ExportsoftwareHistory" remote_server="true" >
+			<param name="operation" regex="exportlist" max-occurrences="2" min-occurrences="1" />
+	 		<param name="fileType" type="String" max-len="10" secret="true" min-occurrences="1" allow-empty="false" />
+ 		</url>
+
+ 		<url roles="ViewInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="viewagreement" >
+			<param name="agreementId" type="long"/>
+		</url>	
+
+		<url roles="ModifyInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="editagreement" >
+			<param name="agreementId" type="long"/>
+		</url>
+
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="get_unlicensed_sw_installations,search_user_or_workstation" >
+			<param name="serverSWProduct" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseOption" type="long" range=">0" min-occurrences="1" />
+			<param name="searchText" type="String" max-len="250" secret="true" />
+			<param name="swId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="site" type="long" range=">=-2" />
+			<param name="department" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="licenseID" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="compId" type="long" range=">0" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchLicenseTypes" >
+			<param name="licenseTypeId" type="long" range=">0" />
+			<param name="swManufacturer" type="long" range=">0" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS,ModifyPurchaseOrder" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchLicenseOption" >
+			<param name="licenseTypeId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="swManufacturer" type="long" range=">0" />
+		</url>
+
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="edit_software_license_type" >
+			<param name="licenseTypeId" type="long" range=">0" min-occurrences="1" />
+		</url>
+
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/SoftwareLicense.do"  operation-param="operation" operation-value="checkForDuplicateLicenseKey">
+			<param name="licenseKey" type="String" max-len="250"/>
+		</url>
+
+		<url roles="CreateInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="fetch_downgrade_licenses">
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="/software/upgradeddowngradeddetails.jsp" >
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+		</url>
+
+	 	<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="get_swtype_details" remote_server="true">
+			<param name="swtypeid" type="long" range=">0" min-occurrences="1" />
+		</url>	
+
+	 	<url roles="ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="getSoftwareComplianceProgress" remote_server="true" />
+
+	 	<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="get_associated_site_depts,get_associated_site_users" >
+			<param name="siteId" type="long" range=">=-2" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="get_installed_ws" remote_server="true">
+			<param name="productId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchManagedSoftwares" >
+			<param name="swManufacturer" type="long" range=">0" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="get_swcategory_details" >
+			<param name="swcategoryid" type="long" range=">0" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="fetchunderlicensedsites" >
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showUserDetails,showSoftwareDetails" remote_server="true" >
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showInstallationDetails" remote_server="true">
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="filterBy" regex="licensed|allinstallations|unlicensed" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showHistoryDetails" remote_server="true">
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="filterBy" regex="install|uninstall" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showSuiteSoftwares" remote_server="true">
+			<param name="softwareId" type="long" range=">0,-1" min-occurrences="1" max-occurrences="100" />
+			<param name="workstationId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="showSuiteInstallationAlone" type="boolean" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="showLicenseDetails" >
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="licenseTypeId" type="long" range=">-7" />
+			<param name="upgradedFromFilter" type="long" range=">0,-1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="agreementexpiryinfo,fetchsoftwarelist" >
+			<param name="swManufacturer" type="long" range=">0,-1" max-occurrences="500" min-occurrences="1" />
+		</url>
+
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="fetchsoftwarecount,fetchrarelyusedlicensecount,fetchlicensecount,getGraph" >
+			<param name="swManufacturer" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="graphName" type="String" max-len="50" allow-empty="false" />
+		</url>
+
+		<!-- URLs moved from assetaccess xml-->
+		<url roles="ModifyInventoryWS" path="/asset/WS_softwares.jsp">
+			<param name="id" type="long" range=">0"/>
+			<param name="externalframe" type="boolean" />
+		</url>
+
+	</urls>
+	<urls authentication="required" method="post" csrf="true" allowed_portals="it" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_post" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+		<param name="pageLength" type="long" range=">0" max-occurrences="2" allow-empty="false" />
+		<param name="loadingMsg" type="String" max-len="100" max-occurrences="2" allow-empty="false" />
+		<param name="rowcount" type="String" max-len="100" max-occurrences="2" allow-empty="false" />
+		
+		<url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="softwareusers">
+            <param name="operation" regex="removePersonalization"/>
+            <param name="viewId" type="long" range=">0"/>
+            <param name="userId" type="long" range=">0"/>
+        </url>
+		<url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="alllicenses">
+            <param name="operation" regex="removePersonalization"/>
+            <param name="viewId" type="long" range=">0"/>
+            <param name="userId" type="long" range=">0"/>
+        </url>
+        <url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="availableLicenses">
+            <param name="operation" regex="removePersonalization"/>
+            <param name="viewId" type="long" range=">0"/>
+            <param name="userId" type="long" range=">0"/>
+        </url>
+        <url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="softwareInstallations">
+            <param name="operation" regex="removePersonalization"/>
+            <param name="viewId" type="long" range=">0"/>
+            <param name="userId" type="long" range=">0"/>
+        </url>
+        <url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="softwareList">
+            <param name="operation" regex="removePersonalization"/>
+            <param name="viewId" type="long" range=">0"/>
+            <param name="userId" type="long" range=">0"/>
+        </url>
+
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="softwareTypeView,softwareCategoryView,licenseTypes,importswlicenses" />
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="licenseudf,agreementudf">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="UDF_add" dynamic-throttle="true" >
+				<throttle lock-period="30m" threshold="3" duration="1m"/>
+			</throttles>
+            <param name="XML" type="String" max-len="400000" description="XML data is added as a String" secret="true" min-occurrences="1"/>
+            <param name="TABLENAME" type="String" max-len="100" min-occurrences="1"/>
+        </url>
+		<!--software-->
+
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="calculatePendingList,runCompliance" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="1000" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SoftwareHome_calculatePendingList.runCompliance" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m" />
+			</throttles>
+		</url>
+		<url roles="DeleteInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="deleteSoftwares" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+		</url>
+		<url roles="DeleteInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="deletefromsuite" remote_server="true" >
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="suiteId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="addSuiteInstallation" remote_server="true">
+			<param name="wsId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="allocateLicenseToSite" >
+			<param name="alllicenses" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="addsoftwareinstallation" remote_server="true" >
+			<param name="workstationId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="DeleteInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="removeSoftwareLicenses" >
+			<param name="alllicenses" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="updateswmanufacturer" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="softwareManufacturerId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="changeSWType" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="swTypeId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="changeCategory" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="softwareCategoryId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="addtosuite" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="suiteId" type="long" range=">0" />
+			<param name="siteId" type="long" range=">=-2" />
+			<param name="createnewsuite" type="boolean" />
+		</url>
+		<url roles="CreateInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="saveSuiteScanSettings" remote_server="true">
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="suiteRuleId" type="long" range=">=-1" />
+			<param name="wsId" type="long" range=">0" max-occurrences="500" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="saveSoftwareDetails" remote_server="true" >
+		 	<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+		 	<param name="softwareCategoryId" type="long" range=">0" />
+		 	<param name="softwareTypeId" type="long" range=">0" />
+		 	<param name="softwareManufacturerId" type="long" range=">0" />
+			<param name="description" type="String" secret="true" max-len="3500" allow-empty="false" />
+			<param name="cost" type="double" range=">=0" allow-empty="false" />
+			<param name="images" type="long" max-occurrences="10"/>
+			<param name="selectedSiteId" type="long" range=">=-2" />
+			<param name="showAllocatedDetails" type="boolean" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="softwareReconcile" remote_server="true">
+			<param name="parentId" type="long" range=">0" max-occurrences="1" min-occurrences="1" />
+			<param name="childId" type="long" range=">0" max-occurrences="1" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="getLicenseUsageGraph,getSoftwareUsageGraph" remote_server="true">
+			<param name="manufacturer" type="long" range=">0,-1" />
+			<param name="site" type="long" range=">0,-1,-2"/>
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/SoftwareHome.do" operation-param="operation" operation-value="validateSoftwareReconcile" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="2" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="/AddSoftware.do" remote_server="true" >
+			<param name="swAdd" type="boolean" min-occurrences="1" />
+			<param name="suiteRuleId" type="long" range=">=-1" />
+			<param name="workstationIds" type="long" range=">0" max-occurrences="500" />
+			<param name="version" type="String" max-len="100" />
+			<param name="type" type="long" range=">0" min-occurrences="1" />
+			<param name="category" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="isSuiteSoftware" regex="on|off" />
+			<param name="softwareName" type="String" max-len="250" min-occurrences="1" allow-empty="false" />
+			<param name="desc" type="String" secret="true" max-len="3500" />
+			<param name="suitesoftwares" type="long" range=">0" max-occurrences="500" />
+			<param name="allsuitesoftware" type="long" range=">0" max-occurrences="500" />
+			<param name="images" type="long" max-occurrences="10"/>
+			<param name="files" regex="filename" max-len="100" secret="true" max-occurrences="100" />
+			<param name="default_sliderimage" regex="on" />
+			<param name="cost" type="double" range=">=0" />
+		</url>
+		<url roles="SDAdmin" path="/AddSoftwareInfo.do" operation-param="module" operation-value="addswcategory">
+			<param name="swcategoryid" type="long" range=">0" />
+			<param name="swcategory" type="String" max-len="50" min-occurrences="1" allow-empty="false" />
+			<param name="swcategorydescription" type="String" max-len="250" secret="true" />
+		</url>
+		<url roles="SDAdmin" path="/AddSoftwareInfo.do" operation-param="module" operation-value="updateswcategory">
+	 		<param name="swcategoryid" type="long" range=">0" min-occurrences="1" /> 
+	 		<param name="swcategory" type="String" max-len="50" min-occurrences="1" allow-empty="false" /> 
+	 		<param name="swcategorydescription" type="String" max-len="250" secret="true" />
+	 	</url>
+		<url roles="SDAdmin" path="/AddSoftwareInfo.do" operation-param="module" operation-value="delete_swcategory">
+			<param name="swcategoryid" type="long" range=">0" min-occurrences="1" />
+		</url>
+		
+		<url roles="SDAdmin" path="/AddSoftwareInfo.do" operation-param="module" operation-value="addswtype,updateswtype">
+			<param name="swtypeid" type="long" range=">0" />
+			<param name="swtype" type="String" max-len="50" min-occurrences="1" allow-empty="false" />
+			<param name="swtypedescription" type="String" max-len="250" secret="true" />
+			<param name="isCompliaceCalculate" type="boolean" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="/AddSoftwareInfo.do" operation-param="module" operation-value="delete_swtype">
+			<param name="swtypeid" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="/NotifySWUsers.do" operation-param="action" operation-value="send" remote_server="true">
+			<param name="swId" type="long" range=">0" min-occurrences="1" />
+			<param name="subject" type="String" secret="true" max-len="500" min-occurrences="1" allow-empty="false" />
+			<param name="to" type="String" secret="true" max-len="3500" min-occurrences="1" allow-empty="false" />
+			<param name="desc" type="String" secret="true" max-len="5000" min-occurrences="1" allow-empty="false" />
+			<param name="submit" regex="Send" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="change_as_managed_software" >
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="searchSoftware" remote_server="true">
+			<param name="item_name_[0-9]+" name-regex="true" type="String" max-len="250" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="calculateSoftwareCompliance" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" />
+			<param name="allsoftware" type="boolean" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="AJaxServlet_calculateSoftwareCompliance" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m" />
+			</throttles>
+	 	</url>
+	 	<url roles="ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="getSoftwareSiteCompliance" remote_server="true">
+			<param name="softwareId" type="long" range=">0" max-occurrences="500" />
+			<param name="allsoftware" type="boolean" min-occurrences="1" />
+			<param name="siteCount" type="long" range=">0,-1" min-occurrences="1" />
+	 	</url>
+		<url roles="CreateInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="add_sw_mfg" >
+			<param name="name" type="String" max-len="150" min-occurrences="1" allow-empty="false" />
+			<param name="swvendor" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="description" type="String" max-len="250" secret="true" />
+		</url>
+		<url roles="DeleteInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="deleteSwInstallation" remote_server="true">
+			<param name="swId" type="long" range=">0" min-occurrences="1" />
+			<param name="wsIds" type="String" max-len="3500" secret="true" regex="[0-9]+(,[0-9]+){0,299}" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="ViewInventoryWS" path="/FlexiListView.ls" operation-param="viewName" operation-value="softwareList,alllicenses,softwareInstallations,softwareusers,softwareHistory,workstationList,availableLicenses" remote_server="true">
+			<param name="operation" regex="fetchData|initiate" max-occurrences="2" min-occurrences="1" />
+ 			<param name="page" type="long" range=">0" />		
+		 	<param name="rp" type="long" range=">0" />		
+		 	<param name="viewId" type="long" range=">0" min-occurrences="1" />		
+ 			<param name="totalRecords" type="long" range=">0" />		
+ 			<param name="fromSoftwareHome" type="boolean" />		
+		 	<param name="site" type="long" range=">=-2" />		
+		 	<param name="searchText" type="String" max-len="5000" allow-empty="false" secret="true"/>
+		 	<param name="softwareManufacturer" type="long" range=">0,-1" />		
+		 	<param name="showZeroCount" type="boolean" />		
+		 	<param name="siteId" type="long" range=">=-2" />		
+		 	<param name="swComplianceType" type="long" range=">=-1" />		
+		 	<param name="customViewId" type="long" range=">0,-999" />		
+		 	<param name="navigationButtonClicked" type="boolean" />		
+		 	<param name="reloaded" type="boolean" />		
+		 	<param name="swType" type="long" range=">=0,-1,-2" />		
+		 	<param name="unusedlicenses" type="boolean" />		
+		 	<param name="fromRarelyUsedLink" type="boolean" />
+		 	<param name="([0-9]+-)*SC-[a-zA-z]+-[a-zA-z]+" name-regex="true" type="String" max-len="250" max-occurrences="500" />
+		 	<param name="[0-9]+-SC-SoftwareLicense_Fields-[a-zA-z]+_[a-zA-z]+[0-9]+" name-regex="true" type="String" max-len="250" max-occurrences="500" />
+		 	<param name="consoleFilter" type="String" max-len="100" allow-empty="false" />
+		 	<param name="dateFilter" regex="today|yesterday|this_week|last_week|this_month|last_month|current_quater|last_quater|this_year|last_year" />
+		 	<param name="fromDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}|NA" />
+		 	<param name="toDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}|NA" />
+		 	<param name="sortname" type="String" max-len="50" allow-empty="false" />
+		 	<param name="sortorder" regex="asc|desc" />
+		 	<param name="sortTriggered" type="boolean" />
+		 	<param name="onChangeOfPerPage" type="boolean" />
+		 	<param name="pageNavigation" type="boolean" />
+		 	<param name="purchaseOrderId" type="long" range=">0,-1" />
+		 	<param name="action" type="String" max-len="50" allow-empty="false" />
+		 	<param name="licenseTypeId" type="long" range=">-7" />
+		 	<param name="softwareId" type="long" range=">0" />
+		 	<param name="selectedSiteId" type="long" range=">=-2" />
+		 	<param name="upgradedFromFilter" type="long" range=">0,-1" />
+		 	<param name="filterBy" type="String" max-len="50" allow-empty="false" />
+		 	<param name="licenseFilter" type="String" max-len="50" allow-empty="false" />
+		 	<param name="otherLicenseTypes" type="String" max-len="50" />
+		 	<param name="licenseCategory" regex="upgrade|activeLicenses|expiredLicenses|suite|all|undefined" />
+		 	<param name="SoftwareList:SWMANUFACTURERID" type="long" range=">0" />
+		 	<param name="subModSelText" type="String" max-len="50" />
+		 	<param name="selectName" type="String" max-len="250" allow-empty="false" />
+		 	<param name="fromUserPage" type="boolean" />
+		 	<param name="suiteRuleId" type="long" range=">=-1" />
+		 	<param name="softwareName" type="String" max-len="250" allow-empty="false" />
+		 	<param name="swAdd" type="boolean" />
+		 	<param name="type" type="long" range=">0" />
+		 	<param name="category" type="long" range=">0" />
+		 	<param name="version" type="String" max-len="20" />
+		 	<param name="desc" type="String" max-len="250" secret="true" />
+			<param name="suitesoftwares" type="long" range=">0" max-occurrences="500" />
+			<param name="isSuiteSoftware" regex="on|off" />
+			<param name="files" type="String" max-len="1000" secret="true" max-occurrences="100" />
+			<param name="default_sliderimage" regex="on" />
+			<param name="cost" type="double" range=">=0" />
+			<param name="columnChanged" type="boolean" />
+			<param name="columnId" type="long" range=">0" />
+			<param name="columnAdded" type="boolean" />
+			<param name="showSuiteComponentInstallation" type="boolean" />
+			<param name="fetchDowngradedLicenses" type="boolean" />
+			<param name="workstationIds" type="long" range=">0" max-occurrences="500" />
+			<param name="attribute" regex="software" />
+			<param name="poCustomID" type="long" range=">0" />
+			<param name="columnName" type="String" max-len="200" allow-empty="false" />
+			<param name="columnPositionChanged" type="boolean" />
+			<param name="sortedColumnId" type="long" max-occurrences="500" />
+			<param name="isVisible_[0-9]+" name-regex="true" max-occurrences="500" type="boolean" />
+ 		</url>
+		<!--license-->
+		<url roles="CreateInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="parseCSVHeader" >
+			<file name="theFile" max-size="10240" allowed-extensions="csv" content-type-name="csv" allow-empty="false">
+				<filename regex="filename" max-len="1000" />
+			</file>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SoftwareLicense_parseCSVHeader" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m" />
+			</throttles>
+			<param name="forwardTo" type="String" max-len="20" />
+			<param name="chooseCSV" type="String" max-len="50" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="CreateInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="importSoftwareLicenses" >
+			<param name="csvfile" regex="filename" max-len="1000" secret="true" min-occurrences="1" />
+			<param name="COMPONENTID" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="SWMANUFACTURERID" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="LICENSETYPEID" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="LICENSEOPTIONID" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="VENDORID" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="INSTALLATIONSCOUNT" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="NOOFUSERS" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="LICENSEKEY" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="ACQUISITIONDATE" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="ACQUISITIONDATE_FORMAT" regex="yyyy-MM-dd|yyyy\/MM\/dd|yyyy\.MM\.dd|dd-MM-yyyy|dd\/MM\/yyyy|dd\.MM\.yyyy|MM-dd-yyyy|MM\/dd\/yyyy|MM\.dd\.yyyy" min-occurrences="1" />
+			<param name="EXPIRYDATE" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="COST" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="SITEID" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="DESCRIPTION" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="chooseCSV" type="String" max-len="20" min-occurrences="1" />
+			<param name="UDF_CHAR[0-9]+" name-regex="true" type="String" secret="true" max-len="100" max-occurrences="12" />
+			<param name="UDF_LONG[0-9]+" name-regex="true" type="String" secret="true" max-len="100" max-occurrences="4" />
+			<param name="UDF_COST[0-9]+" name-regex="true" type="String" secret="true" max-len="100" max-occurrences="4" />
+			<param name="UDF_DATE[0-9]+" name-regex="true" type="String" secret="true" max-len="100" max-occurrences="4" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="allocateCAL">
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="availableCAL" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseOption" type="long" range=">0" min-occurrences="1" />
+			<param name="allocateToWSList" regex="([0-9]+,){0,1}[0-9]+" max-len="500" max-occurrences="500" />
+		</url>
+		<url roles="CreateInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="addlicenseoption">
+			<param name="swmanufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseType" type="long" range=">0" min-occurrences="1" />
+			<param name="optionName" type="String" max-len="250" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="removeAllocatedLicence">
+			<param name="softwareId" type="long" range=">0" />
+			<param name="installationIds" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="softwareID" type="long" range=">0" />
+		</url>
+		<url roles="DeleteInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="delete">
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="autoAllocateLicense">
+			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="allocateOption" type="String" max-len="50" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="allocateLicense">
+			<param name="selectedSiteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+			<param name="wsId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="allocateOption" regex="available" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="add">
+			<param name="softwareID" type="long" range=">0" />
+			<param name="site" type="long" range=">=-2" />
+			<param name="licenseCategory" regex="standard|upgrade|downgrade|all" min-occurrences="1" />
+			<param name="trackby" regex="CAL|Processor|User|Workstation" min-occurrences="1" />
+			<param name="installationType" regex="Single|Multiple|Unlimited|OEM|NA" min-occurrences="1" />
+			<param name="isfreelicense" type="boolean" />
+			<param name="isnodelockedlicense" type="boolean" />
+			<param name="isfreesupport" type="boolean" />
+			<param name="isperpetual" type="boolean" />
+			<param name="iscompanylicense" type="boolean" />
+			<param name="licenseTypeName" type="String" max-len="110" min-occurrences="1" allow-empty="false" />
+			<param name="userAccessType" type="String" max-len="100" secret="true" />
+			<param name="existingLicenseKey" secret="true" type="String" max-len="500" />
+			<param name="prevLicenseTypeID" type="long" range=">0" min-occurrences="1" />
+			<param name="prevLicenseType" type="String" max-len="110" />
+			<param name="installedIn" type="long" range=">=0" min-occurrences="1" />
+			<param name="fromSWDetailsPage" type="boolean" />
+			<param name="softwareId" type="long" range=">0" />
+			<param name="softwareManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareManufacturer_old" type="String" max-len="150" allow-empty="false" />
+			<param name="componentID" type="long" range=">0" min-occurrences="1" allow-empty="false" />
+			<param name="licenseType" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedOptionValue" type="long" range=">0,-1" />
+			<param name="licenseOption" type="long" range=">0" />
+			<param name="calLicenseCoun" type="long" range=">0" />
+			<param name="processorCount" type="long" range=">0" />
+			<param name="associatedServer" type="long" range=">0,-1" />
+			<param name="licenseCount" type="long" range=">0" />
+			<param name="installationCount" type="long" range=">0" />
+			<param name="noOfUsersAllowed" type="long" range=">0" />
+			<param name="allocateToWorkstation" type="long" range=">0,-1" />
+			<param name="allocateToUser" type="long" range=">0" max-occurrences="500" />
+			<param name="hostID" type="String" secret="true" max-len="100" />
+			<param name="OSName" type="String" max-len="100" />
+			<param name="licenseKey" secret="true" type="String" max-len="250" />
+			<param name="vendorID" type="long" range=">=0" min-occurrences="1" />
+			<param name="purchaseDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="expiryDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="purchaseCost" type="double" range=">=0" min-occurrences="1" />
+			<param name="totalCost" type="double" range=">=0" />
+			<param name="departmentName" type="long" range=">0,-1" />
+			<param name="description" type="String" max-len="250" secret="true" min-occurrences="1" allow-empty="false" />
+			<param name="UDF_CHAR[0-9]+" name-regex="true" secret="true" type="String" max-len="3500" max-occurrences="12" />
+			<param name="UDF_COST[0-9]+" name-regex="true" secret="true" type="double" max-occurrences="4" />
+			<param name="UDF_LONG[0-9]+" name-regex="true" secret="true" type="long" max-occurrences="4" />
+			<param name="UDF_DATE[0-9]+" name-regex="true" secret="true" type="String" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" max-occurrences="4" />
+			<param name="clientSWName" type="long" range=">0,-1" />
+			<param name="department" type="long" range=">0,-1" />
+			<param name="searchBox" type="String" max-len="250" />
+			<param name="rowIds" type="long" range=">0" max-occurrences="500" />
+			<param name="licenseId_[0-9]+" type="long" range=">0,-1" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="software_[0-9]+" type="long" range=">0,-1" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="licenseKey_[0-9]+" secret="true" type="String" max-len="500" name-regex="true" max-occurrences="500" />
+			<param name="addSoftware" regex="Save" min-occurrences="1" />
+			<param name="calLicenseCount" type="long" range=">0" />
+			<param name="licenseName" type="String" max-len="200" allow-empty="false" />
+			<param name="softwareName" type="String" max-len="250" allow-empty="false" />
+			<param name="unlicensedWSList" type="String" max-len="100" max-occurrences="500" allow-empty="false" />
+			<param name="allocateToWSList" regex="([0-9]+,){0,1}[0-9]+" max-len="500" max-occurrences="500" />
+			<param name="disabledSite" type="long" range=">0,-1" />
+			<param name="dLicenseType" type="long" range=">0" />
+			<param name="licenseUsageStatus" type="boolean" />
+			<param name="allUserList" type="String" max-len="3500" secret="true" max-occurrences="1000" allow-empty="false" />
+			<param name="licensedSoftware" type="long" range=">0" />
+			<param name="alreadyPurchasedLicenseKey" secret="true" type="String" max-len="500" allow-empty="false" />
+			<param name="alreadyPurchasedLicense" type="long" range=">0" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/SoftwareLicense.do" operation-param="operation" operation-value="update">
+			<param name="softwareID" type="long" range=">0" />
+			<param name="site" type="long" range=">=-2" />
+			<param name="licenseCategory" regex="standard|upgrade|downgrade|all" min-occurrences="1" />
+			<param name="trackby" regex="CAL|Processor|User|Workstation" min-occurrences="1" />
+			<param name="installationType" regex="Single|Multiple|Unlimited|OEM|NA" min-occurrences="1" />
+			<param name="isfreelicense" type="boolean" />
+			<param name="isnodelockedlicense" type="boolean" />
+			<param name="isfreesupport" type="boolean" />
+			<param name="isperpetual" type="boolean" />
+			<param name="iscompanylicense" type="boolean" />
+			<param name="licenseTypeName" type="String" max-len="110" min-occurrences="1" allow-empty="false" />
+			<param name="userAccessType" type="String" max-len="100" secret="true" />
+			<param name="existingLicenseKey" secret="true" type="String" max-len="500" />
+			<param name="prevLicenseTypeID" type="long" range=">0" min-occurrences="1" />
+			<param name="prevLicenseType" type="String" max-len="110" />
+			<param name="installedIn" type="long" range=">=0" min-occurrences="1" />
+			<param name="fromSWDetailsPage" type="boolean" />
+			<param name="softwareId" type="long" range=">0" />
+			<param name="softwareManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareManufacturer_old" type="String" max-len="150" allow-empty="false" />
+			<param name="componentID" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseType" type="long" range=">0" min-occurrences="1" />
+			<param name="selectedOptionValue" type="long" range=">0,-1" />
+			<param name="licenseOption" type="long" range=">0" />
+			<param name="calLicenseCoun" type="long" range=">0" />
+			<param name="processorCount" type="long" range=">0" />
+			<param name="associatedServer" type="long" range=">0,-1" />
+			<param name="licenseCount" type="long" range=">0" />
+			<param name="installationCount" type="long" range=">0" />
+			<param name="noOfUsersAllowed" type="long" range=">0" />
+			<param name="allocateToWorkstation" type="long" range=">0,-1" />
+			<param name="allocateToUser" type="long" range=">0" max-occurrences="500" />
+			<param name="hostID" type="String" secret="true" max-len="100" />
+			<param name="OSName" type="String" max-len="100" />
+			<param name="licenseKey" secret="true" type="String" max-len="500" />
+			<param name="vendorID" type="long" range=">=0" />
+			<param name="purchaseDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="expiryDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="purchaseCost" type="double" range=">=0" min-occurrences="1" />
+			<param name="totalCost" type="double" range=">=0" />
+			<param name="departmentName" type="long" range=">0,-1" />
+			<param name="description" type="String" max-len="250" secret="true" />
+			<param name="UDF_CHAR[0-9]+" name-regex="true" secret="true" type="String" max-len="3500" max-occurrences="12" />
+			<param name="UDF_LONG[0-9]+" name-regex="true" secret="true" type="long" max-occurrences="4" />
+			<param name="UDF_DATE[0-9]+" name-regex="true" secret="true" type="String" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" max-occurrences="4" />
+			<param name="UDF_COST[0-9]+" name-regex="true" secret="true" type="double" max-occurrences="4" />
+			<param name="clientSWName" type="long" range=">0,-1" />
+			<param name="department" type="long" range=">0,-1" />
+			<param name="searchBox" type="String" max-len="250" />
+			<param name="rowIds" type="long" range=">0" max-occurrences="500" />
+			<param name="licenseId_[0-9]+" type="long" range=">0,-1" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="software_[0-9]+" type="long" range=">0,-1" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="licenseKey_[0-9]+" secret="true" type="String" max-len="500" name-regex="true" max-occurrences="500" />
+			<param name="addSoftware" regex="Save" min-occurrences="1" />
+			<param name="calLicenseCount" type="long" range=">0" />
+			<param name="licenseID" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseName" type="String" max-len="200" allow-empty="false" />
+			<param name="softwareName" type="String" max-len="250" allow-empty="false" />
+			<param name="licenseType_old" type="String" max-len="110" />	
+			<param name="unlicensedWSList" type="String" max-len="100" max-occurrences="500" allow-empty="false" />
+			<param name="allocateToWSList" regex="([0-9]+,){0,1}[0-9]+" max-len="500" max-occurrences="500" />
+			<param name="disabledSite" type="long" range=">0,-1" />
+			<param name="dLicenseType" type="long" range=">0" />
+			<param name="licenseUsageStatus" type="boolean" />
+			<param name="site_old" type="String" max-len="250" />
+			<param name="allUserList" type="String" max-len="1000" secret="true" max-occurrences="1000" allow-empty="false" />
+			<param name="licenseOption_old" type="String" max-len="250" />
+			<param name="vendorID_old" type="String" max-len="250" />
+			<param name="allocateToWorkstation_old" type="String" max-len="250" />
+			<param name="isNodeLockedAllocated" type="boolean" />
+		</url>
+		<url roles="DeleteInventoryWS" path="/SoftwareLicenseListView.do" operation-param="action" operation-value="delete">
+			<param name="checkbox" type="long" range=">0" max-occurrences="300" min-occurrences="1" />
+		</url>
+		<url roles="ModifyInventoryWS" path="/AllocateSoftwareLicense.do" operation-param="action" operation-value="allocateLicense">
+			<param name="allocateLicense" type="boolean" />
+			<param name="softwareId" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">=-2" min-occurrences="1" />
+			<param name="allocateOption" regex="available" min-occurrences="1" />
+			<param name="licenseId" type="long" range=">0" min-occurrences="1" />
+			<param name="wsId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+		</url>		
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="delete_license_types" >
+			<param name="licenseTypeId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="add_software_license_type" >
+			<param name="licenseTypeId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="swManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="mode" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="licenseType" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="swComplianceType" type="long" range=">=-1" />
+			<param name="swInstallationType" type="long" range=">0" min-occurrences="1" />
+			<param name="userAccessType" type="long" range=">0" />
+			<param name="isPerpetual" type="boolean" />
+			<param name="isFree" type="boolean" />
+			<param name="isNodeLocked" type="boolean" />
+			<param name="swLicenseOption" type="String" max-len="100" max-occurrences="10" min-occurrences="1" allow-empty="false" />
+		</url>
+		<!--agreement-->
+
+		<url roles="ModifyInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="updateagreement" >
+			<param name="agreementId" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareManufacturer_old" type="String" max-len="150" min-occurrences="1" allow-empty="false" />
+			<param name="purchaseDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" min-occurrences="1" />
+			<param name="agreementNumber" type="String" max-len="50" min-occurrences="1" allow-empty="false" />
+			<param name="expiryDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="authorizationNumber" type="String" max-len="50" />
+			<param name="vendorID" type="long" range=">=0" min-occurrences="1" />
+			<param name="description" type="String" max-len="250" secret="true" />
+			<param name="terms" type="String" max-len="3500" secret="true" />
+			<param name="UDF_CHAR+[0-9]+" name-regex="true" secret="true" type="String" max-len="3500" max-occurrences="12" />
+			<param name="UDF_LONG+[0-9]+" name-regex="true" secret="true" type="long" max-occurrences="4" />
+			<param name="UDF_DATE+[0-9]+" name-regex="true" secret="true" type="String" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}|-" max-occurrences="4" />
+			<param name="UDF_COST+[0-9]+" name-regex="true" secret="true" type="double" max-occurrences="4" />
+			<param name="poNumber" type="String" secret="true" max-len="50" />
+			<param name="invoiceNumber" type="String" max-len="50" />
+			<param name="poName" type="String" max-len="100" />
+			<param name="invoiceDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="poDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="totalAmount" type="double" range=">=0" min-occurrences="1" />
+			<param name="poDesc" type="String" max-len="250" secret="true" />
+			<param name="searchedLicenseId" type="long" range=">0" max-occurrences="500" allow-empty="false" />
+			<param name="notifyBefore" type="long" range=">0" />
+			<param name="notifyUsersList" type="long" range=">0" max-occurrences="500" />
+			<param name="fromList" type="long" range=">0" max-occurrences="500" />
+		</url>
+		<url roles="CreateInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="addagreement" >
+			<param name="softwareManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="softwareManufacturer_old" type="String" max-len="150" allow-empty="false" />
+			<param name="purchaseDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" min-occurrences="1" />
+			<param name="agreementNumber" type="String" max-len="50" min-occurrences="1" allow-empty="false" />
+			<param name="expiryDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="authorizationNumber" type="String" max-len="50" />
+			<param name="vendorID" type="long" range=">=0" min-occurrences="1" />
+			<param name="description" type="String" max-len="250" secret="true" />
+			<param name="terms" type="String" max-len="3500" secret="true" />
+			<param name="UDF_CHAR[0-9]+" name-regex="true" secret="true" type="String" max-len="3500" max-occurrences="12" />
+			<param name="UDF_DATE[0-9]+" name-regex="true" secret="true" type="String" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" max-occurrences="4" />
+			<param name="UDF_COST[0-9]+" name-regex="true" secret="true" type="double" max-occurrences="4" />
+			<param name="UDF_LONG[0-9]+" name-regex="true" secret="true" type="long" max-occurrences="4" />
+			<param name="poNumber" type="String" secret="true" max-len="50" />
+			<param name="invoiceNumber" type="String" max-len="50" />
+			<param name="poName" type="String" max-len="100" />
+			<param name="invoiceDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="poDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" />
+			<param name="totalAmount" type="double" range=">=0" min-occurrences="1" />
+			<param name="poDesc" type="String" max-len="250" secret="true" />
+			<param name="searchedLicenseId" type="long" range=">0" max-occurrences="500" />
+			<param name="notifyBefore" type="long" range=">0" />
+			<param name="notifyUsersList" type="long" range=">0" max-occurrences="500" />
+		</url>	
+		<url roles="CreateInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="createlicenses" >
+			<param name="rowIds" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="licenseId_[0-9]+" type="long" range=">0,-1" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="software_[0-9]+" type="long" range=">0" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="licenseType_[0-9]+" type="long" range=">0" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="licenseOption_[0-9]+" type="long" range=">0" name-regex="true" max-occurrences="500" min-occurrences="1" />
+			<param name="licenseCount_[0-9]+" type="String" max-len="20" name-regex="true" regex="[0-9]{1,20}|Unlimited" max-occurrences="500" min-occurrences="1" allow-empty="false" />
+			<param name="licenseKey_[0-9]+" secret="true" type="String" max-len="500" name-regex="true" max-occurrences="500" />
+			<param name="licenseCost_[0-9]+" type="double" range=">=0" name-regex="true" max-occurrences="500" min-occurrences="1" />
+		</url>		
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="addtoagreement" >
+			<param name="swManufacturer" type="long" range=">0" min-occurrences="1" />
+			<param name="agreementId" type="long" range=">0" min-occurrences="1" />
+			<param name="licenseIds" regex="[0-9]+(,[0-9]+){0,299}" max-len="3500" min-occurrences="1" allow-empty="false" />
+		</url>	
+		<url roles="DeleteInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="deleteLA" >
+			<param name="agreementId" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+		</url>
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="fetchsoftwarelicenses" >
+			<param name="addedlicenses" regex="[0-9]+(,[0-9]+){0,299}" max-len="3500" min-occurrences="1" allow-empty="false" />
+		</url>
+		<url roles="CreateInventoryWS" path="/LicenseAgreement.do" operation-param="operation" operation-value="refreshlicenselist" >
+			<param name="softwareManufacturer" type="long" range=">0" min-occurrences="1" /> 	
+		</url>
+
+		<!--service pack-->
+		<url roles="DeleteInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixListView.do" operation-param="action" operation-value="delete" remote_server="true">
+			<param name="Hotfix" type="String" max-len="100" />
+			<param name="checkbox" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="deleteHotfix" regex="yes|no" />
+			<param name="checkbox23" regex="on" />
+		</url>
+		<url roles="DeleteInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixDetailView.do" operation-param="action" operation-value="deleteSpInWs" remote_server="true">
+			<param name="criteria" type="long" range=">0" min-occurrences="1" />
+			<param name="Workstation" type="String" max-len="250" />
+			<param name="FullName" type="String" max-len="150" />
+			<param name="checkbox" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+			<param name="checkbox23" regex="on" />
+		</url>
+		<url roles="ModifyInventoryWS" path="(/STATE_ID/[0-9]+)?/HotfixDetailView.do" operation-param="action" operation-value="changeSwType,saveEdit" remote_server="true">
+			<param name="hotfixName" type="String" max-len="100" min-occurrences="1" allow-empty="false" />
+			<param name="hotfixId" type="long" range=">0" min-occurrences="1" />
+			<param name="hotfixType" type="long" range=">=0" min-occurrences="1" />
+			<param name="hotfixDesc" type="String" max-len="250" secret="true" />
+			<param name="swList" type="long" range=">0" max-occurrences="500" />
+			<param name="swTypeId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="save" regex="Save" />
+		</url>
+	</urls>
+	
+</security>
+<!-- $Id$ -->

@@ -1,0 +1,485 @@
+{
+    "Additional Elements": [],
+    "lastModified": 1543580927000,
+    "operations": [
+        {
+            "isReleased": "true",
+            "input": {
+                "name": "INPUT_DATA",
+                "showattr": "true",
+                "sample": "{\"list_info\":{\"row_count\":2,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+            },
+            "excludedAttributes": [],
+            "desc": "",
+            "name": "",
+            "path": "/api/v3/users",
+            "disp_desc": "Get all users",
+            "defaultAttributes": [],
+            "method": "GET",
+            "inOP": "true",
+            "output": {"sample": "{\"users\":[{\"phone\":\"1234455\",\"department\":null,\"is_technician\":true,\"reporting_to\":null,\"id\":\"4\",\"profile_pic\":null,\"first_name\":null,\"requester_allowed_to_view\":null,\"jobtitle\":\"\",\"sms_mail_id\":null,\"description\":\"\",\"name\":\"administrator\",\"domain\":null,\"employee_id\":\"009\",\"email_id\":null,\"baseelement_fields\":{\"udf_pickref_1\":null},\"is_vipuser\":false,\"citype_name\":\"User\",\"status\":\"ACTIVE\",\"middle_name\":null,\"cost_per_hour\":\"0.00\",\"service_request_approver\":null,\"people_fields\":{},\"ciid\":\"18\",\"purchase_approval_limit\":\"-1.00\",\"login_name\":\"administrator\",\"project_roles\":{\"id\":\"1\",\"name\":\"Project Admin\"},\"last_name\":null,\"created_time\":{\"display_value\":\"Nov 13, 2018 10:15 AM\",\"value\":\"1542084336796\"},\"mobile\":\"1234567890\",\"purchase_approver\":true},{\"phone\":\"8888\",\"department\":null,\"is_technician\":false,\"reporting_to\":null,\"id\":\"3\",\"profile_pic\":null,\"first_name\":null,\"requester_allowed_to_view\":null,\"jobtitle\":\"\",\"sms_mail_id\":null,\"description\":\"End User of the software product\",\"name\":\"Guest\",\"domain\":null,\"employee_id\":\"888\",\"email_id\":null,\"baseelement_fields\":{\"udf_pickref_1\":null},\"is_vipuser\":false,\"citype_name\":\"User\",\"status\":\"ACTIVE\",\"middle_name\":null,\"cost_per_hour\":\"0.00\",\"service_request_approver\":null,\"people_fields\":{},\"ciid\":\"17\",\"purchase_approval_limit\":null,\"login_name\":\"guest\",\"project_roles\":null,\"last_name\":null,\"created_time\":{\"display_value\":\"Nov 13, 2018 10:15 AM\",\"value\":\"1542084336796\"},\"mobile\":\"1234567890\",\"purchase_approver\":null}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":true,\"start_index\":1,\"row_count\":2,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"},
+            "workflow": ""
+        },
+        {
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "",
+            "name": "",
+            "disp_desc": "Get an user",
+            "path": "/api/v3/users/{user_id}",
+            "defaultAttributes": [],
+            "method": "GET",
+            "inOP": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"user\":{\"user_udf_fields\":{\"udf_sline_1\":\"User udf value1\"},\"phone\":\"213129387\",\"department\":{\"site\":null,\"id\":\"2\",\"name\":\"Engineering\"},\"is_technician\":true,\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"id\":\"301\",\"profile_pic\":null,\"first_name\":\"User\",\"requester_allowed_to_view\":4,\"jobtitle\":\"Developer\",\"sms_mail_id\":\"user1@zylker.com\",\"description\":\"-desc\",\"name\":\"abc\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"attachments\":[{\"id\":\"1\",\"file_name\":\"scat-ico-cubes.gif\",\"attachment_key\":\"14A4C55F-E51B-4B54-829A-5247CD719A7B\",\"content_url\":\"/api/v3/attachments/1\",\"size\":\"2.82KB\"},{\"id\":\"2\",\"file_name\":\"scat-ico-filecheck.gif\",\"attachment_key\":\"5F5BD28C-C886-49FD-BADE-BC72303CAF11\",\"content_url\":\"/api/v3/attachments/2\",\"size\":\"2.86KB\"}],\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"baseelement_fields\":{\"udf_pickref_1\":{\"id\":2,\"name\":\"Medium\"}},\"is_vipuser\":true,\"citype_name\":\"Technician\",\"status\":\"ACTIVE\",\"middle_name\":\"middle\",\"cost_per_hour\":\"2342.00\",\"service_request_approver\":true,\"people_fields\":{\"udf_sline_303\":\"SL value1\"},\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"ciid\":\"301\",\"purchase_approval_limit\":\"-1.00\",\"login_name\":\"u1\",\"project_roles\":{\"id\":\"3\",\"name\":\"Project Manager\"},\"last_name\":\"last\",\"created_time\":{\"display_value\":\"Nov 13, 2018 03:59 PM\",\"value\":\"1542104957538\"},\"associated_roles\":[{\"id\":\"69\",\"name\":\"ViewRequester\"},{\"id\":\"33\",\"name\":\"ViewRequestsNotInAnySite\"},{\"id\":\"35\",\"name\":\"Resources not in any site\"},{\"id\":\"3\",\"name\":\"SDAdmin\"},{\"id\":\"29\",\"name\":\"SDGuest\"}],\"mobile\":\"934578345\",\"purchase_approver\":true}}"},
+            "workflow": ""
+        },
+        {
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "input": {
+                "name": "INPUT_DATA",
+                "showattr": "true",
+                "sample": "{\"user\":{\"first_name\":\"Test\",\"middle_name\":\"user\",\"last_name\":\"name\",\"name\":\"Test user name\",\"is_vipuser\":true,\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"mobile\":\"934578345\",\"phone\":\"213129387\",\"sms_mail_id\":\"abcde@zylker.com\",\"jobtitle\":\"Developer\",\"department\":{\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\"},\"is_technician\":true,\"cost_per_hour\":\"2342.00\",\"project_roles\":{\"id\":\"3\"},\"user_udf_fields\":{\"udf_sline_1\":\"User udf value1\"},\"baseelement_fields\":{\"udf_pickref_1\":{\"id\":2,\"name\":\"Medium\"},\"udf_pickref_606\":{\"id\":4,\"name\":\"Finance\"},\"udf_sline_603\":\"SL3_value1\",\"udf_sline_604\":\"SL_Value\"},\"people_fields\":{\"udf_sline_303\":\"SL value1\",\"udf_sline_605\":\"User_SL2_value\"},\"login_name\":\"u3\",\"password\":\"u2\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"description\":\"description\"}}"
+            },
+            "desc": "",
+            "name": "",
+            "disp_desc": "Add an user",
+            "path": "/api/v3/users",
+            "defaultAttributes": [],
+            "method": "POST",
+            "inOP": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"user\":{\"user_udf_fields\":{\"udf_sline_1\":\"User udf value1\"},\"phone\":\"213129387\",\"department\":{\"site\":null,\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"id\":\"607\",\"profile_pic\":null,\"first_name\":\"Test\",\"requester_allowed_to_view\":null,\"jobtitle\":\"Developer\",\"sms_mail_id\":\"abcde@zylker.com\",\"description\":\"description\",\"name\":\"Test user name\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"baseelement_fields\":{\"udf_pickref_1\":{\"id\":2,\"name\":\"Medium\"},\"udf_pickref_606\":{\"site\":null,\"id\":4,\"name\":\"Finance\"},\"udf_sline_603\":\"SL3_value1\",\"udf_sline_604\":\"SL_Value\"},\"is_vipuser\":true,\"status\":\"ACTIVE\",\"middle_name\":\"user\",\"cost_per_hour\":\"2342.00\",\"service_request_approver\":null,\"people_fields\":{\"udf_sline_303\":\"SL value1\",\"udf_sline_605\":\"User_SL2_value\"},\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"ciid\":\"607\",\"purchase_approval_limit\":null,\"login_name\":\"u3\",\"project_roles\":{\"id\":\"3\",\"name\":\"Project Manager\"},\"last_name\":\"name\",\"created_time\":{\"display_value\":\"Nov 14, 2018 11:52 AM\",\"value\":\"1542176549186\"},\"associated_roles\":[{\"id\":\"29\",\"name\":\"SDGuest\"}],\"is_org_admin\":null,\"mobile\":\"934578345\",\"purchase_approver\":null}}"},
+            "workflow": ""
+        },
+        {
+            "isReleased": "true",
+            "input": {
+                "name": "INPUT_DATA",
+                "showattr": "true",
+                "sample": "{\"user\":{\"first_name\":\"Test\",\"middle_name\":\"user\",\"last_name\":\"name\",\"name\":\"Test user name\",\"is_vipuser\":true,\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"mobile\":\"934578345\",\"phone\":\"213129387\",\"sms_mail_id\":\"abcde@zylker.com\",\"jobtitle\":\"Developer\",\"department\":{\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\"},\"cost_per_hour\":\"232.00\",\"project_roles\":{\"id\":\"3\"},\"user_udf_fields\":{\"udf_sline_1\":\"User udf value3\"},\"baseelement_fields\":{\"udf_pickref_1\":{\"id\":2,\"name\":\"Medium\"},\"udf_pickref_606\":{\"id\":4,\"name\":\"Finance\"},\"udf_sline_603\":\"SL3_value1\",\"udf_sline_604\":\"SL_Value1\"},\"people_fields\":{\"udf_sline_303\":\"SL value1\",\"udf_sline_605\":\"User_SL2_value2\"},\"login_name\":\"u3\",\"password\":\"u3\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"description\":\"description\"}}"
+            },
+            "excludedAttributes": [],
+            "desc": "",
+            "name": "",
+            "path": "/api/v3/users/{user_id}",
+            "disp_desc": "Update an user",
+            "defaultAttributes": [],
+            "method": "PUT",
+            "inOP": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"user\":{\"user_udf_fields\":{\"udf_sline_1\":\"User udf value3\"},\"phone\":\"213129387\",\"department\":{\"site\":null,\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"id\":\"607\",\"profile_pic\":null,\"first_name\":\"Test\",\"requester_allowed_to_view\":null,\"jobtitle\":\"Developer\",\"sms_mail_id\":\"abcde@zylker.com\",\"description\":\"description\",\"name\":\"Test user name\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"baseelement_fields\":{\"udf_pickref_1\":{\"id\":2,\"name\":\"Medium\"},\"udf_pickref_606\":{\"site\":null,\"id\":4,\"name\":\"Finance\"},\"udf_sline_603\":\"SL3_value1\",\"udf_sline_604\":\"SL_Value1\"},\"is_vipuser\":true,\"status\":\"ACTIVE\",\"middle_name\":\"user\",\"cost_per_hour\":\"232.00\",\"service_request_approver\":null,\"people_fields\":{\"udf_sline_303\":\"SL value1\",\"udf_sline_605\":\"User_SL2_value2\"},\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"ciid\":\"607\",\"purchase_approval_limit\":null,\"login_name\":\"u3\",\"project_roles\":{\"id\":\"3\",\"name\":\"Project Manager\"},\"last_name\":\"name\",\"created_time\":{\"display_value\":\"Nov 14, 2018 11:52 AM\",\"value\":\"1542176549186\"},\"associated_roles\":[{\"id\":\"29\",\"name\":\"SDGuest\"}],\"is_org_admin\":null,\"mobile\":\"934578345\",\"purchase_approver\":null}}"},
+            "workflow": ""
+        },
+        {
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "",
+            "name": "",
+            "disp_desc": "Delete an user",
+            "path": ["/api/v3/users/{user_id}"],
+            "defaultAttributes": [],
+            "method": "DELETE",
+            "inOP": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "workflow": ""
+        },
+        {
+            "isReleased": "true",
+            "input": {
+                "name": "INPUT_DATA",
+                "showattr": "true",
+                "sample": "{\"technician\":{\"first_name\":\"testing\",\"middle_name\":\"12\",\"last_name\":\"34\",\"name\":\"testing 12 34\",\"is_vipuser\":\"true\",\"employee_id\":\"2333\",\"description\":\"test\",\"department\":{\"id\":\"1\"},\"phone\":\"2323232\",\"sms_mail_id\":\"aaa12@zylker.com\",\"jobtitle\":\"Java Developer\",\"email_id\":\"user.r@zylker.com\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"mobile\":\"1234567890\",\"cost_per_hour\":\"0.00\",\"allowed_to_view_cost\":\"false\",\"service_request_approver\":\"false\",\"purchase_approver\":\"false\",\"associated_sites\":[],\"support_group\":[],\"project_roles\":null,\"reporting_to\":{\"id\":\"4\"},\"login_name\":\"test\",\"associated_roles\":[{\"id\":\"29\"}],\"user_udf_fields\":{\"udf_date_100000005\":{\"value\":\"1540448040000\"},\"udf_long_100000004\":\"23\",\"udf_mline_100000002\":\"Multi Line\",\"udf_pick_100000003\":\"1\",\"udf_sline_100000001\":\"default\"},\"baseelement_fields\":{\"udf_pickref_100000001\":null}}}"
+            },
+            "excludedAttributes": [],
+            "desc": "",
+            "name": "",
+            "path": "/api/v3/users/{user_id}/change_as_technician",
+            "disp_desc": "Change as technician",
+            "defaultAttributes": [],
+            "method": "PUT",
+            "inOP": "true",
+            "output": {"sample": "{\"technician\":{\"is_online\":null,\"phone\":\"2323232\",\"department\":{\"site\":null,\"id\":\"1\",\"name\":\"Administration\"},\"support_group\":[],\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"associated_sites\":[{\"id\":\"-1\",\"name\":\"Not associated to any site\"},{\"id\":\"-1\",\"name\":\"Not associated to any site\"}],\"id\":\"311\",\"profile_pic\":null,\"jobtitle\":\"Java Developer\",\"requester_allowed_to_view\":null,\"first_name\":\"testing\",\"sms_mail_id\":\"aaa12@zylker.com\",\"description\":\"test\",\"name\":\"testing 12 34\",\"domain\":null,\"sduser_id\":\"311\",\"email_id\":\"user.r@zylker.com\",\"employee_id\":\"2333\",\"baseelement_fields\":{\"udf_pickref_1\":null},\"is_vipuser\":true,\"portaluser_id\":\"310\",\"account_id\":\"311\",\"status\":\"ACTIVE\",\"middle_name\":\"12\",\"allowed_to_view_cost\":false,\"service_request_approver\":null,\"cost_per_hour\":\"0.00\",\"people_fields\":{},\"is_in_ad\":null,\"enable_telephony\":false,\"extension\":null,\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"ciid\":\"311\",\"aaaaccpass_id\":\"311\",\"purchase_approval_limit\":\"-1.00\",\"login_name\":\"test\",\"project_roles\":null,\"last_name\":\"34\",\"sip_user\":null,\"aaauser_id\":\"311\",\"created_time\":{\"display_value\":\"Nov 13, 2018 02:47 PM\",\"value\":\"1542100622983\"},\"associated_roles\":[{\"id\":\"69\",\"name\":\"ViewRequester\"},{\"id\":\"33\",\"name\":\"ViewRequestsNotInAnySite\"},{\"id\":\"35\",\"name\":\"Resources not in any site\"},{\"id\":\"29\",\"name\":\"SDGuest\"}],\"is_org_admin\":null,\"mobile\":\"1234567890\",\"purchase_approver\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "workflow": ""
+        },
+        {
+            "isReleased": "true",
+            "input": {
+                "name": "INPUT_DATA",
+                "showattr": "true",
+                "sample": "{\"user\":{\"citype_id\":64}}"
+            },
+            "excludedAttributes": [],
+            "desc": "",
+            "name": "",
+            "path": "/api/v3/users/_modify_ci_type?ids={user_ids}",
+            "disp_desc": "Modify CIType of the user",
+            "defaultAttributes": [],
+            "method": "PUT",
+            "inOP": "true",
+            "output": {"sample": "{\"modify_ci_type\":{\"response\":\"success\"}}"},
+            "workflow": ""
+        }
+    ],
+    "attributes": [
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Unique user identity",
+            "name": "id",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "long"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "First name of the user",
+            "name": "first_name",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Middle name of the user",
+            "name": "middle_name",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Last name of the user",
+            "name": "last_name",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Name of the user",
+            "name": "name",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "CI Id of the user",
+            "name": "ciid",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "long"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Unique employee id assigned to the user",
+            "name": "employee_id",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Email address of the user",
+            "name": "email_id",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Secondary email addresses of the user",
+            "name": "secondary_emailids",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Array of Objects"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Phone number of the user",
+            "name": "phone",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Mobile number of the user",
+            "name": "mobile",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Sms mail Id of the user",
+            "name": "sms_mail_id",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Job title of the user",
+            "name": "jobtitle",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Default fields for the base CI Type",
+            "name": "ci_default_fields",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Object"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Default fields for the User CI Type",
+            "name": "ci_user_fields",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Object"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "User - Additional fields of the particular user",
+            "name": "user_udf_fields",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Object"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "relEntity": {
+                "name": "Department",
+                "relation": "1to1",
+                "type": "referential"
+            },
+            "desc": "Department to which the user belongs",
+            "name": "department",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Object"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "User's pay in cost per hour",
+            "name": "cost_per_hour",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Number"
+        },
+        {
+            "relEntity": {
+                "name": "user_V3",
+                "relation": "1to1",
+                "type": "referential"
+            },
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Reporting user",
+            "name": "reporting_to",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Object"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Username/Email to log in to the application",
+            "name": "login_name",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Password to log in to the application",
+            "name": "password",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Domain to which the user belongs",
+            "name": "domain",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Object"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Indicates whether the user is a VIP user",
+            "name": "is_vipuser",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Boolean"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Indicates whether the user is a technician",
+            "name": "is_technician",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Boolean"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Indicates whether the user is allowed to approve purchase orders",
+            "name": "purchase_approver",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Boolean"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Amount up to which purchase order approval is permitted for the user",
+            "name": "purchase_approval_limit",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "long"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Indicates whether the user is allowed to approve service requests",
+            "name": "service_request_approver",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Boolean"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Roles assigned to the user",
+            "name": "associated_roles",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Array of Objects"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Project roles assigned to the user",
+            "name": "project_roles",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Array of Objects"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "URL of the user's profile picture",
+            "name": "profile_pic",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Permissions for the user to view requests",
+            "name": "requester_allowed_to_view",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "CI type of the user",
+            "name": "citype_name",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Active status of the user",
+            "name": "status",
+            "column": "",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        },
+        {
+            "graphView": "",
+            "isReleased": "true",
+            "desc": "Time at which the user is added to the organisation",
+            "name": "created_time",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "Object"
+        },
+        {
+            "isReleased": "true",
+            "graphView": "",
+            "desc": "Description of the user",
+            "name": "description",
+            "column": "",
+            "html_type": "",
+            "inOP": "true",
+            "type": "String"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" disable-extraparam="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="announcement" dynamic-throttle="true"  >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+		<url path="/home/AnnouncementForm.jsp" roles="ViewAnnouncements" user_type="all"  method="get" operation-param="mode" operation-value="view"/>
+		<url path="/home/AnnouncementForm.jsp" roles="AddAnnouncements"  method="get" operation-param="mode" operation-value="add">
+			<param name="module" regex="problem|change|release"/>
+			<param name="moduleId" type="long" range=">0"/>
+		</url>
+		<url path="/home/AnnouncementForm.jsp" roles="ModifyAnnouncements"  method="get" operation-param="mode" operation-value="edit"/>
+		<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="mark_announcement_as_read" user_type="all" method="post" csrf="true" >
+			<param name="dynamicNotifId" type="long" range=">0"/>
+			<param name="SUBREQUEST" regex="XMLHTTP"/>
+		</url>
+		<!-- SD-73964 CSRF attack in GET method  -->
+		<url path="/AnnounceShow.do" method="get" operation-param="mode" operation-value="view" roles="ViewAnnouncements" user_type="all">
+			<!--param name="select" regex="1|2|3|4"/-->
+
+			<!-- Below params are used in Zia Bot for Announcement List Views -->
+			<param name="externalframe" type="boolean"/>
+			<param name="input_data" template="list_info_base" type="JSONObject" max-len="-1"/>
+			<param name="from" regex="zia"/>
+
+		</url>
+		<!-- System Updates -->
+		<url path="/overview/announcement.jsp" roles="SDAdmin" method="GET"/>
+	</urls>
+</security>
+<!--$Id$-->

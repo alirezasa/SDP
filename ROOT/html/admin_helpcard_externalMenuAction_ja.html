@@ -1,0 +1,38 @@
+﻿<style type="text/css">
+.tablecolor {
+	background-color: #CCC;
+}
+.lightgrey {
+	color: #C0C0C0;
+}
+.tablecolorlightgrey {
+	background-color: #CCC;
+}
+.tablelightgrey1 {
+	background-color: #E8E8E8;
+}
+.textdarkgrey {
+	color: #575757;
+}
+</style>
+<p>自身のスクリプトを使って、<b>リクエスト</b>ページの<b>アクション</b>メニューをカスタマイズできます。アクションメニューを作成して、そのメニューとカスタムクラスやスクリプトファイルを関連付けてアクションを実行します。ここで作成したメニューは、<b>リクエスト詳細</b>ページの<b>アクション</b>メニューに追加されます。</p>
+<p style="margin-top: 9.5pt; margin-bottom: 9.5pt;"><span class=helpheading><strong>新規メニューの追加</strong></span></p>
+<p>新規メニュー作成には、次の詳細を登録してください: </p>
+
+    <p><b>メニュー名</b>: 作成するメニューに一意の名前を指定します (メニュー名は、リクエストページのアクションメニューの下に表示されます)</p>
+    <p><b>説明</b>: メニュー目的の説明を入力します。</p>
+    <p><b>関連付ける役割</b>: このメニューにアクセスする技術担当者の役割を指定します(「All Roles（すべての役割」、または「Selected Roles（選択された役割)」より選択）</p>
+    <p><b>関連付けるテンプレート</b>: このメニューを表示するテンプレートを選択します(「All Templates（すべてのテンプレート）」、「All Incident Templates（すべてのインシデントテンプレート）」、「All Service Templates（すべてのサービステンプレート）」または「Selected Templates（選択したテンプレート)」より選択）</p>
+    <p><b>アクションタイプの選択</b>:「スクリプトを実行」、もしくは「クラスの実行」をアクションタイプ・ドロップダウンから選択します。「クラスの実行」を選択した場合、Executorクラスを指定してください；例、"com.servicedeskplus.integration.JiraActionImplementation"。「スクリプトを実行」を選択した場合、スクリプトファイルのパスと名前を指定してください；<br>例: "cmd /c Index.bat"。初期設定では、"[SDPインストールディレクトリ]/integration/custom_ scripts/"ディレクトリから実行します。</p>
+    <p>カスタムスクリプトへパラメーターとして引数を渡すことができます。</p>
+    
+<p><b>例:</b>&nbsp;</p><p><i>Script用</i>: cmd&nbsp;/ c Index.bat $SUBJECT $PRIORITY $STATUS</p><p><i>Class用</i> &nbsp;:&nbsp;com.servicedeskplus.integration.JiraActionImplementation</p><p>
+    <br><br><strong>その他サポートされているパラメーター</strong></p><p>$COMPLETE_JSON_FILE：Complete RequestオブジェクトはJSONファイルに保存され、そのファイルパスはStringオブジェクトとしてパスされます。</p><p>JSONファイルパス&nbsp;: <i>(SDP_Home\integration\custom_scripts\request\12_1426143538036.json).</i></p>
+    <p> $HTML_DATA_JSON_FILE：Ajaxコールリクエストの"<strong>データ</strong>"パラメーターはメニュー名、JSONリクエスト、XMLファイルパスと共にJSONファイルに保存され、そのファイルパスがStringオブジェクトとしてパスされます。カスタマイズしたHTMLファイルで使用されます。例、(SDP_Home\integration\custom_scripts\request\12_1426143538036.json)</p>
+    <p> $HANDSHAKE_KEY：ハンドシェイクキーがStringオブジェクトとしてパスされます。</p>
+    <p><b>保存</b>をクリックします。</p>
+
+<p>作成されたメニューが、<b>リクエスト詳細</b>ページの<b>アクション</b>メニューの下に表示されます。</p><br>
+<p style="margin-top: 9.5pt; margin-bottom: 9.5pt;"><span class=helpheading><strong>リストの表示</strong></span></p>
+    <p><b>カスタムメニューの有効化/無効化</b>: メニューの有効化/無効化は、リクエストカスタムメニュー・リストビューページから<b>有効化/無効化</b>アイコンをクリックします。</p>
+    <p><b>カスタムメニューの編集/削除</b>: メニューの編集/削除は、<b>リクエストカスタムメニュー</b>リストビューページから該当メニューの<b>編集/削除</b>アイコンをクリックします。</p>

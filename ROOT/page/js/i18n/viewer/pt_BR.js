@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = 'Visualizador';
+i18n["zcpage.builder.viewer.ar"] = 'AR';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = 'Configurar visualizador';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = 'Excluir visualizador';
+i18n["zcpage.builder.arviewer.deletetitle"] = 'Excluir visualizador do AR';
+i18n["zcpage.builder.arviewer.deletewarning"] = 'Esta ação não pode ser desfeita. Tem certeza de que deseja excluí-lo?';
+i18n["zcpage.builder.viewer.arsetup"] = 'Configuração do AR';
+i18n["zcpage.builder.viewer.arsetup.msg"] = 'Clique em “Adicionar entrada” para fornecer uma entrada para o visualizador.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = 'Adicionar entrada';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = 'Conjunto de AR com base em marcador';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = 'Variável da página';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = 'Nenhuma variável de página para selecionar. No entanto, você pode adicionar uma nova variável de página na guia <b>Variáveis de página e script</b>. <br> <a href=\"https://help.zoho.com/portal/en/kb/creator/developer-guide/pages/page-script-and-variables/articles/page-scripts-and-variable" target=\"_blank\">Saiba mais</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = 'Nenhum conjunto de AR com base em marcador para selecionar. No entanto, você pode criar um na biblioteca de AR na seção Microsserviço. <a href=\"https://www.zoho.com/creator/help/microservices/add-models.html#create_arset" target=\"_blank\">Saiba mais</a>';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = 'Esta é uma entrada específica para dispositivos móveis. Para capturar o marcador, ele usa a câmera do seu celular.';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = 'O valor da variável da página deve ser o nome do modelo 3D utilizado na biblioteca de AR.';
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = 'Se você cancelar agora, todas as alterações feitas neste visualizador não serão salvas.';

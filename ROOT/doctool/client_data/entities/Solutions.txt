@@ -1,0 +1,714 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions"
+      ],
+      "desc": "This operation helps you add a new solution.",
+      "disp_desc": "Add a solution",
+      "workflow": "SolutionUtil.java#addSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution\":{\"title\":\"sample\",\"description\":\"sample description\",\"topic\":{\"name\":\"General\"}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution added successfully.\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"1\",\"name\":\"UnApproved\"},\"has_attachments\":\"false\",\"id\":\"10\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:28 PM\",\"value\":\"1470052681954\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"0\",\"is_public\":\"false\",\"comment\":null,\"created_time\":{\"display_value\":\"Aug 1, 2016 05:28 PM\",\"value\":\"1470052681954\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}"
+      ],
+      "desc": "This operation helps you view an existing solution by ID.",
+      "disp_desc": "View a solution",
+      "workflow": "SolutionUtil.java#viewSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution details fetched successfully\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"11\",\"name\":\"Settings\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"2\",\"name\":\"Approved\"},\"has_attachments\":\"false\",\"id\":\"1\",\"last_updated_time\":{\"display_value\":\"Jan 14, 1970 07:16 PM\",\"value\":\"1172791311\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"To move data from one installation from another.\",\"description\":\"<div style=\\\"padding: 3.0px;font-size: 11.0px;font-family: verdana , arial , helvetica , sans-serif;\\\"><font size=\\\"2\\\">You can move the data from the existing server to new server. Please follow the steps mentioned below: <br /><br />1. Stop ManageEngine ServiceDesk Plus service<br /><br />2. Kindly Upgrade the SD+ if needed. Take the link below to check if you are in the latest version;<br /><a href=\\\"http://manageengine.com/products/service-desk/service-packs.html\\\">http://manageengine.com/products/service-desk/service-packs.html</a><br /></font></div><div style=\\\"padding: 3.0px;font-size: 11.0px;font-family: verdana , arial , helvetica , sans-serif;\\\"><font size=\\\"2\\\">Now start and stop the service once after the upgrade process.<br /><br />3. In the command prompt, move to [ServiceDeskPlus-Home]\\\\bin directory and execute backupdata.batto start the data backup. Once the backup is over, a directory named &quot;backup&quot; will be created in [ServiceDeskPlus-Home], within which another directory with the name &quot;Backup_[Versionnumber]_Monthdate_Year_Hour_Minutes&quot; will be created and the backup file with .data extension is placed in this directory. The name of the backup file contains the date and time at which backup is taken. Example:BackUp_5501_SEP14_2006_15_51.data <br /><br />cmd&gt; [ServiceDeskPlus Home]\\\\bin <br />cmd&gt; backUpData.bat <br /><br /><span style=\\\"color: rgb(204,0,51);\\\"></span>4. Install SD+ to the new server.<br /><br />5. Copy the backup folder from the old server to [ServiceDeskPlus-Home] in the new server. <br /><br />6.To restore the backed up data, Go to [ServiceDeskPlus-Home]\\\\bin directory and execute restoredata.bat. Choose the backup file while prompted. See example below: <br /><br />cmd&gt; [ServiceDeskPlus Home]\\\\bin <br />cmd&gt; restoreData.bat <br /><br /><br /><br />7. Start the SD+ server once after restoring the data in the new server.</font></div><br /><br />[ Valid as on ServiceDesk Plus release 7.0 ]\",\"keywords\":[\"backup\",\" restore\",\" migrate\",\" Changing the server\"],\"user_groups\":null,\"no_of_hits\":\"3\",\"is_public\":\"true\",\"comment\":null,\"created_time\":{\"display_value\":\"Jan 14, 1970 07:16 PM\",\"value\":\"1172791311\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions"
+      ],
+      "desc": "This operation helps you view all the existing solutions in the application.<br> Supported values for the filter attribute are :<br> 1. Approved<br> 2. Rejected<br> 3. Approval Pending<br> 4. UnApproved",
+      "disp_desc": "View all solutions",
+      "workflow": "SolutionUtil.java#viewSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"3\",\"start_index\":\"1\",\"sort_field\":\"topic\",\"sort_order\":\"A\",\"filter_by\":{\"name\":\"ApprovedSolutions\"}}}"
+      },
+      "output": {
+        "sample": "{\"solutions\":[{\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"topic\":{\"id\":\"12\",\"name\":\"Customizations\"},\"approval_status\":{\"id\":\"2\",\"name\":\"Approved\"},\"has_attachments\":\"false\",\"id\":\"3\",\"title\":\"Modify Login screens and Logout screens\",\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"last_updated_time\":{\"display_value\":\"May 22, 2007 05:19 AM\",\"value\":\"1179791345000\"},\"keywords\":[\"modify login screen\",\" modify logout screen\"],\"description\":\"<font size='3' face='Times New Roman'><span style='font-size: 12pt;'>Find below the procedure to meet with your need:<br /><br /><font color='#990000'><span style='color: rgb(153, 0, 0);'>1. Save the page served under http://[servername-or-ipaddress:port-number] as index.html. Copy this file onto C:\\\\ManageEngine\\\\ServiceDesk\\\\applications\\\\extracted\\\\AdventNetServiceDesk.eear\\\\AdventNetServiceDeskWC.ear\\\\AdventNetServiceDesk.war<br /><br />2. Modify the index.html page as per your needs and the save the file under the same location. <br /><br />3. Keep the FORM Submit and Action options as they are.<br /><br />4. </span></font></span></font><font size='3' face='Times New Roman'><span style='font-size: 12pt;'><font color='blue'><span style='color: blue;'><span style='color: rgb(153, 0, 0);'>Edit the Web.xml file present under C:\\\\ManageEngine\\\\ServiceDesk\\\\applications\\\\extracted\\\\AdventNetServiceDesk.eear\\\\AdventNetServiceDeskWC.ear\\\\AdventNetServiceDesk.war\\\\WEB-INF and change the following:<br /><br /></span></span></font></span></font><font size='3' face='Times New Roman'><span style='font-size: 12pt;'><font color='blue'><span style='color: blue;'>&lt;form-login-page&gt;/Login.jsp&lt;/form-login-page&gt;<br /><br /><br />should be changed as<br /><br />&lt;form-login-page&gt;/index.html&lt;/form-login-page&gt;<br /></span></font></span></font><br /><span style='color: rgb(153, 0, 0);'>AND</span><br /><br /><font size='3' face='Times New Roman'><span style='font-size: 12pt;'><font color='blue'><span style='color: blue;'>&lt;form-error-page&gt;/Login.jsp?error=true&lt;/form-error-page&gt;<br /><br />should be changed as<br /><br />&lt;form-error-page&gt;/index.html&lt;/form-error-page&gt;<br /><br /><span style='color: rgb(153, 0, 0);'>5. </span></span></font></span></font><font size='3' face='Times New Roman' style='color: rgb(153, 0, 0);'><span style='font-size: 12pt;'>Restart ServiceDesk Plus service.</span></font><br /><font size='3' face='Times New Roman'><span style='font-size: 12pt;'><font color='#990000'><span style='color: rgb(153, 0, 0);'><br />6. You can now access the modified index page as http://[servername-or-ipaddress:port-number]/index.html</span></font><br /><br /></span></font><font size='2' style='font-family: arial,helvetica,sans-serif;'><span class='genmed'><span style='font-weight: bold;'>Note</span>: This file is bound to changes everytime a servicepack or hotfix is released. Hence, when you apply the hotfix or servicepack, you must redo the changes. </span></font><font size='3' face='Times New Roman'><span style='font-size: 12pt;'><font color='blue'><span style='color: blue;'></span></font><br /></span></font><br><br>[ Valid as on ServiceDesk Plus release 7.0 ]\",\"user_groups\":null,\"is_public\":\"true\",\"comment\":null,\"no_of_hits\":\"0\",\"created_time\":{\"display_value\":\"May 22, 2007 05:19 AM\",\"value\":\"1179791345000\"}},{\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"topic\":{\"id\":\"11\",\"name\":\"Settings\"},\"approval_status\":{\"id\":\"2\",\"name\":\"Approved\"},\"has_attachments\":\"false\",\"id\":\"1\",\"title\":\"To move data from one installation from another.\",\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"last_updated_time\":{\"display_value\":\"Jan 14, 1970 07:16 PM\",\"value\":\"1172791311\"},\"keywords\":[\"backup\",\" restore\",\" migrate\",\" Changing the server\"],\"description\":\"<div style=\\\"padding: 3.0px;font-size: 11.0px;font-family: verdana , arial , helvetica , sans-serif;\\\"><font size=\\\"2\\\">You can move the data from the existing server to new server. Please follow the steps mentioned below: <br /><br />1. Stop ManageEngine ServiceDesk Plus service<br /><br />2. Kindly Upgrade the SD+ if needed. Take the link below to check if you are in the latest version;<br /><a href=\\\"http://manageengine.com/products/service-desk/service-packs.html\\\">http://manageengine.com/products/service-desk/service-packs.html</a><br /></font></div><div style=\\\"padding: 3.0px;font-size: 11.0px;font-family: verdana , arial , helvetica , sans-serif;\\\"><font size=\\\"2\\\">Now start and stop the service once after the upgrade process.<br /><br />3. In the command prompt, move to [ServiceDeskPlus-Home]\\\\bin directory and execute backupdata.batto start the data backup. Once the backup is over, a directory named &quot;backup&quot; will be created in [ServiceDeskPlus-Home], within which another directory with the name &quot;Backup_[Versionnumber]_Monthdate_Year_Hour_Minutes&quot; will be created and the backup file with .data extension is placed in this directory. The name of the backup file contains the date and time at which backup is taken. Example:BackUp_5501_SEP14_2006_15_51.data <br /><br />cmd&gt; [ServiceDeskPlus Home]\\\\bin <br />cmd&gt; backUpData.bat <br /><br /><span style=\\\"color: rgb(204,0,51);\\\"></span>4. Install SD+ to the new server.<br /><br />5. Copy the backup folder from the old server to [ServiceDeskPlus-Home] in the new server. <br /><br />6.To restore the backed up data, Go to [ServiceDeskPlus-Home]\\\\bin directory and execute restoredata.bat. Choose the backup file while prompted. See example below: <br /><br />cmd&gt; [ServiceDeskPlus Home]\\\\bin <br />cmd&gt; restoreData.bat <br /><br /><br /><br />7. Start the SD+ server once after restoring the data in the new server.</font></div><br /><br />[ Valid as on ServiceDesk Plus release 7.0 ]\",\"user_groups\":null,\"is_public\":\"true\",\"comment\":null,\"no_of_hits\":\"3\",\"created_time\":{\"display_value\":\"Jan 14, 1970 07:16 PM\",\"value\":\"1172791311\"}},{\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"topic\":{\"id\":\"13\",\"name\":\"Troubleshooting\"},\"approval_status\":{\"id\":\"2\",\"name\":\"Approved\"},\"has_attachments\":\"false\",\"id\":\"2\",\"title\":\"How to generate a Support file ?\",\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"last_updated_time\":{\"display_value\":\"Apr 29, 2007 01:45 AM\",\"value\":\"1177791345000\"},\"keywords\":[\"support file\",\" log file\"],\"description\":\"Please follow the steps mentioned below for support file generation:<br><ol><li>Go to 'Support' tab.<li>Click on 'Support File'. This would create a file with extension zip.gz<li>Please mail this file to servicedeskplus-support@manageengine.com<br><br>[ Valid as on ServiceDesk Plus release 7.0 ]\",\"user_groups\":null,\"is_public\":\"true\",\"comment\":null,\"no_of_hits\":\"0\",\"created_time\":{\"display_value\":\"Apr 29, 2007 01:45 AM\",\"value\":\"1177791345000\"}}],\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"List view fetched successfully\",\"statuscode\":\"200\"}]},\"list_info\":{\"has_more_rows\":\"true\",\"end_index\":\"3\",\"start_index\":\"1\",\"page_number\":\"1\",\"sort_order\":\"A\",\"row_count\":\"3\",\"total_count\":\"4\",\"search_fields\":{}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}"
+      ],
+      "desc": "This operation helps you update an existing solution.",
+      "disp_desc": "Update a solution",
+      "workflow": "SolutionUtil.java#updateSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution\":{\"title\":\"sample\",\"description\":\"sample description\",\"topic\":{\"name\":\"General\"}}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution updated successfully\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"1\",\"name\":\"UnApproved\"},\"has_attachments\":\"false\",\"id\":\"5\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:29 PM\",\"value\":\"1470052758542\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"1\",\"is_public\":\"false\",\"comment\":null,\"created_time\":{\"display_value\":\"Aug 1, 2016 04:54 PM\",\"value\":\"1470050686793\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}"
+      ],
+      "desc": "This operation helps you delete an existing solution by ID.",
+      "disp_desc": "Delete a solution",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution deleted successfully.\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"1\",\"name\":\"UnApproved\"},\"has_attachments\":\"false\",\"id\":\"5\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:29 PM\",\"value\":\"1470052758542\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"1\",\"is_public\":\"false\",\"comment\":null,\"created_time\":{\"display_value\":\"Aug 1, 2016 04:54 PM\",\"value\":\"1470050686793\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/approve"
+      ],
+      "desc": "This operation helps you approve an existing solution.",
+      "disp_desc": "Approve a solution",
+      "workflow": "SolutionUtil.java#approveSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution\":{\"operation_comment\":\"Approve comments\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution approved successfully\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"2\",\"name\":\"Approved\"},\"has_attachments\":\"false\",\"id\":\"6\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"0\",\"is_public\":\"false\",\"comment\":null,\"created_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/_move_to_trash",
+        "/api/v3/solutions/_move_to_trash?ids={solution_ids}"
+      ],
+      "desc": "This operation helps you to move an existing solution to trash",
+      "disp_desc": "Move solution to trash",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution moved to trash successfully.\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"1\",\"name\":\"UnApproved\"},\"has_attachments\":\"false\",\"id\":\"5\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:29 PM\",\"value\":\"1470052758542\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"1\",\"is_public\":\"false\",\"comment\":null,\"created_time\":{\"display_value\":\"Aug 1, 2016 04:54 PM\",\"value\":\"1470050686793\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+     },
+     {
+       "name": "",
+       "method": "PUT",
+       "moduleName" : "Solutions",
+       "path": [
+         "/api/v3/solutions/{solution_id}/_restore_from_trash",
+         "/api/v3/solutions/_restore_from_trash?ids={solution_ids}"
+       ],
+       "desc": "This operation helps you to restore an existing solution from trash",
+       "disp_desc": "Restore solution from trash",
+       "workflow": "",
+       "isReleased": "true",
+       "output": {
+         "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution restored successfully.\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"1\",\"name\":\"UnApproved\"},\"has_attachments\":\"false\",\"id\":\"5\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:29 PM\",\"value\":\"1470052758542\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"1\",\"is_public\":\"false\",\"comment\":null,\"created_time\":{\"display_value\":\"Aug 1, 2016 04:54 PM\",\"value\":\"1470050686793\"}}}"
+       },
+       "defaultAttributes": [],
+       "excludedAttributes": [],
+       "inOP": "true",
+       "inOD": "true"
+     },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/reject"
+      ],
+      "desc": "This operation helps you reject the approval of an existing solution.",
+      "disp_desc": "Reject a solution",
+      "workflow": "SolutionUtil.java#rejectSolution#QSDRequestWrapper;",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution\":{\"operation_comment\":\"Reject comments\"}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution rejected successfully\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"4\",\"name\":\"Rejected\"},\"has_attachments\":\"false\",\"id\":\"6\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"0\",\"is_public\":\"false\",\"comment\":null,\"created_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/like"
+      ],
+      "desc": "This operation is help to like a solution.",
+      "disp_desc": "Like a solution",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution rejected successfully\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"4\",\"name\":\"Rejected\"},\"has_attachments\":\"false\",\"id\":\"6\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"0\",\"is_public\":\"false\",\"comment\":null,\"likes\":\"1\",\"dislikes\":\"0\",\"created_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/dislike"
+      ],
+      "desc": "This operation is help to dislike a solution.",
+      "disp_desc": "Dislike a solution",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution rejected successfully\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"4\",\"name\":\"Rejected\"},\"has_attachments\":\"false\",\"id\":\"6\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"0\",\"is_public\":\"false\",\"comment\":null,\"likes\":\"1\",\"dislikes\":\"0\",\"created_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/removelike"
+      ],
+      "desc": "To Remove Like(or)Dislike of the solution",
+      "disp_desc": "Remove Like(or)Dislike of the solution",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"Success\",\"messages\":[{\"type\":\"Success\",\"message\":\"Solution rejected successfully\",\"statuscode\":\"200\"}]},\"solution\":{\"topic\":{\"id\":\"8\",\"name\":\"General\"},\"created_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"approval_status\":{\"id\":\"4\",\"name\":\"Rejected\"},\"has_attachments\":\"false\",\"id\":\"6\",\"last_updated_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"},\"last_updated_by\":{\"id\":\"3\",\"name\":\"administrator\"},\"title\":\"sample\",\"description\":\"sample description\",\"keywords\":null,\"user_groups\":null,\"no_of_hits\":\"0\",\"is_public\":\"false\",\"comment\":null,\"likes\":\"1\",\"dislikes\":\"0\",\"created_time\":{\"display_value\":\"Aug 1, 2016 05:23 PM\",\"value\":\"1470052404122\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/reacted_users"
+      ],
+      "desc": "This operation helps you view liked and disliked users of the solution",
+      "disp_desc": "View Liked and Disliked Users",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"5\",\"start_index\":\"1\"}}"
+      },
+      "output": {
+        "sample": "{\"reacted_users\":[{\"like_dislike\":true,\"user\":{\"email_id\":null,\"login_name\":\"administrator\",\"phone\":\"1234455\",\"domain\":null,\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null}},{\"like_dislike\":false,\"user\":{\"email_id\":\"user1@zylker.com\",\"login_name\":\"senthamizh\",\"phone\":\"1234455\",\"domain\":null,\"name\":\"Senthamizh\",\"mobile\":\"9876543210\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\",\"name\":\"default-profile-pic2.svg\"},\"is_vipuser\":false,\"id\":\"5\",\"department\":null}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/approval_content"
+      ],
+      "desc": "Get Approval Content Before  \"Submit for Approval\" ",
+      "disp_desc": "Get Approval Content Before  \"Submit for Approval\"",
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"approval_content\":{\"subject\":\"Approve request for the Solution 99999000000074005\",\"description\":\"Dear Technicain please check this solution and approve\"},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/comments"
+      ],
+      "desc": "Get all comments associated to a solution",
+      "disp_desc": "Get list of comments for a solution",
+      "operWorkflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"sort_field\":\"created_time\",\"sort_order\":\"desc\"}}"
+      },
+      "output": {
+        "sample": "{\"comments\":[{\"id\":\"10099006500074876\",\"solution\":{\"id\":\"99999000000074005\",\"title\":\"<title>\"},\"user\":{\"photo_url\":\"https://contacts.localzoho.com/file?ID=10704061&t=user&fs=thumb\",\"id\":\"99999000000020666\",\"name\":\"aravind\"},\"comment\":\"comment\",\"updated_time\":null,\"created_time\":{\"value\":\"1447332777412\",\"display_value\":\"Nov 12, 2015 06:22 PM\"}}],\"list_info\":{\"sort_field\":\"created_time\",\"sort_order\":\"desc\",\"start_index\":1,\"has_more_rows\":false,\"row_count\":1},\"response_status\":[{\"status\":\"success\",\"status_code\":2000}]}"
+      },
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/comments"
+      ],
+      "desc": "Add a comment to a solution",
+      "disp_desc": "Add solution comments",
+      "operWorkflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution_comment\":{\"comment\":\"Workaround solution\"}}"
+      },
+      "output": {
+        "sample": "{\"solution_comment\":{\"id\":\"<commentID>\",\"solution\":{\"id\":\"solutionID\",\"title\":\"<solutionTitle>\"},\"user\":{\"photo_url\":\"https://contacts.localzoho.com/file?ID=10704061&t=user&fs=thumb\",\"id\":\"99999000000020666\",\"name\":\"aravind\"},\"comment\":\"<your comment>\",\"updated_time\":null,\"created_time\":{\"value\":\"1447332777412\",\"display_value\":\"Nov 12, 2015 06:22 PM\"}},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/comments/{comment_id}"
+      ],
+      "desc": "Update a comment added to a solution",
+      "disp_desc": "Update a solution comment",
+      "operWorkflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution_comment\":{\"comment\":\"Workaround solution\"}}"
+      },
+      "output": {
+        "sample": "{\"solution_comment\":{\"id\":\"<commentID>\",\"solution\":{\"id\":\"solutionID\",\"title\":\"<solutionTitle>\"},\"user\":{\"photo_url\":\"https://contacts.localzoho.com/file?ID=10704061&t=user&fs=thumb\",\"id\":\"99999000000020666\",\"name\":\"aravind\"},\"comment\":\"<your comment>\",\"updated_time\":null,\"created_time\":{\"value\":\"1447332777412\",\"display_value\":\"Nov 12, 2015 06:22 PM\"}},\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solutions/{solution_id}/comments/{comment_id}"
+      ],
+      "desc": "Delete a comment added to a solution",
+      "disp_desc": "Delete a solution comment",
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solution_relations"
+      ],
+      "desc": "Add solution relation",
+      "disp_desc": "Add solution relation",
+      "operWorkflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"solution_relations\":[{\"parent_solution\":{\"id\":\"99999000000074005\"},\"child_solution\":{\"id\":\"99999000000074010\"}}]}"
+      },
+      "output": {
+        "sample": "{\"solution_relations\":{\"id\":\"11111000000074876\",\"parent_solution\":{\"id\":\"99999000000074005\",\"title\":\"Work around solution\"},\"child_solution\":{\"id\":\"99999000000074010\",\"title\":\"work around solution plan b\"}},\"response_status\":[{\"id\":\"100000000000024355\",\"status\":\"success\",\"status_code\":2000}]}"
+      },
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Solutions",
+      "path": [
+        "/api/v3/solution_relations/{solution_relation_ID}"
+      ],
+      "desc": "Delete solution relation",
+      "disp_desc": "Remove solution relation",
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"response_status\":[{\"id\":\"99999000000079039\",\"status\":\"success\",\"status_code\":2000}]}"
+      },
+      "inOD": "true",
+      "params": [],
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique ID of the Solution.",
+      "graphView": "Solution#id",
+      "column": "SOLUTION :SOLUTIONID",
+      "isMandatory": "true",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "title",
+      "type": "String",
+      "desc": "The Title of the Solution.",
+      "graphView": "Solution#title",
+      "column": "SOLUTION:TITLE",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Description of the Solution.",
+      "graphView": "Solution#description",
+      "column": "SOLUTION:DESCRIPTION",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "topic",
+      "type": "Object",
+      "desc": "Used to identify the type of Solution.",
+      "graphView": "Solution#topic",
+      "column": "SOLUTION:TOPICID",
+      "isMandatory": "true",
+      "isDefault": "true",
+      "relEntity": {
+        "name": "Topic",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "keywords",
+      "type": "Array",
+      "desc": "Key words to tag a Solution, useful while searching for the solution.",
+      "graphView": "Solution#keywords",
+      "column": "SOLUTION_KEYWORDS:KEYWORDID",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "keywords",
+      "type": "Array",
+      "desc": "Key words to tag the solution. It is useful while searching the solution.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOD": "true",
+      "internalType": "string",
+      "entity": null,
+      "relational_mapping": null,
+      "autofill": null,
+      "dfs_module_name": null,
+      "delete": null,
+      "add_reference_entity": null,
+      "trim_length": null,
+      "suffix": null,
+      "group": null,
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "comment",
+      "type": "String",
+      "desc": "Gives extra information about the Solution.",
+      "graphView": "Solution#comment",
+      "column": "SOL_COMMENTHISTORY:COMMENTS",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_public",
+      "type": "Boolean",
+      "desc": "Holds the value True or False, based on which the Solution will be public or private.",
+      "graphView": "Solution#public",
+      "column": "SOLUTIONINFO:ISPUBLIC",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_public",
+      "type": "Boolean",
+      "desc": "True or false, based on which the solution will be public or private",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOD": "true",
+      "internalType": "boolean",
+      "entity": null,
+      "relational_mapping": null,
+      "autofill": null,
+      "dfs_module_name": null,
+      "delete": null,
+      "add_reference_entity": null,
+      "trim_length": null,
+      "suffix": null,
+      "group": null,
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "user_groups",
+      "type": "Array of Objects",
+      "desc": "List of User Groups to which the Solutions are associated.",
+      "graphView": "Solution#usergroups",
+      "column": "SOLUTIONUGMAPPING:USERGROUPID",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "approval_status",
+      "type": "Object",
+      "desc": "Approval status of a Solution.",
+      "graphView": "Solution#approvalstatus",
+      "column": "SOLUTION:STATUSID",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "no_of_hits",
+      "type": "Number",
+      "desc": "Denotes the number of times the solution is viewed.",
+      "graphView": "Solution#viewcount",
+      "column": "SOLTUIONINFO:NOOFHITS",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "no_of_hits",
+      "type": "Number",
+      "desc": "Numbers of hits of the solutions",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOD": "true",
+      "internalType": "int",
+      "entity": null,
+      "relational_mapping": null,
+      "autofill": null,
+      "dfs_module_name": null,
+      "delete": null,
+      "add_reference_entity": null,
+      "trim_length": null,
+      "suffix": null,
+      "group": null,
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "has_attachments",
+      "type": "Boolean",
+      "desc": "Holds the value True or False, which indicates whether the Solution has attachments or not.",
+      "graphView": "Solution#hasattachments",
+      "column": "SOLUTION:ATTACHMENTS",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "desc": "The details of the user who created the Solution.",
+      "graphView": "Solution#createdby",
+      "column": "SOLUTIONINFO:CREATEDBY",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "relEntity": {
+        "name": "Technician",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "last_updated_by",
+      "type": "Object",
+      "desc": "The details of a user who updated the Solution recently.",
+      "graphView": "Solution#lastupdatedby",
+      "column": "SOLUTIONINFO:LASTUPDATEDBY",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "relEntity": {
+        "name": "Technician",
+        "type": "referential",
+        "relation": "1to1"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "desc": "Time of creation of a Solution.",
+      "graphView": "Solution#createdtime",
+      "column": "SOLUTIONINFO:CREATEDTIME",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "last_updated_time",
+      "type": "Object",
+      "desc": "Last updated time of a Solution.",
+      "graphView": "Solution#lastupdatedtime",
+      "column": "SOLUTIONINFO:LASTUPDATEDTIME",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "attachments",
+      "type": "Array of Objects",
+      "desc": "Solution attachments",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "inOD": "true",
+      "internalType": "int",
+      "entity": null,
+      "relational_mapping": null,
+      "autofill": null,
+      "dfs_module_name": null,
+      "delete": null,
+      "add_reference_entity": null,
+      "trim_length": null,
+      "suffix": null,
+      "group": null,
+      "validation_rules": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "likes",
+      "type": "Number",
+      "desc": "Denotes the number of times the Solution is Liked",
+      "graphView": "Solution#likes",
+      "column": "SOLTUIONSTATISTICS:LIKESCOUNT",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "dislikes",
+      "type": "Number",
+      "desc": "Denotes the number of times the Solution is Disliked",
+      "graphView": "Solution#dislikes",
+      "column": "SOLTUIONSTATISTICS:DISLIKESCOUNT",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "deleted_time",
+      "type": "Object",
+      "desc": "Denotes the time at which this solution is deleted",
+      "graphView": "",
+      "column": "SOLUTIONINFO:DELETEDTIME",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "isReleased": "true",
+  "lastModified": 1470052815000
+}

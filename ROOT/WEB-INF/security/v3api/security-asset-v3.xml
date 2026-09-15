@@ -1,0 +1,2613 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" authentication="required" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets">
+            <param max-len="-1" type="JSONObject" template="ci_attributes_template" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/assets/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/assets">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset" name="input_data"/>
+            <param regex="\d+((\,\d+)?){0,499}" max-len="1200" name="ids"/>
+        </url>
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/assets">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset" name="input_data"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/assets/(\d+)"/>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/assets">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets(/udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,HelpdeskConfig" path="/api/v3/assets/(product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute|space)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/(product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute|space)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/assets/(\d+)/(product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url path="/api/v3/assets/(product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/asset_attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/asset_attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/asset_attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/asset_attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/assets/(\d+)/asset_attachments/(\d+)/(child_asset|parent_asset)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url path="/api/v3/workstations/(\d+)/asset_attachments/(\d+)/(child_asset|parent_asset)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <!--group-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_groups/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_groups">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_groups/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--loan start-->
+        <url method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/asset_loans">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset_loan" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset_loan" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/asset_loans/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/asset_loans">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset_loan" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/asset_loans/(loaned_to|department|site)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/(loaned_to|department|site)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_to/(\d+)"/>
+        <url method="get" path="/api/v3/asset_loans/(\d+)/loaned_to/(\d+)/images/(\d+)">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <!--loan end-->
+        <!--Component Attachment-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/component_attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/component_attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/component_attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/component_attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/assets/(\d+)/component_attachments/(\d+)/(child_asset|parent_asset)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url path="/api/v3/workstations/(\d+)/component_attachments/(\d+)/(child_asset|parent_asset)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/component_attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/component_attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/component_attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/component_attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/assets/(\d+)/component_attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/component_attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--Depreciation-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_depreciation_values/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_depreciation_values">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_depreciation_values/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_depreciation_values/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/depreciation_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/depreciation_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/depreciation_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/depreciation_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/depreciation_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--loan start-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/loaned_assets/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/loaned_assets">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/loaned_assets/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="loaned_asset" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="loaned_asset" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/loaned_assets/(_?)extend">
+            <param max-len="-1" type="JSONObject" template="extend_asset_loan" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/(_?)extend">
+            <param max-len="-1" type="JSONObject" template="extend_asset_loan" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/loaned_assets/(_?)return">
+            <param max-len="-1" type="JSONObject" template="return_asset" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/(_?)return">
+            <param max-len="-1" type="JSONObject" template="return_asset" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/loaned_assets/(\d+)/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/(\d+)/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/loaned_assets">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="loaned_asset" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="loaned_asset" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/loaned_assets/(\d+)/(asset_loan|asset)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/(\d+)/(asset_loan|asset)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/loaned_assets/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/loaned_assets/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/loaned_assets/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/asset_loans/(\d+)/loaned_assets/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--loan end-->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/service_packs/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/service_packs">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="delete" roles="ModifyInventoryWS" path="/api/v3/workstations/(\d+)/service_packs/(\d+)"/>
+        <url method="delete" roles="ModifyInventoryWS" path="/api/v3/workstations/(\d+)/service_packs">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/service_packs/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/service_packs/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/service_packs/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="software_installation" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/workstations/(\d+)/software/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="software_installation" name="input_data"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/workstations/(\d+)/software/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/workstations/(\d+)/software">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="software_installation" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/workstations/(\d+)/software">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software/(software|workstation|license)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software/(\d+)/(software|workstation|license)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/software/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations">
+            <param max-len="-1" type="JSONObject" template="ci_attributes_template" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/workstations/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="workstation" name="input_data"/>
+        </url>
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/workstations">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="workstation" name="input_data"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/workstations/(\d+)"/>
+        <url method="get" roles="AERemoteControl" path="/api/v3/workstations/(\d+)/(_?)remote_control_links">
+            <param max-len="-1" type="JSONObject" template="rds_template" name="input_data"/>
+        </url>
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/workstations/(\d+)/(_?)copy">
+            <param max-len="-1" type="JSONObject" template="copy_template" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/workstations">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="workstation" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS" path="/api/v3/workstations">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(chassis_type|computer_group|department|hard_disks|monitors|mouse|network_adapters|physical_drives|ports|printer_details|processors|usb_controllers|user_accounts|video_card|logical_drives|memory_modules|vm_host|vm_platform|product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)/(vm_host|vm_platform|product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/workstations/(product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url path="/api/v3/workstations/(\d+)/(product|vendor|site|user|department|used_by_asset|state|region_sys_attribute|technician_sys_attribute|site_sys_attribute)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations(/workstation_udf_fields|/udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/workstations/(\d+)(/workstation_udf_fields|/udf_fields)?/(udf_pick_[a-z0-9_]+)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <!-- common urls starts -->
+        <url path="/api/v3/proxy_settings/(\d+)" roles="SDAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/proxy_settings" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/proxy_settings" roles="SDAdmin" method="post">
+            <param name="input_data" template="proxy_setting" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/proxy_settings/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="proxy_setting" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/proxy_settings/(_?)allowed_values_for_fields" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/proxy_settings/(\d+)/(_?)allowed_values_for_fields" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/proxy_settings" roles="SDAdmin" method="put">
+            <param name="input_data" template="proxy_setting" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/proxy_settings/(\d+)/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/proxy_settings/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/proxy_settings/_total_count" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- common urls ends -->
+
+        <param name-regex="true" max-len="100" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true" max-occurrences="1"/>
+        <param name="format" regex="json"/>
+
+
+
+        <!-- Asset Replenishment  starts-->
+        <url path="/api/v3/asset_replenishments/(\d+)" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments" roles="CreateInventoryWS" method="post">
+            <param name="input_data" template="asset_replenishment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(\d+)" roles="ModifyInventoryWS" method="put">
+            <param name="input_data" template="asset_replenishment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(\d+)" roles="DeleteInventoryWS" method="delete"/>
+        <url path="/api/v3/asset_replenishments/(_?)get_inventory_count" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="replenishment_inventory_count" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(_?)allowed_values_for_fields" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(\d+)/(_?)allowed_values_for_fields" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments" roles="ModifyInventoryWS" method="put">
+            <param name="input_data" template="asset_replenishment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/asset_replenishments" roles="DeleteInventoryWS" method="delete">
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(\d+)/(site|product_type|product|asset_module)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url path="/api/v3/asset_replenishments/(site|product_type|product|asset_module)" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="replenishment_allowed_values" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(\d+)/(site|product_type|product|asset_module)" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="replenishment_allowed_values" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(site|product_type|product|asset_module)/(\d+)" roles="ViewInventoryWS" method="get"/>
+        <url path="/api/v3/asset_replenishments/(\d+)/_links" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/_links" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/_total_count" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(\d+)/(_?)history" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(_?)history" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states" roles="SDAdmin" method="post">
+            <param name="input_data" template="asset_replenishment_state" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/(\d+)" roles="SDAdmin" method="delete"/>
+        <url path="/api/v3/asset_replenishment_states/(\d+)" roles="SDAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/(_?)allowed_values_for_fields" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states" roles="SDAdmin" method="delete">
+            <param name="ids" max-len="1200" min-occurrences="1" regex="ids"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/(\d+)/(state)/(\d+)" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/asset_replenishment_states/(state)" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/(state)/(\d+)" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/asset_replenishment_states/(\d+)/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/_total_count" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/(\d+)/(_?)history" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishment_states/(_?)history" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/asset_replenishments/(_?)metainfo" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <!-- Asset Replenishment  ends-->
+        <!--Asset Admin entities-->
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_categories/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_categories">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_categories/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_categories/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_categories/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--Product urls ends -->
+        <!--Product Type urls starts -->
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/product_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/product_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/product_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/product_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/product_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/product_types/(\d+)/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/product_types/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="ViewInventoryWS"  remote_server="true" path="/api/v3/product_types/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="level_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="ViewInventoryWS"  remote_server="true" path="/api/v3/product_types/(_?)get_performed_by_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="level_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/product_types" roles="SDAdmin" method="post">
+            <param name="input_data" template="product_type" type="JSONObject" max-len="-1" min-occurrences="1" />
+        </url>
+        <url path="/api/v3/product_types/(\d+)" roles="SDAdmin" method="put">
+            <param name="input_data" template="product_type" type="JSONObject" max-len="-1" min-occurrences="1" />
+        </url>
+        <url path="/api/v3/product_types/(\d+)" roles="SDAdmin" method="delete">
+        </url>
+        <url path="/api/v3/product_types/(\d+)/(_?)get_dependencies_count" roles="SDAdmin" method="get">
+        </url>
+        <url path="/api/v3/product_types" roles="SDAdmin" method="put">
+            <param name="input_data" template="product_type" type="JSONObject" max-len="-1" min-occurrences="1" />
+            <param name="ids" min-occurrences="1" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/product_types" roles="SDAdmin" method="delete">
+            <param name="ids" min-occurrences="1" max-len="1200" regex="ids" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/product_types/(_?)allowed_values_for_fields" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/product_types/(\d+)/(_?)allowed_values_for_fields" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/product_types/(type|category)" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/product_types/(\d+)/(type|category)" roles="ViewInventoryWS" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+
+        <!--Product type image urls starts -->
+        <url path="/api/v3/product_types/images/(\d+)" method="get" >
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url path="/api/v3/product_types/(\d+)/images/(\d+)" method="get" >
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url path="/api/v3/product_types/(\d+)/images" roles="SDAdmin" method="post" >
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/product_types/images" roles="SDAdmin" method="post" >
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/product_types/(\d+)/images" roles="SDAdmin" method="put" >
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/product_types/icon_name" roles="SDAdmin" method="get">
+            <throttles name="room_layout_icon_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+
+        <!--Product type image urls ends -->
+
+        <!--Product Type urls ends -->
+        <!--Asset State urls starts -->
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_states/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset_state" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/asset_states">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset_state" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_states/(\d+)">
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(\d+)/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/asset_states">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="asset_state" name="input_data"/>
+            <param regex="ids" min-occurrences="1" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/asset_states">
+            <param regex="ids" min-occurrences="1" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(\d+)/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="asset_state_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_states/(_?)get_performed_by_for_history" >
+	            <throttles key="url.path+url.dynamic_key" name="asset_state_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                    <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/asset_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!--Asset State urls ends -->
+
+        <!--Product Vendor Association urls start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin,AddingNewProduct" path="/api/v3/product_vendor_associations">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="product_vendor_association" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/product_vendor_associations/(\d+)">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="product_vendor_association" name="input_data"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/product_vendor_associations/(\d+)">
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(\d+)/(_?)allowed_values_for_fields">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/product_vendor_associations">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="product_vendor_association" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/product_vendor_associations">
+            <param regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(product|vendor|maintenance_vendor)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(\d+)/(product|vendor|maintenance_vendor)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(\d+)/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(_?)history">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(_?)get_records_for_history">
+            <throttles key="url.path+url.dynamic_key" name="product_vendor_association_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/product_vendor_associations/(_?)get_performed_by_for_history" >
+            <throttles key="url.path+url.dynamic_key" name="product_vendor_association_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/product_vendor_associations/(_?)get_unassociated_products" roles="SDAdmin" method="get">
+            <param name="input_data" template="unassociated_products_template" type="JSONObject" max-len="-1"  min-occurrences="1" />
+        </url>
+        <url path="/api/v3/product_vendor_associations/(_?)get_unassociated_vendors" roles="SDAdmin" method="get">
+            <param name="input_data" template="unassociated_vendors_template" type="JSONObject" max-len="-1"  min-occurrences="1" />
+        </url>
+        <!--Product Vendor Association urls end -->
+    </urls>
+    <urls api="true" authentication="required" remote_server="true">
+        <param name-regex="true" max-len="100" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true" max-occurrences="1"/>
+        <param name="format" regex="json"/>
+        <param name="input_data" template="asset_meta" type="JSONObject" max-len="150"/>
+
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_meta_info" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+        <url method="get" path="/api/v3/assets/(_?)metainfo" roles="ViewInventoryWS,HelpdeskConfig">
+            <param name="OPERATION_NAME" regex="MetaInfo API"/>
+        </url>
+        <url method="get" path="/api/v3/assets/(\d+)/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/(\d+)/costs/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/(\d+)/contracts/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/(\d+)/depreciation_values/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/(\d+)/asset_attachments/child_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/(\d+)/asset_attachments/parent_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/(\d+)/component_attachments/child_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/(\d+)/component_attachments/parent_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+
+
+        <url method="get" path="/api/v3/assets/category/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/state/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/type/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/used_by_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/department/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/product/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/product_type/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/region/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/site/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/user/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/assets/vendor/(_?)metainfo" roles="ViewInventoryWS"/>
+
+        <url method="get" path="/api/v3/workstations/(_?)metainfo" roles="ViewInventoryWS">
+            <param name="OPERATION_NAME" regex="MetaInfo API"/>
+        </url>
+        <url method="get" path="/api/v3/workstations/(\d+)/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/processors/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/motherboards/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/memory_modules/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/hard_disks/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/logical_drives/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/physical_drives/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/printer_details/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/mouse/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/monitors/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/usb_controllers/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/video_card/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/ports/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/user_accounts/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/network_adapters/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/contracts/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/costs/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/asset_attachments/child_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/(\d+)/component_attachments/child_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+
+        <url method="get" path="/api/v3/workstations/state/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/used_by_asset/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/chassis_type/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/computer_group/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/department/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/domain/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/product/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/product_type/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/region/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/site/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/user/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/workstations/vendor/(_?)metainfo" roles="ViewInventoryWS"/>
+
+        <url method="get" path="/api/v3/product_vendor_associations/(_?)metainfo" roles="ViewInventoryWS,SDAdmin"/>
+        <url method="get" path="/api/v3/products/(_?)metainfo" roles="ViewInventoryWS,ViewProduct"/>
+        <url method="get" path="/api/v3/product_types/(_?)metainfo" roles="ViewInventoryWS"/>
+        <url method="get" path="/api/v3/asset_states/(_?)metainfo" roles="ViewInventoryWS,SDAdmin"/>
+        <!-- Urls for Product Type images starts -->
+        <url method="get" path="/api/v3/assets/product_type/(\d+)/images/(\d+)" user_type="all">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/workstations/product_type/(\d+)/images/(\d+)" user_type="all">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/workstations/(\d+)/product_type/(\d+)/images/(\d+)" user_type="all">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/assets/(\d+)/product_type/(\d+)/images/(\d+)" user_type="all">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/products/product_type/(\d+)/images/(\d+)" user_type="all">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <!-- Urls for Product Type images ends-->
+    </urls>
+    <urls api="true" authentication="required">
+
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+        <param name="format" regex="json"/>
+
+       <url remote_server="false" method="post" roles="ModifyInventoryWS" path="/api/v3/asset_loans/_upload">
+       	    <throttles key="url.path+url.dynamic_key" name="asset_loans_upload_post" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="15"/>
+            </throttles>
+       </url>
+
+        <!-- booking url starts -->
+
+        <!-- Admin login url starts-->
+        <url method="get" path="/api/v3/booking_purposes/(_?)metainfo" roles="BookingAdmin"/>
+
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_settings/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin" path="/api/v3/asset_booking_settings/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_booking_setting" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin" path="/api/v3/asset_booking_settings">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_booking_setting" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_settings/(\d+)/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_settings/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_settings/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_settings/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_settings/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_settings/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="BookingAdmin" path="/api/v3/asset_booking_status">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_booking_status" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_booking_status" name="input_data"/>
+        </url>
+        <url method="delete" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)/(_?)move_to_trash"/>
+        <url method="put" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)/(_?)restore_from_trash"/>
+        <url method="put" roles="BookingAdmin" path="/api/v3/asset_booking_status">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_booking_status" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(created_by)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)/created_by">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/asset_booking_status/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="post" roles="BookingAdmin" path="/api/v3/booking_purposes">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booking_purpose" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booking_purpose" name="input_data"/>
+        </url>
+        <url method="delete" roles="BookingAdmin" path="/api/v3/booking_purposes/(_?)move_to_trash">
+            <param regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)/(_?)move_to_trash"/>
+        <url method="put" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)/(_?)restore_from_trash"/>
+        <url method="put" roles="BookingAdmin" path="/api/v3/booking_purposes/(_?)restore_from_trash">
+            <param regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="put" roles="BookingAdmin" path="/api/v3/booking_purposes">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booking_purpose" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/created_by">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)/created_by">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_purposes/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+
+        <url method="put" roles="BookingAdmin" path="/api/v3/booking_fields/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booking_field" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin" path="/api/v3/booking_fields">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booking_field" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/(\d+)/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/(\d+)/(product_type|udf_field)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin" path="/api/v3/booking_fields/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+
+
+        <!-- Admin login url ends-->
+
+        <!-- Booking Admin and Tech operations -->
+        <url method="get" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(_?)metainfo" roles="BookingAdmin,BookingTechnician"/>
+        <url method="get" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(\d+)/(_?)metainfo" roles="BookingAdmin,BookingTechnician"/>
+        <url method="get" path="/api/v3/booked_assets/(\d+)/asset/(_?)metainfo" roles="BookingAdmin,BookingTechnician"/>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(booked_by|status|last_updated_by)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/site">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(_?)history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(_?)get_asset_availability">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="check_availability" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(_?)get_asset_availability">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="check_availability" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booked_asset" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booked_asset" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booked_asset" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booked_asset" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booked_asset" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="booked_asset" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/(\d+)/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(\d+)/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(\d+)/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/(booking_item|booking|asset)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(booking_item|booking|asset)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(booking_item|booking|asset)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/(\d+)/(booking_item|booking|asset)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(\d+)/(booking_item|booking|asset)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(\d+)/(booking_item|booking|asset)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booked_assets/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/booked_assets/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/booked_assets/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(_?)mark_as_ready">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(_?)mark_as_ready">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/(_?)mark_as_ready"/>
+        <url method="put" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/mark_as_ready"/>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(booking|status)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(booking|product_type|status)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/booking_items/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booked_by/(\d+)">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url method="get" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(\d+)/booked_by/(\d+)/(_?)metainfo">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+
+        <!-- booking admin and tech operations end -->
+
+        <!-- Requester login url starts-->
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings" >
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/booking_items" >
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/booking_items/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/booking_items/product_type">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/booking_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/booking_fields/(\d+)/(_?)get_values">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="field_spec_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/booking_fields/(_?)get_values">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="item_spec_list_info" name="input_data"/>
+        </url>
+
+        <url  user_type="all" method="put" roles="SDGuest,ViewRequester" path="/api/v3/booking_items/(\d+)/(_?)cancel">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="cancel_booking_template" name="input_data"/>
+        </url>
+        <url  user_type="all" method="put" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/(_?)cancel">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="cancel_booking_template" name="input_data"/>
+        </url>
+
+        <url  user_type="all" method="put" roles="SDGuest,ViewRequester" path="/api/v3/booking_items/(_?)cancel">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="cancel_booking_template" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url  user_type="all" method="put" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings/(\d+)/booking_items/(_?)cancel">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="cancel_booking_template" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+
+
+        <url method="get" path="/api/v3/asset_bookings/(_)metainfo" user_type="all" roles="SDGuest,ViewRequester"/>
+        <url method="get" path="/api/v3/asset_booking_settings/(_?)metainfo" user_type="all" roles="SDGuest,ViewRequester"/>
+
+        <url method="get" path="/api/v3/asset_bookings/(\d+)/(_?)metainfo" user_type="all" roles="SDGuest,ViewRequester"/>
+        <url method="get" path="/api/v3/asset_bookings/(\d+)/booking_items/(_?)metainfo" user_type="all" roles="SDGuest,ViewRequester"/>
+
+        <url user_type="all" method="post" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="asset_booking" name="input_data"/>
+        </url>
+        <url user_type="all" method="put" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings/(\d+)/(_?)reschedule">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="reschedule_booking" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings/(_?)get_asset_summary">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/asset_booking_settings">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/booked_assets/(_?)get_asset_availability">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="check_availability" name="input_data"/>
+        </url>
+
+        <url user_type="all" method="get" roles="SDGuest,ViewRequester" path="/api/v3/asset_bookings/purpose">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+
+        <url method="get" path="/api/v3/associated_assets/(\d+)/product_type/(\d+)/images/(\d+)" user_type="all" description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+
+        <!-- Requester login url ends-->
+
+        <!-- Booking Notification attachments url -->
+        <url remote_server="false" method="post" roles="BookingAdmin,BookingTechnician" path="/api/v3/asset_bookings/(_?)upload">
+        	<throttles key="url.path+url.dynamic_key" name="asset_bookings_upload_post" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="15"/>
+            </throttles>
+        </url>
+
+
+        <!-- Image related additional url for booking-->
+
+        <url user_type="all" method="get" path="/api/v3/asset_bookings/(\d+)/booked_by/(\d+)/images/(\d+)"  description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/asset_bookings/(\d+)/booking_items/product_type/(\d+)/images/(\d+)" description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/asset_bookings/(\d+)/booking_items/(\d+)/product_type/(\d+)/images/(\d+)" description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/booking_items/product_type/(\d+)/images/(\d+)" description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/booking_items/(\d+)/product_type/(\d+)/images/(\d+)" description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+
+        <url user_type="all" method="get" path="/api/v3/booking_fields/(\d+)/product_type/(\d+)/images/(\d+)" description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/booking_fields/product_type/(\d+)/images/(\d+)" description="As suggested by framework team, we cannot provide the role in the security xml, as the image token authentication will not be occurred">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+        </url>
+
+        <!-- booking url ends -->
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="asset_udf_fields_ref">
+            <key name-regex="true" name="udf_char" max-len="3500" type="String" max-occurrences="200"  secret="true"/>
+            <key name-regex="true" name="udf_sline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+            <key name-regex="true" name="udf_mline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+            <key name-regex="true" name="udf_pick" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+            <key name-regex="true" name="udf_pickref" type="JSONObject" template="IDNameJson" max-occurrences="200"  />
+            <key name-regex="true" name="udf_long" type="long" max-occurrences="200" secret="true"/>
+            <key name-regex="true" name="udf_date" type="JSONObject" template="datefield" max-occurrences="200" />
+        </jsontemplate>
+        <jsontemplate name="asset_meta">
+            <key name="for" regex="hardware|advanced_filter|udf_refer_entity_fields"/>
+            <key name="template" template="asset_meta_template" type="JSONObject" max-len="50"/>
+        </jsontemplate>
+        <jsontemplate name="asset_meta_template">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_base">
+            <key name="id" type="long"  range=">0"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="udf_fields" template="asset_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_tag" type="String" max-len="50" secret="true"/>
+            <key name="org_serial_number" type="String" max-len="50" secret="true"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="acquisition_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="warranty_expiry" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="expiry_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="location" type="String" max-len="250" secret="true"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="region" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="purchase_cost" type="double" range=">=0.0"/>
+            <key name="operational_cost" type="double" range=">=0.0"/>
+            <key name="total_cost" type="double" range=">=0.0"/>
+            <key name="current_cost" type="double" range=">=0.0"/>
+            <key name="costs" template="asset_cost_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="network_adapters" template="asset_sub_network_adapter_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_depreciation_configured" type="boolean" allow-invalid="false"/>
+            <key name="is_depreciation_calculated" type="boolean" allow-invalid="false"/>
+            <key name="discovered_serial_number" type="String" max-len="150" secret="true"/>
+            <key name="sys_uptime" type="String" max-len="100"/>
+            <key name="sys_name" type="String" max-len="150" secret="true"/>
+            <key name="sys_location" type="String" max-len="50" secret="true"/>
+            <key name="sys_description" type="String" max-len="500" secret="true"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="loan_start" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="loan_end" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="used_by_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="component_attachments" template="component_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_attachments" template="old_asset_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="depreciation_values" template="depreciation_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="device_type" template="device_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_personal" type="boolean" allow-invalid="false"/>
+            <key name="contracts" template="contract_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_loanable" type="boolean" allow-invalid="false"/>
+            <key name="last_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_success_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="ip_addresses" type="String" max-len="2000" secret="true"/>
+            <key name="primary_ip" type="String" max-len="2000" secret="true"/>
+            <key name="is_loaned" type="boolean" allow-invalid="false"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name=".+_fields" name-regex="true" template="asset_udf_fields_ref" type="JSONObject" max-len="-1" max-occurrences="500"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="purchase_order_no" type="String" max-len="20"/>
+            <key name="mac_address" type="String" max-len="50" secret="true"/>
+            <key name="region_sys_attribute" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="technician_sys_attribute" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="site_sys_attribute" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="state_history_comments" type="String" max-len="100"/>
+            <key name="retain_user_site" type="boolean" allow-invalid="false"/>
+            <key name="space" template="space_instance_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset">
+            <key name="asset" template="asset_base" type="JSONObject" max-len="-1"/>
+            <key name="assets" template="asset_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_unique_wrapper">
+            <key name="asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="old_asset_attachment_base">
+            <key name="child_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="parent_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="old_asset_attachment">
+            <key name="asset_attachment" template="old_asset_attachment_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="old_asset_attachment_unique_wrapper">
+            <key name="asset_attachment" template="old_asset_attachment_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_category_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+        </jsontemplate>
+        <jsontemplate name="asset_category_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+        </jsontemplate>
+        <jsontemplate name="asset_category">
+            <key name="asset_category" template="asset_category_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_category_unique_wrapper">
+            <key name="asset_category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="cost_factor" template="asset_cost_factor_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="cost_factor" template="asset_cost_factor_unique" type="JSONObject" max-len="-1"/>
+            <key name="amount" type="double" range=">=0.0"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="date" template="datefield" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost">
+            <key name="asset_cost" template="asset_cost_base" type="JSONObject" max-len="-1"/>
+            <key name="costs" template="asset_cost_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost_unique_wrapper">
+            <key name="asset_cost" template="asset_cost_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost_factor_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost_factor_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost_factor">
+            <key name="asset_cost_factor" template="asset_cost_factor_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_cost_factor_unique_wrapper">
+            <key name="asset_cost_factor" template="asset_cost_factor_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_group_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="is_static" type="boolean" allow-invalid="false"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_group">
+            <key name="asset_group" template="asset_group_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_group_unique_wrapper">
+            <key name="asset_group" template="asset_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_loan_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="custom_id" type="long" range=">0"/>
+            <key name="loaned_to" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="extended_to" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="status" type="String" max-len="20"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_loan_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="custom_id" type="long" range=">0"/>
+            <key name="loaned_assets" template="loaned_asset_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="loaned_to" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="extended_to" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="returned_on" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="status" type="String" max-len="20"/>
+            <key name="is_escalated" type="boolean" allow-invalid="false"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_on" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_unique" name="booking"/>
+        </jsontemplate>
+        <jsontemplate name="asset_loan">
+            <key name="asset_loan" template="asset_loan_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_loan_unique_wrapper">
+            <key name="asset_loan" template="asset_loan_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_type_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+        </jsontemplate>
+        <jsontemplate name="asset_type_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="30"/>
+        </jsontemplate>
+        <jsontemplate name="asset_type">
+            <key name="asset_type" template="asset_type_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_type_unique_wrapper">
+            <key name="asset_type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="associated_asset_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="sduser_id" type="long" range=">0"/>
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="image_file_name" type="String" max-len="250" secret="true"/>
+            <key name="loan_start" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="loan_end" template="datefield" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="associated_asset">
+            <key name="associated_asset" template="associated_asset_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="associated_asset_unique_wrapper">
+            <key name="associated_asset" template="associated_asset_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="audit_history_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="status" type="String" max-len="19"/>
+            <key name="message" type="String" max-len="250"/>
+            <key name="is_delta_scan" type="boolean"/>
+            <key name="scan_type" template="discovery_type_constant_base" type="JSONObject" max-len="-1"/>
+            <key name="scan_mode" template="discovery_type_constant_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="audit_history_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="status" type="String" max-len="19"/>
+            <key name="message" type="String" max-len="250"/>
+            <key name="is_delta_scan" type="boolean" allow-invalid="false"/>
+            <key name="hardware_history" template="hardware_audit_history_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="error_code" type="int" range=">=0"/>
+            <key name="scan_type" template="discovery_type_constant_base" type="JSONObject" max-len="-1"/>
+            <key name="scan_mode" template="discovery_type_constant_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="audit_history">
+            <key name="audit_history" template="audit_history_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="audit_history_unique_wrapper">
+            <key name="audit_history" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="month" type="int" range=">=0"/>
+            <key name="year" type="int" range=">=0"/>
+            <key name="depreciation_value" type="double" range=">0.0"/>
+            <key name="total_depreciation" type="double" range=">0.0"/>
+            <key name="book_value" type="double" range=">0.0"/>
+            <key name="remaining_life" type="int" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="month" type="int" range="0-12"/>
+            <key name="year" type="int" range=">0"/>
+            <key name="depreciation_value" type="double" range=">0.0"/>
+            <key name="total_depreciation" type="double" range=">0.0"/>
+            <key name="book_value" type="double" range=">0.0"/>
+            <key name="remaining_life" type="int" range=">0"/>
+            <key name="depreciated_percent" type="double" range="0-100"/>
+            <key name="is_current_month" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation">
+            <key name="depreciation" template="depreciation_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_unique_wrapper">
+            <key name="depreciation" template="depreciation_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_detail_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="depreciation_type" template="depreciation_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="salvage_value" type="double" range=">=0.0"/>
+            <key name="useful_life" type="long" range=">0"/>
+            <key name="depreciation_percent" type="double" range="1-100"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_detail_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="depreciation_type" template="depreciation_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="salvage_value" type="double" range=">=0.0"/>
+            <key name="useful_life" type="long" range=">0"/>
+            <key name="depreciation_percent" type="double" range="0-100"/>
+            <key name="asset_id" type="long" range=">0"/>
+            <key name="component_id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_detail">
+            <key name="depreciation_detail" template="depreciation_detail_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_detail_unique_wrapper">
+            <key name="depreciation_detail" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_type_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_type_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_type">
+            <key name="depreciation_type" template="depreciation_type_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="depreciation_type_unique_wrapper">
+            <key name="depreciation_type" template="depreciation_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="component_attachment_base">
+            <key name="child_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="parent_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="component_attachment">
+            <key name="component_attachment" template="component_attachment_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="component_attachment_unique_wrapper">
+            <key name="component_attachment" template="component_attachment_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <!-- asset_replenishment starts-->
+        <jsontemplate name="asset_replenishment_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="created_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_module" template="asset_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="threshold_count" type="long" range=">0"/>
+            <key name="inventory_count" type="long" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_replenishment">
+            <key name="asset_replenishment" template="asset_replenishment_base" type="JSONObject" max-len="-1"/>
+            <key name="asset_replenishments" template="asset_replenishment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_replenishment_unique_wrapper">
+            <key name="asset_replenishment" template="asset_replenishment_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_replenishment_state_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_replenishment_state_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="asset_replenishment_state">
+            <key name="asset_replenishment_state" template="asset_replenishment_state_base" type="JSONObject" max-len="-1"/>
+            <key name="asset_replenishment_states" template="asset_replenishment_state_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="asset_replenishment_state_unique_wrapper">
+            <key name="asset_replenishment_state" template="asset_replenishment_state_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <!-- asset_replenishment ends -->
+        <jsontemplate name="hardware_audit_history_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="audit_id" type="long" range=">0"/>
+            <key name="entity" type="String" max-len="30"/>
+            <key name="field" type="String" max-len="30"/>
+            <key name="value" type="String" max-len="2000"/>
+            <key name="old_value" type="String" max-len="2000"/>
+            <key name="secondary_value" type="String" max-len="2000"/>
+            <key name="operation" type="String" max-len="19"/>
+            <key name="operation_name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="hardware_audit_history">
+            <key name="hardware_audit_history" template="hardware_audit_history_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="hardware_audit_history_unique_wrapper">
+            <key name="hardware_audit_history" template="hardware_audit_history_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="loaned_asset_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="asset" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="loaned_asset_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="asset_loan" template="asset_loan_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+            <key name="is_returned" type="boolean" allow-invalid="false"/>
+            <key name="is_escalated" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="loaned_asset">
+            <key name="loaned_asset" template="loaned_asset_base" type="JSONObject" max-len="-1"/>
+            <key name="loaned_assets" template="loaned_asset_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="loaned_asset_unique_wrapper">
+            <key name="loaned_asset" template="loaned_asset_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="product_type_unique">
+            <key name="id" type="long" range=">0,-1" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="internal_name" type="String" max-len="250" secret="true"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="icon_name" template="media_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="product_type_base">
+            <key name="id" type="long" range=">0" allow-invalid="false"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="internal_name" type="String" max-len="250" secret="true"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="100"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_visible" type="boolean" allow-invalid="false"/>
+            <key name="is_default" type="boolean" allow-invalid="false"/>
+            <key name="icon_name" template="media_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="product_type">
+            <key name="product_type" template="product_type_base" type="JSONObject" max-len="-1"/>
+            <key name="product_types" template="product_type_base" type="JSONArray" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+        <jsontemplate name="product_type_unique_wrapper">
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="state_history_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="current_state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="previous_state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="state_start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="state_assigned_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="owner_start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="owner_assigned_by" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_leased" type="boolean" allow-invalid="false"/>
+            <key name="assigned_to" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="associated_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="state_history_comments" type="String" max-len="250"/>
+            <key name="owner_history_comments" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="state_history">
+            <key name="state_history" template="state_history_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="service_pack_unique">
+            <key name="id" type="long" range=">0" />
+            <key name="name" type="String" max-len="250" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_host_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="chassis_type" template="chassis_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_host_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="vm_platform" template="virtual_server_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="installed_vms" type="int" range=">=0"/>
+            <key name="allowed_vms" type="int" range=">=0"/>
+            <key name="workstation_udf_fields" template="asset_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="computer_system" template="computer_system_template" type="JSONObject" max-len="-1"/>
+            <key name="operating_system" template="operating_system_template" type="JSONObject" max-len="-1"/>
+            <key name="last_logged_user" type="String" max-len="100" secret="true"/>
+            <key name="keyboard" template="keyboard_template" type="JSONObject" max-len="-1"/>
+            <key name="memory" template="memory_template" type="JSONObject" max-len="-1"/>
+            <key name="sound_card" template="sound_card_template" type="JSONObject" max-len="-1"/>
+            <key name="processors" template="workstation_processor_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+            <key name="motherboards" template="workstation_motherboard_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="user_accounts" template="workstation_user_account_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="memory_modules" template="workstation_memory_module_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="hard_disks" template="workstation_hard_disk_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+            <key name="logical_drives" template="workstation_logical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="physical_drives" template="workstation_physical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="printer_details" template="workstation_printer_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="mouse" template="workstation_mouse_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="video_card" template="workstation_multimedia_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="monitors" template="workstation_monitor_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="ports" template="workstation_port_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="usb_controllers" template="workstation_usb_controller_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_remote_control_prompt_enabled" type="boolean" allow-invalid="false"/>
+            <key name="agent_version" type="String" max-len="250"/>
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_server" type="boolean" allow-invalid="false"/>
+            <key name="logical_cpu_count" type="long" range=">=0"/>
+            <key name="audit_history" template="audit_history_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="vm_type" type="int" range=">0"/>
+            <key name="vm_name" type="String" max-len="200" secret="true"/>
+            <key name="vm_host" template="virtual_host_unique" type="JSONObject" max-len="-1"/>
+            <key name="icon" type="String" max-len="100" description="since image names are not more then 100"/>
+            <key name="free_slots" type="long" range=">=0"/>
+            <key name="disk_space" type="long" range=">=0"/>
+            <key name="chassis_type" template="chassis_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="udf_fields" template="asset_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_tag" type="String" max-len="50" secret="true"/>
+            <key name="org_serial_number" type="String" max-len="50" secret="true"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="acquisition_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="warranty_expiry" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="expiry_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="location" type="String" max-len="250" secret="true"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="region" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="purchase_cost" type="double" range=">=0.0"/>
+            <key name="operational_cost" type="double" range=">=0.0"/>
+            <key name="total_cost" type="double" range=">=0.0"/>
+            <key name="current_cost" type="double" range=">=0.0"/>
+            <key name="costs" template="asset_cost_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="network_adapters" template="network_adapter_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_depreciation_configured" type="boolean" allow-invalid="false"/>
+            <key name="is_depreciation_calculated" type="boolean" allow-invalid="false"/>
+            <key name="discovered_serial_number" type="String" max-len="150" secret="true"/>
+            <key name="sys_uptime" type="String" max-len="100"/>
+            <key name="sys_name" type="String" max-len="150"  secret="true"/>
+            <key name="sys_location" type="String" max-len="50" secret="true"/>
+            <key name="sys_description" type="String" max-len="500" secret="true"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="loan_start" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="loan_end" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="used_by_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="component_attachments" template="component_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_attachments" template="old_asset_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="depreciation_values" template="depreciation_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="device_type" template="device_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_personal" type="boolean" allow-invalid="false"/>
+            <key name="contracts" template="contract_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_loanable" type="boolean" allow-invalid="false"/>
+            <key name="last_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_success_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="ip_addresses" type="String" max-len="2000" secret="true"/>
+            <key name="primary_ip" type="String" max-len="2000" secret="true"/>
+            <key name="is_loaned" type="boolean" allow-invalid="false"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name=".+_fields" name-regex="true" template="asset_udf_fields_ref" type="JSONObject" max-len="-1" max-occurrences="500"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="purchase_order_no" type="String" max-len="20"/>
+            <key name="mac_address" type="String" secret="true" max-len="50"/>
+            <key name="region_sys_attribute" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="technician_sys_attribute" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="site_sys_attribute" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="state_history_comments" type="String" max-len="100"/>
+            <key allow-invalid="false" type="boolean" name="retain_user_site"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_host">
+            <key name="virtual_host" template="virtual_host_base" type="JSONObject" max-len="-1"/>
+            <key name="virtual_hosts" template="virtual_host_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_host_unique_wrapper">
+            <key name="virtual_host" template="virtual_host_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_machine_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="vm_host" template="virtual_host_unique" type="JSONObject" max-len="-1"/>
+            <key name="vm_name" type="String" max-len="200" secret="true"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="chassis_type" template="chassis_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_machine_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="vm_host" template="virtual_host_unique" type="JSONObject" max-len="-1"/>
+            <key name="vm_name" type="String" max-len="200" secret="true"/>
+            <key name="memory_reservation" type="long" range=">0"/>
+            <key name="memory_limit" type="long" range=">=0"/>
+            <key name="memory_shares" type="int" range=">=0"/>
+            <key name="memory_sharelevel" type="String" max-len="100"/>
+            <key name="memory_configured" type="String" max-len="100"/>
+            <key name="cpu_reservation" type="int" range=">=0"/>
+            <key name="cpu_limit" type="long" range=">=0"/>
+            <key name="cpu_shares" type="int" range=">=0"/>
+            <key name="cpu_sharelevel" type="String" max-len="100"/>
+            <key name="cpu_configured" type="String" max-len="100"/>
+            <key name="cpu_reservation_percentage" type="int" range="0-100"/>
+            <key name="cpu_limit_percentage" type="int" range="0-100"/>
+            <key name="workstation_udf_fields" template="asset_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="computer_system" template="computer_system_template" type="JSONObject" max-len="-1"/>
+            <key name="operating_system" template="operating_system_template" type="JSONObject" max-len="-1"/>
+            <key name="last_logged_user" type="String" max-len="100" secret="true"/>
+            <key name="keyboard" template="keyboard_template" type="JSONObject" max-len="-1"/>
+            <key name="memory" template="memory_template" type="JSONObject" max-len="-1"/>
+            <key name="sound_card" template="sound_card_template" type="JSONObject" max-len="-1"/>
+            <key name="processors" template="workstation_processor_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+            <key name="motherboards" template="workstation_motherboard_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="user_accounts" template="workstation_user_account_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="memory_modules" template="workstation_memory_module_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="hard_disks" template="workstation_hard_disk_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+            <key name="logical_drives" template="workstation_logical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="physical_drives" template="workstation_physical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="printer_details" template="workstation_printer_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="mouse" template="workstation_mouse_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="video_card" template="workstation_multimedia_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="monitors" template="workstation_monitor_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="ports" template="workstation_port_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="usb_controllers" template="workstation_usb_controller_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_remote_control_prompt_enabled" type="boolean" allow-invalid="false"/>
+            <key name="agent_version" type="String" max-len="250"/>
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_server" type="boolean" allow-invalid="false"/>
+            <key name="logical_cpu_count" type="long" range=">=0"/>
+            <key name="audit_history" template="audit_history_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="vm_type" type="int" range=">=0"/>
+            <key name="allowed_vms" type="int" range=">=0"/>
+            <key name="vm_platform" template="virtual_server_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="icon" type="String" max-len="100" description="since image names are not more then 100"/>
+            <key name="free_slots" type="long" range=">=0"/>
+            <key name="disk_space" type="long" range=">=0"/>
+            <key name="chassis_type" template="chassis_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="udf_fields" template="asset_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_tag" type="String" max-len="50" secret="true"/>
+            <key name="org_serial_number" type="String" max-len="50" secret="true"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="acquisition_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="warranty_expiry" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="expiry_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="location" type="String" max-len="250" secret="true"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="region" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="purchase_cost" type="double" range=">=0.0"/>
+            <key name="operational_cost" type="double" range=">=0.0"/>
+            <key name="total_cost" type="double" range=">=0.0"/>
+            <key name="current_cost" type="double" range=">=0.0"/>
+            <key name="costs" template="asset_cost_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="network_adapters" template="network_adapter_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_depreciation_configured" type="boolean" allow-invalid="false"/>
+            <key name="is_depreciation_calculated" type="boolean" allow-invalid="false"/>
+            <key name="discovered_serial_number" type="String" max-len="150" secret="true"/>
+            <key name="sys_uptime" type="String" max-len="100"/>
+            <key name="sys_name" type="String" max-len="150" secret="true"/>
+            <key name="sys_location" type="String" max-len="50" secret="true"/>
+            <key name="sys_description" type="String" max-len="500" secret="true"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="loan_start" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="loan_end" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="used_by_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="component_attachments" template="component_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_attachments" template="old_asset_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="depreciation_values" template="depreciation_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="device_type" template="device_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_personal" type="boolean" allow-invalid="false"/>
+            <key name="contracts" template="contract_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_loanable" type="boolean" allow-invalid="false"/>
+            <key name="last_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_success_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="ip_addresses" type="String" max-len="2000" secret="true"/>
+            <key name="primary_ip" type="String" max-len="2000" secret="true"/>
+            <key name="is_loaned" type="boolean" allow-invalid="false"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name=".+_fields" name-regex="true" template="asset_udf_fields_ref" type="JSONObject" max-len="-1" max-occurrences="500"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="purchase_order_no" type="String" max-len="20"/>
+            <key name="mac_address" type="String" secret="true" max-len="50"/>
+            <key name="region_sys_attribute" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="technician_sys_attribute" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="site_sys_attribute" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="state_history_comments" type="String" max-len="100"/>
+            <key allow-invalid="false" type="boolean" name="retain_user_site"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_machine">
+            <key name="virtual_machine" template="virtual_machine_base" type="JSONObject" max-len="-1"/>
+            <key name="virtual_machines" template="virtual_machine_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_machine_unique_wrapper">
+            <key name="virtual_machine" template="virtual_machine_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_server_type_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="usage_order" type="int" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_server_type_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="usage_order" type="int" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_server_type">
+            <key name="virtual_server_type" template="virtual_server_type_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="virtual_server_type_unique_wrapper">
+            <key name="virtual_server_type" template="virtual_server_type_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="chassis_type" template="chassis_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="workstation_udf_fields" template="asset_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="computer_system" template="computer_system_template" type="JSONObject" max-len="-1"/>
+            <key name="operating_system" template="operating_system_template" type="JSONObject" max-len="-1"/>
+            <key name="last_logged_user" type="String" max-len="100" secret="true"/>
+            <key name="keyboard" template="keyboard_template" type="JSONObject" max-len="-1"/>
+            <key name="memory" template="memory_template" type="JSONObject" max-len="-1"/>
+            <key name="sound_card" template="sound_card_template" type="JSONObject" max-len="-1"/>
+            <key name="processors" template="workstation_processor_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+            <key name="motherboards" template="workstation_motherboard_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="user_accounts" template="workstation_user_account_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="memory_modules" template="workstation_memory_module_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="hard_disks" template="workstation_hard_disk_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+            <key name="logical_drives" template="workstation_logical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="physical_drives" template="workstation_physical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="printer_details" template="workstation_printer_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="mouse" template="workstation_mouse_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="video_card" template="workstation_multimedia_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="monitors" template="workstation_monitor_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="ports" template="workstation_port_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="usb_controllers" template="workstation_usb_controller_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_remote_control_prompt_enabled" type="boolean" allow-invalid="false"/>
+            <key name="agent_version" type="String" max-len="250"/>
+            <key name="domain" template="domain_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_server" type="boolean" allow-invalid="false"/>
+            <key name="logical_cpu_count" type="long" range=">=0"/>
+            <key name="audit_history" template="audit_history_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="vm_type" type="int" range=">=0"/>
+            <key name="allowed_vms" type="int" range=">=0"/>
+            <key name="vm_name" type="String" max-len="200" secret="true"/>
+            <key name="vm_host" template="virtual_host_unique" type="JSONObject" max-len="-1"/>
+            <key name="vm_platform" template="virtual_server_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="icon" type="String" max-len="100" description="since image names are not more then 100"/>
+            <key name="free_slots" type="long" range=">=0"/>
+            <key name="disk_space" type="long" range=">=0"/>
+            <key name="chassis_type" template="chassis_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="name" type="String" max-len="200" secret="true"/>
+            <key name="udf_fields" template="asset_udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_tag" type="String" max-len="50" secret="true"/>
+            <key name="org_serial_number" type="String" max-len="50" secret="true"/>
+            <key name="barcode" type="String" max-len="100" secret="true"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="acquisition_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="warranty_expiry" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="expiry_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="location" type="String" max-len="250" secret="true"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="region" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="purchase_cost" type="double" range=">=0.0"/>
+            <key name="operational_cost" type="double" range=">=0.0"/>
+            <key name="total_cost" type="double" range=">=0.0"/>
+            <key name="current_cost" type="double" range=">=0.0"/>
+            <key name="costs" template="asset_cost_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_depreciation" template="depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="network_adapters" template="asset_sub_network_adapter_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_depreciation_configured" type="boolean" allow-invalid="false"/>
+            <key name="is_depreciation_calculated" type="boolean" allow-invalid="false"/>
+            <key name="discovered_serial_number" type="String" max-len="150" secret="true"/>
+            <key name="sys_uptime" type="String" max-len="100"/>
+            <key name="sys_name" type="String" max-len="150" secret="true"/>
+            <key name="sys_location" type="String" max-len="50" secret="true"/>
+            <key name="sys_description" type="String" max-len="500" secret="true"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+            <key name="loan_start" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="loan_end" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="used_by_asset" template="asset_unique" type="JSONObject" max-len="-1"/>
+            <key name="component_attachments" template="component_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="asset_attachments" template="old_asset_attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="depreciation_values" template="depreciation_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="device_type" template="device_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="state" template="asset_state_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_personal" type="boolean" allow-invalid="false"/>
+            <key name="contracts" template="contract_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="is_loanable" type="boolean" allow-invalid="false"/>
+            <key name="last_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="last_success_audit" template="audit_history_unique" type="JSONObject" max-len="-1"/>
+            <key name="ci" template="ci_unique" type="JSONObject" max-len="-1"/>
+            <key name="ip_addresses" type="String" max-len="2000" secret="true"/>
+            <key name="primary_ip" type="String" max-len="2000" secret="true"/>
+            <key name="is_loaned" type="boolean" allow-invalid="false"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name=".+_fields" name-regex="true" template="asset_udf_fields_ref" type="JSONObject" max-len="-1" max-occurrences="500"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="purchase_order_no" type="String" max-len="20"/>
+            <key name="mac_address" type="String" max-len="50" secret="true"/>
+            <key name="region_sys_attribute" template="region_unique" type="JSONObject" max-len="-1"/>
+            <key name="technician_sys_attribute" template="technician_unique" type="JSONObject" max-len="-1"/>
+            <key name="site_sys_attribute" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="state_history_comments" type="String" max-len="100"/>
+            <key name="retain_user_site" type="boolean" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="workstation">
+            <key name="workstation" template="workstation_base" type="JSONObject" max-len="-1"/>
+            <key name="workstations" template="workstation_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_unique_wrapper">
+            <key name="workstation" template="workstation_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_hard_disk_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="model" type="String" max-len="50"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="capacity" type="long" range=">=0"/>
+            <key name="free_space" type="long" range=">=0"/>
+            <key name="drive_type" type="String" max-len="25"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_hard_disk">
+            <key name="workstation_hard_disk" template="workstation_hard_disk_base" type="JSONObject" max-len="-1"/>
+            <key name="hard_disks" template="workstation_hard_disk_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_hard_disk_unique_wrapper">
+            <key name="workstation_hard_disk" template="workstation_hard_disk_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_logical_drive_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="50" secret="true"/>
+            <key name="drive_type" type="String" max-len="25"/>
+            <key name="capacity" type="long" range=">=0"/>
+            <key name="free_space" type="long" range=">=0"/>
+            <key name="file_system" type="String" max-len="50" secret="true"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_logical_drive">
+            <key name="workstation_logical_drive" template="workstation_logical_drive_base" type="JSONObject" max-len="-1"/>
+            <key name="logical_drives" template="workstation_logical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_logical_drive_unique_wrapper">
+            <key name="workstation_logical_drive" template="workstation_logical_drive_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_memory_module_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="module_tag" type="String" max-len="100"/>
+            <key name="capacity" type="long" range=">=0"/>
+            <key name="socket" type="String" max-len="100"/>
+            <key name="bank_label" type="String" max-len="100" secret="true"/>
+            <key name="memory_type" type="String" max-len="100"/>
+            <key name="frequency" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_memory_module">
+            <key name="workstation_memory_module" template="workstation_memory_module_base" type="JSONObject" max-len="-1"/>
+            <key name="memory_modules" template="workstation_memory_module_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_memory_module_unique_wrapper">
+            <key name="workstation_memory_module" template="workstation_memory_module_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_monitor_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="monitor_type" type="String" max-len="100"/>
+            <key name="resolution" type="String" max-len="100"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_monitor">
+            <key name="workstation_monitor" template="workstation_monitor_base" type="JSONObject" max-len="-1"/>
+            <key name="monitors" template="workstation_monitor_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_monitor_unique_wrapper">
+            <key name="workstation_monitor" template="workstation_monitor_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_mouse_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="mouse_type" type="String" max-len="100"/>
+            <key name="buttons" type="long" range=">=0"/>
+            <key name="mouse_serial_number" type="String" max-len="100" secret="true"/>
+            <key name="mouse_manufacturer" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_mouse">
+            <key name="workstation_mouse" template="workstation_mouse_base" type="JSONObject" max-len="-1"/>
+            <key name="mouse" template="workstation_mouse_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_mouse_unique_wrapper">
+            <key name="workstation_mouse" template="workstation_mouse_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_multimedia_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="memory" type="long" range=">=0"/>
+            <key name="chipset" type="String" max-len="250" secret="true"/>
+            <key name="bios_version" type="String" max-len="25" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_multimedia">
+            <key name="workstation_multimedia" template="workstation_multimedia_base" type="JSONObject" max-len="-1"/>
+            <key name="video_card" template="workstation_multimedia_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_multimedia_unique_wrapper">
+            <key name="workstation_multimedia" template="workstation_multimedia_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_physical_drive_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="drive_type" type="String" max-len="250"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="version" type="String" max-len="50"/>
+            <key name="date" type="String" max-len="30"/>
+            <key name="provider" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_physical_drive">
+            <key name="workstation_physical_drive" template="workstation_physical_drive_base" type="JSONObject" max-len="-1"/>
+            <key name="physical_drives" template="workstation_physical_drive_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_physical_drive_unique_wrapper">
+            <key name="workstation_physical_drive" template="workstation_physical_drive_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_port_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="status" type="String" max-len="25"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_port">
+            <key name="workstation_port" template="workstation_port_base" type="JSONObject" max-len="-1"/>
+            <key name="ports" template="workstation_port_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_port_unique_wrapper">
+            <key name="workstation_port" template="workstation_port_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_printer_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100" secret="true"/>
+            <key name="server" type="String" max-len="100" secret="true"/>
+            <key name="type" type="String" max-len="25"/>
+            <key name="is_default" type="String" max-len="5"/>
+            <key name="model" type="String" max-len="100"/>
+            <key name="location" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_printer">
+            <key name="workstation_printer" template="workstation_printer_base" type="JSONObject" max-len="-1"/>
+            <key name="printer_details" template="workstation_printer_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_printer_unique_wrapper">
+            <key name="workstation_printer" template="workstation_printer_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_processor_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="core_count" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="speed" type="double" range=">=0.0"/>
+            <key name="manufacturer" type="String" max-len="50"/>
+            <key name="model" type="String" max-len="50"/>
+            <key name="cpu_stepping" type="String" max-len="50"/>
+            <key name="family" type="String" max-len="50"/>
+            <key name="serial_number" type="String" max-len="50" secret="true"/>
+            <key name="number_of_cores" type="long" range=">0"/>
+            <key name="cpu_manufacturer" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_processor">
+            <key name="workstation_processor" template="workstation_processor_base" type="JSONObject" max-len="-1"/>
+            <key name="processors" template="workstation_processor_base" type="JSONArray" max-len="-1" array-size="0-200"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_processor_unique_wrapper">
+            <key name="workstation_processor" template="workstation_processor_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_motherboard_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="serial_number" type="String" max-len="100" secret="true"/>
+            <key name="manufacturer" type="String" max-len="100"/>
+            <key name="model" type="String" max-len="100"/>
+            <key name="product" type="String" max-len="100"/>
+            <key name="version" type="String" max-len="100"/>
+            <key name="installed_date" type="JSONObject" template="datefield" />
+            <key name="part_number" type="String" max-len="100"/>
+            <key name="primary_bus_type" type="String" max-len="100"/>
+            <key name="secondary_bus_type" type="String" max-len="100"/>
+            <key name="device_status" type="String" max-len="100"/>
+            <key name="description" type="String" max-len="100" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_motherboard">
+            <key name="workstation_motherboard" template="workstation_motherboard_base" type="JSONObject" max-len="1400"/>
+            <key name="motherboards" template="workstation_motherboard_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_usb_controller_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_usb_controller">
+            <key name="workstation_usb_controller" template="workstation_usb_controller_base" type="JSONObject" max-len="-1"/>
+            <key name="usb_controllers" template="workstation_usb_controller_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_usb_controller_unique_wrapper">
+            <key name="workstation_usb_controller" template="workstation_usb_controller_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_user_account_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="domain" secret="true" type="String" max-len="250"/>
+            <key name="full_name" type="String" max-len="250"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="status" type="String" max-len="250"/>
+            <key name="sid" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_user_account">
+            <key name="workstation_user_account" template="workstation_user_account_base" type="JSONObject" max-len="-1"/>
+            <key name="user_accounts" template="workstation_user_account_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="workstation_user_account_unique_wrapper">
+            <key name="workstation_user_account" template="workstation_user_account_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="prod_icon">
+            <key name="content-url" regex="/api/v3/[a-z0-9_/]+/images/(\d+)"/>
+            <key name="id" type="long" range=">=0"/>
+            <key name="primary" type="boolean"/>
+        </jsontemplate>
+        <!-- asset booking template ends -->
+        <jsontemplate name="asset_booking_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key type="long" name="display_id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="booked_by"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="start_time"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="end_time"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_status_unique" name="status"/>
+        </jsontemplate>
+        <jsontemplate name="asset_booking_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key type="long" name="display_id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="booking_purpose_unique" name="purpose"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="booking_item_base" name="booking_items"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="asset_loan_unique" name="asset_loans"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="booked_asset_unique" name="booked_assets"/>
+            <key max-len="-1" type="JSONObject" template="booking_type_template" name="product_type"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="booked_by"/>
+            <key max-len="-1" type="JSONObject" template="department_unique" name="department"/>
+            <key max-len="-1" type="JSONObject" template="site_unique" name="site"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="start_time"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="end_time"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_status_unique" name="status"/>
+            <key max-len="250" type="String" name="comments"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="created_on"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="last_updated_by"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="last_updated_on"/>
+        </jsontemplate>
+        <jsontemplate name="asset_booking">
+            <key max-len="-1" type="JSONObject" template="asset_booking_base" name="asset_booking"/>
+        </jsontemplate>
+        <jsontemplate name="asset_booking_setting_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key type="long" name="allowed_maximum_booking_days" range="1-366"/>
+            <key type="long" name="advance_booking_minimum_days" range="1-366" />
+            <key type="long" name="advance_booking_maximum_days" range="1-366"/>
+            <key type="long" name="minimum_booking_interval_time" range="0-8787" />
+            <key allow-invalid="false" type="boolean" name="is_booking_enabled"/>
+            <key type="long" name="custom_booking_id" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="asset_booking_setting">
+            <key max-len="-1" type="JSONObject" template="asset_booking_setting_base" name="asset_booking_setting"/>
+        </jsontemplate>
+        <jsontemplate name="asset_booking_status_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="100" type="String" name="name"/>
+            <key max-len="100" type="String" name="internal_name"/>
+        </jsontemplate>
+        <jsontemplate name="asset_booking_status_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="100" type="String" name="name"/>
+            <key max-len="100" type="String" name="internal_name"/>
+            <key max-len="250" type="String" name="description" secret="true"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="created_by"/>
+            <key allow-invalid="false" type="boolean" name="deleted"/>
+        </jsontemplate>
+        <jsontemplate name="asset_booking_status">
+            <key max-len="-1" type="JSONObject" template="asset_booking_status_base" name="asset_booking_status"/>
+        </jsontemplate>
+        <jsontemplate name="booked_asset_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="booking_item_unique" name="booking_item"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_unique" name="booking"/>
+            <key max-len="-1" type="JSONObject" template="all_asset_template_unique" name="asset"/>
+            <key allow-invalid="false" type="boolean" name="is_loaned"/>
+        </jsontemplate>
+        <jsontemplate name="booked_asset_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="booking_item_unique" name="booking_item"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_unique" name="booking"/>
+            <key max-len="-1" type="JSONObject" template="all_asset_template_unique" name="asset"/>
+            <key allow-invalid="false" type="boolean" name="is_loaned"/>
+        </jsontemplate>
+        <jsontemplate name="booked_asset">
+            <key max-len="-1" type="JSONObject" template="booked_asset_base" name="booked_asset"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="booked_asset_base" name="booked_assets"/>
+        </jsontemplate>
+        <jsontemplate name="booking_field_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="product_type_unique" name="product_type"/>
+            <key max-len="100" type="String" name="group_name"/>
+            <key max-len="100" type="String" name="field_name"/>
+        </jsontemplate>
+        <jsontemplate name="booking_field_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="product_type_unique" name="product_type"/>
+            <key max-len="100" type="String" name="group_name"/>
+            <key max-len="100" type="String" name="field_name"/>
+            <key max-len="-1" type="JSONObject" template="udf_field_unique" name="udf_field"/>
+            <key allow-invalid="false" type="boolean" name="is_enabled"/>
+        </jsontemplate>
+        <jsontemplate name="booking_field">
+            <key max-len="-1" type="JSONObject" template="booking_field_base" name="booking_field"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="booking_field_base" name="booking_fields"/>
+        </jsontemplate>
+        <jsontemplate name="booking_item_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_unique" name="booking"/>
+            <key max-len="-1" type="JSONObject" template="product_type_unique" name="product_type"/>
+            <key max-len="50000" type="JSONObject|JSONArray" template="search_criteria" name="criteria" secret="true"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_status_unique" name="status"/>
+        </jsontemplate>
+        <jsontemplate name="booking_item_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_unique" name="booking"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="booked_asset_base" name="booked_assets"/>
+            <key max-len="-1" type="JSONObject" template="product_type_unique" name="product_type"/>
+            <key max-len="50000" type="JSONObject|JSONArray" template="search_criteria" name="criteria"/>
+            <key type="long" name="total_count" range="1-100"/>
+            <key type="long" name="loaned_count" range="0-100"/>
+            <key max-len="-1" type="JSONObject" template="asset_booking_status_unique" name="status"/>
+        </jsontemplate>
+        <jsontemplate name="booking_item">
+            <key max-len="-1" type="JSONObject" template="booking_item_base" name="booking_item"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="booking_item_base" name="booking_items"/>
+        </jsontemplate>
+        <jsontemplate name="booking_purpose_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="100" min-len="2" type="String" name="name"/>
+        </jsontemplate>
+        <jsontemplate name="booking_purpose_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="100" min-len="2" type="String" name="name"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="created_by"/>
+            <key allow-invalid="false" type="boolean" name="deleted"/>
+        </jsontemplate>
+        <jsontemplate name="booking_purpose">
+            <key max-len="-1" type="JSONObject" template="booking_purpose_base" name="booking_purpose"/>
+        </jsontemplate>
+        <jsontemplate name="booking_history_template">
+            <key name="for" regex="history_filter"/>
+        </jsontemplate>
+        <jsontemplate name="reschedule_booking">
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="cancel_booking_template">
+            <key name="ids" type="JSONArray" template="id_array" array-size="0-100" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="check_availability">
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="booking_items" template="booking_product_type_template" type="JSONArray" array-size="0-100" max-len="-1"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="booking_product_type_template" >
+            <key name="display_order" type="long" range=">0"/>
+            <key name="order" type="long" range=">0"/>
+            <key name="required_count" type="long" range=">0"/>
+            <key name="product_type" template="product_type_template" type="JSONObject" max-len="-1" />
+            <key name="criteria" template="search_criteria" type="JSONObject|JSONArray" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="booking_type_template">
+            <key name="display_name" type="String" max-occurrences="1" max-len="250"/>
+            <key name="trimmed_name" type="String" max-occurrences="1" max-len="1000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="item_spec_list_info">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1" />
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1" />
+            <key name="criteria" template="search_criteria" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="field_spec_list_info">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+            <key name="start_time" template="datefield" type="JSONObject" max-len="-1" />
+            <key name="end_time" template="datefield" type="JSONObject" max-len="-1" />
+            <key name="criteria" template="search_criteria" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <!-- asset booking template ends -->
+    </jsontemplates>
+</security>

@@ -1,0 +1,83 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\": [{\"status_code\": 2000, \"status\": \"success\"} ], \"associated_requests\": [{\"requester\": {\"email_id\": null, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\"}, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"template\": {\"is_service_template\": false, \"service_category\": null, \"name\": \"Default Request\", \"id\": \"1\"}, \"short_description\": \"\", \"created_time\": {\"display_value\": \"Jul 5, 2023 03:57 PM\", \"value\": \"1688552832375\"}, \"subject\": \"dwa\", \"is_overdue\": false, \"technician\": null, \"priority\": null, \"created_by\": {\"email_id\": null, \"phone\": \"1234455\", \"name\": \"administrator\", \"mobile\": \"1234567890\", \"profile_pic\": {\"content-url\": \"/images/default-profile-pic2.svg\"}, \"is_vipuser\": false, \"id\": \"5\", \"department\": null }, \"due_by_time\": null, \"response_time_elapsed\": null, \"site\": null, \"is_service_request\": false, \"cancel_requested_is_pending\": false, \"cancel_requested\": false, \"id\": \"3\", \"status\": {\"color\": \"\", \"name\": \"Cancelled\", \"id\": \"7\"}, \"group\": null } ], \"list_info\": {\"has_more_rows\": false, \"start_index\": 1, \"row_count\": 1 } }"},
+            "path": ["/api/v3/projects/{project_id}/associated_requests"],
+            "method": "GET",
+            "moduleName" : "Request",
+            "workflow": "",
+            "disp_desc": "Get Request associations",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all request details associated with a project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Request",
+            "workflow": "",
+            "disp_desc": "Associate Request",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"},{\"status_code\":2000,\"status\":\"success\"}],\"requests\":[{\"project\":{\"id\":\"1\"},\"request\":{\"id\":\"1\"}},{\"project\":{\"id\":\"1\"},\"request\":{\"id\":\"2\"}}]}"},
+            "path": ["/api/v3/projects/{project_id}/requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"requests\":[{\"request\":{\"id\":\"1\"}},{\"request\":{\"id\":\"2\"}}]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to associate a request with a project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs."
+        },
+        {
+            "method": "DELETE",
+            "moduleName" : "Request",
+            "workflow": "",
+            "disp_desc": "Dissociate Request",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"},{\"status_code\":2000,\"status\":\"success\"}]}"},
+            "path": ["/api/v3/projects/{project_id}/requests"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"requests\":[{\"request\":{\"id\":\"2\"}},{\"request\":{\"id\":\"3\"}}]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to dissociate a request from a project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "project",
+            "column": "WOTOPROJECTS:PROJECTID",
+            "inOD": "false",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "request",
+            "column": "WOTOPROJECTS:WORKORDERID",
+            "inOD": "false",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1611252174000
+}

@@ -1,0 +1,192 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/questions"
+      ],
+      "desc": "This operation lets you add a question",
+      "disp_desc": "Add Question",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"question\":{\"question\":\" Choose the laptop brand ? \",\"type\":\"text / pick_list / checkbox \",\"product_type \":{\"id\":\"1 \",\"name\":\"Access Point \"},\"answer_options\":[{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"},{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"}]}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"question\":{\"id\":2967,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \",\"type\":\"text / pick_list / checkbox \",\"product_type \":{\"id\":\"1 \",\"name\":\"Access Point \"},\"answer_options\":[{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"},{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/questions/{question_id}"
+      ],
+      "desc": "This operation lets you update a question",
+      "disp_desc": "Update Question",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"question\":{\"question\":\" Choose the laptop brand ? \",\"type\":\"text / pick_list / checkbox \",\"product_type \":{\"id\":\"1 \",\"name\":\"Access Point \"},\"answer_options\":[{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"},{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"}]}}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"question\":{\"id\":1,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \",\"type\":\"text / pick_list / checkbox \",\"product_type \":{\"id\":\"1 \",\"name\":\"Access Point \"},\"answer_options\":[{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"},{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/questions/{question_id}"
+      ],
+      "desc": "This operation lets you fetch details of a question",
+      "disp_desc": "View Question",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"question\":{\"id\":2967,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \",\"type\":\"text / pick_list / checkbox \",\"product_type \":{\"id\":\"1 \",\"name\":\"Access Point \"},\"answer_options\":[{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"},{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"}]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/resources/{resource_id}/questions",
+        "/api/v3/questions"
+      ],
+      "desc": "This operation lets you fetch all questions",
+      "disp_desc": "View All Questions",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"questions\":[{\"id\":2967,\"field_key\":\"question_2967 \",\"question\":\" Choose the laptop brand ? \",\"type\":\"text / pick_list / checkbox \",\"product_type \":{\"id\":\"1 \",\"name\":\"Access Point \"},\"answer_options\":[{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"},{\"id\":\"1 \",\"name\":\"sony WIFI Access Point \"}]}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/questions/{question_id}"
+      ],
+      "desc": "This operation lets you delete a question",
+      "disp_desc": "Delete Question",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique Identifier of the question",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "question",
+      "type": "String",
+      "desc": "Actual question string",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "answer_options",
+      "type": "Array of Objects",
+      "desc": "Answer options can be provided manually or it could be the product list under the product_type selected",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "field_key",
+      "type": "String",
+      "desc": "Used under request to provide the answers",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "type",
+      "type": "String",
+      "desc": "Defines the type of answer. Possible values can be \"text\" | \"pick_list\" | \"checkbox \"",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "product_type",
+      "type": "Object",
+      "desc": "Type of the product from where the possible options will be derived.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1479118442000
+}

@@ -1,0 +1,293 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN">
+<html>
+<div id="foshelpcard">
+  <head>
+    <!--(==============================================================)-->
+    <!--(Document created with RoboEditor. )============================-->
+    <!--(==============================================================)-->
+    <title>FOS 配置</title>
+    <!--(Meta)==========================================================-->
+    <meta name="generator" content="RoboHELP by eHelp Corporation - www.ehelp.com">
+    <meta name="generator-major-version" content="0.1">
+    <meta name="generator-minor-version" content="1">
+    <meta name="filetype" content="kadov">
+    <meta name="filetype-version" content="1">
+    <meta name="page-count" content="1">
+    <meta name="layout-height" content="675">
+    <meta name="layout-width" content="959">
+    <meta name="date" content="02 8, 2007 6:32:51 PM">
+    <!--(Body)==========================================================-->
+  </head>
+  <body>
+  故障转移服务 (FOS) 配置可以确保ServiceDesk Plus在遭遇硬件/软件故障时保持可用。
+  <div class="mt15">
+    故障转移服务通过热-备用系统来工作：其主服务器运行ServiceDesk Plus，而备服务器处于备用模式，并定期监视主服务器的运行状况。如果主服务器出现故障，它将作为主服务器接管运行。当主服务器恢复故障后，它将作为备用服务器启动。
+  </div>
+  <div class="mt15">
+    主备服务器需连接到一个共用的数据库服务器以及一个共用的网络路径。
+  </div>
+  <div class="mt15">
+    选择<strong>启用 FOS 启动模式</strong>复选框，在故障转移服务模式下加载ServiceDesk Plus。
+  </div>
+  <span class="sb disp-ib mb10 mt10">
+    <h5>主机器信息：</h5>
+  </span>
+  <ul class="pl30 mb0">
+    <li>
+      <span class="sb">主服务器IP&nbsp;-&nbsp;</span>输入ServiceDesk Plus所在的主服务器的IP地址。
+    </li>
+    <li class="mt15">
+      <span class="sb">主服务器NIC &nbsp;-&nbsp;</span>输入主服务器的网络接口卡 (NIC) 地址 (也称作物理地址)。NIC 地址应放在 { } 括号内。
+    </li>
+    <details class="mt15 helpdetailstag">
+      <summary class="sb"><span class="detailsarrow"></span>识别NIC地址的工具</summary>
+      <ul class="pl30 mt10 lh24">
+        <li>ServiceDesk Plus内置了工具来帮助您识别您的NIC地址。</li>
+        <li>在您的主服务器上，打开<span class="sb">{SDP_Home}\bin目录</span>，然后执行<span
+                class="sb">iflist.exe </span>工具。</li></span>
+        <li>定位适配器状态为<b> UP</b>的NIC卡，将其适配器名称复制到ServiceDesk Plus。</li>
+      </ul>
+    </details>
+    <li class="mt15">
+      <span class="sb">主服务器的子网掩码&nbsp;-&nbsp;</span>输入子网掩码以根据主服务器IP地址确定网络ID和主机ID。<strong> 缺省的子网掩码为
+      255.255.255.0</strong>，您可以按需修改为其它有效的子网掩码。
+    </li>
+  </ul>
+  <details class="pl30 mt15 mb0 helpdetailstag">
+    <summary class="sb"><span class="detailsarrow"></span>有效的子网掩码：</summary>
+    <table width="95%" border="1" align="center" cellpadding="6" class="mt15">
+      <tr>
+        <th></th>
+        <th>有效的子网掩码值</th>
+      </tr>
+      <tr>
+        <td>/30</td>
+        <td>255.255.255.252</td>
+      </tr>
+      <tr>
+        <td>/29</td>
+        <td>255.255.255.248</td>
+      </tr>
+      <tr>
+        <td>/28</td>
+        <td>255.255.255.240</td>
+      </tr>
+      <tr>
+        <td>/27</td>
+        <td>255.255.255.224</td>
+      </tr>
+      <tr>
+        <td>/26</td>
+        <td>255.255.255.192</td>
+      </tr>
+      <tr>
+        <td>/25</td>
+        <td>255.255.255.128</td>
+      </tr>
+      <tr>
+        <td>/24</td>
+        <td>255.255.255.0</td>
+      </tr>
+      <tr>
+        <td>/23</td>
+        <td>255.255.254.0</td>
+      </tr>
+      <tr>
+        <td>/22</td>
+        <td>255.255.252.0</td>
+      </tr>
+      <tr>
+        <td>/21</td>
+        <td>255.255.248.0</td>
+      </tr>
+      <tr>
+        <td>/20</td>
+        <td>255.255.240.0</td>
+      </tr>
+      <tr>
+        <td>/19</td>
+        <td>255.255.224.0</td>
+      </tr>
+      <tr>
+        <td>/18</td>
+        <td>255.255.192.0</td>
+      </tr>
+      <tr>
+        <td>/17</td>
+        <td>255.255.128.0</td>
+      </tr>
+      <tr>
+        <td>/16</td>
+        <td>255.255.0.0</td>
+      </tr>
+    </table>
+  </details>
+  <span class="sb mt10 mb10 disp-ib">
+    <h5>备机器信息：</h5>
+  </span>
+  <ul class="pl30 mb0">
+    <li>
+      <span class="sb">备服务器IP&nbsp;-&nbsp;</span>输入您的备用服务器的IP地址。
+    </li>
+    <li class="mt15">
+      <span class="sb">备服务器的NIC&nbsp;-&nbsp;</span>输入您的备服务器的网络接口卡 (NIC) 地址 (也称作物理地址)。NIC地址应放在 { }括号内。
+    </li>
+    <details class="mt15 helpdetailstag">
+      <summary class="sb"><span class="detailsarrow"></span>识别NIC地址的工具</summary>
+      <ul class="pl30 mt10 lh24">
+        <li>ServiceDesk Plus内置了工具来帮助您识别您的NIC地址。</li>
+        <li>在您的主服务器上，打开<span class="sb">{SDP_Home}\bin目录</span>，然后执行<span
+                class="sb">iflist.exe </span>工具。</li></span>
+        <li>定位适配器状态为<b> UP</b>的NIC卡，将其适配器名称复制到ServiceDesk Plus。</li>
+      </ul>
+    </details>
+    <li class="mt15">
+      <span class="sb">备服务器的子网掩码&nbsp;-&nbsp;</span>输入子网掩码以根据备服务器IP地址确定网络ID和主机ID。<strong> 缺省的子网掩码为
+      255.255.255.0</strong>，您可以按需修改为其它有效的子网掩码。
+    </li>
+  </ul>
+  <details class="pl30 mt15 mb0 helpdetailstag">
+    <summary class="sb"><span class="detailsarrow"></span>有效的子网掩码：</summary>
+    <table width="95%" border="1" align="center" cellpadding="6" class="mt15">
+      <tr>
+        <th></th>
+        <th>有效的子网掩码值</th>
+      </tr>
+      <tr>
+        <td>/30</td>
+        <td>255.255.255.252</td>
+      </tr>
+      <tr>
+        <td>/29</td>
+        <td>255.255.255.248</td>
+      </tr>
+      <tr>
+        <td>/28</td>
+        <td>255.255.255.240</td>
+      </tr>
+      <tr>
+        <td>/27</td>
+        <td>255.255.255.224</td>
+      </tr>
+      <tr>
+        <td>/26</td>
+        <td>255.255.255.192</td>
+      </tr>
+      <tr>
+        <td>/25</td>
+        <td>255.255.255.128</td>
+      </tr>
+      <tr>
+        <td>/24</td>
+        <td>255.255.255.0</td>
+      </tr>
+      <tr>
+        <td>/23</td>
+        <td>255.255.254.0</td>
+      </tr>
+      <tr>
+        <td>/22</td>
+        <td>255.255.252.0</td>
+      </tr>
+      <tr>
+        <td>/21</td>
+        <td>255.255.248.0</td>
+      </tr>
+      <tr>
+        <td>/20</td>
+        <td>255.255.240.0</td>
+      </tr>
+      <tr>
+        <td>/19</td>
+        <td>255.255.224.0</td>
+      </tr>
+      <tr>
+        <td>/18</td>
+        <td>255.255.192.0</td>
+      </tr>
+      <tr>
+        <td>/17</td>
+        <td>255.255.128.0</td>
+      </tr>
+      <tr>
+        <td>/16</td>
+        <td>255.255.0.0</td>
+      </tr>
+    </table>
+  </details>
+  <span class="sb mb10 mt10 disp-ib">
+    <h5>常规信息：</h5>
+  </span>
+  <ul class="pl30 mb0">
+    <li>
+      <span class="sb">虚拟IP&nbsp;-&nbsp;</span>确保您所配置的虚拟IP属于主备服务器所在的相同子网内，且未绑定到任务服务器。
+    </li>
+    <details class="mt15 helpdetailstag">
+      <summary class="sb"><span class="detailsarrow"></span>如何测试虚拟IP地址？</summary>
+      <ul class="pl30 mt10 lh24">
+        <li>打开命令提示符窗口，执行命令：：ping {IP地址}</li>
+        <li>如果您看到<strong>请求超时</strong>消息，这表示虚拟IP地址可用。</li>
+      </ul>
+    </details>
+    <li class="mt15">
+      <span class="sb">通用别名&nbsp;-&nbsp;</span> 设置一个可用于访问ServiceDesk Plus的域名地址。
+    </li>
+    <li class="mt15">
+      <span class="sb">当出现故障转移时通知&nbsp;-&nbsp;</span> 添加技术员的邮件地址，以在自监控、数据同步、备服务器接管服务时获得告警通知。使用半角逗号来分割多个邮件地址。
+    </li>
+  </ul>
+  <div class="mt15">
+    <span class="sb">注意：</span>在高可用性配置设置完成后，应设置文件复制配置并重启ServiceDesk Plus以使配置生效。
+  </div>
+  </body>
+</div>
+
+<div id="drhelpcard" class="hide">
+  <head>
+    <!--(==============================================================)-->
+    <!--(Document created with RoboEditor. )============================-->
+    <!--(==============================================================)-->
+    <title>DR 配置</title>
+    <!--(Meta)==========================================================-->
+    <meta name="generator" content="RoboHELP by eHelp Corporation - www.ehelp.com">
+    <meta name="generator-major-version" content="0.1">
+    <meta name="generator-minor-version" content="1">
+    <meta name="filetype" content="kadov">
+    <meta name="filetype-version" content="1">
+    <meta name="page-count" content="1">
+    <meta name="layout-height" content="675">
+    <meta name="layout-width" content="959">
+    <meta name="date" content="02 8, 2007 6:32:51 PM">
+    <!--(Body)==========================================================-->
+  </head>
+  <body>
+  在灾难恢复模式下，资源会被复制到故障区域外、一个不同物理地区下的数据中心中。
+  <div class="mt15">
+    主备服务器都会连接到一个共用的数据库服务器和一个共用的网络路径。
+  </div>
+  <div class="mt15">
+    选择<strong>启用 DR 启动模式</strong>复选框，在灾难恢复模式下启动ServiceDesk Plus。
+  </div>
+  <span class="sb disp-ib mb10 mt10">
+      <h5>灾难恢复明细：</h5>
+    </span>
+  <ul class="pl30 mb0">
+    <li>
+      <span class="sb">主服务器IP&nbsp;-&nbsp;</span>输入ServiceDesk Plus所在的主服务器的IP地址。
+    </li>
+    <li>
+      <span class="sb">备服务器IP&nbsp;-&nbsp;</span>输入您的备服务器的IP地址。
+    </li>
+    <li class="mt15">
+      <span class="sb">通用别名&nbsp;-&nbsp;</span>设置一个可访问ServiceDesk Plus的自定义域名。
+    </li>
+    <li class="mt15">
+      <span class="sb">当出现故障转移时通知&nbsp;-&nbsp;</span> 添加技术员的邮件地址，以在自监控、数据同步、备服务器接管服务时获得告警通知。使用半角逗号来分割多个邮件地址。
+    </li>
+  </ul>
+  <div class="mt15">
+    <span class="sb">注意：</span>在高可用性配置设置完成后，应设置文件复制配置并重启ServiceDesk Plus以使配置生效。
+  </div>
+  </body>
+</div>
+</html>

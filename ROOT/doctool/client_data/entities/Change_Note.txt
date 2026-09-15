@@ -1,0 +1,199 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"notes\":[{\"performed_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"Sample\",\"id\":\"1\",\"performed_time\":{\"display_value\":\"Sep 9, 2020 12:42 PM\",\"value\":\"1599635567482\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"},
+            "path": ["/api/v3/changes/{change_id}/notes"],
+	    "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View all Notes of a Change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"note\":{\"performed_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"Sample\",\"id\":\"1\",\"performed_time\":{\"display_value\":\"Sep 9, 2020 12:42 PM\",\"value\":\"1599635567482\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/changes/{change_id}/notes/{notes_id}",
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View a note of a change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"note\":{\"performed_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"Sample\",\"id\":\"302\",\"performed_time\":{\"display_value\":\"Sep 9, 2020 04:26 PM\",\"value\":\"1599649000868\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/changes/{change_id}/notes",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"note\":{\"description\":\"Sample\"}}"
+            },
+            "method": "POST",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Add a note to a change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"note\":{\"performed_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"Sample Edit\",\"id\":\"301\",\"performed_time\":{\"display_value\":\"Sep 9, 2020 04:26 PM\",\"value\":\"1599648997729\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/changes/{change_id}/notes/{note_id}",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"note\":{\"description\":\"Sample Edit\"}}"
+            },
+            "method": "PUT",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Edit a note of a change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/changes/{change_id}/notes/{note_id}"],
+            "method": "DELETE",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Delete a note from a change",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {
+                "sample": "{\"attachment\":{\"module\":\"note\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image\/jpeg\",\"size\":{\"display_value\":\"16.34KB\",\"value\":16740},\"name\":\"sample.jpg\",\"attached_on\":{\"display_value\":\"19\/04\/2023 08:23 PM\",\"value\":\"1681916012451\"},\"content_url\":\"\/api\/v3\/changes\/100000034\/notes\/2701\/attachments\/100000603\/download\",\"id\":\"100000603\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+            },
+            "path":[
+                "/api/v3/changes/{change_id}/notes/{note_id}/upload"
+            ],
+            "method": "PUT",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Associate Attachment To Note",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "fileinput": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to upload an attachment to a note."
+        },
+        {
+            "output": {
+                "sample": "{\"attachments\":[{\"module\":\"note\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image\/jpeg\",\"size\":{\"display_value\":\"16.34KB\",\"value\":16740},\"name\":\"sample.jpg\",\"attached_on\":{\"display_value\":\"19\/04\/2023 10:04 PM\",\"value\":\"1681922066409\"},\"content_url\":\"\/api\/v3\/changes\/100000035\/notes\/2703\/attachments\/100000608\/download\",\"id\":\"100000608\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"
+            },
+            "path": "/api/v3/changes/{change_id}/notes/{note_id}/attachments",
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Get Note Attachment List",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all attachments present in a note."
+        },
+        {
+            "output": {
+                "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+            },
+            "path": "/api/v3/changes/{change_id}/notes/{note_id}/attachments/{attachment_id}",
+            "method": "DELETE",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Delete Note Attachment",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete an attachment in a note."
+        },
+        {
+            "path": "/api/v3/changes/{change_id}/notes/{note_id}/attachments/{attachment_id}/download",
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Download Attachment",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to download a particular attachment present in a note."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "SDPNOTES:NOTESID",
+            "type": "long",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "represents id of the notes",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "performed_by",
+            "column": "SDPNOTES:USERID",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "User who added the notes",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "performed_time",
+            "column": "SDPNOTES:RECORDEDDATE",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Date/Time at which the notes was created.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "SDPNOTES:DESCRIPTION",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "The content of the notes.",
+            "graphView": ""
+        }
+    ]
+}

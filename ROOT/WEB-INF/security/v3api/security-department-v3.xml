@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true" is_esm="true">
+
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_v3_urls" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1m"/>
+        </throttles>
+
+        <!--department api url start-->
+        <url user_type="all" method="post" roles="CreateDept,SDOrgAdmin" path="/api/v3/departments">
+            <param name="input_data" type="JSONObject" template="department" allow-invalid="false" min-occurrences="1" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="put" roles="SDAdmin,SDOrgAdmin" path="/api/v3/departments">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_bulk_edit" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param name="input_data" type="JSONObject" template="department" max-len="-1" min-occurrences="1" />
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1" allow-empty="false"/>
+        </url>
+        <url user_type="all" method="put" roles="ModifyDept,SDOrgAdmin" path="/api/v3/departments/(\d+)">
+            <param name="input_data" type="JSONObject" template="department" allow-invalid="false" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDOrgAdmin" path="/api/v3/departments/_history">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_history" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin" path="/api/v3/departments/(\d+)/linked_ci/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_linked_ci" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+        </url>
+        <url user_type="all" method="delete" roles="DeleteDept,SDOrgAdmin" path="/api/v3/departments/(\d+)"/>
+        <url user_type="all" method="get" roles="Common_Role" path="/api/v3/departments/_metainfo">
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/departments/_pending_associations"/>
+        <url method="put" roles="SDAdmin" path="/api/v3/departments/_pending_associations">
+            <param name="input_data" type="JSONObject" template="change_dept_associations" allow-invalid="false" max-len="-1" min-occurrences="1"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="delete" roles="DeleteDept,SDOrgAdmin" path="/api/v3/departments">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url user_type="all" method="get" roles="Common_Role" path="/api/v3/departments/(\d+)/_metainfo"/>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/department_head">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/site">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/linked_entity">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/linked_instance">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" allow-invalid="false" max-len="-1"/>
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/_links">
+            <param name="input_data" type="JSONObject" template="links_input" allow-invalid="false" max-len="-1"/>
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/_get_records_for_history">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_records_for_history" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/_get_performed_by_for_history">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_performed_by_history" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            </url>
+
+        <url user_type="all" method="post" roles="ModifyDept" path="/api/v3/departments/(\d+)/role_associations">
+            <param name="input_data" type="JSONObject" template="department_role_association" allow-invalid="false" min-occurrences="1" max-len="-1"/>
+        </url>
+        <url user_type="all" method="put" roles="ModifyDept" path="/api/v3/departments/(\d+)/role_associations/(\d+)">
+            <param name="input_data" type="JSONObject" template="department_role_association" allow-invalid="false" min-occurrences="1" max-len="-1"/>
+        </url>
+        <url user_type="all" method="delete" roles="ModifyDept" path="/api/v3/departments/(\d+)/role_associations/(\d+)"/>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/role_associations/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/role_associations">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="put" roles="ModifyDept" path="/api/v3/departments/(\d+)/role_associations">
+            <param name="input_data" type="JSONObject" template="department_role_association" allow-invalid="false" min-occurrences="1" max-len="-1"/>
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+        </url>
+        <url user_type="all" method="delete" roles="ModifyDept" path="/api/v3/departments/(\d+)/role_associations">
+            <param name="ids" allow-empty="false" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/(\d+)/role_associations/(org_role|user|department)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/(\d+)/role_associations/(\d+)/(org_role|user|department)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/role_associations/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" allow-invalid="false" max-len="-1"/>
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/role_associations/_links">
+            <param name="input_data" type="JSONObject" template="links_input" allow-invalid="false" max-len="-1"/>
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/role_associations/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/role_associations/(\d+)/_history">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/role_associations/_history">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/(\d+)/department_udf_fields/([a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/department_udf_fields/([a-z0-9_]+)">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" path="/api/v3/departments/department_udf_fields">
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/udf_([a-z0-9_]+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_udf_pick" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param name="input_data" type="JSONObject" template="list_info" allow-invalid="false" max-len="-1"/>
+        </url>
+
+        <!-- department report module meta calls for filter criteria start -->
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/site/_metainfo"/>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/linked_instance/_metainfo"/>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/linked_entity/_metainfo"/>
+        <url user_type="all" method="get" roles="ViewDept" path="/api/v3/departments/department_head/_metainfo"/>
+        <!-- department report module meta calls for filter criteria end -->
+
+        <!--department attachment api url start-->
+        <url user_type="all" method="post" roles="CreateDept,SDOrgAdmin" path="/api/v3/departments/_upload">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/attachments/(\d+)/_download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" max-len="10" name="mode"/>
+        </url>
+        <url user_type="all" method="post" roles="ModifyDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/_upload">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="put" roles="ModifyDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/_upload">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/attachments/(\d+)/_download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" max-len="10" name="mode"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/attachments/_download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" max-len="10" name="mode"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/attachments">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_attachment_get_all" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url user_type="all" method="get" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/attachments/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_attachment_get" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+        </url>
+        <url user_type="all" method="delete" roles="ViewDept,SDOrgAdmin" path="/api/v3/departments/(\d+)/attachments/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="department_attachment_bulk_delete" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="80" duration="1m" />
+            </throttles>
+        </url>
+        <!--department attachment api url end-->
+        <!--department api url end-->
+    </urls>
+
+
+    <!-- Department Templates starts here -->
+    <jsontemplates>
+         <jsontemplate name="department_unique">
+             <key name="id" type="long" range=">0"/>
+             <key name="name" type="String" max-len="100" secret="true"/>
+             <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+             <key name="department_head" template="orguser_unique" type="JSONObject" max-len="-1"/>
+             <key name="deleted" type="boolean" allow-invalid="false"/>
+         </jsontemplate>
+         <jsontemplate name="department_base">
+             <key name="id" type="long" range=">0"/>
+             <key name="name" type="String" max-len="100" secret="true"/>
+             <key name="department_head" template="orguser_unique" type="JSONObject" max-len="-1"/>
+             <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+             <key name="description" secret="true" type="String" max-len="250"/>
+             <key name="deleted" type="boolean" allow-invalid="false"/>
+             <key name="role_associations" template="department_role_association_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+             <key name="department_udf_fields" type="JSONObject" dynamic-json-template="true" max-len="-1"/>
+             <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+         </jsontemplate>
+         <jsontemplate name="department">
+             <key name="department" template="department_base" type="JSONObject" max-len="-1"/>
+             <key name="departments" template="department_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+         </jsontemplate>
+         <jsontemplate name="department_unique_wrapper">
+             <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+         </jsontemplate>
+         <jsontemplate name="department_role_association_base">
+             <key name="id" type="long" range=">0"/>
+             <key name="org_role" template="org_role_unique" type="JSONObject" max-len="-1"/>
+             <key name="user" template="orguser_unique" type="JSONObject" max-len="-1"/>
+             <key name="department" template="department_unique" type="JSONObject" max-len="-1"/>
+         </jsontemplate>
+         <jsontemplate name="department_role_association">
+             <key name="department_role_association" template="department_role_association_base" type="JSONObject" max-len="-1"/>
+         </jsontemplate>
+         <jsontemplate name="department_role_association_unique_wrapper">
+             <key name="department_role_association" template="department_role_association_unique" type="JSONObject" max-len="-1"/>
+         </jsontemplate>
+         <jsontemplate name="department_meta">
+             <key name="for" regex="udf_refer_entity_fields"/>
+         </jsontemplate>
+        <jsontemplate name="change_dept_associations">
+            <key name="state_id" type="long" range=">0"/>
+            <key name="department_id" type="long" range=">0"/>
+            <key name="change_asset_site" type="boolean" />
+        </jsontemplate>
+    </jsontemplates>
+    <!-- Department Templates ends here-->
+
+
+</security>

@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ServiceDesk Plus - Desktop Central 連携</title>
+</head>
+
+<body>
+<br>
+<strong>Desktop Central連携 </strong>:
+</p>
+<p align="right" style="margin-top: 0.5pt; margin-bottom: 0.5pt;" ><b>連携手順</b> : <a href="#" sdpJs="js-event-admin_helpcard_desktopcentral_ja-0" style="color:blue;text-decoration:underline;" >ビデオ</a> | <a href="#" sdpJs="js-event-admin_helpcard_desktopcentral_ja-1" style="color:blue;text-decoration:underline;" >ヘルプ</a></p>
+
+<p>ServiceDesk PlusとDesktop Centralを連携させることですべてのデスクトップやモバイル端末を管理することができます。Desktop Centralによってパッチのインストールやソフトウェアの展開、リモートコントロール管理、チャット機能、クライアントマシンの管理、USB制御などを自動化できます。さらにモバイル端末では、プロファイル管理やアプリ管理、セキュリティ管理、資産管理ができます。ServiceDesk PlusとDesktop Centralをインストールした場合、Desktop Centralがインストールされているコンピューターの情報（ポート番号など）を入力する必要があります。</p>
+<p><strong>メモ:</strong> Desktop Centralのバージョンは8.1以上である必要があります。</p>
+<p><strong>入力情報:</strong></p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>サーバー名:</strong><span style="font-weight: bold;">Desktop Centralがインストールされているサーバー</span>を入力します。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>ポート番号:</strong>Desktop Centralサーバーの<span style="font-weight: bold;">ポート番号</span>を入力します。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>プロトコル設定:</strong><span style="font-weight: bold;">プロトコル設定</span>で"http"か"https"を選択します。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>メモ:</strong><strong>Desktop Central</strong>と<strong>MDM</strong>のドロップダウンメニューを表示するには、"Desktop Centralメニューを有効にする"と"MDM（モバイルデバイス管理）メニューを有効にする"をそれぞれ選択します。Desktop Centralのビルド80100以上がインストールされていればメニューが表示されます。ドロップダウンメニューを表示させたくない場合は、チェックボックスの選択を外して<strong>保存</strong>してください。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="font-weight: bold;">
+  設定が保存されると、ServiceDesk PlusとDesktop Central間での接続設定が完了します。一度完了すると、Desktop Centralサーバーから構成されたソフトウェア情報を取得します。</p>
+
+<br>
+
+<p><span class="helpheading"><strong>その他ManageEngine 製品との連携（HTTPS接続での起動時）</strong></span></p>
+<ol>
+  <li><strong>.zip</strong> file を以下のリンクからダウンロードし、"<em>ManageEngine\ServiceDesk"</em>に展開します。</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong>https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip </p>
+  <p style="margin-left: 50px;"><strong>For Windows:</strong> https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip </p>
+  <li>コマンドプロンプトに接続し、"<em>ManageEngine\ServiceDesk"</em>に進み、以下のようにバッチを実行します。</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>コマンドを実行している際に、<strong>PKIX</strong>例外が発生したら、値を入力してください。値を入力すると、<em>"ManageEngine\ServiceDesk"配下に<strong>jssecacerts</strong>という名称のファイルが生成されます。</em>.</p>
+  </li>
+  <li><strong>jssecacerts</strong>ファイルを"<em>ManageEngine\ServiceDesk\jre\lib\security"</em>フォルダー配下にコピーし、ServiceDesk Plusを再起動します。<br>
+    <br>
+  </li>
+</ol>
+</body>
+</html>
+<script nonce="${{sdpNonce}}">
+document.querySelector('[sdpJs="js-event-admin_helpcard_desktopcentral_ja-0"]').addEventListener("click", function(event) { return appendDID('http://www.manageengine.com/products/desktop-central/demo/desktop-management-videos.html?integration',true) });
+document.querySelector('[sdpJs="js-event-admin_helpcard_desktopcentral_ja-1"]').addEventListener("click", function(event) { return appendDID('http://www.manageengine.com/products/desktop-central/help/configuring_desktop_central/dc_sdp_integration.html',true) });
+</script>

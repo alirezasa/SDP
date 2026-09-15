@@ -1,0 +1,1050 @@
+<!--$Id$-->
+<!-- Security authentication for Change module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+    <urls authentication="required" user_type="all" description="Roles are not configured for change URL's since roles are dynamically defined as change roles. Role check is done at code level.">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="change_module_URL" dynamic-throttle="true"  >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+        <param name="(?i)(USERID)" name-regex="true" type="long"  max-occurrences="1" range=">0"/>
+        <param name="(?i)(CHANGEID)" name-regex="true" regex="id"  max-occurrences="2" range=">0"/>
+
+        <url path="/servlet/Select2Servlet" operation-param="module" operation-value="group" roles="SDAdmin">
+            <param name="params" type="String" max-len="2000"/>
+            <param name="page" type="long" range=">0"/>
+            <param name="searchText" type="String" max-len="250"/>
+            <param name="callback" regex="jQuery[0-9]+_[0-9]+"/>
+        </url>
+        <url path="/FilteredChangesFromProject.cc" method="get" >
+            <param name="PROJECTID" regex="id"/>
+            <param name="initiatedBy" regex="change|project"/>
+            <param name="UNIQUE_ID" regex="FilteredChangesFromProject"/>
+        </url>
+
+        <url path="/FilteredChanges.cc" method="GET" description="Roles check present in code">
+            <param name="PROBLEMID" regex="id"/>
+            <param name="WORKORDERID" regex="id"/>
+            <param name="CATEGORYID" regex="id" />
+            <param name="REQUESTTYPE" regex="requestchange|causedbychange"/>
+        </url>
+
+        <url path="/ViewWorkflow.do" method="get">
+            <param name="workflow_id" type="long" range= ">0"/>
+            <param name="module_id" type="long" range= ">0"/>
+            <param name="module" regex="change|release|zia-bot" min-occurrences="1"/>
+            <param name="requestFrom" regex="exportPDF"/>
+        </url>
+
+        <url path="/ChangeTemplate.do" method="get" roles="SDAdmin">
+            <param name="mode" regex="edit|duplicate|add|deleteChangeTemplate|templatechange|listview"/>
+            <param name="tempid" regex="id" />
+            <param name="id" type="String" max-len="20" description="IN some cases, the id is set as default"  />
+        </url>
+
+        <url path="/ChangeTemplate.do" method="post" csrf="true" roles="SDAdmin">
+            <param name="mode" regex="edit|duplicate|add|deleteChangeTemplate|templatechange|listview" />
+            <param name="id" regex="id"  />
+            <param name="tempid" regex="id" />
+        </url>
+
+        <url path="/ChangeSLAListView.do" method="get" roles="SDAdmin">
+        </url>
+
+        <url path="/ChangeSLA.do" method="get" roles="SDAdmin">
+            <param name="id" regex="id" />
+        </url>
+
+        <url path="/ChangeConfiguration.do" operation-param="Submit" operation-value="submit" method="post" csrf="true" roles="SDAdmin">
+            <param name="statusUpdateNotif" type="boolean" />
+            <param name="globalEditOnAllStages" type="boolean" />
+            <param name="cabAutoAttachments" type="boolean" />
+            <param name="allowUserAsApprover" type="boolean" />
+            <param name="restrictResetLevel" type="boolean" />
+            <param name="deleteWFApprovalLevels" type="boolean" />
+            <param name="autoSendRecommendMail" type="boolean" />
+            <param name="allowProminentStatus" type="boolean" />
+            <param name="roleEditConfig" type="boolean" />
+            <param name="crossedStageTaskEdit" type="boolean" />
+            <param name="save" type="String" />
+        </url>
+
+        <url path="/servlet/slaapi" method="put" csrf="true" roles="SDAdmin">
+            <param name="escalationsEnabled" type="boolean"/>
+            <param name="get" regex="ChangeSLAConfig|escalationsEnabled"/>
+            <param name="id" regex="ids" max-len="2500"/>
+        </url>
+
+        <url path="/servlet/slaapi/[0-9]+" path-regex="true" method="get" roles="SDAdmin"/>
+
+        <url path="/servlet/slaapi/[0-9]+" path-regex="true" method="put" csrf="true" roles="SDAdmin">
+            <param name="INPUT_DATA" type="JSONObject" template="sla_input_data_template" max-len="-1" />
+        </url>
+
+        <url path="/servlet/slaapi/changeSLA/[0-9]+" path-regex="true" method="get" roles="SDAdmin"/>
+
+        <url path="/servlet/slaapi/changeSLA/[0-9]+" path-regex="true" method="put" csrf="true" roles="SDAdmin">
+            <param name="INPUT_DATA" type="JSONObject" template="sla_input_data_template" max-len="-1" />
+            <param name="escalationsEnabled" type="boolean"/>
+            <param name="get" regex="ChangeSLAConfig|escalationsEnabled"/>
+            <param name="id" regex="ids" max-len="2500"/>
+        </url>
+
+        <url path="/servlet/slaapi/changeSLA" method="post" csrf="true"  roles="SDAdmin">
+            <param name="INPUT_DATA" type="JSONObject" template="sla_input_data_template" max-len="-1" />
+        </url>
+
+        <url path="/servlet/slaapi/changeSLA" method="delete" csrf="true"  roles="SDAdmin">
+            <param name="id" regex="ids" max-len="2500"/>
+        </url>
+
+        <url path="/servlet/slaapi/changeSLA/reorder" path-regex="true" method="put" csrf="true" roles="SDAdmin">
+            <param name="INPUT_DATA" type="JSONObject" template="changeSLA_reorder" max-len="-1" />
+        </url>
+
+        <url path="/servlet/slaapi/changeSLA" method="get" roles="SDAdmin">
+            <param name="get" regex="ChangeSLAConfig|escalationsEnabled"/>
+        </url>
+
+        <url path="/calendar/SaveColorSelection.jsp" method="get" >
+            <param name="COLORS" regex="color" max-len="10" max-occurrences="100" />
+        </url>
+
+        <url path="/calendar/SaveColorSelection.jsp" method="post" csrf="true" description="ROLE_NOT_REQUIRED">
+            <param name="viewType" regex="ListView|CalendarView" />
+            <param name="COLORS" regex="color" max-len="10" max-occurrences="100" />
+            <param name="[0-9]+" name-regex="true" type="String"  max-len="0"/>
+        </url>
+
+        <url path="/calendar/ChangeCalendar.jsp" method="get" >
+            <param name="Type" regex="Week" />
+            <param name="(?i)(Module)" name-regex="true" regex="Change" max-occurrences="2"/>
+            <param name="[0-9]+" name-regex="true" type="String" max-len="0"/>
+            <param name="month" regex="1[0-2]|(0|[1-9])" />
+            <param name="year" regex="^[0-9]{4}$" />
+            <param name="calViewOption" regex="MyApprovedChanges|MyUnApprovedChanges|MyOpenChanges|MyCompletedChanges|MyChanges|AllChanges|OpenChanges|CompletedChanges|ApprovedChanges" />
+        </url>
+
+        <url path="/calendar/ElementDetails.jsp" operation-param="module" operation-value="Change" method="get">
+            <param name="elementId" type="long" range=">=0" />
+            <param name="[0-9]+" name-regex="true" type="String" max-len="0" />
+        </url>
+
+        <url path="/calendar/MonthCalendar.jsp" operation-param="module" operation-value="Change" method="get">
+            <param name="Type" regex="Month" />
+            <param name="month" regex="1[0-2]|(0|[1-9])" />
+            <param name="year" regex="^[0-9]{4}$" />
+            <param name="site" regex="^(-)?([0-9]|[null]){1,19}$"/>
+            <param name="FILTERID" type="long" range=">=0" />
+            <param name="calViewOption" regex="MyApprovedChanges|MyUnApprovedChanges|MyOpenChanges|MyCompletedChanges|MyChanges|AllChanges|OpenChanges|CompletedChanges|ApprovedChanges" />
+        </url>
+        <url path="/calendar/WeekCalendar.jsp" operation-param="module" operation-value="Change" method="get">
+            <param name="date" regex="^([1-9]|[1-3][0-9])$" />
+            <param name="month" regex="1[0-2]|(0|[1-9])" />
+            <param name="year" regex="^[0-9]{4}$" />
+            <param name="site" regex="^(-)?([0-9]|[null]){1,19}$"/>
+            <param name="FILTERID" type="long" range=">=0"/>
+            <param name="calViewOption" regex="MyApprovedChanges|MyUnApprovedChanges|MyOpenChanges|MyCompletedChanges|MyChanges|AllChanges|OpenChanges|CompletedChanges|ApprovedChanges" />
+        </url>
+
+        <url path="/Changes.cc" method="get">
+            <param name="viewType" regex="ListView|CalendarView" />
+            <param name="[0-9]+" name-regex="true"  type="String" max-len="0" />
+            <param name="UNIQUE_ID" regex="Changes"/>
+            <param name="module" regex="Change" />
+            <param name="month" regex="^(0?[1-9]|1[012])$" />
+            <param name="year" regex="^[0-9]{4}$" />
+            <param name="TYPE" regex="MY_APPROVED|MY_UNAPPROVED"/>
+            <param name="FILTERID" type="long" range=">0" />
+            <param name="criteria" type="JSONArray" template="workflow_criteria" max-len="-1" array-size="0-100" />
+            <param name="trashView" regex="true" />
+        </url>
+
+        <url path="/STATE_ID/[0-9]+/ChangesList(_HD_[0-9]+)?.cc" path-regex="true" method="get">
+            <param name="UNIQUE_ID" regex="ChangesList(_HD_[0-9]+)?" />
+            <param name="TYPE" regex="ALL|MY_OPEN|MY_CLOSED|MY_APPROVED|MY_UNAPPROVED|MY_CHANGES|OPEN|CLOSED|UNASSIGNED|PR_CAT|Search"/>
+            <param name="CHANGED" type="boolean" />
+            <param name="FROM" regex="projectChangeAssociation|Filter"/>
+            <param name="initiatedBy" regex="project|change"/>
+            <param name="PROJECTID" type="long" range=">0"/>
+            <param name="FILTERID" regex="[0-9]+|trashed_changes"/>
+            <param name="criteria" type="JSONArray" template="workflow_criteria" max-len="-1" array-size="0-100"/>
+            <param name="WORKORDERID" type="long" range=">0" />
+            <param name="CATEGORYID" type="long" range=">=0"/>
+            <param name="module" regex="change"/>
+            <param name="REQUESTTYPE" regex="requestchange|causedbychange"/>
+        </url>
+
+        <url path="/ChangeDetails.do" method="get">
+            <param name="approval_id" type="long" range=">0" />
+            <param name="approval_level_id" type="long" range=">0" />
+            <param name="approval_level_name" type="String" description="Cant add regex as user given input" />
+            <param name="stageId" type="long" range=">0"/>
+            <param name="ID" type="long" range=">0"/>
+            <param name ="CHGSITEID" type="long" range=">=0"/>
+            <param name ="CHGGROUPID" type="long" range=">=0"/>
+            <param name="fromListView"  type="boolean"/>
+            <param name="navType"  regex="n|p"/>
+            <param name="mode"  regex="changeSubmnTab|planningtab|taskDetails|print|problemsandincidents|takeAction"/>
+            <param name="from"  regex="change|Actionlink|customFunction|allApprovals|approvalsList|pendingApprovalsList"/>
+            <param name="SITEID" type="long" range=">=0"/>
+            <param name="tab"  regex="Submission|Planning|Approval|Implementation|Review|Close" />
+            <param name="[0-9]+" name-regex="true" type="String" max-len="0"/>
+            <param name="(?i)(edit)" name-regex="true" type="boolean" max-occurrences="1"/>
+            <param name="show" regex="resolution|downtime" />
+            <param name="fieldname" regex="IMPACTDESC|ROLLOUTPLAN|BACKOUTPLAN|CHECKLIST" />
+            <param name="view" regex="print"/>
+            <param name="KEY"  type="String" secret="true"/>
+            <param name="OWNERID" type="long" range=">=0" />
+            <param name ="USER_NAME" type="String" secret="true"/>
+            <param name="MODULE" regex="Change"/>
+            <param name="edit" type="boolean" />
+            <param name="ISARCHIVE" type="boolean" />
+            <param name="CHANGEID" type="long" range=">0" />
+            <param name="viewname" regex="causedbychange" />
+            <param name="externalframe" regex="true"/>
+        </url>
+
+
+        <url path="/servlet/CmClientUtilServlet" operation-param="command" operation-value="recommendOrRejectChange"  method="post" csrf="true" >
+            <param name="KEY" type="String" max-occurrences="1" secret="true" max-len="200"/>
+            <param name="COMMENTS" type="String" max-len="5000" max-occurrences="1" secret="true"/>
+            <param name="ITEMID" type="long" range= ">0" />
+            <param name="BY" type="long" range= ">0"  />
+            <param name="Action" regex="Approve|Reject" />
+            <param name="APPROVALID" type="long" range= ">0"  />
+            <param name="APPROVALLEVELID" type="long" range= ">0"  />
+        </url>
+
+        <url path="/servlet/CmClientUtilServlet" operation-param="command" operation-value="associateIncidents" method="post" csrf="true">
+            <param name="ASSOCIATE" type="boolean"/>
+            <param name="FROMREQUESTPAGE" type="boolean"/>
+            <param name="TAB" regex="change" />
+            <param name="WORKORDERID" type="long"  range=">0"  max-occurrences="250"/>
+            <param name="[0-9]+" name-regex="true"  type="String" max-len="0" />
+            <param name="DELETE" type="boolean" />
+            <param name="REQUESTTYPE" regex="(?i)causedbychange" />
+        </url>
+
+
+        <url path="/servlet/CmClientUtilServlet"
+             operation-param="command" operation-value="saveStatusInfo" method="post" csrf="true" roles="SDAdmin">
+            <param name="statusid" type="long"  range=">0"   />
+            <param name="stageid" type="long"  range=">0"/>
+            <param name="mode" regex="edit" />
+            <param name="statusname" type="String" secret="true"/>
+            <param name="actionname" type="String" secret="true"/>
+            <param name="description"  secret="true" type="String" max-len="250"  />
+            <param name="subject" type="String" max-len="500"  secret="true"/>
+            <param name="isdeleted" type="boolean" />
+            <param name="notify_name" type="String" secret="true" max-len="5000" description="Contains comma separated values of roles to be notified. Hence regex not added"/>
+            <param name="notify_id" regex="ids" max-len="2500"/>
+            <param name="message"  max-len="-1"  secret="true" xss="sdpantisamyfilter"/>
+        </url>
+
+
+
+        <url path="/servlet/CmClientUtilServlet" operation-param="command" operation-value="getStatusInfo"  method="get" roles="SDAdmin">
+            <param name="statusid" type="long"  range=">0" />
+            <param name="stageid" type="long"  range=">0" />
+        </url>
+
+        <url path="/servlet/CmClientUtilServlet" operation-param="command" operation-value="getDefaultStatus_TemplateInfo"  method="get" roles="SDAdmin"/>
+
+
+
+	    <url path="/servlet/CmClientUtilServlet" operation-param="command" operation-value="getChangeAttachments" method="get">
+            <param name="CHANGEID" type="long"  range=">0" />
+        </url>
+
+        <url path="/change/ChangePlan.jsp" method="get">
+            <param name="TIMEPERIOD" regex="this_week|next_week|this_month|next_month|nt_7|nt_15|nt_30|undefined" />
+            <param name="id" regex="table_[0-9]+" />
+            <param name="site"  type="long"  range=">=-2" allow-empty="false"/>
+        </url>
+
+        <url path="/change/UnapprovedChanges.jsp" method="get">
+            <param name="id" regex="table_[0-9]+" />
+            <param name="site"  type="long"  range=">=-2" allow-empty="false"/>
+        </url>
+
+        <url path="/SearchChangeIncidents.cc" method="get">
+            <param name="UNIQUE_ID" regex="SearchChangeIncidents"/>
+            <param name="TYPE" regex="OPEN|ADD" />
+            <param name="CATEGORYID" type="long"  range=">0"  />
+            <param name="FROM" regex="Actionlink"/>
+            <param name="REQUESTTYPE" regex="causedbychange"/>
+        </url>
+        <url path="/setup/ChangeNotifications.jsp" operation-param="SaveNot" operation-value="view" method="get" roles="SDAdmin"/>
+
+        <url path="/setup/ChangeNotifications.jsp" operation-param="SaveNot" operation-value="Save" method="post" csrf="true" roles="SDAdmin">
+            <param name="ChangeAssigned|Change_Notes_Mention|ChangeAssigned_SMS|ChangeRoleRemoval|ProblemAssociated|ProblemDetached|ChangeIncidentAssociated|ChangeIncidentDetached|ApproveAction_Change|Change_Edit|ChangeCreated|ChangeCreated_SMS|ChangeClosed|ProjectAssociated|ProjectDetached|Notify_Project_onChange_Closed_Cancelled_Rejected|Notify_Project_onChange_Deletion|Change_Bell_Notification"  name-regex="true"  max-occurrences="17" regex="on"/>
+            <param name="ChangeCreated_UserDisplay" type="String" max-len="100000" secret="true"/>
+            <param name="ChangeCreated_USERS"  type="String" max-len="1000"/>
+            <param name="ChangeCreated_SMS_USERS"  type="String" max-len="1000"/>
+            <param name="ChangeCreated_SMS_UserDisplay"  type="String" max-len="100000" secret="true"/>
+            <param name="ChangeClosed_UserDisplay"  type="String" max-len="100000" secret="true"/>
+            <param name="ChangeClosed_USERS"  type="String" max-len="1000"/>
+        </url>
+
+        <url path="/common/ViewConversationsFromList.jsp" method="get" operation-param="module" operation-value="changes" user_type="all" description="ROLE_NOT_REQUIRED">
+		    <throttles key="url.path+url.dynamic_key" name="ConversationsList" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		    <param name="mode" regex="view"/>
+		    <param name="id" range=">0" type="long"/>
+		    <param name="currentView" type="String"/>
+		    <param name="view" regex="notes|conversations"/>
+	    </url>
+
+        <url path="/change/ChangeTypeChart.jsp" method="get">
+            <param name="INLINE" type="boolean" />
+            <param name="TYPE" type="String" />
+        </url>
+
+        <url path="(/STATE_ID/[0-9]+)?/CFChangesList(_HD_[0-9]+)?.cc" method="get" roles="SDAdmin" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="CFChangesList(_HD_[0-9]+)?" />
+            <param name="FROM" regex="customFunction"/>
+            <param name="FILTERID" type="long"  range=">0"/>
+        </url>
+
+        <url path="/AssociateCIList.do" method="get" user_type="all" operation-param="module" operation-value="change" description="ROLE_NOT_REQUIRED">
+            <param name="mode" regex="change_global|change_inline|change_spot|change_template"/>
+            <param name="selectedCount"  type="long"  range=">-1"/>
+            <param name="parentElement1" regex="assetlist|assetlist_spot|assetlist_inline|ASSETID|selectedCIs|selectedCIs1"/>
+            <param name="selectedData" type="JSONArray" template="IdTextArray" max-len="-1" array-size="0-100"/>
+            <param name="siteID" type="String" max-len="10" description="Regex id could not be used since in some cases, value is -2. Also cant be defined as long since null in some cases" />
+            <param name="category" type="String" description="Id cannot be set since in case of category 'owned by user' text is passed"/>
+            <param name="userID" regex="[0-9]+|null" />
+            <param name="pageLength" regex="positive_Integers" max-occurrences="2"/>
+            <param name="loadingMsg" type="String" max-occurrences="2" />
+            <param name="rowcount" type="String" max-occurrences="2" />
+            <param name="chosenCIs" type="JSONArray" template="IdTextArray" max-len="-1" array-size="0-100"/>
+            <param name="selectedCICount" type="long"  range=">-1" />
+            <param name="AssetName" type="String" />
+            <param name="SerialNo" type="long"  range=">0" />
+            <param name="CIType" type="String" />
+            <param name="ProductName" type="String" />
+            <param name="Department" type="String" />
+            <param name="User" type="String" secret="true" />
+            <param name="Site" type="String" />
+            <param name="checkbox" regex="positive_Integers" max-occurrences="50"/>
+            <param name="checkbox23"  regex="on"/>
+            <param name="showUserFilter" type="boolean" />
+            <param name="showDeptFilter" type="boolean" />
+            <param name="showNoSiteFilter" type="boolean" />
+            <param name="siteName" type="String" />
+            <param name="siteID_siteSearch" type="String" />
+        </url>
+
+
+
+        <url path="/change/ChangeListBulkOperations.jsp" method="post" csrf="true">
+            <param name="TYPE"  regex="PICKUP|ASSIGN" />
+            <param name="Module" regex="Change" />
+            <param name="TECHID"  type="long"  range=">0"/>
+            <param name="[0-9]+" name-regex="true"  type="String"  max-len="0"/>
+            <param name="CHANGEID" type="long"  range=">0" max-occurrences="250"/>
+
+        </url>
+
+        <url path="/common/NotesDetailsView.jsp" operation-param="MODULE" operation-value="Change" method="get">
+            <param name="ID"  type="long"  range=">0" />
+            <param name="USERID"  type="long"  range=">0" />
+            <param name="NOTESID"  type="long"  range=">0"  />
+            <param name="KEY"  regex="^null$"/>
+
+        </url>
+
+
+        <!--/servlet/HdClientUtilServlet starts-->
+        <url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="updateTemplate" method="post" csrf="true" roles="SDAdmin">
+            <param name="templateID" type="long"  range=">0"  />
+            <param name="isDeleted" type="boolean" />
+            <param-group name="changeTemplate"/>
+            <param name="changeTemplateRoles" type="JSONObject" template="changeTemplateRoles" max-len="-1" />
+        </url>
+
+        <url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="updateTemplateRoles" method="post" csrf="true" roles="SDAdmin">
+            <param name="templateID" type="long"  range=">0"  />
+            <param name="changeTemplateRoles" type="JSONObject" template="changeTemplateRoles" max-len="-1" />
+        </url>
+
+        <url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="saveTemplate" method="post" csrf="true" roles="SDAdmin">
+            <param name="duplicate" type="boolean" />
+            <param name="originalTid" type="long"  range=">0"  />
+            <param-group name="changeTemplate"/>
+        </url>
+
+        <url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="getTemplateRoles" method="get" roles="SDAdmin">
+            <param name="templateID" type="long"  range=">0"  />
+        </url>
+
+        <url path="/servlet/HdClientUtilServlet" method="get" operation-param="command" operation-value="getAllUsedChangeUDFNames" roles="SDAdmin"/>
+
+
+
+
+        <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="deleteChange" csrf="true" method="post" roles="DeleteChanges">
+            <param name="CHANGEID" type="long"  range=">0" max-occurrences="250"/>
+            <param name="cancelAssocProject" type="boolean" />
+        </url>
+
+        <url roles="SDAdmin" path="/STATE_ID/[0-9]+/ShowChangeTemplate(_HD_[0-9]+)?.cc" method="get" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="ShowChangeTemplate(_HD_[0-9]+)?"/>
+            <param name="TYPE" regex="viewgeneral|viewemergency|viewall" />
+            <param name="CHANGED" type="boolean"  />
+        </url>
+
+        <url path="/STATE_ID/[0-9]+/AssociatedChangeIncidents(_HD_[0-9]+)?.cc" method="get" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="AssociatedChangeIncidents(_HD_[0-9]+)?" />
+            <param name="CHANGEINCIDENTDETAILS" type="boolean" />
+
+        </url>
+
+        <url path="/STATE_ID/[0-9]+/AssociatedIncidentsCausedByChange(_HD_[0-9]+)?.cc" method="get" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="AssociatedIncidentsCausedByChange(_HD_[0-9]+)?" />
+            <param name="CHANGEINCIDENTDETAILS" type="boolean" />
+        </url>
+
+        <url path="/STATE_ID/[0-9]+/AssociateNewIncidentsCausedByChange(_HD_[0-9]+)?.cc" method="get" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="AssociateNewIncidentsCausedByChange(_HD_[0-9]+)?" />
+            <param name="TYPE" regex="ALL|OPEN" />
+        </url>
+
+        <url path="/STATE_ID/[0-9]+/AssociateNewChangeIncidents(_HD_[0-9]+)?.cc" method="get" url-type="dynamic">
+            <param name="UNIQUE_ID" regex="AssociateNewChangeIncidents(_HD_[0-9]+)?" />
+            <param name="TYPE" regex="ALL|OPEN"  />
+        </url>
+
+
+
+        <!--SetUpWizard.do starts -->
+        <url path="/SetUpWizard.do" operation-param="forwardTo" operation-value="changeudf,changeworkflow,changetemplate" method="get" roles="SDAdmin"/>
+
+        <url path="/SetUpWizard.do" operation-param="forwardTo" operation-value="changeslalistview" method="get" roles="SDAdmin">
+            <param name="isReorder" type="boolean" />
+        </url>
+
+        <url path="/SetUpWizard.do" roles="SDAdmin" operation-param="forwardTo" method="get" operation-value="changeautoaction">
+            <param name="isReorder" regex="true|failure"/>
+        </url>
+
+
+        <url path="/SetUpWizard.do" operation-param="forwardTo" operation-value="changeudf" method="post" csrf="true" roles="SDAdmin">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="change_udf" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="5" lock-period="30m"/>
+            </throttles>
+            <param name="XML" type="String" max-len="400000" secret="true" description="All the field data and default values are passed as xml"/>
+            <param name="TABLENAME" regex="Change_Fields" />
+            <param name="serviceCategory" regex="id" />
+        </url>
+
+
+
+
+
+        <!--SetUpWizard.do ends-->
+
+
+        <!-- RequestExternalAction.do starts-->
+        <url path="/RequestExternalAction.do" method="get" operation-param="module" operation-value="change" roles="SDAdmin">
+            <param name="method" regex="getTriggerActionData|getAutoActionListView|getAutoActionCritVals|organizeActions|editAutoAction"/>
+            <param name="action_id" type="long"  range=">0"  />
+        </url>
+
+        <url path="/RequestExternalAction.do" operation-param="module" operation-value="change" method="post" csrf="true" roles="SDAdmin">
+            <param name="method" regex="saveReOrderActions|saveAutoAction|enableDisableAction|deleteAutoAction" min-occurrences="1"/>
+            <param name="(?i)(action_id)" name-regex="true" type="long"  range=">0"  max-occurrences="2"/>
+            <param name="items" type="JSONObject" template="change_custom_trigger_items_template" max-len="-1" />
+            <param name="reorderItems" regex="ids" max-len="2500"/>
+        </url>
+        <!-- RequestExternalAction.do ends-->
+
+
+        <url path="/common/ViewHistory.jsp" operation-param="module" operation-value="workflows" roles="SDAdmin">
+            <param name="id" type="long" allow-empty="false" range=">0"/>
+            <param name="key" regex="sort_order_workflows"/>
+        </url>
+
+		<url path="/jsp/getLeftNav.jsp" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED">
+            <param name="LeftNav" regex="Close|close|Open" />
+            <param name="module" regex="change" />
+        </url>
+
+        <!-- urls moved from security-accesspermissions.xml-->
+        <url roles="SDAdmin" path="/NotificationContent.do" disable-extraparam="true" method="get" operation-param="notifType"
+             operation-value="ChangeAssigned,Change_Notes_Mention,ChangeAssigned_SMS,ProblemAssociated,ProblemDetached,ChangeIncidentAssociated,ChangeIncidentDetached,ApproveAction_Change,ChangeCreated,ChangeCreated_SMS,ChangeClosed,Approval_Change,Notify_Change,Change_SLA,ChangeRoleRemoval,Change_Edit,ProjectAssociated,ProjectDetached,Notify_Project_onChange_Closed_Cancelled_Rejected,Notify_Project_onChange_Deletion,BackupApproverConfig,BackupApproverConfigCancelled,ApprovalSendToBackupApprover,BackupApproverAction,ApproveIfRequesterIsAppr,ApproveIfAlreadyApproved,ChangeStatus_E-Mail_Default">
+            <param name="isSMS" type="boolean"/>
+        </url>
+
+        <url roles="SDAdmin" path="/NotificationContent.do" disable-extraparam="true" method="post" csrf="true" operation-param="notifType"
+            operation-value="ChangeAssigned,Change_Notes_Mention,ChangeAssigned_SMS,ProblemAssociated,ProblemDetached,ChangeIncidentAssociated,ChangeIncidentDetached,ApproveAction_Change,ChangeCreated,ChangeCreated_SMS,ChangeClosed,Approval_Change,Notify_Change,Change_SLA,ChangeRoleRemoval,Change_Edit,ProjectAssociated,ProjectDetached,Notify_Project_onChange_Closed_Cancelled_Rejected,Notify_Project_onChange_Deletion,BackupApproverConfig,BackupApproverConfigCancelled,ApprovalSendToBackupApprover,BackupApproverAction,ChangeStatus_E-Mail_Default">
+            <param name="fromAdminPage" type="boolean"/>
+            <param name="subject" type="String" max-len="500" secret="true"/>
+            <param name="content" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+            <param name="mode" regex="update"/>
+        </url>
+        <!-- url moved from security-allmodules.xml -->
+
+    	<url path="/calendar/MiniCalendar.jsp" user_type="all" description="ROLE_NOT_REQUIRED">
+            <param name="month" allow-empty="false" regex="1[0-2]|(0|[1-9])" />
+            <param name="year" allow-empty="false" regex="^[0-9]{4}$" />
+            <param name="module" regex="Change"/>
+        </url>
+	 <!-- Change UI revamp url config-->
+      <url path="/ui/changes" method="get" operation-param="mode" operation-value="add">
+        <param name="from" regex="problem|request|project|cmdb"/>
+        <param name="externalframe" type="boolean" />
+        <param name="associatedEntityId" type="long" range=">0"/>
+      </url>
+      <url path="/ui/changes" method="get" operation-param="mode" operation-value="detail">
+        <param name="entity_id" type="long"  range=">=0" />
+        <param name="printPreview" type="boolean" />
+         <param name="externalframe" type="boolean" />
+      </url>
+      <url path="/ui/changes" method="get" user_type="all" operation-param="mode" operation-value="edit" description="ROLE_NOT_REQUIRED">
+        <param name="entity_id" type="long"  range=">=0" />
+      </url>
+        <url path="/ui/changes" method="get" operation-param="mode" operation-value="copy" roles="CreateChanges">
+        <param name="entity_id" type="long"  range=">=0" />
+        <param name="externalframe" type="boolean" />
+      </url>
+      <url path="/change/ChangeDetail.jsp" method="get" user_type="all" description="ROLE_NOT_REQUIRED">
+         <param name="module" regex="change"/>
+        <param name="tabName" regex="[a-zA-Z\/_]*" />
+        <param name="printPreview" type="boolean" />
+        <param name="externalframe" type="boolean" />
+        <param name="id" regex="id" />
+        <param name="entity_id" type="long"  range=">=0"/>
+        <param name="mode" regex="detail" />
+      </url>
+
+       <!-- For change new page -->
+       <url path="/change/ChangeForm.jsp" roles="CreateChanges" method="get" operation-param="mode" operation-value="add" >
+            <param name="id" type="long" range=">0"/>
+            <param name="from" regex="problem|request|project|cmdb"/>
+            <param name="externalframe" type="boolean" />
+            <param name="associatedEntityId" type="long" range=">0"/>
+       </url>
+        <url path="/change/ChangeForm.jsp" roles="CreateChanges" method="get" operation-param="mode" operation-value="copy" >
+            <param name="id" type="long" range=">0"/>
+            <param name="externalframe" type="boolean" />
+       </url>
+       <url path="/change/ChangeForm.jsp" user_type="all" method="get" operation-param="mode" operation-value="edit" description="ROLE_NOT_REQUIRED">
+           <param name="id" type="long" range=">0"/>
+       </url>
+
+       <!-- View History JSP URL -->
+      <url path="/common/ViewHistory.jsp" remote_server="true" operation-param="module" operation-value="changes" roles="" description="ROLE_NOT_REQUIRED">
+        <param name="id" type="long" allow-empty="false"/>
+        <param name="key" regex="change_history_sort_order"/>
+        <param name="print_view" type="boolean"/>
+        <param name="is_new_history" type="boolean" />
+      </url>
+
+       <url path="/ui/print" method="get" operation-param="module" operation-value="change" user_type="all" description="ROLE_NOT_REQUIRED">
+            <param name="entity_id" type="long" range=">0" />
+            <param name="externalframe" type="boolean" />
+            <param name="approvals_level" regex="id" />
+            <param name="approval" regex="id" />
+            <param name="printMode" type="boolean"  max-occurrences="1"  />
+        </url>
+
+        <url path="/servlet/SDAjaxServlet" method="get" operation-param="action" operation-value="getTemplateRules">
+            <param name="module" regex="CHANGE"/>
+            <param name="templateId" regex="positive_Integers"/>
+            <param name="sdUserType" regex="Technician|Requester|UserExceptCMCO"/>
+            <param name="mode" regex="create|edit"/>
+            <param name="rulesRequired" regex="templateSpecific|global|all"/>
+        </url>
+        <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="getFieldsJson" method="get" roles="CreateChanges,ModifyChanges">
+            <param name="module" regex="CHANGE"/>
+            <param name="templateId" regex="positive_Integers"/>
+        </url>
+
+        <!-- Request Associations new page start-->
+        <url path="/workorder/RequestListViewWeb.jsp" method="get" roles="ViewRequests" operation-param="module" operation-value="change">
+            <param name="module_id" regex="id" />
+            <param name="externalframe" type="boolean" />
+            <param name="view" regex="associated|association" />
+            <param name="type" regex="initiated_by_requests|initiated_requests" />
+            <param name="canAssociate" type="boolean" />
+        </url>
+        <!-- Request Associations new page End -->
+
+        <url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="addUdf" method="post" csrf="true" roles="SDAdmin" disable-extraparam="true">
+            <param name="templateID" type="long"  range=">0" />
+            <param name="aliasName" type="String" max-len="500"/>
+            <param name="columnName" type="String" max-len="50"/>
+            <param name="from" regex="changetemplate"/>
+            <param name="type" regex="Single Line|Pick List|Multi Line|Numeric|Date/Time" />
+            <param name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250" />
+            <param name="pickUpList" type="JSONObject" template="pickUpListTemplate" max-len="-1"/>
+            <param name="fromService" type="boolean" />
+            <param name="(?i)(ServiceId)" name-regex="true" regex="null|[0-9]+"/>
+            <param name="fieldScope" regex="service" />
+            <param name="module" regex="requests" />
+            <param name="dataType" regex="CHAR|LONG|DATE|DOUBLE" />
+            <param name="isCommon" type="boolean" />
+            <throttles name="addUdf_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+    </urls>
+
+    <!--URLs/templates/regexes moved from sec-api-v3-manual-->
+    <urls authentication="required" description="Roles will not be configured for change URL's since roles are dynamically defined as change roles. Role check is done at code level.">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="change_v3_manual_URLs" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+        <url path="/api/v3/changes/summary" method="get" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="2500" regex="ids"/>
+        </url>
+        <url path="/api/v3/changes/(\d+)/summary" method="get" user_type="all" url-type="dynamic" description="ROLE_NOT_REQUIRED"/>
+        <url path="/api/v3/changes/approval_status" method="get" user_type="all" description="ROLE_NOT_REQUIRED"><!--allowed value url for read only field-->
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+
+    <jsontemplates>
+
+        <jsontemplate name="change_assign_technician">
+            <key name="change" type="JSONObject" max-len="-1" template="assign_technician"/>
+        </jsontemplate>
+        <jsontemplate name="assign_technician">
+            <key name="change_owner" type="JSONObject" max-len="-1" template="user_unique"/>
+        </jsontemplate>
+        <jsontemplate name="close_change_operation">
+            <key name="status" regex="completed|canceled" min-occurrences="1" />
+            <key name="comment" type="String" max-len="2000" secret="true" />
+        </jsontemplate>
+        <jsontemplate name="change_bulk_close_operation">
+            <key name="change" template="change_bulk_close_operation_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="change_bulk_close_operation_base">
+            <key name="status" template="change_status_unique" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+            <key name="comment" type="String" max-len="500" secret="true" min-occurrences="1" />
+            <key name="closure_code" template="change_closure_code_unique" type="JSONObject" max-len="-1"/>
+            <key name="close_details" template="change_descriptive_field_base" type="JSONObject" max-len="-1"/>
+            <key name="attachments" template="attachment_base" type="JSONArray" max-len="-1" array-size="0-10"/>
+        </jsontemplate>
+        <jsontemplate name="change_layouts">
+            <key name="name" type="String"/>
+            <key name="stage" template="change_stage_unique" type="JSONObject" max-len="-1"/>
+            <key name="sections" template="change_sections" max-len="-1" type="JSONArray"  array-size="0-100" />
+        </jsontemplate>
+        <jsontemplate name="change_sections">
+            <key name="fields" template="change_fields" max-len="-1" type="JSONArray" array-size="0-100" />
+        </jsontemplate>
+        <jsontemplate name="change_fields">
+            <key name="position" template="change_position" max-len="-1" type="JSONObject" />
+            <key name="mandatory"  type="boolean"/>
+            <key name="name"  type="String" />
+        </jsontemplate>
+        <jsontemplate name="change_template_copy">
+            <key name="include_roles" type="boolean" />
+        </jsontemplate>
+        <jsontemplate name="change_position">
+            <key name="col_size" type="int"/>
+            <key name="row_size" type="int"/>
+            <key name="row" type="int"/>
+            <key name="col" type="int"/>
+        </jsontemplate>
+        <jsontemplate name="change_template_change">
+            <key name="roles" template="change_template_role_base" type="JSONArray" max-len="-1" array-size="0-300"/>
+            <key name="reason_for_change" template="reason_for_change_unique" type="JSONObject" max-len="-1"/>
+            <key name="assets" template="ci_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="category" template="category_unique" type="JSONObject" max-len="-1"/>
+            <key name="subcategory" template="subcategory_unique" type="JSONObject" max-len="-1"/>
+            <key name="item" template="item_unique" type="JSONObject" max-len="-1"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="impact" template="impact_unique" type="JSONObject" max-len="-1"/>
+            <key name="priority" template="priority_unique" type="JSONObject" max-len="-1"/>
+            <key name="urgency" template="urgency_unique" type="JSONObject" max-len="-1"/>
+            <key name="type" template="change_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="group" template="queue_unique" type="JSONObject" max-len="-1"/>
+            <key name="services" template="service_category_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="stage" template="change_stage_unique" type="JSONObject" max-len="-1"/>
+            <key name="status" template="change_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="risk" template="risk_unique" type="JSONObject" max-len="-1"/>
+            <key name="workflow" template="change_workflow_unique" type="JSONObject" max-len="-1"/>
+            <key name="createdby" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="title" type="String" max-len="250" secret="true"/>
+            <key name="udf_fields" template="udf_fields_ref" type="JSONObject" max-len="-1"/>
+            <key name="schedule_start_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="schedule_end_time" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="comment" type="String" max-len="3000" secret="true"/>
+            <key name="description" secret="true" xss="sdpantisamyfilter"/>
+            <key name="change_owner" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="change_manager" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="change_requester" template="user_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+    </jsontemplates>
+    <!--API Manual Entries end-->
+    <jsontemplates>
+
+        <jsontemplate name="IdTextArray" disable-extra-key="true" >
+            <key name="id" type="long"  range=">0" />
+            <key name="text|name" name-regex="true" max-occurrences="1" type="String" max-len="200" />
+      </jsontemplate>
+
+        <jsontemplate name="idjson">
+            <key index="0-150" type="long"  range=">0"/>
+        </jsontemplate>
+
+
+        <jsontemplate name="sla_input_data_template">
+            <key name="changeSLA" type="JSONObject" template="changeSLADetails" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeSLADetails">
+            <key name="name" type="String" />
+            <key name="description" secret="true" type="String" max-len="1000" />
+            <key name="override_operational_hours" type="boolean" />
+            <key name="is_enabled" type="boolean" />
+            <key name="condition" type="JSONObject" template="changeSLACondition" max-len="-1"/>
+            <key name="agreed_time" type="JSONObject" template="changeSLAAgreedTime" max-len="-1"/>
+            <key name="escalations" type="JSONArray" template="changeSLAEscalationsArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeSLACondition">
+            <key name="match" regex="All|Any" />
+            <key name="rules" type="JSONObject" template="changeSLAConditionRules" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeSLAConditionRules" >
+            <key name="impact" type="JSONArray" template="changeSLAArray" max-len="-1" array-size="0-100"/>
+            <key name="risk" type="JSONArray" template="changeSLAArray" max-len="-1" array-size="0-100"/>
+            <key name="category" type="JSONArray" template="changeSLAArray" max-len="-1" array-size="0-100"/>
+            <key name="type" type="JSONArray" template="changeSLAArray" max-len="-1" array-size="0-100"/>
+            <key name="services" type="JSONArray" template="changeSLAArray" max-len="-1" array-size="0-100"/>
+            <key name="emergency" type="boolean" />
+        </jsontemplate>
+
+        <jsontemplate name="changeSLAArray">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeSLAAgreedTime" >
+            <key name="is_predefined" type="boolean" />
+            <key name="days" type="int" range="0-180"/>
+            <key name="hours" type="int" range="0-23"/>
+            <key name="minutes" type="int" range="0-59"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeSLAEscalationsArray">
+            <key name="days" type="int" range="0-180"/>
+            <key name="hours" type="int" range="0-23"/>
+            <key name="minutes" type="int" range="0-59"/>
+            <key name="escalate" regex="After|Before" />
+            <key name="percentage" type="long" range="0-150"/>
+            <key name="notify_roles" type="JSONArray" template="changeSLANotifyRoles" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeSLANotifyRoles" >
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+
+        <!--changesla ends-->
+
+        <!--saveChangeTemplate starts-->
+        <jsontemplate name="save_change_template">
+            <key name="WFSTAGEID" type="JSONObject" template="saveChangeTemplateIDs"  max-len="-1"/>
+            <key name="WFSTATUSID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="RISKID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="PRIORITYID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="TECHNICIANID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="CATEGORYID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="SUBCATEGORYID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="ITEMID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="TITLE" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="SITEID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="GROUPID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="DESCRIPTION" secret="true" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="INITIATORID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="CHANGEMANAGERID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="REASONFORCHANGEID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="SCHEDULEDSTARTTIME" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="SCHEDULEDENDTIME" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="CREATEDTIME" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="COMPLETEDTIME" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="STATUSCOMMENTS" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="ISRETROSPECTIVE" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="CHANGETYPEID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="IMPACTID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="URGENCYID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="ASSETID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="SERVICEID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="CIID" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" />
+            <key name="Dummy([0-9]+)" name-regex="true" type="JSONObject" template="saveChangeTemplateDummy" max-len="-1" max-occurrences="200"/>
+            <key name="UDF_(LONG|DATE)([0-9]+)" name-regex="true" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" max-occurrences="100"/>
+            <key name="UDF_CHAR[0-9]+" name-regex="true" type="JSONObject" template="saveChangeTemplateIDs" max-len="-1" max-occurrences="100"/>
+        </jsontemplate>
+
+        <jsontemplate name="saveChangeTemplateIDs">
+            <key name="VIEWID" type="String" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="TITLE" type="String" max-len="2000" description="For every special and other language characters the name is encoded" secret="true"/>
+            <key name="DESCRIPTION" type="String" secret="true" max-len="2000"/>
+            <key name="TYPE" type="String" max-len="2000" description="For every special and other language characters the name is encoded" />
+            <key name="INDEX_NO" type="int"  range=">-2" />
+            <key name="ROWINDEX" type="int"  range=">-2"/>
+            <key name="COLUMNINDEX" type="int"  range=">-2"/>
+            <key name="COLSPAN" type="long"  range=">0" />
+            <key name="ROWSPAN" type="long"  range=">0" />
+            <key name="MANDATORY" type="boolean" />
+            <key name="EDITABLE" type="boolean" />
+            <key name="VIEWABLE" type="boolean" />
+            <key name="isUDF" type="boolean" />
+            <key name="DEFAULTVALUE" xss="sdpantisamyfilter" max-len="-1" description="This includes template description which has a db size of '-1'. For every special and other language characters the name is encoded" secret="true"/>
+            <key name="LISTVALUES" type="JSONObject" template="saveChangeTemplateListValues" max-len="-1"/>
+            <key name="REMOVABLE" type="boolean" />
+        </jsontemplate>
+
+        <jsontemplate name="saveChangeTemplateDummy">
+            <key name="VIEWID" type="String" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="TITLE" type="String" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="TYPE" type="String" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="INDEX_NO" type="int"  range=">-2"/>
+            <key name="ROWINDEX" type="int"   range=">-2"/>
+            <key name="COLUMNINDEX" type="int"   range=">-2"/>
+            <key name="COLSPAN" type="long"  range=">0"  />
+            <key name="ROWSPAN" type="long"  range=">0"  />
+            <key name="ISDUMMY" type="boolean" />
+            <key name="LISTVALUES" type="JSONObject" max-len="-1" template="saveChangeTemplateListValues" />
+            <key name="REMOVABLE" type="boolean" />
+        </jsontemplate>
+
+        <jsontemplate name="saveChangeTemplateListValues" />
+
+        <!--saveChangeTemplate ends-->
+
+        <!--changeCustomTrigger starts-->
+        <jsontemplate name="change_custom_trigger_items_template" >
+            <key name="details" type="JSONArray" template="customTriggerDetails" max-len="-1"/>
+            <key name="criteria" type="JSONArray" template="customTriggerCriteria" max-len="-1" array-size="0-20"/>
+            <key name="action" type="JSONArray" template="customTriggerAction" max-len="-1" />
+        </jsontemplate>
+
+        <jsontemplate name="customTriggerDetails" >
+            <key name="name" type="String" max-len="2000" min-occurrences="1" description="For every special and other language characters the name is encoded"/>
+            <key name="desc" type="String" max-len="250" secret="true" />
+            <key name="trigger" type="long"  range=">0" min-occurrences="1" />
+            <key name="executiontime" type="int" />
+            <key name="cascade" type="boolean" />
+        </jsontemplate>
+
+        <jsontemplate name="customTriggerCriteria" >
+            <key name="selcrit" regex="positive_Integers"/>
+            <key name="selcon" regex="positive_Integers" />
+            <key name="comp"  regex="and|or"/>
+            <key name="values" type="String" max-len="2000" description="For every special and other language characters the name is encoded" />
+        </jsontemplate>
+
+        <jsontemplate name="customTriggerAction" >
+            <key name="execute" type="JSONObject" template="customTriggerExecute" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="customTriggerExecute" >
+            <key name="exe_type" regex ="script|class|custom_function|webhook" />
+            <key name="executor" type="String" max-len="200"/>
+        </jsontemplate>
+        <!--changeCustomTrigger ends-->
+
+        <!--changeSLAReorder starts-->
+        <jsontemplate name="changeSLA_reorder">
+            <key name="changeSLA_order" type="JSONArray" template="changeSLA_orderArray" max-len="-1" array-size="0-250"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeSLA_orderArray">
+            <key name="id" type="long" range=">0"/>
+            <key name="order_id" type="long" range=">0"/>
+        </jsontemplate>
+        <!--changeSLAReorder ends-->
+
+        <!--changeTemplateRoles starts-->
+        <jsontemplate name="changeTemplateRoles">
+            <key name="[0-9]+" name-regex="true" type="JSONObject" template="changeTemplateRoleDetails" max-len="-1" max-occurrences="50"/>
+        </jsontemplate>
+
+        <jsontemplate name="changeTemplateRoleDetails">
+            <key name="roleid" type="long"  range=">0"  />
+            <key name="name" type="String" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="techonly" type="boolean" />
+            <key name="isSupportGroup" type="boolean" />
+            <key name="isCoTech" type="boolean"/>
+            <key name="index" type="int" range=">-2"/>
+            <key name="IsShareAllTech" type="boolean" />
+            <key name="mandatory" type="boolean" />
+            <key name="users" type="JSONArray" template="longarray" max-len="-1" array-size="0-50" />
+            <key name="groups" type="JSONArray" template="IdTextArray" max-len="-1" array-size="0-50"/>
+            <key name="extraOptions" type="JSONArray" template="extraOptionsTemplate" max-len="-1" />
+        </jsontemplate>
+
+        <jsontemplate name="extraOptionsTemplate">
+            <key name="name" type="String" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="id" type="long"  range=">-2"  />
+            <key name="isTag" type="boolean" />
+        </jsontemplate>
+        <!--changeTemplateRoles ends-->
+
+        <!-- Notification template starts-->
+        <jsontemplate name="notifications_template" >
+            <key name="notification" type="JSONObject" template="notifications" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="notifications">
+            <key name="id" type="long" range=">0"/>
+            <key name="title" type="String" max-len="5000" secret="true"/><!--As data is encoded-->
+            <key name="description"  secret="true" xss="sdpantisamyfilter" max-len="-1" description="For every special and other language characters the name is encoded" />
+            <key name="to" type="JSONArray" max-len="-1" template="toArray" array-size="0-50" secret="true"/>
+            <key name="cc" type="JSONArray" max-len="-1" template="ccArray" array-size="0-50" secret="true"/>
+            <key name="type" regex="Notify_Change|change_reply|change_forward"/>
+            <key name="attachments" type="JSONArray" template="attachmentsArray" max-len="-1" array-size="0-50"/>
+        </jsontemplate>
+
+        <jsontemplate name="toArray">
+            <key index="0-50" regex="email" secret="true"/>
+        </jsontemplate>
+
+        <jsontemplate name="ccArray">
+            <key index="0-50" regex="email" secret="true" />
+        </jsontemplate>
+
+        <jsontemplate name="attachmentsArray">
+            <key name="name" regex="filename" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="path" type="String" max-len="2000"/>
+            <key name="size" type="long"  range=">0" />
+            <key name="content_url" type="String" max-len="250"/>
+            <key name="id" type="long"  range=">0" />
+            <key name="key" type="String" secret="true"/>
+        </jsontemplate>
+
+        <jsontemplate name="deleteAttachmentsArray">
+            <key name="name" regex="filename" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <key name="path" regex=".*(\\|\/)bin(\\|\/)Attachments(\\|\/)Notifications(\\|\/)[0-9]+(\\|\/)[0-9a-zA-Z()\[\]{}+_\-\;\#\^\.\$@\?\,\:\'\!\P{InBasicLatin}\s]+" max-len="2000" secret="true"/>
+            <key name="size" type="long"  range=">0" />
+            <key name="content_url" type="String" max-len="250" />
+            <key name="id" type="long"  range=">0" />
+            <key name="key" type="String" secret="true"/>
+        </jsontemplate>
+
+        <!--notification template ends-->
+
+
+
+        <!-- Workflow statement attribute templates begin -->
+        <jsontemplate name="point2d" disable-extra-key="true">
+            <key name="x" type="int"  min-occurrences="1" range="1-1000000" />
+            <key name="y" type="int"  min-occurrences="1" range="1-1000000" />
+        </jsontemplate>
+        <jsontemplate name="workflow_stage_status_attribute" disable-extra-key="true">
+            <key name="id" type="long"  range=">0"  min-occurrences="1"/>
+            <key name="name" type="String"  />
+            <key name="internal_name" type="String"  />
+            <key name="description" secret="true" type="String" max-len="250" />
+            <key name="override_notification" type="boolean" />
+            <key name="applies_to_all" type="boolean" />
+            <key name="notification_content_id" type="long"  range=">0" />
+            <key name="subject" type="String" max-len="500" secret="true"/>
+            <key name="content" max-len="-1" secret="true" xss="sdpantisamyfilter"/>
+            <key name="notify_to" template="notify_to" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="workflow_switch_options" disable-extra-key="true">
+            <key name="id" type="String" max-len="5000"  min-occurrences="1"/>
+            <key name="name" type="String" max-len="5000" />
+        </jsontemplate>
+        <jsontemplate name="workflow_criteria_value"><key index="0-100" type="String" max-len="3500"/></jsontemplate>
+        <jsontemplate name="workflow_criteria">
+            <key name="field" type="String" min-occurrences="1"/>
+            <key name="condition" type="String" min-occurrences="1"/>
+            <key name="value"  type="String" max-len="3500"/>
+            <key name="values" type="JSONArray" template="workflow_criteria_value" max-len="-1" array-size="0-100"/>
+            <key name="logical_operator" regex="and|or|AND|OR" />
+            <key name="children" type="JSONArray" template="workflow_criteria" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="connector_source" disable-extra-key="true">
+            <key name="source_statement" template="statement_unique" type="JSONObject" max-len="-1" />
+            <key name="source_port" type="String" max-len="5000" />
+        </jsontemplate>
+        <jsontemplate name="connector_target" disable-extra-key="true">
+            <key name="target_statement" template="statement_unique" type="JSONObject" max-len="-1" />
+            <key name="target_port" type="String" max-len="5000" />
+        </jsontemplate>
+
+        <jsontemplate name="notify_to">
+            <key name="users" template="user_base" type="JSONArray" max-len="-1"  array-size="0-200"/>
+            <key name="xpaths" template="xpath_template" type="JSONArray" max-len="-1"  array-size="0-200"/>
+        </jsontemplate>
+        <jsontemplate name="xpath_template" disable-extra-key="true">
+            <key name="xpath"  type="String"  min-occurrences="1" />
+            <key name="display_name"  type="String"  />
+        </jsontemplate>
+
+        <jsontemplate name="workflow_notify_to">
+            <key name="technicians" type="JSONArray" template="strarray" max-len="-1"  array-size="0-100"/>
+            <key name="users" type="JSONArray" template="strarray" max-len="-1"  array-size="0-200"/>
+            <key name="xpaths" template="xpath_template" type="JSONArray" max-len="-1"  array-size="0-200"/>
+            <!-- <key name="roles" type="JSONArray" template="strarray" max-len="-1"  array-size="0-100"/>
+            <key name="sites" type="JSONArray" template="strarray" max-len="-1"  array-size="0-100"/>
+            <key name="depts" type="JSONArray" template="strarray" max-len="-1"  array-size="0-100"/>
+            <key name="groups" type="JSONArray" template="strarray" max-len="-1"  array-size="0-100"/>
+            <key name="user_groups" type="JSONArray" template="strarray" max-len="-1"  array-size="0-100"/>
+            <key name="custom_groups" type="JSONArray" template="strarray" max-len="-1"  array-size="0-100"/> -->
+        </jsontemplate>
+        <jsontemplate name="workflow_copy">
+            <key name="copy_workflow" type="JSONObject" template="copy_workflow_input"  max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="copy_workflow_input">
+            <key name="name"  type="String"/>
+        </jsontemplate>
+        <!-- Workflow statement attribute templates end -->
+
+        <!-- Change conversation template moved from security-requestaccess.xml-->
+        <jsontemplate name="conversations">
+            <key name="system_notifications" type="boolean" />
+            <key name="list_info" type="JSONObject" template="list_info_conversations" />
+            <key name="notes" type="boolean" />
+        </jsontemplate>
+        <jsontemplate name="list_info_conversations">
+            <key name="start_index" type="long" range=">=0"/>
+            <key name="sort_order" regex="asc|desc" />
+            <key name="get_total_count" type="boolean" />
+            <key name="row_count" type="long" range=">=0"/>
+        </jsontemplate>
+
+    </jsontemplates>
+
+    <regexes>
+        <regex name="tagsRestricted" value="(?ms)^(?!.*&lt;[a-zA-Z!\-/]).*$" />
+        <regex name="statementKey" value="(?i)start|end|((stage|Switch|FieldUpdate|Approval|Notification|Condition).*)" />
+        <regex name="action_module" value="change|release"/>
+    </regexes>
+
+
+    <!--URLs/templates/regexes moved from sec-api-v3-manual-->
+
+
+    <param-groups>
+
+        <param-group name="changeAdminCommonList">
+            <param name="name" type="String" min-occurrences="1" />
+            <param name="description" secret="true" type="String" max-len="500"/>
+            <param name="commonid" type="long" range=">0" />
+            <param name="isdeleted" type="boolean"/>
+        </param-group>
+
+        <param-group name="changeTemplate">
+            <param name="templateName" type="String" max-len="2000" description="For every special and other language characters the name is encoded"/>
+            <param name="templateType" regex="ChangeTemplate"/>
+            <param name="templateComment" type="String" max-len="2000" secret="true" description="For every special and other language characters the name is encoded" />
+            <param name="isEmergency" type="boolean" />
+            <param name="isDefault" type="boolean" />
+            <param name="wfid" type="long"  range=">=0"  />
+            <param name="allFields" type="JSONObject" template="save_change_template" max-len="-1" />
+            <param name="INLINEIMAGES" type="String" max-occurrences="50"/>
+        </param-group>
+
+    </param-groups>
+
+</security>

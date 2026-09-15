@@ -1,0 +1,189 @@
+{
+    "udf_module_name": "",
+    "personality": "",
+    "settings_name": "",
+    "entityDesc": "Comments that enable members/administrators to share their views on tasks for the betterment of the problem task.",
+    "Additional Elements": [],
+    "isReleased": "true",
+    "listview_personality": "",
+    "table_name": "",
+    "path": "",
+    "transformer": "",
+    "basetable": "",
+    "entity_group": "",
+    "listeners": [],
+    "page_details": {},
+    "lastModified": 1522324747000,
+    "bean": "",
+    "history_fkcolumn": "",
+    "history_diff_table": "",
+    "history_table": "",
+    "entityName": "Comments",
+    "optional_tables": [],
+    "license_to_check": "",
+    "syslog_module": "",
+    "cache_key": "",
+    "fileName": "Comments",
+    "attachment_module": "",
+    "operations": [
+        {
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"comment\":{\"content\":\"Sample Comment @[user:4] \"}}"
+            },
+            "desc": "This operation lets you add a task comment. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+            "name": "",
+            "disp_desc": "Add a comment",
+            "path": [
+                "/api/v3/problems/{problem_id}/tasks/{task_id}/comments"
+            ],
+            "defaultAttributes": [],
+            "method": "POST",
+            "moduleName" : "Problem",
+            "inOP": "true",
+            "output": {"sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"comment\": { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:16 PM\", \"value\": \"1588146369638\" }, \"id\": \"5\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"Sample Comment \\n<span mention-type=\\\"user\\\" mention=\\\"4\\\" style=\\\"color: rgb(26, 110, 189);\\\">@administrator</span>\" }}"},
+            "workflow": ""
+        },
+        {
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"comment\":{\"content\":\"Updated Comment\"}}"
+            },
+            "desc": "This operation lets you update a task comment. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+            "name": "",
+            "disp_desc": "Update a Comment",
+            "path": ["/api/v3/problems/{problem_id}/tasks/{task_id}/comments/{comment_id}"],
+            "defaultAttributes": [],
+            "method": "PUT",
+            "moduleName" : "Problem",
+            "inOP": "true",
+            "output": {"sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"comment\": { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:14 PM\", \"value\": \"1588146277369\" }, \"id\": \"4\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"Updated Comment\" }}"},
+            "workflow": ""
+        },
+        {
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation lets you delete a task comment. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+            "name": "",
+            "path": [
+                "/api/v3/problems/{problem_id}/tasks/{task_id}/comments/{comment_id}"
+            ],
+            "disp_desc": "Delete a comment",
+            "defaultAttributes": [],
+            "method": "DELETE",
+            "moduleName" : "Problem",
+            "inOP": "true",
+            "output": {"sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"},
+            "workflow": ""
+        },
+        {
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{ \"list_info\": { \"row_count\": \"12\", \"start_index\": 2, \"get_total_count\": \"true\" }}"
+            },
+            "desc": "This operation lets you view all comments under a task. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+            "name": "",
+            "disp_desc": "View all comments",
+            "path": [
+                "/api/v3/problems/{problem_id}/tasks/{task_id}/comments"
+            ],
+            "defaultAttributes": [],
+            "method": "GET",
+            "moduleName" : "Problem",
+            "inOP": "true",
+            "output": {"sample": "{ \"comments\": [ { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:19 PM\", \"value\": \"1588146588213\" }, \"id\": \"14\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\"><span>&nbsp;</span>the request defines the importance that is to be given to the requ</span></span></span>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:19 PM\", \"value\": \"1588146578199\" }, \"id\": \"13\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<table style=\\\"box-sizing: content-box; font-size: 13px; border-collapse: separate; border-spacing: 0px; background: rgb(255, 255, 255); padding: 0px; width: 1412.4399px; border: 0px; color: rgb(51, 51, 51); font-family: Roboto, arial; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; text-decoration-color: initial\\\" width=\\\"100%\\\" border=\\\"0\\\" cellpadding=\\\"0\\\" align=\\\"center\\\" cellspacing=\\\"0\\\" class=\\\"tableComponent\\\" id=\\\"ChangeTypeList_TABLE\\\">\\n <tbody style=\\\"box-sizing: content-box\\\">\\n <tr style=\\\"box-sizing: content-box\\\" class=\\\"tc-row\\\">\\n <td style=\\\"box-sizing: border-box; padding: 5px; color: rgb(0, 0, 0); font-weight: normal; border-bottom: 1px solid rgb(241, 241, 241); height: 33px; background: rgb(245, 245, 245); white-space: nowrap\\\" id=\\\"ChangeTypeList_r_3_3\\\" class=\\\" oddRow\\\">\\n <div>\\n <br>\\n </div>\\n <div>\\n Degradation in service\\n <br>\\n </div></td>\\n </tr>\\n </tbody>\\n</table>\\n<div>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:19 PM\", \"value\": \"1588146544217\" }, \"id\": \"12\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\">To add a new priority click the<span>&nbsp;</span></span></span></span>\\n <b>Add New Priority</b>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\"><span>&nbsp;</span>link on the right hand side corner of the<span>&nbsp;</span></span></span></span>\\n <b>Priority List</b>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\"><span>&nbsp;</span>table.</span></span></span>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:18 PM\", \"value\": \"1588146537935\" }, \"id\": \"11\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\">To add a new priority click the<span>&nbsp;</span></span></span></span>\\n <b>Add New Priority</b>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\"><span>&nbsp;</span>link on the right hand side corner of the<span>&nbsp;</span></span></span></span>\\n <b>Priority List</b>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\"><span>&nbsp;</span>table.</span></span></span>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:18 PM\", \"value\": \"1588146525486\" }, \"id\": \"10\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\">Priority associated to the request defines</span></span></span>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:18 PM\", \"value\": \"1588146514447\" }, \"id\": \"9\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\">Click the<span>&nbsp;</span></span></span></span>\\n <b>Save</b>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\"><span>&nbsp;</span>button to save the priority and retu</span></span></span>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:18 PM\", \"value\": \"1588146503099\" }, \"id\": \"8\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <b>Name:<span>&nbsp;</span></b>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\">Specify a unique name to identify each priority.</span></span></span>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:18 PM\", \"value\": \"1588146491738\" }, \"id\": \"7\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\">The Add Priority form has two fields, namely, Priority Name and Description.'</span></span></span>\\n <br>\\n</div>\\n<div>\\n <span class=\\\"colour\\\" style=\\\"color: rgb(51, 51, 51)\\\"><span class=\\\"font\\\" style=\\\"font-family: Roboto, arial\\\"><span class=\\\"size\\\" style=\\\"font-size: 13px\\\">​</span></span></span>\\n <br>\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:17 PM\", \"value\": \"1588146479131\" }, \"id\": \"6\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n sample ksjdj asdosd\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:14 PM\", \"value\": \"1588146277369\" }, \"id\": \"4\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"Updated Comment\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:01 PM\", \"value\": \"1588145510391\" }, \"id\": \"3\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"<div>\\n <span mention-type=\\\"user\\\" mention=\\\"4\\\" style=\\\"color: rgb(26, 110, 189)\\\">@administrator</span>&nbsp;\\n</div>\" }, { \"parent\": null, \"created_time\": { \"display_value\": \"Apr 29, 2020 12:45 PM\", \"value\": \"1588144540829\" }, \"id\": \"2\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"Sample Comment\" } ], \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": true, \"start_index\": 2, \"total_count\": 14, \"get_total_count\": \"true\", \"row_count\": 12 }}"},
+            "workflow": ""
+        },
+        {
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{ \"comment\": { \"content\": \"Sample Reply @[user:4]\" }}"
+            },
+            "desc": "This operation lets you add a reply to a task comment. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+            "name": "",
+            "disp_desc": "Reply to a comment",
+            "path": [
+                "/api/v3/problems/{problem_id}/tasks/{task_id}/comments/{comment_id}/_reply"
+            ],
+            "defaultAttributes": [],
+            "method": "POST",
+            "moduleName" : "Problem",
+            "inOP": "true",
+            "output": {"sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"comment\": { \"parent\": { \"id\": \"4\", \"content\": \"Parent Comment\" }, \"created_time\": { \"display_value\": \"Apr 29, 2020 01:22 PM\", \"value\": \"1588146765763\" }, \"id\": \"16\", \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"content\": \"Sample Reply \\n<span mention-type=\\\"user\\\" mention=\\\"4\\\" style=\\\"color: rgb(26, 110, 189);\\\">@administrator</span>\" }}"},
+            "workflow": ""
+        }
+    ],
+    "attributes": [
+        {
+      "name": "id",
+      "type": "Number",
+      "isReadOnly": "true",
+      "desc": "Unique identifier of the comment.",
+      "graphView": "",
+      "column": "COMMENTS : COMMENTID",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "content",
+      "type": "HTML",
+      "desc": "comment string.",
+      "graphView": "",
+      "column": "COMMENTS : COMMENT",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+       "isReadOnly": "true",
+      "type": "Object",
+      "desc": "User who created the comment.",
+      "graphView": "",
+      "column": "COMMENTS : COMMENTOWNER",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "parent",
+      "isReadOnly": "true",
+      "type": "Object",
+      "desc": "Parent comment to which the comment is replied to",
+      "graphView": "",
+      "column": "COMMENTS : PARENTID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "isReadOnly": "true",
+      "desc": "Time of creation of the comment.",
+      "graphView": "",
+      "column": "COMMENTS : CREATEDTIME",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+    ],
+    "inOP": "true",
+    "settings_relational_mapping": "",
+    "handler": ""
+}

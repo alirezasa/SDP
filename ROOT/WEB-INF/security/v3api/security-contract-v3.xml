@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" authentication="required">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_contract" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="\d+((\,\d+)?){0,249}" max-len="3000" name="ids"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="\d+((\,\d+)?){0,249}" max-len="3000" name="ids"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contract_status/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contract_status">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contract_status/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="\d+((\,\d+)?){0,249}" max-len="3000" name="ids"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contract_status/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="\d+((\,\d+)?){0,249}" max-len="3000" name="ids"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contract_status/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+    	</url>
+	<!---Attachment URLS start-->
+	<url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="delete" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/attachments/(\d+)"/>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/attachments/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+        <url method="delete" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/attachments">
+            <param regex="\d+((\,\d+)?){0,249}" max-len="3000" name="ids"  min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="\d+((\,\d+)?){0,249}" max-len="3000" name="ids"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="\d+((\,\d+)?){0,249}" max-len="3000" name="ids"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contracts_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+        <url method="post" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contracts_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+        <url method="put" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/(_?)upload" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contracts_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param max-len="250" type="String" name="description" secret="true"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/attachments/(\d+)/(_?)download">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <param regex="view" name="mode"/>
+        </url>
+	<!--Attachment URLS end-->
+	
+	<!--Contract API URLS START-->
+		<url method="get" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/(_?)owner_email_content"/>
+		<url method="get" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/(_?)vendor_email_content"/>
+		<url method="get" roles="ViewContract" path="/api/v3/contract_renewals">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+    	</url>
+		<url method="get" roles="ViewContract" path="/api/v3/contracts/(type|parent_contract|vendor|assets|notify_users)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/(type|parent_contract|vendor|assets|notify_users)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+    	</url>
+        <url method="get" roles="ViewContract" path="/api/v3/contracts/(\d+)/contract_renewals">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+    	</url>
+		<url method="post" roles="CreateContract" path="/api/v3/contracts">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract" name="input_data"/>
+    	</url>
+    	<url method="post" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/(_?)email_owner">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="contract_notification_template" name="input_data"/>
+    	</url>
+    	<url method="post" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/(_?)email_vendor">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="contract_notification_template" name="input_data"/>
+    	</url>
+		<url method="post" roles="CreateContract" path="/api/v3/contracts/(\d+)/(_?)renew_contract">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract" name="input_data"/>
+    	</url>
+     	<url method="post" roles="CreateContract" path="/api/v3/contract_assets">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_asset" name="input_data"/>
+    	</url>
+    	<url method="post" roles="CreateContract" path="/api/v3/contract_relationships">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_relationship" name="input_data"/>
+    	</url>
+		<url method="post" roles="CreateContract,ModifyContract" path="/api/v3/contract_renewals">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_renewal" name="input_data"/>
+        </url>
+        <url method="post" roles="CreateContract,ModifyContract" path="/api/v3/contracts/(\d+)/contract_renewals">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_renewal" name="input_data"/>
+        </url>
+		<url method="put" roles="ModifyContract" path="/api/v3/contracts/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract" name="input_data"/>
+    	</url>
+    	<url method="put" roles="ModifyContract" path="/api/v3/contracts">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+    	</url>
+		<url method="put" roles="ModifyContract" path="/api/v3/contract_assets/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_asset" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyContract" path="/api/v3/contract_assets">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_asset" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+		<url method="put" roles="ModifyContract" path="/api/v3/contract_relationships/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_relationship" name="input_data"/>
+    	</url>
+	 	<url method="put" roles="ModifyContract" path="/api/v3/contract_relationships">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_relationship" name="input_data"/>
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+    	</url>
+		<url method="put" roles="ModifyContract" path="/api/v3/contract_renewals/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_renewal" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyContract" path="/api/v3/contracts/(\d+)/contract_renewals/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_renewal" name="input_data"/>
+        </url>
+        <url method="put" roles="ModifyContract" path="/api/v3/contract_renewals">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_renewal" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="put" roles="ModifyContract" path="/api/v3/contracts/(\d+)/contract_renewals">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="contract_renewal" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+    	</url>
+
+		<url method="delete" roles="DeleteContract" path="/api/v3/contracts/(\d+)"/>
+		<url method="delete" roles="DeleteContract" path="/api/v3/contracts">
+            <param allow-empty="false" min-occurrences="1" regex="ids" max-len="1200" name="ids"/>
+    	</url>
+        <url path="/api/v3/contracts/assets/product/(all_product_type)" roles="CreateContract,ModifyContract" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" />
+        </url>
+	<!--Contract API URLS END-->
+	<param name-regex="true" max-len="100" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true" max-occurrences="1" />
+    	<param name="format" regex="json"/>
+    </urls>
+	<!-- Json Templates begins -->
+	<jsontemplates>
+	 <jsontemplate name="contract_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="custom_contract_id" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="from_date" template="datefield" type="JSONObject" max-len="-1"/>
+	    <key name="to_date" template="datefield" type="JSONObject" max-len="-1"/>
+	    <key name="total_price" type="double" range=">=0"/>
+        </jsontemplate>
+        <jsontemplate name="contract_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="custom_contract_id" type="String" max-len="100"/>
+            <key name="name" type="String" max-len="100"/>
+            <key name="comments" type="String" max-len="-1" secret="true"/>
+            <key name="support" type="String" max-len="3500" secret="true"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="notify_before" type="long" range="1-180"/>
+            <key name="esclate_to_id" type="long" range=">0"/>
+            <key name="user" template="user_unique" type="JSONObject" max-len="-1"/>
+            <key name="created_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="from_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="to_date" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="total_price" type="double" range=">=0"/>
+            <key name="contract_status" template="contract_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="is_escalated" type="boolean" allow-invalid="false"/>
+            <key name="is_renewed" type="boolean" allow-invalid="false"/>
+	    	<key name="assets" template="all_asset_template_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+	    	<key name="type" type="JSONObject" template="contract_type_unique" max-len="-1"/>
+	    	<key name="parent_contract" type="JSONObject" template="contract_unique" max-len="-1"/>
+	    	<key name="created_by" type="JSONObject" template="user_unique" max-len="-1"/>
+	    	<key name="notification_email" type="String" max-len="500" secret="true" description="Comma separated mailids"/>
+	    	<key name="contract_notify_before_days" array-size="0-20" max-len="-1" type="JSONArray" template="contract_notify_day_base" />
+	    	<key name="notify_users" array-size="0-100" max-len="-1" type="JSONArray" template="technician_unique" />
+            <key name="udf_fields" max-len="-1" type="JSONObject" template="udf_fields_ref"/>
+            <key name="contract_renewals" array-size="0-100" max-len="-1" type="JSONArray" template="contract_renewal_unique"/>
+            <key name="attachments" array-size="0-100" max-len="-1" type="JSONArray" template="attachment_base"/>
+        </jsontemplate>
+        <jsontemplate name="contract">
+            <key name="contract" template="contract_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="contract_unique_wrapper">
+            <key name="contract" template="contract_unique" type="JSONObject" max-len="-1"/>
+    	</jsontemplate>
+	<jsontemplate name="contract_asset_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="all_asset_template_unique" name="asset"/>
+        </jsontemplate>
+        <jsontemplate name="contract_asset_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="all_asset_template_unique" name="asset"/>
+        </jsontemplate>
+        <jsontemplate name="contract_asset">
+            <key max-len="-1" type="JSONObject" template="contract_asset_base" name="contract_asset"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="contract_asset_base" name="contract_assets"/>
+        </jsontemplate>
+        <jsontemplate name="contract_asset_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="contract_asset_unique" name="contract_asset"/>
+        </jsontemplate>
+        <jsontemplate name="contract_notify_day_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key type="long" name="notify_before" range="1-180"/>
+            <key allow-invalid="false" type="boolean" name="is_sent"/>
+        </jsontemplate>
+        <jsontemplate name="contract_notify_day_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key type="long" name="notify_before" range="1-180"/>
+            <key allow-invalid="false" type="boolean" name="is_sent"/>
+        </jsontemplate>
+        <jsontemplate name="contract_notify_day">
+            <key max-len="-1" type="JSONObject" template="contract_notify_day_base" name="contract_notify_day"/>
+        </jsontemplate>
+        <jsontemplate name="contract_notify_day_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="contract_notify_day_unique" name="contract_notify_day"/>
+        </jsontemplate>
+        <jsontemplate name="contract_relationship_unique">
+            <key allow-invalid="false" max-len="-1" type="JSONObject" template="contract_unique" name="child_contract"/>
+        </jsontemplate>
+        <jsontemplate name="contract_relationship_base">
+            <key allow-invalid="false" max-len="-1" type="JSONObject" template="contract_unique" name="child_contract"/>
+            <key max-len="-1" type="JSONObject" template="contract_unique" name="parent_contract"/>
+        </jsontemplate>
+        <jsontemplate name="contract_relationship">
+            <key max-len="-1" type="JSONObject" template="contract_relationship_base" name="contract_relationship"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="contract_relationship_base" name="contract_relationships"/>
+        </jsontemplate>
+        <jsontemplate name="contract_relationship_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="contract_relationship_unique" name="contract_relationship"/>
+        </jsontemplate>
+        <jsontemplate name="contract_renewal_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="contract_unique" name="renewed_contract"/>
+            <key max-len="-1" type="JSONObject" template="contract_unique" name="old_contract"/>
+        </jsontemplate>
+        <jsontemplate name="contract_renewal_base">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key max-len="-1" type="JSONObject" template="contract_unique" name="renewed_contract"/>
+            <key max-len="-1" type="JSONObject" template="contract_unique" name="old_contract"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="renewed_date"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="renewed_by"/>
+        </jsontemplate>
+        <jsontemplate name="contract_renewal">
+            <key max-len="-1" type="JSONObject" template="contract_renewal_base" name="contract_renewal"/>
+        </jsontemplate>
+        <jsontemplate name="contract_renewal_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="contract_renewal_unique" name="contract_renewal"/>
+        </jsontemplate>
+		<jsontemplate name="contract_notification_template">
+    		<key name="notification" type="JSONObject" template="contract_notification_base" max-len="-1" max-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="contract_notification_base">
+			<key name="subject" type="String" max-len="500" max-occurrences="1" secret="true"/>
+			<key name="description" max-len="-1" max-occurrences="1" secret="true" xss="sdpantisamyfilter" description="Notification content description"/>
+			<key name="cc" type="JSONArray" template="emailarray" max-len="-1" max-occurrences="1" secret="true"/>
+		</jsontemplate>
+    	<jsontemplate name="contract_status_unique">
+            <key allow-invalid="false" type="long" name="id" range=">0"/>
+            <key name="status" regex="Active|Expired|Yet to be Active"/>
+        </jsontemplate>
+        <jsontemplate name="contract_status_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="status" regex="Active|Expired|Yet to be Active"/>
+            <key name="is_pending" type="String" max-len="5"/>
+            <key name="(?i)(description)" name-regex="true" secret="true" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="contract_status">
+            <key name="contract_status" template="contract_status_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="contract_status_unique_wrapper">
+            <key name="contract_status" template="contract_status_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+	</jsontemplates>
+  <!-- Json Templates ends -->	
+</security>

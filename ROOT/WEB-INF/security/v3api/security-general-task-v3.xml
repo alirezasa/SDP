@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" description="FGR_APPLIED:Roles are not defined as role check will be done at server side" user_type="all">
+
+        <throttles name="general_task" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/tasks(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="general_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/tasks/(\d+)(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="general_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+	<url path="/api/v3/tasks/(_?)metainfo" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject"/>
+        </url>
+        <url path="/api/v3/tasks/(\d+)/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url path="/api/v3/tasks/(\d+)/attachments/(\d+)"  method="delete" />
+
+        <url path="/api/v3/tasks/(\d+)/attachments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/attachments/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/tasks/attachments/(\d+)/(_?)download"  method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/attachments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="tasks_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/(_?)upload" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="tasks_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/(_?)upload" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="tasks_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments/(\d+)"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments/(\d+)"  method="delete" />
+
+        <url path="/api/v3/tasks/(\d+)/comments/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments/(\d+)/(_?)reply"  method="post" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/(_?)history"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" path="/api/v3/tasks/(\d+)/owner/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+        <url method="post" path="/api/v3/tasks/(\d+)/comments/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/tasks/(\d+)/comments/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/comments/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/comments/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <!--For comment mentions allowed values profile pic-->
+        <url method="get" path="/api/v3/tasks/(\d+)/comments/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <!--For comment mentions user popup window profile pic-->
+        <url method="get" path="/api/v3/tasks/(\d+)/comments/(\d+)/mentions/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/comments/(\d+)/mentions/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mentions_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <!--For comment created_by user popup window profile pic-->
+        <url method="get" path="/api/v3/tasks/(\d+)/comments/(\d+)/created_by/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/comments/(\d+)/created_by/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="created_by_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments"  method="put" >
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/comments/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks"  method="post" >
+            <param name="input_data" template="task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)"  method="put" >
+            <param name="input_data" template="task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)"  method="delete" />
+
+        <url path="/api/v3/tasks/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(_?)trigger"  method="put" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(_?)close"  method="put" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/(_?)trigger"  method="put" />
+
+        <url path="/api/v3/tasks/(\d+)/(_?)close"  method="put" />
+
+        <url path="/api/v3/tasks"  method="put" >
+            <param name="input_data" template="task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/template/(\d+)"  method="get" />
+        <url path="/api/v3/tasks/(\d+)/template/(\d+)"  method="get" />
+
+        <url path="/api/v3/tasks/(status|owner|marked_owner|priority|type|template|created_by|tags|module)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/(status|owner|marked_owner|priority|type|template|tags)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <url user_type="all" method="get" roles="" path="/api/v3/tasks/owner/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        
+        <url path="/api/v3/tasks/template/(\d+)/images/(\d+)"  method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/_links"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url method="post" path="/api/v3/tasks/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/tasks/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/tasks/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs"  method="post" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)"  method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)"  method="delete" />
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs"  method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(_?)get_time_spent"  method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)/(_?)get_time_spent"  method="get" >
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+
+        <url path="/api/v3/tasks/(\d+)/worklogs"  method="put" >
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)/template/(\d+)"  method="get" />
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(owner|type|template)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)/(owner|type)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/template/(\d+)"  method="get" />
+        <url path="/api/v3/tasks/(\d+)/worklogs/template/(\d+)/images/(\d+)" user_type="all" method="get" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)/(\d+)"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/tasks/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" roles="" method="get" description="FGR_APPLIED">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" roles="" method="get" description="FGR_APPLIED">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/worklogs/_links"  method="get" >
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url method="post" path="/api/v3/tasks/(\d+)/worklogs/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/tasks/(\d+)/worklogs/(\d+)/images">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/worklogs/(\d+)/images/(\d+)">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/worklogs/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/tasks/(\d+)/worklogs/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="metainfo"/>
+        </url>
+        <url path="/api/v3/tasks/(\d+)/worklogs/(\d+)/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url method="get" path="/api/v3/tasks/(\d+)/worklogs/(_?)summary"/>
+
+        <!--  Unified worklogs start -->
+        <url path="/api/v3/worklogs" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="unified_worklog_template" name="input_data"/>
+        </url>
+        <url path="/api/v3/worklogs/_summary" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="unified_worklog_template" name="input_data"/>
+        </url>
+        <url path="/api/v3/worklogs/_metainfo" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="unified_worklog_template" name="input_data"/>
+        </url>
+        <!-- Unified worklogs end-->
+
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+    <urls authentication="required" api="true" description="Roles are not defined as role check will be done at server side">
+
+        <throttles name="general_task_mark_assign" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="60" lock-period="5M"/>
+        </throttles>
+
+        <url path="/api/v3/tasks/(_?)assign"  method="put">
+            <param name="input_data" template="assign_task_without_group_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(_?)mark"  method="put">
+            <param name="input_data" template="mark_task_without_group_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/(_?)assign"  method="put">
+            <param name="input_data" template="assign_task_without_group_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/(\d+)/(_?)mark"  method="put">
+            <param name="input_data" template="mark_task_without_group_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+
+        <url path="/api/v3/tasks/_total_count" method="get" user_type="all">
+            <throttles name="task_total" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/tasks/site" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/tasks/group" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+    </urls>
+</security>

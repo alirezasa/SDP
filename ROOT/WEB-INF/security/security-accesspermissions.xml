@@ -1,0 +1,366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--$Id$-->
+<!--
+    Document   : Adminsecurity.xml
+    Created on : January 27, 2012, 10:20 PM
+    Author     : shanmugam-0107
+    Description:
+        Purpose of the document follows.
+-->
+<!-- /AutoAssign.do contains more form data when show per page is > 200,changed limit to 1600 -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+        <defaultparams>
+            <param name="_" type="long" description="To prevent browser caching of jQuery AJAX call result"/>
+            <param name="SUBREQUEST" regex="XMLHTTP|true" max-occurrences="5" />
+            <param name="PORTALID" type="long" description="To access specified portal data"/>
+            <param name="tm" type="long" description="To prevent browser caching of jQuery AJAX call result"/>
+            <param name="noheader" type="boolean"/>
+            <param name="externalframe" type="boolean"/>
+            <param name="previewSlider" type="boolean"/>
+	    <param name="esmDirectory" type="boolean"/>
+        </defaultparams>
+    <urls authentication="required" method="get">
+
+    <!--url roles="IncidentBusinessRuleConfig,ServiceRequestConfig" path="/BusinessRuleDef.do"  method="get" />
+    <url roles="IncidentBusinessRuleConfig,ServiceRequestConfig" path="/BusinessRuleDef.do" method="post" csrf="true"/-->
+
+    <url roles="SDAdmin,ReportConfigAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="privacy-settings"/>
+    <url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="apisettings"/>
+
+    <url roles="SDAdmin" path="/setup/SetUpWizard.jsp"/>
+
+    <!--SD-74733-->
+	<!-- Based on struts this below jsp will load without network call Hence commenting -->
+    <!--url roles="SDAdmin,IncidentRequestConfig,ServiceRequestConfig,WorkLogConfig" path="/setup/UDFDefList.jsp"/-->
+    <!-- SD-78892 Fix -->
+    <!--SD-78175-->
+    <url roles="SDAdmin,SDOrgAdmin,HelpdeskConfig" path="/DefaultConfigDef.do" method="get" user_type="all">
+        <throttles name="DefaultConfigDef_admin" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+    </url>
+
+
+    <url roles="SDAdmin" path="/setup/api.jsp"/>
+    <!--url roles="SDAdmin,SDGuest" path="/SurveyDetails.do"/-->
+    <!--url roles="PreventiveMaintenanceTaskConfig" path="/ScheduleRequest.do"/-->
+    <!--url roles="SDAdmin" path="/NotificationContent.do"/-->
+        <param name="isFAQ" regex="true"/>
+
+
+
+
+    <!-- Multi Select UDF pop up -->
+
+    <!--Below Urls are given by Anand Balan-->
+    <!--<url roles="IncidentBusinessRuleConfig,ServiceRequestConfig" path="/BusinessRuleDef.do" method="get">
+        <param name="from" regex="SCatalog"/>
+    </url>-->
+
+     <!-- Url check as a part of HelpdeskConfig Role -->
+
+        <!--team:G2 Choosing technicians from Notification rules -->
+        <url roles="SDAdmin,SDSiteAdmin,HelpdeskConfig" path="/SearchItem.do" disable-extraparam="true">
+         <!--Params Used in Service Catalog Module Starts-->
+          <param name="element1" type="String"/>
+          <param name="element2" type="String"/>
+          <param name="mode" type="String"/>
+          <param name="siteID" type="String"/>
+          <param name="from" type="String"/>
+          <param name="criteria" type="String"/>
+          <param name="type" type="String"/>
+          <param name="noTicketOwner" type="boolean"/>
+          <!--Params Used in Service Catalog Module Ends-->
+    </url>
+    <!-- End of URL check as a part of HelpdeskConfig Role -->
+
+    <!-- Vulnerable Url's for HelpdeskConfig -->
+
+
+    <url roles="SDAdmin,ReportConfigAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="notification" method="get" remote_server="true"/>
+
+    <!-- End of Vulnerable Url's -->
+
+        <!-- Business Rules -->
+        <!--<url roles="IncidentBusinessRuleConfig,ServiceRequestConfig" path="/NotificationContent.do" method="get"
+             operation-param="notifType" operation-value="BusinessRule_EMail,BusinessRule_SMS"/>
+        <url roles="IncidentBusinessRuleConfig,ServiceRequestConfig" path="/NotificationContent.do" method="post"
+             csrf="true" operation-param="notifType" operation-value="BusinessRule_EMail,BusinessRule_SMS"/>-->
+
+
+        <!-- Notification Rules -> Request (SDAdmin as well as HelpdeskConfig) -->
+
+        <!-- Notification Rules -> Request (SDOrgAdmin) -->
+        <url roles="SDOrgAdmin" path="/NotificationContent.do" method="get" operation-param="notifType" operation-value="RequesterLogin_E-Mail" user_type="all"/>
+
+         <!-- Notification Rules -> Portal Owner (SDOrgAdmin) -->
+        <url roles="SDOrgAdmin" path="/NotificationContent.do" method="get" operation-param="notifType" operation-value="Notify_PortalOwner" user_type="all">
+		<throttles name="notify_PortalOwner" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+
+        <!-- Notification Rules -> Problem (SDAdmin) -->
+        <url roles="SDAdmin" path="/NotificationContent.do" method="get" operation-param="notifType"
+             operation-value="ProblemAssigned,ProblemAssigned_SMS,IncidentAssociated,IncidentDetached,ProblemCreated,ProblemCreated_SMS,ProblemClosed,PR_NOT_TECH,PR_NOT_REQ,PR_NOT_GNRL,Problem_Notes_Mention">
+            <throttles name="notify_problem" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="isSMS" regex="true" />
+        </url>
+
+        <!-- Notification Rules -> Solution (SDAdmin) -->
+        <url roles="SDAdmin" path="/NotificationContent.do" method="get" operation-param="notifType"
+             operation-value="AcknowledgeUserSolution,Notify_NewApprovedSolution,NotifyAdd_UpdateSolution,Notify_ApproveSolution,NotifySolutionOwner_ReviewDate,NotifySolutionOwner_ExpiryDate">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SolutionNotificationRules_Get" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+
+		<!-- Notification Rules -> Space (ConfigureSpace) -->
+        <url roles="ConfigureSpace" path="/NotificationContent.do" method="get" operation-param="notifType"
+             operation-value="Campus_Edit,Structure_Edit,Floor_Edit,Room_Edit" disable-extraparam="true">
+			 <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Space_Notification_Rules_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+		</url>
+
+    <!-- <url path="/ReplyTemplate.do" method="GET" roles="ViewRequests,HelpdeskConfig">
+        <param name="mode" regex="getInfo|changeDesc|changeStatus|select|rtList" />
+        <param name="id" type="long"/>
+        <param name="woId" type="long"/>
+        <param name="status" type="long"/>
+    </url> -->
+    <!--SD-70741 issue fix ends here-->
+
+    <url roles="SDAdmin,SDOrgAdmin,SDSiteAdmin,HelpdeskConfig,ConfigureSpace,ReportConfigAdmin,ConfigureCMDB" path="/AdminHome.do" method="get" user_type="all" remote_server="true" disable-extraparam="true">
+        <param name="method" regex="adminSettings"/>
+    </url>
+
+    </urls>
+
+    <urls authentication="required" method="post">
+
+
+
+	    <!-- URL for both SDAdmin and SDSiteAdmin -->
+
+	    <!-- <url roles="SDAdmin,SDOrgAdmin,SDSiteAdmin,HelpdeskConfig" path="/AdminHome.do" user_type="all"/> -->
+	    <!-- <url roles="SDAdmin" path="/RequesterDef.do" operation-param="userViewType" operation-value="inactiveUsers">
+		    <param name="showUserDetails" type="boolean"/>
+		    <param name="startsWith" regex="[a-zA-Z]" />
+	    </url> -->
+
+	    <!-- URL for SDAdmin alone -->
+
+	    <!-- <url roles="LevelConfig,ModeConfig,UrgencyConfig,CommonRequestConfig,WorkLogConfig,PriorityMatrixConfig" path="/ConfDef.cc" method="post">
+		    <param name="UNIQUE_ID" regex="ConfDef"/>
+	    </url> -->
+	    <!-- <url roles="SDAdmin" path="/setup/SetUpWizard.jsp"/> -->
+		    <!-- SD-74733 -->
+	   <!--  <url roles="SDAdmin,IncidentRequestConfig,ServiceRequestConfig,WorkLogConfig" path="/setup/UDFFields.jsp"/>
+	    <url roles="IncidentRequestConfig" path="/setup/Incident_add_fields.jsp"/>
+	    <url roles="SDAdmin,IncidentRequestConfig,ServiceRequestConfig" path="/setup/UDFDefList.jsp"/> -->
+	    <!-- <url roles="CSIConfig" path="/setup/CategoryTreeView.jsp"/> -->
+
+		    <!-- SD-78892 Fix -->
+		    <!--SD-78175-->
+
+	    <url roles="SDAdmin,SDOrgAdmin,HelpdeskConfig" path="/DefaultConfigDef.do" operation-param="defModule" operation-value="notDefEsm" method="post" csrf="true" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="DefaultConfigDef_ESM" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+		    <param name="emailReqOnLoginInfo" regex="on|off"/>
+		    <param name="submit" regex="Save"/>
+	    </url>
+
+	    <!--<url roles="SDAdmin" path="/DynamicGroupDef.do"/>-->
+
+	    <!-- <url roles="ImpactConfig" path="/ImpactConfDef.cc" method="post">
+		    <param name="UNIQUE_ID" regex="ImpactConfDef"/>
+	    </url> -->
+
+	    <!-- Multi Select UDF pop up -->
+	    <!-- <url path="/workorder/multiselect.jsp" user_type="all">
+		    <param name="name" type="String" max-len="-1"/>
+		    <param name="fromParam" regex="template|viewOnly"/>
+	    </url> -->
+
+		    <!--Below Urls are given by Anand Balan-->
+
+
+
+	    <!-- Url check as a part of HelpdeskConfig Role -->
+
+
+	   <!--  <url roles="SDAdmin,SDSiteAdmin,HelpdeskConfig" path="/SearchItem.do"/>
+	    <url roles="ServiceLevelAgreementConfig" path="/HdSearchItem.do"/> -->
+	    <!-- <url roles="CSIConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="category"/>
+	    <url roles="StatusConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="status"/>
+	    <url roles="LevelConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="level"/>
+	    <url roles="ModeConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="mode"/>
+	    <url roles="ImpactConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="impact"/>
+	    <url roles="UrgencyConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="urgency"/>
+	    <url roles="PriorityMatrixConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="priorityMatrix"/>
+	    <url roles="CommonRequestConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="requestType,requestclosurecode,closerequestfilter,ResolutionTemplate,externalMenuAction"/>
+	    <url roles="CommonRequestConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="externalautoaction">
+		    <param name="isReorder" regex="true|failure"/>
+	    </url>
+        <url roles="HelpdeskConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="ReplyTemplate" csrf="true"/>
+	    <url roles="IncidentRequestConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="reqUDF,RequestTemplate"/>-->
+	    <!--<url roles="IncidentBusinessRuleConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="rule"/>
+	    <url roles="ServiceLevelAgreementConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="sla"/>
+	    <url roles="SDAdmin,HelpdeskConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="notDefconfig"/>
+	    <url roles="PreventiveMaintenanceTaskConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="scheduleReq"/>
+	    <url roles="TechnicianAutoAssignConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="TechAutoAssign"/>
+	    <url roles="DataArchiveConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="archive"/>-->
+		    <!-- End of URL check as a part of HelpdeskConfig Role -->
+
+
+		    <!-- Vulnerable Url's for HelpdeskConfig -->
+	    <url roles="SDAdmin" path="/ConfigureStyle.do" method="post" csrf="true"/>
+	    <!-- <url roles="SDAdmin,SDSiteAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="queues"/> -->
+	    <url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="notification" method="post" csrf="true" remote_server="true"/>
+		    <!-- End of Vulnerable Url's -->
+
+		    <!-- Business Rules -->
+
+	    <!-- Notification Rules ::: Request (SDAdmin as well as HelpdeskConfig) -->
+
+		    <!-- Notification Rules ::: Request (SDOrgAdmin) -->
+        <url roles="SDOrgAdmin" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType" operation-value="RequesterLogin_E-Mail" user_type="all">
+            <param name="fromAdminPage" type="boolean"/>
+            <param name="subject" type="String" max-len="500"/>
+            <param name="mode" regex="update"/>
+            <param name="content" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+        </url>
+		    <!-- Notification Rules ::: Portal Owner (SDOrgAdmin) -->
+	    <url roles="SDOrgAdmin" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType" operation-value="Notify_PortalOwner" user_type="all" disable-extraparam="true">
+			<param name="subject" type="String" max-len="1000" secret="true"/>
+         	<param name="content" xss="sdpantisamyfilter" max-len="10000" secret="true"/>
+           	<param name="mode" regex="update"/>
+		<throttles name="update_portalownernotification" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+		    <!-- Notification Rules ::: Problem (SDAdmin) -->
+	    <url roles="SDAdmin" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType"
+		    operation-value="ProblemAssigned,ProblemAssigned_SMS,IncidentAssociated,IncidentDetached,ProblemCreated,ProblemCreated_SMS,ProblemClosed,PR_NOT_TECH,PR_NOT_REQ,PR_NOT_GNRL,Problem_Notes_Mention">
+            <param name="fromAdminPage" type="boolean"/>
+            <param name="subject" type="String" max-len="500"/>
+            <param name="mode" regex="update"/>
+            <param name="content" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+            <throttles name="notify_problem_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+		    <!-- Notification Rules ::: Solution (SDAdmin) -->
+        <url roles="SDAdmin" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType"
+             operation-value="AcknowledgeUserSolution,Notify_NewApprovedSolution,NotifyAdd_UpdateSolution,Notify_ApproveSolution,NotifySolutionOwner_ReviewDate,NotifySolutionOwner_ExpiryDate">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SolutionNotificationRules_Post" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="fromAdminPage" type="boolean"/>
+            <param name="subject" type="String" max-len="1000" secret="true"/>
+            <param name="content" xss="sdpantisamyfilter" max-len="-1" secret="true"/>
+            <param name="mode" regex="update"/>
+        </url>
+			<!-- Notification Rules ::: Space (ConfigureSpace) -->
+	    <url roles="ConfigureSpace" path="/NotificationContent.do" method="post" csrf="true" operation-param="notifType"
+		    operation-value="Campus_Edit,Structure_Edit,Floor_Edit,Room_Edit" disable-extraparam="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Space_Notification_Rules_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="fromAdminPage" type="boolean"/>
+            <param name="subject" type="String" max-len="500"/>
+            <param name="content" xss="sdpantisamyfilter" max-len="-1" description="Serverside handling is done already in resourcesutil.java;SSA_APPLIED" />
+            <param name="mode" type="String" />
+		</url>
+
+    </urls>
+
+<urls  authentication="required">
+    <url roles="HelpdeskConfig,ConfigureSpace" path="/NotificationDef.do" method="post" csrf="true" operation-param="mode" operation-value="cancel">
+	    <!--Added MSP Timesheet module. Timesheet supports notifcation-->
+        <param name="notModule" regex="Solution|Asset|Problem|Software|Request|Loan|Change|Release|MileStone|Comment|General_Templet|Project|Task|Approval|Notes|Timesheet|Contract|Purchase|Space"/>
+    </url>
+</urls>
+
+    <!-- Notification Rules Requests, ESM & Mobile App Tabs-->
+    <urls authentication="required" api="true">
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/request_notification_rules/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/request_notification_rules/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/request_notification_rules/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/request_notification_rules/(_?)metainfo" method="get" >
+             <param allow-invalid="false" name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/mobile_app_notification_rules/(_?)history" method="get" rebrand="zmon">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/mobile_app_notification_rules/(_?)get_records_for_history" method="get" rebrand="zmon">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/mobile_app_notification_rules/(_?)get_performed_by_for_history" method="get" rebrand="zmon">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" path="/api/v3/mobile_app_notification_rules/(_?)metainfo" method="get" rebrand="zmon">
+            <param allow-invalid="false" name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/api/v3/esm_notification_rules/(_?)history" method="get"  user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/api/v3/esm_notification_rules/(_?)get_records_for_history" method="get"  user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/api/v3/esm_notification_rules/(_?)get_performed_by_for_history" method="get"  user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/api/v3/esm_notification_rules/(_?)metainfo" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <throttles name="notifi_rules_mobileapp_requests" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </urls>
+    <urls authentication="required" remote_server="true" path="/common/ViewHistory.jsp" operation-param="module">
+        <param name="id" type="long" allow-empty="false"/>
+        <param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+        <param name="search_filter" regex="mobile_app_notification_rule|request_notification_rule|esm_notification_rule" />
+        <param name="admin_entity" regex="true"/>
+        <param name="skip_filter_options" type="String"/>
+        <param name="skip_operation_names" type="String"/>
+        <param name="is_date_filter" type="boolean"/>
+        <param name="module_value" type="String"/>
+
+        <url roles="SDAdmin,HelpdeskConfig" operation-value="request_notification_rules">
+            <param name="key" regex="request_notification_rules_history" />
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" operation-value="mobile_app_notification_rules">
+            <param name="key" regex="mobile_app_notification_rules_history"/>
+        </url>
+        <url  roles="SDOrgAdmin" operation-value="esm_notification_rules" user_type="all">
+            <param name="key" regex="esm_notification_rules_history"/>
+        </url>
+
+        <throttles name="aah_notification_rules" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </urls>
+    <!-- End of notification Rules Configuration-->
+
+    <jsontemplates>
+ <jsontemplate name="pickUpListTemplate">
+   <key name=".+" name-regex="true" regex=".+" max-occurrences="25000" max-len="100" secret="true"/>
+  </jsontemplate>
+</jsontemplates>
+</security>
+
+<!--$Id$-->

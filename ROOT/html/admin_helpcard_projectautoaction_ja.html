@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>projectautoaction</title>
+</head>
+
+<body>
+    <p>スクリプトファイルやカスタム関数を用いて、プロジェクトで<strong>「アクション」</strong>を自動的にトリガーする、プロジェクトのカスタムトリガーを使用できます。</p>
+    <p>プロジェクトのカスタムトリガーを新規作成する方法は以下の通りです。</p>
+    <ul>
+    <li><strong>［新規アクションの追加］</strong>をクリックします。</li>
+    <li>アクションの「アクション名」と「説明」を入力し、「アクションの実行」のドロップダウンリストからアクションがいつ実行されるかを選択します。</li>
+    <li>「アクションタイプ」を「カスタム関数を実行」、「スクリプトを実行」から選択し、実行する必要のあるスクリプトファイルを選択します。</li>
+    <li>プロジェクトでアクションが実行するための条件を設定します。プラスアイコンをクリックすることで、複数の条件を追加することができます。必要に応じて、ANDまたはOR演算子を選択します。</li>
+    <li><strong>「後続アクションの処理を停止します」</strong>のチェックボックスのチェックを外すと、プロジェクトにアクションのルールが適用された後も、後続のアクションが実行されます。</li>
+    </ul>
+    <p><strong>注意：</strong></p>
+    <ul>
+    <li>既存の<strong>「アクション」</strong>の名称と競合しないよう、<strong>「新規アクション」</strong>には必ず一意の名称を入力してください。</li>
+    <li>テキストファイルは＜インストールディレクトリ＞\ManageEngine\ServiceDesk\integration\custom_scripts\executor_files配下にのみ保存され、スクリプトファイルは、＜インストールディレクトリ＞\ManageEngine\ServiceDesk\integration\suctom_scripts配下にのみ保存されます。</li>
+    <li>デフォルトとして、<strong>「後続アクションの処理を停止します」</strong>の設定は常に有効化されており、アクションは「アクションルールの順序」にしたがって実行されます。</li>
+    <li>一覧ページの<strong>［アクションの編成］</strong>で、アクションが実行される順番を並び替えることができます。</li>
+    </ul>
+    <p><strong>技術的な詳細設定：</strong></p>
+    <p><strong>「アクションの実行」</strong>内では、スクリプトファイルを実行するか、カスタム関数を実行するかを選択し、以下の事項を使用することで同様の設定をすることができまます。</p>
+    <ul>
+    <li> <strong>スクリプト：</strong>スクリプトが含まれているテキストファイルの名称を入力します。<strong>例）AddComments.txt</strong></li>
+    <li> <strong>カスタム関数：</strong>カスタム関数を実行すると、ServiceDesk Plusやその他外部アプリケーションでデータを操作することができます。実行したいカスタム関数を選択するか、新しく作成します。</li>
+    <li> <strong>サポートされているリターン演算子 ：</strong>PDATE_PROJECT、ADD_COMMENTS</li>
+    </ul>
+    <p><strong>注意：</strong></p>
+    <ul>
+    <li>スクリプトでは、「py addComments.py $TITLE $TYPE」などのAPIパラメーターを引数として渡すことができます。</li>
+    <li>カスタム関数では、引数として、<strong>projectObj</strong>と<strong>context</strong>がサポートされています。</li>
+    </ul>
+    <p><strong>スクリプトでサポートされているその他のパラメーター：</strong></p>
+    <p>$COMPLETE_V3_JSON_JILE：Complete Request ObjectがJSONファイルに保存され、そのファイルパスがString型として渡されます。「プロジェクトの編集時」の操作の場合、DIFF_JSON（古いプロジェクトデータと新しいプロジェクトデータの差異）もJSONファイルとして保存されます。</p>
+    <div class="alert alert-info icon" role="alert">
+      <span class="msg">$HELPDESK_ID ： ポータルのIDです。このIDは、新しいURLパラメーター「PORTALID」に対して、ServiceDesk Plus全てのAPIコールへの値として渡す必要があります。これは、ESM設定を有効化している場合にのみ利用することができます。
+    </div>
+    <p>JSONファイルパス：＜インストールディレクトリ＞\ManageEngine\ServiceDesk\integration\custom_scripts\project\12_1426143538036.json</p>
+    <p><strong>ServiceDesk Plusのトリガーからの応答サンプル：</strong></p>
+    <p>{
+      <br>    "message":"Customized message"   
+      <br>    "operations": [<br>
+      
+              {<br>
+      
+                  "operation_name": "ADD_COMMENTS",<br>
+      
+                  "input_data": {<br>
+      
+                          "comment": {<br>
+      
+                               "content": "Sample content from script"<br>
+      
+                          }<br>
+      
+                  }<br>
+      
+              }<br>
+      
+        ]<br>
+      
+    }</p>
+</body>
+
+</html>

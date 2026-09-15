@@ -1,0 +1,24 @@
+<!-- $Id$ -->
+<!-- Security authentication for Admin->Users related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="admin_useraccess_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="1m"/>
+        </throttles>
+
+        <!-- url splitting for MSP (need to modify and add AccountAdmin role for this url)  -->
+        <url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="activeDirectory,LDAP" method="GET" remote_server="true"/>
+		<!-- url splitting for MSP end-->
+		<url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="sso,ESMTwoFactorAuth" method="GET" remote_server="true"/>
+
+	<url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="validPredefinedPassword" user_type="all" method="GET" remote_server="true"/>
+
+    </urls>
+
+    <urls authentication="required" disable-extraparam="true">
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="saveAdAuth" user_type="all" method="POST" csrf="true" remote_server="true">
+            <param name="ADAuthEnabled" type="boolean" />
+        </url>
+    </urls>
+
+</security>

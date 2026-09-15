@@ -1,0 +1,89 @@
+{
+  "operations": [
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_stages/{id}",
+      "desc": "You can view the details of a specific Change Request here.",
+      "disp_desc": "View a Change Stage",
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_stage\":{\"id\":\"1\",\"description\":\"The stage when a change is submitted for authorization.\",\"displayname\":\"Submission\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_stages",
+      "desc": "You can get the details of all available Change Requests here.",
+      "disp_desc": "View all Change Stages",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"change_stages\":[{\"id\":\"3\",\"description\":\"The stage when a change is awaiting approval from the concern authority.\",\"displayname\":\"CAB Evaluation\"},{\"id\":\"6\",\"description\":\"The stage when the review is successful and the change is closed.\",\"displayname\":\"Close\"},{\"id\":\"4\",\"description\":\"The stage when the implementation of the change is carried out.\",\"displayname\":\"Implementation\"},{\"id\":\"2\",\"description\":\"The Stage when the planning for the change is commenced.\",\"displayname\":\"Planning\"},{\"id\":\"5\",\"description\":\"The stage when the implementation is reviewed from the concern authority.\",\"displayname\":\"Review\"},{\"id\":\"1\",\"description\":\"The stage when a change is submitted for authorization.\",\"displayname\":\"Submission\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":6,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"
+      },
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },      
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_stages/{id}",
+      "desc": "You can edit the changes here.",
+      "disp_desc": "Update a Change Stage",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"change_stage\":{\"id\":\"1\",\"description\":\"The stage when a change is submitted for authorization.\",\"name\":\"Submission\"}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"change_stage\":{\"id\":\"1\",\"description\":\"The stage when a change is submitted for authorization.\",\"name\":\"Submission\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "CHANGE_STAGEDEFINITION:WFSTAGEID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "name",
+    "type": "String",
+    "desc": "The name of the Change Stage",
+    "column": "CHANGE_STAGEDEFINITION:DISPLAYNAME",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "description",
+    "type": "String",
+    "desc": "The description of the Change stage",
+    "column": "CHANGE_STAGEDEFINITION:DESCRIPTION",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  }
+],
+  "isReleased": "false"
+}

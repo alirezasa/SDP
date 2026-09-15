@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p><strong>On-Premises to Cloud Migration</strong></p>
+<p>On this page, you can migrate the Admin module data from ServiceDesk Plus On-Premises to ServiceDesk Plus Cloud. Before you start, make sure you read the <strong> Terms and Services</strong> to find the list of entities that will be migrated automatically and those to be migrated manually. </p>
+<p>ServiceDesk Plus uses OAuth 2.0 to communicate between On-Premises and Cloud servers. OAuth 2.0 is an authentication method that provides delegated access to a protected resource using web tokens instead of passwords. Click <a class="text-link" target="_blank" href="https://www.manageengine.com/products/service-desk/sdpod-v3-api/SDPOD-V3-API.html#oauth-2-0" rel="noopener noreferrer">here</a> to learn more.</p>
+ <p> <br>
+  Once you have manually migrated the required entities, you can initiate automatic migration by filling in the migration form using the following pointers:<br>
+</p>
+<table border="1px" cellpadding="10">
+  <thead>
+  <tr>
+    <th><strong>Field</strong></th>
+    <th><strong>Explanation</strong></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>ServiceDesk Plus Cloud Data Center</td>
+    <td>Choose the Data Center to identify the Domain URL of ServiceDesk Plus Cloud.</td>
+  </tr>
+  <tr>
+    <td>Domain URL</td>
+    <td>The Domain URL will be auto populated based on the Data Center.</td>
+  </tr>
+  <tr>
+    <td>Client ID and Client Secret</td>
+    <td>Provide Client ID and Client Secret generated in the authorization server. Learn how to do this <a class="text-link" target="_blank" href="https://www.manageengine.com/products/service-desk/sdpod-v3-api/SDPOD-V3-API.html#register-your-application" rel="noopener noreferrer">here</a></td>
+  </tr>
+  <tr>
+    <td>Redirect URL</td>
+    <td>Redirect URL provided must be copied to the authorization server for generating the Client ID and the Client Secret.</td>
+</tr>
+  <tr>
+    <td>Mode</td>
+    <td>Choose the mode of migration for service desk data. Note that this does not apply to admin data, assets, and solutions.
+      <ul>
+        <li><strong>Trial Mode</strong> - Data created within the last 30 days will be migrated.</li>
+        <li><strong>Full Mode</strong> - Select the range for the data to be migrated. Data created within 1 year can be migrated in this mode. You can extend this range up to 5 years. <a class="text-link" target="_blank" href="https://help.servicedeskplus.com/op-to-od-migration$customrange" rel="noopener noreferrer">Click here</a> to learn more. </li>
+      </ul>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<p>  When you click <strong>Next</strong>, a window will pop up, where you can give your consent after signing in to your ServiceDesk Plus Cloud account. Select the ServiceDesk Plus Cloud instance to which the data needs to be migrated. Select the entities to migrate and click <strong>Move Data</strong>. A report showing the migration progress will be displayed.</p>
+<p>Once the admin data is migrated, the migration will be paused so that you can manually migrate admin entities that are not migrated by system. Click Resume to migrate module data.</p>
+<p>When the migration process is underway, you can <strong>Pause/Resume or Cancel Migration</strong> using the respective buttons. You can select and rerun the migration for failed entities using the <strong>Rerun</strong> option shown in the banner after migration is complete. You can also rerun migration after being paused by the system.</p>
+<p>Post migration, click <strong>Go to ServiceDesk Plus Cloud</strong> to access the cloud instance.</p>
+<p>To view the status of the data added or updated in ServiceDesk Plus Cloud, go to <strong>Setup</strong> &gt;&gt; <strong>Import Data</strong> &gt;&gt; <strong>Import History</strong>.
+</p>
+<p>To know more about the prerequisites for migrating data from On-Premises to Cloud, refer to the <a class="text-link" target="_blank" href="https://help.servicedeskplus.com/op-to-od-migration$pre" rel="noopener noreferrer">admin guide.</a></p>
+<p>&nbsp;</p>
+<p><strong><u>Note</u></strong></p>
+<ul>
+  <li>If the license is not enabled for any entity/module in On-Premise, the respective entity/module data will not be migrated.</li>
+  <li>Inline images, attachments, sub-entities (eg: task template, resources, and questions under request template) will be migrated along with the entity data.</li>
+  <li>Inactive admin entities will also be imported without any error.</li>
+  <li>Data related to features that are not available in ServiceDesk Plus Cloud will not be migrated.</li>
+  <li>Avoid database operations while migrating the data from On-Premises to Cloud. This might result in migration failure.</li>
+  <li>All the data to be migrated will be zipped and placed in zip files under the 'Conversion' folder and will be deleted on a successful import.</li>
+  <li>Instance to Instance migration is possible. i.e data from one particular ServiceDesk plus On-premises instance can be migrated to the ServiceDesk Plus Cloud instance selected in the form.</li>
+  <li>Migration cannot be started in two instances at the same time. Only one migration will be handled at one time.</li>
+  <li>No maximum limit for adding attachments but the total attachment size of one entity(all attachments included) must not exceed 48 MB. Attachments greater than 48 MB will not be migrated.</li>
+  <li>License check, technician count, and additional fields count need to be verified manually in Cloud before starting the migration.</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>

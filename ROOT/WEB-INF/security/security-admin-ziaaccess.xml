@@ -1,0 +1,169 @@
+<!-- $Id$ -->
+<!-- Security authentication for Survey module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true">
+        <url roles="SDAdmin" path="/servlet/SDAjaxServlet" operation-param="action" operation-value="saveApprovalAcknowledgement" method="POST" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_saveApprovalAcknowledgement" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="10" lock-period="5M"/>
+		    </throttles>
+            <param name="module" type="String" max-len="20" min-occurrences="1" />
+            <param name="subjectVal" type="String" min-occurrences="1" />
+            <param name="tokenValue" xss="sdpantisamyfilter" max-len="200000" secret="true" min-occurrences="1" />
+            <param name="notificationtype" regex="ZiaAcknowledgement_InconclusiveAction|ZiaAcknowledgement_ApprovalAction|ZiaAcknowledgement_AlreadyApproved" min-occurrences="1" />
+        </url>
+        <url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="ziaconfiguration" method="GET" rebrand="zmon">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_configuration" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="30" lock-period="5M"/>
+		    </throttles>
+        </url>
+        <url path="/ApprovalActionAcknowledge.do" roles="SDAdmin" method="GET">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_getApprovalAcknowledgement" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="10" lock-period="5M"/>
+		    </throttles>
+            <param name="notificationname" regex="ZiaAcknowledgement_InconclusiveAction|ZiaAcknowledgement_ApprovalAction|ZiaAcknowledgement_AlreadyApproved"/>
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="getData" roles="SDAdmin" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_getData" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="15" lock-period="5M"/>
+		    </throttles>
+            <param name="action" regex="approvalprediction|reopenprediction" min-occurrences="1" />
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="restoreDefaultData" roles="SDAdmin" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_restoreDefaultData" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="15" lock-period="5M"/>
+		    </throttles>
+            <param name="fromVal" regex="ziaconfiguration|ssp"/>
+            <param name="action" regex="approvalprediction|reopenprediction"/>
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="getModifiedData" roles="SDAdmin" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_getModifiedData" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="15" lock-period="5M"/>
+		    </throttles>
+            <param name="label_1_count" type="long" range=">0" min-occurrences="1" />
+            <param name="label_2_count" type="long" range=">0" min-occurrences="1" />
+            <param name="label_3_count" type="long" range=">0"/>
+            <param name="fromVal" regex="ziaconfiguration|ssp" min-occurrences="1" />
+            <param name="action" regex="approvalprediction|reopenprediction" min-occurrences="1" />
+            <param name="customData" type="JSONObject" max-len="-1" template="zia_custom_data" description="JSONObject that holds the customdata contents. There is no length restriction for the dataset given by user for training Zia's approval|reopen prediction" secret="true" min-occurrences="1" />
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="getQueryResult" roles="SDAdmin" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_getQueryResult" dynamic-throttle="true"  >
+	            <throttle duration="20s" threshold="10" lock-period="5M"/>
+		    </throttles>
+            <param name="testdata" type="String" max-len="500"/>
+            <param name="action" regex="approvalprediction|reopenprediction"/>
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="updateTechVerification" roles="ZiaVerifier" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_updateTechVerification" dynamic-throttle="true"  >
+	            <throttle duration="10s" threshold="10" lock-period="5M"/>
+		    </throttles>
+            <param name="verifiedas" regex="valid|invalid" min-occurrences="1"/>
+            <param name="verified_action" regex="Approve|Reject|Need Clarification"/>
+            <param name="ziaid" regex="ids_500" min-occurrences="1"/>
+            <param name="frommodule" regex="Request|Change|Release|PurchaseOrder|PurchaseRequest|global" min-occurrences="1"/>
+            <param name="action" regex="approvalprediction|reopenprediction|parser" min-occurrences="1"/>
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="updatePrediction" roles="SDAdmin" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="update_zia_prediction" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="15" lock-period="5M"/>
+		    </throttles>
+            <param name="module" regex="general|request"/>
+            <param name="actionname" regex="approvalprediction|reopenprediction|categoryprediction|templateprediction|parser" min-occurrences="1" />
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="discardZiaSuggestion" method="post" csrf="true" user_type="all" description="ROLE_NOT_REQUIRED: Server level checks are implemented for this url to determine whether the user has the capability to execute the action.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_discardZiaSuggestion" dynamic-throttle="true"  >
+	            <throttle duration="10s" threshold="10" lock-period="5M"/>
+		    </throttles>
+			<param name="woId" type="long" range=">0"/>
+            <param name="tempId" type="long" range=">0"/>
+			<param name="action" regex="templateprediction|category"/>
+        </url>
+		<url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="remindLaterZiaSuggestion" method="post" csrf="true" user_type="all" description="ROLE_NOT_REQUIRED: Server level checks are implemented for this url to determine whether the user has the capability to execute the action.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_remindLaterZiaSuggestion" dynamic-throttle="true"  >
+	            <throttle duration="10s" threshold="10" lock-period="5M"/>
+		    </throttles>
+			<param name="woId" type="long" range=">0"/>
+            <param name="action" regex="templateprediction|category"/>
+        </url>
+
+        <url path="/zia/ZiaNotifications.jsp" method="get" description="URL can be accessed by all the technician but data will be user specific which is handled in the server-side" user_type="all" rebrand="zmon">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_notifications" dynamic-throttle="true"  >
+	            <throttle duration="10s" threshold="20" lock-period="5M"/>
+		    </throttles>
+        </url>
+        <url roles="SDAdmin" path="/approvalActionTokenEdit.do" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_getApprovalTokenValue" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="10" lock-period="5M"/>
+		    </throttles>
+            <param name="notType" regex="Approval_Request|Approval_Change|Approval_Release|POPendingApprovalNotification|PRPendingApprovalNotification"/>
+        </url>
+        <url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="saveApprovalTokenValue" method="post" csrf="true" roles="SDAdmin">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_saveApprovalTokenValue" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="10" lock-period="5M"/>
+		    </throttles>
+            <param name="module" regex="admin"/>
+            <param name="tokenValue" type="String" max-len="500" secret="true" min-occurrences="1"/>
+            <param name="notifyType" regex="Approval_Request|Approval_Change|Approval_Release|POPendingApprovalNotification|PRPendingApprovalNotification"/>
+        </url>
+        <url path="/common/ViewHistory.jsp" roles="SDAdmin" operation-param="module" operation-value="ziaconfigurations,zia-bot,zia_parsers">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="update_zia_history" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="15" lock-period="5M"/>
+            </throttles>
+            <param name="id" regex="1"/>
+            <param name="key" regex="sort_order_ziaconfigurations|sort_order_ziabot|ziaconfigurations_history|zia_parsers_history"/>
+            <param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+            <param name="search_filter" type="String"/>
+            <param name="admin_entity" type="boolean"/>
+            <param name="is_date_filter" type="boolean"/>
+            <param name="skip_filter_options" type="String"/>
+            <param name="skip_operation_names" type="String"/>
+            <param name="module_value" type="String"/>
+        </url>
+    </urls>
+    <!--bot urls-->
+    <urls authentication="required" disable-extraparam="true">
+		<url path="/api/v3/zia_skills/sessions" method="post" api="true" user_type="all" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+            <throttles name="zia_bot_session" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="10s" threshold="5" lock-period="5M"/>
+            </throttles>
+			<param name="environment" regex="DEVELOPMENT"/>
+	    </url>
+		<url path="/api/v3/zia_skills/sessions/(\d+)/transcript" method="post" api="true" user_type="all" url-type="dynamic" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_bot_transcript" dynamic-throttle="true" >
+	            <throttle duration="10s" threshold="20" lock-period="5M"/>
+		    </throttles>
+            <inputstream type="JSONObject" template="zia_message" max-len="12000"/>
+        </url>
+		<url path="/api/v3/zia_skills/sessions/(\d+)/transcript/options" method="get" user_type="all" url-type="dynamic" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_bot_options" dynamic-throttle="true" >
+	            <throttle duration="10s" threshold="20" lock-period="5M"/>
+		    </throttles>
+        	<param name="searchText" type="String" max-len="2000" secret="true"/>
+		</url>
+        <url path="/api/v3/zia_skills/sessions/(\d+)/sample_sentences" method="get" user_type="all" url-type="dynamic" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+            <throttles name="zia_bot_command" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="10s" threshold="5" lock-period="5M"/>
+            </throttles>
+        	<param name="offset" type="long" range=">=0"/>
+			<param name="limit" type="long" range=">0"/>
+        </url>
+		<url path="/api/v3/zia_skills/transcript" method="get" user_type="all" description="ROLE_NOT_REQUIRED: Will be accessed by all users">
+            <throttles name="zia_bot_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="10s" threshold="5" lock-period="5M"/>
+            </throttles>
+			<param name="offset" type="long" range=">=0"/>
+			<param name="limit" type="long" range=">0"/>
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="enable_bot,disable_bot" roles="SDAdmin" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="zia_bot_status" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="15" lock-period="5M"/>
+		    </throttles>
+        </url>
+        <url path="/servlet/AIAjaxServlet" operation-param="command" operation-value="get_parser_debug_file" roles="SDAdmin" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="get_parser_debug_file" dynamic-throttle="true"  >
+	            <throttle duration="1M" threshold="2" lock-period="5M"/>
+		    </throttles>
+        </url>
+    </urls>
+    <!-- bot urls-->
+</security>

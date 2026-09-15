@@ -1,0 +1,128 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"attachment_field\":{\"updated_on\":null,\"attachments\":[],\"stage\":{\"internal_name\":\"UAT\",\"stage_index\":\"5\",\"name\":\"UAT\",\"id\":\"7\"},\"name\":\"uat_testplan\",\"updated_by\":null,\"id\":\"1\"}}"},
+            "path": ["/api/v3/changes/{change_id}/attachment_fields/{attachment_id}"],
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View any Attachment Field",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":3},\"attachment_fields\":[{\"updated_on\":null,\"stage\":{\"internal_name\":\"UAT\",\"stage_index\":\"5\",\"name\":\"UAT\",\"id\":\"7\"},\"name\":\"uat_testplan\",\"updated_by\":null,\"id\":\"1\"},{\"updated_on\":null,\"stage\":{\"internal_name\":\"UAT\",\"stage_index\":\"5\",\"name\":\"UAT\",\"id\":\"7\"},\"name\":\"uat_issues\",\"updated_by\":null,\"id\":\"2\"},{\"updated_on\":null,\"stage\":{\"internal_name\":\"Release\",\"stage_index\":\"6\",\"name\":\"Release\",\"id\":\"8\"},\"name\":\"release_issues\",\"updated_by\":null,\"id\":\"3\"}]}"},
+            "path": ["/api/v3/changes/{change_id}/attachment_fields"],
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "View all Attachment Fields",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"metainfo\":{\"is_dynamic\":false,\"plural_name\":\"attachment_fields\",\"relationship\":false,\"fields\":{\"updated_on\":{\"display_type\":\"Date/Time\",\"read_only\":true,\"form_field\":false,\"type\":\"datetime\",\"display_name\":\"UpdatedOn\",\"partial_field\":false,\"searchable\":false},\"stage\":{\"read_only\":true,\"editable\":false,\"form_field\":false,\"lookup_entity\":\"change_stage\",\"lookup_field\":\"name\",\"href\":\"/changes/attachment_fields/stage\",\"type\":\"lookup\",\"partial_field\":false,\"mandatory\":true},\"name\":{\"read_only\":true,\"form_field\":false,\"type\":\"string\",\"partial_field\":false,\"constraints\":{\"max_length\":\"100\"}},\"updated_by\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"user\",\"lookup_field\":\"name\",\"href\":\"/changes/attachment_fields/updated_by\",\"type\":\"lookup\",\"display_name\":\"UpdatedBy\",\"partial_field\":false},\"id\":{\"identifier\":true,\"read_only\":true,\"form_field\":false,\"type\":\"long\",\"partial_field\":false}},\"entity\":\"attachment_field\"}}"},
+            "path": "/api/v3/changes/attachment_fields/metainfo",
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Meta-Info for Attachment Field Add",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"metainfo\":{\"is_dynamic\":false,\"plural_name\":\"attachment_fields\",\"relationship\":false,\"fields\":{\"updated_on\":{\"display_type\":\"Date/Time\",\"read_only\":true,\"form_field\":false,\"type\":\"datetime\",\"display_name\":\"UpdatedOn\",\"partial_field\":false,\"searchable\":false},\"stage\":{\"read_only\":true,\"editable\":false,\"form_field\":false,\"lookup_entity\":\"change_stage\",\"lookup_field\":\"name\",\"href\":\"/changes/attachment_fields/stage\",\"type\":\"lookup\",\"partial_field\":false,\"mandatory\":true},\"name\":{\"read_only\":true,\"form_field\":false,\"type\":\"string\",\"partial_field\":false,\"constraints\":{\"max_length\":\"100\"}},\"updated_by\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"user\",\"lookup_field\":\"name\",\"href\":\"/changes/attachment_fields/updated_by\",\"type\":\"lookup\",\"display_name\":\"UpdatedBy\",\"partial_field\":false},\"id\":{\"identifier\":true,\"read_only\":true,\"form_field\":false,\"type\":\"long\",\"partial_field\":false}},\"entity\":\"attachment_field\"}}"},
+            "path":["/api/v3/changes/{change_id}/attachment_fields/{attachment_field_id}/metainfo"],
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Meta-Info for Attachment Field Edit",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "CHANGEATTACHMENTFIELD:ID",
+            "type": "long",
+            "isReleased": "true",
+            "desc": "The id of the descriptive field.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "stage",
+            "column": "CHANGEDESCRIPTIVEFIELDS:STAGEID",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "The stage of the descriptive field",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "CHANGEATTACHMENTFIELD:NAME",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "The name of the descriptive field",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "updated_on",
+            "column": "CHANGEDESCRIPTIVEFIELD:UPDATED_ON",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "The time of update.",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "updated_by",
+            "column": "CHANGEDESCRIPTIVEFIELD:UPDATED_BY",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "The user who updated the description.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "attachments",
+            "column": "ChangeAttachmentToAttachments:ATTACHMENTID",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1582902833000
+}

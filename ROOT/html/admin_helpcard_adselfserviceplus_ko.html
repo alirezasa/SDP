@@ -1,0 +1,37 @@
+<p><span class="helpheading"><strong>ADSelfService Plus와 통합</strong></span></p>
+<p>ServiceDesk Plus를 ManageEngine ADSelfService Plus와 통합하여 Active Directory 사용자가 Active Directory 암호와 Active Directory 계정을 쉽게 셀프 서비스할 수 있도록 합니다. ManageEngine ADSelfService Plus는 안전한 웹 기반 최종 사용자 비밀번호 재설정 관리 프로그램입니다. 이 소프트웨어는 도메인 사용자가 Microsoft Windows Active Directory에서 비밀번호 셀프 서비스, 계정 셀프 서비스 및 개인 세부정보(예: 전화번호, 이메일 ID 등)의 셀프 서비스를 수행하는 데 도움이 됩니다. 이 두 제품을 모두 설치한 경우, 포트 번호와 함께 ADSelfService Plus가 설치된 컴퓨터의 세부 정보를 제공하기만 하면 됩니다.</p>
+<p><strong>제공될 정보:</strong></p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>서버 명:</strong> <span style="font-weight: bold;">Server 
+  where ADSelfService Plus 애플리케이션 서버가 설치될 서버</span>를 입력합니다. </p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>서버 포트:</strong> ADSelfService Plus 의<span style="font-weight: bold;">Port 
+ 포트 번호</span>를 입력합니다.</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>프로토콜 설정:</strong> <span style="font-weight: bold;">프로토콜 설정</span>을 클릭합니다. http 혹은 https.</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong> 기술자를 위한 메뉴 활성화</strong> 옵션을 선택하여 기술자를 위한 ADSelfService Plus를 보여 줍니다. 이 메뉴는 ServiceDesk Plus와 ADSelfService Plus 제품의 통합 상태와 상관없이 표시됩니다. <strong>요청자를 위한 AD 셀프 서비스 탭 사용</strong> 옵션을 선택하여 요청자에게 AD 셀프 서비스 탭을 표시합니다. "ADSelfService Plus" 탭은 ServiceDesk Plus가 ADSelfService Plus 제품과 통합된 경우에만 요청자 로그인에 표시됩니다.</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><span style="font-weight: bold;">저장</span>을 클릭합니다. 
+  설정이 성공적으로 저장되고 ServiceDesk Plus가 ADSelfService Plus 서버와 연결을 시도합니다. 연결이 설정되면 점프 링크를 사용하여 ADSelfService Plus 서버로 갈 수 있습니다.
+</p>
+
+<br>
+<div id="integ-https">
+<p><span class="helpheading"><strong>(HTTPS 모드에서 실행중 인) 다른 ME 제품과 통합</strong></span></p>
+<ol>
+  <li>아래에 표시된 링크로부터 <strong>.zip</strong> 파일을 다운로드하고, "<em>ManageEngine\ServiceDesk"</em>에 압축을 풉니다.:</li>
+  <p style="margin-left: 50px;"><strong>Linux 용: </strong><a href="https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g423n1gp9135o97nfchub1/lincertgeneration.zip" target="_blank">https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g423n1gp9135o97nfchub1/lincertgeneration.zip</a></p>
+  <p style="margin-left: 50px;"><strong>Windows 용:</strong> <a href="https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g2tdh126s6hmhpvjja2si1/windowscertgeneration.zip" target="_blank">https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g2tdh126s6hmhpvjja2si1/windowscertgeneration.zip</a> </p>
+  <li>명령 프롬프트에 연결합니다. "<em>ManageEngine\ServiceDesk"</em>로 이동하여 다음 형식으로 배치 파일을 실행합니다.</li>
+  <p style="margin-left: 50px;"><strong>Linux 용: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>Windows 용: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>명령을 실행하면 <strong>PKIX</strong> 예외가 발생한 다음, 한 값을 입력하라는 메시지가 표시됩니다.  1을 입력하면<em>"ManageEngine\ServiceDesk"</em> 아래에 <strong>jssecacerts</strong>라는 파일이 생성됩니다.</p>
+  </li>
+  <li>"<em>ManageEngine\ServiceDesk\jre\lib\security"</em> 폴더 아래의 <strong>jssecacerts</strong> 파일을 복사한 다음 ServiceDesk Plus 애플리케이션을 다시 시작하십시오.</li>
+</ol>
+</div>

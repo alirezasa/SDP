@@ -1,0 +1,18 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zc.page.builder.formembed.property.resetbutton"] = 'إعادة تعيين نص الزر (على الويب فقط)';
+i18n["zcpage.dialog.embed.redirectto"] = 'إعادة التوجيه إلى';
+i18n["zcpage.dialog.embed.redirectto.tooltip"] = 'إعادة التوجيه عند تقديم الاستمارة بنجاح';
+i18n["zcpage.dialog.embed.submittxt"] = 'إرسال نص الزر';
+i18n["zcpage.dialog.embed.successmsg.tooltip"] = 'الرسالة التي سيتم عرضها عند تقديم الاستمارة بنجاح';
+i18n["zcpage.dialog.form.configure.values"] = 'تكوين القيم';
+i18n["zc.builder.page.embed.report.config"] = 'لا تتوفر خيارات تكوين للتقرير المحدد';
+i18n["zcpage.dialog.embed.actions"] = 'الإجراءات';
+i18n["zcpage.dialog.embed.duplicate"] = 'تكرار';
+i18n["zcpage.dialog.embed.edit"] = 'تحرير';
+i18n["zcpage.dialog.embed.export"] = 'تصدير';
+i18n["zcpage.dialog.embed.filter"] = 'عامل التصفية';
+i18n["zcpage.dialog.embed.miscellaneous"] = 'متفرقة';
+i18n["zcpage.dialog.embed.printexport"] = 'الطباعة والتصدير ';
+i18n["zcpage.dialog.embed.recordscount"] = 'عدد السجلات';
+i18n["zcpage.dialog.embed.report.addfilter"] = '‎إضافة عامل التصفية‏';
+i18n["zcpage.dialog.embed.report.addfilter.desc"] = 'أضف عامل تصفية وقيّد السجلات ليتم عرضها في هذا التقرير. ';
+i18n["zcpage.dialog.embed.search.and.filters"] = 'البحث وعوامل التصفية';

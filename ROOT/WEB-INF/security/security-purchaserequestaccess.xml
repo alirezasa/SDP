@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" method="get" >
+		 	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pr_entity" dynamic-throttle="true" >
+            	<throttle lock-period="5m" threshold="80" duration="1m"/>
+        	</throttles>
+        	<url roles="ViewPR" path="/api/v3/purchaserequests/[0-9]+">
+			<param name="INPUT_DATA" template="list_info" type="JSONObject" max-len="-1"/>
+			<param name="date" regex="null|[0-9]+"/>
+		</url>
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="viewPR">
+			<param name="requestId" type="long" range=">0" min-occurrences="1"/>
+			<param name="sectionLoad" type="boolean"/>
+			<param name="issimilarrequest" type="boolean"/>
+			<param name="showApprovalPage" type="String" max-len="100"/>
+			<param name="redirecttononloginurl"  type="boolean"/>
+		</url>
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="printView,showHistory">
+			<param name="requestId" type="long" range=">0" min-occurrences="1"/>
+			<param name="fromListView" type="boolean"/>
+		</url>
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="getVendorCurrency">
+			<param name="vendorId" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<url roles="CreatePR" path="/PurchaseRequest.do" operation-param="task" operation-value="newPR">
+			<param name="sectionLoad" type="boolean"/>
+		</url>
+
+		<url roles="ModifyPR" path="/PurchaseRequest.do" operation-param="task" operation-value="editPR">
+			<param name="requestId" type="long" range=">0" min-occurrences="1"/>
+			<param name="chooseVendor" type="boolean"/>
+			<param name="productNames" type="JSONArray" max-len="16000" array-size="0-100" template="strarray" />
+		</url>
+		<url roles="ViewInventoryWS,CreatePR,ModifyPR,SDCo-ordinator" path="/usersites.json" remote_server="true">
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+" max-len="50" min-occurrences="1" allow-empty="false"/>
+			<param name="searchText" type="String" max-len="250" />
+			<param name="page" type="long" range=">0"/>
+			<param name="_" type="long" range=">0"/>
+			<param name="nonotinanysite" type="boolean"/>
+			<param name="noallsiteoption" type="String" max-len="150"/>
+			<param name="siteId" regex="-1|null|[0-9]+"/>
+		</url>	
+		<url roles="CreatePR,ModifyPR" path="/allusers.json">
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+" max-len="50" min-occurrences="1" allow-empty="false"/>
+			<param name="searchText" type="String" max-len="150"/>
+			<param name="page" type="long" range=">0"/>
+			<param name="siteId" regex="-1|null|[0-9]+" max-occurrences="2"/>
+			<param name="isFilterBySite" type="boolean"/>
+			<param name="_" type="long" range=">0"/>
+		</url>
+
+		<url roles="CreatePurchaseOrder" path="/PurchaseRequest.do" operation-param="task" operation-value="check_for_newly_added_products">
+			<param name="requestIds" type="long" range=">0" max-occurrences="100"/>
+		</url>
+
+		<url roles="CreatePurchaseOrder" path="/purchase/showsimilarprs.jsp">
+			<param name="date" regex="null|[0-9]+"/>
+			<param name="requestId" type="long" range=">0"/>
+		</url>
+
+		<url roles="ModifyPR" path="/PurchaseRequest.do" operation-param="task" operation-value="showUnassociatedSRs">
+			<param name="requestId" type="long" range=">0" max-occurrences="100"/>
+		</url>
+		
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="showUnAssociatedPRs">
+			<param name="serviceRequestId" type="long" range=">0"/>
+			<param name="isArchivedRequest" type="boolean"/>
+		</url>
+		
+		<url roles="ViewPR,ViewPurchaseOrder" path="/PurchaseRequest.do" operation-param="task" operation-value="associated_purchase_details">
+			<param name="workOrderID" type="long" range=">0"/>
+			<param name="isarchived" type="boolean"/>
+		</url>
+
+		<url roles="ModifyPurchaseOrder,ModifyPR" path="/PurchaseRequest.do" operation-param="task" operation-value="associate_requests">
+			<param name="poId" type="long" range=">0"/>
+		</url>
+
+		<url roles="ViewRequests" path="/PurchaseRequest.do" operation-param="task" operation-value="showAssociatedSR">
+			<param name="requestId" type="long" range=">0" allow-empty="false"/>
+		</url>
+		
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="showAssociatedSRPRs">
+			<param name="serviceRequestId" type="long" range=">0"/>
+		</url>
+
+		<url roles="ViewPR" path="/purchase/prsummarylist.jsp"/>
+		<url roles="SDAdmin" path="/purchase/prnotificationtemplates.jsp">
+			<param name="date" regex="null|[0-9]+"/>
+		</url>
+
+
+		<url roles="CreatePR,ModifyPR" path="/Notify.do"  operation-param="notifyModule" operation-value="PurchaseRequest">
+			<param name="mode" regex="E-Mail"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="notifyTo" regex="all"/>
+			<param name="subject" type="String" max-len="500" secret="true"/>
+		</url>
+
+		<url roles="CreatePR,ModifyPR" path="/common/AEFileAttachment.jsp" operation-param="module" operation-value="PRNotifications_attachment">
+			<param name="type"  regex="new"/>
+			<param name="[0-9]+" name-regex="true" type="boolean" max-occurrences="1"/>
+	        </url>
+
+		<url roles="ModifyRequests,ModifyPR" path="/FlexiListView.ls" operation-param="viewName" operation-value="allServiceRequests">
+			<param name="operation" regex="exportlist" max-occurrences="2"/>
+			<param name="fileType" regex="HTML|PDF|XLS|CSV|XLSX|DOC|DOCX|XML" />
+		</url>
+		<url  roles="CreatePR,ModifyPR" path="/servlet/Select2Servlet" operation-param="module" operation-value="costcenter">
+             <param name="params" type="String" max-len="1000" secret="true" description="params contain all the parameter"/>
+             <param name="callback" regex="jQuery[0-9]+_[0-9]+" max-len="50" min-occurrences="1" allow-empty="false"/>
+             <param name="searchText" type="String" max-len="150"/>
+             <param name="page" type="long" range=">0"/>
+             <param name="siteId" regex="-1|[0-9]+"/>
+             <param name="isFilterBySite" type="boolean"/>
+        </url>
+		<url roles="CreatePurchaseOrder" path="/PurchaseRequest.do" operation-param="task" operation-value="similarrequest"/>
+	</urls>
+
+	<urls authentication="required" method="post"  csrf="true" >
+
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pr_entity_post" dynamic-throttle="true" >
+        		<throttle lock-period="5m" threshold="80" duration="1m"/>
+        	</throttles>
+        <url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="purchaserequestudf" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="pr_udf_post" dynamic-throttle="true" >
+				<throttle lock-period="30m" threshold="3" duration="1m"/>
+			</throttles>
+		   	<param name="XML" secret="true" type="String" max-len="360000" description="XML param contains the full data tag,12 text,4 numeric,4 date fields"/>
+			<param name="TABLENAME" regex="PurchaseRequest_Fields"/>
+			<param name="serviceCategory" type="String" max-len="100"/>
+		</url>
+		
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="showList">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+	    </url>
+
+		<url roles="CreatePR,ModifyPR" path="/servlet/AJaxServlet" operation-param="action" operation-value="searchProduct">
+			<param name="item_name_[0-9]+" name-regex="true" type="String" max-len="150"/>
+		</url>
+
+		<url roles="CreatePR,ModifyPR,CreatePurchaseOrder" path="/servlet/AJaxServlet" operation-param="action" operation-value="fetchProductWithDoubleValue">
+			<param name="requestIds" type="long" range=">0" max-occurrences="100"/>
+		</url>
+
+		<url roles="CreatePR,ModifyPR" path="/servlet/AJaxServlet" operation-param="action" operation-value="checkInactiveServices">
+			<param name="serviceNames" type="String" max-len="25000" secret="true" description="Comma separated vendor service names."/>
+		</url>
+		
+		<url roles="CreatePR,ModifyPR" path="/servlet/AJaxServlet" operation-param="action" operation-value="checkUnManagedSoftware">
+			<param name="softwareNames" type="String" max-len="250" max-occurrences="25"/>
+		</url>
+		
+		<url roles="CreatePR,ModifyPR" path="/PurchaseRequest.do" operation-param="task" operation-value="getEstimatedCostforProduct">
+			<param name="vendorid" type="long" range=">0" min-occurrences="1"/>
+			<param name="productName" type="JSONArray" max-len="16000" array-size="0-100" template="strarray"/>
+		</url>
+		<url roles="CreatePR" path="/PurchaseRequest.do" operation-param="task" operation-value="addPR">
+			<param name="redirectToNewPOPage" type="boolean"/>
+			<param name="input_data" template="save_pr_template" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url roles="ModifyPR" path="/PurchaseRequest.do" operation-param="task" operation-value="updatePR">
+			<param name="requestId" type="long" range=">0" min-occurrences="1"/>
+			<param name="redirectToNewPOPage" type="boolean"/>
+			<param name="input_data" template="save_pr_template" type="JSONObject" max-len="-1"/>
+		</url>
+		
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="isSoftwareType">
+			<param name="productTypeId" type="long" range=">0"/>
+		</url>
+
+		<url roles="CreatePurchaseOrder" path="/PurchaseRequest.do" operation-param="task" operation-value="getRequestRaisedForVendor">
+			<param name="vendorId" type="long" range=">0" min-occurrences="1"/>
+		</url>
+
+		<url roles="CreatePurchaseOrder" path="/PurchaseRequest.do" operation-param="task" operation-value="getSimilarPurchaseRequest">
+			<param name="requestId" regex="null|[0-9]+"/>
+		</url>
+		
+		<url roles="AddingNewProduct,AddingNewVendorService" path="/PurchaseRequest.do" operation-param="task" operation-value="create_product">
+			<param name="unknownItemCategory_[0-9]+" name-regex="true" type="String" max-len="100" max-occurrences="150"/>
+			<param name="componentTypeSelect_[0-9]+" name-regex="true" type="long" range=">0" max-occurrences="150"/>
+			<param name="itemName_[0-9]+" name-regex="true" type="String" max-len="150" max-occurrences="150"/>
+			<param name="oldItemName_[0-9]+" name-regex="true" type="String" max-len="150" max-occurrences="150"/>
+			<param name="itemRequestId_[0-9]+" name-regex="true" type="long" range=">0" max-occurrences="150"/>
+			<param name="serviceTypeSelect_[0-9]+" name-regex="true" type="long" range=">0" max-occurrences="150"/>
+			<param name="unknownItemMfg_[0-9]+" name-regex="true" type="long" range=">0" max-occurrences="150"/>
+			<param name="noOfInput" type="long" range=">0"/>
+		</url>
+
+		<url roles="DeletePR" path="/PurchaseRequest.do" operation-param="task" operation-value="deletePR">
+			<param name="requestIds" type="long" range=">0" min-occurrences="1" max-occurrences="100"/>
+		</url>
+		
+		<url roles="ViewPR" path="/PurchaseRequest.do" operation-param="task" operation-value="updatePRCreationNotification">
+			<param name="enablePRCreationNotification" type="boolean"/>
+		</url>
+
+		<url roles="ModifyRequests" path="/PurchaseRequest.do" operation-param="task" operation-value="detachSRsFromPR,associateSRsToPR">
+			<param name="serviceRequestIds" type="long" range=">0" min-occurrences="1" max-occurrences="100"/>
+			<param name="requestId" type="long" range=">0" min-occurrences="1"/>
+		</url>
+
+		<url roles="ModifyPR" path="/PurchaseRequest.do" operation-param="task" operation-value="associatePRsToSR,dissociatePRsFromSR">
+			<param name="serviceRequestId" type="long" range=">0" min-occurrences="1"/>
+			<param name="requestIds" type="long" range=">0" min-occurrences="1" max-occurrences="100"/>
+		</url>
+
+		<url roles="ViewPR,ModifyPurchaseOrder" path="/PurchaseRequest.do" operation-param="task" operation-value="addRequestsToPO,removeRequestsFromPO">
+			<param name="purchaseOrderId" type="long" range=">0" min-occurrences="1"/>
+			<param name="requestIds" type="long" range=">0" min-occurrences="1" max-occurrences="100"/>
+		</url>
+		
+		<url roles="SDAdmin" path="/PurchaseRequest.do" operation-param="task" operation-value="enableNotificationForTech,disableNotificationForTech">
+			<param name="technicianIds" type="long" range=">0" min-occurrences="1" max-occurrences="100"/>
+		</url>
+
+		<url roles="CreatePurchaseOrder" path="/PurchaseRequest.do" operation-param="task" operation-value="getRequestRaisedForItem">
+			<param name="itemNames" type="String" max-len="150" max-occurrences="100"/>
+		</url>
+		
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="filterTechnicianBySite">
+			<param name="siteId" type="long" range="-1,>0"/>
+			<param name="alreadyAddedTechnicianIds" type="long" range=">0" max-occurrences="100"/>
+		</url>
+
+		<url roles="ModifyPR" path="/PurchaseRequest.do" operation-param="task" operation-value="check_for_newly_added_products">
+			<param name="requestIds" type="long" range=">0" max-occurrences="100"/>
+			<param name="purchaseOrderId" type="long" range=">0" max-occurrences="100"/>
+		</url>	
+		
+		<url roles="ViewPR,ViewRequests" path="/PurchaseRequest.do" operation-param="task" operation-value="getAssociatedPrsForSR">
+			<param name="serviceRequestId" type="long" range=">0" min-occurrences="1"/>
+		</url>
+
+		<url roles="CreatePR,ModifyPR" path="/Notify.do"  operation-param="notifyModule" operation-value="notifyPurchaseRequester">
+			<param name="to" type="String" max-len="250" secret="true"/>
+			<param name="ccAddress" type="String" max-len="250" secret="true"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="contentType" regex="text/html"/>
+			<param name="isForward" type="String" max-len="25"/>
+			<param name="orgReqIDStr" type="long" range=">0"/>
+			<param name="notifyTo" regex="all"/>
+			<param name="module" regex="PurchaseRequest"/>
+			<param name="enableNotify" type="boolean"/>
+			<param name="subject" type="String" max-len="500" secret="true"/>
+			<param name="desc" max-len="-1" secret="true" xss="sdpantisamyfilter" description="since it is a html content, Max len as provided in the data-dictionary."/>
+			<param name="poPDFName" type="String" max-len="100"/>
+			<param name="submit" type="String" max-len="25"/>
+			<param name="att_file_id" type="long" range=">0" max-occurrences="25"/>
+			<param name="attach" regex="filename" max-len="1000" max-occurrences="25" secret="true"/>
+			<param name="attPath" type="String" max-len="10240" max-occurrences="25" secret="true"/>
+			<param name="attSize" type="long" range=">0" max-occurrences="25"/>
+			<param name="att_desc" type="String" max-len="250" max-occurrences="25" secret="true"/>
+		</url>
+
+		<url roles="ViewPR" path="/FlexiListView.ls" operation-param="viewName" operation-value="purchaseRequestList">
+			<param name="operation" regex="fetchData|initiate" max-occurrences="2" min-occurrences="1" />
+ 			<param name="page" type="long" range=">0" />		
+		 	<param name="rp" type="long" range=">0" />		
+			<param name="viewId" type="long" range=">0"/>
+			<param name="reloaded" type="boolean" />
+			<param name="totalRecords" type="long" range=">0" />
+			<param name="poId" type="long" range=">0" />
+			<param name="associatePRTo" type="long" range=">0" />
+			<param name="task" regex="associate_requests|showUnAssociatedPRs"/>
+			<param name="navigationButtonClicked" type="boolean" />
+			<param name="customViewId" type="long" range=">0,-999" />
+			<param name="sortname" type="String" max-len="50" allow-empty="false" />
+			<param name="sortorder" regex="asc|desc" />
+			<param name="sortTriggered" type="boolean" />
+			<param name="([0-9]+-)*SC-[a-zA-z]+-[a-zA-z]+" name-regex="true" type="String" max-len="250" max-occurrences="500" />
+			<param name="[0-9]+-SC-PurchaseRequest_Fields-[a-zA-z]+_[a-zA-z]+[0-9]+" name-regex="true" type="String" max-len="500" max-occurrences="500" />
+			<param name="onChangeOfPerPage" type="boolean" />
+			<param name="columnChanged" type="boolean" />
+			<param name="columnId" type="long" range=">0" />
+			<param name="columnAdded" type="boolean" />
+			<param name="filterBy" type="String" max-len="50" allow-empty="false" />
+			<param name="searchText" type="String" max-len="250" allow-empty="false" />
+			<param name="showZeroCount" type="boolean" />
+			<param name="columnName" type="String" max-len="200" allow-empty="false" />
+			<param name="columnPositionChanged" type="boolean" />
+			<param name="sortedColumnId" type="long" max-occurrences="100" />
+			<param name="isVisible_[0-9]+" name-regex="true" max-occurrences="500" type="boolean" />
+			<param name="isArchivedRequest" type="boolean"/>
+			<param name="serviceRequestId" type="long" range=">0"/>
+			<param name="newWidth" type="long" range=">0"/>
+			<param name="columnSizeChanged" type="boolean"/>
+			<param name="pageNavigation" type="boolean" />
+		</url>
+
+		<url roles="ModifyRequests,ModifyPR" path="/FlexiListView.ls" operation-param="viewName" operation-value="allServiceRequests">
+			<param name="operation" regex="fetchData|initiate" max-occurrences="2" min-occurrences="1" />
+ 			<param name="page" type="long" range=">0" />		
+		 	<param name="rp" type="long" range=">0" />		
+			<param name="viewId" type="long" range=">0"/>
+			<param name="reloaded" type="boolean" />		
+			<param name="totalRecords" type="long" range=">0" />
+			<param name="requestId" type="long" range=">0" />
+			<param name="task" regex="showUnAssociatedSRs"/>
+			<param name="navigationButtonClicked" type="boolean" />
+			<param name="customViewId" type="long" range=">0,-999" />
+			<param name="sortname" type="String" max-len="50" allow-empty="false" />
+			<param name="sortorder" regex="asc|desc" />
+			<param name="sortTriggered" type="boolean" />
+			<param name="([0-9]+-)*SC-[a-zA-z]+-[a-zA-z]+" name-regex="true" type="String" max-len="250" max-occurrences="500" />
+			<param name="onChangeOfPerPage" type="boolean" />
+			<param name="columnChanged" type="boolean" />
+			<param name="columnId" type="long" range=">0" />
+			<param name="columnAdded" type="boolean" />
+			<param name="filterBy" type="String" max-len="50" allow-empty="false" />
+			<param name="searchText" type="String" max-len="250" allow-empty="false" />
+			<param name="showZeroCount" type="boolean" />
+			<param name="columnName" type="String" max-len="200" allow-empty="false" />
+			<param name="columnPositionChanged" type="boolean" />
+			<param name="sortedColumnId" type="long" max-occurrences="100" />
+			<param name="isVisible_[0-9]+" name-regex="true" max-occurrences="500" type="boolean" />
+			<param name="newWidth" type="long" range=">0"/>
+			<param name="columnSizeChanged" type="boolean"/>
+			<param name="pageNavigation" type="boolean" />
+ 		</url>
+ 		
+ 		<!--Remove Personalization for flexi list view urls -->
+		<url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="purchaseOrderList">
+			<param name="operation" regex="removePersonalization"/>
+			<param name="viewId" type="long" range=">0"/>
+			<param name="userId" type="long" range=">0"/>
+		</url>
+		<url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="purchaseRequestList">
+			<param name="operation" regex="removePersonalization"/>
+			<param name="viewId" type="long" range=">0"/>
+			<param name="userId" type="long" range=">0"/>
+		</url>
+		<url roles="SDAdmin" path="/RemoveUserPersonalization.ls" operation-param="viewName" operation-value="allServiceRequests">
+			<param name="operation" regex="removePersonalization"/>
+			<param name="viewId" type="long" range=">0"/>
+			<param name="userId" type="long" range=">0"/>
+		</url>
+	</urls>
+
+	<!-- templates for PR api start -->
+    	<jsontemplates>
+        	<jsontemplate name="save_pr_template">
+            		<key name="purchaserequests" template="save_pr_template_ref" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="save_pr_template_ref">
+			<key name="noApproversWithMail" type="long" range=">=0"/>
+			<key name="subject" type="String" max-len="250"/>
+			<key name="requested_date" type="String" max-len="10"/>
+			<key name="vendor" type="long" range=">0"/>
+			<key name="date_required" type="String" max-len="10"/>
+			<key name="site" type="long" range=">0"/>
+			<key name="priority" type="long" range=">0"/>
+			<key name="requester" type="long" range=">0"/>
+			<key name="costcenter" type="long" range=">0"/>
+			<key name="technician" type="long" range=">0"/>
+			<key name="purchase_type" type="long" range=">0"/>
+			<key name="shipping_details" type="String" max-len="250" secret="true"/>
+			<key name="request_description" type="String" max-len="3500" secret="true"/>
+			<key name="udf_fields" template="pr_udf_fields_ref" type="JSONObject" max-len="-1"/>
+			<key name="requested_items" template="pr_requested_items_ref" type="JSONArray" max-len="-1" array-size="0-100"/>
+			<key name="approval_details" template="pr_approval_details_ref" type="JSONArray" max-len="-1" array-size="0-10"/>
+			<key name="service_requests" template="service_request_ref" type="JSONArray" max-len="-1" array-size="0-1"/>
+		</jsontemplate>
+
+		<jsontemplate name="pr_udf_fields_ref">
+			<key name-regex="true" name="udf_char[0-9]+" template="pr_udf_char_fields_value_ref" type="JSONObject" max-len="-1" max-occurrences="12"/>
+			<key name-regex="true" name="udf_long[0-9]+" template="pr_udf_long_fields_value_ref" type="JSONObject" max-len="-1" max-occurrences="4"/>
+			<key name-regex="true" name="udf_date[0-9]+" template="pr_udf_date_fields_value_ref" type="JSONObject" max-len="-1" max-occurrences="4"/>
+		</jsontemplate>
+		
+		<jsontemplate name="pr_udf_char_fields_value_ref">
+			<key name="value" type="String" max-len="3500" secret="true"/>
+		</jsontemplate>
+
+		<jsontemplate name="pr_udf_date_fields_value_ref">
+			<key name="value" type="String" max-len="10" secret="true"/>
+		</jsontemplate>
+
+		<jsontemplate name="pr_udf_long_fields_value_ref">
+			<key name="value" type="long" range=">0" secret="true"/>
+		</jsontemplate>
+
+		<jsontemplate name="pr_requested_items_ref">
+			<key name="item_name" type="String" max-len="150"/>
+			<key name="item_desc" type="String" max-len="10000" secret="true"/>
+			<key name="quantity" type="double" range=">=0" description=" PR quantity holds zero value too."/>
+			<key name="estimated_cost" type="double" range=">=0"/>
+			<key name="totalCost" type="double" range=">=0"/>
+		</jsontemplate>	
+
+		<jsontemplate name="pr_approval_details_ref">
+			<key name="approval_level" type="long" range=">0"/>
+			<key name="approval_condition" regex="or|and"/>
+			<key name="approvers" template="pr_approvers_ref" type="JSONArray" max-len="-1" array-size="0-10"/>
+		</jsontemplate>
+
+		<jsontemplate name="pr_approvers_ref">
+			<key name="approver" type="long" range=">0"/>
+		</jsontemplate>
+		<jsontemplate name="service_request_ref">
+			<key name="service_request_id" type="long" range=">0"/>
+		</jsontemplate>
+	</jsontemplates>
+	<!-- templates for PR api end -->
+</security>
+

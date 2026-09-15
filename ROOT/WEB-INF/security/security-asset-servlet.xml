@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required">
+        <throttles name="all_product_type_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url method="get" roles="SDAdmin" path="/common/ViewHistory.jsp" operation-param="module" operation-value="all_product_types">
+            <param name="key" regex="all_product_types_history" description="NOT_AUTH_KEY"/>
+            <param name="id" type="long" range=">=1" allow-invalid="false" />
+            <param name="entity_key" type="String" max-len="50" description="NOT_AUTH_KEY"/>
+            <param name="search_filter" regex="all_product_type" max-len="20"/>
+            <param name="admin_entity" type="boolean"/>
+            <param name="is_date_filter" type="boolean"/>
+            <param name="is_new_history" type="boolean" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/common/ViewHistory.jsp" operation-param="module" operation-value="asset_modules">
+            <param name="key" regex="asset_modules_history" description="NOT_AUTH_KEY" />
+            <param name="id" type="long" range=">=1" allow-invalid="false" />
+            <param name="entity_key" type="String" max-len="50" description="NOT_AUTH_KEY"/>
+            <param name="search_filter" regex="asset_module" max-len="20"/>
+            <param name="is_date_filter" type="boolean"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/common/ViewHistory.jsp" operation-param="module" operation-value="consumable_modules">
+            <param name="key" regex="consumable_modules_history" description="NOT_AUTH_KEY"/>
+            <param name="id" type="long" range=">=1" allow-invalid="false" />
+            <param name="entity_key" type="String" max-len="50" description="NOT_AUTH_KEY"/>
+            <param name="search_filter" regex="consumable_module" max-len="20"/>
+            <param name="is_date_filter" type="boolean"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/common/ViewHistory.jsp" operation-param="module" operation-value="software_modules">
+            <param name="key" regex="software_modules_history" description="NOT_AUTH_KEY"/>
+            <param name="id" type="long" range=">=1" allow-invalid="false" />
+            <param name="entity_key" type="String" max-len="50" description="NOT_AUTH_KEY"/>
+            <param name="search_filter" regex="software_module" max-len="20"/>
+            <param name="is_date_filter" type="boolean"/>
+        </url>
+    </urls>
+    <urls method="get" authentication="required" remote_server="true">
+        <throttles name="asset_servlet_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1m" threshold="80" lock-period="5m"/>
+        </throttles>
+        <!-- TODO -->
+        <url roles="ViewInventoryWS" path="/ui/asset">
+            <!-- below entries for list view -->
+            <param name="module" regex="all_asset_api_plural_name_regex"/>
+            <param name="TypeID" regex="long_regex"/>
+            <param name="from" regex="dashboard|space|showdetails"/>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="criteriafor" type="String" max-len="100"/>
+            <param name="canShowLeftPanel" type="boolean"/>
+            <!-- below entries for details view -->
+            <param name="entity_id" type="long" range=">0"/>
+            <param name="tab" regex="assetinfo"/><!-- view details  -->
+            <!-- below entries common for application -->
+            <param name="mode" regex="get|add|edit|details"/>
+            <param name="gsearch" type="String" max-len="1000" secret="true" />
+        </url>
+        <url roles="ViewInventoryWS" path="/ui/failed_list_view">
+            <param name="auditFilter" regex="7|30|90"/>
+            <param name="productType" type="long" range=">0"/>
+        </url>
+        <url roles="ViewInventoryWS" path="/common/ViewHistory.jsp" operation-param="module" operation-value="asset_assets">
+            <param name="id" type="long" range=">0"/>
+            <param name="sub_module" regex="all_asset_api_plural_name_regex" max-len="50"/>
+            <param name="module_value" regex="asset_history|scan_history|state_history|remote_session_history|print_history" description="NOT_AUTH_KEY"/>
+        </url>
+        <url roles="ViewInventoryWS" path="/ui/asset_history_list_view">
+            <param name="operationTime" type="long" range=">0"/>
+            <param name="operationType" regex="hardware|software"/>
+        </url>
+        <!--Auto Assign Assets to Suggested Owners-->
+        <url roles="SDAdmin,SDSiteAdmin" path="/asset/AutoAssign.jsp"/>
+    </urls>
+    <urls authentication="required" method="get" remote_server="true">
+        <throttles name="asset_details_urls" key="url.path+url.dynamic_key" window="ROLLING" scope="APPSERVER" dynamic-throttle="true">
+            <throttle duration="1m" threshold="70" lock-period="5m"/>
+        </throttles>
+        <url path="/servlet/AssetApiServlet" roles="ViewInventoryWS" operation-param="module" operation-value="asset_left_nav"/>
+        <url path="/servlet/AssetApiServlet" roles="ViewInventoryWS" operation-param="module" operation-value="asset_left_nav_search"/>
+        <url path="/servlet/AssetApiServlet" roles="ViewInventoryWS" operation-param="module" operation-value="get_configurations"/>
+    </urls>
+</security>

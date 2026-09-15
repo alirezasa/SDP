@@ -1,0 +1,625 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": "/api/v3/requests/{request_id}/tasks",
+      "desc": "This operation helps you add a new task. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Add a Task",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"task\": { \"percentage_completion\": 6, \"email_before\": 50, \"description\": \"Hello description\", \"title\": \"Task adding through API\", \"additional_cost\": \"2.20\", \"actual_end_time\": { \"value\": 1583814450059 }, \"actual_start_time\": { \"value\": 1483814450059 }, \"group\": { \"id\": 1 }, \"owner\": { \"id\": 9 }, \"priority\": { \"id\": 2, \"name\": \"Normal\" }, \"scheduled_end_time\": { \"value\": 1683814450059 }, \"estimated_effort\": { \"hours\": \"2\", \"minutes\": \"55\", \"days\": \"4\" }, \"type\": { \"name\": \"Planning\" }, \"scheduled_start_time\": { \"value\": 1583814450059 }, \"status\": { \"id\": \"1\" } }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"task\": { \"template\": null, \"request\": { \"subject\": \"req1\", \"id\": \"1\" }, \"percentage_completion\": 100, \"attachments\": [], \"email_before\": \"50\", \"description\": \"Hello description\", \"title\": \"Task adding through API\", \"type\": { \"color\": \"#ff66cc\", \"name\": \"Planning\", \"id\": \"1\" }, \"overdue\": false, \"additional_cost\": \"2.20\", \"actual_end_time\": { \"display_value\": \"Mar 10, 2020 09:57 AM\", \"value\": \"1583814450059\" }, \"id\": \"4\", \"actual_start_time\": { \"display_value\": \"Jan 8, 2017 12:10 AM\", \"value\": \"1483814450059\" }, \"group\": { \"site\": null, \"name\": \"Hardware Problems\", \"id\": \"1\" }, \"owner\": { \"email_id\": null, \"name\": \"Jeniffer Doe\", \"is_vipuser\": false, \"id\": \"9\", \"department\": null }, \"created_time\": { \"display_value\": \"Sep 24, 2020 01:41 PM\", \"value\": \"1600935112473\" }, \"associated_entity\": \"request\", \"index\": \"3\", \"priority\": { \"color\": \"#006600\", \"name\": \"Normal\", \"id\": \"2\" }, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"due_by_time\": { \"display_value\": \"May 11, 2023 07:44 PM\", \"value\": \"1683814450059\" }, \"scheduled_end_time\": { \"display_value\": \"May 11, 2023 07:44 PM\", \"value\": \"1683814450059\" }, \"marked_owner\": null, \"marked_group\": null, \"estimated_effort\": { \"display_value\": \"4 Days 2 Hrs 55 Mins\", \"hours\": \"2\", \"minutes\": \"55\", \"days\": \"4\" }, \"scheduled_start_time\": { \"display_value\": \"Mar 10, 2020 09:57 AM\", \"value\": \"1583814450059\" }, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "roles": [
+        "Add Project Task"
+      ],
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks/{task_id}"
+      ],
+      "desc": "This operation helps you update an existing task. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Update a Task",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"task\": { \"group\": { \"name\": \"Network\" }, \"owner\": { \"id\": 6 } }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"task\": { \"template\": null, \"request\": { \"subject\": \"req1\", \"id\": \"1\" }, \"percentage_completion\": 100, \"attachments\": [ { \"module\": \"task\", \"authentication_id\": \"1\", \"content_type\": \"image/jpeg\", \"size\": { \"display_value\": \"5.69KB\", \"value\": 5828 }, \"name\": \"images.jpg\", \"content_url\": \"/api/v3/requests/1/tasks/2/attachments/1/download\", \"id\": \"1\" } ], \"email_before\": \"50\", \"description\": \"Hello description\", \"title\": \"Task adding through API\", \"type\": { \"color\": \"#ff66cc\", \"name\": \"Planning\", \"id\": \"1\" }, \"overdue\": false, \"additional_cost\": \"2.20\", \"actual_end_time\": { \"display_value\": \"Mar 10, 2020 09:57 AM\", \"value\": \"1583814450059\" }, \"id\": \"2\", \"actual_start_time\": { \"display_value\": \"Jan 8, 2017 12:10 AM\", \"value\": \"1483814450059\" }, \"group\": { \"site\": null, \"name\": \"Network\", \"id\": \"2\" }, \"owner\": { \"email_id\": null, \"name\": \"Heather Graham\", \"is_vipuser\": false, \"id\": \"6\", \"department\": null }, \"created_time\": { \"display_value\": \"Sep 24, 2020 01:35 PM\", \"value\": \"1600934745080\" }, \"associated_entity\": \"request\", \"index\": \"1\", \"priority\": { \"color\": \"#006600\", \"name\": \"Normal\", \"id\": \"2\" }, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"due_by_time\": { \"display_value\": \"May 11, 2023 07:44 PM\", \"value\": \"1683814450059\" }, \"scheduled_end_time\": { \"display_value\": \"May 11, 2023 07:44 PM\", \"value\": \"1683814450059\" }, \"marked_owner\": null, \"marked_group\": null, \"estimated_effort\": { \"display_value\": \"4 Days 2 Hrs 55 Mins\", \"hours\": \"2\", \"minutes\": \"55\", \"days\": \"4\" }, \"scheduled_start_time\": { \"display_value\": \"Mar 10, 2020 09:57 AM\", \"value\": \"1583814450059\" }, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks/{task_id}"
+      ],
+      "desc": "This operation helps you delete an existing task by ID. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Delete a Task",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks/{task_id}"
+      ],
+      "desc": "This operation helps you view an existing task by ID. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "View a Task",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"task\": { \"template\": null, \"request\": { \"subject\": \"update\", \"id\": \"1\" }, \"percentage_completion\": 6, \"attachments\": [ { \"module\": \"task\", \"authentication_id\": \"1\", \"content_type\": \"image/jpeg\", \"size\": { \"display_value\": \"5.69KB\", \"value\": 5828 }, \"name\": \"images.jpg\", \"content_url\": \"/api/v3/requests/1/tasks/2/attachments/1/download\", \"id\": \"1\" } ], \"email_before\": \"50\", \"description\": \"Hello description\", \"title\": \"Task adding through API\", \"overdue\": false, \"additional_cost\": \"2.20\", \"actual_end_time\": { \"display_value\": \"Mar 10, 2020 09:57 AM\", \"value\": \"1583814450059\" }, \"id\": \"2\", \"actual_start_time\": { \"display_value\": \"Jan 8, 2017 12:10 AM\", \"value\": \"1483814450059\" }, \"group\": { \"site\": { \"id\": 901 }, \"name\": \"custom site group\", \"id\": \"301\" }, \"owner\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Shawn Adams\", \"is_vipuser\": false, \"id\": \"5\", \"department\": { \"site\": { \"name\": \"custom site\", \"id\": 901 }, \"name\": \"custom department\", \"id\": 301 } }, \"created_time\": { \"display_value\": \"Apr 28, 2020 12:44 PM\", \"value\": \"1588058053832\" }, \"associated_entity\": \"request\", \"index\": \"2\", \"priority\": { \"color\": \"#006600\", \"name\": \"Normal\", \"id\": \"2\" }, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"due_by_time\": { \"display_value\": \"May 11, 2023 07:44 PM\", \"value\": \"1683814450059\" }, \"scheduled_end_time\": { \"display_value\": \"May 11, 2023 07:44 PM\", \"value\": \"1683814450059\" }, \"marked_owner\": null, \"marked_group\": null, \"site\": { \"name\": \"custom site\", \"id\": \"901\" }, \"estimated_effort\": { \"display_value\": \"4 Days 2 Hrs 55 Mins\", \"hours\": \"2\", \"minutes\": \"55\", \"days\": \"4\" }, \"created_date\": { \"display_value\": \"Apr 28, 2020 12:44 PM\", \"value\": \"1588058053832\" }, \"type\": { \"color\": \"#ff66cc\", \"name\": \"Planning\", \"id\": \"1\" }, \"scheduled_start_time\": { \"display_value\": \"Mar 10, 2020 09:57 AM\", \"value\": \"1583814450059\" }, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks"
+      ],
+      "desc": "This operation lets you view the details of all tasks under a request. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "View All Tasks",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"sort_field\": \"title\", \"get_total_count\": \"true\", \"sort_order\": \"desc\", \"fields_required\": [ \"id\", \"title\" ] }}"
+      },
+      "output": {
+        "sample": "{ \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": true, \"sort_field\": \"title\", \"fields_required\": [ \"id\", \"title\" ], \"start_index\": 1, \"total_count\": 13, \"sort_order\": \"desc\", \"get_total_count\": \"true\", \"row_count\": 10 }, \"tasks\": [ { \"id\": \"24\", \"title\": \"Task adding through API\" }, { \"id\": \"29\", \"title\": \"Setting up user location\" }, { \"id\": \"25\", \"title\": \"Setting up user computer\" }, { \"id\": \"28\", \"title\": \"Setting up user computer\" }, { \"id\": \"27\", \"title\": \"Setting up email address\" }, { \"id\": \"3\", \"title\": \"req task\" }, { \"id\": \"32\", \"title\": \"Open up Network Port\" }, { \"id\": \"31\", \"title\": \"Load Paper in Printer Tray\" }, { \"id\": \"34\", \"title\": \"Include another RAM\" }, { \"id\": \"26\", \"title\": \"Entry in Active directory\" } ]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks/{task_id}/_trigger"
+      ],
+      "desc": "This operation helps you trigger an existing task. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Trigger a Task",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"task\": { \"template\": null, \"request\": { \"subject\": \"update\", \"id\": \"1\" }, \"percentage_completion\": 0, \"attachments\": [], \"email_before\": \"0\", \"description\": \"To create email address for the new joinee.<br /><br />Email address :<br />Account login name :<br />Account password :\", \"title\": \"Setting up email address\", \"overdue\": false, \"additional_cost\": \"0.00\", \"actual_end_time\": null, \"id\": \"27\", \"actual_start_time\": null, \"group\": null, \"owner\": null, \"created_time\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255647\" }, \"associated_entity\": \"request\", \"index\": \"5\", \"priority\": null, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"due_by_time\": null, \"scheduled_end_time\": null, \"marked_owner\": null, \"marked_group\": null, \"site\": { \"name\": \"custom site\", \"id\": \"901\" }, \"estimated_effort\": { \"display_value\": \"-\", \"hours\": \"0\", \"minutes\": \"0\", \"days\": \"0\" }, \"created_date\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255647\" }, \"type\": null, \"scheduled_start_time\": { \"display_value\": \"Apr 28, 2020 01:18 PM\", \"value\": \"1588060086172\" }, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+        {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks/{task_id}/_close"
+      ],
+      "desc": "This operation helps to close an existing task. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Close a Task",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"task\": { \"template\": null, \"request\": { \"subject\": \"update\", \"id\": \"1\" }, \"percentage_completion\": 100, \"attachments\": [], \"email_before\": \"0\", \"description\": \"To set up computer for the new joinee.<br /><br />Laptop / Desktop :<br />Additional software :<br />Additional hardware :\", \"title\": \"Setting up user computer\", \"overdue\": false, \"additional_cost\": \"0.00\", \"actual_end_time\": { \"display_value\": \"Apr 28, 2020 01:19 PM\", \"value\": \"1588060177426\" }, \"id\": \"28\", \"actual_start_time\": null, \"group\": null, \"owner\": null, \"created_time\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255667\" }, \"associated_entity\": \"request\", \"index\": \"6\", \"priority\": null, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"due_by_time\": null, \"scheduled_end_time\": null, \"marked_owner\": null, \"marked_group\": null, \"site\": { \"name\": \"custom site\", \"id\": \"901\" }, \"estimated_effort\": { \"display_value\": \"-\", \"hours\": \"0\", \"minutes\": \"0\", \"days\": \"0\" }, \"created_date\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255667\" }, \"type\": null, \"scheduled_start_time\": null, \"status\": { \"color\": \"#006600\", \"name\": \"Closed\", \"id\": \"3\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks/{task_id}/_assign"
+      ],
+      "desc": "This operation helps to assign owner for an existing task. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Assign Task Owner",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"task\": { \"owner\": { \"name\": \"Heather Graham\", \"id\": 6 }, \"group\": { \"id\": \"303\", \"name\": \"group 2\" } }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"task\": { \"template\": null, \"request\": { \"subject\": \"update\", \"id\": \"1\" }, \"percentage_completion\": 0, \"attachments\": [], \"email_before\": \"0\", \"description\": \"To set up user location for the new joinee with chair, desk, lock and key. To set up telephone connection:\", \"title\": \"Setting up user location\", \"overdue\": false, \"additional_cost\": \"0.00\", \"actual_end_time\": null, \"id\": \"29\", \"actual_start_time\": null, \"group\": { \"site\": { \"id\": 901 }, \"name\": \"group 2\", \"id\": \"302\" }, \"owner\": { \"email_id\": \"aaa@zylker.com\", \"name\": \"Heather Graham\", \"is_vipuser\": false, \"id\": \"6\", \"department\": null }, \"created_time\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255686\" }, \"associated_entity\": \"request\", \"index\": \"7\", \"priority\": null, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"due_by_time\": null, \"scheduled_end_time\": null, \"marked_owner\": null, \"marked_group\": null, \"site\": { \"name\": \"custom site\", \"id\": \"901\" }, \"estimated_effort\": { \"display_value\": \"-\", \"hours\": \"0\", \"minutes\": \"0\", \"days\": \"0\" }, \"created_date\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255686\" }, \"type\": null, \"scheduled_start_time\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/tasks/{task_id}/_mark"
+      ],
+      "desc": "This operation helps to mark owner for an existing task. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Mark Task Owner",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"task\": { \"marked_owner\": { \"id\": 5 }, \"marked_group\": { \"id\": \"301\" } }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"task\": { \"template\": null, \"request\": { \"subject\": \"update\", \"id\": \"1\" }, \"percentage_completion\": 0, \"attachments\": [], \"email_before\": \"0\", \"description\": \"To change the printer Toner<br /><br />Printer name :<br />Printer Location :<br />\", \"title\": \"Change the Printer Toner\", \"overdue\": false, \"additional_cost\": \"0.00\", \"actual_end_time\": null, \"id\": \"30\", \"actual_start_time\": null, \"group\": null, \"owner\": null, \"created_time\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255706\" }, \"associated_entity\": \"request\", \"index\": \"8\", \"priority\": null, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"due_by_time\": null, \"scheduled_end_time\": null, \"marked_owner\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Shawn Adams\", \"is_vipuser\": false, \"id\": \"5\", \"department\": { \"site\": { \"name\": \"custom site\", \"id\": 901 }, \"name\": \"custom department\", \"id\": 301 } }, \"marked_group\": { \"site\": { \"id\": 901 }, \"name\": \"custom site group\", \"id\": \"301\" }, \"site\": { \"name\": \"custom site\", \"id\": \"901\" }, \"estimated_effort\": { \"display_value\": \"-\", \"hours\": \"0\", \"minutes\": \"0\", \"days\": \"0\" }, \"created_date\": { \"display_value\": \"Apr 28, 2020 01:04 PM\", \"value\": \"1588059255706\" }, \"type\": null, \"scheduled_start_time\": null, \"status\": { \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/task_dependencies"
+      ],
+      "desc": "This operation helps to add dependency between two tasks. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Add Task Dependency",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"task_dependency\":{\"parent_task\":{\"id\":\"1\"}, \"child_task\":{\"id\":\"3\"}}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"task_dependency\":{\"child_task\":{\"id\":\"3\",\"title\":\"task 3\"},\"id\":\"2\",\"parent_task\":{\"id\":\"1\",\"title\":\"task 1\"}}}"
+      },
+     "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/task_dependencies/{task_dependency_id}"
+      ],
+      "desc": "This operation helps to remove dependency between two tasks. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Remove Task Dependency",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Request",
+      "path": [
+        "/api/v3/requests/{request_id}/task_dependencies"
+      ],
+      "desc": "This operation helps to view all task dependencies under a request. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Get Task Dependencies",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2},\"task_dependencies\":[{\"parent_task\":{\"id\":\"1\",\"title\":\"task 1\"},\"id\":\"1\",\"child_task\":{\"id\":\"2\",\"title\":\"task 2\"}},{\"parent_task\":{\"id\":\"1\",\"title\":\"task 1\"},\"id\":\"2\",\"child_task\":{\"id\":\"3\",\"title\":\"task 3\"}}]}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+        "output":{"sample":"{\"attachment\":{\"module\":\"task\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image/jpeg\",\"size\":{\"display_value\":\"26.77KB\",\"value\":27421},\"name\":\"249118238_829038111099900_5198533347997136607_n.jpg\",\"attached_on\":{\"display_value\":\"Feb2,202301:19AM\",\"value\":\"1675280989654\"},\"content_url\":\"/api/v3/requests/1/tasks/attachments/10/download\",\"id\":\"10\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+        "path": [
+            "/api/v3/requests/{request_id}/tasks/_upload",
+            "/api/v3/requests/{request_id}/tasks/{task_id}/_upload"
+        ],
+        "method": "POST",
+        "moduleName" : "Request",
+        "workflow": "",
+        "disp_desc": "Add attachment",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "fileinput": "true",
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to upload an attachment to a request task.Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs."
+    },
+     {
+        "path": "/api/v3/requests/{request_id}/tasks/{task_id}/attachments/{attachment_id}/_download",
+        "method": "GET",
+        "moduleName" : "Request",
+        "workflow": "",
+        "disp_desc": "Download attachment",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to download a particular attachment present in request task.Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs."
+    },
+    {
+        "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+        "path": "/api/v3/requests/{request_id}/tasks/{task_id}/attachments/{attachment_id}",
+        "method": "DELETE",
+        "moduleName" : "Request",
+        "workflow": "",
+        "disp_desc": "Delete attachment",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to delete an attachment in request task.Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs."
+    },
+    {
+        "output": {"sample": "{\"attachment\":{\"module\":\"task\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image/jpeg\",\"size\":{\"display_value\":\"2898.60KB\",\"value\":2968173},\"name\":\"IMG_0004.JPG\",\"attached_on\":{\"display_value\":\"Feb1,202307:22PM\",\"value\":\"1675259524747\"},\"content_url\":\"/api/v3/requests/1/tasks/2/attachments/4/download\",\"id\":\"4\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+        "path": ["/api/v3/requests/{request_id}/tasks/{task_id}/_upload"],
+        "method": "PUT",
+        "moduleName" : "Request",
+        "workflow": "",
+        "disp_desc": "Add and associate attachment",
+        "inOP": "true",
+        "name": "",
+        "defaultAttributes": [],
+        "fileinput": "true",
+        "isReleased": "true",
+        "excludedAttributes": [],
+        "desc": "This operation is used to add and associate an attachment to request task.Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs."
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the task",
+      "isReadOnly": "true",
+      "graphView": "",
+      "column": "TASKDETAILS : TASKID",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "title",
+      "type": "String",
+      "isMandatory": "true",
+      "desc": "Title of the task.",
+      "graphView": "Task#title",
+      "column": "TASKDETAILS : TITLE",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "template",
+      "type": "Object",
+      "desc": "Task template from which Task is to be created. eg : \"template\":{\"id\":\"301\"}",
+      "graphView": "",
+      "column": "TASKDETAILS :TEMPLATEID",
+      "html_type": "",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "isDefault": "true",
+      "desc": "Indicates the level of progress of the task. The Object has \"id\" and/or \"name\" of the status.<br/> E.g \"status\": {\"name\": \"Open\"}",
+      "graphView": "Task#status",
+      "column": "TASKDETAILS : STATUSID",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "owner",
+      "type": "Object",
+      "desc": "User to whom the task is assigned. Object has the \"id\" and \"name\" of the owner. <br/>E.g. \"owner\":{\"id\":3}",
+      "graphView": "Task#owner",
+      "column": "TASKDETAILS : OWNERID",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "scheduled_start_time",
+      "type": "Object",
+      "desc": "Date and time at which the task is scheduled to start. Object has the \"value\" in milliseconds and \"display_value\" in the standard date format. <br/>E.g \"scheduled_start_time\":{\"value\":1428477462973}",
+      "graphView": "Task#scheduledstarttime",
+      "column": "TASKDETAILS : SCHEDULEDSTARTTIME",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "scheduled_end_time",
+      "type": "Object",
+      "desc": "Date and time at which the task is scheduled to finish.Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"scheduled_end_time\":{\"value\":1428477462973}",
+      "graphView": "Task#scheduledendtime",
+      "column": "TASKDETAILS : SCHEDULEDENDTIME",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "due_by_time",
+      "isReadOnly": "true",
+      "type": "Object",
+      "desc": "Date and time at which the task is to set as the due.Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"due_by_time\":{\"value\":1428477462973}",
+      "graphView": "Task#scheduledendtime",
+      "column": "TASKDETAILS : DUEBYTIME",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "email_before",
+      "type": "Number",
+      "desc": "Time set to trigger notification to owner",
+      "graphView": "Task#scheduledendtime",
+      "column": "TASKDETAILS : REMINDBEFORE",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "percentage_completion",
+      "type": "Number",
+      "desc": "Indicates the progress of the task in percentage of completion.",
+      "graphView": "Task#percentageofcompletion",
+      "column":"TASKDETAILS : PER_OF_COMPLETION",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "actual_start_time",
+      "type": "Object",
+      "desc": "Date and time at which the task has actually started.Object has the \"value\" in milliseconds and \"display_value\" in the standard date format. <br/> E.g \"actual_start_time\":{\"value\":1428477462973}",
+      "graphView": "Task#actualstarttime",
+      "column": "TASKDETAILS : ACTUALSTARTTIME",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "actual_end_time",
+      "type": "Object",
+      "desc": "Date and time at which the task actually got finished.Object has the \"value\" in milliseconds and \"display_value\" in the standard date format.<br/> E.g \"actual_end_time\":{\"value\":1428477462973}",
+      "graphView": "Task#actualendtime",
+      "column": "TASKDETAILS : ACTUALENDTIME",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "additional_cost",
+      "type": "Number",
+      "desc": "Cost spent other than the actual cost of the task.",
+      "graphView": "Task#additionalcost",
+      "column": "TASKDETAILS : ADDTIONAL_COST",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "priority",
+      "type": "Object",
+      "desc": "Defines the intensity or importance of a task. Object has \"id\" and/or \"name\" of the priority. <br/>E.g \"priority\":{\"id\":2}",
+      "graphView": "Task#priority",
+      "column": "TASKDETAILS : PRIORITYID",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "type",
+      "type": "Object",
+      "desc": "Used to categorize the tasks of similar cases. Object has \"id\" and/or \"name\" of the task type. <br/>E.g \"type\":{\"id\":2}",
+      "graphView": "Task#tasktype",
+      "column": "TASKDETAILS : TASKTYPEID",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "HTML Desc",
+      "desc": "Has description about the task.",
+      "graphView": "Task#description",
+      "column": "TASKDESCRIPTION : DESCRIPTION",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "estimated_effort",
+      "type": "Object",
+      "desc": "Estimated effort given in terms of days hours and minutes. <br/> e.g : \"estimated_effort\": { \"hours\": \"2\", \"minutes\": \"3\", \"days\": \"4\" },",
+      "graphView": "Task#estimatedeffortdays",
+      "column": "",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "isReadOnly": "true",
+      "desc": "Date and time at which the task is created. This object has the \"value\" in milliseconds and \"display_value\" in the standard date format.",
+      "graphView": "",
+      "column": "TASKDETAILS : CREATEDDATE",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "isReadOnly": "true",
+      "desc": "Name and Id of the Technician who created the task is present in JSON format.",
+      "graphView": "",
+      "column": "TASKDETAILS : CREATEDBY",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "overdue",
+      "type": "Boolean",
+      "desc": "OverDue of the Task. ",
+      "graphView": "",
+      "column": "TASKDETAILS : ISOVERDUE",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "marked_owner",
+      "type": "Object",
+      "column": "TASKDETAILS : MARKEDTECHNICIAN",
+      "desc": "Represents the Technician who is marked to do the task. Object has the \"id\" and \"name\" of the owner.<br/> E.g. \"marked_owner\":{\"id\":3}",
+      "graphView": "",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "associated_entity",
+      "type": "String",
+      "desc": "Module to which the task is associated to.",
+      "graphView": "",
+      "column": "TASKDETAILS : MODULE",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "index",
+      "type": "Number",
+      "isReadOnly": "true",
+      "desc": "Index of the task",
+      "graphView": "",
+      "column": "TASKDETAILS : TASKINDEX",
+      "html_type": "",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "isReadOnly": "true",
+      "desc": "Site of the task",
+      "graphView": "",
+      "column": "TASKDETAILS : SITEID",
+      "html_type": "",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+     {
+      "name": "marked_group",
+      "type": "String",
+      "desc": "Represents the group marked to do the task.",
+      "graphView": "",
+      "column": "TASKDETAILS : MARKEDGROUP",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "group",
+      "type": "String",
+      "desc": "Denotes the classification of the Helpdesk team who handles the task.",
+      "graphView": "Task#group",
+      "column": "TASKDETAILS : GROUPID",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "request",
+      "type": "Object",
+      "isReadOnly": "true",
+      "desc": "Parent Entity to which the task associated.",
+      "graphView": "",
+      "column": "WORKORDERTOTASKDETAILS : WORKORDERID",
+      "html_type": "",
+      "inOP": "true",
+      "internalType": "",
+      "entity": null,
+      "relational_mapping": null,
+      "autofill": null,
+      "dfs_module_name": null,
+      "delete": null,
+      "add_reference_entity": null,
+      "trim_length": null,
+      "suffix": null,
+      "group": null,
+      "validation_rules": [],
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1470048779000
+}

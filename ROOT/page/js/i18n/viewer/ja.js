@@ -1,0 +1,16 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zcpage.builder.element.viewer"] = 'ビューアー';
+i18n["zcpage.builder.viewer.ar"] = 'AR（拡張現実）';
+i18n["zcpage.builder.viewer.ar.configure.tooltip"] = 'ビューアーを設定する';
+i18n["zcpage.builder.viewer.ar.delete.tooltip"] = 'ビューアーを削除する';
+i18n["zcpage.builder.arviewer.deletetitle"] = 'ARビューアーを削除する';
+i18n["zcpage.builder.arviewer.deletewarning"] = '操作後、元に戻すことはできません。本当に削除しますか？';
+i18n["zcpage.builder.viewer.arsetup"] = 'AR設定';
+i18n["zcpage.builder.viewer.arsetup.msg"] = 'ARビューアーの入力データを追加するには、［入力データを追加する］をクリックしてください';
+i18n["zcpage.builder.viewer.arsetup.button.addinput"] = '入力データを追加する';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset"] = 'マーカー型AR';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param"] = 'パラメーター';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.noparam"] = '選択できるパラメーターはありません。ページの設定で新しいパラメーターを追加できます。';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.nomarkerset"] = 'マーカー型ARは選択されていません。マイクロサービスのセクションのARライブラリーで作成できます。';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.markerset.tooltip"] = 'モバイルデバイス専用の入力データです。マーカーを取得する際、モバイルカメラが使用されます。';
+i18n["zcpage.builder.viewer.arsetup.button.addinput.param.tooltip"] = 'パラメーターに追加できるのは、マイクロサービスのARライブラリ－で使用されている3Dモデルのリンク名のみです。ページの設定のパラメーターセクションから追加できます。';
+i18n["zcpage.builder.viewer.ar.cancelmsg"] = 'キャンセルすると、このビューアーの変更内容は保存されません。';

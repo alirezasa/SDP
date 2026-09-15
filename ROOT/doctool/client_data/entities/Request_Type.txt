@@ -1,0 +1,138 @@
+{
+	"operations": [{
+		"name": "",
+		"method": "POST",
+		"moduleName" : "Request",
+		"path": "/api/v3/request_types",
+		"desc": "This operation lets you add a request type.",
+		"disp_desc": "Add Request Type",
+		"workflow": "",
+		"input": {
+			"name": "INPUT_DATA",
+			"sample": "{\"request_type\":{\"name\":\"Incident\",\"description\":\"Faults and error\",\"deleted\":false}}"
+		},
+		"output": {
+			"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"request_type\":{\"id\":\"99999000000009971\",\"name\":\"Incident\",\"description\":\"Faults and error\",\"deleted\":false}}"
+		},
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "GET",
+		"moduleName" : "Request",
+		"path": "/api/v3/request_types",
+		"desc": "This operation fetches all request types. ",
+		"disp_desc": "View all Request Types",
+		"workflow": "",
+		"input": {
+			"name": "INPUT_DATA",
+			"sample": "{\"list_info\":{\"row_count\":2,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+		},
+		"output": {
+			"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"request_types\":[{\"id\":\"99999000000009971\",\"name\":\"Incident\",\"description\":\"Faults and error\",\"deleted\":false}]}"
+		},
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "GET",
+		"moduleName" : "Request",
+		"path": "/api/v3/request_types/{request_type_id}",
+		"desc": "This operation fetches details of a request type.",
+		"disp_desc": "View Request Type",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"request_type\":{\"id\":\"99999000000009971\",\"name\":\"Incident\",\"description\":\"Faults and error\",\"deleted\":false}}"
+		},
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "PUT",
+		"moduleName" : "Request",
+		"path": "/api/v3/request_types/{request_type_id}",
+		"desc": "This operation lets you update a request type.",
+		"disp_desc": "Update Request Type",
+		"workflow": "",
+		"input": {
+			"name": "INPUT_DATA",
+			"sample": "{\"request_type\":{\"name\":\"Incident\",\"description\":\"Faults and error\",\"deleted\":false}}"
+		},
+		"output": {
+			"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"request_type\":{\"id\":\"99999000000009971\",\"name\":\"Incident\",\"description\":\"Faults and error\",\"deleted\":false}}"
+		},
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}, {
+		"name": "",
+		"method": "DELETE",
+		"moduleName" : "Request",
+		"path": ["/api/v3/request_types/{request_type_id}"],
+		"desc": "This operation lets you delete a request type.",
+		"disp_desc": "Delete Request Type",
+		"workflow": "",
+		"output": {
+			"sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+		},
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}],
+	"attributes": [{
+		"name": "id",
+		"type": "Number",
+		"desc": "Unique identifier used to identify the request type.",
+		"graphView": "",
+		"relational_mapping": "RequestTypeDefinition.REQUESTTYPEID",
+		"column": "RequestTypeDefinition : REQUESTTYPEID",
+		"odcolumn": "",
+		"html_type": "",
+		"isMandatory": "true",
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}, {
+		"name": "name",
+		"type": "String",
+		"desc": "Name of the request type.",
+		"graphView": "",
+		"relational_mapping": "RequestTypeDefinition.NAME",
+		"column": "RequestTypeDefinition : NAME",
+		"odcolumn": "",
+		"html_type": "",
+		"isMandatory": "true",
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}, {
+		"name": "description",
+		"type": "String",
+		"desc": " Description of this request type.",
+		"graphView": "",
+		"relational_mapping": "RequestTypeDefinition.DESCRIPTION",
+		"column": "RequestTypeDefinition : DESCRIPTION",
+		"odcolumn": "",
+		"html_type": "",
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}, {
+		"name": "deleted",
+		"type": "Boolean",
+		"desc": "Indicates whether the request type is still in use in the application.",
+		"graphView": "",
+		"relational_mapping": "RequestTypeDefinition.ISDELETED",
+		"column": "RequestTypeDefinition : ISDELETED",
+		"odcolumn": "",
+		"html_type": "",
+		"inOP": "true",
+		"inOD": "true",
+		"isReleased": "true"
+	}],
+	"Additional Elements": [],
+	"isReleased": "true"
+}

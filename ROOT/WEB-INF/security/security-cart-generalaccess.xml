@@ -1,0 +1,172 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true">
+        <!-- Community -> HealthMeter -->
+        <url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" remote_server="true" operation-value="healthmeter" method="GET">
+            <param name="prop" regex="ALLINFO|PRODUCTINFO|LICENSEINFO|INSTALLATIONINFO|CONFIGURATIONINFO|SYSTEMINFO|DATABASEINFO|APPLICATIONHEALTHINFO"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="healthmeter" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="15" lock-period="5m"/>
+            </throttles>
+        </url>
+    </urls>
+
+    <!-- FOS,Password policy,reset password,License-->
+    <!-- FOS related urls starts-->
+    <urls authentication="required" method="GET" disable-extraparam="true">
+        <url roles="SDAdmin,SDOrgAdmin" path="/servlet/AJaxServlet"  operation-param="action" operation-value="getFOSDetails" user_type="all">
+            <param name="json" type="JSONObject" max-len="-1" template="fosinputs"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_getFOSDetails" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+    </urls>
+    <!-- FOS related urls ends-->
+
+    <!-- Help->License  starts-->
+    <urls authentication="required" method="POST" csrf="true" disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="LicenseDetails_post" dynamic-throttle="true"  >
+            <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        <url  path="/jsp/LicenseDetails.jsp" user_type="all" operation-param="action" operation-value="posted" roles="SDAdmin,SDOrgAdmin" >
+            <param name="attach" regex="Apply" min-occurrences="1"/>
+            <file name="browse" max-size="500" allowed-extensions="xml" content-type-name="xml" allow-empty="false">
+                <filename regex="filename" max-len="250"/>
+            </file>
+        </url>
+        <!--AMS -->
+        <url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="sendAMSRenewalMail" >
+            <param name="mail" type="String"/>
+            <param name="type" type="String" />
+            <param name="notes" type="String" />
+        </url>
+        <url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="hideAMSUpdateBand" />
+        <!--AMS -->
+    </urls>
+
+    <urls authentication="required" method="GET"  disable-extraparam="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="LicenseDetails_get" dynamic-throttle="true"  >
+            <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        <url  path="/jsp/LicenseDetails.jsp" user_type="all" roles="SDAdmin,SDOrgAdmin" operation-param="action" operation-value="getLicenseDetails"/>
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getAvailMDHLicense" user_type="all" roles="SDAdmin,SDOrgAdmin"/>
+        <url path="/servlet/AJaxServlet" operation-param="action" operation-value="getLicenseDetails" user_type="all" roles="SDAdmin,SDOrgAdmin" >
+            <param name="license_key" type="String" max-len="1000"/>
+            <param name="helpdeskID" type="long" range=">0"/>
+        </url>
+        <!-- AMS -->
+        <url roles="SDAdmin" path="/jsp/AMSRequestForm.jsp" remote_server="true">
+            <param name="from" type="String"/>
+        </url>
+        <!-- AMS -->
+    </urls>
+    <!-- Help->License  ends-->
+
+    <!-- Profile -> Change Password , password policy starts-->
+    <urls authentication="required" method="GET"  disable-extraparam="true" >
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="changePwd_get" dynamic-throttle="true"  >
+            <throttle duration="10m" threshold="20" lock-period="15m"/>
+        </throttles>
+
+        <url roles="Common_Role" path="/servlet/AJaxServlet"  operation-param="action" operation-value="getPwdPolicy" user_type="all" remote_server="true">
+            <param name="SUBREQUEST" type="String" />
+            <param name="_" type="long"/>
+        </url>
+        <url roles="Common_Role" path="/servlet/AJaxServlet" operation-param="action" operation-value="checkNewPwd" user_type="all"  remote_server="true">
+            <param name="input_data" type="JSONObject" template="check_newPwd" max-len="-1"/>
+            <param name="SUBREQUEST" type="String" />
+            <param name="_" type="long"/>
+        </url>
+    </urls>
+
+    <urls authentication="required" method="POST"  csrf="true" disable-extraparam="true" >
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="changePwd_post" dynamic-throttle="true"  >
+            <throttle duration="10m" threshold="10" lock-period="15m"/>
+        </throttles>
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="updatePwdPolicy" user_type="all"  remote_server="true" ids-url-id="Password_Policy_Update">
+            <param name="input_data" type="JSONObject" template="pwd_policy" min-occurrences="1" max-len="-1"/>
+        </url>
+    </urls>
+    <!-- Profile -> Change Password,password policy ends-->
+
+    <urls authentication="required" >
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mobile_app_config" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+        <url roles="SDOrgAdmin" path="/api/v3/mobile_app_configs/(_?)get_security_configuration" user_type="all" method="get" rebrand="zmon"/>
+        <url roles="SDOrgAdmin" path="/api/v3/mobile_app_configs/(_?)save_security_configuration" user_type="all" method="post" rebrand="zmon" csrf="true">
+            <param name="input_data" type="JSONObject" template="mobile_app_security_config" min-occurrences="1" max-len="-1" />
+        </url>
+
+        <url path="/api/v3/mobile_app_configs/(_?)history" method="get" roles="SDOrgAdmin" user_type="all" url-type="dynamic" rebrand="zmon">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mobile_app_config_get_history" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="60" duration="1M"/>
+            </throttles>
+    </url>
+
+    <url path="/api/v3/mobile_app_configs/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin" user_type="all" url-type="dynamic" rebrand="zmon">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mobile_app_config_get_performed" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="60" duration="1M"/>
+        </throttles>
+    </url>
+    </urls>
+
+    <jsontemplates>
+    <!--FOS related JSONTemplate starts-->
+    <jsontemplate name="fosinputs" disable-extra-key="true">
+        <key name="primaryIP" regex="ipaddress" secret="true" type="String" min-occurrences="1" max-len="15"/>
+        <key name="primaryUserName" type="String" secret="true" min-occurrences="1" max-len="500"/>
+        <key name="secondaryIP" regex="ipaddress" secret="true" type="String" min-occurrences="1" max-len="15"/>
+        <key name="secondaryUserName" type="String" secret="true" min-occurrences="1" max-len="500"/>
+    </jsontemplate>
+
+    <!--FOS related JSONTemplate ends-->
+    <!--change password , password policy related JSONTemplate starts -->
+    <jsontemplate name="check_newPwd" disable-extra-key="true">
+        <key name="newPwd" type="String" max-len="500" secret="true"/>
+    </jsontemplate>
+
+    <jsontemplate name="pwd_policy" disable-extra-key="true">
+        <key name="isPwdPolicyEnabled" type="boolean" min-occurrences="1"/>
+        <key name="min_length" type="long" min-len="1" max-len="2"/>
+        <key name="mixed_case" type="boolean"/>
+        <key name="numOf_splChar" type="long" regex="-1|1"/>
+        <key name="numOf_oldPass" type="long" regex="1|2|3|4|5|6|7|8"/>
+        <key name="password_age" type="long" regex="-1|90|60|45|30"/>
+        <key name="forcePasswordReset" type="boolean" min-occurrences="1"/>
+        <key name="loginnameindepnt" type="boolean"/>
+    </jsontemplate>
+    <!--change password , password policy related JSONTemplate ends -->
+        <!-- SD-106898 starts -->
+        <jsontemplate name="contact_collection">
+            <key name="contact_collection" type="JSONObject" max-len="-1" min-occurrences="1" template="contact_collection_fields"/>
+        </jsontemplate>
+        <jsontemplate name="contact_collection_fields">
+            <key name="organization" type="String" min-occurrences="1" secret="true" max-len="250"/> <!--regex cannot be added since organization name can be of any language -->
+            <key name="email_id" regex="^[\W]*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,20}[\W]*,{1}[\W]*)*([\w+\-.%]+@[\w\-.]+\.[A-Za-z]{2,20})[\W]*$" min-occurrences="1" secret="true" max-len="5000"/>
+            <key name="phone_number" regex="contact_number" min-len="10" max-len="15" secret="true"/>
+            <key name="country" type="long" min-occurrences="1" range=">0"/>
+            <key name="state" type="long" range=">0"/>
+        </jsontemplate>
+        <!-- SD-106898 ends -->
+        <!-- SD-103152 starts -->
+        <jsontemplate name="mobile_app_security_config">
+            <key name="mobile_app_security_config" type="JSONObject" max-len="-1" min-occurrences="1" template="mobile_app_security_config_base" />
+        </jsontemplate>
+        <jsontemplate name="mobile_app_security_config_base">
+            <key name="allow_paste_option" type="boolean"/>
+            <key name="allow_attachment_operations" type="boolean"/>
+            <key name="allow_screen_captures" type="boolean"/>
+            <key name="allow_session_timeout" type="boolean"/>
+            <key name="session_timeout_in_mins" type="int" range="5-20000"/>
+
+            <key name="pre_auth_enabled" type="boolean"/>
+            <key name="pre_auth_client_id" type="String" max-len="500" secret="true"/>
+            <key name="pre_auth_client_secret" type="String" max-len="500" secret="true"/>
+            <key name="pre_auth_authorize_url" type="String" max-len="500" secret="true"/>
+            <key name="pre_auth_token_url" type="String" max-len="500" secret="true"/>
+        </jsontemplate>
+        <!-- SD-103152 ends -->
+    </jsontemplates>
+</security>

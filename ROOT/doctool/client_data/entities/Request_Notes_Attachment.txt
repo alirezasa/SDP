@@ -1,0 +1,162 @@
+{
+  "operations": [
+    {
+      "output": {
+        "sample": "{\"attachment\":{\"module\":\"note\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image\/jpeg\",\"size\":{\"display_value\":\"16.34KB\",\"value\":16740},\"name\":\"sample.jpg\",\"attached_on\":{\"display_value\":\"19\/04\/2023 12:31 PM\",\"value\":\"1681887716595\"},\"content_url\":\"\/api\/v3\/requests\/100000032\/notes\/attachments\/100000305\/download\",\"id\":\"100000305\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "path":[
+        "/api/v3/requests/{request_id}/notes/upload"
+      ],
+      "method": "POST",
+      "moduleName" : "Request",
+      "workflow": "",
+      "disp_desc": "Add Attachment To Note",
+      "inOP": "true",
+      "name": "",
+      "defaultAttributes": [],
+      "fileinput": "true",
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation is used to upload an attachment for note."       
+    },
+    {
+      "output": {
+        "sample": "{\"attachment\":{\"module\":\"note\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image\/jpeg\",\"size\":{\"display_value\":\"16.34KB\",\"value\":16740},\"name\":\"sample.jpg\",\"attached_on\":{\"display_value\":\"19\/04\/2023 08:23 PM\",\"value\":\"1681916012451\"},\"content_url\":\"\/api\/v3\/requests\/100000034\/notes\/2701\/attachments\/100000603\/download\",\"id\":\"100000603\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "path":[
+        "/api/v3/requests/{request_id}/notes/{note_id}/upload"
+      ],
+      "method": "PUT",
+      "moduleName" : "Request",
+      "workflow": "",
+      "disp_desc": "Associate Attachment To Note",
+      "inOP": "true",
+      "name": "",
+      "defaultAttributes": [],
+      "fileinput": "true",
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation is used to upload an attachment to a note."       
+    },
+    {
+      "output": {
+        "sample": "{\"attachments\":[{\"module\":\"note\",\"description\":null,\"attached_by\":{\"email_id\":null,\"phone\":\"1234455\",\"name\":\"administrator\",\"mobile\":\"1234567890\",\"profile_pic\":null,\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"content_type\":\"image\/jpeg\",\"size\":{\"display_value\":\"16.34KB\",\"value\":16740},\"name\":\"sample.jpg\",\"attached_on\":{\"display_value\":\"19\/04\/2023 10:04 PM\",\"value\":\"1681922066409\"},\"content_url\":\"\/api\/v3\/requests\/100000035\/notes\/2703\/attachments\/100000608\/download\",\"id\":\"100000608\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"
+      },
+      "path": "/api/v3/requests/{request_id}/notes/{note_id}/attachments",
+      "method": "GET",
+      "moduleName" : "Request",
+      "workflow": "",
+      "disp_desc": "Get Note Attachment List",
+      "inOP": "true",
+      "name": "",
+      "defaultAttributes": [],
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation is used to fetch all attachments present in a note."
+    },
+    {
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "path": "/api/v3/requests/{request_id}/notes/{note_id}/attachments/{attachment_id}",
+      "method": "DELETE",
+      "moduleName" : "Request",
+      "workflow": "",
+      "disp_desc": "Delete Note Attachment",
+      "inOP": "true",
+      "name": "",
+      "defaultAttributes": [],
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation is used to delete an attachment in a note."
+    },
+    {
+      "path": "/api/v3/requests/{request_id}/notes/{note_id}/attachments/{attachment_id}/download",
+      "method": "GET",
+      "moduleName" : "Request",
+      "workflow": "",
+      "disp_desc": "Download Attachment",
+      "inOP": "true",
+      "name": "",
+      "defaultAttributes": [],
+      "isReleased": "true",
+      "excludedAttributes": [],
+      "desc": "This operation is used to download a particular attachment present in a note."
+    }
+    ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "long",
+      "desc": "Id of this request",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isDefault": "true",
+      "isReleased": "true",
+      "inOD": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "id",
+      "type": "long",
+      "desc": "Id of the note",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "request",
+      "type": "Object",
+      "desc": "Note associated request details.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "entityName": "Request_Notes_Attachment",
+  "fileName": "Request_Notes_Attachment",
+  "basetable": "",
+  "entityDesc": "Configuration entity used to manage attachments present in a request note.",
+  "listeners": [],
+  "page_details": {},
+  "table_name": "",
+  "path": "",
+  "settings_name": "",
+  "settings_relational_mapping": "",
+  "handler": "",
+  "transformer": "",
+  "attachment_module": "",
+  "bean": "",
+  "udf_module_name": "",
+  "syslog_module": "",
+  "cache_key": "",
+  "personality": "",
+  "listview_personality": "",
+  "history_table": "",
+  "history_fkcolumn": "",
+  "history_diff_table": "",
+  "license_to_check": "",
+  "entity_group": "",
+  "optional_tables": [
+    "[object Object]"
+  ],
+  "inOP": "true",
+  "inOD": "true",
+  "subsections": {},
+  "lastModified": 1472490832000,
+  "isReleased": "true"
+}

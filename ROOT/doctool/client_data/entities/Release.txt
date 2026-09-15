@@ -1,0 +1,671 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"metainfo\":{\"is_dynamic\":false,\"plural_name\":\"releases\",\"relationship\":false,\"fields\":{\"template\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"release_template\",\"lookup_field\":\"name\",\"href\":\"/releases/template\",\"type\":\"lookup\",\"partial_field\":false,\"mandatory\":true},\"roles\":{\"fields\":{\"4\":{\"listview_default\":false,\"prominent\":false,\"depends_on\":[\"site\"],\"multiple\":true,\"description\":\"Manages the team that builds and documents the service.\",\"lookup_field\":\"name\",\"placeholder_string\":\"i18n.sdp.release.technician\",\"lookup_entity\":\"technician\",\"display_name\":\"Development Head\",\"type\":\"lookup\",\"display_type\":\"multi_select\",\"internal_name\":\"development_head\",\"inactive\":false,\"user_type\":\"ST\",\"default_display\":{\"name\":\"i18n.sdp.not_assigned\"},\"name\":\"Development Head\",\"id\":\"4\",\"picker\":false,\"href\":\"/releases/release_engineer\"},\"5\":{\"listview_default\":false,\"prominent\":false,\"depends_on\":[\"site\"],\"multiple\":true,\"description\":\"Leads the team that evaluates the functionality of the service.\",\"lookup_field\":\"name\",\"placeholder_string\":\"i18n.sdp.release.technician\",\"lookup_entity\":\"technician\",\"display_name\":\"QA Manager\",\"type\":\"lookup\",\"display_type\":\"multi_select\",\"internal_name\":\"qa_manager\",\"inactive\":false,\"user_type\":\"ST\",\"default_display\":{\"name\":\"i18n.sdp.not_assigned\"},\"name\":\"QA Manager\",\"id\":\"5\",\"picker\":false,\"href\":\"/releases/release_engineer\"},\"6\":{\"listview_default\":false,\"prominent\":false,\"depends_on\":[\"site\"],\"multiple\":true,\"description\":\"Organizes and manages the testing of the service by stakeholders and select clients.\",\"lookup_field\":\"name\",\"placeholder_string\":\"i18n.sdp.release.technician\",\"lookup_entity\":\"technician\",\"display_name\":\"UAT Owner\",\"type\":\"lookup\",\"display_type\":\"multi_select\",\"internal_name\":\"uat_owner\",\"inactive\":false,\"user_type\":\"ST\",\"default_display\":{\"name\":\"i18n.sdp.not_assigned\"},\"name\":\"UAT Owner\",\"id\":\"6\",\"picker\":false,\"href\":\"/releases/release_engineer\"},\"7\":{\"listview_default\":false,\"prominent\":false,\"depends_on\":[\"site\"],\"multiple\":true,\"description\":\"Analyzes the entire release process and evaluates possible outcomes.\",\"lookup_field\":\"name\",\"placeholder_string\":\"i18n.sdp.release.technician\",\"lookup_entity\":\"technician\",\"display_name\":\"Release Reviewer\",\"type\":\"lookup\",\"display_type\":\"multi_select\",\"internal_name\":\"release_reviewer\",\"inactive\":false,\"user_type\":\"ST\",\"default_display\":{\"name\":\"i18n.sdp.not_assigned\"},\"name\":\"Release Reviewer\",\"id\":\"7\",\"picker\":false,\"href\":\"/releases/release_engineer\"}},\"type\":\"group\",\"relationship\":true,\"standalone_crud\":true},\"changes\":{\"display_type\":\"ajax_picklist\",\"lookup_entity\":\"change\",\"lookup_field\":\"name\",\"href\":\"/releases/changes\",\"type\":\"lookup\",\"partial_field\":true,\"mandatory\":true},\"emergency\":{\"read_only\":true,\"form_field\":false,\"sortable\":false,\"type\":\"boolean\",\"partial_field\":false},\"description\":{\"display_type\":\"html\",\"sortable\":false,\"type\":\"html\",\"partial_field\":false},\"title\":{\"display_type\":\"text\",\"type\":\"string\",\"partial_field\":true,\"mandatory\":true,\"constraints\":{\"max_length\":\"250\"}},\"next_review_on\":{\"display_type\":\"datetime\",\"type\":\"datetime\",\"partial_field\":false,\"searchable\":false},\"assets\":{\"display_type\":\"ajax_picklist\",\"multiple\":true,\"lookup_entity\":\"asset\",\"lookup_field\":\"name\",\"href\":\"/releases/assets\",\"type\":\"lookup\",\"partial_field\":false},\"configuration_items\":{\"display_type\":\"ajax_picklist\",\"multiple\":true,\"lookup_entity\":\"ci\",\"lookup_field\":\"name\",\"href\":\"/releases/configuration_items\",\"type\":\"lookup\",\"partial_field\":false},\"urgency\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"urgency\",\"lookup_field\":\"name\",\"href\":\"/releases/urgency\",\"type\":\"lookup\",\"partial_field\":false},\"close_details\":{\"type\":\"group\",\"fields\":{\"close_details_updated_on\":{\"read_only\":true,\"form_field\":false,\"type\":\"datetime\",\"partial_field\":false,\"searchable\":false},\"close_details_description\":{\"display_type\":\"html\",\"sortable\":false,\"type\":\"html\",\"partial_field\":false},\"closure_code\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"closure_code\",\"lookup_field\":\"name\",\"href\":\"/releases/closure_code\",\"type\":\"lookup\",\"partial_field\":false},\"close_details_updated_by\":{\"read_only\":true,\"form_field\":false,\"lookup_entity\":\"user\",\"lookup_field\":\"name\",\"href\":\"/releases/close_details_updated_by\",\"type\":\"lookup\",\"partial_field\":false}}},\"id\":{\"identifier\":true,\"read_only\":true,\"form_field\":false,\"type\":\"long\",\"partial_field\":false},\"group\":{\"display_type\":\"searchable_picklist\",\"depends_on\":[\"site\"],\"lookup_entity\":\"support_group\",\"lookup_field\":\"name\",\"href\":\"/releases/group\",\"type\":\"lookup\",\"partial_field\":false},\"created_time\":{\"display_type\":\"datetime\",\"default_value\":{\"value\":1578464528418},\"type\":\"datetime\",\"partial_field\":false,\"mandatory\":true,\"searchable\":false},\"item\":{\"display_type\":\"searchable_picklist\",\"depends_on\":[\"subcategory\"],\"lookup_entity\":\"item\",\"lookup_field\":\"name\",\"href\":\"/releases/item\",\"type\":\"lookup\",\"partial_field\":false},\"impact\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"impact\",\"lookup_field\":\"name\",\"href\":\"/releases/impact\",\"type\":\"lookup\",\"partial_field\":false},\"release_type\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"change_type\",\"lookup_field\":\"name\",\"href\":\"/releases/release_type\",\"type\":\"lookup\",\"partial_field\":false},\"services\":{\"display_type\":\"searchable_picklist\",\"multiple\":true,\"lookup_entity\":\"service_category\",\"lookup_field\":\"name\",\"href\":\"/releases/services\",\"type\":\"lookup\",\"partial_field\":false},\"priority\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"priority\",\"lookup_field\":\"name\",\"href\":\"/releases/priority\",\"type\":\"lookup\",\"partial_field\":false},\"scheduled_end_time\":{\"display_type\":\"datetime\",\"type\":\"datetime\",\"partial_field\":false,\"searchable\":false},\"site\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"site\",\"lookup_field\":\"name\",\"href\":\"/releases/site\",\"type\":\"lookup\",\"partial_field\":false},\"completed_time\":{\"display_type\":\"datetime\",\"type\":\"datetime\",\"partial_field\":false,\"searchable\":false},\"stage\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"release_stage\",\"lookup_field\":\"name\",\"href\":\"/releases/stage\",\"type\":\"lookup\",\"partial_field\":false,\"mandatory\":true},\"udf_fields\":{\"fields\":{\"dec_decimal_cost\":{\"display_type\":\"Decimal\",\"is_encrypted\":false,\"default_value\":null,\"id\":\"96\",\"display_name\":\"Cost\",\"type\":\"double\",\"constraints\":{},\"searchable\":false},\"pick_picklist\":{\"display_type\":\"Pick List\",\"is_encrypted\":false,\"default_value\":null,\"id\":\"97\",\"href\":\"/releases/udf_fields/pick_picklist\",\"display_name\":\"PickList\",\"type\":\"string\",\"constraints\":{}}},\"type\":\"udf\"},\"comment\":{\"display_type\":\"textarea\",\"depends_on\":[\"status\"],\"sortable\":false,\"type\":\"string\",\"partial_field\":false,\"constraints\":{\"max_length\":\"-1\"},\"searchable\":false},\"risk\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"risk\",\"lookup_field\":\"name\",\"href\":\"/releases/risk\",\"type\":\"lookup\",\"partial_field\":false},\"category\":{\"display_type\":\"searchable_picklist\",\"lookup_entity\":\"category\",\"lookup_field\":\"name\",\"href\":\"/releases/category\",\"type\":\"lookup\",\"partial_field\":false},\"subcategory\":{\"display_type\":\"searchable_picklist\",\"depends_on\":[\"category\"],\"lookup_entity\":\"subcategory\",\"lookup_field\":\"name\",\"href\":\"/releases/subcategory\",\"type\":\"lookup\",\"partial_field\":false},\"deleted_time\":{\"read_only\":true,\"form_field\":false,\"type\":\"datetime\",\"partial_field\":false,\"searchable\":false},\"notes_present\":{\"read_only\":true,\"form_field\":false,\"sortable\":false,\"type\":\"boolean\",\"partial_field\":false},\"scheduled_start_time\":{\"display_type\":\"datetime\",\"type\":\"datetime\",\"partial_field\":false,\"searchable\":false},\"status\":{\"display_type\":\"searchable_picklist\",\"depends_on\":[\"stage\"],\"lookup_entity\":\"release_status\",\"lookup_field\":\"name\",\"href\":\"/releases/status\",\"type\":\"lookup\",\"partial_field\":false,\"mandatory\":true}},\"entity\":\"release\"}}"},
+            "path": [
+                "/api/v3/releases/metainfo",
+                "/api/v3/releases/{release_id}/metainfo"
+            ],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get MetaInfo",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "false",
+            "excludedAttributes": [],
+            "desc": "This Operation is used to fetch the metainfo of a release."
+        },
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get  Allowed Values for Fields",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"allowed_values\":{\"stage\":[{\"name\":\"Closure\",\"id\":\"9\"},{\"name\":\"Deployment\",\"id\":\"6\"},{\"name\":\"Development\",\"id\":\"3\"},{\"name\":\"Planning\",\"id\":\"2\"},{\"name\":\"Review\",\"id\":\"8\"},{\"name\":\"Submission\",\"id\":\"1\"},{\"name\":\"Testing\",\"id\":\"4\"},{\"name\":\"Training\",\"id\":\"7\"},{\"name\":\"UAT\",\"id\":\"5\"}],\"urgency\":[{\"deleted\":false,\"name\":\"High\",\"id\":\"2\"},{\"deleted\":false,\"name\":\"Low\",\"id\":\"4\"},{\"deleted\":false,\"name\":\"Normal\",\"id\":\"3\"},{\"deleted\":false,\"name\":\"Urgent\",\"id\":\"1\"}],\"impact\":[{\"deleted\":false,\"name\":\"High\",\"id\":\"1\"},{\"deleted\":false,\"name\":\"Low\",\"id\":\"3\"},{\"deleted\":false,\"name\":\"Medium\",\"id\":\"2\"}],\"close_details\":{\"closure_code\":[{\"inactive\":false,\"name\":\"Closed - Canceled\",\"id\":\"4\"},{\"inactive\":false,\"name\":\"Closed - Completed\",\"id\":\"1\"},{\"inactive\":false,\"name\":\"Closed - Deferred\",\"id\":\"3\"},{\"inactive\":false,\"name\":\"Closed - Rejected\",\"id\":\"2\"}]},\"udf_fields\":{\"pick_picklist\":[{\"deleted\":false,\"name\":\"Academic\",\"id\":\"5\"},{\"deleted\":false,\"name\":\"Fiction\",\"id\":\"1\"},{\"deleted\":false,\"name\":\"History\",\"id\":\"4\"},{\"deleted\":false,\"name\":\"Scientific\",\"id\":\"3\"},{\"deleted\":false,\"name\":\"Self-help\",\"id\":\"2\"}]},\"release_type\":[{\"inactive\":false,\"name\":\"Major\",\"id\":\"2\"},{\"inactive\":false,\"name\":\"Minor\",\"id\":\"4\"},{\"inactive\":false,\"name\":\"Significant\",\"id\":\"3\"},{\"inactive\":false,\"name\":\"Standard\",\"id\":\"1\"}],\"risk\":[{\"inactive\":false,\"name\":\"High\",\"id\":\"3\"},{\"inactive\":false,\"name\":\"Low\",\"id\":\"1\"},{\"inactive\":false,\"name\":\"Medium\",\"id\":\"2\"}],\"services\":[{\"deleted\":false,\"name\":\"Application Login\",\"id\":\"1\"},{\"deleted\":false,\"name\":\"Communication\",\"id\":\"2\"},{\"deleted\":false,\"name\":\"Data Management\",\"id\":\"3\"},{\"deleted\":false,\"name\":\"Email\",\"id\":\"4\"},{\"deleted\":false,\"name\":\"Hardware\",\"id\":\"5\"},{\"deleted\":false,\"name\":\"Internet\",\"id\":\"6\"},{\"deleted\":false,\"name\":\"Software\",\"id\":\"7\"},{\"deleted\":false,\"name\":\"User Management\",\"id\":\"8\"}],\"priority\":[{\"deleted\":false,\"name\":\"High\",\"id\":\"4\"},{\"deleted\":false,\"name\":\"Low\",\"id\":\"1\"},{\"deleted\":false,\"name\":\"Medium\",\"id\":\"3\"},{\"deleted\":false,\"name\":\"Normal\",\"id\":\"2\"}],\"category\":[{\"deleted\":false,\"name\":\"Desktop Hardware\",\"id\":\"2\"},{\"deleted\":false,\"name\":\"General\",\"id\":\"1\"},{\"deleted\":false,\"name\":\"Internet\",\"id\":\"7\"},{\"deleted\":false,\"name\":\"Network\",\"id\":\"10\"},{\"deleted\":false,\"name\":\"Operating System\",\"id\":\"11\"},{\"deleted\":false,\"name\":\"Printers\",\"id\":\"6\"},{\"deleted\":false,\"name\":\"Routers\",\"id\":\"4\"},{\"deleted\":false,\"name\":\"Services\",\"id\":\"12\"},{\"deleted\":false,\"name\":\"Software\",\"id\":\"3\"},{\"deleted\":false,\"name\":\"Switches\",\"id\":\"5\"}]},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": [
+                "/api/v3/releases/allowed_values_for_fields",
+                "/api/v3/releases/{release_id}/allowed_values_for_fields",
+                "/api/v3/releases/{release_id}/status"
+            ],
+            "input": {
+                "name": "input_data",
+                "sample": ""
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "false",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch allowed values for a release field."
+        },
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "View Release",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release\":{\"template\":{\"name\":\"General Template\",\"id\":\"1\"},\"short_description\":\"MSSQL Server service pack upgrade\",\"roll_out_plan\":null,\"closure_code\":null,\"roles\":[{\"role\":{\"internal_name\":\"release_requester\",\"user_type\":\"ALL\",\"name\":\"Release Requester\",\"id\":\"3\"},\"id\":\"8\",\"user\":{\"email_id\":null,\"name\":\"Guest\",\"is_vipuser\":false,\"id\":\"3\",\"department\":null}}],\"emergency\":false,\"description\":\"MSSQL Server service pack upgrade\",\"title\":\"MSSQL Server service pack upgrade\",\"review_details\":null,\"next_review_on\":{\"display_value\":\"Jun 22, 2020 03:34 PM\",\"value\":\"1592820250370\"},\"assets\":[{\"ci_id\":\"24\",\"product\":{\"id\":\"2\"},\"product_type\":{\"id\":\"1\"},\"name\":\"asset2\",\"id\":\"1\",\"state\":{\"id\":\"1\"},\"barcode\":null}],\"configuration_items\":[{\"name\":\"ci2\",\"id\":\"24\"}],\"urgency\":{\"name\":\"Urgent\",\"id\":\"1\"},\"close_details\":null,\"id\":\"8\",\"group\":{\"site\":null,\"name\":\"Hardware Problems\",\"id\":\"1\"},\"created_time\":{\"display_value\":\"Mar 24, 2020 07:04 PM\",\"value\":\"1585056877590\"},\"item\":{\"name\":\"Install\",\"id\":\"6\"},\"impact\":{\"name\":\"High\",\"id\":\"1\"},\"release_type\":{\"color\":\"#aaff66\",\"name\":\"Standard\",\"id\":\"1\"},\"checklist\":null,\"services\":[{\"name\":\"Application Login\",\"id\":\"1\"},{\"name\":\"Communication\",\"id\":\"2\"}],\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:36 PM\",\"value\":\"1592820360370\"},\"back_out_plan\":null,\"completed_time\":null,\"stage\":{\"internal_name\":\"planning\",\"name\":\"Planning\",\"id\":\"2\"},\"risk\":{\"name\":\"High\",\"id\":\"3\"},\"impact_details\":null,\"category\":{\"name\":\"Software\",\"id\":\"3\"},\"subcategory\":{\"name\":\"IE 7\",\"id\":\"7\"},\"deleted_time\":null,\"notes_present\":false,\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:35 PM\",\"value\":\"1592820350370\"},\"status\":{\"internal_name\":\"rejected\",\"stage\":{\"id\":\"2\"},\"status_type\":\"Failed\",\"name\":\"Rejected\",\"id\":\"7\"}}}"},
+            "path": ["/api/v3/releases/{release_id}"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"add_recent_item\":true}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation helps you to view the release details by the unique release id."
+        },
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "View all Releases",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"sort_field\":\"title\",\"search_criteria\":{\"field\": \"title\", \"value\": \"mssql\", \"condition\": \"is\"},\"total_count\":1,\"sort_order\":\"asc\",\"get_total_count\":\"true\",\"row_count\":1},\"releases\":[{\"template\":{\"name\":\"General Template\",\"id\":\"1\"},\"emergency\":false,\"title\":\"MSSQL Server service pack upgrade release\",\"next_review_on\":{\"display_value\":\"Jun 22, 2020 03:34 PM\",\"value\":\"1592820250370\"},\"urgency\":{\"name\":\"Urgent\",\"id\":\"1\"},\"id\":\"10\",\"group\":{\"site\":null,\"name\":\"Hardware Problems\",\"id\":\"1\"},\"created_time\":{\"display_value\":\"Mar 24, 2020 07:25 PM\",\"value\":\"1585058137756\"},\"item\":{\"name\":\"Install\",\"id\":\"6\"},\"impact\":{\"name\":\"High\",\"id\":\"1\"},\"release_type\":{\"color\":\"#aaff66\",\"name\":\"Standard\",\"id\":\"1\"},\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:36 PM\",\"value\":\"1592820360370\"},\"completed_time\":null,\"stage\":{\"internal_name\":\"planning\",\"name\":\"Planning\",\"id\":\"2\"},\"risk\":{\"name\":\"High\",\"id\":\"3\"},\"category\":{\"name\":\"Software\",\"id\":\"3\"},\"subcategory\":{\"name\":\"IE 7\",\"id\":\"7\"},\"deleted_time\":null,\"notes_present\":false,\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:35 PM\",\"value\":\"1592820350370\"},\"status\":{\"internal_name\":\"rejected\",\"stage\":{\"id\":\"2\"},\"status_type\":\"Failed\",\"name\":\"Rejected\",\"id\":\"7\"}}]}"},
+            "path": ["/api/v3/releases"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"fields_required\":[\"priority\",\"release_type\",\"scheduled_end_time\",\"category\",\"scheduled_start_time\",\"created_time\",\"completed_time\",\"title\",\"stage\",\"status\",\"notes_present\",\"emergency\",\"deleted_time\"],\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"desc\"}],\"search_criteria\":{\"field\":\"title\",\"value\":\"mssql\",\"condition\":\"contains\"},\"filter_by\":{\"name\":\"all_releases\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation lets you to view the details of all the releases."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add Release",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release\":{\"template\":{\"name\":\"General Template\",\"id\":\"1\"},\"short_description\":\"MSSQL Server service pack upgrade\",\"roll_out_plan\":null,\"closure_code\":null,\"roles\":[{\"role\":{\"internal_name\":\"release_requester\",\"user_type\":\"ALL\",\"name\":\"Release Requester\",\"id\":\"3\"},\"id\":\"9\",\"user\":{\"email_id\":null,\"name\":\"Guest\",\"is_vipuser\":false,\"id\":\"3\",\"department\":null}}],\"emergency\":false,\"description\":\"MSSQL Server service pack upgrade\",\"title\":\"MSSQL Server service pack upgrade\",\"review_details\":null,\"next_review_on\":null,\"assets\":[{\"ci_id\":\"24\",\"product\":{\"id\":\"2\"},\"product_type\":{\"id\":\"1\"},\"name\":\"asset1\",\"id\":\"1\",\"state\":{\"id\":\"1\"},\"barcode\":null}],\"configuration_items\":[{\"name\":\"ci1\",\"id\":\"24\"}],\"urgency\":{\"name\":\"Urgent\",\"id\":\"1\"},\"close_details\":null,\"id\":\"9\",\"group\":{\"site\":null,\"name\":\"Hardware Problems\",\"id\":\"1\"},\"created_time\":{\"display_value\":\"Mar 24, 2020 07:15 PM\",\"value\":\"1585057512478\"},\"item\":{\"name\":\"Install\",\"id\":\"6\"},\"impact\":{\"name\":\"High\",\"id\":\"1\"},\"release_type\":{\"color\":\"#aaff66\",\"name\":\"Standard\",\"id\":\"1\"},\"checklist\":null,\"services\":[{\"name\":\"Application Login\",\"id\":\"1\"},{\"name\":\"Communication\",\"id\":\"2\"}],\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:36 PM\",\"value\":\"1592820360370\"},\"back_out_plan\":null,\"completed_time\":null,\"stage\":{\"internal_name\":\"submission\",\"name\":\"Submission\",\"id\":\"1\"},\"risk\":{\"name\":\"High\",\"id\":\"3\"},\"impact_details\":null,\"category\":{\"name\":\"Software\",\"id\":\"3\"},\"subcategory\":{\"name\":\"IE 7\",\"id\":\"7\"},\"deleted_time\":null,\"notes_present\":false,\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:35 PM\",\"value\":\"1592820350370\"},\"status\":{\"internal_name\":\"requested\",\"stage\":{\"id\":\"1\"},\"status_type\":\"In Progress\",\"name\":\"Requested\",\"id\":\"1\"}}}"},
+            "path": "/api/v3/releases",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"release\":{\"roles\":[{\"role\":{\"name\":\"release requester\"},\"user\":{\"name\":\"guest\"}}],\"template\":{\"id\":\"1\",\"name\":\"General Template\"},\"risk\":{\"name\":\"high\"},\"priority\":{\"name\":\"high\"},\"comment\":\"The above Stage/Status is set as part of 'Release' creation\",\"description\":\"MSSQL Server service pack upgrade\",\"title\":\"MSSQL Server service pack upgrade\",\"next_review_on\":null,\"urgency\":{\"name\":\"Urgent\"},\"group\":{\"site\":null,\"name\":\"Hardware Problems\"},\"impact\":{\"name\":\"High\"},\"release_type\":{\"name\":\"Standard\"},\"category\":{\"name\":\"Software\"},\"subcategory\":{\"name\":\"IE 7\"},\"item\":{\"name\":\"Install\"},\"services\":[{\"name\":\"Application Login\",\"id\":\"1\"},{\"name\":\"Communication\",\"id\":\"2\"}],\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:34 PM\",\"value\":\"1592820360370\"},\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:34 PM\",\"value\":\"1592820350370\"},\"stage\":{\"name\":\"submission\"},\"status\":{\"name\":\"Requested\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation helps you to add new release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Update Release",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release\":{\"template\":{\"name\":\"General Template\",\"id\":\"1\"},\"short_description\":\"MSSQL Server service pack upgrade\",\"roll_out_plan\":null,\"closure_code\":null,\"roles\":[{\"role\":{\"internal_name\":\"release_requester\",\"user_type\":\"ALL\",\"name\":\"Release Requester\",\"id\":\"3\"},\"id\":\"9\",\"user\":{\"email_id\":null,\"name\":\"Guest\",\"is_vipuser\":false,\"id\":\"3\",\"department\":null}}],\"emergency\":false,\"description\":\"MSSQL Server service pack upgrade\",\"title\":\"MSSQL Server service pack upgrade\",\"review_details\":null,\"next_review_on\":null,\"assets\":[{\"ci_id\":\"24\",\"product\":{\"id\":\"2\"},\"product_type\":{\"id\":\"1\"},\"name\":\"asset2\",\"id\":\"1\",\"state\":{\"id\":\"1\"},\"barcode\":null}],\"configuration_items\":[{\"name\":\"ci2\",\"id\":\"24\"}],\"urgency\":{\"name\":\"Urgent\",\"id\":\"1\"},\"close_details\":null,\"id\":\"9\",\"group\":{\"site\":null,\"name\":\"Hardware Problems\",\"id\":\"1\"},\"created_time\":{\"display_value\":\"Mar 24, 2020 07:15 PM\",\"value\":\"1585057512478\"},\"item\":{\"name\":\"Install\",\"id\":\"6\"},\"impact\":{\"name\":\"High\",\"id\":\"1\"},\"release_type\":{\"color\":\"#aaff66\",\"name\":\"Standard\",\"id\":\"1\"},\"checklist\":null,\"services\":[{\"name\":\"Application Login\",\"id\":\"1\"},{\"name\":\"Communication\",\"id\":\"2\"}],\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:36 PM\",\"value\":\"1592820360370\"},\"back_out_plan\":null,\"completed_time\":null,\"stage\":{\"internal_name\":\"submission\",\"name\":\"Submission\",\"id\":\"1\"},\"risk\":{\"name\":\"High\",\"id\":\"3\"},\"impact_details\":null,\"category\":{\"name\":\"Software\",\"id\":\"3\"},\"subcategory\":{\"name\":\"IE 7\",\"id\":\"7\"},\"deleted_time\":null,\"notes_present\":false,\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:35 PM\",\"value\":\"1592820350370\"},\"status\":{\"internal_name\":\"requested\",\"stage\":{\"id\":\"1\"},\"status_type\":\"In Progress\",\"name\":\"Requested\",\"id\":\"1\"}}}"},
+            "path": ["/api/v3/releases/{release_id}"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"release\":{\"roles\":[{\"role\":{\"name\":\"release requester\"},\"user\":{\"name\":\"guest\"}}],\"template\":{\"id\":\"1\",\"name\":\"General Template\"},\"risk\":{\"name\":\"high\"},\"priority\":{\"name\":\"high\"},\"comment\":\"The above Stage/Status is set as part of 'Release' creation\",\"description\":\"MSSQL Server service pack upgrade\",\"title\":\"MSSQL Server service pack upgrade\",\"next_review_on\":null,\"urgency\":{\"name\":\"Urgent\"},\"group\":{\"site\":null,\"name\":\"Hardware Problems\"},\"impact\":{\"name\":\"High\"},\"release_type\":{\"name\":\"Standard\"},\"category\":{\"name\":\"Software\"},\"subcategory\":{\"name\":\"IE 7\"},\"item\":{\"name\":\"Install\"},\"services\":[{\"name\":\"Application Login\",\"id\":\"1\"},{\"name\":\"Communication\",\"id\":\"2\"}],\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:34 PM\",\"value\":\"1592820360370\"},\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:34 PM\",\"value\":\"1592820350370\"},\"stage\":{\"name\":\"submission\"},\"status\":{\"name\":\"Requested\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation helps you to update the release by using the unique release_id."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Close release",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/releases/{release-id}/_close"],
+            "input": {
+                "name": "input_data",
+                "sample": "{\"status\":\"completed\",\"comment\":\"Release has been closed\"}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation allows you to close a single or multiple releases."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": [
+                "/api/v3/releases/{release_id}/_pickup",
+                "/api/v3/releases/_pickup?ids={release_ids}"
+            ],
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Pickup Release",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation allows you to pickup release on your name as a technician."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Assign release",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": [
+                "/api/v3/releases/{release_id}/_assign",
+                "/api/v3/releases/_assign?ids={release_ids}"
+            ],
+            "input": {
+                "name": "input_data",
+                "sample": "{\"release\":{\"release_engineer\":{\"name\":\"heather graham\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation allows you to pickup release on your name as a release engineer."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": [
+                "/api/v3/releases/{release_id}/_move_to_trash",
+                "/api/v3/releases/_move_to_trash?ids={release_ids}"
+            ],
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete release",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation lets you delete(move to trash) release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": [
+                "/api/v3/releases/{release_id}",
+                "/api/v3/releases?ids={release_ids}"
+            ],
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}",
+            "disp_desc": "Delete release from Trash",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation lets you delete the release permenantly(from the trash)."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": [
+                "/api/v3/releases/{release_id}/_restore_from_trash",
+                "/api/v3/releases/_restore_from_trash?ids={release_ids}"
+            ],
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "undefined",
+            "disp_desc": "Restore Release from Trash",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation lets you restore release from trash."
+        },
+        {
+            "output": {"sample": "{\"status_comments\":[{\"commented_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"stage\":{\"internal_name\":\"planning\",\"stage_index\":2,\"name\":\"Planning\",\"id\":\"2\"},\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"commented_on\":{\"display_value\":\"Aug 5, 2020 11:56 PM\",\"value\":\"1596652004059\"},\"comment\":\"The above Stage/Status is set as part of 'Release' creation\",\"id\":\"1206\",\"status\":{\"internal_name\":\"rejected\",\"stage\":{\"id\":\"2\"},\"status_type\":\"Failed\",\"name\":\"Rejected\",\"id\":\"7\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"},
+            "path": "/api/v3/releases/{release_id}/status_comments",
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}",
+            "disp_desc": "Get Release Status Comments",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch the release status comments."
+        },
+        {
+            "output": {"sample": "{\"summary\":{\"projects\":{\"all\":0},\"approvals\":{\"all\":0},\"changes\":{\"all\":0},\"id\":\"1\",\"tasks\":{\"all\":10,\"closed\":5},\"worklogs\":{\"all\":3}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/releases/{release_id}/summary"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Release Summary",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch the release summary."
+        },
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":true,\"start_index\":1,\"row_count\":10},\"history\":[{\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"deleted_time\"},\"previous_value\":null,\"current_value\":{\"display_value\":\"Aug 8, 2020 12:40 AM\",\"value\":\"1596827416844\"}}],\"id\":\"3601\",\"time\":{\"display_value\":\"Aug 8, 2020 12:40 AM\",\"date\":\"Aug 8, 2020\",\"time\":\"12:40 AM\",\"value\":\"1596827416846\"},\"operation\":\"move_to_trash\"},{\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"user\"},\"previous_value\":null,\"current_value\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}},{\"field\":{\"name\":\"id\"},\"previous_value\":null,\"current_value\":\"1203\"},{\"field\":{\"name\":\"role\"},\"previous_value\":null,\"current_value\":{\"internal_name\":\"release_engineer\",\"prominent\":true,\"user_type\":\"SGT\",\"name\":\"Release Engineer\",\"id\":\"2\"}}],\"id\":\"3341\",\"time\":{\"display_value\":\"Aug 7, 2020 11:46 PM\",\"date\":\"Aug 7, 2020\",\"time\":\"11:46 PM\",\"value\":\"1596824170600\"},\"operation\":\"release_to_release_role_add\"},{\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"user\"},\"previous_value\":null,\"current_value\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}},{\"field\":{\"name\":\"id\"},\"previous_value\":null,\"current_value\":\"1202\"},{\"field\":{\"name\":\"role\"},\"previous_value\":null,\"current_value\":{\"internal_name\":\"release_engineer\",\"prominent\":true,\"user_type\":\"SGT\",\"name\":\"Release Engineer\",\"id\":\"2\"}}],\"id\":\"3340\",\"time\":{\"display_value\":\"Aug 7, 2020 11:44 PM\",\"date\":\"Aug 7, 2020\",\"time\":\"11:44 PM\",\"value\":\"1596824095915\"},\"operation\":\"release_to_release_role_delete\"},{\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"user\"},\"previous_value\":null,\"current_value\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}},{\"field\":{\"name\":\"id\"},\"previous_value\":null,\"current_value\":\"1202\"},{\"field\":{\"name\":\"role\"},\"previous_value\":null,\"current_value\":{\"internal_name\":\"release_engineer\",\"prominent\":true,\"user_type\":\"SGT\",\"name\":\"Release Engineer\",\"id\":\"2\"}}],\"id\":\"3339\",\"time\":{\"display_value\":\"Aug 7, 2020 11:43 PM\",\"date\":\"Aug 7, 2020\",\"time\":\"11:43 PM\",\"value\":\"1596823994745\"},\"operation\":\"release_to_release_role_add\"},{\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"user\"},\"previous_value\":null,\"current_value\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}},{\"field\":{\"name\":\"id\"},\"previous_value\":null,\"current_value\":\"1201\"},{\"field\":{\"name\":\"role\"},\"previous_value\":null,\"current_value\":{\"internal_name\":\"release_engineer\",\"prominent\":true,\"user_type\":\"SGT\",\"name\":\"Release Engineer\",\"id\":\"2\"}}],\"id\":\"3338\",\"time\":{\"display_value\":\"Aug 7, 2020 11:41 PM\",\"date\":\"Aug 7, 2020\",\"time\":\"11:41 PM\",\"value\":\"1596823873735\"},\"operation\":\"release_to_release_role_delete\"},{\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"user\"},\"previous_value\":null,\"current_value\":{\"email_id\":null,\"name\":\"Guest\",\"is_vipuser\":false,\"id\":\"3\",\"department\":null}},{\"field\":{\"name\":\"id\"},\"previous_value\":null,\"current_value\":\"610\"},{\"field\":{\"name\":\"role\"},\"previous_value\":null,\"current_value\":{\"internal_name\":\"release_requester\",\"prominent\":true,\"user_type\":\"ALL\",\"name\":\"Release Requester\",\"id\":\"3\"}}],\"id\":\"3337\",\"time\":{\"display_value\":\"Aug 7, 2020 11:41 PM\",\"date\":\"Aug 7, 2020\",\"time\":\"11:41 PM\",\"value\":\"1596823873722\"},\"operation\":\"release_to_release_role_delete\"},{\"release\":{\"short_description\":\"MSSQL Server service pack upgrade\",\"id\":\"273\",\"title\":\"MSSQL Server service pack upgrade\"},\"by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"diff\":[{\"field\":{\"name\":\"user\"},\"previous_value\":null,\"current_value\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}},{\"field\":{\"name\":\"id\"},\"previous_value\":null,\"current_value\":\"609\"},{\"field\":{\"name\":\"role\"},\"previous_value\":null,\"current_value\":{\"internal_name\":\"release_manager\",\"prominent\":true,\"user_type\":\"SDRM\",\"name\":\"Release Manager\",\"id\":\"1\"}}],\"id\":\"3336\",\"time\":{\"display_value\":\"Aug 7, 2020 11:41 PM\",\"date\":\"Aug 7, 2020\",\"time\":\"11:41 PM\",\"value\":\"1596823873711\"},\"operation\":\"release_to_release_role_delete\"}]}"},
+            "path": ["/api/v3/releases/{release_id}/history"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}",
+            "disp_desc": "Get Release History",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch the release history."
+        },
+        {
+            "output": {"sample": "{\"get_permissions\":{\"1\":{\"view\":true,\"edit\":true,\"approve\":true},\"2\":{\"view\":true,\"edit\":true,\"approve\":true},\"3\":{\"view\":true,\"edit\":true,\"approve\":true},\"4\":{\"view\":true,\"edit\":true,\"approve\":true},\"5\":{\"view\":true,\"edit\":true,\"approve\":true},\"6\":{\"view\":true,\"edit\":true,\"approve\":true},\"7\":{\"view\":true,\"edit\":true,\"approve\":true},\"8\":{\"view\":true,\"edit\":true,\"approve\":true},\"9\":{\"view\":true,\"edit\":true,\"approve\":true},\"-1\":{\"edit\":true,\"view\":true,\"approve\":true}}}"},
+            "path": ["/api/v3/releases/{release_id}/_get_permissions"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}",
+            "disp_desc": "Get Release Permissions",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch the release permissions."
+        },
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}",
+            "disp_desc": "Get Release List View Filters",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"show_all\":[{\"name\":\"All Releases\",\"id\":\"29\"},{\"name\":\"All My Releases\",\"id\":\"30\"},{\"name\":\"All Open Releases\",\"id\":\"31\"},{\"name\":\"Unassigned Releases\",\"id\":\"32\"},{\"name\":\"Deployed Releases\",\"id\":\"33\"},{\"name\":\"Cancelled Releases\",\"id\":\"34\"},{\"name\":\"Closed Releases\",\"id\":\"35\"},{\"name\":\"Failed Releases\",\"id\":\"36\"},{\"name\":\"Scheduled Releases\",\"id\":\"37\"},{\"name\":\"Unscheduled Releases\",\"id\":\"38\"},{\"name\":\"Trash Releases\",\"id\":\"39\"}]}"},
+            "path": ["/api/v3/list_view_filters/show_all"],
+            "input": {
+                "name": "input_data",
+                "sample": "{\"show_all\":{\"module\":\"release\"},\"list_info\":{\"row_count\":\"100\",\"search_criteria\":{̌\"field\": \"module\", \"value\":\"release\", \"condition\": \"is\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "false",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch the release list view filters."
+        },
+        {
+            "output": {"sample": "{\"approval_summary\":[{\"latestDecision\":\"approve\",\"comments\":\"Jump\",\"stage\":{\"internal_name\":\"submission\",\"stage_index\":1,\"name\":\"Submission\",\"description\":\"Stage when a release item is submitted\",\"id\":\"1\"},\"approval_levels\":[{\"comments\":\"recommend\",\"level\":1,\"associated_entity\":\"release\",\"action_taken_by\":{\"email_id\":\"aditya.s@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"rule\":{\"type\":\"percent\",\"value\":\"100\"},\"created_by\":{\"email_id\":\"aditya.s@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"deleted\":false,\"stage\":\"1\",\"created_on\":{\"display_value\":\"Nov 18, 2020 07:47 PM\",\"value\":\"1605709040349\"},\"name\":\"Default\",\"id\":\"301\",\"is_current\":false,\"status\":{\"name\":\"Approved\",\"id\":\"2\"},\"action_taken_on\":{\"display_value\":\"Nov 18, 2020 07:48 PM\",\"value\":\"1605709123990\"}}],\"visited\":true,\"commented_on\":1605709282091,\"status\":{\"internal_name\":\"accepted\",\"stage\":{\"id\":\"1\"},\"status_type\":\"Success\",\"name\":\"Accepted\",\"id\":\"2\"}},{\"latestDecision\":\"inProgress\",\"stage\":{\"internal_name\":\"planning\",\"stage_index\":2,\"name\":\"Planning\",\"description\":\"Release planning\",\"id\":\"2\"},\"visited\":true},{\"latestDecision\":\"upcoming\",\"stage\":{\"internal_name\":\"implementation\",\"stage_index\":3,\"name\":\"Development\",\"description\":\"Prepare the release build and test\",\"id\":\"3\"},\"visited\":false},{\"latestDecision\":\"upcoming\",\"stage\":{\"internal_name\":\"testing\",\"stage_index\":4,\"name\":\"Testing\",\"description\":\"Test the developed release build\",\"id\":\"4\"},\"visited\":false},{\"latestDecision\":\"upcoming\",\"stage\":{\"internal_name\":\"UAT\",\"stage_index\":5,\"name\":\"UAT\",\"description\":\"Build given to portion of Users to get tested and reviewd\",\"id\":\"5\"},\"visited\":false},{\"latestDecision\":\"upcoming\",\"stage\":{\"internal_name\":\"deployment\",\"stage_index\":6,\"name\":\"Deployment\",\"description\":\"Release items are deployed\",\"id\":\"6\"},\"visited\":false},{\"latestDecision\":\"upcoming\",\"stage\":{\"internal_name\":\"training\",\"stage_index\":7,\"name\":\"Training\",\"description\":\"Providing Training and Support for the deployed Release Items\",\"id\":\"7\"},\"visited\":false},{\"latestDecision\":\"upcoming\",\"stage\":{\"internal_name\":\"review\",\"stage_index\":8,\"name\":\"Review\",\"description\":\"Review of release build\",\"id\":\"8\"},\"visited\":false},{\"latestDecision\":\"upcoming\",\"stage\":{\"internal_name\":\"close\",\"stage_index\":9,\"name\":\"Closure\",\"description\":\"Release closure\",\"id\":\"9\"},\"visited\":false}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}]}"},
+            "path": ["/api/v3/releases/{release_id}/approval_levels/_approval_summary"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}",
+            "disp_desc": "Get Release Approval Summary",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch the approval summary for the release. Used for Progress API."
+        },
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"_links\":[{\"method\":\"post\",\"non_editable_fields\":[],\"name\":\"add\",\"href\":\"/releases\"},{\"non_editable_records\":[],\"method\":\"put\",\"name\":\"edit\",\"href\":\"/releases\"},{\"non_deletable_records\":[],\"method\":\"delete\",\"name\":\"delete\",\"href\":\"/releases\"}]}"},
+            "path": [
+                "/api/v3/releases/_links",
+                "/api/v3/releases/{release_id}/_links"
+            ],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Release Links",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "false",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch the release links."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add Release with inline images -Attachments",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release\":{\"template\":{\"name\":\"General Template\",\"id\":\"1\"},\"short_description\":\"MSSQL Server service pack upgrade\",\"roll_out_plan\":null,\"closure_code\":null,\"roles\":[{\"role\":{\"internal_name\":\"release_requester\",\"user_type\":\"ALL\",\"name\":\"Release Requester\",\"id\":\"3\"},\"id\":\"9\",\"user\":{\"email_id\":null,\"name\":\"Guest\",\"is_vipuser\":false,\"id\":\"3\",\"department\":null}}],\"emergency\":false,\"description\":\"MSSQL Server service pack upgrade\",\"title\":\"MSSQL Server service pack upgrade\",\"review_details\":null,\"next_review_on\":null,\"assets\":[{\"ci_id\":\"24\",\"product\":{\"id\":\"2\"},\"product_type\":{\"id\":\"1\"},\"name\":\"asset1\",\"id\":\"1\",\"state\":{\"id\":\"1\"},\"barcode\":null}],\"configuration_items\":[{\"name\":\"ci1\",\"id\":\"24\"}],\"urgency\":{\"name\":\"Urgent\",\"id\":\"1\"},\"close_details\":null,\"id\":\"9\",\"group\":{\"site\":null,\"name\":\"Hardware Problems\",\"id\":\"1\"},\"created_time\":{\"display_value\":\"Mar 24, 2020 07:15 PM\",\"value\":\"1585057512478\"},\"item\":{\"name\":\"Install\",\"id\":\"6\"},\"impact\":{\"name\":\"High\",\"id\":\"1\"},\"release_type\":{\"color\":\"#aaff66\",\"name\":\"Standard\",\"id\":\"1\"},\"checklist\":null,\"services\":[{\"name\":\"Application Login\",\"id\":\"1\"},{\"name\":\"Communication\",\"id\":\"2\"}],\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:36 PM\",\"value\":\"1592820360370\"},\"back_out_plan\":null,\"completed_time\":null,\"stage\":{\"internal_name\":\"submission\",\"name\":\"Submission\",\"id\":\"1\"},\"risk\":{\"name\":\"High\",\"id\":\"3\"},\"impact_details\":null,\"category\":{\"name\":\"Software\",\"id\":\"3\"},\"subcategory\":{\"name\":\"IE 7\",\"id\":\"7\"},\"deleted_time\":null,\"notes_present\":false,\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:35 PM\",\"value\":\"1592820350370\"},\"status\":{\"internal_name\":\"requested\",\"stage\":{\"id\":\"1\"},\"status_type\":\"In Progress\",\"name\":\"Requested\",\"id\":\"1\"}}}"},
+            "path": ["/api/v3/releases"],
+            "input": {
+                "name": "input_data",
+                "sample": "{\"release\":{\"title\":\"test inline image\",\"description\":\"test inline image <img src='image_url'>\",\"images\":{\"description\":[\"image_url\"]},\"attachments\":[{\"id\":\"301\"}]}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+      "desc": "Add Release with inline images - Attachments."
+    }, 
+    {
+      "method": "GET",
+      "moduleName" : "Release",
+      "workflow": "",
+      "disp_desc": "View all Releases Using g-search",
+      "defaultAttributes": [],
+      "inOD": "true",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"sort_field\":\"title\",\"search_criteria\":{\"field\":\"title\", \"value\":\"mssql\", \"condition\": \"is\"},\"total_count\":1,\"sort_order\":\"asc\",\"get_total_count\":\"true\",\"row_count\":1},\"releases\":[{\"template\":{\"name\":\"General Template\",\"id\":\"1\"},\"emergency\":false,\"title\":\"MSSQL Server service pack upgrade release\",\"next_review_on\":{\"display_value\":\"Jun 22, 2020 03:34 PM\",\"value\":\"1592820250370\"},\"urgency\":{\"name\":\"Urgent\",\"id\":\"1\"},\"id\":\"10\",\"group\":{\"site\":null,\"name\":\"Hardware Problems\",\"id\":\"1\"},\"reason_for_release\":{\"name\":\"New services\",\"id\":\"1\"},\"created_time\":{\"display_value\":\"Mar 24, 2020 07:25 PM\",\"value\":\"1585058137756\"},\"item\":{\"name\":\"Install\",\"id\":\"6\"},\"impact\":{\"name\":\"High\",\"id\":\"1\"},\"release_type\":{\"color\":\"#aaff66\",\"name\":\"Standard\",\"id\":\"1\"},\"priority\":{\"color\":\"#ff0000\",\"name\":\"High\",\"id\":\"4\"},\"scheduled_end_time\":{\"display_value\":\"Jun 22, 2020 03:36 PM\",\"value\":\"1592820360370\"},\"completed_time\":null,\"stage\":{\"internal_name\":\"planning\",\"name\":\"Planning\",\"id\":\"2\"},\"risk\":{\"name\":\"High\",\"id\":\"3\"},\"category\":{\"name\":\"Software\",\"id\":\"3\"},\"subcategory\":{\"name\":\"IE 7\",\"id\":\"7\"},\"deleted_time\":null,\"notes_present\":false,\"scheduled_start_time\":{\"display_value\":\"Jun 22, 2020 03:35 PM\",\"value\":\"1592820350370\"},\"status\":{\"internal_name\":\"rejected\",\"stage\":{\"id\":\"2\"},\"status_type\":\"Failed\",\"name\":\"Rejected\",\"id\":\"7\"}}]}"
+      },
+      "path": [
+        "/api/v3/releases"
+      ],
+      "input": {
+        "name": "input_data",
+        "sample": "{\"list_info\":{\"gsearch\":\"mssql implementation\"}}"
+      },
+      "inOP": "true",
+      "name": "",
+      "isReleased": "false",
+      "excludedAttributes": [],
+      "desc": "This operation will list of the releases based on text field given in gsearch attribute."
+    }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "long",
+            "isReleased": "true",
+            "desc": "Id of this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "title",
+            "column": "RELEASEDETAILS : TITLE",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Title of this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "WORKORDER : DESCRIPTION",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "HTML Desc",
+            "isReleased": "true",
+            "desc": "Description of this release",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "false",
+            "html_type": "",
+            "inOP": "true",
+            "name": "short_description",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "A short description of this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "release_type",
+            "column": "WORKORDERSTATES : RELEASETYPEID",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Type of this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "impact",
+            "column": "WORKORDERSTATES : IMPACTID",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Impact of this release\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "impact_details",
+            "column": "WORKORDERSTATES : IMPACTDETAILS",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Description about the impact of this release\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "stage",
+            "column": "RELEASEDETAILS : STAGEID",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Indicates the current stage of this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "status",
+            "column": "RELEASEDETAILS : STATUSID",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Indicates the current status of this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "urgency",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Urgency of the release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "priority",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Priority of the release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "services",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Service Affect to which this release belongs",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "release_requester",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Indicates the release requester of this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "assets",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "Array of asset objects associated to this release.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "site",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Denotes the site to which this release belongs",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "group",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Group to which this release belongs\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "technician ",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Technician assigned to this release\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "category",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Category to which this release belongs\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "subcategory ",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Subcategory to which this release belongs\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "item",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Item of this release\n",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "template",
+            "column": "",
+            "odcolumn": "",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Indicates the template which is used to create this release",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "comments",
+            "column": "",
+            "odcolumn": "",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Comments added while changing the release's status",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "images",
+            "column": "",
+            "odcolumn": "",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "Inline images for release",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1608472590000
+}

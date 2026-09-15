@@ -1,0 +1,344 @@
+<!-- $Id$ -->
+<!-- Security XML for Authentication owned by CART TEAM -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+    <!-- Auth API and login related URLs -->
+    <urls authentication="required" disable-extraparam="true">
+        <url method="GET" path="/api/v3/app_resources/build_info" user_type="all" description="ROLE_NOT_REQUIRED: Authentication is enough">
+            <param name="TECHNICIAN_KEY" type="String" max-len="200" secret="true"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="auth_api_build_info" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="100" lock-period="1m"/>
+            </throttles>
+        </url>
+        <url method="GET" path="/api/v3/app_resources/post_login_props" user_type="all" description="ROLE_NOT_REQUIRED: Authentication is enough"/>
+        <url method="POST" path="/api/v3/app_resources/logout" user_type="all" api="true" description="ROLE_NOT_REQUIRED: Authentication is enough">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sdpapi_logout" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+        </url>
+
+        <!-- Common Throttle for Auth API -->
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="auth_api_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="15" lock-period="5m"/>
+        </throttles>
+    </urls>
+
+    <urls authentication="required" api="true">
+        <url method="GET" path="/ESM.do" operation-param="type" operation-value="oauth-providers" roles="SDOrgAdmin" user_type="all"/>
+
+        <url method="PUT" path="/api/v3/login_config" user_type="all" roles="SDOrgAdmin">
+            <param name="input_data" type="JSONObject" template="login_config_put" max-len="5000" min-occurrences="1"/>
+        </url>
+
+        <url method="GET" path="/api/v3/oauth_providers/(_?)metainfo" roles="SDOrgAdmin" user_type="all">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="100000" secret="true"/>
+        </url>
+        <url method="GET" path="/api/v3/oauth_providers/(\d+)/(_?)metainfo" roles="SDOrgAdmin" user_type="all">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="100000" secret="true"/>
+        </url>
+        <url method="GET" path="/api/v3/oauth_providers/(_?)history" user_type="all" roles="SDOrgAdmin">
+            <param max-len="100000" type="JSONObject" template="list_info_with_context_param" name="input_data" secret="true"/>
+        </url>
+        <url method="GET" path="/api/v3/oauth_providers/(_?)get_performed_by_for_history" user_type="all" roles="SDOrgAdmin">
+            <param allow-invalid="false" max-len="100000" type="JSONObject" template="list_info" name="input_data" secret="true"/>
+        </url>
+        <url method="GET" path="/api/v3/oauth_providers/(_?)get_records_for_history" user_type="all" roles="SDOrgAdmin">
+            <param allow-invalid="false" max-len="100000" type="JSONObject" template="list_info" name="input_data" secret="true"/>
+        </url>
+
+        <url method="GET" path="/api/v3/oauth_providers" user_type="all" roles="SDOrgAdmin">
+            <param allow-invalid="false" name="input_data" template="list_info_with_context_param" type="JSONObject" max-len="100000" secret="true"/>
+        </url>
+        <url method="GET" path="/api/v3/oauth_providers/(\d+)" user_type="all" roles="SDOrgAdmin">
+            <param name="input_data" type="JSONObject" template="list_info_with_exclude_fields" max-len="100000" secret="true"/>
+        </url>
+        <url method="POST" path="/api/v3/oauth_providers" user_type="all" roles="SDOrgAdmin">
+            <param name="input_data" type="JSONObject" template="oauth_provider_json" max-len="100000" min-occurrences="1" secret="true"/>
+        </url>
+        <url method="PUT" path="/api/v3/oauth_providers/(\d+)" user_type="all" roles="SDOrgAdmin">
+            <param name="input_data" type="JSONObject" template="oauth_provider_json" max-len="100000" min-occurrences="1" secret="true"/>
+        </url>
+        <url method="DELETE" path="/api/v3/oauth_providers/(\d+)" user_type="all" roles="SDOrgAdmin">
+        </url>
+
+        <url method="GET" path="/api/v3/oauth_providers/icon" user_type="all" roles="SDOrgAdmin"/>
+        <url path="/api/v3/oauth_providers/images" method="post" roles="SDOrgAdmin" user_type="all">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="100000" type="url" content-type-name="image" template="stream_support" name="input_stream" secret="true"/>
+        </url>
+
+
+        <url method="GET" path="/api/v3/oauth_features/(_?)metainfo" roles="SDOrgAdmin" user_type="all">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="100000" secret="true"/>
+        </url>
+        <url method="GET" path="/api/v3/oauth_features" user_type="all" roles="SDOrgAdmin">
+            <param allow-invalid="false" name="input_data" template="list_info_with_context_param" type="JSONObject" max-len="100000" secret="true"/>
+        </url>
+        <url method="GET" path="/api/v3/oauth_features/(\d+)" user_type="all" roles="SDOrgAdmin"/>
+        <url method="DELETE" path="/api/v3/oauth_features/(\d+)" user_type="all" roles="SDOrgAdmin">
+        </url>
+        <url method="GET" path="/api/v3/oauth_features/_get_sso_status" user_type="all" roles="SDOrgAdmin"/>
+
+
+        <url method="GET" path="/common/ViewHistory.jsp" user_type="all" roles="SDOrgAdmin" operation-param="module" operation-value="oauth_providers">
+            <param name="key" regex="oauth_providers_history"/>
+            <param name="admin_entity|is_date_filter" regex="true|false" name-regex="true"/>
+            <param name="entity_key" type="String"/>
+            <param name="skip_filter_options|skip_operation_names|module_value" type="String" max-len="20" name-regex="true"/>
+            <param name="search_filter" regex="oauth_provider"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="oauth_sso_history">
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+
+        <url method="GET" path="/api/v3/oauth_field_map_entries/(_?)metainfo" roles="SDOrgAdmin" user_type="all">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="100000" secret="true"/>
+        </url>
+
+        <!-- Common Throttle for OAuth SSO -->
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="oauth_sso_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="15" lock-period="5m"/>
+        </throttles>
+    </urls>
+
+    <!-- SAML Single Sign on -->
+    <urls authentication="required" disable-extraparam="true">
+        <url method="GET" path="/ESM.do" operation-param="type" operation-value="sso" roles="SDOrgAdmin" user_type="all"/>
+
+        <url method="GET" path="/servlet/SamlMetaServlet" roles="SDOrgAdmin" user_type="all" remote_server="true"/>
+
+        <!-- SD-90224 ISSUE FIX CONFIGURED SAML RELATED URLS -->
+        <url method="GET" path="/SamlLogoutRequestServlet" user_type="all" remote_server="true" description="ROLE_NOT_REQUIRED: Authentication is enough"/>
+
+        <url method="GET" path="/Saml.do" operation-param="method" operation-value="samlSettings" roles="SDOrgAdmin" user_type="all" remote_server="true"/>
+        <url method="GET" path="/Saml.do" operation-param="method" operation-value="getCertificate" roles="SDOrgAdmin" user_type="all" remote_server="true"/>
+        <url method="GET" path="/Saml.do" operation-param="method" operation-value="getHistory" roles="SDOrgAdmin" user_type="all" remote_server="true">
+            <param name="sort_order" regex="asc|desc" min-occurrences="1"/>
+        </url>
+        <url method="POST" path="/Saml.do" operation-param="method" operation-value="generateCertificate" roles="SDOrgAdmin" user_type="all" csrf="true" remote_server="true"/>
+        <url method="POST" path="/Saml.do" operation-param="method" operation-value="addIDP" roles="SDOrgAdmin" user_type="all" csrf="true" remote_server="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="Saml_addIDP" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="loginurl" type="String" max-len="255" min-occurrences="1"/>
+            <param name="logouturl" type="String" max-len="255"/>
+            <param name="algorithm" max-len="50" regex="DSA_SHA1|RSA_SHA1|RSA_SHA256|RSA_SHA384|RSA_SHA512" min-occurrences="1"/>
+            <param name="name_id_format" max-len="150" regex="urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified|urn:oasis:names:tc:SAML:2.0:nameid-format:transient|urn:oasis:names:tc:SAML:2.0:nameid-format:persistent|urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"/>
+            <param name="defaultFields" type="JSONArray" template="saml_field_template" max-len="-1" array-size="0-13"/>
+            <param name="additionalFields" type="JSONArray" template="saml_field_template" max-len="-1" array-size="0-1000"/>
+            <param name="certificateFile" regex="undefined"/>
+            <file name="certificateFile" max-size="10240" allowed-extensions="cer,crt,pem,der,cert" content-type-name="importssl_cert" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+        </url>
+        <url method="POST" path="/Saml.do" operation-param="method" operation-value="setSamlStatus" roles="SDOrgAdmin" user_type="all" csrf="true" remote_server="true">
+            <param name="status" regex="enable|disable" min-occurrences="1"/>
+        </url>
+        <url method="GET" path="/common/ViewHistory.jsp" operation-param="module" operation-value="saml_auth" roles="SDOrgAdmin" user_type="all" remote_server="true">
+            <param name="id" type="long" allow-empty="false"/>
+            <param name="key" regex="saml_history_sort_order"/>
+        </url>
+
+        <!-- Common Throttle for SAML -->
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="saml_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="15" lock-period="2m"/>
+        </throttles>
+    </urls>
+
+    <!-- Two Factor Authentication -->
+    <urls authentication="required" remote_server="true" user_type="all" disable-extraparam="true">
+        <url method="GET" path="/ESM.do" operation-param="type" operation-value="ESMTwoFactorAuth" roles="SDOrgAdmin" user_type="all"/>
+
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="verifySelfEnrollmentSecretCode" roles="Common_Role" csrf="true">
+            <param name="VERIFY_AUTH" type="JSONObject" template="verify_auth" max-len="-1"/>
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="sendSelfEnrollmentSecretCode" roles="Common_Role" csrf="true">
+            <param name="AUTH_RULE" regex="TFA_MAIL_AUTHENTICATOR" min-occurrences="1"/>
+            <param name="ENROLLMENT_KEY" type="String" secret="true"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TFAEmailOTP" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="getUserTrustedBrowsers" roles="Common_Role" csrf="true">
+            <param name="SEARCH_IP_ADDRESS" type="String" secret="true"/>
+            <param name="SEARCH_USER_AGENT" type="String" secret="true"/>
+            <param name="RECORDS_PER_PAGE" regex="10|25|50|100"/>
+            <param name="PAGE" type="long"/>
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="getSelfEnrollmentDetails" roles="Common_Role" csrf="true">
+            <param name="AUTH_RULE" regex="TFA_GOOGLE_AUTHENTICATOR|TFA_MAIL_AUTHENTICATOR" min-occurrences="1"/>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="deleteUserTrustedBrowser" roles="Common_Role" csrf="true">
+            <param name="DELETE_BROWSER_IDS" type="JSONArray" template="longarray" max-len="-1" array-size="0-100"/>
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url method="GET" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="exportBackupVerificationCode" roles="Common_Role">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TFADownloadBVC" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+        </url>
+
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="generateBackupVerificationCode" roles="Common_Role" csrf="true">
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="TFAGenerateBVC" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="getSelfEnrollmentConfiguration,getBackupVerificationCode" roles="Common_Role" csrf="true">
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="getTwoFactorAuthConfig" roles="SDOrgAdmin" csrf="true">
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="deleteEnrolledUsers" roles="SDOrgAdmin" csrf="true" ids-url-id="deleteEnrolledUsers">
+            <param name="DELETE_USER_IDS" type="JSONArray" template="longarray" max-len="-1" array-size="0-100"/>
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="saveTwoFactorModeConfig" roles="SDOrgAdmin" csrf="true" ids-url-id="saveTwoFactorModeConfig">
+            <param name="TFA_MODE_NAME" regex="TFA_BACKUP_VERIFICATION_CODE_AUTHENTICATOR|TFA_MAIL_AUTHENTICATOR|TFA_GOOGLE_AUTHENTICATOR" min-occurrences="1"/>
+            <param name="TFA_MODE_CONFIG" type="JSONObject" template="tfa_mode_config" max-len="-1"/>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="enableDisableTwoFactorAuthConfig" roles="SDOrgAdmin" csrf="true">
+            <param name="IS_ENABLED" type="boolean"/>
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="saveTFALoginRules" roles="SDOrgAdmin" csrf="true" user_type="all">
+            <param name="input_data" type="JSONObject" template="template_tfa_login_rules" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="GET" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="getTFALoginRules" roles="SDOrgAdmin" user_type="all"/>
+        <url method="POST" path="/RestAPI/WC/TwoFactorAction" operation-param="method" operation-value="getUserEnrollmentConfig" roles="SDOrgAdmin" csrf="true">
+            <param name="SEARCH_USER_NAME" type="String" secret="true"/>
+            <param name="SEARCH_DOMAIN_NAME" type="String" secret="true"/>
+            <param name="SEARCH_MODE_OPTION" type="long"/>
+            <param name="RECORDS_PER_PAGE" regex="10|25|50|100"/>
+            <param name="PAGE" type="long"/>
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+        <url method="GET" path="/api/v3/tfa/user" roles="SDOrgAdmin" user_type="all" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <!-- Common Throttle for TFA -->
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="tfa_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="15" lock-period="2m"/>
+        </throttles>
+    </urls>
+
+    <!-- Other Login related URLs -->
+    <urls authentication="required" disable-extraparam="true">
+        <!-- Profile -> Online/Offline -->
+        <url method="PUT" path="/api/v3/availability_status" roles="Common_Role" api="true">
+            <param name="input_data" type="String"/>
+            <param name="tm" type="long"/>
+        </url>
+
+        <!-- Logout -->
+        <url path="/jsp/Logout.jsp" user_type="all" roles="Common_Role" remote_server="true">
+		<param name="is_from_external_chat" type="boolean"/>
+		<param name="origin" type="String" max-len="1000"/>
+	</url>
+
+        <!-- Common Throttle for Login Related URLs -->
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="auth_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="15" lock-period="2m"/>
+        </throttles>
+    </urls>
+
+    <!-- JSON Templates -->
+    <jsontemplates>
+        <jsontemplate name="oauth_provider_json">
+            <key name="oauth_provider" type="JSONObject" template="oauth_provider_base" max-len="100000" secret="true"/>
+            <key name="for" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="oauth_provider_base">
+            <key name="id" type="long"/>
+            <key name="provider_name" type="String" max-len="50"/>
+            <key name="feature" type="JSONObject" template="oauth_feature_base" max-len="7500"/>
+            <key name="client_id" type="String" max-len="200" secret="true"/>
+            <key name="endpoint_url" type="String" max-len="300"/>
+            <key name="token_url" type="String" max-len="300"/>
+            <key name="additional_fields" type="JSONArray" array-size="0-1000" template="oauth_field_map_base" max-len="100000" secret="true"/>
+            <key name="icon" type="JSONObject" template="image_template" max-len="2500"/>
+        </jsontemplate>
+
+        <jsontemplate name="oauth_feature_base">
+            <key name="provider" type="JSONObject" template="oauth_provider_base" max-len="100000" secret="true"/>
+            <key name="id" type="long"/>
+            <key name="is_enabled" type="boolean"/>
+            <key name="feature_name" type="String" max-len="100"/>
+            <key name="get_resource_url" type="String" max-len="300"/>
+            <key name="client_secret" type="String" max-len="300" secret="true"/>
+            <key name="scope" type="String" max-len="500"/>
+            <key name="user_property" type="String" max-len="20"/>
+            <key name="mapped_property" regex="WindowsName|upn|email" max-len="127"/>
+            <key name="feature_redirect_url" type="String" max-len="300"/>
+            <key name="error_redirect_url" type="String" max-len="300"/>
+        </jsontemplate>
+
+        <jsontemplate name="oauth_field_map_base">
+            <key name="id" type="long"/>
+            <key name="oauth_provider" type="long"/>
+            <key name="sd_field_name" type="String" max-len="250"/>
+            <key name="oauth_field_name" type="String" max-len="500" secret="true"/>
+            <key name="import" type="boolean"/>
+        </jsontemplate>
+
+        <jsontemplate name="login_config_put">
+            <key name="login_config" type="JSONArray" template="login_config_base" max-len="5000"/>
+        </jsontemplate>
+
+        <jsontemplate name="login_config_base">
+            <key name="id" type="long"/>
+            <key name="parameter" type="String"/>
+            <key name="category" type="String"/>
+            <key name="param_value" type="String"/>
+        </jsontemplate>
+
+        <jsontemplate name="saml_field_template" disable-extra-key="true">
+            <key name="name" type="String" max-len="250"/>
+            <key name="value" type="String" max-len="500"/>
+            <key name="enabled" type="boolean"/>
+        </jsontemplate>
+
+        <jsontemplate name="verify_auth" disable-extra-key="true">
+            <key name="AUTH_RULE" regex="TFA_GOOGLE_AUTHENTICATOR|TFA_MAIL_AUTHENTICATOR|TFA_BACKUP_VERIFICATION_CODE_AUTHENTICATOR"/>
+            <key name="AUTH_SECRET_KEY" type="String" secret="true"/>
+            <key name="SECRET_KEY" type="String" secret="true"/>
+            <key name="TRUSTED_BROWSER" type="boolean"/>
+            <key name="TIME" type="long" secret="true"/>
+        </jsontemplate>
+
+        <!--API call are made similar to the ones that were made by AD360 prod-->
+        <!--Most of the below variables are received from GET method and used the same JSON as input with little modification -->
+        <!--Most of the variables are not used in the server-side -->
+        <jsontemplate name="tfa_mode_config" disable-extra-key="true">
+            <key name="HASH_MODE_NAME" regex="#TFA_BACKUP_VERIFICATION_CODE_AUTHENTICATOR|#TFA_MAIL_AUTHENTICATOR|#TFA_GOOGLE_AUTHENTICATOR"/>
+            <key name="MODE_NAME" regex="TFA_BACKUP_VERIFICATION_CODE_AUTHENTICATOR|TFA_MAIL_AUTHENTICATOR|TFA_GOOGLE_AUTHENTICATOR"/>
+            <key name="MODE_DISPLAY_NAME" regex="ads.admin.logon_settings.tfa.backup_verification_code|ads.admin.logon_settings.tfa.email_verification|ads.admin.logon_settings.tfa.google_authenticator"/>
+            <key name="TEMP_IS_ENABLED" type="boolean"/>
+            <key name="SHOW_PANEL" type="boolean"/>
+            <key name="IS_SERVER_CONFIGURED" type="boolean"/>
+            <key name="IS_ENABLED" type="boolean"/>
+            <key name="MODE_ID" type="long"/>
+            <key name="PARAMS" type="JSONObject" template="tfa_params" max-len="-1"/>
+            <key name="MACRO_ATTRIBUTES" type="JSONArray" template="strarray" max-len="-1"/>
+            <key name="HELP_NOTE" type="JSONArray" template="strarray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+
+        <jsontemplate name="tfa_params" disable-extra-key="true">
+            <key name="SUBJECT" max-len="1000" xss="sdpantisamyfilter"/>
+            <key name="MESSAGE" max-len="-1" xss="sdpantisamyfilter"/>
+             <key name="SUBJECT_SENSITIVE_RESOURCES" max-len="1000" xss="sdpantisamyfilter"/>
+             <key name="MESSAGE_SENSITIVE_RESOURCES" max-len="-1" xss="sdpantisamyfilter"/>
+             <key name="PRIORITY_SENSITIVE_RESOURCES" type="long" />
+             <key name="SUBJECT_ENROLLMENT" max-len="1000" xss="sdpantisamyfilter"/>
+             <key name="MESSAGE_ENROLLMENT" max-len="-1" xss="sdpantisamyfilter"/>
+             <key name="PRIORITY_ENROLLMENT" type="long" />
+        </jsontemplate>
+    </jsontemplates>
+</security>

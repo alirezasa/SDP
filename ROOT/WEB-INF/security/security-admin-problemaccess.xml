@@ -1,0 +1,63 @@
+<!-- $Id$ -->
+<!-- Security authentication for url entries of Problem Module in Admin Configurations-->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required">
+        <throttles name="problem_admin_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+        <url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="problemmanclose" method="GET"/>
+
+
+        <!-- Notification Rules->Problem  -->
+        <url roles="SDAdmin" path="/setup/ProblemNotifications.jsp" method="GET" operation-param="mode" operation-value="view"/>
+        <url roles="SDAdmin" path="/setup/ProblemNotifications.jsp" method="post" csrf="true" operation-param="mode" operation-value="update">
+            <param name="ProblemAssigned" regex="on|off"/>
+            <param name="ProblemAssigned_SMS" regex="on|off"/>
+            <param name="IncidentAssociated" regex="on|off"/>
+            <param name="IncidentDetached" regex="on|off"/>
+            <param name="ProblemCreated" regex="on|off"/>
+            <param name="ProblemCreated_SMS" regex="on|off"/>
+            <param name="ProblemClosed" regex="on|off"/>
+            <param name="mode" regex="update"/>
+            <param name="ProblemCreated_UserDisplay" type="String" max-len="100000" description="max-len is configured 1L by assuming at most 100 technicians with each having 100 chars will be selected. This param contains the comma seperated technician names." secret="true" />
+            <param name="ProblemCreated_USERS" regex="ids" max-len="1000" description="ids regex is configured which allows 100 comma seperated values"/>
+            <param name="ProblemCreated_SMS_USERS" regex="ids" max-len="1000" description="ids regex is configured which allows 100 comma seperated values" />
+            <param name="ProblemCreated_SMS_UserDisplay" type="String" max-len="100000" description="max-len is configured 1L by assuming at most 100 technicians with each having 100 chars will be selected. This param contains the comma seperated technician names." secret="true" />
+            <param name="ProblemClosed_UserDisplay" type="String" max-len="100000" description="max-len is configured 1L by assuming at most 100 technicians with each having 100 chars will be selected. This param contains the comma seperated technician names." secret="true"/>
+            <param name="ProblemClosed_USERS" regex="ids" max-len="1000" description="ids regex is configured which allows 100 comma seperated values"/>
+        </url>
+
+        <!-- Problem Closure Rules -->
+        <url roles="SDAdmin" path="/setup/CloseRules.jsp" operation-param="mode" operation-value="save" method="POST" csrf="true">
+            <param name="category" regex="on|off"/>
+            <param name="subcategory" regex="on|off"/>
+            <param name="item" regex="on|off"/>
+            <param name="resolution" regex="on|off"/>
+            <param name="root_cause" regex="on|off"/>
+            <param name="urgency" regex="on|off"/>
+            <param name="priority" regex="on|off"/>
+            <param name="impact" regex="on|off"/>
+            <param name="affected_service" regex="on|off"/>
+            <param name="associated_asset" regex="on|off"/>
+            <param name="configuration_items" regex="on|off"/>
+            <param name="tasks" regex="on|off"/>
+            <param name="worklog" regex="on|off"/>
+            <param name="PR_NOT_TECH" regex="on|off"/>
+            <param name="PR_NOT_REQ" regex="on|off"/>
+            <param name="CopyResolution" regex="on|off"/>
+            <param name="CloseIncidents" regex="on|off"/>
+            <param name="module" regex="Problem" min-occurrences="1"/>
+            <param name="from" regex="Close" min-occurrences="1"/>
+            <!-- Value is save, Other language translation will happen, hence string -->
+            <param name="Save" type="String" min-occurrences="1"/>
+            <param name="UDF_LONG[0-9]+" name-regex="true" regex="on|off" max-occurrences="4"/>
+			<param name="UDF_DATE[0-9]+" name-regex="true" regex="on|off" max-occurrences="4"/>
+			<param name="UDF_CHAR[0-9]+" name-regex="true" regex="on|off" max-occurrences="12"/>
+			<param name="UDF_PICK[0-9]+" name-regex="true" regex="on|off" max-occurrences="12"/>
+        </url>
+        
+    </urls>
+
+
+</security>
+

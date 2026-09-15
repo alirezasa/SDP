@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" disable-extraparam="true" api="true">
+        <throttles name="organization_detail" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+
+        <url path="/api/v3/organization_details/(\d+)/images/(\d+)" roles="SDOrgAdmin,ViewPurchaseOrder" method="get" user_type="all"/>
+
+		<url path="/api/v3/organization_details/(\d+)/images" roles="SDOrgAdmin" method="put" user_type="all" >
+             <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg">
+                 <filename regex="filename" max-len="100"/>
+             </file>
+         </url>
+        
+        <param name="TECHNICIAN_KEY|AUTHTOKEN" max-len="36" regex="^[A-F0-9-]{36}$" name-regex="true"/>
+        <param name="format" regex="json"/>
+        <param name="SUBREQUEST" regex="XMLHTTP|true"/>
+    </urls>
+</security>

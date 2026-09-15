@@ -1,0 +1,357 @@
+{
+    "subsections": {"rule": {
+        "inOP": "true",
+        "attributes": [
+            {
+                "html_type": "",
+                "inOP": "true",
+                "name": "value",
+                "column": "APPROVALLEVEL:RULE",
+                "inOD": "true",
+                "type": "String",
+                "isReleased": "true",
+                "isMandatory": "true",
+                "desc": "Allowed Values - 33, 50, 75, 100",
+                "graphView": ""
+            },
+            {
+                "html_type": "",
+                "inOP": "true",
+                "name": "type",
+                "column": "",
+                "inOD": "true",
+                "type": "String",
+                "isReleased": "true",
+                "isMandatory": "true",
+                "desc": "Allowed Values - percentage",
+                "graphView": ""
+            }
+        ],
+        "inOD": "true",
+        "desc": ""
+    }},
+    "operations": [
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get all approval levels",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"approval_levels\":[{\"comments\":\"Level auto approved in accordance with approval rule\",\"level\":1,\"action_taken_by\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\",\"department\":null},\"rule\":{\"type\":\"percent\",\"value\":\"100\"},\"created_by\":{\"email_id\":\"user1@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"deleted\":false,\"stage\":{\"id\":\"1\"},\"created_on\":{\"display_value\":\"Mar 17, 2020 12:44 PM\",\"value\":\"1584429297507\"},\"name\":\"Default\",\"id\":\"603\",\"is_current\":false,\"status\":{\"name\":\"Approved\",\"id\":\"2\"},\"action_taken_on\":{\"display_value\":\"Mar 17, 2020 02:14 PM\",\"value\":\"1584434696869\"}},{\"comments\":null,\"level\":2,\"action_taken_by\":null,\"rule\":{\"type\":\"percent\",\"value\":\"100\"},\"created_by\":{\"email_id\":\"user1@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"deleted\":false,\"stage\":{\"id\":\"1\"},\"created_on\":{\"display_value\":\"Mar 17, 2020 02:18 PM\",\"value\":\"1584434922825\"},\"name\":\"Default\",\"id\":\"901\",\"is_current\":true,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":null}],\"list_info\":{\"has_more_rows\":false,\"sort_field\":\"id\",\"start_index\":1,\"sort_order\":\"asc\",\"search_criteria\":{\"condition\":\"is\",\"field\":\"stage.id\",\"value\":\"1\"},\"row_count\":2}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":100,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"search_criteria\":{\"field\":\"stage.id\",\"value\":1,\"condition\":\"is\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all approval level details for a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"approval_level\":{\"comments\":null,\"level\":2,\"action_taken_by\":null,\"rule\":{\"type\":\"percent\",\"value\":\"100\"},\"created_by\":{\"email_id\":\"user1@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"deleted\":false,\"stage\":{\"internal_name\":\"submission\",\"stage_index\":\"1\",\"name\":\"Submission\",\"id\":\"1\"},\"created_on\":{\"display_value\":\"Mar 17, 2020 02:18 PM\",\"value\":\"1584434922825\"},\"approvals\":[],\"name\":\"Default\",\"id\":\"901\",\"is_current\":true,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":null}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}",
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get a approval level",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch a particular approval level details for a release."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add approval level",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"approval_level\":{\"comments\":null,\"level\":1,\"action_taken_by\":null,\"rule\":{\"type\":\"percent\",\"value\":\"100\"},\"created_by\":{\"email_id\":\"user1@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"deleted\":false,\"stage\":{\"internal_name\":\"submission\",\"stage_index\":\"1\",\"name\":\"Submission\",\"id\":\"1\"},\"created_on\":{\"display_value\":\"Mar 17, 2020 12:44 PM\",\"value\":\"1584429297507\"},\"approvals\":[],\"name\":\"Default\",\"id\":\"603\",\"is_current\":true,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":null}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approval_level\":{\"rule\":{\"type\":\"percent\",\"value\":\"100\"},\"name\":\"Default\",\"stage\":{\"id\":\"1\"},\"approvals\":[]}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to add an approval level to a release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Edit approval level",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"approval_level\":{\"comments\":\"Level reset by system.\",\"level\":1,\"action_taken_by\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\",\"department\":null},\"rule\":{\"type\":\"percent\",\"value\":\"100\"},\"created_by\":{\"email_id\":\"user1@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"deleted\":false,\"stage\":{\"internal_name\":\"submission\",\"stage_index\":\"1\",\"name\":\"Submission\",\"id\":\"1\"},\"created_on\":{\"display_value\":\"Mar 17, 2020 12:44 PM\",\"value\":\"1584429297507\"},\"approvals\":[{\"approver\":{\"email_id\":\"user1@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"comments\":\"Approval reset by System.\",\"deleted\":false,\"sent_by\":{\"email_id\":\"user1@zylker.com\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"id\":\"901\",\"sent_on\":{\"display_value\":\"Mar 17, 2020 02:12 PM\",\"value\":\"1584434560412\"},\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":{\"display_value\":\"Mar 17, 2020 02:35 PM\",\"value\":\"1584435956727\"}},{\"approver\":{\"email_id\":null,\"name\":\"Heather Graham\",\"is_vipuser\":false,\"id\":\"6\",\"department\":null},\"comments\":\"Approval reset by System.\",\"deleted\":false,\"sent_by\":null,\"id\":\"601\",\"sent_on\":null,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":{\"display_value\":\"Mar 17, 2020 02:35 PM\",\"value\":\"1584435956727\"}},{\"approver\":{\"email_id\":null,\"name\":\"Shawn Adams\",\"is_vipuser\":false,\"id\":\"5\",\"department\":null},\"comments\":\"Approval reset by System.\",\"deleted\":false,\"sent_by\":null,\"id\":\"602\",\"sent_on\":null,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":{\"display_value\":\"Mar 17, 2020 02:35 PM\",\"value\":\"1584435956727\"}}],\"name\":\"Default Updated\",\"id\":\"603\",\"is_current\":true,\"status\":{\"name\":\"To Be Sent\",\"id\":\"4\"},\"action_taken_on\":{\"display_value\":\"Mar 17, 2020 02:35 PM\",\"value\":\"1584435956727\"}}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approval_level\":{\"name\":\"Default Updated\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to edit an approval level in a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/{level_id}",
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete approval level",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete an approval level in a release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Approve",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/releases/{release_id}/approval_levels/{level_id}/_approve"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approval_level\":{\"comments\":\"recommend\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to approve an approval level in a release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Reject",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/releases/{release_id}/approval_levels/{level_id}/_reject"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"approval_level\":{\"comments\":\"Rejecting\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to reject an approval level in a release."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Reset Levels",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/releases/{release_id}/approval_levels/_reset_levels",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"stage\":[1]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to reset all approval level in a release."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "APPROVALLEVEL:ID",
+            "inOD": "true",
+            "type": "long",
+            "isReleased": "true",
+            "desc": "Primary id for approval level",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "level",
+            "column": "APPROVALLEVEL:LEVEL",
+            "inOD": "true",
+            "type": "int",
+            "isReleased": "true",
+            "desc": "Level number of the approval level",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "APPROVALLEVEL:NAME",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Name of approval level",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "status",
+            "column": "APPROVALLEVEL:STATUS_ID",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Status of the approval level",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "comments",
+            "column": "APPROVALLEVEL:COMMENTS",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Comments given by the approver when an approval level action is taken",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "action_taken_by",
+            "column": "APPROVALLEVEL:ACTION_BY",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": "",
+            "relEntity": {
+                "name": "User_V3",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "action_taken_on",
+            "column": "APPROVALLEVEL:ACTION_ON",
+            "inOD": "true",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "created_by",
+            "column": "APPROVALLEVEL:CREATED_BY",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Approval level created time",
+            "graphView": "",
+            "relEntity": {
+                "name": "User",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "created_on",
+            "column": "APPROVALLEVEL:CREATED_ON",
+            "inOD": "true",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "User details of the approval level creator",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "approvals",
+            "column": "APPROVALDETAILS:APPROVALID",
+            "inOD": "true",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "List of user approvals",
+            "graphView": "",
+            "relEntity": {
+                "name": "Release_Approval",
+                "type": "sub",
+                "relation": "1toN"
+            }
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "deleted",
+            "column": "APPROVALLEVEL:IS_DELETED",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Denotes if the level is active/inactive",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "is_current",
+            "column": "",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Denotes if the level is current approval level",
+            "graphView": ""
+        },
+        {
+            "isDefault": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "stage",
+            "column": "RELEASEAPPROVALLEVEL:STAGEID",
+            "inOD": "true",
+            "type": "int",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Release stage to which the approval level belongs",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1611252225000
+}

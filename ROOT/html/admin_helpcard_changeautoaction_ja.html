@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>カスタムトリガ―で、スクリプトファイル、カスタムクラスファイル、カスタム関数を使用して、お好みの<strong>［アクション］</strong>を自動的にトリガーすることができます。<strong>［新規アクションの追加］</strong>ウィンドウ内で、新規アクションに名称と説明を入力します。<strong>「アクションタイプ」 </strong>と<strong>「実行するスクリプトファイル」</strong>を選択します。<strong>［後続アクションの処理を停止します］</strong>のチェックボックスを無効にすると、変更にアクションのルールが適用された後も、後続のアクションが実行されます。</p>
+<p><strong>注意</strong>:</p>
+<ul>
+  <li>既存の<strong>「アクション名」</strong>と競合しないよう、<strong>「新規アクション」</strong>の名前は一意なものかを確認してください。</li>
+  <li>新規アクションは変更が <strong>［作成］</strong>、<strong>［編集］</strong>と<strong>［作成か編集］</strong>された際に、実行されます。<br>
+  </li>
+  <li>スクリプトファイル / クラスファイルは指定した場所にのみ保存されます。これらのファイルは、以下のディレクトリに保存されます。: ＜インストールディレクトリ＞\ManageEngine\ServiceDesk\integrationin\custom_scripts</li>
+  <li>デフォルトでは、 <strong>［後続アクションの処理を停止］</strong>は常に有効で、アクションはアクションルール順に実行されます。</li>
+  <li><strong>［アクションの編成］</strong>では、アクションを実行する順番を再編成することができます。<br>
+  </li>
+</ul>
+<p><strong>簡易例</strong>：</p>
+<p>緊急な変更リクエストが起票された際、変更リクエストを早急に確認、承認するために緊急のCABを構成する必要があります。緊急のリクエストが起票された際にカスタムスクリプトが実行されるために新規アクションを設定します。</p>
+
+<p><strong>技術的な詳細</strong>：</p>
+<p><strong>「アクションを実行」</strong>内で、クラス、スクリプト、カスタム関数のどれを実行したいかを選択し、以下を参考に同じように設定します。</p>
+<ul>
+  <li><strong>クラスの実行：</strong>実行する<strong>Executor</strong>クラスを入力します。<br>
+    例）<strong>com.servicedeskplus.integration.ChangeActionImplementation</strong></li>
+  <li><strong>スクリプトを実行：</strong>実行したいスクリプトを含むテキストファイル名を入力します。<br>
+    例）<strong>AddApprovers.txt</strong></li>
+  <li><strong>カスタム関数を実行：</strong>カスタム関数を実行することで、ServiceDesk Plusやその他外部のアプリケーションのデータを操作することができます。お好みのカスタム関数を選択するか、新規に追加します。カスタム関数では、<strong>changeObj</strong>と<strong>context</strong>の引数がサポートされています。</li>
+</ul>
+<p><strong>注意</strong>:</p>
+<ol>
+  <li>スクリプト/クラスでは、引数として「 py addApprovers.py $TITLE $TYPE $TEMPLATE」のような、すべてのAPIパラメーターを渡すことができます。クラスでは「com.servicedeskplus.integration.ChangeActionImplementation、$TITLE $TYPE、$TEMPLATE」のような引数を渡すことができます。</li>
+  <li>changeObjとcontextはカスタム関数でサポートされている引数です。</li>
+</ol>
+<p><strong>スクリプトでサポートされているその他のパラメーター：</strong></p>
+    <p>$COMPLETE_V3_JSON_JILE：Complete Request ObjectがJSONファイルに保存され、そのファイルパスがString型として渡されます。［変更が編集されたとき］を選択した場合、その後 DIFF_JSON (変更前のデータと新規に変更されたデータ間での差異) も JSONファイルに保存されます。</p>
+    <div class="alert alert-info icon" role="alert">
+      <span class="msg">$HELPDESK_ID ： ポータルのIDです。このIDは、新しいURLパラメーター「PORTALID」に対して、ServiceDesk Plus全てのAPIコールへの値として渡す必要があります。これは、ESM設定を有効化している場合にのみ利用することができます。
+    </div>
+    <p>JSONファイルパス：＜インストールディレクトリ＞\ManageEngine\ServiceDesk\integration\custom_scripts\change\12_1426143538036.json</p>
+
+<p><strong>入力データサンプル：</strong></p>
+<blockquote>
+  <p>{<br>INPUT_DATA :<br>{
+    <br>	
+	&quot;login_name&quot; : &quot;logged in user's name&quot;,<br> 
+    &quot;entity&quot; : &quot;module name: here change&quot;,<br>
+    &quot;entity_diff_data&quot; : &quot;difference between the old change data and new change data&quot;,<br>
+    &quot;entity_data&quot; : &quot;GET change API response&quot;
+  <br>}<br>
+  }</p>
+</blockquote>
+    
+<p><strong>ServiceDesk Plusのトリガーからの応答サンプル：</strong></p>
+<p>{
+  <br> 'message':"Customized message"   
+  <br>'operations': [<br>
+  
+      {<br>
+  
+          'operation_name': 'UPDATE_ROLES',<br>
+  
+          'input_data': {<br>
+  
+            'change': {<br>
+  
+                  'roles': [<br>
+  
+                      {<br>
+  
+                          'id': ROLE ID,<br>
+  
+                          'name': 'CHANGE ROLE NAME',<br>
+  
+                          'users': [<br>
+  
+                              {<br>
+  
+                                  'email': 'USERMAILID',<br>
+  
+                                  'name': 'USERNAME'<br>
+  
+                              },<br>
+  
+                              {<br>
+  
+                                  'id': USERID,<br>
+  
+                                  'name': 'USERNAME'<br>
+  
+                              }<br>
+  
+                          ]<br>
+  
+                      }<br>
+  
+                  ]<br>
+  
+              }<br>
+  
+          }</p>
+</body>
+</html>

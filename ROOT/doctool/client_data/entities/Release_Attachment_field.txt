@@ -1,0 +1,145 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"sort_field\":\"name\",\"start_index\":1,\"sort_order\":\"asc\",\"row_count\":5},\"attachment_fields\":[{\"updated_on\":{\"display_value\":\"Nov 10, 2019 03:42 PM\",\"value\":\"1573380740217\"},\"stage\":{\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"Backout Plan\",\"updated_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"plan  description\",\"id\":\"303\"},{\"updated_on\":{\"display_value\":\"Nov 10, 2019 03:42 PM\",\"value\":\"1573380742627\"},\"stage\":{\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"Check List\",\"updated_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"plan  description\",\"id\":\"304\"},{\"updated_on\":{\"display_value\":\"Nov 10, 2019 03:41 PM\",\"value\":\"1573380662470\"},\"stage\":{\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"Impact\",\"updated_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"plan  description\",\"id\":\"301\"},{\"updated_on\":{\"display_value\":\"Nov 10, 2019 03:42 PM\",\"value\":\"1573380745549\"},\"stage\":{\"name\":\"Review\",\"id\":\"5\"},\"name\":\"Review\",\"updated_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"plan  description\",\"id\":\"305\"},{\"updated_on\":{\"display_value\":\"Nov 10, 2019 03:42 PM\",\"value\":\"1573380737738\"},\"stage\":{\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"Roll Out Plan\",\"updated_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"description\":\"plan  description\",\"id\":\"302\"}]}"},
+            "path": ["/api/v3/releases/{release_id}/attachment_fields"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "View Attachment Fields",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to view all attachment details associated with a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"attachment_field\":{\"updated_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"attachments\":[],\"stage\":{\"name\":\"Review\",\"id\":\"5\"},\"name\":\"Review\",\"updated_on\":{\"display_value\":\"Oct 18, 2019 08:15 PM\",\"value\":\"1571409942255\"},\"description\":null,\"id\":\"3905\"}}"},
+            "path": ["/api/v3/releases/{release_id}/attachment_fields/{attachment_fields_id}"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"attachment_field\":{\"description\":\"plan  description\"}}"
+            },
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Update Attachment Fields",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to update an attachment details associated with a release."
+        },{
+            "path": ["/api/v3/releases/{release_id}/attachment_fields/{attachment_fields_id}/_upload"],
+ "output": {
+          "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+        },
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Update Attachment Fields attachment",
+            "fileinput": "true",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to update an attachment associated with a release."
+        },{
+            "path": ["/api/v3/releases/{release_id}/attachment_fields/{attachment_fields_id}/attachments/{attachments_id}"],
+ "output": {
+          "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+        },
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete Attachment Fields attachment",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete an attachment associated with a release."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "RELEASEATTACHMENTFIELD:ID",
+            "type": "long",
+            "isReleased": "true",
+            "desc": "The id of the attachment field.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "stage",
+            "column": "RELEASEATTACHMENTFIELD:STAGEID",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "The stage of the attachment field",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "RELEASEATTACHMENTFIELD:NAME",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "The name of the attachment field",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "updated_on",
+            "column": "RELEASEATTACHMENTFIELD:UPDATED_ON",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "The time of update.",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "updated_by",
+            "column": "RELEASEATTACHMENTFIELD:UPDATED_BY",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "The user who updated the description.",
+            "graphView": ""
+        }, {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "has_attachments",
+            "column": "RELEASEATTACHMENTFIELD:HASATTACHMENT",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "The user who updated the description.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "attachments",
+            "column": "ReleaseAttachmentFieldToAttachments:ATTACHMENTID",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1582902833000
+}

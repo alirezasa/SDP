@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    
+    <urls api="true" disable-extraparam="true" authentication="required" remote_server="true" >
+        <param name-regex="true" max-len="100" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="scanapi" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+        <!-- urls starts -->
+        <url method="get" roles="SDAdmin"  path="/api/v3/snmp_credentials">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+    	</url>
+	<url method="get" roles="SDAdmin" path="/api/v3/snmp_credentials/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/credentials/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/credentials">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/credentials/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/credentials/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/credentials/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/credentials/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/credentials/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/credentials/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/device_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/device_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/device_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/device_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/device_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/password_infos/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/password_infos">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/password_infos/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/password_infos/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/password_infos/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/protocols/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/protocols">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/protocols/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/protocols/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/protocols/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!-- computer_group starts -->
+        <url path="/api/v3/computer_groups/(\d+)" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/computer_groups" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/computer_groups/(\d+)/_links" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/computer_groups/_links" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/computer_groups/_total_count" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>      
+        <!-- computer_group ends --> 
+ 
+        <!-- chassis_type starts -->        
+        <url path="/api/v3/chassis_types/(\d+)" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/chassis_types" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/chassis_types/(\d+)/_links" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/chassis_types/_links" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/chassis_types/_total_count" roles="ViewInventoryWS,ViewProduct" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- chassis_type ends -->     
+
+        <!-- site_ip_mapping starts -->      
+        <url path="/api/v3/site_ip_mappings/(\d+)" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/(\d+)" remote_server="false" roles="SDAdmin" method="put">
+            <param name="input_data" template="site_ip_mapping" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings" remote_server="false" roles="SDAdmin" method="post">
+            <param name="input_data" template="site_ip_mapping" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/(\d+)" remote_server="false" roles="SDAdmin" method="delete"/>
+        <url path="/api/v3/site_ip_mappings/(_?)allowed_values_for_fields" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/(\d+)/(_?)allowed_values_for_fields" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings" remote_server="false" roles="SDAdmin" method="put">
+            <param name="input_data" template="site_ip_mapping" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings" remote_server="false" roles="SDAdmin" method="delete">
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/(\d+)/(site)/(\d+)" remote_server="false" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/site_ip_mappings/(site)" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/(\d+)/(site)" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/(site)/(\d+)" remote_server="false" roles="SDAdmin" method="get"/>
+        <url path="/api/v3/site_ip_mappings/(\d+)/_links" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/_links" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/site_ip_mappings/_total_count" remote_server="false" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        
+        <url roles="SDAdmin" path="/api/v3/site_ip_mappings/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/site_ip_mappings/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/site_ip_mappings/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- site_ip_mapping ends -->
+
+        <url method="get" roles="SDAdmin"  path="/api/v3/domains/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/domains">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/domains/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/domains/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin"  path="/api/v3/domains/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/domains/(\d+)/(scans)/(\d+)" roles="SDAdmin" method="get"/>
+        <url roles="SDAdmin" path="/api/v3/domains/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/domains/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/domains/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        
+        <url path="/api/v3/networks/(\d+)" roles="SDAdmin" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/networks" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/networks/(\d+)/(scans)/(\d+)" roles="SDAdmin,Scan Now" method="get"/>
+        <url path="/api/v3/networks/(\d+)/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/networks/_links" roles="SDAdmin" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/networks/_total_count" roles="SDAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/networks/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/networks/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/networks/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/scans/(\d+)" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/scans" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/scans/(\d+)/(_?)allowed_values_for_fields" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/scans/(\d+)/(jobs)/(\d+)" roles="SDAdmin,Scan Now" method="get"/>
+        <url path="/api/v3/scans/(\d+)/(jobs)" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/scans/(\d+)/_links" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/scans/_links" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/scans/_total_count" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/scanjobs/(\d+)" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="scanjobs" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="200" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/scanjobs" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="scanjobs" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="200" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/scanjobs/(\d+)/(status)/(\d+)" roles="SDAdmin,Scan Now" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_scanjob" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="200" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/scanjobs/(\d+)/_links" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_scanjob" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="200" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/scanjobs/_links" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_scanjob" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="200" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/scanjobs/_total_count" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_scanjob" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="200" duration="1m"/>
+            </throttles>        
+        </url>
+
+        <url path="/api/v3/scanstatuses/(\d+)" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/scanstatuses" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/scanstatuses/(\d+)/_links" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/scanstatuses/_links" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="ids"/>
+        </url>
+        <url path="/api/v3/scanstatuses/_total_count" roles="SDAdmin,Scan Now" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_schedules/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_schedules/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_schedules/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/scan_settings/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_settings/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_settings/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_settings_excludeips/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_settings_excludeips/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/scan_settings_excludeips/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        
+        <url roles="SDAdmin" path="/api/v3/solarwinds_integrations/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/solarwinds_integrations/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/solarwinds_integrations/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/endpoint_central_settings/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/endpoint_central_settings/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/endpoint_central_settings/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/remote_controls/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/remote_controls/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/remote_controls/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        
+        <!-- urls ends -->
+
+        <!-- meta for the urls starts -->
+        <url method="get" path="/api/v3/scanstatuses/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+        <url method="get" path="/api/v3/scanstatuses/(\d+)/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+        
+        <url method="get" path="/api/v3/scanjobs/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+        <url method="get" path="/api/v3/scanjobs/(\d+)/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+        <url method="get" path="/api/v3/scanjobs/(\d+)/status/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+        
+        <url method="get" path="/api/v3/scans/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+        <url method="get" path="/api/v3/scans/(\d+)/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+        <url method="get" path="/api/v3/scans/(\d+)/jobs/(_?)metainfo" roles="SDAdmin,Scan Now"/>
+
+        <url method="get" path="/api/v3/domains/(_?)metainfo" roles="SDAdmin"/>
+        <url method="get" path="/api/v3/domains/(\d+)/(_?)metainfo" roles="SDAdmin"/>
+        <url method="get" path="/api/v3/domains/(\d+)/scans/(_?)metainfo" roles="SDAdmin"/>
+
+        <url method="get" path="/api/v3/networks/(_?)metainfo" roles="SDAdmin"/>
+        <url method="get" path="/api/v3/networks/(\d+)/(_?)metainfo" roles="SDAdmin"/>
+        <url method="get" path="/api/v3/networks/(\d+)/scans/(_?)metainfo" roles="SDAdmin"/>
+
+        <url method="get" path="/api/v3/site_ip_mappings/(_?)metainfo" roles="SDAdmin"/>
+        <url method="get" path="/api/v3/site_ip_mappings/(\d+)/(_?)metainfo" roles="SDAdmin"/>
+        <url method="get" path="/api/v3/site_ip_mappings/(\d+)/site/(_?)metainfo" roles="SDAdmin"/>
+        <url method="get" path="/api/v3/site_ip_mappings/(\d+)/updated_by/(_?)metainfo" roles="SDAdmin"/>
+        <!-- meta for the urls ends -->
+    </urls>
+
+    <jsontemplates> 
+        <jsontemplate name="domain_unique">
+            <key name="id" type="long" range=">=0"/>
+            <key name="name" secret="true" type="String" max-len="100"/>
+            <key name="canonical_name" secret="true" type="String" max-len="100"/>
+        </jsontemplate>
+
+        <jsontemplate name="protocol_unique">
+            <key name="id" type="long"/>
+            <key name="name" type="String" secret="true" max-len="250"/>
+        </jsontemplate>
+        <!-- chassis_type starts -->
+        <jsontemplate name="chassis_type_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="50"/>
+            <key name="chassis_id" type="long" range=">0"/>
+        </jsontemplate>
+        <!-- chassis_type ends -->
+        <!-- computer_group starts -->
+        <jsontemplate name="computer_group_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="50"/>
+        </jsontemplate>
+        <!-- computer_group ends -->
+
+        <jsontemplate name="discovery_type_constant_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+
+        <jsontemplate name="device_type_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+        <!-- site_ip_mapping starts -->
+        <jsontemplate name="site_ip_mapping_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="site" template="site_unique" type="JSONObject" max-len="-1"/>
+            <key name="ipaddress" secret="true" type="String" max-len="250"/>
+            <key name="updated_by" template="technician_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="site_ip_mapping">
+            <key name="site_ip_mapping" template="site_ip_mapping_base" type="JSONObject" max-len="-1"/>
+            <key name="site_ip_mappings" template="site_ip_mapping_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <!-- site_ip_mapping ends -->     
+    </jsontemplates>
+</security>

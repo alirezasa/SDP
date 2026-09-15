@@ -1,0 +1,104 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/status_comments"
+      ],
+      "desc": "",
+      "disp_desc": "View Status Comments",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"search_fields\":{\"stage.id\":\"1\"}}}"
+      },
+      "output": {
+        "sample": "{\"status_comments\":[{\"commented_by\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\"},\"stage\":{\"name\":\"Planning\",\"id\":\"2\"},\"change\":{\"short_description\":\"\",\"id\":\"5\",\"title\":\"WAN - Port - Reconfigure\"},\"commented_on\":{\"display_value\":\"Jul 24, 2019 10:55 PM\",\"value\":\"1563989103810\"},\"comment\":\"bywfrule\",\"id\":\"305\",\"status\":{\"stage\":{\"id\":\"2\"},\"prominent\":false,\"action_name\":null,\"name\":\"Planning In Progress\",\"id\":\"16\"}},{\"commented_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\"},\"stage\":{\"name\":\"Submission\",\"id\":\"1\"},\"change\":{\"short_description\":\"\",\"id\":\"5\",\"title\":\"WAN - Port - Reconfigure\"},\"commented_on\":{\"display_value\":\"Jul 24, 2019 10:55 PM\",\"value\":\"1563989103804\"},\"comment\":\"as\",\"id\":\"304\",\"status\":{\"stage\":{\"id\":\"1\"},\"prominent\":true,\"action_name\":\"Accept\",\"name\":\"Accepted\",\"id\":\"1\"}},{\"commented_by\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\"},\"stage\":{\"name\":\"Submission\",\"id\":\"1\"},\"change\":{\"short_description\":\"\",\"id\":\"5\",\"title\":\"WAN - Port - Reconfigure\"},\"commented_on\":{\"display_value\":\"Jul 24, 2019 07:02 PM\",\"value\":\"1563975124954\"},\"comment\":\"The above stage/status is set as part of 'Change' creation\",\"id\":\"303\",\"status\":{\"stage\":{\"id\":\"1\"},\"prominent\":false,\"action_name\":null,\"name\":\"Requested\",\"id\":\"3\"}}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":3}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "long",
+      "desc": "",
+      "graphView": "",
+      "column": "CHANGESTATUSCOMMENTS:COMMENTID",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "comment",
+      "type": "String",
+      "desc": "The status change comment.",
+      "graphView": "",
+      "column": "CHANGESTATUSCOMMENTS:COMMENTS",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "commented_on",
+      "type": "Date Object",
+      "desc": "The time of status comment.",
+      "graphView": "",
+      "column": "CHANGESTATUSCOMMENTS:COMMENTEDON",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "commented_by",
+      "type": "Object",
+      "desc": "The user who commented.",
+      "graphView": "",
+      "column": "CHANGESTATUSCOMMENTS:COMMENTEDBY",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "change",
+      "type": "Object",
+      "desc": "The change request.",
+      "graphView": "",
+      "column": "CHANGESTATUSCOMMENTS:CHANGEID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "stage",
+      "type": "Object",
+      "desc": "Denotes the stage of the status.",
+      "graphView": "",
+      "column": "CHANGESTATUSCOMMENTS:WFSTAGEID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "desc": "Denotes the status.",
+      "graphView": "",
+      "column": "CHANGESTATUSCOMMENTS:WFSTATUSID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "lastModified": 1564997380000
+}

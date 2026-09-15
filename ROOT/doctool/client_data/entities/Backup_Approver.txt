@@ -1,0 +1,402 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers",
+      "desc": "This operation creates a new backup approver configuration. It allows a user to set up automatic delegation of approval responsibilities from a primary approver to a backup approver for a specified time period.",
+      "disp_desc": "Add Backup Approver",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"backup_approver\":{\"user\":{\"id\":\"5\"},\"backup_user\":{\"id\":\"4\"},\"from\":{\"value\":\"1767225600000\"},\"to\":{\"value\":\"1798761600000\"},\"move_pending_approvals\":true,\"comments\":\"User1 will be on vacation\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"backup_approver\":{\"id\":\"301\",\"user\":{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\",\"department\":null,\"is_vipuser\":false,\"phone\":\"1234455\",\"mobile\":\"1234567890\",\"is_technician\":true,\"type\":\"Technician\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"}},\"backup_user\":{\"id\":\"4\",\"name\":\"user2\",\"email_id\":null,\"department\":null,\"is_vipuser\":false,\"phone\":\"8888\",\"mobile\":\"1234567890\",\"is_technician\":false,\"type\":\"User\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"}},\"from\":{\"value\":\"1767225600000\",\"display_value\":\"Jan 1, 2026 12:00 AM\"},\"to\":{\"value\":\"1798761600000\",\"display_value\":\"Jan 1, 2027 12:00 AM\"},\"move_pending_approvals\":true,\"is_pending_approvals_moved\":false,\"comments\":\"User1 will be on vacation\",\"status\":\"Active\",\"created_by\":{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"created_time\":{\"value\":\"1640908800000\",\"display_value\":\"Dec 31, 2023 12:00 AM\"},\"is_cancelled\":false}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers/{backup_approver_id}",
+      "desc": "This operation updates an existing backup approver configuration. You can modify the backup user, date range, comments, or pending approval transfer settings.",
+      "disp_desc": "Update Backup Approver",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"backup_approver\":{\"backup_user\":{\"id\":\"10\"},\"to\":{\"value\":\"1798761600000\"},\"comments\":\"Extended backup period\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"backup_approver\":{\"id\":\"301\",\"user\":{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\",\"department\":null,\"is_vipuser\":false,\"is_technician\":true,\"type\":\"Technician\"},\"backup_user\":{\"id\":\"10\",\"name\":\"user3\",\"email_id\":null,\"department\":null,\"is_vipuser\":false,\"is_technician\":true,\"type\":\"Technician\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"}},\"from\":{\"value\":\"1767225600000\",\"display_value\":\"Jan 1, 2026 12:00 AM\"},\"to\":{\"value\":\"1798761600000\",\"display_value\":\"Jan 31, 2027 12:00 AM\"},\"move_pending_approvals\":true,\"comments\":\"Extended backup period\",\"status\":\"Active\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers/{backup_approver_id}",
+      "desc": "Get details about a particular backup approver configuration including user details, date range, status, and associated comments.",
+      "disp_desc": "View Backup Approver",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"backup_approver\":{\"id\":\"301\",\"user\":{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\",\"department\":null,\"is_vipuser\":false,\"phone\":\"1234455\",\"mobile\":\"1234567890\",\"jobtitle\":null,\"is_technician\":true,\"type\":\"Technician\",\"project_roles\":{\"name\":\"Project Admin\",\"id\":\"1\"},\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"}},\"backup_user\":{\"id\":\"4\",\"name\":\"user2\",\"email_id\":null,\"department\":null,\"is_vipuser\":false,\"phone\":\"8888\",\"mobile\":\"1234567890\",\"jobtitle\":null,\"is_technician\":false,\"type\":\"User\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"}},\"from\":{\"value\":\"1767225600000\",\"display_value\":\"Jan 1, 2026 12:00 AM\"},\"to\":{\"value\":\"1798761600000\",\"display_value\":\"Jan 1, 2027 12:00 AM\"},\"move_pending_approvals\":true,\"is_pending_approvals_moved\":false,\"comments\":\"User1 will be on vacation\",\"status\":\"Active\",\"created_by\":{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"created_time\":{\"value\":\"1640908800000\",\"display_value\":\"Dec 31, 2023 12:00 AM\"},\"is_cancelled\":false}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers",
+      "desc": "Used to get all backup approver configurations. Supports various filter views like myactive_backup_approvers, myexpired_backup_approvers, mycanceled_backup_approvers, and backup_approver_assignments.",
+      "disp_desc": "View all Backup Approvers",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"100\",\"start_index\":1,\"filter_by\":{\"name\":\"active_backup_approvers\"},\"fields_required\":[\"user.name\",\"backup_user.name\",\"from\",\"to\",\"status\"]}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"backup_approvers\":[{\"id\":\"301\",\"user\":{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\",\"department\":null,\"is_vipuser\":false,\"is_technician\":true,\"type\":\"Technician\"},\"backup_user\":{\"id\":\"4\",\"name\":\"user2\",\"email_id\":null,\"department\":null,\"is_vipuser\":false,\"is_technician\":false,\"type\":\"User\"},\"from\":{\"value\":\"1735689600000\",\"display_value\":\"Jan 1, 2026 12:00 AM\"},\"to\":{\"value\":\"1767225600000\",\"display_value\":\"Jan 1, 2027 12:00 AM\"},\"move_pending_approvals\":true,\"comments\":\"User1 will be on vacation\",\"status\":\"Active\",\"created_by\":{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\"},\"created_time\":{\"value\":\"1640908800000\",\"display_value\":\"Dec 31, 2023 12:00 AM\"},\"is_cancelled\":false}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1,\"start_index\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers/{backup_approver_id}",
+      "desc": "Delete a particular backup approver configuration. This operation permanently removes the configuration from the system.",
+      "disp_desc": "Delete Backup Approver",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers/user",
+      "desc": "Get list of users who can be configured as primary approvers. Returns users based on permissions and department access.",
+      "disp_desc": "Get Available Primary Approvers",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"100\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"users\":[{\"id\":\"5\",\"name\":\"user1\",\"email_id\":\"user1@zylker.com\",\"department\":null,\"is_vipuser\":false,\"phone\":\"1234455\",\"mobile\":\"1234567890\",\"is_technician\":true,\"type\":\"Technician\",\"profile_pic\":{\"content-url\":\"/images/default-profile-pic2.svg\"}}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers/backup_user",
+      "desc": "Get list of users who can be configured as backup approvers. Returns users based on permissions and department access.",
+      "disp_desc": "Get Available Backup Approvers",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"row_count\":\"100\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"users\":[{\"id\":\"3\",\"name\":\"user2\",\"email_id\":\"user2@zylker.com\",\"department\":{\"site\":null,\"name\":\"Administration\",\"id\":\"1\"},\"is_vipuser\":false,\"phone\":\"8888\",\"mobile\":\"1234567890\"}],\"list_info\":{\"has_more_rows\":false,\"row_count\":1}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "showListInfo": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers/_check_availability",
+      "desc": "Check the availability and email configuration of backup approvers for notification purposes. This is used to validate if backup approvers can receive email notifications.",
+      "disp_desc": "Check Backup Approver Availability",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"approvers\":[{\"id\":\"5\"}]}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000},\"availability_details\":{\"no_email_for_backup_approver\":false,\"backup_approvers_no_email_info\":[]}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName": "Common",
+      "path": "/api/v3/backup_approvers/{backup_approver_id}/_cancel",
+      "desc": "This operation cancels an active backup approver configuration. When cancelled, the backup delegation stops and the primary approver resumes normal approval responsibilities.",
+      "disp_desc": "Cancel Backup Approver",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"backup_approver\":{\"cancel_comments\":\"User1 returned early from vacation\"}}"
+      },
+      "output": {
+        "sample": "{}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName": "Common",
+      "path": [
+        "/api/v3/backup_approvers?ids={backup_approver_ids}"
+      ],
+      "desc": "This operation allows bulk update of multiple backup approver configurations. You can modify multiple configurations simultaneously by providing their IDs.",
+      "disp_desc": "Bulk Update Backup Approvers",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"backup_approver\":{\"to\":{\"value\":\"1798761600000\"},\"comments\":\"Extended backup period for all\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName": "Common",
+      "path": [
+        "/api/v3/backup_approvers?ids={backup_approver_ids}"
+      ],
+      "desc": "This operation allows bulk deletion of multiple backup approver configurations by providing a comma-separated list of IDs.",
+      "disp_desc": "Bulk Delete Backup Approvers",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Long",
+      "desc": "Unique identifier for the backup approver configuration",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:BACKUP_CONFIG_ID",
+      "html_type": "",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "user",
+      "type": "Object",
+      "desc": "The primary approver who will be temporarily replaced by the backup approver. This user must have approval permissions.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:USER_ID",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "backup_user",
+      "type": "Object",
+      "desc": "The backup approver who will handle approvals on behalf of the primary approver during the specified time period.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:BACKUP_APPROVERID",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "from",
+      "type": "Date Object",
+      "desc": "Start date and time when the backup approver configuration becomes active. Must be a future date.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:FROM_DATE",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "to",
+      "type": "Date Object",
+      "desc": "End date and time when the backup approver configuration expires. Must be after the from date.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:TO_DATE",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "move_pending_approvals",
+      "type": "Boolean",
+      "desc": "Flag indicating whether existing pending approvals should be automatically transferred to the backup approver when the configuration becomes active.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:MOVE_PENDING_APPROVALS",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_pending_approvals_moved",
+      "type": "Boolean",
+      "desc": "Read-only flag indicating whether pending approvals have been successfully moved to the backup approver.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:IS_PENDING_MOVED",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "comments",
+      "type": "String",
+      "desc": "Optional comments explaining the reason for the backup approver configuration (e.g., vacation, business trip).",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:COMMENTS",
+      "html_type": "",
+      "maxLength": "250",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "status",
+      "type": "String",
+      "desc": "Current status of the backup approver configuration. Possible values: Active, Expired, Cancelled, Pending.",
+      "graphView": "",
+      "column": "",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "desc": "User who created the backup approver configuration.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:CREATED_BY",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Date Object",
+      "desc": "Date and time when the backup approver configuration was created.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:CREATED_TIME",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_cancelled",
+      "type": "Boolean",
+      "desc": "Flag indicating whether the backup approver configuration has been cancelled.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:IS_CANCELLED",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "cancel_comments",
+      "type": "String",
+      "desc": "Comments provided when cancelling the backup approver configuration.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:CANCEL_COMMENTS",
+      "html_type": "",
+      "maxLength": "250",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "cancelled_by",
+      "type": "Object",
+      "desc": "User who cancelled the backup approver configuration.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:CANCELLED_BY",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "cancelled_time",
+      "type": "Date Object",
+      "desc": "Date and time when the backup approver configuration was cancelled.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "BackupApproverDetails:CANCELLED_TIME",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1693276800000
+}

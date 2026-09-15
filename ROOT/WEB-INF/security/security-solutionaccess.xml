@@ -1,0 +1,177 @@
+<!-- $Id$ -->
+<!-- Security authentication for Solutions module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<!-- Solution and topics will be available for both requester and technicians hence roles will not configured for url with 'Get' method -->
+	<urls authentication="required">
+		<url roles="SDAdmin"  path="/setup/SolutionNotifications.jsp" operation-param="mode" operation-value="view" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SolutionNotifications_GET" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" path="/setup/SolutionNotifications.jsp" operation-param="mode" operation-value="update" method="post" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SolutionNotifications" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="reviewnotifybeforedays" type="int" range="0-999"/>
+			<param name="expirynotifybeforedays" type="int" range="0-999"/>
+			<param name="AcknowledgeUserSolution" regex="on|off"/>
+			<param name="Notify_NewApprovedSolution" regex="on|off"/>
+			<param name="NotifyAdd_UpdateSolution" regex="on|off"/>
+			<param name="NotifyAdd_UpdateSolution_USERS" regex="ids" max-len="1000" description="ids regex is configured which allows 100 comma seperated values"/>
+			<param name="NotifyAdd_UpdateSolution_UserDisplay" type="String" max-len="100000" description="max-len is configured 1L by assuming at most 100 technicians with each having 100 chars will be selected. This param contains the comma seperated technician names." secret="true"/>
+			<param name="NotifySolutionOwner_ReviewDate" regex="on|off"/>
+			<param name="NotifySolutionOwner_ExpiryDate" regex="on|off"/>
+			<param name="oldreviewnotifybeforedays" type="int" range="0-999"/>
+		</url>
+		<url path="/setup/kbShortcuts.jsp" operation-param="mode" operation-value="view" user_type="all" method="GET" description="Roles not added as all are able to access the link">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="kbShortcuts" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/servlet/SolutionsServletUtil" operation-param="command" operation-value="getSearchFields" method="GET"  roles="ViewSolutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="getSearchFields" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="search_fields" type="String" max-len="300"/>
+		</url>
+		<url path="/servlet/SolutionsServletUtil" operation-param="command" operation-value="setSearchFields" method="post"  csrf="true" roles="ViewSolutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="setSearchFields" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="search_fields" type="String" max-len="300" min-occurrences="1"/>
+		</url>
+
+		<url path="/servlet/SDAjaxServlet" operation-param="action" operation-value="getIds" method="post" user_type="all" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="getIds" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="300" lock-period="5m"/>
+			</throttles>
+			<param name="module" regex="solution|announcement"/>
+			<param name="from" regex="subject|submit"/>
+			<param name="searchstr" type="String" max-len="1000"/>
+		</url>
+	</urls>
+
+	<urls authentication="required" api="true" >
+
+		<url roles="ViewRequests" path="/api/v3/solution_to_request/(\d+)" user_type="all" method="DELETE" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_to_request_DELETE" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="ViewRequests" path="/api/v3/solution_to_request" user_type="all" method="POST" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_to_request_POST" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="solution_to_request" type="JSONObject" max-len="-1"/>
+		</url>
+		<url roles="ViewRequests" path="/api/v3/solution_to_request/(\d+)" user_type="all" method="PUT" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_to_request_PUT" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param name="input_data" template="solution_to_request" type="JSONObject" max-len="-1"/>
+		</url>
+		<url method="get" roles="ViewSolutions" path="/api/v3/requests/(\d+)/suggest_solutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_get_suggest_solutions" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/kbase/SolutionList.jsp" method="get" user_type="all" roles="ViewSolutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_list" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="module" regex="solution"/>
+			<param name="mode" regex="get|list" />
+		</url>
+
+		<url path="/kbase/SolutionDetails.jsp" method="get" user_type="all" roles="ViewSolutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_details" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="module" regex="solution"/>
+			<param name="tabName" regex="[a-zA-Z\/_]*" />
+			<param name="printPreview" type="boolean" />
+			<param name="id" regex="id" />
+			<param name="entity_id" type="long" />
+			<param name="mode" regex="detail" />
+		</url>
+
+		<!-- For Solution new page -->
+		<url path="/kbase/SolutionForm.jsp"  operation-param="mode" operation-value="edit" method="get" roles="ModifySolutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_form_edit" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="module" regex="solution"/>
+			<param name="id" type="long" />
+		</url>
+		<url path="/kbase/SolutionForm.jsp"  operation-param="mode" operation-value="add" method="get" roles="CreateSolutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_form_add" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="module" regex="solution"/>
+			<param name="associateID" type="String"/>
+			<param name="associateType" regex="String"/>
+		</url>
+
+		<url path="/ui/solutions" method="get" roles="ViewSolutions" user_type="all" operation-param="mode" operation-value="list">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solutions_get" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="gsearch" type="String" max-len="5000" secret="true"/>
+			<param name="isPopular" type="boolean"/>
+			<param name="isPreview" type="boolean"/>
+			<!-- To access url_search param -->
+			<param name="url_search" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/ui/solutions" method="get" roles="CreateSolutions" operation-param="mode" operation-value="add">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_add" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="view" regex="preview"/>
+			<param name="associateID" type="String"/>
+			<param name="associateType" regex="String"/>
+		</url>
+		<url path="/ui/solutions" method="get" roles="ViewSolutions" user_type="all" operation-param="mode" operation-value="detail">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_detail" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="entity_id" type="long" />
+		</url>
+		<url path="/ui/solutions" method="get" roles="ModifySolutions" operation-param="mode" operation-value="edit">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_edit" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="entity_id" type="long" />
+			<param name="module" regex="solution"/>
+		</url>
+
+		<url path="/common/ViewHistory.jsp" user_type="all" remote_server="true" operation-param="module" operation-value="solutions">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solution_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="60" duration="1m"/>
+			</throttles>
+			<param name="id" type="long" allow-empty="false"/>
+			<param name="key" regex="solution_history_sort_order" secret="true"/>
+			<param name="print_view" type="boolean"/>
+			<param name="is_new_history" type="boolean"/>
+		</url>
+
+		<url path="/servlet/ViewMediaServlet" method="GET"  user_type="all"  operation-param="mode" operation-value="view">
+			<param name="videoKey" max-len="500" max-occurrences="1" regex="[a-z0-9]+" secret="true"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ImageUploadServlet" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="10m"/>
+			</throttles>
+		</url>
+
+		<url roles="ViewSolutions" path="/AddSolution.do" operation-param="submitaction" operation-value="viewsolution" method="GET" user_type="all">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="viewsolution" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="fromListView" type="boolean" />
+			<param name="solutionID"  type="long" allow-empty="false" range=">=0"/>
+			<param name="navType" regex="n|p"  />
+			<param name="solID" type="long" allow-empty="false" range=">=0"/>
+		</url>
+
+	</urls>
+</security>

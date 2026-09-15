@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <!-- backup approver urls -->
+    <urls authentication="required" disable-extraparam="true" api="true" description="FGR_APPLIED:Roles are not defined as roles will be created dynamically and role check will be done at server side">
+        <throttles name="backup_approvers_url" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="50" lock-period="5m"/>
+        </throttles>
+
+        <url path="/api/v3/backup_approvers" user_type="all" method="post">
+            <param name="input_data" template="backup_approver" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="backup_approver_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)" user_type="all" method="put">
+            <param name="input_data" template="backup_approver" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <throttles name="backup_approver_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)" user_type="all" method="delete">
+            <throttles name="backup_approver_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)" user_type="all" method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers" user_type="all" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(_?)allowed_values_for_fields" roles="" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)/(_?)allowed_values_for_fields" roles="" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers" method="put">
+            <param name="input_data" template="backup_approver" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1200" secret="true" regex="ids"/>
+            <throttles name="backup_approvers_bulk_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/backup_approvers" method="delete">
+            <param name="ids" max-len="1200" secret="true" regex="ids" min-occurrences="1"/>
+            <throttles name="backup_approvers_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="20" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)/(user|backup_user)/(\d+)" user_type="all" method="get">
+        </url>
+        <url path="/api/v3/backup_approvers/(user|backup_user)" user_type="all" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)/(user|backup_user)" user_type="all" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(user|backup_user)/(\d+)" user_type="all" method="get">
+        </url>
+        <url path="/api/v3/backup_approvers/_total_count" roles="SDAdmin,SDSiteAdmin,SDCo-ordinator" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(_?)check_availability" roles="AddReqApproval" method="get">
+            <param name="input_data" template="check_backup_approver_availability" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)/(user|backup_user)/(\d+)/images/(\d+)" user_type="all" method="get">
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(user|backup_user)/(\d+)/images/(\d+)" user_type="all" method="get">
+            <param regex="[a-z0-9]+" max-occurrences="1" max-len="500" name="key" secret="true"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)/users" user_type="all" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/users" user_type="all" method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/backup_approvers/(\d+)/_cancel" user_type="all" method="put">
+            <param name="input_data" template="backup_approver" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+    </urls>
+    <!-- backup approver urls ends -->
+</security>

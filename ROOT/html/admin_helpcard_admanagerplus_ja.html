@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ServiceDesk Plus - ADManager Plus 連携</title>
+</head>
+
+<body>
+<br>
+<strong>ServiceDesk Plus - ADManager Plus 連携</strong> :
+</p>
+<p align="justify">この連携により、AD管理者とヘルプデスク担当者はServiceDesk PlusとADManager Plusの両方から効率良くAD管理を行うことができます。
+管理者はServiceDesk PlusからADユーザーのパスワードリセット、ユーザー作成、削除、ロック解除、有効化、無効化を行うことができます。</p>
+<p align="justify"><strong>ADManager PlusでのServiceDesk Plus サーバーとの連携設定：</strong></p>
+<p align="justify">ADManager Plusで次の設定を行う必要があります。設定は"ADMP &gt;&gt; 管理 &gt;&gt; 一般設定 &gt;&gt;ServiceDesk Plus"から可能です。</p>
+<ul>
+  <li><strong align="justify">サーバー情報</strong>: ServiceDesk Plusのホスト名とポート番号を入力し、プロトコルを選択します。</li>
+  <li>"ServiceDesk Plusと連携する"にチェックをして有効にします。この設定によりServiceDesk PlusからADとExchange関連のタスクを実行できます。</li>
+  <li><strong>認証情報</strong>: ServiceDesk Plus のログイン名とパスワードを指定のフォーマットで入力します。&quot;接続テスト&保存&quot;をクリックします。
+  ServiceDesk PlusとADManager Plus間で接続が確立され、設定が保存されます。</li>
+</ul>
+<p align="justify">この連携はADManager Plusでヘルプデスクの担当者として設定され、ServiceDesk Plusで技術担当者となっているユーザーのみが対象です。ADユーザーをServiceDesk Plusで技術担当者として設定するには: </p>
+<ul>
+  <li>&quot;オペレーター &gt;&gt; オペレータの追加&quot;に進みます。</li>
+  <li>ドメイン、ADユーザー、オペレータの役割、OUを選択し、もしオペレーターを管理者にする場合は&quot;管理者として振る舞う&quot;にチェックをします。
+  ＊"オペレーター &gt;&gt; オペレーターの役割" で予め役割を作成しておくことができます。</li>
+</ul>
+<p align="justify"><strong>メモ</strong>: ログイン名とドメイン名はADManager PlusとServiceDesk Plusで同一である必要があります。</p>
+<p align="justify"><strong>ServiceDesk PlusでのADManager Plusサーバー設定:</strong></p>
+<ul>
+  <li>ADManager Plusのサーバー名とサーバーポート番号を入力し、プロトコルを選択します。</li>
+  <li>両アプリケーション間での接続を確認するために、&quot;接続をテストして保存&quot;をクリックします。</li>
+  <li>連携設定を削除するには&quot;削除&quot;、キャンセルするには&quot;キャンセル&quot;をクリックします。削除、キャンセルすると保存はされず、一覧表示画面に戻ります。</li>
+</ul>
+<p align="justify">ADManager Plus アクション: リストにはアクション名とと説明、編集するためのアイコンが表示されます。</p>
+<p align="justify">役割の関連付け: 管理者は&quot;すべての役割&quot;と&quot;役割の選択&quot;の両方が選択できます。&quot;すべての役割&quot;を選択するとアクションを実行するための権限が全技術担当者に割り振られます。&quot;役割の選択&quot;を選択すると、役割のリストが表示され、管理者はアクションを実行するための役割を持つユーザーを選択できます。例: SDAdmin, SDSiteAdmin など。</p>
+<p align="justify">テンプレートの関連付け: 管理者はアクションを表示させる対象テンプレートを&quot;すべてのテンプレート&quot; &quot;すべてのインシデント/サービステンプレート&quot; &quot;テンプレートの選択&quot; から選択できます。選択されたテンプレートを使用してリクエストを作成すると、各リクエスト情報内の&quot;アクション&quot;に表示されます。</p>
+<p align="justify"><strong>ServiceDesk PlusからADManager Plusのユーザーを作成:</strong></p>
+<p align="justify">各リクエストテンプレートで技術担当者は権限のあるアクションを実行することができます。</p>
+<p align="justify">例: リクエスト情報のアクションから&quot;ADにユーザーを作成&quot;を実行すると、必要フィールドが含まれるポップアップが表示されます。両アプリケーション間でこれらのフィールドが関連付いている必要があります。すべての情報を入力し、&quot;ADユーザーを作成&quot;をクリックしてください。さらにフィールドを追加するには：</p>
+<ul>
+  <li>[ADMPインストールディレクトリ] &gt;&gt; integration &gt;&gt; resources &gt;&gt; admp &gt;&gt; conf にあるAdmp.xml を開いてください。</li>
+  <li>&quot;ユーザーを作成&quot; メニューをクリックし、要望の追加フィールドを追加する。フィールドはテキスト形式/日付形式/ピックリスト形式です。<br></li></ul>
+<p align="justify">メモ: 追加フィールドを含めるには、ADManager Plusで存在する関連する追加フィールドのIDが必要です。詳細はアドミンガイドを参照してください。</p>
+<p align="justify"><strong>ドメイン設定:</strong></p>
+<p align="justify">ServiceDesk PlusとADManager Plusの連携のために、ドメイン構成は必須です。<br>
+</p>
+<ul>
+  <li>&quot;管理 &gt;&gt;技術担当者?&gt;&gt; ログイン情報 &gt;&gt; ドメイン &quot;からServiceDesk Plusに既に存在するユーザーにドメインを構成することができます</li>
+  <li>&quot;管理-&gt;ディスカバリ-&gt;Windowドメインスキャン&quot; でServiceDesk Plusに新規ドメインを追加できます。<br>
+    <br>
+  </li>
+</ul>
+</body>
+</html>

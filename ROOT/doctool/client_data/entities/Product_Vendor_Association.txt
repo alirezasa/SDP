@@ -1,0 +1,249 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique Identifier.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "product",
+      "type": "String",
+      "desc": "Product to be associated.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "vendor",
+      "type": "String",
+      "desc": "Vendor to be associated.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "vendor_id",
+      "type": "Number",
+      "desc": "Vendor id of vendor.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "flase",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "product_price",
+      "type": "Number",
+      "desc": "Price of the product.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "tax_rate",
+      "type": "Number",
+      "desc": "Tax rate.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "warranty_period_years",
+      "type": "Number",
+      "desc": "Waarenty period of product in yeras.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "warranty_period_months",
+      "type": "Number",
+      "desc": "Warrenty period of product in months.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "maintenance_vendor",
+      "type": "Number",
+      "desc": "Maintaince vendor to be associated.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "comments",
+      "type": "Number",
+      "desc": "Any comments about the association",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    }
+  ],
+    "Additional Elements": [],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/product_vendor_associations"
+      ],
+      "desc": "This operation lets you add a product vendor association.",
+      "disp_desc": "Add a product vendor association",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"product_vendor_association\":{\"product\":{\"id\":\"602\"},\"comments\":\"add product\",\"vendor\":{\"id\":\"302\"},\"warranty_period_years\":\"10\",\"maintenance_vendor\":{\"id\":\"301\"},\"product_price\":\"123.00\",\"tax_rate\":\"10.00\",\"warranty_period_months\":\"10\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"product_vendor_association\":{\"product\":{\"part_no\":\"asdf\",\"name\":\"neadfwMicro\",\"id\":\"602\",\"manufacturer\":\"asdf\"},\"comments\":\"add product\",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"warranty_period_years\":\"10\",\"maintenance_vendor\":{\"name\":\"newV\",\"currency\":{\"id\":\"2\"},\"id\":\"301\"},\"id\":\"4\",\"product_price\":\"123.00\",\"tax_rate\":\"10.00\",\"warranty_period_months\":\"10\"}}"
+      },
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/product_vendor_associations/{product vendor associations_id}"
+      ],
+      "desc": "This operation lets you update a product vendor association.",
+      "disp_desc": "Update a product vendor association",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"product_vendor_association\":{\"comments\":\"I was here\",\"warranty_period_years\":\"8\",\"maintenance_vendor\":{\"id\":\"302\"},\"product_price\":\"100.00\",\"tax_rate\":\"12.00\",\"warranty_period_months\":\"9\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"product_vendor_association\":{\"product\":{\"part_no\":\"\",\"name\":\"newPTeat\",\"id\":\"301\",\"manufacturer\":\"\"},\"comments\":\"I was here\",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"warranty_period_years\":\"8\",\"maintenance_vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"id\":\"2\",\"product_price\":\"100.00\",\"tax_rate\":\"12.00\",\"warranty_period_months\":\"9\"}}"
+		},
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/product_vendor_associations/{product vendor associations_id}"
+      ],
+      "desc": "This operation fetches details of a product vendor association.",
+      "disp_desc": "Get a product vendor association",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"product_vendor_association\":{\"product\":{\"part_no\":\"\",\"name\":\"newPTeat\",\"id\":\"301\",\"manufacturer\":\"\"},\"comments\":\"nothing much\",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"warranty_period_years\":\"0\",\"maintenance_vendor\":{\"name\":\"newV\",\"currency\":{\"id\":\"2\"},\"id\":\"301\"},\"id\":\"2\",\"product_price\":\"123.00\",\"tax_rate\":\"10.00\",\"warranty_period_months\":\"0\"}}"
+		},
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+	{
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/product_vendor_associations"
+      ],
+      "desc": "This operation fetches details of a product vendor association.",
+      "disp_desc": "Get all product vendor associations",
+      "workflow": "",
+	   "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":5,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+            },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"product_vendor_association\":{\"product\":{\"part_no\":\"\",\"name\":\"newPTeat\",\"id\":\"301\",\"manufacturer\":\"\"},\"comments\":\"nothing much\",\"vendor\":{\"name\":\"Vendor2\",\"currency\":{\"id\":\"2\"},\"id\":\"302\"},\"warranty_period_years\":\"0\",\"maintenance_vendor\":{\"name\":\"newV\",\"currency\":{\"id\":\"2\"},\"id\":\"301\"},\"id\":\"2\",\"product_price\":\"123.00\",\"tax_rate\":\"10.00\",\"warranty_period_months\":\"0\"}}"
+		},
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/product_vendor_associations/{product vendor associations_id}"
+      ],
+      "desc": "This operation lets you delete product_vendor_associations",
+      "disp_desc": "Delete a product vendor association",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "false",
+      "isReleased": "true"
+    }
+  ]
+}

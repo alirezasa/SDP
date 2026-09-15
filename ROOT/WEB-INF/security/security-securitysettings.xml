@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+     <urls authentication="required" method="get">
+     	<throttles key="url.path+url.dynamic_key" name="security_settings_common_throttle" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+		<throttle duration="1m" lock-period="5m" threshold="60"/>
+	</throttles>
+	
+	 <!-- SD-112567 Alias URL Entry - URL Rewriter Filter added after SDPSecurity Filter -->
+         <url path="/portal/[a-zA-Z0-9-_]{0,50}" user_type="all" remote_server="true" description="Url can be accessed by anyone for portal access" />
+	
+	<!-- 										Admin Audit History STARTS 														-->
+	<url path="/api/v3/security_settings/(_?)history" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all" remote_server="true">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    <url path="/api/v3/security_settings/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all" remote_server="true">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    
+    	<url path="/api/v3/tfa/(_?)history" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all" remote_server="true">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    <url path="/api/v3/tfa/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all" remote_server="true">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    <url path="/api/v3/tfa/_metainfo" method="get" roles="SDOrgAdmin,SDAdmin" user_type="all" remote_server="true"/>
+ 
+    <url path="/api/v3/attachment_settings/(_?)history" method="get" roles="SDOrgAdmin" user_type="all">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    <url path="/api/v3/attachment_settings/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin" user_type="all">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    
+    <url path="/api/v3/integration_keys/(_?)get_performed_by_for_history" method="get" roles="SDAdmin" remote_server="true">
+    		<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+   	</url>
+   	<url path="/api/v3/integration_keys/(_?)get_records_for_history" method="get" roles="SDAdmin" remote_server="true">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+	</url>
+    <url path="/api/v3/integration_keys/(_?)history" method="get" roles="SDAdmin" remote_server="true">
+    	<param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    
+    <url path="/api/v3/portalcustomizations/(_?)history" method="get" roles="SDOrgAdmin" user_type="all">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    <url path="/api/v3/portalcustomizations/(_?)get_performed_by_for_history" method="get" roles="SDOrgAdmin" user_type="all">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    </url>
+    <!-- 										Admin Audit History ENDS 														-->
+    
+	<url path="/SetUpWizard.do" roles="SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="attachmentSettings" method="GET"/>
+	<url path="/SetUpWizard.do" roles="SDOrgAdmin,SDAdmin," operation-param="forwardTo" user_type="all" operation-value="securitysettings" remote_server="true"/>
+
+        <url path="/setup/securitysettings.jsp" roles="SDOrgAdmin" user_type="all"/>
+        <url path="/setup/integrationkey.jsp" roles="SDAdmin" disable-extraparam="true" method="get" remote_server="true"/>
+        <url path="/setup/integrationkeyForm.jsp" roles="SDAdmin" method="get" operation-param="action" operation-value="add_key" disable-extraparam="true" remote_server="true">
+                <param name="SUBREQUEST" regex="XMLHTTP"/>
+                <param name="_" type="long"/>
+        </url>
+        <url path="/setup/integrationkeyForm.jsp" roles="SDAdmin" method="get" operation-param="action" operation-value="reassign_key" disable-extraparam="true" remote_server="true">
+                <param name="id" type="long" max-occurrences="1" max-len="19"/>
+                <param name="SUBREQUEST" regex="XMLHTTP"/>
+                <param name="_" type="long"/>
+        </url>
+        <url path="/setup/integrationkeyForm.jsp" roles="SDAdmin" method="get" operation-param="action" operation-value="edit_key" disable-extraparam="true" remote_server="true">
+                <param name="id" type="long" min-occurrences="1" max-occurrences="1" max-len="19"/>
+                <param name="status" regex="expired" max-occurrences="1"/>
+                <param name="SUBREQUEST" regex="XMLHTTP"/>
+                <param name="_" type="long"/>
+        </url>
+        <url path="/setup/integrationkeyForm.jsp" roles="SDAdmin" method="get" operation-param="action" operation-value="view_key" disable-extraparam="true" remote_server="true" ids-url-id="integration_key_decrypt">
+                <param name="id" type="long" min-occurrences="1" max-occurrences="1" max-len="19"/>
+                <param name="status" regex="expired" max-occurrences="1"/>
+                <param name="SUBREQUEST" regex="XMLHTTP"/>
+                <param name="_" type="long"/>
+        </url>
+	<url path="/setup/integrationkeyForm.jsp" roles="SDAdmin" method="get" operation-param="action" operation-value="notification_settings" disable-extraparam="true" remote_server="true">
+		<param name="SUBREQUEST" regex="XMLHTTP"/>
+		<param name="_" type="long" range=">0"/>
+	</url>
+
+        <url path="/SecuritySettingsAction.do" roles="SDOrgAdmin" user_type="all">
+                <param name="action" regex="securitysettings"/>
+        </url>
+
+	<url path="/ESM.do" operation-param="type" operation-value="attachmentSettings" user_type="all" roles="SDOrgAdmin" method="GET"/>
+	<url path="/ESM.do" operation-param="type" operation-value="securitysettings" user_type="all" roles="SDOrgAdmin"/>
+        <!-- Disable Concurrent Login-->
+
+	<url path="/jsp/activesessions.jsp" roles="SDAdmin" remote_server="true"/>
+		
+	<url path="/getallactivesessions.do" roles="SDAdmin" remote_server="true">
+		<param name="userId" type="long" range=">0" min-occurrences="1"/>
+		<param name="killUserSessionId" type="long" range=">0" />
+	</url>
+
+	<!-- Admin -> Attachment Settings -->
+        <url path="/api/v3/attachment_settings/1" roles="SDOrgAdmin" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="attachment_settings_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+        		<throttle duration="1m" lock-period="5m" threshold="30"/>
+	        </throttles>
+	</url>
+        <url path="/api/v3/attachment_settings/extensions" roles="SDOrgAdmin" user_type="all">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+	 <!--SD-68703 -->
+	<!-- Admin -> Security settings -->
+        <url path="/api/v3/security_settings" roles="SDOrgAdmin,SDAdmin,HelpdeskConfig" method="get" user_type="all" remote_server="true">
+                <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SecuritySettings" dynamic-throttle="true" >
+                	<throttle duration="1m" threshold="10" lock-period="5m"/>
+                </throttles>
+                <param name="INPUT_DATA" template="include" type="JSONObject" max-len="-1"/>
+                <param name="_" type="long" range=">0"/>
+                <param name="checkICAPConnection" regex="true"/>
+        </url>
+    </urls>
+    <urls authentication="required" api="true" >
+	<throttles key="url.path+url.dynamic_key" name="attachment_settings_update" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+
+	<!-- Admin -> Attachment Settings -->
+	<url path="/api/v3/attachment_settings/upload_new_extension" roles="SDOrgAdmin" method="post" user_type="all">
+		<throttles key="url.path+url.dynamic_key" name="attachment_settings_extensions" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="10"/>
+		</throttles>
+	</url>
+
+	 <!-- Admin -> Attachment Settings -->
+        <url path="/api/v3/attachment_settings/1" roles="SDOrgAdmin" method="put" user_type="all">
+            <param name="input_data" template="attachment_configs" type="JSONObject" max-len="-1"/>
+		<throttles key="url.path+url.dynamic_key" name="attachment_settings_update" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                	<throttle duration="1m" lock-period="5m" threshold="10"/>
+	        </throttles>
+        </url>
+        <url path="/api/v3/attachment_settings/update_storage_flag" roles="SDOrgAdmin" method="put" user_type="all" >
+            <throttles key="url.path+url.dynamic_key" name="attachment_update_storage_flag" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="10"/>
+            </throttles>
+        </url>
+
+	 <!-- Admin -> Security settings -->
+        <url path="/api/v3/security_settings" roles="SDOrgAdmin,SDAdmin" method="put" user_type="all" remote_server="true" ids-url-id="Security_Settings_Update">
+                <param name="INPUT_DATA" type="JSONObject" template="security_settings_template" min-occurrences="1" max-len="-1"/>
+        </url>
+        <url path="/api/v3/throttle_configs/(\d+)" roles="Common_Role" method="get" user_type="all" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/throttle_configs/(\d+)" roles="Common_Role" method="put" user_type="all">
+            <param name="input_data" template="throttle_config" type="JSONObject" max-len="-1"  min-occurrences="1"/>
+        </url>
+         <url path="/api/v3/throttle_configs" roles="Common_Role" method="post" user_type="all">
+            <param name="input_data" template="throttle_config" type="JSONObject" max-len="-1"  min-occurrences="1"/>
+        </url>
+    </urls>
+<jsontemplates>
+        <jsontemplate name="throttle_config" >
+                <key name="throttle_config" template="throttle_config_base" type="JSONObject" max-len="-1"  min-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="throttle_config_base" >
+                <key name="threshold" type="int"  min-occurrences="1"/>
+                <key name="url_pattern_id" type="long" />
+                <key name="all_users" type="boolean" />
+                <key name="integ_keys" type="JSONArray" template="integ_keys_template" array-size="0-30" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="integ_keys_template" >
+                <key name="name" type="String"/>                
+        </jsontemplate>
+</jsontemplates>
+
+   <jsontemplates>
+	 <jsontemplate name="attachment_configs" disable-extra-key="true">
+		<key name="attachment_size" type="long" min-occurrences="1" range="1-1024"/>
+		<key name="attachment_path" max-len="500" regex="^(?!.*\.\.).*$" min-occurrences="1"/>
+        <key name="force_update" type="boolean" allow-invalid="false"/>
+		<key name="extensions" type="JSONArray" min-occurrences="1" template="extensionListArray" array-size="0-1227" max-len="-1" secret="true"/>
+	    <key name="filter_type" regex="Exclude|Include|All Files" min-occurrences="1"/>
+	    <key name="mode" regex="STRICT|LENIENT" min-occurrences="1"/>
+	</jsontemplate>
+	 <jsontemplate name="extensionListArray" disable-extra-key="true" >
+		<key index="0-1226" type="String" max-len="20" />
+	</jsontemplate>	
+
+   </jsontemplates>
+</security>

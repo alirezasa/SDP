@@ -1,0 +1,305 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/downtimes"
+      ],
+      "desc": "",
+      "disp_desc": "View all Deployment schedules of a Change",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"downtimes\":[{\"downtime_scheduled_end\":null,\"downtime_type\":null,\"description\":\"downtime1\",\"is_downtime\":false,\"deployment_scheduled_start\":{\"display_value\":\"Jul21,201901:37AM\",\"value\":\"1563653240000\"},\"deployment_scheduled_end\":{\"display_value\":\"Aug1,201903:24PM\",\"value\":\"1564653240000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":null,\"deployment_actual_end\":null,\"id\":\"1\",\"patch_version\":null,\"downtime_actual_end\":null},{\"downtime_scheduled_end\":{\"display_value\":\"Dec 12, 2023 11:00 PM\",\"value\":\"1702428000000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_scheduled_end\":{\"display_value\":\"Dec 11, 2023 11:59 PM\",\"value\":\"1702339140000\"},\"downtime_actual_start\":{\"display_value\":\"Dec 10, 2023 02:15 AM\",\"value\":\"1702176900000\"},\"deployment_actual_start\":{\"display_value\":\"Dec 10, 2023 02:30 AM\",\"value\":\"1702177800000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_actual_end\":{\"display_value\":\"Dec 11, 2023 11:45 PM\",\"value\":\"1702338300000\"},\"id\":\"101\",\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":{\"display_value\":\"Dec 12, 2023 12:30 AM\",\"value\":\"1702341000000\"}}],\"list_info\":{\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"total_count\":2,\"get_total_count\":\"true\",\"row_count\":2}}"
+		},
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": "/api/v3/changes/{change_id}/downtimes",
+      "desc": "",
+      "disp_desc": "Add a Deployment schedule",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"downtime\":{\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 08:00 PM\",\"value\":\"1702216800000\"},\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_scheduled_end\":{\"display_value\":\"Dec 11, 2023 11:59 PM\",\"value\":\"1702339140000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 04:00 PM\",\"value\":\"1702202400000\"},\"patch_version\":\"v1.2.3\"}}"
+      },
+      "output": {
+        "sample": "{\"downtime\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":null,\"configuration_items\":[],\"id\":\"1\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+	  },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/downtimes/{downtime_id}"
+      ],
+      "desc": "",
+      "disp_desc": "View a Deployment schedule of a Change",
+      "workflow": "",
+      "output": {
+        "sample": "{\"downtime\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":null,\"configuration_items\":[],\"id\":\"1164003\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+	  },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/downtimes/{downtime_id}"
+      ],
+      "desc": "",
+      "disp_desc": "Edit a Deployment schedule",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"downtime\":{\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 08:00 PM\",\"value\":\"1702216800000\"},\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_scheduled_end\":{\"display_value\":\"Dec 11, 2023 11:59 PM\",\"value\":\"1702339140000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 04:00 PM\",\"value\":\"1702202400000\"},\"patch_version\":\"v1.2.3\"}}"
+      },
+      "output": {
+        "sample": "{\"downtime\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":null,\"configuration_items\":[],\"id\":\"1\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+	  },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/downtimes/{downtime_id}"
+      ],
+      "desc": "",
+      "disp_desc": "Delete a Deployment schedule",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+	{
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "path": [
+        "/api/v3/changes/{change_id}/downtimes/copy_scheduled_to_actual?ids={downtime_ids}"
+      ],
+      "desc": "",
+      "disp_desc": "Copy schedule times to Actual times of the Deployment schedule and downtime schedule",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"385322\",\"status\":\"success\"}],\"downtimes\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"configuration_items\":[],\"id\":\"385322\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"}}}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true"
+    },
+    {
+      "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"metainfo\":{\"is_dynamic\":false,\"plural_name\":\"downtimes\",\"relationship\":false,\"fields\":{\"start_time\":{\"display_type\":\"Date/Time\",\"type\":\"datetime\",\"display_name\":\"Start Time\",\"partial_field\":true,\"searchable\":false},\"end_time\":{\"display_type\":\"Date/Time\",\"depends_on\":[\"start_time\"],\"type\":\"datetime\",\"display_name\":\"End Time\",\"partial_field\":true,\"searchable\":false},\"description\":{\"display_type\":\"Multi Line\",\"type\":\"string\",\"display_name\":\"Description\",\"partial_field\":true,\"mandatory\":true,\"constraints\":{\"max_length\":\"-1\"}},\"id\":{\"identifier\":true,\"read_only\":true,\"form_field\":false,\"type\":\"long\",\"partial_field\":false}},\"entity\":\"downtime\"}}"},
+      "path": "/api/v3/changes/downtimes/metainfo",
+      "method": "GET",
+      "moduleName" : "Change",
+      "isReleased": "true",
+      "workflow": "",
+      "disp_desc": "Meta-Info for Change Deployment schedule Add",
+      "inOP": "true",
+      "name": "",
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "desc": ""
+    },
+    {
+    "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"metainfo\":{\"is_dynamic\":false,\"plural_name\":\"downtimes\",\"relationship\":false,\"fields\":{\"service_to_be_down\":{\"display_type\":\"MultiSelect\",\"display_key\":\"sdp.itil.common.serviceaffected\",\"multiple\":true,\"lookup_entity\":\"service_category\",\"lookup_field\":\"name\",\"href\":\"\/changes\/1902\/downtimes\/385322\/service_to_be_down\",\"type\":\"lookup\",\"partial_field\":true,\"display_name\":\"Services Affected\"},\"downtime_scheduled_end\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.downtimescheduledend\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Scheduled Downtime End\",\"searchable\":false},\"downtime_type\":{\"display_type\":\"Pick List\",\"display_key\":\"admin.releaseconf.downtime_type\",\"lookup_entity\":\"downtime_type\",\"lookup_field\":\"name\",\"href\":\"\/changes\/1902\/downtimes\/385322\/downtime_type\",\"type\":\"lookup\",\"partial_field\":false,\"list_view\":true,\"display_name\":\"Deployment Impact\"},\"description\":{\"display_type\":\"Multi Line\",\"display_key\":\"common.description\",\"type\":\"string\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Description\",\"mandatory\":true,\"constraints\":{\"max_length\":-1}},\"is_downtime\":{\"display_key\":\"sdp.change.downtime.isdowntime\",\"default_value\":\"false\",\"sortable\":false,\"type\":\"boolean\",\"partial_field\":false,\"list_view\":true,\"display_name\":\"Downtime Required\"},\"deployment_scheduled_start\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.deploymentscheduledstart\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Scheduled Deployment Start\",\"searchable\":false},\"downtime_actual_start\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.downtimeactualstart\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Actual Downtime Start\",\"mandatory\":true,\"searchable\":false},\"deployment_actual_start\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.deploymentactualstart\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Actual Deployment Start\",\"mandatory\":true,\"searchable\":false},\"downtime_scheduled_start\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.downtimescheduledstart\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Scheduled Downtime Start\",\"searchable\":false},\"deployment_actual_end\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.deploymentactualend\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Actual Deployment End\",\"mandatory\":true,\"searchable\":false},\"configuration_items\":{\"display_type\":\"MultiSelect\",\"display_key\":\"common.association.configuration_items\",\"multiple\":true,\"lookup_entity\":\"cmdb\",\"lookup_field\":\"name\",\"href\":\"\/changes\/1902\/downtimes\/385322\/configuration_items\",\"type\":\"lookup\",\"partial_field\":true,\"display_name\":\"CIs Involved\"},\"id\":{\"identifier\":true,\"read_only\":true,\"form_field\":false,\"type\":\"long\",\"partial_field\":false,\"list_view\":true},\"deployment_scheduled_end\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.deploymentscheduledend\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Scheduled Deployment End\",\"searchable\":false},\"patch_version\":{\"display_type\":\"Single Line\",\"display_key\":\"sdp.change.downtime.patchdetails\",\"type\":\"string\",\"partial_field\":false,\"list_view\":true,\"display_name\":\"Patch Version\",\"constraints\":{\"max_length\":250}},\"downtime_actual_end\":{\"display_type\":\"Date\/Time\",\"display_key\":\"sdp.change.downtime.downtimeactualend\",\"type\":\"datetime\",\"partial_field\":true,\"list_view\":true,\"display_name\":\"Actual Downtime End\",\"mandatory\":true,\"searchable\":false}},\"entity\":\"downtime\"}}"},
+    "path": ["/api/v3/changes/{change_id}/downtimes/{downtime_id}/metainfo"],
+    "method": "GET",
+    "moduleName" : "Change",
+    "isReleased": "true",
+    "workflow": "",
+    "disp_desc": "Meta-Info for Change Deployment schedule Edit",
+    "inOP": "true",
+    "name": "",
+    "defaultAttributes": [],
+    "excludedAttributes": [],
+    "desc": ""
+    }
+  ],
+  "attributes": [
+    {
+      "name": "id",
+      "type": "long",
+      "desc": "",
+      "graphView": "The id of deployment schedule.",
+      "column": "CHANGE_DOWNTIMEDETAILS:DTID",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "changeid",
+      "type": "Object",
+      "desc": "The change request.",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:CHANGEID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "The description of the deployment schedule.",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:DESCRIPTION",
+      "html_type": "",
+      "isMandatory": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "deployment_scheduled_start",
+      "type": "Date Object",
+      "desc": "The scheduled start time of deployment schedule.",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:DEPLOYMENTSCHEDULEDSTARTTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "deployment_scheduled_end",
+      "type": "Date Object",
+      "desc": "The scheduled end time of deployment schedule",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:DEPLOYMENTSCHEDULEDENDTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+	{
+      "name": "deployment_actual_start",
+      "type": "Date Object",
+      "desc": "The actual start time of deployment schedule.",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:DEPLOYMENTACTUALSTARTTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "deployment_actual_end",
+      "type": "Date Object",
+      "desc": "The actual end time of deployment schedule",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:DEPLOYMENTACTUALENDTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },    {
+      "name": "patch_version",
+      "type": "String",
+      "desc": "This field is to define the patch version",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:PATCH_VERSION",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "is_downtime",
+      "type": "Boolean",
+      "desc": "Determines if the Deployment schedule involves a downtime.",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:ISDOWNTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+{
+      "name": "downtime_scheduled_start",
+      "type": "Date Object",
+      "desc": "The scheduled start time of downtime schedule.",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:STARTTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "downtime_scheduled_end",
+      "type": "Date Object",
+      "desc": "The scheduled end time of downtime schedule",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:ENDTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+	{
+      "name": "downtime_actual_start",
+      "type": "Date Object",
+      "desc": "The actual start time of downtime schedule.",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:ACTUALSTARTTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "downtime_actual_end",
+      "type": "Date Object",
+      "desc": "The actual end time of downtime schedule",
+      "graphView": "",
+      "column": "CHANGE_DOWNTIMEDETAILS:ACTUALENDTIME",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true"
+    }, {
+                  "html_type": "",
+                  "inOP": "true",
+                  "name": "service_to_be_down",
+                  "column": "CHANGEDOWNTIMETOSERVICES:SERVICEID",
+                  "type": "Array of Objects",
+                  "isReleased": "true",
+                  "desc": "Services affected",
+                  "graphView": ""
+              },
+              {
+                  "html_type": "",
+                  "inOP": "true",
+                  "name": "configuration_items",
+                  "column": "CHANGEDOWNTIMETOCIS:CIID",
+                  "type": "Array of Objects",
+                  "isReleased": "true",
+                  "desc": "CIs affected",
+                  "graphView": ""
+              }
+
+  ],
+  "Additional Elements": [],
+  "lastModified": 1564997358000
+}

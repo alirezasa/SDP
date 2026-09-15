@@ -1,0 +1,219 @@
+{
+  "attributes": [
+    {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "name",
+      "type": "String",
+      "desc": "Name to identify asset state.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "state_description",
+      "type": "String",
+      "desc": "Asset State name.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Number",
+      "desc": "",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "String",
+      "desc": "Description about the state.",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_scan_required",
+      "type": "boolean",
+      "desc": "Scan required",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_ownership_needed",
+      "type": "boolean",
+      "desc": "is ownership needed",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "false",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_ownership_mandatory",
+      "type": "boolean",
+      "desc": "is ownership is mandatory",
+      "graphView": "",
+      "column": "",
+      "odcolumn": "",
+      "html_type": "",
+      "isMandatory": "false",
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "false",
+      "isReleased": "true"
+    }
+  ],
+    "Additional Elements": [],
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/asset_states"
+      ],
+      "desc": "This operation lets you add a asset state.",
+      "disp_desc": "Add an asset state",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"asset_state\":{\"name\":\"AssetState\",\"is_scan_required\":true,\"is_ownership_needed\":true,\"is_ownership_mandatory\":true,\"description\":\"added a New State\"}}"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"asset_state\":{\"is_scan_required\":true,\"name\":\"In Leased\",\"description\":\"added a New State\",\"id\":\"601\",\"is_ownership_needed\":true,\"is_ownership_mandatory\":true}}"  },
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/asset_states/{asset_state_id}"
+      ],
+      "desc": "This operation lets you update a asset state.",
+      "disp_desc": "Update an asset state",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"asset_state\":{\"name\":\"editedState\",\"is_ownership_needed\":false,\"is_scan_required\":false,\"description\":\"edited a asset state\"}}"
+      },
+      "output": {
+        "sample": "{\"asset_state\":{\"is_scan_required\":false,\"id\":\"1201\",\"name\":\"editedState\",\"description\":\"edited a asset state\",\"is_ownership_needed\":false,\"is_ownership_mandatory\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+		},
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/asset_states/{asset_state_id}"
+      ],
+      "desc": "This operation fetches details of a Asset State.",
+      "disp_desc": "Get an ssset state",
+      "workflow": "",
+      "output": {
+        "sample": "{\"asset_state\":{\"is_scan_required\":false,\"prominent\":true,\"id\":\"1\",\"name\":\"In Store\",\"description\":null,\"is_ownership_needed\":false,\"is_ownership_mandatory\":false},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+		},
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+	{
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/asset_states"
+      ],
+      "desc": "This operation fetches details of a Asset State.",
+      "disp_desc": "Get all asset states",
+      "workflow": "",
+	   "input": {
+                "name": "INPUT_DATA",
+                "sample":"{\"list_info\":{\"row_count\":5,\"start_index\":0,\"sort_field\":\"id\",\"sort_order\":\"asc\",\"get_total_count\":true}}"
+            },
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":6},\"asset_states\":[{\"is_scan_required\":true,\"prominent\":true,\"name\":\"In Store\",\"description\":null,\"id\":\"1\",\"is_ownership_needed\":false,\"is_ownership_mandatory\":false},{\"is_scan_required\":true,\"prominent\":true,\"name\":\"In Use\",\"description\":null,\"id\":\"2\",\"is_ownership_needed\":true,\"is_ownership_mandatory\":true},{\"is_scan_required\":true,\"prominent\":true,\"name\":\"In Repair\",\"description\":null,\"id\":\"3\",\"is_ownership_needed\":false,\"is_ownership_mandatory\":false},{\"is_scan_required\":false,\"prominent\":true,\"name\":\"Expired\",\"description\":null,\"id\":\"4\",\"is_ownership_needed\":false,\"is_ownership_mandatory\":false},{\"is_scan_required\":false,\"prominent\":true,\"name\":\"Disposed\",\"description\":null,\"id\":\"5\",\"is_ownership_needed\":false,\"is_ownership_mandatory\":false},{\"is_scan_required\":true,\"name\":\"In Leased41\",\"description\":\"added a New State\",\"id\":\"301\",\"is_ownership_needed\":true,\"is_ownership_mandatory\":true}]}"},
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Asset",
+      "path": [
+        "/api/v3/asset_states/{asset_state_id}"
+      ],
+      "desc": "This operation lets you delete asset_states",
+      "disp_desc": "Delete an asset state",
+      "workflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status\":\"success\",\"status_code\":2000}}"
+      },
+      "inOP": "true",
+  "isAsset": "true", 
+      "inOD": "false",
+      "isReleased": "true"
+    }
+  ]
+}

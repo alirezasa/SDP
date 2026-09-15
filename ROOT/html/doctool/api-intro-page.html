@@ -1,0 +1,227 @@
+<!-- Translation text here : Translate the text within tags-->
+<div class="api-intro sdtab-content">
+	<div id="introduction" class="sdtab-pane active">
+		<h1>Introduction</h1>
+		<p>
+			REST API acts as a bridge between ServiceDesk Plus and other applications. The Info communication happens via <strong>HTTP</strong> Request. The REST API authenticates users using <strong>API Key</strong>, thus eliminating the need for users to separately log into ServiceDesk Plus to carry out the required operations. The requests are sent using <strong>HTTP Method</strong> and the operations performed using REST API are based on this.
+		</p>
+	
+		<p><strong>Different HTTP Request Methods</strong></p>
+		<p>
+			In general, a request is sent through a specific method, based on which an operation is performed. Following are  the different types of HTTP request methods and their corresponding operations:
+		</p>
+		<ol>
+			<li>POST  - Add / Bulk-Add entities</li>
+			<li>GET   - View the information</li>
+			<li>PUT   - Update the entity details</li>
+			<li>DELETE - Delete / Bulk-delete entities  </li>
+		</ol>
+		<p><strong>input_data</strong></p>
+		<p>
+			For most of the operations, input_data is required. It is given as a <strong>JSON string </strong>along with the parameter, while the Attributes and their values are sent along with the input data. On the other hand, the <strong>Response</strong> is exposed as <strong>JSON string</strong>.
+		</p>
+	</div>
+
+	<div id="authentication" class="sdtab-pane">
+		<p><strong>API Key</strong></p>
+		<p>
+			It is used for authentication purpose. Every user with login permission can generate a authtoken with/without expiry date. A Technician with <strong>'SDAdmin' </strong>role can generate the authtoken for other users as well. It is through this authtoken, a user is identified and operations are performed, based on the role provided to that user. This authtoken can be sent in <strong> Request Header as authtoken</strong>. If the login credentials of the User are disabled, the correspoding authtoken will be deleted. 
+		</p>
+	
+		<p><strong>Generate API key</strong></p>
+		<ol>
+			<li>Go to '<strong>Admin -> Technicians/Users</strong>'.</li>
+			
+			<li>
+				To generate API key for an existing user, click the <strong>Edit</strong> icon beside that user.<br>To generate the API key for a new user, click the <strong>Add New User</strong> link, enter the user details and provide login permission.
+			</li>
+	
+			<li>Click <strong>Generate link </strong>under the <strong>API key details</strong> block. Select a time frame for the key to expire using the <strong>Calendar</strong> icon, or simply retain the same key perpetually.</li>
+	
+			<li>
+				If a key is already generated for the User, a <strong>Re-generate</strong> link appears. <br>A time frame for the key is selected, within which the key  expires. [The time frame shows the date, month, year and time (in hours and minutes)]
+			</li>
+		</ol>
+	
+		<p><b>Other Authentication:</b></p>
+		<p>If the user is logged in, then authtoken is not needed.Instead the login user credentials are taken to perform the required operations.</p>
+	</div>
+
+	<div id="listinfo" class="sdtab-pane">
+		<p><b>LIST VIEW FIELDS :</b></p>
+		<p><span>List view fields are given in the input_data as &ldquo;list_info&rdquo; json object. This list_info json is used to perform list view operation in SDP API V2. The supported operation is GET_ALL.<br>All the parameters mentioned in the below table are only optional.</span></p>
+		<table class="attr-list mt20">
+			<thead>
+				<tr>
+					<th>Paramter</th>
+					<th>Possible/Allowed values</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>start_index</td>
+					<td>e.g: 6</td>
+					<td>Use this to get a list of tasks, starting from this index.</td>
+				</tr>
+				<tr>
+					<td>end_index</td>
+					<td>e.g: 13</td>
+					<td>Use this to get a list of tasks, upto this end index.</td>
+				</tr>
+				<tr>
+					<td>row_count</td>
+					<td>e.g: 15</td>
+					<td>The max number of records to be returned. Default is 10 records which will be returned if this parameter is not given</td>
+				</tr>
+				<tr>
+					<td>search_fields</td>
+					<td>e.g {"title":"Change like this","priority":"High"}</td>
+					<td>The column name and value to be searched for in the format of a json object.</td>
+				</tr>
+				<tr>
+					<td>sort_field</td>
+					<td>e.g: scheduledstarttime</td>
+					<td>The column name for the sort functionality</td>
+				</tr>
+				<tr>
+					<td>sort_order</td>
+					<td>A(Asc) or D(Desc)</td>
+					<td>The sorting order, either ascending or descending.</td>
+				</tr>
+				<tr>
+					<td>get_total_count</td>
+					<td>true or false</td>
+					<td>Use this to retrieve total number of rows returned.(by default it will be false)</td>
+				</tr>
+				<tr>
+					<td>total_count</td>
+					<td>e.g:100</td>
+					<td>Total number of rows in the result.(will be returned with the response only)</td>
+				</tr>
+				<tr>
+					<td>has_more_rows</td>
+					<td>true or false</td>
+					<td>Use this to retrieve info about whether more number of rows exists than the data returned. (will be returned with the response)</td>
+				</tr>
+				<tr>
+					<td>search_criteria</td>
+					<td></td>
+					<td>Refer criteria object (For performing advanced search)</td>
+				</tr>
+				<tr>
+					<td>filter_by</td>
+					<td>e.g., My_Open, My_Unassigned, etc.,</td>
+					<td>Predefined Filter name</td>
+				</tr>
+				<tr>
+					<td>fields_required</td>
+					<td>eg: "[title,priority]"</td>
+					<td>The columns that need to be displayed in the output. JSON array must be given as input</td>
+				</tr>
+			</tbody>
+		</table>
+		<p><b>Note:</b></p>
+		<ol>
+			<li>
+				If <b>row_count, start_index and end_index</b> are given in the request, only start_index and row_count will be taken since row_count will be prioritized over end_index.
+			</li>
+			<li>
+				In <b>fields_required</b> columns are given in an array of string. If all the columns are required, the <b>“[get_all]”</b> has to be given.
+			</li>
+		</ol>
+	</div>
+
+	<div id="statuscodes" class="sdtab-pane">
+		<p><b>STATUS CODES :</b></p>
+		<p>Status codes are used to indicate success or failure of an API call. In general, status codes starts with 2 mean success, 4 mean there was an error in the provided information, and those with 5 indicate server side errors. Commonly used HTTP status codes are listed below.</p>
+		<table class="attr-list mt20">
+			<thead>
+				<tr>
+					<th>Status Code</th>
+					<th>Http Status code</th>
+					<th>Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>200</td>
+					<td>200</td>
+					<td>Success</td>
+				</tr>
+				<tr>
+					<td>4001</td>
+					<td>400</td>
+					<td>Id or Name given in Input does not exist or not in use or user cannot set the value</td>
+				</tr>
+				<tr>
+					<td>4002</td>
+					<td>403</td>
+					<td>Forbidden / User not allowed to perform the operation.</td>
+				</tr>
+				<tr>
+					<td>4004</td>
+					<td>500</td>
+					<td>Internal Error (Exact error cannot be sent to user, like some Exception)</td>
+				</tr>
+				<tr>
+					<td>4005</td>
+					<td>400</td>
+					<td>Reference Exists. (Cannot delete an entity, because it is being used in another module)</td>
+				</tr>
+				<tr>
+					<td>4007</td>
+					<td>404</td>
+					<td>Invalid URL or Resource not found.</td>
+				</tr>
+				<tr>
+					<td>4008</td>
+					<td>400</td>
+					<td>Not Unique</td>
+				</tr>
+				<tr>
+					<td>4009</td>
+					<td>400</td>
+					<td>Trying to edit non-editable field</td>
+				</tr>
+				<tr>
+					<td>4012</td>
+					<td>400</td>
+					<td>Value for mandatory-field is not provided</td>
+				</tr>
+				<tr>
+					<td>4014</td>
+					<td>400</td>
+					<td>Trying to edit read-only field</td>
+				</tr>
+				<tr>
+					<td>4015</td>
+					<td>429</td>
+					<td>API Rate Limit reached</td>
+				</tr>
+				<tr>
+					<td>4016</td>
+					<td>400</td>
+					<td>Time mismatch(Can be used for any time mismatch like Start time/End time mismatch, Created time/Responded time mismatch, etc.,)</td>
+				</tr>
+				<tr>
+					<td>4021</td>
+					<td>400</td>
+					<td>Data type mismatch</td>
+				</tr>
+				<tr>
+					<td>4022</td>
+					<td>401</td>
+					<td>Invalid API Key</td>
+				</tr>
+				<tr>
+					<td>7001</td>
+					<td>400</td>
+					<td>Not allowed as per current license</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<!-- Translation text ends -->

@@ -1,0 +1,52 @@
+<p>LDAP integration allows you to import users from the LDAP server for both Linux and Windows users. You can also schedule import and configure authentication using LDAP.</p>
+<p>To set up LDAP import and authentication, you must initially configure the <strong>Domain Controller</strong> for the imported domains</p>
+<ol>
+	<li>Under the Domain Controllers block, click <strong>Add New Domain</strong>.</li>
+	<li>Specify the <strong>Domain Controller</strong> from where the users have to be imported.
+		<ul>
+			<li>The URL syntax is as follows: <strong>ldap://&lt;server name&gt;:&lt;port number&gt;</strong> where the default port is 389.</li>
+			<li>To connect LDAP in secured mode, use the following URL: <strong>ldaps://hostname:636</strong> where the default port is 636. </li>
+		</ul>
+	</li>
+	<li>Enter the <strong>User Name</strong> along with the Organizational unit (OU) in the given field.</li>
+	<li>Specify the <strong>Password</strong> for the respective field.</li>
+	<li>Specify the <strong>Base DN</strong> which represents the distinguished base name.</li>
+	<li>Specify the criteria to apply on the domain controller in the <strong>Search Filter</strong> field. For ex: mail=* will import users from the parameter mail in the specified domain controller.</li>
+		<ul>
+			<li>If you have chosen the Server type as default LDAP such as, <strong>Microsoft Active Directory, Novell eDirectory and OpenLDAP</strong> then the following fields will be auto-filled.</li>
+			<li>If the LDAP Server Type is <strong>Others</strong> then, specify the <strong>Login Attribute Label, Mail Attribute Label,</strong> and the <strong>Distinguished Name Attributed Label</strong> (similar to the Base DN) in the respective fields.</li>
+		</ul>
+	<li>Select the <strong>LDAP Server Type</strong>.</li>
+	<li>Click <strong>Save</strong> or <strong>Save and Import</strong>.</li>
+</ol>
+<p>You can also import users from the existing domain by clicking <strong>Import Now</strong> on the corresponding Domain Controllers. </p>
+<p>After importing users, you can configure authentication and schedule import from the LDAP configurations.</p>
+
+<p><strong style="font-weight: bold;">Set Local Authentication Password</strong></p>
+<p>Set a default local authentication password for users imported through LDAP. You can enforce users to update this password after their first login from <a target="_blank" style="color: blue;" href="https://help.servicedeskplus.com/esm-security-settings">Security Settings</a>.</p>
+<p>You can enable a random password to be generated for each user or you can set a predefined password for all users. Ensure the predefined password meets all the requirements of the password policy.</p>
+
+<p><strong style="font-weight: bold;">Set an import Schedule</strong></p>
+<p>Schedule LDAP import at periodic intervals. Users and user details from all the domains available in the application are synced to ServiceDesk Plus.</p>
+<ol>
+	<li>Hover over <strong>LDAP Schedule</strong> fields and click <strong>Edit</strong>.</li>
+	<li>Enable the <strong>Schedule LDAP import once in every</strong> option and specify the import period. You can also specify the date and time to begin the schedule.</li>
+	<li>Click <strong>Save</strong>.</li>
+</ol>
+<p>The user details from the domains will be imported periodically as per the number of days specified after the start date and time. During consecutive imports in the same domain, the existing data will be overwritten.</p>
+
+<p><strong style="font-weight: bold;">Enable LDAP Authentication</strong></p>
+<p>Allow users to log in to ServiceDesk Plus using their LDAP credentials. </p>
+<ol>
+	<li>After the users are imported, hover over the <strong>LDAP authentication</strong> checkbox.</li>
+	<li>Click <strong>Edit</strong>.</li>
+	<li>Select <strong>Enable LDAP Authentication</strong> checkbox.</li>
+	<li>Click <strong>Save</strong>.</li>
+</ol>
+<p>In the Login screen, the users can specify their LDAP login credentials and select the <strong>Domain</strong> to log into ServiceDesk Plus. They can also bypass LDAP authentication during login by selecting <strong>Local Authentication</strong> from the <strong>Domain</strong> drop-down and specifying the local credentials.</p>
+<p>For Windows users, AD authentication will be disabled automatically if LDAP authentication is enabled</p>
+<p><strong>Note:</strong></p>
+<ul>
+	<li>Ensure users are already imported into the application before enabling LDAP authentication. </li>
+	<li>LDAP authentication is supported for both Linux and Windows users.</li>
+<ul>

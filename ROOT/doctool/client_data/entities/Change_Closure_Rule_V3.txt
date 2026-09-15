@@ -1,0 +1,84 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_closure_rules",
+      "desc": "You can get the details of all available Change Closure Rules here.",
+      "disp_desc": "View All Change Closure Rules",
+      "workflow": "",
+      "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"change_closure_rules\":[{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"category\",\"id\":\"1\",\"display_name\":\"sdp.common.category\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"subcategory\",\"id\":\"2\",\"display_name\":\"sdp.common.subcategory\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"item\",\"id\":\"3\",\"display_name\":\"sdp.common.item\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"change_type\",\"id\":\"4\",\"display_name\":\"sdp.itil.common.changetype\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"urgency\",\"id\":\"5\",\"display_name\":\"sdp.itil.common.urgency\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"priority\",\"id\":\"6\",\"display_name\":\"sdp.itil.common.priority\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"impact\",\"id\":\"7\",\"display_name\":\"sdp.change.impact\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"services\",\"id\":\"8\",\"display_name\":\"sdp.itil.common.serviceaffected\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"column_name\":\"assets\",\"id\":\"9\",\"display_name\":\"sdp.itil.common.asset\",\"mandatory\":false},{\"stage\":{\"internal_name\":\"Planning\",\"name\":\"Planning\",\"id\":\"2\"},\"column_name\":\"roll_out_plan\",\"id\":\"10\",\"display_name\":\"sdp.change.rollout\",\"mandatory\":false}],\"list_info\":{\"has_more_rows\":true,\"start_index\":1,\"row_count\":10}}"},
+      "inOP": "true",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_closure_rules/{id}",
+      "desc": "You can edit the change Closure Rules here.",
+      "disp_desc": "Update a Change Closure Rule",
+      "workflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+         "sample": "{\"change_closure_rule\": {\"display_name\": \"sdp.common.category\",\"mandatory\": true,\"stage\": {\"id\": \"1\"},\"column_name\": \"CATEGORYID\"}}",
+       "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"change_closure_rule\": {\"display_name\": \"sdp.common.category\",\"mandatory\": true,\"stage\": {\"id\": \"1\",\"displayname\": \"Submission\"},\"column_name\": \"CATEGORYID\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "ChangeClosureRules:CLOSUREID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+      {
+      "name": "display_name",
+      "isDefault": "true",
+      "type": "String",
+      "column": "ChangeClosureRules:COLUMNNAME",
+      "desc": "Denotes the display name of the Change Closure Rule.",
+      "graphView": "change_closure_rule#name",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "mandatory",
+      "isDefault": "true",
+      "type": "boolean",
+      "column": "ChangeClosureRules:MANDATORY",
+      "desc": "Denotes if the Change Closure Rule is mandatory.",
+      "graphView": "change_closure_rule#mandatory",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "stage",
+      "isDefault": "true",
+      "type": "Object",
+      "column": "ChangeClosureRules:STAGEID",
+      "desc": "The change stage, the Change Closure Rule is to be applied to.",
+      "graphView": "change_closure_rule#members",
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "isReleased": "false"
+}
+

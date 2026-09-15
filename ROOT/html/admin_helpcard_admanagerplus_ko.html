@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ServiceDesk Plus Active Directory Management Plug-in</title>
+</head>
+
+<body>
+    <br>
+    <p style="float: right;margin-top: 0;">통합 절차: <a target="_blank" style="color: blue;" href="https://help.servicedeskplus.com/configurations/general/sdp-admp-integration.html">도움말 문서</a> | <a style="color: blue;" target="_blank" href="https://www.manageengine.com/products/ad-manager/admanagerplus-servicedeskplus-integration.html?src=sdpproduct" frameborder="0">데모 요청</a> </p>
+    <strong>SDP-ADMP 통합</strong> :
+
+    <p align="justify">ServiceDesk Plus(SDP) - ADManager Plus(ADMP) 통합은 Active Directory(AD) 관리자와 헬프 데스크 기술자가 두 애플리케이션에서 AD 사용자 계정을 효율적으로 관리하는 데 도움이 됩니다. 관리자와 기술자는 이 통합을 통해 ServiceDesk Plus 내에서 바로 AD 사용자 계정 생성, AD 사용자 암호 재설정, AD 사용자 계정 활성화/비활성화/잠금 해제, 파일 서버(NTFS) 권한 관리 등을 수행할 수 있습니다.</p>
+    <p align="justify">ServiceDesk Plus 기술자가 사용자 생성, 암호 재설정 및 계정 잠금 해제와 같은 반복적인 사용자 관리 작업만 수행하도록 하려면 <a target="_blank" style="color: blue;" href="https://www.manageengine.com/products/service-desk/admanagerplus-plugin.html?src=sdpproduct">AD management plug-in</a>을 사용하십시오.</p>
+    
+	<p align="justify"><strong>통합 절차</strong></p>
+	
+	<p align="justify">통합을 시작하기 전에 ADManager Plus 인스턴스의 버전이 <strong>6640 이상</strong>이어야 하고 ADManager Plus에서 ServiceDesk Plus 설정을 구성하기 전에 ServiceDesk Plus에서 ADManager Plus 서버 세부 정보를 구성해야 합니다.</p>
+
+    <p align="justify"><strong>1. SDP에서 ADManager Plus 서버 설정 구성:</strong></p>
+    <ul>
+		<li>애플리케이션이 현재 실행 중인 서버 이름과 서버 포트를 입력하고 http 및 https 프로토콜 설정 중에서 선택합니다.</li>
+        <li>테스트 연결은 각각의 포트에서 SDP와 ADMP 간에 설정된 연결을 확인하고 설정을 저장합니다.</li>
+        <li>'제거'를 클릭하면 두 애플리케이션 간에 설정된 연결이 제거되고 '취소'를 클릭하면 입력한 설정이 저장되지 않고 취소되고 목록 보기 페이지로 돌아갑니다.</li>
+    </ul>
+
+    <p align="justify"><strong>2. ADMP에서 ServiceDesk Plus 서버 설정 구성:</strong></p>
+    <p align="justify">ADManager Plus에 로그인하고 이 통합이 작동하도록 다음 설정을 구성합니다. ServiceDesk Plus에서 ADManager Plus 서버 설정을 구성하면 SDP 서버 세부 정보가 ADMP에 자동으로 추가됩니다. 설정을 수동으로 구성할 수도 있습니다. 설정은 ADMP &rarr; Admin &rarr; Integrations &rarr; ServiceDesk Plus에서 사용할 수 있습니다.</p>
+    <ul>
+        <li><strong align="justify">서버 정보</strong>: SDP 애플리케이션이 현재 실행 중인 서버 이름과 서버 포트를 입력하고 프로토콜 설정을 선택합니다.</li>
+         <li>'ServiceDesk Plus와의 긴밀한 통합 사용' 옵션을 선택합니다. 이렇게 하면 SDP와 ADMP 간의 통합이 보장됩니다.</li>
+    </ul>
+	
+	<p align="justify"><strong>참고</strong>: ADMP 서버 설정이 SDP에 추가되면 SDP 서버 설정이 자동으로 ADMP에 추가되지만 그 반대는 작동하지 않습니다.</p>
+	
+    <p align="justify">이 통합은 ADMP에서 헬프 데스크 기술자로 구성된 SDP 기술자만 사용할 수 있습니다. 원하는 SDP 기술자를 ADMP의 기술자로 구성하려면:</p>
+    <ul>
+        <li>AD Delegation &rarr; Help Desk Delegation &rarr; Help Desk Technicians &rarr; Add New Technician으로 이동합니다.</li>
+        <li>도메인, AD 사용자, 헬프 데스크 역할 및 조직 단위를 선택합니다. 해당 기술자가 관리자도 될 수 있는 경우 '관리자로 역할' 확인란을 활성화합니다. '저장'을 클릭합니다.</li>
+    </ul>
+    <p align="justify"><strong>참고</strong>: 기술자의 로그인 이름과 도메인 이름은 ADMP와 SDP에서 동일해야 합니다.</p>
+
+    <p align="justify"><strong>3. 도메인 구성:</strong></p>
+    <p align="justify">SDP-ADMP 통합을 위해서, 사용자에 대한 도메인 생성이 필요합니다.
+        <br>
+    </p>
+    <ul>
+        <li>SDP의 기존 사용자에 대한 도메인은 Admin &rarr; Technician &rarr; Login Details &rarr; Select Domain 에서 구성될 수 있습니다. </li>
+        <li>Admin &rarr; Discovery &rarr; Window Domain Scan을 사용하여 SDP에 새 도메인을 추가할 수 있습니다.
+            <br>
+            <br>
+        </li>
+    </ul>
+
+    <p align="justify">각 요청서 템플릿에 대해 활성화된 작업을 기반으로 기술자는 허용된 작업을 수행할 수 있습니다. </p>
+    <p align="justify">예를 들어, 'AD에서 사용자 생성'이  '요청서 세부 정보 페이지 &rarr; 액션 탭에서 호출될 때, 필수 필드가 있는 팝업이 표시됩니다. 이들 필드는 두 응용 프로그램 간에 정확하게 매핑되어야 합니다. 모든 세부 정보를 제공하고 'AD 사용자 만들기'를 클릭합니다. 더 많은 필드를 추가하려면 </p>
+    <ul>
+        <li>[SDP_Home] &rarr; 통합 &rarr; 리소스 &rarr; admp &rarr; conf. 아래에 있는 Admp.xml 파일을 엽니다.</li>
+        <li>&quot;사용자_생성&quot; 메뉴에서, 원하는 추가 필드를 포함합니다. 필드는 텍스트 필드/ 날짜 필드/ 날짜 시간 필드/ 선택 목록 필드일 수 있습니다.
+            <br>
+        </li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<b>
+    <h3>General Settings</h3>
+</b>
+<p>
+    Schedule database maintenance and configure disk usage threshold to optimize the performance of ServiceDesk Plus.
+</p>
+<b>
+    Database Maintenance Schedule
+</b>
+<p>
+    The query optimizer uses table statistics to create query plans. To ensure optimal performance of query plans, the
+    table statistics must be updated regularly.
+</p>
+
+<p>
+<ul>
+    <li>PGSQL - Uses operation VACUUM ANALYZE
+        <ol>
+            <li>Shutdown the application.</li>
+            <li>Go to <b>[SDP_Home]/bin</b>.</li>
+            <li>Execute the <b>DBMaintenance.sh</b> (in Linux machines) or<br> <b>DBMaintenance.bat</b> (in Windows)script.
+            </li>
+        </ol>
+    </li>
+    <li>
+        MSSQL - Uses operation sp_updatestats
+        <ol>
+            <li>Enable <b>Maintenance Schedule</b>.</li>
+            <li>Select a preferred frequency.</li>
+            <li>Set a starting date, along with a preferred time.</li>
+        </ol>
+    </li>
+</ul>
+
+</p>
+<p>
+    To avoid performance issues, schedule database maintenance during non-operational hours..
+</p>
+
+<b>
+    Threshold
+</b>
+<p>
+    Monitoring disk usage is essential to prevent application failure or downtime. You can configure thresholds for the
+    items listed below to ensure your application performance is optimum and send notification if the threshold is
+    reached.
+</p>
+<table border="1" width="95%" cellpadding="6" align="center" style="border: 1px;border-spacing: 0px;">
+    <tbody>
+    <tr>
+        <th scope="col">Field</th>
+        <th scope="col">Explanation</th>
+        <th scope="col">Configuration</th>
+    </tr>
+    <tr>
+        <td>Log file size<br>
+            (displayed only in MSSQL setups)</td>
+        <td>Prevent application downtime caused when the transaction log file (.LDF) used to record all transactions in
+            MSSQL server grows large and fills up the disk</td>
+        <td>Enter a preferred file size in MB.</td>
+    </tr>
+    <tr>
+        <td>Disk usage<br>
+        </td>
+        <td>Prevent application failure caused when the available disk space is consumed as the disk usage increases with
+            time.</td>
+        <td>Enter a preferred value in percentage.</td>
+    </tr>
+    <tr>
+        <td>Memory threshold</td>
+        <td>Monitor heap usage. If the memory space used exceeds the configured value, a heap dump will be generated.</td>
+        <td>Enter preferred value in percentage.</td>
+    </tr>
+    <tr>
+        <td>CPU usage</td>
+        <td>Ensure steady application performance by monitoring unexpected increase in CPU usage.</td>
+        <td>Enter a percentage value in the CPU usage field.</td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<p>Enable <b>Send email notification</b> and select the user roles or users to send the email if a threshold is reached.
+</p>
+<p>Click <b>Save</b>.</p>
+<b>
+    <h3>
+        Reports Settings
+    </h3>
+</b>
+<p>
+    To optimize stability, you can set or modify limits on various report generation criteria such as row limits,
+    the maximum number of simultaneous users, and report generation timeouts. 
+</p>

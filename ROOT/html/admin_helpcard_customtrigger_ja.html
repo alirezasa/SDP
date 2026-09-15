@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>カスタムトリガー</title>
+</head>
+
+<body>
+    <p>カスタムトリガーを用いることで、ユーザーの入力に基づき、カスタマイズしたアクションを用いたプロセスの流れを自動化できます。要件に合った基準や、特定の条件を満たすレコードに対し実行するアクションを定義します。</p>
+    <p>このページでは、様々なカスタムトリガーを作成できます。また、カスタムトリガーの管理/最適化のために、ルールグループを作成できます。</p>
+    <p>初めに、トリガーグループを作成し保存します。作成したトリガーグループにマウスのカーソルをあわせ、新規トリガールールを作成します。</p>
+    <ul>
+        <li><strong>［トリガーを追加］</strong>をクリックします。</li>
+        <li><strong>トリガー名、説明</strong>：カスタムトリガーの「トリガー名」、「説明」を入力します。</li>
+        <li><strong>アクションを実行</strong>：
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">リクエスト</span></summary>
+                <div class="p15 pt5">
+                    <p>すべてのリクエスト（変更/問題などを含む）が、<strong>［作成時］</strong>、<strong>［完全に削除］</strong>、<strong>［リクエスト編集時］</strong>、<strong>［ゴミ箱へ移動しました］</strong>になった際にカスタムトリガーを適用します。</p>
+                </div>
+            </details>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">メモ</span></summary>
+                <div class="p15 pt5">
+                    <p>すべてのメモが、<strong>［作成時］</strong>、<strong>［完全に削除］</strong>、<strong>［編集時］</strong>になった際にカスタムトリガーを適用します。</p>
+                </div>
+            </details>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">通知</span></summary>
+                <div class="p15 pt5">
+                    <p>すべての通知が<strong>［技術担当者によって送信］、［完全に削除］、［転送］、［ユーザーによって送信］、［システム通知］</strong>になった際にカスタムトリガーを適用します。</p>
+                </div>
+            </details>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">承認段階</span></summary>
+                <div class="p15 pt5">
+                    <p>すべての承認段階が<strong>［作成時］、［段階を承認しました］、［段階を却下しました］</strong>になった際にカスタムトリガーを適用します。</p>
+                </div>
+            </details>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">承認</span></summary>
+                <div class="p15 pt5">
+                    <p>すべての承認が、<strong>［作成時］、［承認を承認しました］、［承認を却下しました］、［承認を送信しました］、［完全に削除］</strong>になった際にカスタムトリガーを適用します。</p>
+                </div>
+            </details>
+        </li>
+        <li><strong>～の間に実行</strong>：トリガーが実行される時間帯を、<strong>「いつでも」</strong>、<strong>「業務時間内」</strong>、<strong>「業務時間外」</strong>から選択します。</li>
+        <li><strong>カスケード実行</strong>：トリガーが実行される規則を、<strong>「次のルールを実行」</strong>、<strong>「このグループの残りのルールをスキップ」</strong>、<strong>「全グループにおいて残りのルールをスキップ」</strong>から選択します。</li>
+        <li><strong>条件</strong>：受信したリクエストに対し、特定の条件や、カスタム条件を適用するか、条件を適用しないかどうかを選択します。
+            <ul>
+                <li><strong>基準に基づいて条件を適用する</strong>：ドロップダウンリストから、条件/基準を選択します。</li>
+                <li><strong>カスタム関数を使用して条件を適用する</strong>：既存のカスタム関数か、新規カスタム関数を作成し条件を処理します。</li>
+                <li><strong>条件を適用しない</strong>：受信したすべてのリクエストに対し、このトリガーが適用されます。</li>
+            </ul>
+        </li>
+        <li><strong>アクション：</strong>基準/条件を定義後、アクションを設定します。
+            <ul>
+                <li><strong>カスタムアクションを実行</strong>：
+                    <details class="mt10 mb10 helpdetailstag">
+                        <summary><span class="detailsarrow top-1"></span><span class="sb">リクエスト（問題/変更等含む）</span></summary>
+                        <div class="p15 pt5">
+                            <p>リクエストの場合、［通知アクション］、［カスタム関数］、［スクリプトを実行する］、［クラスの実行］、［Webhook］、［If-If］、［If-Else］からアクションを選択できます。</p>
+                        </div>
+                    </details>
+                    <details class="mt10 mb10 helpdetailstag">
+                        <summary><span class="detailsarrow top-1"></span><span class="sb">メモ/通知/承認段階/承認</span></summary>
+                        <div class="p15 pt5">
+                            <p>［通知アクション］、［カスタム関数］、［スクリプトを実行する］からアクションを選択できます。</p>
+                        </div>
+                    </details>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    
+    <p><strong>NOTES:</strong></p>
+    <p>「アクションを実行」で［編集時］を選択した場合、基準を満たしたときに、いつもアクションを実行するか、初回のみ実行するかを選択できます。</p>
+    <p>同様に、「アクションを実行」で［完全に削除］を選択し、「アクション」で「プロセスの実行を中止」を選択した場合、リクエストが削除された際は、ゴミ箱に一時保存されます。このオプションでは、フィールドの更新はサポートしていません。しかし、ゴミ箱内のリクエストの削除を中止するカスタム関数やスクリプトを設定することができます。</p>
+    <p>カスタムアクションを選択する際、［カスタム関数］と［スクリプトを実行する］は、どちらか片方のみを選択することができます。1つのトリガーに両方のオプションは選択できません。</p>
+    <p>通知で、「アクションを実行」の「システム通知」は、ServiceDesk Plusにデフォルトで設定されている通知のみが適用されます。</p>
+    <h3 class="sb">一覧ページのアクション</h3>
+    <p>カスタムトリガーの一覧ページから、カスタムトリガーやルールグループの編成、カスケード実行の設定、グループ間のトリガーの移動ができます。</p>
+    <p>詳しくは<a target="_blank" href="https://servicedeskplus.helpdocsonline.com/configurations/helpdesk/custom-triggers.html" rel="noopener noreferrer">こちら</a>をご覧ください。</p>
+    </body>
+    </html>

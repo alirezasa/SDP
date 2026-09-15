@@ -1,0 +1,365 @@
+{
+    "Additional Elements": [],
+    "operations": [
+        {
+            "output": {"sample": "{\"orgusers\":[{\"user_udf_fields\":{\"udf_sline_1\":null},\"phone\":\"213129388\",\"department\":null,\"reporting_to\":null,\"id\":\"5\",\"profile_pic\":null,\"jobtitle\":\"\",\"first_name\":null,\"description\":\"Help Desk Executive\",\"sms_mail_id\":null,\"name\":\"administrator\",\"domain\":null,\"employee_id\":\"010\",\"email_id\":null,\"is_vipuser\":false,\"status\":\"ACTIVE\",\"middle_name\":null,\"login_name\":null,\"last_name\":null,\"created_time\":{\"display_value\":\"Nov 13, 2018 03:42 PM\",\"value\":\"1542103940016\"},\"mobile\":\"\",\"is_org_admin\":false},{\"user_udf_fields\":{\"udf_sline_1\":\"User udf value1\"},\"phone\":\"213129387\",\"department\":{\"site\":null,\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"id\":\"301\",\"profile_pic\":null,\"jobtitle\":\"Developer\",\"first_name\":\"User\",\"description\":\"-desc\",\"sms_mail_id\":\"abcd@zylker.com\",\"name\":\"abc\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"is_vipuser\":true,\"status\":\"ACTIVE\",\"middle_name\":\"middle\",\"login_name\":\"u1\",\"last_name\":\"last\",\"created_time\":{\"display_value\":\"Nov 13, 2018 03:59 PM\",\"value\":\"1542104957538\"},\"mobile\":\"12345678\",\"is_org_admin\":true}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":true,\"start_index\":1,\"row_count\":2,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":2,\"sort_order\":\"asc\",\"sort_field\":\"name\"}}",
+                "showattr": "true"
+            },
+            "path": ["/api/v3/orgusers"],
+            "method": "GET",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Get all orgusers",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"orguser\":{\"user_udf_fields\":{\"udf_sline_1\":\"User udf value1\"},\"phone\":\"213129387\",\"department\":{\"site\":null,\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"id\":\"301\",\"profile_pic\":null,\"jobtitle\":\"Developer\",\"first_name\":\"User\",\"description\":\"-desc\",\"sms_mail_id\":\"abcd@zylker.com\",\"name\":\"Abc\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"attachments\":[{\"id\":\"1\",\"file_name\":\"scat-ico-cubes.gif\",\"attachment_key\":\"14A4C55F-E51B-4B54-829A-5247CD719A7B\",\"content_url\":\"/api/v3/attachments/1\",\"size\":\"2.82KB\"},{\"id\":\"2\",\"file_name\":\"scat-ico-filecheck.gif\",\"attachment_key\":\"5F5BD28C-C886-49FD-BADE-BC72303CAF11\",\"content_url\":\"/api/v3/attachments/2\",\"size\":\"2.86KB\"}],\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"is_vipuser\":true,\"status\":\"ACTIVE\",\"middle_name\":\"middle\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"login_name\":\"u1\",\"last_name\":\"last\",\"created_time\":{\"display_value\":\"Nov 13, 2018 03:59 PM\",\"value\":\"1542104957538\"},\"is_org_admin\":true,\"mobile\":\"12345678\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/orgusers/{orguser_id}",
+            "method": "GET",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Get an orguser",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Add an orguser",
+            "roles": ["Adding Requester"],
+            "defaultAttributes": [],
+            "output": {"sample": "{\"orguser\":{\"user_udf_fields\":{\"udf_sline_1\":\"User udf value1\"},\"phone\":\"213129387\",\"department\":{\"site\":null,\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"id\":\"606\",\"profile_pic\":null,\"jobtitle\":\"Developer\",\"first_name\":\"Test\",\"description\":\"description\",\"sms_mail_id\":\"abcde@zylker.com\",\"name\":\"Test user name\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"is_vipuser\":true,\"status\":\"ACTIVE\",\"middle_name\":\"user\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"login_name\":\"u2\",\"last_name\":\"name\",\"created_time\":{\"display_value\":\"Nov 14, 2018 11:42 AM\",\"value\":\"1542175956913\"},\"is_org_admin\":null,\"mobile\":\"12345678\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"orguser\":{\"first_name\":\"Test\",\"middle_name\":\"user\",\"last_name\":\"name\",\"name\":\"Test user name\",\"is_vipuser\":true,\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"mobile\":\"12345678\",\"phone\":\"213129387\",\"sms_mail_id\":\"abcde@zylker.com\",\"jobtitle\":\"Developer\",\"department\":{\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\"},\"user_udf_fields\":{\"udf_sline_1\":\"User udf value1\"},\"login_name\":\"u2\",\"password\":\"u2\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"description\":\"description\"}}",
+                "showattr": "true"
+            },
+            "path": ["/api/v3/orgusers"],
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Update an orguser",
+            "roles": ["Editing Requester"],
+            "defaultAttributes": [],
+            "output": {"sample": "{\"orguser\":{\"user_udf_fields\":{\"udf_sline_1\":\"User udf value2\"},\"phone\":\"213129387\",\"department\":{\"site\":null,\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\",\"email_id\":null,\"is_vipuser\":false},\"id\":\"606\",\"profile_pic\":null,\"jobtitle\":\"Developer\",\"first_name\":\"Test\",\"description\":\"description\",\"sms_mail_id\":\"abcde@zylker.com\",\"name\":\"Test user name\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"is_vipuser\":false,\"status\":\"ACTIVE\",\"middle_name\":\"user\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"login_name\":\"u2\",\"last_name\":\"name\",\"created_time\":{\"display_value\":\"Nov 14, 2018 11:42 AM\",\"value\":\"1542175956913\"},\"is_org_admin\":null,\"mobile\":\"12345678\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"orguser\":{\"first_name\":\"Test\",\"middle_name\":\"user\",\"last_name\":\"name\",\"name\":\"Test user name\",\"is_vipuser\":false,\"employee_id\":\"1234\",\"email_id\":\"user1@zylker.com\",\"secondary_emailids\":[\"user1@zylker.com\",\"user1@zylker.com\"],\"mobile\":\"12345678\",\"phone\":\"213129387\",\"sms_mail_id\":\"abcde@zylker.com\",\"jobtitle\":\"Developer\",\"department\":{\"id\":\"2\",\"name\":\"Engineering\"},\"reporting_to\":{\"id\":\"4\",\"name\":\"administrator\"},\"user_udf_fields\":{\"udf_sline_1\":\"User udf value2\"},\"login_name\":\"u2\",\"password\":\"u3\",\"domain\":{\"id\":\"1\",\"name\":\"ZYLKER\"},\"description\":\"description\"}}",
+                "showattr": "true"
+            },
+            "path": ["/api/v3/orgusers/{orguser_id}"],
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": "/api/v3/orgusers/{orguser_id}",
+            "method": "DELETE",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Delete an orguser",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"12\",\"status\":\"success\"}]}"},
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"32\":\"ANONYMOUS_32\"}",
+                "showattr": "true"
+            },
+            "path": ["/api/v3/orgusers?ids={user_ids}"],
+            "method": "DELETE",
+            "moduleName" : "Common",
+            "workflow": "",
+            "disp_desc": "Anonymize User",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        }
+    ],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "id",
+            "isReleased": "true",
+            "type": "long",
+            "desc": "Unique identity of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "first_name",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "First name of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "middle_name",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Middle name of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "last_name",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Last name of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "name",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Name of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "employee_id",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Unique employee Id assigned to the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "email_id",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Email address of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "secondary_emailids",
+            "isReleased": "true",
+            "type": "Array of Objects",
+            "desc": "Secondary email addresses of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "phone",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Phone number of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "mobile",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Mobile number of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "sms_mail_id",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Sms mail Id of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "user_udf_fields",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "User - Additional fields of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "jobtitle",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Job title of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "department",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "Department to which the orguser belongs",
+            "graphView": "",
+            "relEntity": {
+                "name": "Department",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "reporting_to",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "User to which the orguser reports",
+            "graphView": "",
+            "relEntity": {
+                "name": "Orguser_V3",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "login_name",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Username/email to log in to the application",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "password",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Password to log in to the application",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "domain",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "Domain to which the orguser belongs",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "is_vipuser",
+            "isReleased": "true",
+            "type": "Boolean",
+            "desc": "Indicates whether the orguser is a VIP user",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "is_org_admin",
+            "isReleased": "true",
+            "type": "Boolean",
+            "desc": "Indicates whether the orguser is an organisation admin",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "profile_pic",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "URL of the orguser's profile picture",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "status",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Active status of the orguser",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "created_time",
+            "isReleased": "true",
+            "type": "Object",
+            "desc": "Time at which the orguser is added to the organisation",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "column": "",
+            "name": "description",
+            "isReleased": "true",
+            "type": "String",
+            "desc": "Description of the orguser",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1568030481000
+}

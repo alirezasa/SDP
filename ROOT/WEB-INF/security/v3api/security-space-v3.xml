@@ -1,0 +1,1831 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" disable-extraparam="true" authentication="required">
+		
+		<!-- Attachment urls start -->
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments/(\d+)" roles="CreateSpace,ModifySpace" method="delete">
+			<throttles key="url.path+url.dynamic_key" name="space_documents_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments" roles="CreateSpace,ModifySpace" method="delete">
+			<throttles key="url.path+url.dynamic_key" name="space_documents_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="spaces_sub_spaces_space_documents_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="spaces_sub_spaces_space_documents_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="spaces_sub_spaces_space_documents_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+		
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments/(\d+)" roles="CreateSpace,ModifySpace" method="delete">
+			<throttles key="url.path+url.dynamic_key" name="space_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments" roles="CreateSpace,ModifySpace" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="space_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+			<param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="spaces_sub_spaces_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="spaces_sub_spaces_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="spaces_sub_spaces_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+		
+		
+		
+        <url path="/api/v3/facility_services/(\d+)/attachments/(\d+)" roles="CreateSpace,ModifySpace" method="delete">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/facility_services/(\d+)/attachments" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/attachments" roles="CreateSpace,ModifySpace" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+			<param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/attachments/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/facility_services/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="facility_services_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="facility_services_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="facility_services_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/facility_services/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+		
+		<!-- Attachment urls end -->
+		
+		<!-- Facility Service urls start -->
+		
+        <url path="/api/v3/facility_services" roles="CreateSpace" method="post">
+            <throttles name="facility_service_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="facility_service" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)" roles="ViewSpace" method="get">
+            <throttles name="facility_service_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)" roles="ModifySpace" method="put">
+            <throttles name="facility_service_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="facility_service" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)" roles="DeleteSpace" method="delete">
+            <throttles name="facility_service_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/facility_services" roles="ViewSpace" method="get">
+            <throttles name="facility_service_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services" roles="DeleteSpace" method="delete">
+            <throttles name="facility_service_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(_?)allowed_values_for_fields" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/(_?)allowed_values_for_fields" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(template|supervisor|created_by|last_updated_by)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/(template|supervisor)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+		<url path="/api/v3/facility_services/template/(\d+)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/facility_services/(\d+)/template/(\d+)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/facility_services(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_services/(\d+)/_links" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/facility_services/_links" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/facility_services/(_?)metainfo" method="get" roles="ViewSpace,ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+		<url path="/api/v3/facility_services/(\d+)/(_?)metainfo" method="get" roles="ViewSpace,ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+		<url path="/api/v3/facility_services/(template|supervisor|created_by|last_updated_by)/(_?)metainfo" method="get" roles="ViewSpace">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+		<!-- Facility Services urls end -->
+		
+		<!-- Space instance urls start -->
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)" roles="CreateSpace" method="post">
+			<throttles name="space_instance_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+			<param name="input_data" template="space_instance_cm" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)" roles="ModifySpace" method="put">
+			<throttles name="space_instance_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+			<param name="input_data" template="space_instance_cm" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)" roles="DeleteSpace" method="delete">
+			<throttles name="space_instance_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)" roles="DeleteSpace" method="delete">
+			<throttles name="space_instance_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+			<param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)" roles="ViewSpace" method="get">
+			<throttles name="space_instance_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)" roles="ViewSpace" method="get">
+			<throttles name="space_instance_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces" roles="DeleteSpace" method="delete">
+			<throttles name="space_instance_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+        </url>
+		<url path="/api/v3/spaces" roles="ViewSpace" method="get">
+			<throttles name="space_instance_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/_links" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)copy" roles="CreateSpace" method="post">
+			<throttles name="space_instance_copy" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+			<param name="input_data" template="copy_space_template" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(_?)get_request_templates_with_space" roles="CreateRequests" method="get">
+			<throttles name="space_instance_get_request_templates_with_space" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+			<param name="input_data" template="request_templates_space_get" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)history" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_history_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(_?)metainfo" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/allowed_values_for_fields" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/allowed_values_for_fields" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/_links" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/_links" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(_?)metainfo" method="get" roles="ViewSpace,ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)metainfo" method="get" roles="ViewSpace,ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+		<url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(_?)metainfo" method="get" roles="ViewSpace,ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(template|site|status|created_by|last_updated_by|space_campus|space_building|space_floor|department)/(_?)metainfo" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		</url>
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(area_unit|amenities|criticalities|type|template|facility_service|site|status|supervisors|space_campus|space_building|space_floor|space_room|department|asset|created_by|last_updated_by)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(area_unit|amenities|criticalities|type|template|facility_service|site|status|supervisors|space_campus|space_building|space_floor|space_room|department|summary|asset)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/template/(\d+)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/template/(\d+)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		</url>
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/room_layouts/room_layout" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="room_layout_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/room_layouts/room_layout" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="room_layout_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" roles="ViewSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(amenities|criticalities)/(\d+)/images/(\d+)" roles="" method="get">
+			<throttles key="url.path+url.dynamic_key" name="amenities_criticalities_icon_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param regex="file_token" max-occurrences="1" max-len="500" name="key"/>
+		</url>
+		<url path="/api/v3/spaces/(space_rooms|space_roompartitions)/(\d+)/room_layouts/room_layout/(\d+)/images/(\d+)" roles="" method="get">
+			<throttles key="url.path+url.dynamic_key" name="room_layout_icon_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param regex="file_token" max-occurrences="1" max-len="500" name="key"/>
+		</url>
+		
+		
+		<!-- Space instance urls end -->
+		
+		<!-- Facility Service Templates urls start -->
+		
+        <url path="/api/v3/facility_service_templates" roles="ConfigureSpace" method="post">
+            <throttles name="facility_service_template_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="facility_service_template" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_service_templates/(\d+)" roles="ConfigureSpace" method="put">
+            <throttles name="facility_service_template_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="facility_service_template" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_service_templates/(\d+)" roles="ConfigureSpace" method="delete">
+            <throttles name="facility_service_template_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/facility_service_templates/(\d+)" roles="ConfigureSpace" method="get">
+            <throttles name="facility_service_template_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_service_templates" roles="ConfigureSpace" method="get">
+            <throttles name="facility_service_template_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/facility_service_templates/(_?)default" roles="ConfigureSpace,CreateSpace" method="get">
+            <throttles name="facility_service_template_default" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/facility_service_templates/(\d+)/(_?)mark_default" roles="ConfigureSpace" method="put">
+            <throttles name="facility_service_template_mark_default" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/facility_service_templates/(\d+)/(_?)activate" roles="ConfigureSpace" method="put">
+            <throttles name="facility_service_template_activate" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/facility_service_templates" roles="ConfigureSpace" method="delete">
+            <throttles name="facility_service_template_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		
+        <url path="/api/v3/facility_service_templates/(\d+)/_links" roles="ConfigureSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="facility_service_template_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/facility_service_templates/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_template_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/facility_service_templates/(_?)metainfo" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_templates_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+		<url path="/api/v3/facility_service_templates/(_?)history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_templates_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/facility_service_templates/(_?)get_records_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_templates_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/facility_service_templates/(_?)get_performed_by_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="facility_service_templates_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+		
+		<!-- Facility Service Templates urls end -->
+		
+		<!-- Room layouts urls start -->
+		
+		<url path="/api/v3/room_layouts" roles="ConfigureSpace" method="post">
+            <throttles name="room_layout_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="room_layout" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/room_layouts/(\d+)" roles="ConfigureSpace" method="get">
+            <throttles name="room_layout_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/room_layouts/(\d+)" roles="ConfigureSpace" method="put">
+            <throttles name="room_layout_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="room_layout" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/room_layouts/(\d+)" roles="ConfigureSpace" method="delete">
+            <throttles name="room_layout_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/room_layouts" roles="ConfigureSpace" method="get">
+            <throttles name="room_layout_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/room_layouts" roles="ConfigureSpace" method="put">
+            <throttles name="room_layout_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="room_layout" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/room_layouts" roles="ConfigureSpace" method="delete">
+            <throttles name="room_layout_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/room_layouts/images" roles="ConfigureSpace" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/room_layouts/(\d+)/images" roles="ConfigureSpace" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+		<url path="/api/v3/room_layouts/images/(\d+)" roles="" method="get">
+			<throttles name="room_layout_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/room_layouts/(\d+)/images/(\d+)" roles="" method="get">
+			<throttles name="room_layout_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param regex="file_token" max-occurrences="1" max-len="500" name="key"/>
+		</url>
+		<url path="/api/v3/room_layouts/icon_name" roles="ConfigureSpace" method="get">
+			<throttles name="room_layout_icon_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+		</url>
+        <url path="/api/v3/room_layouts/(\d+)/_links" roles="ConfigureSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="room_layouts_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/room_layouts/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="room_layouts_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/room_layouts/(_?)metainfo" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="room_layouts_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/room_layouts/(_?)history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="room_layouts_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/room_layouts/(_?)get_records_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="room_layouts_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/room_layouts/(_?)get_performed_by_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_amenities_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <!-- Room layouts urls end -->
+		
+		<!-- Space amenities urls start -->
+		
+        <url path="/api/v3/space_amenities" roles="ConfigureSpace" method="post">
+            <throttles name="space_amenity_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_amenity" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_amenities/(\d+)" roles="ConfigureSpace" method="get">
+            <throttles name="space_amenity_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_amenities/(\d+)" roles="ConfigureSpace" method="put">
+            <throttles name="space_amenity_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_amenity" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_amenities/(\d+)" roles="ConfigureSpace" method="delete">
+            <throttles name="space_amenity_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_amenities" roles="ConfigureSpace" method="get">
+            <throttles name="space_amenity_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_amenities" roles="ConfigureSpace" method="put">
+            <throttles name="space_amenity_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_amenity" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_amenities" roles="ConfigureSpace" method="delete">
+            <throttles name="space_amenity_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_amenities/images" roles="ConfigureSpace" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/space_amenities/(\d+)/images" roles="ConfigureSpace" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/space_amenities/images/(\d+)" roles="" method="get">
+			<throttles name="space_amenity_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/space_amenities/(\d+)/images/(\d+)" roles="" method="get">
+			<throttles name="space_amenity_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param regex="file_token" max-occurrences="1" max-len="500" name="key"/>
+		</url>
+		<url path="/api/v3/space_amenities/icon_name" roles="ConfigureSpace" method="get">
+			<throttles name="space_amenity_icon_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+		</url>
+        <url path="/api/v3/space_amenities/(\d+)/_links" roles="ConfigureSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_amenities_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_amenities/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_amenities_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/space_amenities/(_?)metainfo" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_amenities_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/space_amenities/(_?)history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_amenities_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_amenities/(_?)get_records_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_amenities_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_amenities/(_?)get_performed_by_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_amenities_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <!-- Space amenities urls end -->
+		
+		<!-- Space asset association urls start -->
+		
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations" roles="CreateSpace,ModifySpace,ModifyInventoryWS" method="post">
+            <throttles name="space_asset_association_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_asset_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/(\d+)" roles="CreateSpace,ModifySpace,ModifyInventoryWS" method="delete">
+            <throttles name="space_asset_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations" roles="ViewSpace,ViewInventoryWS" method="get">
+            <throttles name="space_asset_association_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations" roles="CreateSpace,ModifySpace,ModifyInventoryWS" method="delete">
+            <throttles name="space_asset_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/(_?)allowed_values_for_fields" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_asset_associations_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/_links" roles="ViewSpace,ViewInventoryWS" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_asset_associations_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" allow-empty="false" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" max-len="1200"/>
+        </url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/(_?)metainfo" method="get" roles="ViewSpace,ViewInventoryWS">
+            <throttles key="url.path+url.dynamic_key" name="space_asset_associations_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+		<!-- Space asset associations urls end -->
+		
+		<!-- Space criticalities urls start -->
+		
+        <url path="/api/v3/space_criticalities" roles="ConfigureSpace" method="post">
+            <throttles name="space_criticality_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_criticality" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_criticalities/(\d+)" roles="ConfigureSpace" method="get">
+            <throttles name="space_criticality_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_criticalities/(\d+)" roles="ConfigureSpace" method="put">
+            <throttles name="space_criticality_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_criticality" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_criticalities/(\d+)" roles="ConfigureSpace" method="delete">
+            <throttles name="space_criticality_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_criticalities" roles="ConfigureSpace" method="get">
+            <throttles name="space_criticality_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_criticalities" roles="ConfigureSpace" method="put">
+            <throttles name="space_criticality_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_criticality" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_criticalities" roles="ConfigureSpace" method="delete">
+            <throttles name="space_criticality_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_criticalities/images" roles="ConfigureSpace" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url path="/api/v3/space_criticalities/(\d+)/images" roles="ConfigureSpace" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+		<url path="/api/v3/space_criticalities/images/(\d+)" roles="" method="get">
+			<throttles name="space_criticality_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/space_criticalities/(\d+)/images/(\d+)" roles="" method="get">
+			<throttles name="space_criticality_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+			<param regex="file_token" max-occurrences="1" max-len="500" name="key"/>
+		</url>
+		<url path="/api/v3/space_criticalities/icon_name" roles="ConfigureSpace" method="get">
+			<throttles name="space_criticality_icon_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+		</url>
+        
+        <url path="/api/v3/space_criticalities/(\d+)/_links" roles="ConfigureSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_criticalities_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_criticalities/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_criticalities_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/space_criticalities/(_?)metainfo" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_criticalities_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/space_criticalities/(_?)history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_criticalities_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_criticalities/(_?)get_records_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_criticalities_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_criticalities/(_?)get_performed_by_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_criticalities_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+
+        <!-- Space criticalities urls end -->
+		
+		<!-- Space Documents urls start -->
+		
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents" roles="ModifySpace" method="post">
+            <throttles name="space_document_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_document" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)" roles="ViewSpace" method="get">
+            <throttles name="space_document_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)" roles="ModifySpace" method="put">
+            <throttles name="space_document_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_document" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)" roles="ModifySpace" method="delete">
+            <throttles name="space_document_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents" roles="ViewSpace" method="get">
+            <throttles name="space_document_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents" roles="ModifySpace" method="delete">
+            <throttles name="space_document_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/_links" roles="ModifySpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/_links" roles="ModifySpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(_?)metainfo" method="get" roles="ViewSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+		<url path="/api/v3/space_documents/(_?)metainfo" method="get" roles="ViewSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+		<!-- Space Documents urls end -->
+		
+		<!-- Space facility service association urls start -->
+		
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations" roles="ModifySpace" method="post">
+            <throttles name="space_facility_service_association_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_facility_service_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations/(\d+)" roles="ModifySpace" method="delete">
+            <throttles name="space_facility_service_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations" roles="ViewSpace" method="get">
+            <throttles name="space_facility_service_association_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations" roles="ModifySpace" method="delete">
+            <throttles name="space_facility_service_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations/_links" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_facility_service_association_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations/(_?)metainfo" method="get" roles="ViewSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_facility_service_association_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+		<!-- Space facility service association urls end -->
+		
+		<!-- Space request association urls start -->
+        
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_request_associations" roles="ViewSpace,ViewRequests" method="get">
+            <throttles name="space_request_association_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_request_associations/_links" roles="ViewSpace,ViewRequests" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_request_association_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/spaces/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_request_associations/(_?)metainfo" method="get" roles="ViewSpace,ViewRequests">
+            <throttles key="url.path+url.dynamic_key" name="space_request_association_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+		<!-- Space request association urls end -->
+		
+		<!-- Space status urls start -->
+		
+        <url path="/api/v3/space_statuses" roles="ConfigureSpace" method="post">
+            <throttles name="space_status_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_status" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_statuses/(\d+)" roles="ConfigureSpace" method="get">
+            <throttles name="space_status_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_statuses/(\d+)" roles="ConfigureSpace" method="put">
+            <throttles name="space_status_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_status" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_statuses/(\d+)" roles="ConfigureSpace" method="delete">
+            <throttles name="space_status_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_statuses" roles="ConfigureSpace" method="get">
+            <throttles name="space_status_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_statuses" roles="ConfigureSpace" method="put">
+            <throttles name="space_status_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_status" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_statuses" roles="ConfigureSpace" method="delete">
+            <throttles name="space_status_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_statuses/(\d+)/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_status_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_statuses/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_status_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/space_statuses/(_?)metainfo" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_status_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_statuses/(_?)history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_statuses_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_statuses/(_?)get_records_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_statuses_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_statuses/(_?)get_performed_by_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_statuses_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <!-- Space status urls end -->
+		
+		<!-- Space templates urls start -->
+		
+        <url path="/api/v3/space_templates" roles="ConfigureSpace" method="post">
+            <throttles name="space_template_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_template" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_templates/(\d+)" roles="ConfigureSpace" method="put">
+            <throttles name="space_template_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_template" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_templates/(\d+)" roles="ConfigureSpace" method="delete">
+            <throttles name="space_template_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_templates/(\d+)" roles="ConfigureSpace" method="get">
+            <throttles name="space_template_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_templates" roles="ConfigureSpace" method="get">
+            <throttles name="space_template_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_template_get" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_templates/(_?)default" roles="ConfigureSpace,CreateSpace" method="get">
+            <throttles name="space_template_get_default" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_default_template_get" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_templates/(\d+)/(_?)mark_default" roles="ConfigureSpace" method="put">
+            <throttles name="space_template_edit_mark_default" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_templates/(\d+)/(_?)activate" roles="ConfigureSpace" method="put">
+            <throttles name="space_template_activate" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_templates" roles="ConfigureSpace" method="delete">
+            <throttles name="space_template_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_templates/(\d+)/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_template_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_templates/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_template_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="space_template_get" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/space_templates/(_?)metainfo" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_template_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+		<url path="/api/v3/space_templates/(_?)history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_templates_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_templates/(_?)get_records_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_templates_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_templates/(_?)get_performed_by_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_templates_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+        
+		<!-- Space templates urls end -->
+		
+		<!-- Space Unit urls start -->
+		<url path="/api/v3/space_units" roles="ConfigureSpace" method="post">
+            <throttles name="space_unit_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_unit" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_units/(\d+)" roles="ConfigureSpace" method="get">
+            <throttles name="space_unit_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_units/(\d+)" roles="ConfigureSpace" method="put">
+            <throttles name="space_unit_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_unit" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_units/(\d+)" roles="ConfigureSpace" method="delete">
+            <throttles name="space_unit_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_units" roles="ConfigureSpace" method="get">
+            <throttles name="space_unit_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/space_units" roles="ConfigureSpace" method="put">
+            <throttles name="space_unit_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_unit" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_units" roles="ConfigureSpace" method="delete">
+            <throttles name="space_unit_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_units/(\d+)/_links" roles="ConfigureSpace" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_unit_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/space_units/_links" roles="ConfigureSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_unit_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+		<url path="/api/v3/space_units/(_?)metainfo" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_unit_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/space_units/(_?)history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_units_getlist_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_units/(_?)get_records_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_units_get_records_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/space_units/(_?)get_performed_by_for_history" method="get" roles="ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_units_get_performed_by_for_history" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+
+        <!-- Space Unit urls end -->
+        
+		<!-- Url for fetching space allowed values in asset form -->
+		<url path="/api/v3/assets/space" roles="ViewSpace,ViewInventoryWS" method="get">
+			<throttles key="url.path+url.dynamic_key" name="space_allowed_values_for_assets" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+        <!-- URLs to support dynamic entity URL parsing without first token starts-->
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments/(\d+)" roles="CreateSpace,ModifySpace" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments" roles="CreateSpace,ModifySpace" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/attachments/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sub_spaces_space_documents_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sub_spaces_space_documents_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sub_spaces_space_documents_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments/(\d+)" roles="CreateSpace,ModifySpace" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="space_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments" roles="CreateSpace,ModifySpace" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="space_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/attachments/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sub_spaces_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sub_spaces_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)upload" roles="CreateSpace,ModifySpace" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="sub_spaces_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/attachments/(\d+)/(_?)download" roles="ViewSpace" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)" roles="CreateSpace" method="post">
+            <throttles name="space_instance_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_instance_cm" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)" roles="ModifySpace" method="put">
+            <throttles name="space_instance_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_instance_cm" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)" roles="DeleteSpace" method="delete">
+            <throttles name="space_instance_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)" roles="DeleteSpace" method="delete">
+            <throttles name="space_instance_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)" roles="ViewSpace" method="get">
+            <throttles name="space_instance_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)" roles="ViewSpace" method="get">
+            <throttles name="space_instance_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)copy" roles="CreateSpace" method="post">
+            <throttles name="space_instance_copy" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="copy_space_template" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(_?)get_request_templates_with_space" roles="CreateRequests" method="get">
+            <throttles name="space_instance_get_request_templates_with_space" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="request_templates_space_get" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)history" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_history_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/allowed_values_for_fields" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/allowed_values_for_fields" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/_links" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/_links" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(_?)metainfo" method="get" roles="ViewSpace,ConfigureSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(template|site|status|created_by|last_updated_by|space_campus|space_building|space_floor|department)/(_?)metainfo" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(area_unit|amenities|criticalities|type|template|facility_service|site|status|supervisors|space_campus|space_building|space_floor|space_room|department|asset|created_by|last_updated_by)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(area_unit|amenities|criticalities|type|template|facility_service|site|status|supervisors|space_campus|space_building|space_floor|space_room|department|summary|asset)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/template/(\d+)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/template/(\d+)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_template_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/room_layouts/room_layout" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="room_layout_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/room_layouts/room_layout" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="room_layout_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)(/udf_fields)?/((multi|pick)_[a-z0-9_]+)" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/(amenities|criticalities)/(\d+)/images/(\d+)" roles="" method="get">
+            <throttles key="url.path+url.dynamic_key" name="amenities_criticalities_icon_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key"/>
+        </url>
+        <url path="/api/v3/(space_rooms|space_roompartitions)/(\d+)/room_layouts/room_layout/(\d+)/images/(\d+)" roles="" method="get">
+            <throttles key="url.path+url.dynamic_key" name="room_layout_icon_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param regex="file_token" max-occurrences="1" max-len="500" name="key"/>
+        </url>
+        <!-- Space asset association urls start -->
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations" roles="CreateSpace,ModifySpace,ModifyInventoryWS" method="post">
+            <throttles name="space_asset_association_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_asset_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/(\d+)" roles="CreateSpace,ModifySpace,ModifyInventoryWS" method="delete">
+            <throttles name="space_asset_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations" roles="ViewSpace,ViewInventoryWS" method="get">
+            <throttles name="space_asset_association_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations" roles="CreateSpace,ModifySpace,ModifyInventoryWS" method="delete">
+            <throttles name="space_asset_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/(_?)allowed_values_for_fields" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_asset_associations_allowed_values_for_fields" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/_links" roles="ViewSpace,ViewInventoryWS" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_asset_associations_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" allow-empty="false" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" max-len="1200"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_asset_associations/(_?)metainfo" method="get" roles="ViewSpace,ViewInventoryWS">
+            <throttles key="url.path+url.dynamic_key" name="space_asset_associations_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+        <!-- Space asset associations urls end -->
+        <!-- Space Documents urls start -->
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents" roles="ModifySpace" method="post">
+            <throttles name="space_document_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_document" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)" roles="ViewSpace" method="get">
+            <throttles name="space_document_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)" roles="ModifySpace" method="put">
+            <throttles name="space_document_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_document" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)" roles="ModifySpace" method="delete">
+            <throttles name="space_document_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents" roles="ViewSpace" method="get">
+            <throttles name="space_document_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents" roles="ModifySpace" method="delete">
+            <throttles name="space_document_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(\d+)/_links" roles="ModifySpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/_links" roles="ModifySpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_documents/(_?)metainfo" method="get" roles="ViewSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_documents_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        <!-- Space Documents urls end -->
+        
+        <!-- Space facility service association urls start -->
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations" roles="ModifySpace" method="post">
+            <throttles name="space_facility_service_association_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="space_facility_service_association" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations/(\d+)" roles="ModifySpace" method="delete">
+            <throttles name="space_facility_service_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations" roles="ViewSpace" method="get">
+            <throttles name="space_facility_service_association_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations" roles="ModifySpace" method="delete">
+            <throttles name="space_facility_service_association_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations/_links" roles="ViewSpace" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_facility_service_association_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_facility_service_associations/(_?)metainfo" method="get" roles="ViewSpace">
+            <throttles key="url.path+url.dynamic_key" name="space_facility_service_association_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+        <!-- Space facility service association urls end -->
+        
+        <!-- Space request association urls start -->
+        
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_request_associations" roles="ViewSpace,ViewRequests" method="get">
+            <throttles name="space_request_association_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_request_associations/_links" roles="ViewSpace,ViewRequests" method="get">
+            <throttles key="url.path+url.dynamic_key" name="space_request_association_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/(space_campuses|space_buildings|space_nonbuildings|space_floors|space_rooms|space_roompartitions|space_structures)/(\d+)/space_request_associations/(_?)metainfo" method="get" roles="ViewSpace,ViewRequests">
+            <throttles key="url.path+url.dynamic_key" name="space_request_association_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+        </url>
+        
+        <!-- Space request association urls end -->
+        <!-- URLs to support dynamic entity URL parsing without first token ends-->
+    </urls>
+</security>

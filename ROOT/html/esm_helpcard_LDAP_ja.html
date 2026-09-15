@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>esmLDAP</title>
+</head>
+
+<body>
+    <p>LDAP連携をすることで、WindowsとLinuxサーバーの双方で、LDAPサーバーからユーザーをインポートすることができます。スケジュールインポートとLDAPを用いた認証設定をすることができます。</p>
+    <p>LDAPのインポートと認証を設定するには、初めにインポートするドメインの<strong>ドメインコントローラ</strong>を設定をする必要があります。</p>
+    <ol>
+	    <li>ドメインコントローラのブロック内の<strong>［新規ドメインの追加］</strong>をクリックします。</li>
+	    <li>ユーザーをインポートする<strong>ドメインコントローラ</strong>を入力します。
+		    <ul>
+			    <li>URLは次の通りです：<br>
+                    <strong>ldap://&lt;サーバー名&gt;:&lt;ポート番号&gt;</strong>（デフォルトのポート番号は389です。）</li>
+			    <li>LDAPをセキュアモードで接続するURLは、次の通りです：<br>
+                    <strong>ldaps://&lt;ホスト名&gt;:&lt;ポート番号&gt;</strong>（デフォルトのポート番号は636です。）</li>
+		    </ul>
+	    </li>
+	    <li>指定のフィールドに、組織単位（OU）と<strong>ユーザー名</strong>を入力します。</li>
+	    <li>指定のフィールドに、<strong>パスワード</strong>を入力します。</li>
+	    <li>識別子を示す<strong>Base DN</strong>を入力します。</li>
+	    <li><strong>「検索フィルター」</strong>フィールドに、特定のドメインコントローラに対して適用するを入力します。例えば、「mail=*」と指定すると、特定のドメインコントローラの「mail」のパラメーターからユーザーをインポートします。</li>
+		    <ul>
+			    <li><strong>Microsoft Active Directory、Novell eDirectory、OpenLDAP</strong>などのサーバータイプをデフォルトのLDAPとして選択している場合は、以降のフィールドは自動的に入力されます。</li>
+			    <li>LDAPのサーバータイプが<strong>「その他」</strong>の場合は、<strong>ログイン属性ラベル」、「メール属性ラベル」、「ユーザーログオン名属性ラベル（BaseDNと同じ）」</strong>をそれぞれのフィールドに入力します。</li>
+		    </ul>
+	    <li>LDAPの<strong>サーバータイプ</strong>を選択します。</li>
+	    <li><strong>［保存］</strong>または<strong>［保存/インポート］</strong>をクリックしドメインコントローラの設定を保存します。</li>
+    </ol>
+
+    <p>対応するドメインコントローラの<strong>［インポート］</strong>をクリックし、既存のドメインからユーザーをインポートすることができます。</p>
+    <p>ユーザーのインポート後、LDAP設定で、スケジュールインポートや、認証設定をすることができます。</p>
+
+    <p><strong style="font-weight: bold;">ローカル認証パスワード設定</strong></p>
+    <p>LDAPからインポートされたユーザーに対して、デフォルトのローカル認証パスワードを設定できます。また、<a target="_blank" style="color: blue;" href="https://servicedeskplus.helpdocsonline.com/esm-security-settings">セキュリティ設定</a>から、ユーザーの初回ログイン後にパスワードの更新を強制することもできます。</p>
+    <p>各ユーザー向けにランダムパスワードを生成すること有効化したり、全てのユーザ向けに、定義済みパスワードを設定したりすることができます。なお、事前に定義されているパスワードは、パスワードポリシーの全ての要件を満たす必要があります。</p>
+
+    <p><strong style="font-weight: bold;">インポートスケジュール設定</strong></p>
+    <p>一定間隔でLDAPをインポートするスケジュールを設定します。ServiceDesk Plusで利用できる全てのドメインから、ユーザーとユーザーの詳細がServiceDesk Plusに同期されます。</p>
+    <ol>
+	    <li><strong>「LDAPスケジュール」</strong>フィールドにマウスのカーソルを合わせ、<strong>［編集］</strong>をクリックします。</li>
+	    <li><strong>「～ごとにLDAPインポートを1回スケジュール」</strong>のオプションを有効化し、インポートする間隔を入力します。インポートスケジュールを開始する日時を指定することもできます。</li>
+	    <li><strong>［保存］</strong>をクリックして変更を保存します。</li>
+    </ol>
+    <p>ユーザーの詳細は、ドメインから、開始日時から指定された日数ごとに定期的にインポートされます。同じドメインを連続でインポートした際は、既存のデータは上書きされます。</p>
+
+    <p><strong style="font-weight: bold;">LDAP認証の有効化</strong></p>
+    <p>ユーザーが自身のLDAP資格情報を用いて、ServiceDesk Plusにログインすることができます。</p>
+    <ol>
+	    <li>ユーザーをインポートした後、<strong>「LDAP認証」</strong> のフィールドにマウスのカーソルを合わせ、<strong>［編集］</strong>をクリックします。</li>
+	    <li><strong>「LDAP認証を有効にする」</strong>のチェックボックスにチェックを入れます。</li>
+	    <li><strong>［保存］</strong>をクリックし、変更を保存します。</li>
+    </ol>
+    <p>ログイン画面にて、ユーザーがLDAP資格情報を入力し、<strong>「ドメイン」</strong>を選択して、ServiceDesk Plusにログインできるようになります。また、<strong>「ドメイン」</strong>のドロップダウンリストから<strong>「ローカル認証」</strong>を選択し、ローカルな資格情報を入力することで、ログイン時のLDAP認証を回避することができます。</p>
+    <p>Windowsのユーザーの場合は、LDAP認証を有効化すると、AD認証は自動的に無効化されます。</p>
+    <p><strong>注意：</strong></p>
+    <ul>
+	    <li>LDAP認証を有効化する前に、ユーザーがServiceDesk Plusにインポートされていることを確認してください。</li>
+	    <li>LDAP認証はLinuxとWindowsの両ユーザーに対応しています。</li>
+    <ul>
+</body>
+
+</html>

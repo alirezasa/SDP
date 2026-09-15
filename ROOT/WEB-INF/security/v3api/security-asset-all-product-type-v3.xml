@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true">
+        <throttles name="all_product_type_api" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1M" threshold="80" lock-period="5M"/>
+        </throttles>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types">
+            <param name="input_data" type="JSONObject" template="all_product_type_list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <!-- refer entity start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(\d+)/(parent|asset_type|asset_category|icon|status|category)/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(parent|asset_type|asset_category|icon|status|category)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(\d+)/(parent|status|category)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(parent|status|category)/(\d+)" />
+        <!-- refer entity end -->
+        <!-- convenience operations start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(\d+)/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/_get_performed_by_for_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" allow-invalid="false" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/all_product_types/_get_records_for_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" allow-invalid="false" />
+        </url>
+        <!-- image starts -->
+        <url method="get" path="/api/v3/all_product_types/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="res" regex="50x50|120x120"/>
+            <param name="key" regex="[a-z0-9]+" max-len="500" max-occurrences="1" secret="true" description="SHORT_LIFE_KEY" />
+        </url>
+        <url method="get" path="/api/v3/all_product_types/(\d+)/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="res" regex="50x50|120x120"/>
+            <param name="key" regex="[a-z0-9]+" max-len="500" max-occurrences="1" secret="true" description="SHORT_LIFE_KEY" />
+        </url>
+    </urls>
+    <urls api="true" authentication="required">
+        <throttles name="all_product_types_images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1m" threshold="10" lock-period="5m"/>
+        </throttles>
+        <url method="post" roles="SDAdmin" path="/api/v3/all_product_types/images">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/all_product_types/(\d+)/images">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <!-- image ends -->
+    </urls>
+</security>

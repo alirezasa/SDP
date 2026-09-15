@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <jsontemplates>
+        <jsontemplate name="chat_unique">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key allow-invalid="false" type="int" name="entity"/>
+            <key allow-invalid="false" max-len="250" type="String" name="title"/>
+        </jsontemplate>
+        <jsontemplate name="chat_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key allow-invalid="false" type="int" name="entity"/>
+            <key max-len="-1" type="JSONObject" template="chat_state_unique" name="status"/>
+            <key allow-invalid="false" max-len="250" type="String" name="title" secret="true"/>
+            <key max-len="-1" type="JSONObject" template="site_unique" name="site"/>
+            <key max-len="-1" type="JSONObject" template="support_group_unique" name="group"/>
+            <key  max-len="2000" type="String" name="message" secret="true"/>
+            <key allow-invalid="false" array-size="2-100" max-len="-1" type="JSONArray" template="chat_technician_id" name="technician_list"/>
+            <key max-len="-1" type="JSONObject" template="chat_technician_id" name="technician"/>
+            <key max-len="-1" type="JSONObject" template="chat_request_map_base" name="request_chat_association"/>
+             <key allow-invalid="false" type="long" name="chat_id"/>
+        </jsontemplate>
+        <jsontemplate name="chat">
+            <key max-len="-1" type="JSONObject" template="chat_base" name="chat"/>
+        </jsontemplate>
+        <jsontemplate name="chat_technician_id">
+            <key type="long" name="id"/>
+        </jsontemplate>
+        <jsontemplate name="chat_info_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key name="type" min-occurrences="1" regex="text|note|attachment"/>
+            <key max-len="2000" type="String" name="text" secret="true"/>
+            <key max-len="-1" type="JSONObject" template="chat_info_chat_note_template" name="chat_note"/>
+            <key max-len="-1" type="JSONObject" template="attachment_base" name="attachments"/>
+            <key allow-invalid="false" type="long" name="chat_message_time"/>
+            <key max-len="-1" type="JSONObject" template="chat_technician_id" name="reply_to"/>
+        </jsontemplate>
+        <jsontemplate name="chat_info">
+            <key max-len="-1" type="JSONObject" template="chat_info_base" name="chat_info"/>
+        </jsontemplate>
+        <jsontemplate name="chat_message_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="2000" type="String" name="message" secret="true" />
+        </jsontemplate>
+        <jsontemplate name="chat_message">
+            <key max-len="-1" type="JSONObject" template="chat_message_base" name="chat_message"/>
+        </jsontemplate>
+        <jsontemplate name="chat_note_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="2000" type="String" name="message" secret="true" />
+            <key allow-invalid="false" type="int" name="is_shared" range="0-1"/>
+        </jsontemplate>
+        <jsontemplate name="chat_note">
+            <key max-len="-1" type="JSONObject" template="chat_note_base" name="chat_note"/>
+        </jsontemplate>
+        <jsontemplate name="chat_note_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="chat_note_base" name="chat_note"/>
+        </jsontemplate>
+        <jsontemplate name="chat_info_chat_note_template">
+            <key max-len="2000" type="String" name="note" secret="true"/>
+            <key allow-invalid="false" type="int" name="is_shared" range="0-1"/>
+        </jsontemplate>
+        <jsontemplate name="chat_request_map_base">
+            <key allow-invalid="false" type="long" name="mapping_id"/>
+            <key max-len="-1" type="JSONObject" template="request_unique" name="request"/>
+        </jsontemplate>
+        <jsontemplate name="chat_request_map">
+            <key max-len="-1" type="JSONObject" template="chat_request_map_base" name="chat_request_map"/>
+        </jsontemplate>
+        <jsontemplate name="chat_state_unique">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="100" type="String" name="name"/>
+        </jsontemplate>
+        <jsontemplate name="chat_user_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="-1" type="JSONObject" template="user_unique" name="member_details"/>
+            <key max-len="20" type="String" name="status"/>
+            <key max-len="-1" type="JSONObject" template="datefield" name="start_time"/>
+        </jsontemplate>
+        <jsontemplate name="chat_user">
+            <key max-len="-1" type="JSONObject" template="chat_user_base" name="chat_user"/>
+        </jsontemplate>
+        <jsontemplate name="chat_user_unique_wrapper">
+            <key max-len="-1" type="JSONObject" template="chat_user_unique" name="chat_user"/>
+        </jsontemplate>
+         <jsontemplate name="chat_update_title">
+            <key max-len="-1" type="JSONObject" template="chat_title" name="chat"/>
+         </jsontemplate>
+         <jsontemplate name="chat_title">
+            <key allow-invalid="false" max-len="250" type="String" name="title" secret="true" />
+         </jsontemplate>
+         <jsontemplate name="chat_add_member">
+            <key max-len="-1" type="JSONObject" template="chat_technician_idjson" name="chat"/>
+            <key name="users" template="longarray" array-size="0-100" type="JSONArray" max-len="-1"/>
+        </jsontemplate>
+         <jsontemplate name="chat_technician">
+            <key max-len="-1" type="JSONObject" template="chat_technician_idjson" name="chat"/>
+        </jsontemplate>
+         <jsontemplate name="chat_technician_idjson">
+            <key max-len="-1" type="JSONObject" template="chat_technician_id" name="technician"/>
+        </jsontemplate>
+        <jsontemplate name="chat_settings_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="100" type="String" name="parameter"/>
+            <key max-len="7500" type="String" name="value" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="chat_settings">
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="chat_settings_base" name="chat_settings"/>
+        </jsontemplate>
+       
+
+
+        <!-- pin message templates -->
+        <jsontemplate name="pin_chat_info_base">
+            <key allow-invalid="false" type="long" name="id"/>
+        </jsontemplate>
+        <jsontemplate name="pin_end_time_base">
+            <key allow-invalid="false" type="long" name="value"/>
+        </jsontemplate>
+        <jsontemplate name="pin_message_base">
+            <key allow-invalid="false" type="JSONObject" template="pin_chat_info_base" name="message"/>
+            <key allow-invalid="false" type="JSONObject" template="pin_end_time_base" name="end_time"/>
+        </jsontemplate>
+        <jsontemplate name="pin_message">
+            <key max-len="-1" type="JSONObject" template="pin_message_base" name="pin_message"/>
+        </jsontemplate>
+
+
+        <jsontemplate name="update_pin_message_base">
+            <key allow-invalid="false" type="JSONObject" template="pin_end_time_base" name="end_time"/>
+        </jsontemplate>
+        <jsontemplate name="update_pin_message">
+            <key max-len="-1" type="JSONObject" template="update_pin_message_base" name="pin_message"/>
+        </jsontemplate>
+
+        <jsontemplate name="channel_base">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100" min-occurrences="1"/>
+            <key name="description" type="String" max-len="1000" secret="true"/>
+            <key name="type" regex="team|org"/>
+            <key name="is_public" type="boolean"/>
+            <key name="status" template="channel_status_unique" type="JSONObject" max-len="-1"/>
+            <key name="channel_users" template="longarray" array-size="0-100" type="JSONArray" max-len="-1"/>
+            <key name="archive_note" type="String" max-len="1000" secret="true"/>
+            <key max-len="-1" type="JSONObject" template="media_unique" name="icon"/>
+            <key name="criteria" template="search_criteria" type="JSONArray" max-len="-1" array-size="1-50"/>
+            <key name="permissions" allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="channel_permission_base_new" />
+        </jsontemplate>
+        <jsontemplate name="channel_unique">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="channel">
+            <key name="channel" template="channel_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="channel_action_base">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String"/>
+            <key name="description" type="String" max-len="1000" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="channel_role_base">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String"/>
+            <key name="description" type="String" max-len="500" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="channel_role">
+            <key name="channel_role" template="channel_role_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="channel_status_unique">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="channel_status_base">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="name" type="String"/>
+        </jsontemplate>
+        <jsontemplate name="channel_status">
+            <key name="channel_status" template="channel_status_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="channel_permission_base_new">
+            <key name="is_admin_allowed" type="boolean" allow-invalid="false"/>
+            <key name="is_moderator_allowed" type="boolean" allow-invalid="false"/>
+            <key name="is_member_allowed" type="boolean" allow-invalid="false"/>
+            <key name="action" template="channel_action_base" type="JSONObject" max-len="-1" min-occurrences="1"/>       
+        </jsontemplate>
+        <jsontemplate name="channel_permission_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key name="is_admin_allowed" type="boolean" allow-invalid="false"/>
+            <key name="is_moderator_allowed" type="boolean" allow-invalid="false"/>
+            <key name="is_member_allowed" type="boolean" allow-invalid="false"/>
+            <key name="action" template="channel_action_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <key allow-invalid="false" type="long" name="channel_id"/>
+        </jsontemplate>
+        <jsontemplate name="channel_permissions">
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="channel_permission_base" name="permissions"/>
+        </jsontemplate>
+        <jsontemplate name="channel_user_base">
+            <key max-len="-1" type="JSONObject" template="user_unique" name="member"/>
+            <key max-len="-1" type="JSONObject" template="channel_role_base" name="channel_role"/>
+        </jsontemplate>
+        <jsontemplate name="channel_user">
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONObject" template="channel_user_base" name="channel_user"/>
+        </jsontemplate>
+        <jsontemplate name="channel_user_edit">
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONObject" template="channel_role" name="channel_user"/>
+        </jsontemplate>
+        <jsontemplate name="archive_note">
+            <key allow-invalid="false" max-len="500" type="String" name="archive_note" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="chat_remove_member">
+            <key max-len="-1" type="JSONObject" template="chat_user_idjson" name="chat"/>
+        </jsontemplate>
+         <jsontemplate name="chat_user_idjson">
+            <key max-len="-1" type="JSONObject" template="chat_technician_id" name="user"/>
+        </jsontemplate>
+        <jsontemplate name="user_search_tag">
+            <key allow-invalid="false" max-len="20" min-occurrences="1" type="String" name="search_tag"/>
+         </jsontemplate>
+         <jsontemplate name="chat_notifications_base">
+            <key name="notification_action" template="wfnotificationaction_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+
+        <jsontemplate name="chat_notifications">
+            <key max-len="-1" type="JSONObject" template="chat_notifications_base" name="chat_notifications"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

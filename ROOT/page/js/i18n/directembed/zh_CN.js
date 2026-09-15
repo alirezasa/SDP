@@ -1,0 +1,18 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zc.page.builder.formembed.property.resetbutton"] = '重置按钮文本(仅限Web)';
+i18n["zcpage.dialog.embed.redirectto"] = '重定向到';
+i18n["zcpage.dialog.embed.redirectto.tooltip"] = '成功提交表单时重定向';
+i18n["zcpage.dialog.embed.submittxt"] = '提交按钮的文本';
+i18n["zcpage.dialog.embed.successmsg.tooltip"] = '提交表单成功时显示的信息';
+i18n["zcpage.dialog.form.configure.values"] = '赋值';
+i18n["zc.builder.page.embed.report.config"] = '所选报表没有配置选项';
+i18n["zcpage.dialog.embed.actions"] = '动作';
+i18n["zcpage.dialog.embed.duplicate"] = '副本';
+i18n["zcpage.dialog.embed.edit"] = '编辑';
+i18n["zcpage.dialog.embed.export"] = '导出';
+i18n["zcpage.dialog.embed.filter"] = '过滤器';
+i18n["zcpage.dialog.embed.miscellaneous"] = '杂项';
+i18n["zcpage.dialog.embed.printexport"] = '打印并导出';
+i18n["zcpage.dialog.embed.recordscount"] = '记录数';
+i18n["zcpage.dialog.embed.report.addfilter"] = '添加过滤器';
+i18n["zcpage.dialog.embed.report.addfilter.desc"] = '添加一个过滤器筛选在此报告中显示的记录。';
+i18n["zcpage.dialog.embed.search.and.filters"] = '搜索 & 过滤器';

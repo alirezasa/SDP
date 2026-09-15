@@ -1,0 +1,102 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":2},\"po_closure_fields\":[{\"field\":\"UDF_CHAR1\",\"module\":\"Purchase_Order\",\"is_mandatory\":false,\"id\":\"1\",\"name\":\"test\"},{\"field\":\"UDF_LONG1\",\"module\":\"Purchase_Order\",\"is_mandatory\":false,\"id\":\"13\",\"name\":\"nn\"}]}"},
+            "path": ["/api/v3/po_closure_fields"],
+            "method": "GET",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "View all po closure fields",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+		{
+            "method": "PUT",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Update po closure fields",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"1\",\"status\":\"success\"}],\"po_closure_fields\":{\"field\":\"UDF_CHAR1\",\"module\":\"Purchase_Order\",\"is_mandatory\":true,\"id\":\"1\",\"name\":\"test\"}}"},
+            "path": ["/api/v3/po_closure_fields/{id}"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"po_closure_field\":{\"is_mandatory\":\"true\"}}"
+            },
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "To mark - Update is_mandatory to true,\nTo unmark - Update is_mandatory to false\n"
+        }
+	],
+	"Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "",
+            "type": "Number",
+			"isAsset": "true",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Unique identifier.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+			"isReadOnly": "true",
+            "name": "module",
+            "column": "",
+			"isAsset": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Represent purchase module.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "field",
+			"isReadOnly": "true",
+            "column": "",
+			"isAsset": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Show the field name of the additional field.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+			"isReadOnly": "true",
+			"isAsset": "true",
+            "column": "",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Show the customer created alias name.",
+            "graphView": ""
+        },
+		{
+            "html_type": "",
+            "inOP": "true",
+            "name": "is_mandatory",
+            "column": "",
+			"isAsset": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "To mark is_mandatory for closing the PO.",
+            "graphView": ""
+        }
+	]
+}

@@ -1,0 +1,131 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"roles\":[{\"role\":{\"internal_name\":\"release_manager\",\"user_type\":\"SDRM\",\"name\":\"Release Manager\",\"id\":\"1\"},\"id\":\"11\",\"user\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}},{\"role\":{\"internal_name\":\"development_head\",\"user_type\":\"ST\",\"name\":\"Development Head\",\"id\":\"4\"},\"id\":\"12\",\"user\":{\"email_id\":null,\"name\":\"Shawn Adams\",\"is_vipuser\":false,\"id\":\"5\",\"department\":null}},{\"role\":{\"internal_name\":\"qa_manager\",\"user_type\":\"ST\",\"name\":\"QA Manager\",\"id\":\"5\"},\"id\":\"13\",\"user\":{\"email_id\":null,\"name\":\"Heather Graham\",\"is_vipuser\":false,\"id\":\"6\",\"department\":null}}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"total_count\":3,\"get_total_count\":\"true\",\"row_count\":3}}"},
+            "path": ["/api/v3/releases/{release_id}/roles"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true}}"
+            },
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get All Release associated Roles",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all associated release roles details for a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release_to_release_role\":{\"role\":{\"internal_name\":\"development_head\",\"user_type\":\"ST\",\"name\":\"Development Head\",\"id\":\"4\"},\"id\":\"12\",\"user\":{\"email_id\":null,\"name\":\"Shawn Adams\",\"is_vipuser\":false,\"id\":\"5\",\"department\":null}}}"},
+            "path": ["/api/v3/releases/{release_id}/roles/{release_role_id}"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Release Associated Role Details",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch a particular role details for a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release_to_release_role\":{\"role\":{\"internal_name\":\"release_manager\",\"user_type\":\"SDRM\",\"name\":\"Release Manager\",\"id\":\"1\"},\"id\":\"11\",\"user\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null}}}"},
+            "path": ["/api/v3/releases/{release_id}/roles"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"release_to_release_role\":{\"role\":{\"id\":\"1\"},\"user\":{\"id\":\"4\"}}}"
+            },
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add User to Release Role",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to add a user to a release role associated in a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/releases/{release_id}/roles/{release_role_id}"],
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete Release User",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete a user associated in a release role."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isDefault": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "RELEASEROLEUSERMAPPING:ROLETPUSERMAPPINGID",
+            "type": "long",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "release",
+            "column": "RELEASEROLEUSERMAPPING:RELEASEID",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "",
+            "graphView": "",
+            "relEntity": {
+                "name": "Releases",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "role",
+            "column": "RELEASEROLEUSERMAPPING:ROLEID",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "",
+            "graphView": "",
+            "relEntity": {
+                "name": "release_role",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "user",
+            "column": "RELEASEROLEUSERMAPPING:USERID",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": "",
+            "relEntity": {
+                "name": "User_V3",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        }
+    ],
+    "lastModified": 1580977792000
+}

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" roles="TaskConfig">
+
+        <throttles name="task_admin_config" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+
+        <url path="/api/v3/task_closure_fields"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_closure_fields"  method="put">
+            <param name="input_data" template="task_closure_field" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/task_closure_fields/(_?)history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_closure_fields/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_closure_fields/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_types"  method="post">
+            <param name="input_data" template="task_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/task_types/(\d+)"  method="put">
+            <param name="input_data" template="task_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/task_types/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/task_types/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_types"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_types"  method="put">
+            <param name="input_data" template="task_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/task_types"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/task_types/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/task_types/(_?)history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_types/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_types/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(_?)metainfo" method="get"/>
+
+        <url path="/api/v3/task_templates"  method="post">
+            <param name="input_data" template="task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(\d+)"  method="put">
+            <param name="input_data" template="task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/task_templates/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_templates"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(\d+)/(_?)associations"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/task_templates"  method="put">
+            <param name="input_data" template="task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/task_templates"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(\d+)/(owner|marked_owner|group|marked_group|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/task_templates/(owner|marked_owner|group|marked_group|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(\d+)/(owner|marked_owner|group|marked_group|status|priority|type)"  method="get">
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(owner|marked_owner|group|marked_group|status|priority|type)/(\d+)"  method="get"/>
+
+        <url path="/api/v3/task_templates/(_?)history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(_?)get_records_for_history" method="get" >
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_templates/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/task_custom_triggers/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_custom_triggers/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/task_custom_triggers/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+
+        <!--Task template dependencies starts-->
+        <url path="/api/v3/request_templates/(\d+)/task_template_dependencies" method="post" >
+            <param name="input_data" template="request_task_template_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/request_templates/(\d+)/task_template_dependencies/(\d+)" method="delete" />
+        <url path="/api/v3/request_templates/(\d+)/task_template_dependencies" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/task_templates(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/project_templates/(\d+)/task_template_dependencies" method="post" >
+            <param name="input_data" template="project_task_template_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/project_templates/(\d+)/task_template_dependencies/(\d+)" method="delete" />
+        <url path="/api/v3/project_templates/(\d+)/task_template_dependencies" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_template_dependencies" method="post" >
+            <param name="input_data" template="project_task_template_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_template_dependencies/(\d+)" method="delete" />
+        <url path="/api/v3/project_templates/(\d+)/milestone_templates/(\d+)/task_template_dependencies" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+
+        <!--Task template dependencies end-->
+
+        <url path="/api/v3/task_templates/images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/task_templates/(\d+)/images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+           <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+    </urls>
+
+    <urls authentication="required" api="true" roles="WorkLogConfig">
+
+        <throttles name="worklog_admin_config" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+
+        <url path="/api/v3/worklog_types/(_?)metainfo" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/worklog_types"  method="post">
+            <param name="input_data" template="worklog_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/worklog_types/(\d+)"  method="put">
+            <param name="input_data" template="worklog_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/worklog_types/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/worklog_types/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/worklog_types"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/worklog_types"  method="put">
+            <param name="input_data" template="worklog_type" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/worklog_types"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/worklog_types/(_?)history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/worklog_types/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/worklog_types/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!-- Worklog template customization URLS -->
+        <url path="/api/v3/worklog_templates"  method="post">
+            <param name="input_data" template="worklog_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/worklog_templates/(\d+)"  method="put">
+            <param name="input_data" template="worklog_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/worklog_templates/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/worklog_templates"  method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/worklog_templates"  method="delete">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/worklog_templates/_default" method="get" />
+        <url path="/api/v3/worklog_templates/(\d+)/_mark_default" method="put" />
+        <url path="/api/v3/worklog_templates/(\d+)/_copy_template" method="post" >
+            <param name="input_data" template="template_copy" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/worklog_templates/(\d+)/_activate" method="put" />
+        <url path="/api/v3/worklog_templates/_history" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+
+        <url path="/api/v3/worklog_templates/_get_records_for_history" method="get" >
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+
+        <url path="/api/v3/worklog_templates/_get_performed_by_for_history" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/worklog_templates/images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/worklog_templates/(\d+)/images" method="post" >
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/worklog_templates/images/(\d+)">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/worklog_templates/(\d+)/images/(\d+)">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url path="/api/v3/worklogs/(type|(udf_pick_|udf_multiselect_)[a-z0-9_]+)" method="get" >
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/worklogs/_get_time_spent" method="get">
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+
+
+    </urls>
+    <urls authentication="required" api="true" description="ROLE_NOT_REQUIRED: Authenticated via image token">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1m"/>
+        </throttles>
+        <url user_type="all" method="get" path="/api/v3/task_templates/(\d+)/images/(\d+)">
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+        </url>
+        <url user_type="all" method="get" path="/api/v3/task_templates/images/(\d+)" />
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+    </urls>
+</security>

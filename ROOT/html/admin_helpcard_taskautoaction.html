@@ -1,0 +1,65 @@
+<!DOCTYPE>
+<html>
+<head>
+</head>
+<body>
+<p>Use Task Trigger to automatically trigger any '<strong>Action</strong>' on a task using a script file or a custom function. </p>
+<p>To create a new custom trigger for tasks,</p>
+<ul>
+<li> Click <strong>New Action</strong>.</li>
+<li> Enter a name and description for the action and select when the action must be executed. </li>
+<li> Select the Action Type (Custom Functions/Scripts) and point to the corresponding script file which needs to be triggered. </li>
+<li> Set Criteria under which the action must be executed on tasks. You can add multiple criterions by clicking on the + icon. Switch between AND and OR operators between the criterions as per your requirement.</li>
+<li> Deselecting '<strong>Stop processing subsequent actions</strong>' checkbox will execute successive action even after an action rule is applied on a task.</li>
+</ul>
+<p><strong>Note:</strong></p>
+<ul>
+<li> Make sure that you enter a unique name for the '<strong>New Action</strong>', so that the name doesn't clash with existing '<strong>Action</strong>' names.</li>
+<li> Ensure that the text file is stored only in [SDP_Home]/integration/custom_scripts/executor_files directory and the script file is stored only in [SDP_Home]/integration/custom_scripts/</li>
+<li> By default, '<strong>Stop processing subsequent actions</strong>' is always enabled and the actions will be executed as per the 'Action rule order'.</li>
+<li> '<strong>Organize Actions</strong>' in the list view allows you to rearrange the order in which the actions are executed. </li>
+</ul>
+<p><strong>TECHNICAL DETAILS:</strong></p>
+<p>Under <strong>Perform Action</strong>, choose whether you want to execute a script, or a custom function and configure the same using the following pointers:</p>
+<ul>
+<li> <strong>Script:</strong> Specify the name of the text file containing the script content . For example, <strong>AddComments.txt</strong></li>
+<li> <strong>Custom Function:</strong> By executing custom functions, you can manipulate data in ServiceDesk Plus and other external applications. Choose the required custom function or add a new one. </li>
+<li> <strong>Supported Return Operations:</strong>  UPDATE_TASK , ADD_COMMENTS & ADD_WORKLOG </li>
+</ul>
+<p><strong>Note : </strong></p>
+<ul>
+<li>In a script, you can pass API parameters as arguments, such as py addComments.py $TITLE $TYPE. </li>
+<li><strong>taskObj</strong> and <strong>context</strong> are the arguments supported in custom functions. </li>
+</ul>
+<p><strong>Other Parameters Supported in Script:</strong></p>
+<p>$COMPLETE_V3_JSON_FILE ---> Complete Request Object will be saved to a JSON file and the file path will be passed as String Object. If the Operation is '<strong>When a Task is edited</strong>', then DIFF_JSON (difference between the old task data and new task data) will also be saved to a JSON file.</p>
+<div class="alert alert-info icon" role="alert">
+  <span class="msg">$HELPDESK_ID ---> The <strong>ID of the portal</strong>. This ID needs to be passed as the value to all SDP API calls, against new URL parameter 'PORTALID'. This is applicable only for ESM enabled setups.
+</div>
+<p>JSON File Path  : <em>(SDP_Home\integration\custom_scripts\task\12_1426143538036.json).</em></p>
+<p><strong>Sample response from the trigger application:</strong></p>
+<p>{
+  <br>    "message":"Customized message"   
+  <br>    "operations": [<br>
+  
+          {<br>
+  
+              "operation_name": "ADD_COMMENTS",<br>
+  
+              "input_data": {<br>
+  
+                      "comment": {<br>
+  
+                           "content": "Sample content from script"<br>
+  
+                      }<br>
+  
+              }<br>
+  
+          }<br>
+  
+    ]<br>
+  
+}</p>
+</body>
+</html>

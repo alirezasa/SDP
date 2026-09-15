@@ -1,0 +1,39 @@
+﻿<p><span class="helpheading"><strong>与Mobile Device Manager Plus集成</strong></span></p>
+<p align="right" style="margin-top: 0.5pt; margin-bottom: 0.5pt;" ><b>集成过程步骤：帮助文档</b> : <a href="#" data-id="mdm-helpddoc"  style="color:blue;text-decoration:underline;" >帮助文档</a></p>
+
+<p>将ServiceDesk Plus与Mobile Device Manager Plus集成以直接从ServiceDesk Plus控制台管理和保护移动设备。移动设备管理器自动化各种移动设备管理任务，如应用程序分发、设备管理和限制、电子邮件管理和资产管理。它还通过限制应用程序、设备和第三方云服务之间的数据传输为移动设备提供了额外的安全性。它有助于管理员在丢失设备的情况下定位设备，并在必要时擦除数据。如果已经安装了两个产品，只需输入安装Mobile Device Manager Plus服务器的计算机的详细信息以及端口号。</p>
+<p><strong>注释：</strong> 您应该运行Mobile Device Manager Plus加上版本92370和以上。</p>
+<p><strong>细节：</strong></p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>服务器名称：</strong>输入安装<span style="font-weight: bold;">Mobile Device Manager Plus服务器的服务器信息</span>。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>服务器端口：</strong>输入Mobile Device Manager Plus服务器的<span style="font-weight: bold;">端口号</span>。</p>
+
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>协议设置：</strong>选择<span style="font-weight: bold;">协议设置</span>。比如说HTTP或HTTPS。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>注释：</strong>若要显示<strong>Mobile Device Manager Plus</strong>下拉菜单，请启用MDM（Mobile Device Manager Plus）菜单。只有在使用MDM Bug 92263时，此选项才可用。若要从下拉框中移除MDM选项，请取消选择该选项。单击“保存”。一旦成功保存设置，SDP服务器将与MDM服务器建立连接。然后，从MDM服务器获取配置细节。</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+<p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">点击<span style="font-weight: bold;">保存</span>。
+  设置保存成功，服务事务处理将尝试建立与Mobile Device Manager Plus服务器的连接。 
+</p>
+<br>
+<p><span class="helpheading"><strong>与其他ME产品集成（运行在HTTPS模式下）</strong></span></p>
+<ol>
+  <li>从下面给出的链接中下载<strong>.zip</strong>，并将其提取到"<em>ManageEngine\ServiceDesk"</em>:</li>
+  <p style="margin-left: 50px;"><strong>Linux: </strong>https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip </p>
+  <p style="margin-left: 50px;"><strong>Windows:</strong> https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip </p>
+  <li>连接到命令提示符。转到"<em>ManageEngine\ServiceDesk"</em>并以以下格式运行批处理文件:</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>在运行命令时，您将收到一个异常<strong>PKIX</strong>然后它将要求您输入一个值。提供值1，它将生成一个名为<strong>jssecacerts</strong>在<em>"ManageEngine\ServiceDesk"</em>下面。</p>
+  </li>
+  <li>复制<strong>jssecacerts</strong>文件在 "<em>ManageEngine\ServiceDesk\jre\lib\security"</em> 下面，然后重启桌面应用程序。</li>
+</ol>
+<script nonce="<%=sdpNonce%>">
+  let integ = jQuery(document).off("click.integrations"); //NO I18N
+  integ.on("click.integrations","[data-id='mdm-helpddoc']", function(){
+ 			return appendDID('https://www.manageengine.com/mobile-device-management/help/integrations/mdm_and_servicedeskplus.html#ui_integ',true); //NO I18N
+ 	});
+</script>

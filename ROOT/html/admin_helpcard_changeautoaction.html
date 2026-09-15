@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>With Custom Trigger, you can automatically trigger the required '<strong>Action</strong>' using the script file or custom class file or custom function. In the '<strong>New Action</strong>' window, provide the name and description for the new action. From the drop-down list, select the instant at which the action has to be executed. Set the '<strong>Criteria</strong>' fields, its corresponding conditions and their field values. Select the '<strong>Action Type</strong>' and the corresponding script file or class file or custom function that has to be triggered. Deselecting '<strong>Stop processing subsequent actions</strong>' checkbox will execute successive action even after an action rule is applied on a change.</p>
+<p><strong>FACTS</strong>:</p>
+<ul>
+  <li> Make sure that you enter an unique name for the '<strong>New Action</strong>' ,so that the name doesn't clash with existing '<strong>Actio</strong>n' names.</li>
+  <li>Ensure that the script /class file is stored only in the specified locations. Store them in the directory as follows: [SDP_Home]/integration/custom_scripts/</li>
+  <li>By default, '<strong>Stop processing subsequent action</strong>s' is always enabled and the actions will be executed as per the 'Action rule order'.</li>
+  <li>'<strong>Organize Action</strong>s' allow you to rearrange the order in which the actions are executed.<br>
+  </li>
+</ul>
+<p><strong>SAMPLE SCENARIO</strong>:</p>
+<p>When an Emergency Change Request is raised, an emergency CAB need to be configured so as to verify and approve the Change Request immediately. Here a new action can be configured to execute a Custom Script or Custom Function when an Emergency Change Request is raised.</p>
+<p><strong>TECHNICAL DETAILS</strong>:</p>
+<p>Under <strong>Perform Action</strong>, choose whether you want to execute class, script, or custom function and configure the same using the following pointers:  </p>
+<ul>
+  <li><strong>Class: </strong>Specify the <strong>Executor</strong> class. For example, <strong>com.servicedeskplus.integration.ChangeActionImplementation</strong>. </li>
+  <li><strong>Script: </strong>Specify the name of the text file containing the script execution content. For example, <strong>AddApprovers.txt</strong>.
+  <li><strong>Custom Function: </strong> By executing custom functions, you can manipulate data in ServiceDesk Plus and other external applications. Choose the required custom function or add a new one. <strong>changeObj</strong> and <strong>context</strong> are the arguments supported in custom functions.</li>
+</ul>
+<p><strong> Note:</strong>:</p>
+<ol>
+  <li>In a script or a class, you can pass all API parameters as arguments, such as py addApprovers.py $TITLE $TYPE $TEMPLATE. In a class you could pass  com.servicedeskplus.integration.ChangeActionImplementation $TITLE $TYPE $TEMPLATE.</li>
+  <li>changeObj and context are the arguments supported in custom functions.</li>
+</ol>
+<p><strong> Other Parameters Supported in Script</strong>:</p>
+<p>$COMPLETE_V3_JSON_FILE ---&gt; Complete Request Object will be saved to a JSON file and the file path will be passed as String Object. If the Operation is <strong>'When a Change is edited'</strong>, then DIFF_JSON (difference between the old change data and new change data) will also be saved to a JSON file.</p>
+<div class="alert alert-info icon" role="alert">
+  <span class="msg">$HELPDESK_ID ---&gt; The <strong>ID of the portal.</strong> This id needs to be passed as the value to all SDP API calls, against new URL parameter 'PORTALID'. This is applicable only for ESM enabled setups.
+</div>
+<p>JSON File Path  : <em>(SDP_Home\integration\custom_scripts\change\12_1426143538036.json).</em></p>
+<p><strong>Input data for trigger application:</strong></p>
+<blockquote>
+  <p>{<br>INPUT_DATA :<br>{
+    <br>	
+	&quot;login_name&quot; : &quot;logged in user's name&quot;,<br> 
+    &quot;entity&quot; : &quot;module name: here change&quot;,<br>
+    &quot;entity_diff_data&quot; : &quot;difference between the old change data and new change data&quot;,<br>
+    &quot;entity_data&quot; : &quot;GET change API response&quot;
+  <br>}<br>
+  }</p>
+</blockquote>
+<p><strong>Response from trigger application:</strong></p>
+<p>{
+  <br> 'message':"Customized message"   
+  <br>'operations': [<br>
+  
+      {<br>
+  
+          'operation_name': 'UPDATE_ROLES',<br>
+  
+          'input_data': {<br>
+  
+            'change': {<br>
+  
+                  'roles': [<br>
+  
+                      {<br>
+  
+                          'id': ROLE ID,<br>
+  
+                          'name': 'CHANGE ROLE NAME',<br>
+  
+                          'users': [<br>
+  
+                              {<br>
+  
+                                  'email': 'USERMAILID',<br>
+  
+                                  'name': 'USERNAME'<br>
+  
+                              },<br>
+  
+                              {<br>
+  
+                                  'id': USERID,<br>
+  
+                                  'name': 'USERNAME'<br>
+  
+                              }<br>
+  
+                          ]<br>
+  
+                      }<br>
+  
+                  ]<br>
+  
+              }<br>
+  
+          }</p>
+</body>
+</html>

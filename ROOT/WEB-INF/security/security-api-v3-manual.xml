@@ -1,0 +1,429 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<regexes>
+		<regex name="color" value="^#[0-9A-Fa-f]{6}|transparent$" />
+		<regex name="ids" value="\d+((\,\d+)?){0,99}" />
+		<regex name="ids_250" value="\d+((\,\d+)?){0,249}" />
+		<regex name="ids_500" value="\d+((\,\d+)?){0,499}" />
+		<regex name="api_name" value="(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)" />
+		<regex name="udf_all" value="udf_(char|long|date)([0-9]+)" />
+		<regex name="udf_char" value="udf_(char)(_)([0-9]+)" />
+		<regex name="udf_long" value="udf_(long)(_)([0-9]+)" />
+		<regex name="udf_date" value="udf_(date)(_)([0-9]+)" />
+		<regex name="udf_decimal" value="udf_(decimal)(_)([0-9]+)" />
+		<regex name="udf_multiselect" value="udf_(multiselect)(_)([0-9]+)" />
+		<regex name="udf_sline" value="udf_(sline)(_)([0-9]+)" />
+		<regex name="udf_mline" value="udf_(mline)(_)([0-9]+)" />
+		<regex name="udf_pick" value="udf_(pick)(_)([0-9]+)" />
+		<regex name="udf_pickref" value="udf_(pickref)(_)([0-9]+)" />
+		<regex name="contact_number" value="^([0-9A-Za-z\-\(\)\ \+])+$" />
+		<regex name="emailstring" value="^[\w]([\w\-\.\+\'\/]*)@([\w\-\.]*)(\.[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2})$" />
+		<regex name="udf_char_" value="udf_(sline|mline|pick|multiselect)(_)([0-9]+)" />
+		<regex name="udf_long_" value="udf_(long)_([0-9]+)" />
+		<regex name="udf_decimal_" value="udf_(decimal)_([0-9]+)" />
+		<regex name="udf_date_" value="udf_(date)_([0-9]+)" />
+		<regex name="udf_html" value="udf_(html)_([0-9]+)"/>
+		<regex name="udf_bool" value="udf_(boolean)_([0-9]+)"/>
+		<regex name="udf_percent" value="udf_(percent)_([0-9]+)"/>
+		<regex name="udf_attach" value="udf_(attach)_([0-9]+)"/>
+		<regex name="udf_url" value="udf_(url)_([0-9]+)"/>
+		<regex name="document_name" value="^[\w\^&amp;&apos;\@\{\}\[\]\,\$\=\!\-\#\(\)\.%\+\~\_ \P{InBasicLatin}]+$" />
+		<!--Update the same widget_custom_url regex in selfservicecustomization_Technicianscript.js for client side validation-->
+		<regex name="widget_custom_url" value="(^(ht|f)tp(s?)\:\/\/[-.\w]*(\/?)([a-zA-Z0-9\-\.\?\,\:\'\/\\\+=&amp;%\$#_@]*)?$)|((\/|\\)custom(\/|\\)widgets(\/|\\)[a-zA-Z0-9_(\/|\\)-]+[0-9a-zA-Z()\[\]{}+_\-\;\#\^\.\$@\?\,\:\'\!\P{InBasicLatin}\s]+\.(?i)html?)|(about:blank)" />
+		<regex name="inline_img_name" value="[a-z0-9_-]{1,32}.(jpg|png|jpeg|gif|bmp|svg)" />
+		<regex name="file_token" value="[a-z0-9]+" />
+		<!--<regex name="img_type_value" value="/api/v3/[a-zA-T0-9_/&amp;?.=]+|[a-z0-9]{32}.(jpg|png|jpeg|gif)" />-->
+
+		<regex name="questions_reqprop" value="qstn_(text)(_)([0-9]+)|qstn_(simple)(_)([0-9]+)|qstn_(select)(_)([0-9]+)|qstn_(radio)(_)([0-9]+)|qstn_(check)(_)([0-9]+)"/>
+		<regex name="udf_fields_reqprop" value="udf_sline(_)([0-9]+)|udf_mline(_)([0-9]+)|udf_pick(_)([0-9]+)|udf_(multiselect)(_)([0-9]+)|udf_(date)(_)([0-9]+)|udf_(long)(_)([0-9]+)|udf_(decimal)(_)([0-9]+)"/>
+		<regex name="password" value="^.{1,500}$" />
+		<regex name="list_view_filter_modules" value="project|change|task|release|change_task|request|all_modules_approval|request_maintenance|purchase_order|purchase_request|problem|solution|backup_approver|asset_computer|milestone|custom_view_([a-z_]+)" />
+		<regex name="import_modules" value="Projects|Vendors|UdfOptions|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))|Solutions|Requests|cmdb|user|(association_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))|(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))|(asset_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))"/>
+		<regex name="custom_view_modules" value="custom_view_([a-z_])+" />
+		<!-- regex to match mail joined by ',' with optional spaces -->
+		<regex name="emailList" value="^([\w]([\w\-.\+\'\/]*)@([\w\-]+\.)+[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2}(,\s*([\w]([\w\-.\+\'\/]*)@([\w\-]+\.)+[a-zA-Z]{2,22}(\.[a-zA-Z]{2}){0,2})){0,99})?$" />
+	</regexes>
+	<jsontemplates>
+
+		<!-- udf fields - to be mentioned in the modules jsons-->
+
+		<jsontemplate name="udf_fields_all">
+			<key name-regex="true" name="udf_all" type="JSONObject" template="udf_field_base" max-occurrences="120" />
+		</jsontemplate>
+		<jsontemplate name="all_udf_fields_ref">
+			<key name-regex="true" name="udf_char" max-len="3500" type="String" max-occurrences="200"  secret="true"/>
+			<key name-regex="true" name="udf_sline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_mline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_pick" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_pickref" type="JSONObject" template="IDNameJson" max-occurrences="200"  />
+			<key name-regex="true" name="udf_long" type="long" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_decimal" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_date" type="JSONObject" template="datefield" max-occurrences="200" />
+			<key name-regex="true" name="udf_multiselect" type="JSONArray" template="IDNameJson" max-occurrences="120" max-len="-1" array-size="0-25" />
+			<key name-regex="true" name="udf_bool" type="boolean" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_percent" regex="^[-+]?[0-9]{0,5}(\.[0-9]{1,2})?$" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_html" xss="sdpantisamyfilter" max-len="-1" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_attach" type="JSONObject" template="attachment_base" max-len="-1" max-occurrences="200" />
+			<key name-regex="true" name="udf_url" type="String" max-len="500" max-occurrences="200" />
+		</jsontemplate>
+
+		<jsontemplate name="req_udf_fields_ref">
+			<key name-regex="true" name="udf_char" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_sline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_mline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_pick" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<!--Retained old behavior as a part of providing Backward Compatibility. Need to be changed as below while stopping Backward Compatibility support-->
+			<!--<key name-regex="true" name="udf_pick" max-len="3500" type="JSONObject" template="IDNameJson" max-occurrences="200"/>-->
+			<key name-regex="true" name="udf_long" type="long" max-occurrences="200"/>
+			<key name-regex="true" name="udf_decimal" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="200"/>
+			<key name-regex="true" name="udf_date" type="JSONObject" template="datefield" max-occurrences="200"/>
+			<key name-regex="true" name="udf_multiselect" type="JSONArray" template="multiselect_array" max-occurrences="120" max-len="-1" array-size="0-25"/>
+		</jsontemplate>
+
+		<jsontemplate name="udf_fields_ref">
+			<key name-regex="true" name="udf_char" max-len="3500" type="String" max-occurrences="200"  secret="true"/>
+			<key name-regex="true" name="udf_sline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_mline" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_pick" max-len="3500" type="String" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_pickref" type="JSONObject" template="IDNameJson" max-occurrences="200"  />
+			<key name-regex="true" name="udf_long" type="long" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_decimal" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_date" type="JSONObject" template="datefield" max-occurrences="200" />
+			<key name-regex="true" name="udf_multiselect" type="JSONArray" template="multiselect_array" max-occurrences="120" max-len="-1" array-size="0-25" />
+			<key name-regex="true" name="udf_bool" type="boolean" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_percent" regex="^[-+]?[0-9]{0,4}(\.[0-9]{1,2})?$" max-occurrences="200" secret="true"/>
+			<key name-regex="true" name="udf_html" xss="sdpantisamyfilter" max-len="-1" max-occurrences="200" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="common_udf_fields_ref">
+			<key name-regex="true" name="sline_[a-z0-9_]+" type="String" max-len="120" max-occurrences="200" />
+			<key name-regex="true" name="mline_[a-z0-9_]+" type="String" max-len="250" max-occurrences="200" />
+			<key name-regex="true" name="url_[a-z0-9_]+" type="String" max-len="500" max-occurrences="200" />
+			<key name-regex="true" name="pho_[a-z0-9_]+" regex="contact_number" max-len="30" max-occurrences="200" />
+			<key name-regex="true" name="attach_[a-z0-9_]+" type="JSONObject" template="attachment_base" max-len="-1" max-occurrences="200" />
+			<key name-regex="true" name="email_[a-z0-9_]+" regex="emailstring" max-len="100" max-occurrences="200" />
+			<key name-regex="true" name="multi_[a-z0-9_]+" type="JSONArray" template="IDNameJson" max-len="-1" max-occurrences="200" array-size="0-25" />
+			<key name-regex="true" name="pick_[a-z0-9_]+" type="JSONObject" template="IDNameJson" max-len="-1" max-occurrences="200" />
+			<key name-regex="true" name="bool_[a-z0-9_]+" type="boolean" max-occurrences="200" />
+			<key name-regex="true" name="per_[a-z0-9_]+" regex="^[-+]?[0-9]{0,5}(\.[0-9]{1,2})?$" max-occurrences="200" />
+			<key name-regex="true" name="dec_[a-z0-9_]+" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="200" />
+			<key name-regex="true" name="num_[a-z0-9_]+" type="long" max-len="20" max-occurrences="200" />
+			<key name-regex="true" name="date_[a-z0-9_]+" type="JSONObject" template="datefield" max-occurrences="200" />
+			<key name-regex="true" name="html_[a-z0-9_]+" xss="sdpantisamyfilter" max-len="-1" max-occurrences="200" />
+			<key name-regex="true" name="color_[a-z0-9_]+" max-len="7" max-occurrences="200" regex="color"/>
+		</jsontemplate>
+		<jsontemplate name="release_udf_fields_ref">
+			<key name-regex="true" name="sline_[a-z0-9_]+" type="String" max-len="250" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="mline_[a-z0-9_]+" type="String" max-len="500" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="multi_[a-z0-9_]+" type="JSONArray" max-len="-1" array-size="0-25" template="IDNameJson" max-occurrences="120" />
+			<key name-regex="true" name="pick_[a-z0-9_]+" type="JSONObject" max-len="-1" template="IDNameJson" max-occurrences="120" />
+			<key name-regex="true" name="dec_[a-z0-9_]+" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="num_[a-z0-9_]+" type="long" max-len="20" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="date_[a-z0-9_]+" type="JSONObject" template="datefield" max-occurrences="120" />
+		</jsontemplate>
+
+		<jsontemplate name="project_module_udf_fields_ref">
+			<key name-regex="true" name="sline_[a-z0-9_]+" type="String" max-len="250" max-occurrences="120" secret="true" />
+			<key name-regex="true" name="mline_[a-z0-9_]+" type="String" max-len="500" max-occurrences="120" secret="true" />
+			<key name-regex="true" name="multi_[a-z0-9_]+" type="JSONArray" max-len="-1" array-size="0-25" template="IDNameJson" max-occurrences="120"/>
+			<key name-regex="true" name="pick_[a-z0-9_]+" type="JSONObject" max-len="-1" template="IDNameJson" max-occurrences="120" />
+			<key name-regex="true" name="dec_[a-z0-9_]+" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="num_[a-z0-9_]+" type="long" max-occurrences="120" secret="true"/>
+			<key name-regex="true" name="date_[a-z0-9_]+" type="JSONObject" template="datefield" max-occurrences="120"/>
+		</jsontemplate>
+
+		<jsontemplate name="vendor_udf_fields_ref">
+			<key name-regex="true" name="sline_[a-z0-9_]+" type="String" max-len="250" max-occurrences="200" />
+			<key name-regex="true" name="mline_[a-z0-9_]+" type="String" max-len="500" max-occurrences="200" />
+			<key name-regex="true" name="url_[a-z0-9_]+" type="String" max-len="500" max-occurrences="200" />
+			<key name-regex="true" name="pho_[a-z0-9_]+" regex="contact_number" max-len="30" max-occurrences="200" />
+			<key name-regex="true" name="attach_[a-z0-9_]+" type="JSONObject" template="attachment_base" max-len="-1" max-occurrences="200" />
+			<key name-regex="true" name="email_[a-z0-9_]+" regex="emailstring" max-len="100" max-occurrences="200" />
+			<key name-regex="true" name="multi_[a-z0-9_]+" type="JSONArray" template="IDNameJson" max-len="-1" max-occurrences="200" array-size="0-25" />
+			<key name-regex="true" name="pick_[a-z0-9_]+" type="JSONObject" template="IDNameJson" max-len="-1" max-occurrences="200" />
+			<key name-regex="true" name="bool_[a-z0-9_]+" type="boolean" max-occurrences="200" />
+			<key name-regex="true" name="per_[a-z0-9_]+" regex="^[-+]?[0-9]{0,5}(\.[0-9]{1,2})?$" max-occurrences="200" />
+			<key name-regex="true" name="dec_[a-z0-9_]+" regex="^[-+]?[0-9]{0,13}(\.[0-9]+)?" max-occurrences="200" />
+			<key name-regex="true" name="num_[a-z0-9_]+" type="long" max-len="20" max-occurrences="200" />
+			<key name-regex="true" name="date_[a-z0-9_]+" type="JSONObject" template="datefield" max-occurrences="200" />
+		</jsontemplate>
+
+		<!-- list_info -->
+		<jsontemplate name="list_info">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="include" type="JSONArray" template="strarray" max-len="-1" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+		</jsontemplate>
+		<jsontemplate name="list_info_with_context_param">
+			<key name="list_info" template="list_info_base" type="JSONObject" max-len="100000"/>
+			<key name="for" type="String"/>
+		</jsontemplate>
+		<jsontemplate name="list_info_with_exclude_fields">
+			<key name="list_info" template="list_info_base" type="JSONObject" max-len="100000"/>
+			<key name="exclude_fields" type="JSONArray" max-len="100000" array-size="0-100" template="strarray" />
+		</jsontemplate>
+		<jsontemplate name="list_info_base">
+			<key name="row_count" type="int" />
+			<key name="page" type="int" />
+			<key name="start_index" type="int" />
+			<key name="sort_field" type="String" />
+			<key name="sort_fields" type="JSONArray" template="sort_fields_json" max-len="-1" array-size="0-3" />
+			<key name="sort_order" regex="asc|desc|A|D" />
+			<key name="filter" type="String" />
+			<key name="filter_by" type="JSONObject" template="IDNameJson" />
+			<key name="view_info" type="JSONObject" template="IDNameJson" />
+			<key name="search_fields" type="JSONObject" max-len="-1" template="search_field_json" />
+			<key name="search_criteria" type="JSONObject|JSONArray" max-len="-1" template="search_criteria" />
+			<key name="range_criteria" type="JSONObject|JSONArray" max-len="10000" array-size="0-5" template="search_criteria" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+			<key name="group_by" type="JSONArray" array-size="0-100" max-len="100000" template="strarray" />
+			<key name="get_total_count" regex="true|false" />
+			<key name="search_fields_condition" regex="or|and" />
+			<key name="gsearch" type="String" max-len="5000" secret="true"/>
+			<key name="end_index" type="int" />
+		</jsontemplate>
+		<jsontemplate name="allowed_values_list_info">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="for" type="String" />
+			<key name="template" type="JSONObject" template="IDNameJson" />
+			<key name="include_inactive_value" type="boolean" max-occurrences="1" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+		</jsontemplate>
+		<jsontemplate name="allowed_values_for_field_list_info">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="for" type="String" />
+			<key name="include_inactive_value" type="boolean" max-occurrences="1" />
+			<key name="include_fields" type="JSONArray" template="strarray" max-len="-1" array-size="0-200" />
+		</jsontemplate>
+		<jsontemplate name="allowed_values_list_info_service_sla">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="template" type="JSONObject" template="IDNameJson" max-len="320" />
+			<key name="user" type="JSONObject" template="IDNameJson" max-len="320" />
+			<key name="include_inactive_value" type="boolean" max-occurrences="1" />
+		</jsontemplate>
+
+		<jsontemplate name="search_field_json">
+			<extrakey min-len="0" max-len="1000" type="String" limit="50" description="Search fields can't be predicted. So allowed extra keys" />
+		</jsontemplate>
+		<jsontemplate name="sort_fields_json">
+			<key name="field" type="String" min-occurrences="1" />
+			<key name="order" regex="asc|desc|ASC|DESC" />
+		</jsontemplate>
+		<jsontemplate name="search_criteria">
+			<key name="field" type="String" min-occurrences="1" />
+			<key name="condition" type="String" min-occurrences="1" />
+			<key name="value" type="String" max-len="1000" />
+			<key name="values" type="JSONArray" template="strarray" max-len="-1" array-size="0-200" />
+			<key name="logical_operator" regex="and|or|AND|OR" />
+			<key name="children" type="JSONArray" template="search_criteria" max-len="-1" array-size="0-100" />
+		</jsontemplate>
+
+		<jsontemplate name="age">
+			<key name="years" type="int" />
+			<key name="months" type="int" />
+			<key name="days" type="int" />
+			<key name="hours" type="long" />
+			<key name="minutes" type="int" />
+			<key name="value" type="long" allow-invalid="false" min-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="timediff">
+			<key name="hours" type="long" />
+			<key name="minutes" type="int" />
+			<key name="seconds" type="int" />
+		</jsontemplate>
+		<jsontemplate name="id_array">
+			<key index="0-3000" type="long" />
+		</jsontemplate>
+		<!-- Adding includes and fields_required keys in the include template to provide backward compatibility for task's old api
+		the same needs to be removed in the time of op api removal-->
+		<jsontemplate name="include">
+			<key name="add_recent_item" type="boolean" />
+			<key name="include" type="JSONArray" template="strarray" max-len="-1" array-size="0-100" />
+			<key name="includes" type="JSONArray" template="strarray" max-len="-1" array-size="0-100" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+			<key name="exclude_fields" type="JSONArray" max-len="100000" array-size="0-100" template="strarray" />
+		</jsontemplate>
+		<jsontemplate name="strarray">
+			<key index="0-99" type="String" max-len="1000" />
+		</jsontemplate>
+		<jsontemplate name="medium_strarray">
+			<key index="0-199" type="String" max-len="1000" />
+		</jsontemplate>
+ 		<jsontemplate name="media_array">
+			<key index="0-99" template="media_unique" type="JSONObject" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="largestrarray"><key index="0-1500" type="String" max-len="1500"/></jsontemplate>
+		<jsontemplate name="strarray_500">
+			<key index="0-499" type="String" max-len="50" allow-invalid="false"/>
+		</jsontemplate>
+		<jsontemplate name="multiselect_array">
+			<key index="0-99" type="String" max-len="250" secret="true"/>
+			<!--Retained old behaviour as a part of providing backward compatibility.Need to be changed as below while stopping Backward Compatibility support-->
+			<!--<key index="0-99" type="JSONObject" template="IDNameJson" secret="true"/>-->
+		</jsontemplate>
+		<jsontemplate name="longarray">
+			<key index="0-99" regex="long" />
+		</jsontemplate>
+		<jsontemplate name="emailarray">
+			<key index="0-99" regex="email" max-len="1000" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="inline_image_array">
+			<key index="0-99" regex="inline_img_name" max-len="39"/>
+		</jsontemplate>
+		<jsontemplate name="image_template">
+			<key name="id" regex="null|[0-9]+"/>
+			<key name="name" regex="inline_img_name" max-len="39" />
+			<key name="content-url" regex="[a-zA-Z0-9-.=?_/]+" max-len="2000" />
+		</jsontemplate>
+		<jsontemplate name="media_unique">
+			<key name="primary" type="boolean" allow-invalid="false" />
+			<key name="id" type="long" />
+			<key name="content-url" regex="[a-zA-Z0-9-.=?_/]+" max-len="2000" />
+		</jsontemplate>
+		<!--<jsontemplate name="image_array"><key index="0-99" regex="img_type_value" max-len="250"/>
+		</jsontemplate>-->
+		<jsontemplate name="jsonarray">
+			<key index="0-99" type="JSONObject" template="IDNameJson" />
+		</jsontemplate>
+		<jsontemplate name="NameJson">
+			<key name="name" type="String" max-len="300" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="IDNameJson">
+			<key name="id" type="long"/>
+			<key name="name" type="String" max-len="300" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="IDNameTextJson">
+			<key name="id" type="long"/>
+			<key name="name" type="String" max-len="300" secret="true"/>
+			<key name="text" type="String" max-len="300" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="custom_widget_object">
+			<key name-regex="true" name="^[A-Za-z-_0-9]*$" type="String" max-len="500" max-occurrences="10" />
+		</jsontemplate>
+
+		<jsontemplate name="datefield">
+			<key name="value" type="long" allow-invalid="false" />
+			<key name="display_value" type="String" />
+		</jsontemplate>
+		<jsontemplate name="memoryfield">
+			<key name="unit" regex="B|KB|MB|GB|TB|PB"/>
+			<key name="value" type="double" range=">=0" precision="3"/>
+			<key name="base_value" type="long" range="0-9223372036854775807"/>
+			<key name="display_value" type="String" max-len="50" />
+		</jsontemplate>
+		<!-- json template to be mentioned for metainfo operations in module json -->
+		<jsontemplate name="metainfo">
+			<key name="for" type="String" />
+			<key name="include" template="strarray" type="JSONArray" max-len="-1" array-size="0-100" />
+			<key name="template" type="JSONObject" template="IDNameJson" />
+		</jsontemplate>
+
+		<jsontemplate name="links_input">
+			<key name="operations_required" type="JSONArray" template="strarray" max-len="-1" array-size="0-100" />
+		</jsontemplate>
+
+		<!-- json template to be mentioned for export operations in module json -->
+		<jsontemplate name="export_info">
+			<key name="export" type="JSONObject" template="export" max-len="-1" />
+			<key name="list_info" type="JSONObject" template="list_info_base" max-len="-1" />
+			<key name="no_header" type="boolean"/>
+			<key name="for" regex="list_view_filter|advanced_search_filter"/>
+		</jsontemplate>
+		<jsontemplate name="export">
+			<key name="format" type="String" regex="PDF|CSV|HTML|XLS|XLSX|DOC|DOCX|XML|pdf|csv|html|xls|xlsx|doc|docx|xml" />
+			<key name="title" type="String" />
+		</jsontemplate>
+
+		<!-- udf_fields convenience operations and additional attributes -->
+
+		<jsontemplate name="list_view_filter_get">
+			<key name="show_all" template="show_all_base" type="JSONObject" max-len="-1" />
+			<key name="module" regex="list_view_filter_modules" />
+			<key name="list_info" type="JSONObject" template="list_info_base" max-len="-1" />
+		</jsontemplate>
+		<!-- has to be removed once mobile apps adopts the changes -->
+		<jsontemplate name="show_all_base">
+			<key name="module" regex="list_view_filter_modules" />
+		</jsontemplate>
+		
+		<jsontemplate name="advanced_search">
+			<key name="module" regex="list_view_filter_modules" />
+		</jsontemplate>
+		<jsontemplate name="slide_details_json">
+			<key name="slide_name"  max-len="500" type="String" min-occurrences="1"/>
+			<key name="name"  max-len="500" type="String" min-occurrences="1"/>
+			<key name="description"  max-len="500" type="String"/>
+			<key name="type"  regex="image|embed" />
+			<key name="link"  max-len="1000"  type="String"/>
+			<key name="alignment"  regex="top|right|left|bottom" />
+		</jsontemplate>
+
+		<!-- Consilio Changes start-->
+		<jsontemplate name="udf__field_api_key">
+			<key name="udf__fields" template="udf_values" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+
+		<jsontemplate name="udf_values" disable-extra-key="true">
+			<key name="allowed_values"  template="allowed_Values_array" type="JSONArray" max-len="-1" max-occurrences="1" array-size="0-100"/>
+		</jsontemplate>
+		<!-- Consilio Changes End-->
+
+		<jsontemplate name="fields_additional_attributes">
+			<key name="precision" regex="^([1-3])$" />
+			<key name="max-len" type="int" />
+			<key name="min-len" type="int" />
+			<key name="num_range" regex="^(\-?[0-9]*\:\-?[0-9]*)$" />
+			<key name="sort_order" regex="asc|desc" />
+			<key name-regex="true" name="[a-z0-9_]+" type="String" max-occurrences="5" />
+		</jsontemplate>
+		<jsontemplate name="options_additional_attribute_config">
+			<key name-regex="true" name="[a-z0-9_]+" type="JSONObject" template="options_additional_attribute_config_template" />
+		</jsontemplate>
+		<jsontemplate name="options_additional_attribute_config_template">
+			<key name="type" regex="long|int|float|double|boolean|string|html" max-len="10" />
+			<key name="mandatory" type="boolean" />
+			<key name-regex="true" name="[a-z0-9_]+" type="String" max-occurrences="5" />
+		</jsontemplate>
+		<jsontemplate name="options_additional_attribute_template">
+			<key name-regex="true" name="[a-z0-9_]+" type="String" max-occurrences="5" max-len="5000" secret="true"/>
+		</jsontemplate>
+		<jsontemplate name="get_config">
+			<key name="get_config" template="get_config_base" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="type_wise_count">
+			<key name="type_wise_count" template="get_config_base" type="JSONObject" max-len="-1" allow-invalid="false" min-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="get_config_base">
+			<key name="module" type="String" max-len="50"/>
+			<key name="category" type="String" max-len="50"/>
+			<key name="for" type="String" max-len="100"/>
+		</jsontemplate>
+		<jsontemplate name="inline_img_template">
+			<key name-regex="true" name="[a-z0-9_]+\.{0,1}[a-z0-9_]+" type="JSONArray" template="inline_image_array" max-len="-1" array-size="0-50" max-occurrences="10"/>
+		</jsontemplate>
+       
+       <jsontemplate name="associated_sub_modules" disable-extra-key="true">
+			 <key  name="list_info" template="list_info_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+
+		<jsontemplate name="udf_fields_get">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="module" type="JSONObject" template="IDNameJson" />
+			<key name="category" type="JSONObject" template="IDNameJson" />
+		</jsontemplate>
+
+		<jsontemplate name="history_get">
+			<key name="module" type="String" max-len="30" />
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+		</jsontemplate>
+		<jsontemplate name="slide_reorder_template">
+			<key name="slide_details" type="JSONArray" template="slide_reorder_JSONArray_template" max-len="-1"  array-size="0-50" />
+		</jsontemplate>
+		<jsontemplate name="slide_reorder_JSONArray_template">
+			<key name="id" type="long" />
+			<key name="order" type="long"/>
+		</jsontemplate>
+		<jsontemplate name="tour_make_draft_template">
+			<key name="order" type="long"  />
+		</jsontemplate>
+	</jsontemplates>
+</security>

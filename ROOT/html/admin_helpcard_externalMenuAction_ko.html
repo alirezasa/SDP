@@ -1,0 +1,40 @@
+<style type="text/css">
+.tablecolor {
+    background-color: #CCC;
+}
+.lightgrey {
+    color: #C0C0C0;
+}
+.tablecolorlightgrey {
+    background-color: #CCC;
+}
+.tablelightgrey1 {
+    background-color: #E8E8E8;
+}
+.textdarkgrey {
+    color: #575757;
+}
+</style>
+<p>이 기능을 사용하면 자신의 스크립트를 사용하여 <strong>요청서</strong> 페이지의 <strong>액션</strong> 메뉴를 사용자 지정할 수 있습니다. 다른 액션업 메뉴를 만들고 사용자 정의 클래스 또는 스크립트 파일을 메뉴와 연결하여 관련 액션을 실행할 수 있습니다. 여기에서 만든 메뉴는 <strong>요청서 세부정보</strong> 페이지의 <strong>액션</strong> 메뉴 아래에 나열됩니다.</p>
+<p style="margin-top: 9.5pt; margin-bottom: 9.5pt;"><span class="helpheading">새 메뉴 추가</span></p>
+<p>새 메뉴를 만드는 동안 다음 세부 정보를 제공해야 합니다.</p>
+
+    <p><strong>메뉴 이름</strong>: 생성 중인 메뉴의 유일한 이름을 지정합니다(메뉴 이름은 요청서 페이지의 액션 메뉴 아래에 표시됩니다)</p>
+    <p><strong>설명</strong>: 메뉴의 목적을 나타내는 적절한 설명을 입력합니다.</p>
+    <p><strong>역할 연계</strong>: 이 메뉴에 액세스할 기술자 역할을 결정합니다(선택 옵션: 모든 역할 또는 '선택한 역할')</p>
+    <p><strong>템플릿 연계</strong>: 템플릿을 선택하면 이 메뉴가 표시됩니다(선택 가능한 옵션: '모든 템플릿', '모든 인시던트 템플릿, '모든 서비스 템플릿'(또는) '선택한 템플릿 ')</p>
+    <p><strong>사용자 정의 HTML 파일</strong>: 메뉴가 호출될 때 사용자 정의 HTML 파일을 로드하려면 html 파일을 "[SDP_Home]/Integration/resources/" 디렉토리에 배치해야 합니다. 확장자가 <strong>htt/htx/htm/html/htmls</strong>인 파일은 호출에만 지원됩니다. 또한 JavaScript 및 CSS와 같은 종속성 파일은 동일한 위치에 배치되어야 합니다.</p>
+    <p><strong>액션 유형 선택</strong>:
+    </p><p>액션 유형 드롭다운에서 '스크립트 실행' 또는 '클래스 실행' 옵션을 선택합니다. '<strong>클래스 실행</strong>' 옵션을 선택한 경우 제공된 필드에 Executor 클래스를 지정해야 합니다. 예: "<strong>com.servicedeskplus.integration.JiraActionImplementation</strong>". '<strong>스크립트 실행</strong>' 옵션을 선택한 경우 지정된 필드에 스크립트가 포함된 텍스트 파일의 파일 이름을 지정해야 합니다. 애플리케이션은 <strong>[SDP_Home]/integration/custom_scripts/executor_files</strong> 디렉토리에 저장된 언급된 텍스트 파일에서 스크립트를 가져옵니다.</p>
+    <p>사용자 정의 <strong>스크립트/클래스</strong>에 대한 인수를 전달할 수도 있습니다. 모든 API 매개변수는 인수로 지원됩니다.&nbsp;</p><p><strong>예</strong>&nbsp;</p><p><em>스크립트의 경우 </em>: cmd&nbsp;/ c 색인. bat $COMPLETE_V3_JSON_FILE</p><p><em>클래스의 경우</em> &nbsp;:&nbsp;com.servicedeskplus.integration.JiraActionImplementation</p><p>
+    <strong>지원되는 기타 매개변수 중 일부</strong></p><p>$COMPLETE_V3_JSON_FILE ---&gt; 전체 요청서 개체는 JSON 파일에 저장되고 파일 경로는 문자열 개체로 전달됩니다.</p><p>JSON 파일 경로 &nbsp;: <em>(SDP_Home\integration\custom_scripts\request\12_1426143538036.json) .</em></p>
+    <p> $HTML_DATA_JSON_FILE ---&gt; Ajax call request  "<strong>data</strong>" 매개변수는 메뉴 이름, 요청 json 및 xml 파일 경로와 함께 JSON 파일에 저장되고 파일 경로는 String Object로 전달됩니다. 사용자 정의 HTML 파일과 함께 사용됩니다. 예: (SDP_Home\integration\custom_scripts\request\12_1426143538036.json). </p>
+    <p> $HANDSHAKE_KEY ---&gt; Handshake 키는 String Object로 전달됩니다.</p>
+    <p><strong>저장</strong>을 클릭합니다.</p>
+
+<p>이제 메뉴가 만들어지고 <strong>요청 세부정보</strong> 페이지의 <strong>액션</strong> 메뉴에서 볼 수 있습니다.</p>
+<p style="margin-top: 9.5pt; margin-bottom: 9.5pt;"><span class="helpheading">목록 보기</span></p>
+<p>새 메뉴를 추가하는 동안 액세스할 수 있습니다. 여기에서 다음을 수행할 수 있습니다.</p>
+
+   <p><strong>사용자 정의 메뉴 활성화/비활성화</strong>: <strong>활성화/비활성화</strong> 아이콘을 클릭하여 사용자 정의 메뉴 요청서 목록 보기 페이지에서 메뉴를 활성화 또는 비활성화합니다.</p>
+     <p><strong>사용자 정의 메뉴 수정/삭제</strong>: <strong>요청서 사용자 정의 설정 메뉴</strong> 목록 보기 페이지에서  업데이트/제거하려는 특정 메뉴에 해당하는 <strong>수정/삭제</strong> 아이콘을 클릭합니다..</p>

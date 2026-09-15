@@ -1,0 +1,57 @@
+/*$Id$*/
+
+/* Put this inside a @media qualifier so Netscape 4 ignores it */
+@media screen {
+/* Turn off list bullets */
+ul.mktree  li {
+	list-style: none;
+	font-size: var(--fs-11);
+}
+/* Control how "spaced out" the tree is */
+ul.mktree, ul.mktree ul , ul.mktree li {
+	margin-left: 3px;
+}
+/* Provide space for our own "bullet" inside the LI */
+ul.mktree  li           .bullet {
+	padding-left: 15px;
+	font-size: var(--fs-11);
+}
+/* Show "bullets" in the links, depending on the class of the LI that the link's in */
+ul.mktree  li.liOpen    .bullet {
+	cursor: var(--sdpcursor-pointer);
+	font-size: var(--fs-11);
+	background-image: url('/images/minus.gif');
+	background-repeat: no-repeat;
+	background-position: center left;
+}
+ul.mktree  li.liClosed  .bullet {
+	cursor: var(--sdpcursor-pointer);
+	background: url('/images/plus.gif')   center left no-repeat;
+}
+ul.mktree  li.liBullet  .bullet {
+	cursor: var(--sdpcursor-default);
+	background: url('/images/bullet.gif') center left no-repeat;
+}
+/* Sublists are visible or not based on class of parent LI */
+ul.mktree  li.liOpen    ul {
+	display: block;
+	font-size: var(--fs-11);
+}
+ul.mktree  li.liClosed  ul {
+	display: none;
+	font-size: var(--fs-11);
+}
+/* Format menu items differently depending on what level of the tree they are in */
+ul.mktree  li {
+	font-size: var(--fs-11);
+}
+ul.mktree  li ul li {
+	font-size: var(--fs-11);
+}
+ul.mktree  li ul li ul li {
+	font-size: var(--fs-11);
+}
+ul.mktree  ul li ul li ul li li {
+	font-size: var(--fs-11);
+}
+}

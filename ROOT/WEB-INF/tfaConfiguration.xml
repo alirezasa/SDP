@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <uri-resources>
+     <!--
+  * <uri-resources> : Logical Grouping of a webapp's HTTP requests into actions and permissions with help of URI and other request based criteria.
+                 * <actions> : Collection of actions.
+  * <action> : Represents a logical resource or a feature which consists of a group of low level permissions.
+  name : Unique identifier for the action. (Mandatory)
+  - Allowed characters are [A-Za-Z_\-] with maxlen of 100 chars. Eg, "admin-settings" or "AssetRequest"
+  reauthn : true/false, To set re-authentication(MFA only as of now) applicable status at action level. (optional)
+  - If not set, will be considered as false by default.
+  ids-urls-id : This attribute can be used if a <urls> tag in WAF already represents an action (ie) encompasses all the <url>s of this action's permissions alone and you want to use the same as the criteria for the entire action. (optional)
+  - Unique identifier(unique across all <urls> in WAF) should be created, set here and also set at the respective <urls> tag for a custom attribute "ids-urls-id" value at WAF security.xml in order to map it.
+  - Allowed characters are [A-Za-Z0-9_\-] with maxlen of 500 chars.
+  - NOTE : Use this attribute only when you want to set 'reauthn' at action level itself and don't want to define individual permissions.
+  * <permission> : Represents a specific permission over the action wrt request params criteria.
+  name : Unique identifier for the permission. (Mandatory)
+  - Allowed characters are [A-Za-Z_\-] with maxlen of 100 chars. Eg, "update" or "ExportAsPDF".
+  ids-url-id : This attribute maps a existing WAF's <url> criteria to this permission. (Mandatory)
+  - Unique identifier should be created and used at here and WAF respective <url> tag for a custom attribute "ids-url-id" value at security.xml for mapping it.
+  - Allowed characters are [A-Za-Z0-9_\-] with maxlen of 500 chars.
+  - NOTE : HTTP verb criteria will also be implicitly considered here. So, if products has permissions based on HTTP verb, we advise to handle it as a separate <url> at WAF itself and just map here.
+  operation-params : Additional HTTP request parameters criteria in query string format. (optional)
+  - Leave it as empty value, if you want to consider this permission only when empty request params. Eg, <operation-params></operation-params>
+                 - Ignore this tag, if you want to consider this permission irrespective of HTTP request params.
+  reauthn : true/false, Whether to consider this action for re-authentication(MFA only as of now) or not. (optional)
+  - If not set, will be considered as false by default unless the same flag is set to true at parent action.
+             reauthn_bypass_notenrolled : If true, reauthn won't be forced if user is not registered for MFA.
+                 - Not advisable to use this, Product team should reach FW team for using it.
+  -->
+<actions>
+    <action name="Security_Settings">
+         <permission name="Update" ids-url-id="Security_Settings_Update" reauthn = "true"/>
+     </action>
+         <action name="Password_Policy">
+         <permission name="Update" ids-url-id="Password_Policy_Update" reauthn = "true"/>
+     </action>
+     <action name="saveTwoFactorModeConfig">
+         <permission name="Update" ids-url-id="saveTwoFactorModeConfig" reauthn = "true" reauthn_bypass_notenrolled="true"/>
+     </action>
+       <action name="saveAdminConfigTFA">
+         <permission name="Update" ids-url-id="saveAdminConfigTFA" reauthn = "true" reauthn_bypass_notenrolled="true"/>
+     </action>
+        <action name="deleteEnrolledUsers">
+         <permission name="Update" ids-url-id="deleteEnrolledUsers" reauthn = "true" reauthn_bypass_notenrolled="true"/>
+     </action>
+     <action name="field_form_rules">
+         <permission name="Insert" ids-url-id="field_form_rules" reauthn = "true" />
+     </action>
+      <action name="app_service_actions">
+          <permission name="Insert" ids-url-id="app_service_actions" reauthn = "true" />
+      </action>
+      <action name="custom_functions_tfa">
+          <permission name="Update" ids-url-id="custom_functions_tfa" reauthn = "true" />
+      </action>
+      <action name="integration_key_decrypt">
+          <permission name="View" ids-url-id="integration_key_decrypt" reauthn="true"/>
+      </action>
+      <action name="adv_settings_tfa">
+          <permission name="Update" ids-url-id="adv_settings_tfa" reauthn = "true" />
+      </action>
+<!--    <action name="mail_server_settings">-->
+<!--        <permission name="Update" ids-url-id="Email_Def_Update" reauthn = "true"/>-->
+<!--        <permission name="Update" ids-url-id="Filter_Def_Update" reauthn = "true"/>-->
+<!--        <permission name="Update" ids-url-id="Email_Delimiter_Update" reauthn = "true"/>-->
+<!--    </action>-->
+</actions>
+</uri-resources>

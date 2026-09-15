@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+
+</head>
+
+<body>
+  <p>A change template contains a canvas, a header, and various fields.</p>
+   <p><strong>Header:</strong>Consists of the template name and workflow, along with the <strong>Undo</strong> and <strong>Redo</strong> buttons.</p>
+   <p><strong>Canvas:</strong>Is the visual builder into which you can drag various fields and create the workflow. </p>
+   <p><strong>Fields:</strong>Any change additional fields configured in the application and the fields removed from the canvas are listed in this section. </p>
+   <p><strong>Duplicating Change Templates:</strong> Instead of creating individual forms for each Change Template, click <strong>Duplicate Template</strong> to create duplicate templates for similar change requests.  Duplicating a template retains the fields in the canvas and renames the new template as <strong>Copy of (Template Name)</strong>.  </p>
+
+    To create a change template, </p>
+<ul>
+      <li>Click <strong>Add Change Template.</strong></li>
+        <li>Provide a template <strong>Name</strong> and <strong>Description</strong> and select the <strong>Workflow</strong> for the template to follow.</li>
+          <li>Use the checkboxes displayed on the top to mark emergency or default templates</li>.
+            <li>Customize the fields in the template form, add and group fields into sections, and customize the template layout.</li>
+              <li>Configure <strong>Change Roles. </strong></li>
+                <li>Under <strong>Field & Form rules,</strong> configure the <strong>On Form Load, On Field Change,</strong> and <strong>On Form Submit rules. </strong></li>
+                  <li>Click <strong>Save.</strong></li>
+</ul>
+     <p>Use the <strong>Search</strong> icon to search for your preferred change template.</p>
+     <p>Using <strong>Actions</strong> icon, you can edit, disable, delete, or mark a change template as default. You cannot, however, disable or delete the default template.</p>
+     <p>Click the <strong>Workflow</strong> icon next to the selected change to preview the assigned workflow status.</p>
+    <strong>Note:</strong>
+<ul>
+    <li>If a change template is deleted while being used in changes, the template will be disabled. You can restore an inactive change template by editing it.</li>
+    <li>When you set a default template, all new change templates will contain the default configurations. </li>
+    <li>Deleting the default template from the Change Template List View is not allowed. Instead, you can set another template as the default template and then delete the previous default template. </li>
+  <li>While creating a change request, the fields in the form will be populated based on the default template.</li>
+    <li>If you have added or deleted a user from a role, the modifications done will reflect only in the forthcoming change requests. Deleting a role will delete the role from the change request, which does not have any users assigned to it.</li>
+  <li>The maximum number of roles that can be added is 12.</li>
+    <li>The change owner, and change requester roles can't be added or edited under <strong>Change Roles.</strong></li>
+    <li><strong>SharedRole</strong> allows you to share a change with your technicians. You can share the change with specific technicians or all technicians by selecting <strong>$AllTechnician.</strong> </li>
+    <li>Change requests shared with all technicians will not appear under <strong>My Changes</strong> in the list view.</li>
+    <li>Technicians will be notified only when they are individually selected for <strong>SharedRole.</strong></li>
+    <li>You can add a new role in the Change Roles page under <strong>Admin > Customization > Change Roles</strong> and selecting <strong>Add</strong>. The added role will be shown in the <strong>Change Roles</strong> under <strong>Admin >Templates and Forms > Change Template,</strong> after refreshing the page.</li>
+  </ul>
+  <strong>Field and form Rules:</strong>
+    <p>With Field & Form Rules, you can define rules that can be executed on a change form. Field and form rules are executed after a change form is loaded, submitted, and on field change. Field & Form Rules are not executed on the server side but on the client side. Rules can be disabled or enabled. </p>
+
+    <p><strong>Events supported in Field & Form Rules:</strong></p>
+    <p><strong>On Form Load:</strong> Rules are executed each time the change form is loaded.</p>
+    <p><strong>On Field Change:</strong> Rules are executed when the field value changes. Rule will be applied when a field value mentioned in the rule is changed.</p>
+    <strong>Note:</strong>
+<ul>
+    <li>The rules defined should contain at least one action to be executed.</li>
+    <li>The actions will be executed after checking the criteria. If no criteria is set, the actions will be executed in the organized order.</li>
+</ul>
+    <p><strong>On Form Submit:</strong> Rules are executed when the change form is submitted. Execute Script is the only action allowed for this event. Rules defined for this event should contain a valid script. Script will be executed after checking the set criteria, and if no criteria is defined, the script will be executed directly.</p>
+    <p><strong>Applicable To Users:</strong> Rules can be applied to all users or technicians except ChangeOwner, ChangeManager, or SDChangeManager.</p>
+    <p><strong>Rule Execution:</strong> Rules can be executed on creating a new change request or on editing an existing change request or both.</p>
+    <p><strong>Copying Rules To Another Template:</strong> One or more rules can be copied from one template to another using Copy rule in the actions menu. If no criteria is set for certain rules, then such rules will not be copied.</p>
+    <p><strong>Removing Fields from Change Form:</strong> Removing fields from the template would automatically remove fields from the rules defined for that template. If the fields are deleted and no criteria is set for certain rules, then such rules will be deleted.</p>
+    <p><strong>Actions supported in Field & Form Rules:</strong></p>
+<ul>
+  <li><strong>Show Fields</strong></li>
+  <li><strong>Hide Fields</strong></li>
+  <li><strong>Enable Fields</strong></li>
+  <li><strong>Disable Fields</strong></li>
+  <li><strong>Mandate Fields:</strong> Makes given fields mandatory in the change form.  User will not be able to submit the form without filling value for these fields.</li>
+  <li><strong>Non-Mandate Fields:</strong> Removes mandatory property of given fields in the change form on which this action is applied. Thus user can submit form without filling value for these fields.</li>
+  <li><strong>Execute Script:</strong> Executes script in the change form. Script should be a valid JavaScript code. Otherwise script won't be executed. Some methods are supported as default methods in script execution. For example to hide category and level fields you can call below method with an array of fields as. eg: <code> $CS.hideField(["CATEGORY","LEVEL"]);</code>
+    <br>
+  </li>
+</ul>
+</body>
+</html>
+

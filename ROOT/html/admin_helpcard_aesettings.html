@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+<p>In Scan Settings, you can configure various discovery related settings.</p>
+<p><strong>Configure Invalid Service Tags</strong></p>
+<p>While performing a scan, the Workstations and servers are uniquely identified based on its Service Tags and Name. So when the service tags are not configured properly by the OEM, many machines would result in similar service tags. In such cases, if a scan is performed, one workstation details would be overwritten by the other. To avoid this, you can add the service tag under Invalid Service Tag list such that, the workstations with the service tag is ignored during a scan.</p>
+<ol><ul style="list-style: disc;">
+  <li>Scan software in Solaris and AIX machines</li>
+</ul></ol>
+<p>By enabling this checkbox, software details present in Solaris and AIX machines will be scanned while disabling will prevent scanning software in these machines.</p>
+<ol><ul style="list-style: disc;">
+  <li>Disable Ping</li>
+</ul></ol>
+<p>By default, machines can be pinged despite any background process. Enable this checkbox, to prevent pinging during scan, remote control and AD user import.</p>
+<ol><ul style="list-style: disc;">
+  <li>Schedule based Software Compliance Calculation</li>
+</ul></ol>
+<p>By enabling this checkbox, Software Compliance can be calculated  by scheduling them at required time intervals. By default, the schedule  is set to 30 minutes. If this checkbox is not enabled, then the Software Compliance will be calculated instantly with the scan process.</p>
+<p>
+<strong>Note</strong>: During the scheduled calculation process, scan will not be performed. </p>
+<ol><ul style="list-style: disc;">
+  <li>sysname over DNSname</li>
+</ul></ol>
+<p>Enable this option to prioritize sysname over DNSname for choosing a deviceName during SNMP scan. By default this option will be disabled.
+</p>
+<ol><ul style="list-style: disc;">
+  <li>Stop uploading scanned XMLs via non-login URL</li>
+</ul></ol>
+<p>By enabling this option, you can make the application unresponsive to unnecessary data upload while receiving scanned XML data from an agent through a non-login URL. <br>
+  <br>
+</p>
+<p><strong>Exclude IP/Devices from scan</strong></p>
+<p>Exclude unwanted assets from being scanned during various scans like <strong>Network Scan, Workstation Scan, Domain Scan </strong>and <strong>Schedule Scan</strong> etc., by adding them to the <strong>excluded devices list.</strong> To exclude a device from being scanned, enter its <strong>IP Address or Device Name</strong>, click <strong>Add </strong>button. The IP Address or Device Name just added will appear under <strong>Excluded IP(s)/Device(s) list</strong>. In case you wish to add more devices to the exclude list, <strong>repeat the process</strong> and when all the desired devices have been added, click <strong>Save </strong>button to save the settings.However exclude will not happen if devices are added from remote AE server and importing scanned xml's manually.<br>
+  <br>
+</p>
+<p><strong>Auto Site Allocation</strong></p>
+<p>This configuration allows you to automatically assign assets to sites based on their IP addresses. To do this, click <strong>New Configuration</strong>, select your preferred site from the <strong>Sites</strong> drop-down, provide an IP address or an IP address range, and click <strong>Save.</strong> </p>
+<p>For bulk assignment of assets to sites, click Import XLS and follow the instructions.</p>
+<p>After a new configuration, a full scan will run and then a partial scan will run every 6 hours. The assignment will be based on the first matching IP address. During partial scan, the assignment will happen only for assets added manually through forms or for assets whose IP address has been changed after the full scan.</p>
+<p>Only the IPv4 addresses with the following formats are supported: </p>
+<ol>
+  <ul style="list-style: disc;">
+    <li>A single IP address: 172.3.4.50  </li>
+    <li>A range specified using the last byte: 172.3.4.50-250 </li>
+    <li>A range specified using the last two bytes: 172.3.4.50-5.250 </li>
+    <li>A range specified using the last three bytes: 172.3.4.50-4.5.250</li>
+    <li>A range specified using the all four bytes: 172.3.4.50-173.1.1.250</li>
+  </ul>
+</ol>
+<p>For a single configuration, you can add multiple IP addresses separated by commas in any of the supported formats. Eg : 192.168.23.132,192.168.23.140-192.168.23.150, 172.3.4.50-250.</p>
+<p><strong>Note:</strong> This configuration will not work with distributed asset scan. </p>
+</body>
+</html>

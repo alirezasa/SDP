@@ -1,0 +1,228 @@
+<!-- $Id$ -->
+<!-- Security authentication for Self-Service Portal Settings related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <urls authentication="required">
+        <url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="settings" method="GET"/>
+        <url roles="SDOrgAdmin" path="/Settings.do" operation-param="mode" operation-value="viewESM" user_type="all" method="GET"/>
+        <url roles="SDOrgAdmin" path="/Settings.do" operation-param="mode" operation-value="updateESM" user_type="all" method="POST" csrf="true" ids-url-id="adv_settings_tfa">
+            <param name="headCheck" regex="Default|UserDefined"/>
+            <param name="chooseLanguage" type="String" max-len="10"/>
+            <param name="portalList" type="long" max-occurrences="25"/>
+            <param name="addUser" type="boolean"/>
+            <param name="emailIDBased" type="boolean"/>
+            <param name="addLogin" type="boolean"/>
+            <param name="localAuth" type="boolean"/>
+            <param name="processEmailFromNewUser" type="boolean"/>
+            <param name="hideGPTConfigurations" type="boolean"/>
+            <param name="reqDetail" regex="show|showandedit|showWithAdditionalFields"/>
+			<param name="trashTimeLimit" regex="1|2|3|4|5|6|7|8|9|10"/>
+			<param name="historyRecordsLimit" regex="3|4|5|6"/>
+            <param name="dnsName" type="String" max-len="500" regex="^([a-zA-Z0-9])+(([\-\.]{1})?([a-zA-Z0-9])+)*(\.[a-zA-Z]{2,5})*(:[0-9]{1,5})*$" secret="true"/>
+            <!-- SD-96324-->
+            <!-- Regex cannot be added for the below params -->
+            <param name="appTimeZone" type="String"/>
+            <param name="appDateFormat" type="String"/>
+            <param name="appTimeFormat" type="String"/>
+            <param name="langOverwrite" type="boolean"/>
+            <param name="siteTimezoneOverwrite" type="boolean"/>
+            <param name="personalizeTimezoneOverwrite" type="boolean"/>
+            <param name="dateFormatOverwrite" type="boolean"/>
+            <param name="timeFormatOverwrite" type="boolean"/>
+            <!-- SD-96324-->
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="esm_dir_application_settings" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="15" lock-period="5m"/>
+            </throttles>
+		</url>
+        <url roles="SDAdmin" path="/Settings.do"  operation-param="mode" operation-value="view" method="GET"/>
+        <url roles="SDAdmin" path="/Settings.do" operation-param="mode" operation-value="update" method="POST" csrf="true" ids-url-id="adv_settings_tfa">
+            <file name="headBrowse" max-size="10240" content-type-name="all_image_type" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+            <param name="moveClosureCode" type="long"/>
+            <param name="moveStatus" type="long"/>
+            <param name="approveIfRequesterIsAppr" type="boolean"/>
+            <param name="allowTechCreateReplyTemplate" type="boolean"/>
+            <param name="approvalReplyActionEnabled" type="boolean"/>
+            <param name="approveIfAlreadyApproved" type="boolean" />
+            <param name="allowCancelRequestDirectly" type="boolean"/>
+            <param name="enableAcknowledgeNotification" type="boolean"/>
+            <param name="printPreview" regex="[a-z,_]*" max-len="250"/>
+            <param name="approvalPreview" regex="[a-z,_]*" max-len="100"/>
+            <param name="reqSearch" type="boolean"/>
+            <param name="reqProjectOption" type="boolean"/>
+            <param name="reqReOpenOption" type="boolean"/>
+            <param name="reqCloseOption" type="boolean"/>
+            <param name="onholdOption" type="boolean"/>
+            <param name="reqGlobalReOpenOption" regex="Always|TimePeriod|Never|New"/>
+            <param name="reopenAge" type="long"/>
+            <param name="disableDefaultTemplate" type="boolean"/>
+            <param name="reqDetail" regex="showandedit|show|showWithAdditionalFields" max-occurrences="3"/>
+            <param name="editIncident" regex="Incident"/>
+            <param name="editService" regex="Service"/>
+            <param name="showCostToReq" type="boolean"/>
+            <param name="showCostToApprover" type="boolean"/>
+            <param name="autoSuggestForRequesters" type="boolean"/>
+            <param name="statusCommentForRequest" type="boolean"/>
+            <param name="inc_nonOperationalHours" type="boolean"/>
+            <param name="autoFillStartEndTime" type="boolean"/>
+            <param name="showAssocWS" regex="true|false|on|off" max-occurrences="2"/>
+            <param name="showApprovalTab" type="boolean"/>
+            <param name="approvalRestrictionType" regex="sysusers|srapprovers"/>
+            <param name="approvalRestrictionTypeDefaultVal" regex="globalsysusers|globalsrapprovers"/>
+            <param name="approvalRequiresLogin" type="boolean"/>
+            <param name="advancedApprovalRestriction" type="boolean"/>
+            <param name="stopTimer" type="boolean"/>
+            <param name="stopTimerStatus" type="String" max-len="100"/>
+            <param name="isScheduleChanged" type="boolean"/>
+            <param name="isApprReminderEnabled" type="boolean"/>
+            <param name="approvalReminder" type="boolean"/>
+            <param name="daysToTakeAction" type="long"/>
+            <param name="apprRemHRS" type="long"/>
+            <param name="apprRemMINS" type="long"/>
+            <param name="stopApprovalReminderNotifBasedOnCount" type="boolean"/>
+            <param name="approvalReminderLimit" type="long"/>
+            <param name="currency" type="long"/>
+	    <param name="currencySymbol" regex="([^&lt;&gt;;'&quot;-]+)" max-len="10"/>
+            <param name="chooseLanguage" type="String" max-len="100"/>
+            <param name="weekStartDay" type="long"/>
+            <param name="showSiteDetails" type="boolean"/>
+            <param name="mergeTemplates" type="boolean"/>
+            <param name="addUser" type="boolean"/>
+            <param name="addLogin" type="boolean"/>
+            <param name="emailIDBased" type="boolean"/>
+            <param name="localAuth" type="boolean"/>
+            <param name="processEmailFromNewUser" type="boolean"/>
+            <param name="hideGPTConfigurations" type="boolean"/>
+            <param name="quickCreate" type="boolean"/>
+            <param name="selectAsset" type="boolean"/>
+            <param name="solSelfApprove" type="boolean"/>
+            <param name="hideSolutionToReq" type="boolean"/>
+
+            <param name="hideForwardSolutionToReq" type="boolean"/>
+            <param name="remoteDA" type="boolean"/>
+            <param name="allowMobileAppsForRequester" type="boolean"/>
+            <param name="allowNonLoginSolutionView" type="boolean"/>
+            <param name="cleanClosedWOSystemNotificationEnabled" type="boolean"/>
+            <param name="monthCriteria" type="long"/>
+            <param name="dnsName" type="String" max-len="500" regex="^([a-zA-Z0-9])+(([\-\.]{1})?([a-zA-Z0-9])+)*(\.[a-zA-Z]{2,5})*(:[0-9]{1,5})*$" secret="true"/>
+            <param name="backupTechConfiguration" regex="DueBy|CurrentTime"/>
+            <param name="headCheck" regex="Default|UserDefined"/>
+            <param name="SSPCustomizationType" regex="basic|advanced" />
+            <param name="headsubmit" type="String"/>
+            <param name="save" type="String"/>
+            <!--Params for Move operation starts-->
+            <param name="moveConfiguration" regex="delete|retain"/>
+            <!--Params for Move operation ends-->
+            <!--param for to enable login close starts -->
+            <param name="allowLoginClose" type="boolean"/>
+            <!--param for to enable login close ends-->
+			<param name="trashTimeLimit" regex="1|2|3|4|5|6|7|8|9|10"/>
+			<param name="historyRecordsLimit" regex="3|4|5|6"/>
+	        <param name="mandateApprovalComments" type="boolean"/>
+	        <param name="actionNameForMandateComments" regex="all|reject"/>
+	    <param name="userFieldRestrictionType" regex="all|include|exclude"/>
+            <param name="userRestrictedFields" type="JSONArray" template="user_restriction_field_template" max-len="-1" array-size="0-500"/>
+            <param name="techFieldRestrictionType" regex="all|include|exclude"/>
+            <param name="techRestrictedFields" type="JSONArray" template="sdp_tech_restriction_field_template" max-len="-1" array-size="0-500"/>
+			<!--params for approval clarification reminder-->
+			<param name="isApprClarifReminderEnabled" type="boolean"/>
+            <param name="approvalClarifReminder" type="boolean"/>
+            <param name="daysToTakeActionOnclarif" type="long"/>
+            <param name="apprClarifRemHRS" type="long"/>
+            <param name="apprClarifRemMINS" type="long"/>
+            <param name="stopApprovalClarifReminderNotifBasedOnCount" type="boolean"/>
+			<param name="isClarifScheduleChanged" type="boolean"/>
+			<param name="approvalClarifReminderLimit" type="long"/>
+            <!-- SD-96324-->
+            <!-- Regex cannot be added for the below params -->
+            <param name="appTimeZone" type="String"/>
+            <param name="appDateFormat" type="String"/>
+            <param name="appTimeFormat" type="String"/>
+            <param name="langOverwrite" type="boolean"/>
+            <param name="siteTimezoneOverwrite" type="boolean"/>
+            <param name="personalizeTimezoneOverwrite" type="boolean"/>
+            <param name="dateFormatOverwrite" type="boolean"/>
+            <param name="timeFormatOverwrite" type="boolean"/>
+            <param name="Enable_Resolved" type="boolean" min-occurrences="1" />
+            <param name="backupApprover" type="boolean"/>
+            <!-- SD-96324-->
+	    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="self_service_portal_settings" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="15" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- SSP Customization -->
+        <url roles="SDAdmin" path="/SSCustomizeView.do" operation-param="action" operation-value="getDashboard" method="GET">
+            <param name="from" regex="home" />
+            <param name="Preview" regex="true" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ssp_get_dashboard" dynamic-throttle="true">
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin" path="/SSCustomizeView.do" operation-param="action" operation-value="publishDraft" method="POST" csrf="true">
+            <param name="new_config" template="save_widget_template" type="JSONObject" max-len="-1" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ssp_publish_draft" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin" path="/SSCustomizeView.do" operation-param="action" operation-value="saveDraft" method="POST" csrf="true">
+            <param name="new_config" template="save_widget_template" type="JSONObject" max-len="-1" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ssp_save_draft" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin" path="/SSCustomizeView.do" operation-param="action" operation-value="removeDraft" method="POST" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ssp_remove_draft" dynamic-throttle="true">
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url roles="SDOrgAdmin,SDAdmin" path="/api/v3/application_settings/(_?)history" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="application_settings_history" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDOrgAdmin,SDAdmin" path="/api/v3/application_settings/(_?)get_records_for_history" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="application_settings_get_records_for_history" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="SDOrgAdmin,SDAdmin" path="/api/v3/application_settings/(_?)get_performed_by_for_history" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="application_settings_get_performed_by_for_history" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url roles="SDOrgAdmin,SDAdmin" path="/common/ViewHistory.jsp" operation-param="module" operation-value="application_settings" user_type="all">
+            <param name="id" type="long" allow-empty="false"/>
+            <param name="key" regex="application_settings_history"/>
+            <param name="admin_entity|is_date_filter" regex="true|false" name-regex="true"/>
+            <param name="entity_key" type="String" max-len="100"/>
+            <param name="skip_filter_options|skip_operation_names|module_value" type="String" max-len="20" name-regex="true"/>
+            <param name="search_filter" regex="application_setting"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="application_settings_ViewHistory" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!-- Approval Reminder desription -->
+        <url path="/ApprovalReminderDesc.do" roles="SDAdmin" method="GET">
+			<param name="module" regex="clarification|approval"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="approval_reminder_description" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+		</url>
+		
+        <url roles="SDAdmin" path="/servlet/SDAjaxServlet" operation-param="action" operation-value="saveApprovalReminderDesc" method="POST" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="save_approval_reminder_description" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="module" type="String" max-len="20"/>
+			<param name="approval_module" regex="clarification|approval"/>
+            <param name="subjectVal" type="String" secret="true"/>
+            <param name="tokenValue" xss="sdpantisamyfilter" secret="true" max-len="-1" description="HTML element is passed as a String"/>
+        </url>
+    </urls>
+</security>

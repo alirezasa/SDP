@@ -1,0 +1,963 @@
+<!-- $Id$ -->
+<!-- contains all the manual secutiy config specifically related to custom modules, templates, form customization and udf -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<regexes>
+		<regex name="cm_api_name" value="(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" />
+		<regex name="conf_api_name" value="(conf_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" />
+		<regex name="process_api_name" value="(pe_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))" />
+		<regex name="api_name" value="(([a-z]|[0-9])+(_([a-z]|[0-9])+)*)" />
+	</regexes>
+	<jsontemplates>
+		<jsontemplate name="udf_constraint">
+			<key name="constraint_name" type="String"/>
+			<key name="constraint_value" type="String"/>
+		</jsontemplate>
+		<jsontemplate name="custom_instance">
+			<key name="cm_api_name" name-regex="true" template="instance_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="sub_entity_instance">
+			<key name="api_name" name-regex="true" template="instance_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="custom_task">
+			<key name="tasks" template="base_task_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+			<key name="task" name-regex="true" template="base_task_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="configuration_instance">
+			<key name="conf_api_name" name-regex="true" template="configuration_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="process_instance">
+			<key name="process_api_name" name-regex="true" template="configuration_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="cm_layout_field">
+			<key name="id" type="long" />
+			<key name="name" type="String"/>
+			<key name="position" type="JSONObject" template="cm_field_position" max-len="-1"/>
+			<key name="mandatory" type="boolean" max-occurrences="1"/>
+			<key name="unique" type="boolean" max-occurrences="1"/>
+			<key name="primary_field" type="boolean" max-occurrences="1"/>
+			<key name="height" type="String" max-len="100"/>
+			<key name="help_text" type="String" max-len="250"/>
+			<key name="options_display" regex="Vertical|Horizontal|vertical|horizontal" />
+			<key name="style_properties" type="JSONObject" template="style_properties" max-len="-1"/>
+			<key name="permission" type="JSONObject" template="cm_permission" max-len="-1"/>
+			<key name="requester_can_edit" type="boolean"/>
+			<key name="requester_can_view" type="boolean"/>
+			<key name="context" type="String" max-len="50"/>
+		</jsontemplate>
+		<jsontemplate name="cm_permission">
+			<key name="edit" type="String" />
+			<key name="view" type="String" />
+		</jsontemplate>
+		<jsontemplate name="cm_field_position">
+			<key name="row" type="int" max-occurrences="1"/>
+			<key name="col" type="int" max-occurrences="1"/>
+			<key name="row_size" type="int" max-occurrences="1"/>
+			<key name="col_size" type="int" max-occurrences="1"/>
+		</jsontemplate>
+		<jsontemplate name="template_copy">
+			<key name="copy_template" type="JSONObject" template="copy_template_input" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="copy_template_input">
+			<key name="copy_template_name" type="String" />
+			<key name="number_of_copies" type="int" range="1-9" />
+		</jsontemplate>
+		<jsontemplate name="cm_new_form">
+			<key name="new_form" template="cm_new_form_base" type="JSONObject" max-len="-1"/>
+		</jsontemplate>
+		<jsontemplate name="cm_new_form_base">
+			<key name="parent" template="module_unique" type="JSONObject" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="module_delete">
+			<key name="delete_data" type="boolean" allow-invalid="false" />
+		</jsontemplate>
+		<jsontemplate name="section_attributes" disable-extra-key="true">
+			<key name="is_predefined" regex="true" />
+		</jsontemplate>
+		<jsontemplate name="cm_tuple_properties">
+			<key name="limit" type="long" range=">0" />
+			<key name="criteria" type="JSONObject|JSONArray" max-len="-1" template="search_criteria" />
+		</jsontemplate>
+		<!-- moved from requesttemplate-v3.xml -->
+		<jsontemplate name="style_properties" disable-extra-key="true">
+			<key name="font_family" type="String" max-len="100" />
+			<key name="font_size" regex="12px|13px|14px|15px" />
+			<key name="bg_color" regex="color" />
+			<key name="label_color" regex="color" />
+			<key name="field_align" regex="right|left|top" />
+			<key name="font_weight" regex="bold|normal" />
+		</jsontemplate>
+		<jsontemplate name="template_style_properties" disable-extra-key="true">
+			<key name="section_style" type="JSONObject" template="style_properties" max-len="-1" />
+			<key name="field_style" type="JSONObject" template="style_properties" max-len="-1" />
+			<!-- Added by release module-->
+			<key name="max_width" type="int" range="1366-1880"/>
+		</jsontemplate>
+	</jsontemplates>
+	<urls authentication="required" disable-extraparam="true" api="true" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done.">
+		<throttles name="custom_module_apis" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+		<!--association urls starts-->
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}" method="post" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" name="input_data" template="instance_relationship" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(\d+)" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(\d+)" method="put" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" name="input_data" template="instance_relationship" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(\d+)" method="delete" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." />
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}" method="delete" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param name="ids" max-len="1200" min-occurrences="1" regex="ids"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(_?)metainfo" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(source|destination)" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(source|destination)/_total_count" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(_?)upload/(attach_[a-z0-9_]+)" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/(\d+)/udf_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/udf_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/udf_fields/(attach_[a-z0-9_]+)/(\d+)" method="delete" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done.">
+			<param name="mode" regex="view"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)association_summary" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." />
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)get_all_associations" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." />
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/_links" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done." >
+			<param allow-invalid="false" name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${association}/_total_count" method="get" user_type="all" description="FGR_APPLIED:No role configured for Custom Module as they have dynamic-roles. Server-side authorization have been done.">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<!--	association urls ends	-->
+		<url path="/api/v3/${cm_api_name}" method="post">
+			<param name="input_data" template="custom_instance" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)" method="put">
+			<param name="input_data" template="custom_instance" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)" method="delete"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)" method="get">
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/allowed_values_for_fields" method="get">
+			<param name="input_data" template="allowed_values_for_field_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/allowed_values_for_fields" method="get">
+			<param name="input_data" template="allowed_values_for_field_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}" method="put">
+			<param name="input_data" template="custom_instance" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}" method="delete">
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)history" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(_?)history" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)metainfo" method="get">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(_?)metainfo" method="get">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)metadata" method="get" />
+		<url path="/api/v3/${cm_api_name}/(_?)metadata" method="get" />
+		<url path="/api/v3/${cm_api_name}/(\d+)/${cm_api_name}/(_?)metadata" method="get" />
+		<url path="/api/v3/${cm_api_name}/${cm_api_name}/(_?)metadata" method="get" />
+		<url path="/api/v3/${cm_api_name}/(\d+)/${cm_api_name}/(\d+)/(_?)metadata" method="get" />
+
+		<url path="/api/v3/${cm_api_name}/_total_count" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)move_to_trash" roles="" method="delete"/>
+		<url path="/api/v3/${cm_api_name}/(_?)move_to_trash" roles="" method="delete">
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)restore_from_trash" roles="" method="put"/>
+		<url path="/api/v3/${cm_api_name}/(_?)restore_from_trash" roles="" method="put">
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(_?)export" method="get">
+			<param name="input_data" template="export_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/created_by/(_?)metainfo" method="get">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/created_by/(_?)metainfo" method="get">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(_?)metainfo" method="get">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/(_?)metainfo" method="get">
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(created_by)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(created_by)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(created_by)/(\d+)" method="get">
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(created_by)/(\d+)" method="get">
+		</url>
+
+		<!-- Custom Module attachments -->
+		<url path="/api/v3/${cm_api_name}/(\d+)/attachments" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/attachments/(\d+)" method="get">
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/attachments/(\d+)" method="delete">
+			<throttles name="attachemnt_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get" description="FGR_APPLIED">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get" description="FGR_APPLIED">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/cm_fields/(attach_[a-z0-9_]+)/(\d+)" roles="" method="delete" description="FGR_APPLIED">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/attachments/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/attachments/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/attachments/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(_?)upload" operation-param="for" operation-value="import" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(_?)upload" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)upload" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)upload" method="put">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(_?)upload/(attach_[a-z0-9_]+)" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/(_?)upload/(attach_[a-z0-9_]+)" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/${api_name}/(_?)upload/(attach_[a-z0-9_]+)" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(_?)upload/(attach_[a-z0-9_]+)" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/${api_name}/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+
+		<!-- Custom Module comments -->
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments" method="post">
+			<param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)" method="put">
+			<param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)" method="delete"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)" method="get">
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments" method="put">
+			<param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments" method="delete">
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)/(_?)reply" method="post">
+			<param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/_total_count" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)/created_by/(\d+)" method="get">
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+		</url>
+
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false"
+				 max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/comments/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/comments/(\d+)/images/(\d+)">
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/comments/images/(\d+)" />
+
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false"
+				 max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="post" path="/api/v3/${cm_api_name}/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/images/(\d+)">
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/images/(\d+)" />
+
+		<!-- Custom module tasks -->
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks" method="post">
+			<param name="input_data" template="custom_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)" method="put">
+			<param name="input_data" template="custom_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)" method="delete"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)" method="get">
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks" method="get">
+			<throttles name="task_get_list" key="url.path+url.dynamic_key+param.for" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+			<param name="for" regex="dep"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks" method="put">
+			<param name="input_data" template="custom_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks" method="delete">
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/_total_count" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/(status|owner|marked_owner|priority|type|template)"  method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(status|owner|marked_owner|priority|type|template)"  method="get" >
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/template/(\d+)" method="get"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/template/(\d+)" method="get"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/template/(_?)metainfo" method="get"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/template/(\d+)/images/(\d+)" method="get" >
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(_?)assign" method="put">
+			<param name="input_data" template="assign_task_info" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(_?)mark" method="put">
+			<param name="input_data" template="mark_task_info" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(_?)trigger" method="put">
+			<param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(_?)close" method="put">
+			<param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(_?)organize" method="put">
+			<param name="ids" max-len="1000" min-occurrences="1" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/(_?)assign" method="put">
+			<param name="input_data" template="assign_task_info" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/(_?)mark" method="put">
+			<param name="input_data" template="mark_task_info" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/(_?)close" method="put"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/task_dependencies" method="post" >
+			<throttles name="task_dependency_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="input_data" template="task_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/task_dependencies/(\d+)" method="delete" >
+			<throttles name="task_dependency_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/task_dependencies" method="get" >
+			<throttles name="task_dependency_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+		</url>
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false"
+				  max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/tasks/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/images/(\d+)">
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/tasks/images/(\d+)" />
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/attachments/(\d+)" method="delete">
+			<throttles name="request_task_attachment_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/attachments" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/attachments/(_?)download" method="get">
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/attachments/(\d+)/(_?)download" method="get">
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/attachments" method="delete">
+			<param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+		</url>
+
+		<!-- Custom module task Worklogs -->
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs"  method="post">
+			<param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="put">
+			<param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="delete"/>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)"  method="get">
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs"  method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(_?)get_time_spent"  method="get">
+			<param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)get_time_spent"  method="get">
+			<param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs"  method="put">
+			<param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs"  method="delete">
+			<param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/template/(\d+)"  method="get"/>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(owner|type|template)"  method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/(owner|type)"  method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/template/(\d+)"  method="get"/>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)/(\d+)"  method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/_links"  method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/_links"  method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/images/(\d+)">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="500" duration="1m"/>
+			</throttles>
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/images/(\d+)">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="30" duration="1m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(_?)metainfo" method="get">
+			<param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)metainfo" method="get">
+			<param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(_?)summary"/>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get">
+		     <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+		         <throttle lock-period="5m" threshold="30" duration="1m"/>
+		     </throttles>
+		     <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		 </url>
+
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+		    <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+		        <throttle duration="1m" threshold="10" lock-period="5m"/>
+		    </throttles>
+		    <param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post">
+		    <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+		        <throttle duration="1m" threshold="10" lock-period="5m"/>
+		    </throttles>
+		    <param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+		    <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+		        <throttle duration="1m" threshold="10" lock-period="5m"/>
+		    </throttles>
+		    <param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get">
+		    <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+		        <throttle duration="1m" threshold="10" lock-period="5m"/>
+		    </throttles>
+		    <param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tasks/(\d+)/worklogs/template/(\d+)/images/(\d+)" method="get" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="30" duration="1m"/>
+			</throttles>
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		</url>
+		<!-- Custom module as sub entity in custom module -->
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}" method="post">
+			<param name="input_data" template="sub_entity_instance" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)" method="put">
+			<param name="input_data" template="sub_entity_instance" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)" method="delete"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)" method="get">
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}" method="put">
+			<param name="input_data" template="sub_entity_instance" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}" method="delete">
+			<param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="1000" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/_total_count" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/${api_name}(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/${api_name}(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/${api_name}(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/${api_name}/(\d+)(/cm_fields)?/((multi|pick)_[a-z0-9_]+)" method="get">
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/(_?)history" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(_?)history" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+
+		<!-- Custom module tags
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags" method="post">
+			<param name="input_data" template="tag" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags/(\d+)" method="put">
+			<param name="input_data" template="tag" type="JSONObject" max-len="-1" min-occurrences="1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags" method="put">
+			<param name="input_data" template="tag" type="JSONObject" max-len="-1" min-occurrences="1"/>
+			<param name="ids" max-len="-1" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags/(\d+)" method="delete"/>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags" method="delete">
+			<param name="ids" max-len="-1" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags/(\d+)" method="get">
+			<param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags/(\d+)/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="-1" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags/_links" method="get">
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+			<param name="ids" max-len="-1" regex="ids"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/tags/_total_count" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url> -->
+		<!-- Custom module Sub Form url -->
+		<url path="/api/v3/${cm_api_name}/${api_name}" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/${api_name}/allowed_values_for_fields" method="get">
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/${api_name}/(_?)upload" operation-param="for" operation-value="import" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(_?)upload" operation-param="for" operation-value="import" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/${api_name}/(_?)upload" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/(_?)upload" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/(_?)upload/(attach_[a-z0-9_]+)" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/(_?)upload" method="put">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/attachments/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/attachments/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/${api_name}/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/${api_name}/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/cm_fields/(attach_[a-z0-9_]+)/(\d+)" roles="" method="delete">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(_?)upload" roles="" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/${api_name}/(_?)upload/(attach_[a-z0-9_]+)" roles="" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/${api_name}/(_?)upload/(attach_[a-z0-9_]+)" roles="" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/${api_name}/(\d+)/(_?)upload/(attach_[a-z0-9_]+)" roles="" method="post">
+			<throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="description" type="String" max-len="250"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/attachments/(\d+)" method="delete">
+			<throttles name="attachemnt_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/attachments/(\d+)" method="delete">
+			<throttles name="attachemnt_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1M" threshold="60" lock-period="5M"/>
+			</throttles>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/attachments/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/${api_name}/(\d+)/cm_fields/(attach_[a-z0-9_]+)/(\d+)/(_?)download" roles="" method="get">
+			<throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="view"/>
+		</url>
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/${api_name}/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="post" path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/images">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="10" duration="1m"/>
+			</throttles>
+			<file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image" remove-exif="true">
+				<filename max-len="100" regex="filename"/>
+			</file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/${api_name}/(\d+)/images/(\d+)">
+			<param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+		</url>
+		<url method="get" path="/api/v3/${cm_api_name}/(\d+)/${api_name}/images/(\d+)" />
+	</urls>
+</security>

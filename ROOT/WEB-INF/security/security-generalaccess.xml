@@ -1,0 +1,1125 @@
+	<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+	<urls authentication="required" method="get">
+	<url path="/common/FileAttachment.jsp" user_type="all" operation-param="module" operation-value="Change,AccDetail,Notifications">
+		<param name="type"  regex="new"/>
+		<param name="modId"  type="long"/>
+		<param name="[0-9]+" name-regex="true" type="boolean"/>
+	</url>
+
+	<!-- SD-76189 -->
+
+	<!--RequestExternalAction.do is commented for to avoid duplicate url entry-->
+	<!-- <url  path="/RequestExternalAction.do" roles="SDAdmin">
+		<param name="module" regex="change|request"/>
+		<param name="method" regex="loadActionListPage|getAutoActionListView|saveAutoAction|organizeActions|saveReOrderActions|getTriggerActionData|getAutoActionCritVals|deleteAutoAction|enableDisableAction|editAutoAction"/>
+		<param name="action_id" type="long"/>
+	</url> -->
+	<url path="/RulePopUp.do" roles="SDAdmin,HelpdeskConfig" operation-param="mode" operation-value="forautoaction">
+		<throttles name="rulepopup_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+			<throttle duration="1m" threshold="10" lock-period="5m"/>
+		</throttles>
+		<param name="selVal" type="long" range=">0"/>
+		<param name="from" regex="rule|ruleaction|rulenotification|escalate"/>
+		<param name="element1" type="long" range=">0"/>
+		<param name="element2" type="long"/>
+		<param name="critId" regex="^critId_([1-9]|1[0-9]|20)$" max-len="9"/>
+		<param name="module" regex="change|request" max-len="7"/>
+	</url>
+
+	<url path="/servlet/Select2Servlet" user_type="all" operation-param="module" operation-value="customfilter_technician,customfilter_user,customfilter_department,customfilter_supportGroup,customfilter_site" disable-extraparam="true" description="FGR_APPLIED:Roles are not defined as role check will be done at server side based on module param">
+		<throttles key="url.path+url.dynamic_key" name="custom_filter_select2" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="60"/>
+		</throttles>
+		<param name="params" type="String"/>
+		<param name="searchText" type="String"/>
+		<param name="searchTerm" type="String"/>
+		<param name="entity" regex="list_view_filter_modules" min-occurrences="1"/>
+	</url>
+        <!-- Task Template Add/Edit in Admin Section (Task Templates/ Incident Template/ Service Template / Project Template) -->
+		<url path="/servlet/Select2Servlet" roles="TaskConfig" operation-param="module" operation-value="unique_support_group" disable-extraparam="true">
+			<throttles key="url.path+url.dynamic_key" name="unique_support_group_select2" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" lock-period="5m" threshold="60"/>
+			</throttles>
+	</url>
+
+	<!-- G3 related Select2Servlet changes starts -->
+	<url path="/servlet/Select2Servlet" user_type="all" disable-extraparam="true" operation-param="module" operation-value="user" method="get" description="Since both requester and technician can access this url in change module , role check should not be aded here " >
+		<throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING">
+			<throttle duration="30s" threshold="60" lock-period="5M"/>
+		</throttles>
+            <param name="searchOptions" type="String" />
+            <param name="searchTerm" type="String" />
+            <param name="page" type="long"  />
+            <param name="per_page" type="long"  />
+            <param name="get" regex="userSearchOptions" />
+            <param name="fromModule" regex="Change" />
+            <param name="ids" regex="ids" max-len="-1"/>
+            <param name="excludeTech" type="boolean" />
+            <param name="fromModuleId" type="long"  />
+            <param name="siteFilterBehaviour" regex="Asset|SDP_Request|SDP_REQUEST" />
+            <param name="deptId" type="long"  />
+            <param name="siteId" type="long"  />
+            <param name="addLoggedInTech" type="boolean"/>
+        </url>
+		<url path="/servlet/Select2Servlet" disable-extraparam="true" operation-param="module" operation-value="technician" method="get" roles="ViewRequester" >
+			<throttles name="select2" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING">
+				<throttle duration="30s" threshold="60" lock-period="5M"/>
+			</throttles>
+			<param name="searchOptions" type="String" />
+			<param name="searchTerm" type="String" />
+			<param name="page" type="long"  />
+			<param name="per_page" type="long"  />
+			<param name="get" regex="userSearchOptions" />
+			<param name="fromModule" regex="Change" />
+			<param name="ids" regex="ids" max-len="-1"/>
+			<param name="excludeTech" type="boolean" />
+			<param name="fromModuleId" type="long"  />
+			<param name="siteFilterBehaviour" regex="Asset|SDP_Request|SDP_REQUEST" />
+			<param name="deptId" type="long"  />
+			<param name="siteId" type="long"  />
+			<param name="addLoggedInTech" type="boolean"/>
+		</url>
+
+	<!-- G3 related Select2Servlet changes ends-->
+
+
+		<url path="/servlet/Select2Servlet" operation-param="module" operation-value="site" remote_server="true" roles="ViewInventoryWS,SDAdmin,ViewCI">
+			<throttles key="url.path+url.dynamic_key" name="site_select2servlet" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" lock-period="5m" threshold="30"/>
+			</throttles>
+			<param name="searchText" type="String" max-len="1000"/>
+            <param name="params" type="String" max-len="1000" secret="true"/>
+            <param name="page" type="long"/>
+			<param name="callback" regex="jQuery[0-9]+_[0-9]+"/>
+        </url>
+
+	<url path="/SetUpWizard.do"  roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="department">
+		<throttles key="url.path+url.dynamic_key" name="department_select2servlet" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+			<throttle duration="1m" lock-period="5m" threshold="30"/>
+		</throttles>
+		<param name="tab" regex="Admin" />
+	</url>
+
+
+	<url path="/servlet/MentionServlet" user_type="all" disable-extraparam="true" description="Roles are not defined as role check will be done at server side">
+		<throttles key="url.path+url.dynamic_key" name="mention_servlet_url" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" lock-period="5m" threshold="100"/>
+		</throttles>
+		<param name="module" regex="task|project|milestone|solution" min-occurrences="1"/> <!-- Add other modules in regex if required -->
+		<param name="moduleid" type="long" min-occurrences="1"/>
+		<param name="searchterm" type="String" max-len="254" />
+	</url>
+
+	<url path="/SetUpWizard.do" roles="SDAdmin" operation-param="forwardTo" operation-value="api"/>
+	<url path="/SetUpWizard.do" roles="SDAdmin" operation-param="forwardTo" operation-value="integrationkey" disable-extraparam="true" method="get" remote_server="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="integration_key_setupwizard" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/SetUpWizard.do" roles="CommonRequestConfig" operation-param="forwardTo" operation-value="externalAutoAction"/>
+
+	<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="zrconfig" method="get" user_type="all" rebrand="zmon">
+		<throttles name="zrconfig_setupwizard" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+			<throttle duration="1m" threshold="50" lock-period="5m"/>
+		</throttles>
+	</url>
+	<url path="/common/ViewHistory.jsp" roles="ViewRequests,ViewRequester,HelpdeskConfig" user_type="all" remote_server="true" operation-param="module" operation-value="color_settings">
+		<param name="id" type="long" allow-empty="false"/>
+		<param name="key" regex="sort_order_color_settings"/>
+		<param name="print_view" type="boolean"/>
+	</url>
+
+	<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="role" method="GET">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="role_url" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+	</url>
+	<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="css" method="GET"/>
+
+
+
+		<url roles="HelpdeskConfig,ReportConfigAdmin" path="/setup/SetMailSendOption.jsp" method="get"/>
+
+        <url roles="HelpdeskConfig" path="/autoSuggestTokenEdit.do" method="get"/>
+
+	<url roles="HelpdeskConfig" path="/setup/MobileNotifications.jsp" method="get" operation-param="mode" operation-value="view" rebrand="zmon">
+		<throttles name="MobileNotificationsGet" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+
+
+    <url roles="SDAdmin" path="/servlet/SDAjaxServlet" operation-param="action" operation-value="saveRequestCloseNotification" method="POST" csrf="true">
+    		<param name="module" type="String" max-len="10"/>
+    		<param name="tokenValue" type="String" max-len="-1"/>
+    </url>
+    <url roles="SDAdmin" path="/servlet/SDAjaxServlet" method="GET" operation-param="action" operation-value="getSurveyContent">
+		<throttles name="surveyContent_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+	</url>
+</urls>
+
+<urls authentication="required" method="post">
+
+	<!--Start For Zoho Editor-->
+	<url path="/jsp/UploadImage.jsp" user_type="all" method="POST" csrf="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="UploadImage" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+		<param name="Module" type="String"/>
+		<param name="zereqid" regex="null|[0-9]+"/>
+		<param name="emberUI" type="boolean" />
+		<file name="img_file" max-size="3072" allowed-extensions="jpg,jpeg,png,bmp,gif" content-type-name="image_inline" continue-onerror="true" allow-empty="false">
+			<filename regex="filename" max-len="1000"/>
+		</file>
+	</url>
+	<!-- <url path="/ze/jsp/ze_spellcheck.jsp" user_type="all" roles="Common_Role">
+		<param name="spellcheckurl" regex="/spellcheck.do" />
+		<param name="needLocalSpellCheck" type="boolean" />
+		<param name="spellchecklang" regex="locale" />
+		<param name="useSameDomain" type="boolean" />
+		<param name="domainname" type="String"/>
+	</url> -->
+	<!--End For Zoho Editor-->
+
+	<url path="/common/FileAttachment.jsp" user_type="all" operation-param="module" operation-value="AccDetail,Notifications" method="post" csrf="true">
+		<param name="modId" type="long"/>
+		<param name="att_desc" type="String"/>
+		<param name="attach" regex="Attach File"/>
+
+	</url>
+	<!-- SD-76189 -->
+
+	<!-- <url path="/RulePopUp.do" roles="SDAdmin,HelpdeskConfig" operation-param="mode" operation-value="forautoaction">
+		<param name="selVal" type="String" max-len="-1"/>
+		<param name="from" regex="rule|ruleaction|rulenotification|escalate"/>
+		<param name="element1" type="String" max-len="-1"/>
+		<param name="element2" type="String" max-len="-1"/>
+		<param name="critId" type="String" max-len="-1"/>
+		<param name="module" regex="change|request" max-len="-1"/>
+	</url> -->
+
+
+
+
+    <!-- <url path="/servlet/RuleFilterServlet" roles="SDAdmin">
+		<param name="criteria" regex="6|9|11|12|54"/>
+		<param name="siteName" type="String" max-len="-1"/>
+	</url> -->
+
+	<!-- <url path="/servlet/Select2Servlet" user_type="all">
+		<param name="get" regex="userSearchOptions"/>
+		<param name="module" regex="user|customfilter_technician|customfilter_user|technician|technician_list|approvers"/>
+		<param name="ids" regex="^(\d)+(,(\d)+)*$" max-len="500"/>
+		<param name="searchTerm" type="String" max-len="-1"/>
+		<param name="per_page" type="long"/>
+		<param name="page" type="long"/>
+		<param name="excludeTech" type="boolean"/>
+		<param name="addLoggedInTech" type="boolean"/>
+		<param name="fromModule" regex="Change|Request"/>
+		<param name="fromModuleId" type="long"/>
+		<param name="siteFilterBehaviour" regex="Asset|SDP_Request|SDP_REQUEST"/>
+		<param name="deptId" type="long"/>
+		<param name="siteId" type="long"/>
+		<param name="searchOptions" type="String" max-len="-1"/>
+	</url>-->
+	<!--<url path="/SetUpWizard.do" roles="SDAdmin,SDSiteAdmin,SDOrgAdmin" operation-param="forwardTo" user_type="all" operation-value="department"/>-->
+
+
+
+
+	<!-- <url path="/SetUpWizard.do" roles="SDAdmin" operation-param="forwardTo" operation-value="ciType"/> -->
+    <!-- <url path="/SetUpWizard.do" roles="SDOrgAdmin,SDAdmin" operation-param="forwardTo" user_type="all" operation-value="requesterUDF"/> -->
+
+		<!-- SD-63223, 70753 -->
+	<!-- SD-63212 able to provide string value in date and month and year parameter.-->
+	<!-- <url path="/calendar/TechnicianCalendar.jsp">
+		<param name="date" type="long"/>
+		<param name="month" type="long"/>
+		<param name="year" type="long"/>
+		<param name="techId" type="long"/>
+	</url> -->
+<!-- 	<url path="/DeletedUsers.do" roles="SDAdmin">
+		<param name="type" regex="requesters|technicians"/>
+	</url>
+	<url path="/asset/DeletedUsersList.jsp" roles="SDAdmin"/>-->
+		 <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="UpdatePwdPolicy" dynamic-throttle="true" >
+                        <throttle duration="1m" threshold="30" lock-period="5m"/>
+                </throttles>
+	<!-- <url path="/common/ViewHistory.jsp" roles="ViewRequests,ViewRequester" user_type="all"></url> -->
+
+
+	<!-- Currency related entry-->
+
+	<!--<url path="/setup/FrequentCurrencyList.jsp" roles="SDAdmin"/>
+	<url path="/setup/AddNewFrequentCurrency.jsp" roles="SDAdmin"/>
+	<url path="/setup/CurrencyListInclude.jsp" roles="SDAdmin"/> -->
+
+		<!--SD-68703 -->
+
+		<param name="approvalReplyActionEnabled" type="boolean"/>
+        <param name="enableAcknowledgeNotification" type="boolean"/>
+
+
+
+	<url roles="HelpdeskConfig,ReportConfigAdmin" path="/setup/SetMailSendOption.jsp" method="post" csrf="true">
+		<param name="isPlainText" regex="true|false"/>
+	</url>
+
+	<url roles="HelpdeskConfig" path="/servlet/SDAjaxServlet" operation-param="action" operation-value="saveAutoSuggestToken" method="POST" csrf="true">
+		<param name="module" type="String" max-len="20"/>
+		<param name="tokenValue" type="String" max-len="6000"/>
+			<!-- 500 [max-len] * 4 [1 Unicode <= 4 bytes] * 3 [UrlEncoding ('=' is '%3D')] -->
+	</url>
+
+	<url roles="HelpdeskConfig" path="/setup/MobileNotifications.jsp" operation-param="mode" operation-value="update" method="post" csrf="true" rebrand="zmon">
+		<param name="MobNotif_(PR-assign|PR-approval|PR-approved|PR-rejected|PO-canceled|PR-canceled|broadcast_message|req-assign|req-reply|req-approved|req-rejected|notes-add|req-edit|req-share|req-requesting-cancel|request-notes-mention|req-requesting-cancel-revoke|req-cancelled|change-services-modified|change-downtime-schedule-modified|change-incomingmail|change-assetsinvolved-modified|change-sla-violated|change-release-schedule-modified|change-release-actual-modified|change-approval-mail-sent|change-approvallevel-accepted|change-approvallevel-rejected|change-status-action-taken)" name-regex="true" regex="on|off" max-occurrences="18"/>
+		<param name="MobNotif_(PR-assign|PR-approval|PR-approved|PR-rejected|PO-canceled|PR-canceled|broadcast_message|req-assign|req-reply|req-approved|req-rejected|notes-add|req-edit|req-share|req-requesting-cancel|request-notes-mention|req-requesting-cancel-revoke|req-cancelled|change-services-modified|change-downtime-schedule-modified|change-incomingmail|change-assetsinvolved-modified|change-sla-violated|change-release-schedule-modified|change-release-actual-modified|change-approval-mail-sent|change-approvallevel-accepted|change-approvallevel-rejected|change-status-action-taken)_force" name-regex="true" regex="on|off" max-occurrences="18"/>
+	</url>
+
+	</urls>
+
+	<urls authentication="required" method="post">
+	<url path="/problem/AssignProblem.jsp" roles="ModifyProblems" method="GET" disable-extraparam="true">
+		<param name="ID" type="long" max-occurrences="1" allow-empty="false"/>
+		<param name="MODULE" regex="Problem" max-occurrences="1" allow-empty="false"/>
+		<param name="[0-9]+" name-regex="true" type="boolean"/>
+	</url>
+</urls>
+
+
+
+	<!-- CART Related URLS -->
+	<urls authentication="required">
+
+
+
+		<!-- The below configurations will be using the under the ESM directory and portal as well hence we have added the common_role. -->
+		<url path="/event/controller" roles="Common_Role" operation-param="action" operation-value="setReadStatus" method="POST" csrf="true"  user_type="all" remote_server="true">
+			<param name="ID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<!-- Community -> Support -->
+		<url path="/common/FileAttachment.jsp" method="GET" roles="SDAdmin" user_type="all" operation-param="module" operation-value="Support">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="FileAttachment_Support_common_get" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="type"  regex="new"/>
+			<param name="[0-9]+" name-regex="true" type="boolean"/>
+		</url>
+		<url path="/common/FileAttachment.jsp" method="POST" user_type="all" roles="SDAdmin" operation-param="module" operation-value="Support" csrf="true">
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="FileAttachment_Support" dynamic-throttle="true"  >
+	            <throttle duration="1m" threshold="30" lock-period="5m"/>
+		</throttles>
+			<param name="att_desc" type="String" max-len="250"/>
+			<param name="attach" regex="Attach File"/>
+		</url>
+		<url path="/workorder/FileDownload.jsp" operation-param="module" operation-value="support" roles="SDAdmin" user_type="all" method="GET" remote_server="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="FileAttachment_Support_get" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="fName" regex="filename"/>
+		</url>
+
+			<param name="action" type="String" max-len="1000"/>
+			<param name="attach" type="String" max-len="1000"/>
+		<!-- Home -> Scheduler -->
+		<!-- SD-91302 -->
+		<url path="/api/v3/health_status" method="get" user_type="all" />
+	</urls>
+	<!-- CART Related URLS end -->
+
+	<urls authentication="required" >
+
+		<url path="/api/v3/availability_status" roles="Common_Role" api="true" method="GET"/>
+
+
+	</urls>
+
+	<!--Request related urls starts-->
+    <urls authentication="required" disable-extraparam="true" >
+		<url path="/RulePopUp.do" roles="SDAdmin,HelpdeskConfig,SDSiteAdmin" operation-param="mode" operation-value="add,edit">
+			<throttles name="rulepopup_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="selVal" type="String" max-len="500"/>
+			<param name="isArchive" type="boolean"/>
+			<param name="forBR" type="boolean"/>
+			<param name="from" regex="rule|ruleaction|rulenotification|escalate"/>
+			<param name="element1" type="String" max-len="500"/>
+			<param name="element2" type="String" max-len="500"/>
+			<param name="critId" type="String" max-len="500"/>
+			<param name="module" regex="change|request"/>
+			<param name="siteID" type="long"/>
+		</url>
+    </urls>
+
+    <!--  OP to OD Migration related urls -->
+	<urls authentication="required" disable-extraparam="true"  roles="SDAdmin">
+
+		<throttles name="op_to_od_migration_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1M" threshold="60" lock-period="5M"/>
+		</throttles>
+
+		<url path="/SetUpWizard.do" operation-param="forwardTo" operation-value="optood" method="get" rebrand="zmon">
+			<param name="showFormPage" type="boolean"/>
+		</url>
+
+		<url path="/OpToOdMigration.do" method="POST" csrf="true" operation-param="forwardTo" operation-value="saveCredentials" rebrand="zmon">
+			<param name="sdpODDataCenter" regex="us|eu|in|cn|au|jp|ca|uk|sa"/>
+			<param name="sdpODPortalName" type="String"/>
+			<param name="entitySelection" regex="ids_250" max-len="-1"/>
+			<param name="oauthClientId" type="String" max-len="500" secret="true"/>
+			<param name="oauthClientSecret" type="String" max-len="500" secret="true"/>
+			<param name="mode" regex="trial|final" min-occurrences="1"/>
+			<param name="startTime" type="long"/>
+			<param name="endTime" type="long"/>
+			<param name="startTimeDisplay" type="String"/>
+			<param name="endTimeDisplay" type="String"/>
+		</url>
+
+		<url path="/OpToOdMigration.do" method="GET" operation-param="forwardTo" operation-value="getProgressDetails, getEntityInfo, getVersionInfo, getPreValXLS, preValidateMigration" rebrand="zmon"/>
+
+		<url path="/OpToOdMigration.do" method="POST" operation-param="forwardTo" operation-value="resumeMigration, stopMigration, cancelMigration" csrf="true" rebrand="zmon" />
+
+		<url path="/OpToOdMigration.do" method="POST" operation-param="forwardTo" operation-value="rerunMigration" csrf="true" rebrand="zmon">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="rerunMigration" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="5" lock-period="10m"/>
+			</throttles>
+			<param name="rerunEntitySelection" regex="ids_250" max-len="2500" min-occurrences="1" secret="true"/>
+		</url>
+
+		<url path="/OpToOdMigration.do" method="GET" operation-param="forwardTo" operation-value="getPortalInfo" rebrand="zmon">
+			<param name="sdpODDataCenter" regex="us|eu|in|cn|au|jp|ca|uk|sa"/>
+		</url>
+
+		<url path="/OpToOdMigration.do" method="POST" operation-param="forwardTo" operation-value="getPreValidationInfo" csrf="true" rebrand="zmon">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="getPreValidationInfo" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="5" lock-period="10m"/>
+			</throttles>
+			<param name="entitySelection" regex="ids_250" max-len="-1" secret="true"/>
+		</url>
+
+		<url path="/servlet/OauthServlet" method="get" operation-param="module" operation-value="opodmigration"/>
+
+		<url path="/servlet/OauthServlet" method="get">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="GetOAuthCode" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="5" lock-period="15m"/>
+			</throttles>
+			<param name="state" type="String" max-len="1000" min-occurrences="1" secret="true"/>
+			<param name="code" type="String" max-len="150" secret="true"/>
+			<param name="location" regex="us|eu|in|cn|au|jp|dev|ca|uk|sa"/>
+			<param name="accounts-server" type="String"/>
+			<param name="error" regex="access_denied"/>
+		</url>
+
+	</urls>
+
+
+	<!--Product Images related urls ends -->
+
+	<!--Request related urls ends -->
+
+	<urls authentication="required" remote_server="true" path="/common/ViewHistory.jsp" operation-param="module">
+		<param name="id" type="long" allow-empty="false"/>
+		<param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+		<param name="search_filter" type="String"/>
+		<param name="admin_entity" type="boolean"/>
+		<param name="is_date_filter" type="boolean"/>
+		<param name="skip_filter_options" type="String"/>
+		<param name="skip_operation_names" type="String"/>
+		<param name="module_value" type="String"/>
+
+		<url roles="SDOrgAdmin" operation-value="regions" user_type="all">
+			<param name="key" regex="regions_history" />
+		</url>
+		<url roles="CSIConfig" operation-value="categories">
+			<throttles name="categories_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="categories_history" />
+		</url>
+		<url roles="StatusConfig" operation-value="statuses">
+			<throttles name="statuses_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="statuses_history" />
+		</url>
+		<url roles="LevelConfig" operation-value="levels">
+			<throttles name="levels_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="levels_history" />
+		</url>
+
+		<url roles="ModeConfig" operation-value="modes">
+			<throttles name="modes_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="modes_history" />
+		</url>
+		<url roles="ImpactConfig" operation-value="impacts">
+			<throttles name="impacts_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="impacts_history" />
+		</url>
+		<url roles="UrgencyConfig" operation-value="urgencies">
+			<throttles name="urgencies_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="urgencies_history" />
+		</url>
+		<url roles="CommonRequestConfig" operation-value="request_types">
+			<throttles name="request_type_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="request_types_history" />
+		</url>
+		<url roles="HelpdeskConfig" operation-value="reply_templates">
+			<throttles name="reply_templates_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="reply_templates_history" />
+		</url>
+		<url roles="CommonRequestConfig" operation-value="resolution_templates">
+			<throttles name="resolution_templates_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="resolution_templates_history" />
+		</url>
+		<url roles="IncidentRequestConfig,ServiceRequestConfig" operation-value="request_templates">
+			<throttles name="request_templates_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="request_templates_history" />
+		</url>
+		<url roles="TaskConfig" operation-value="task_types">
+			<param name="key" regex="task_types_history" />
+		</url>
+		<url roles="TaskConfig" operation-value="task_closure_fields">
+			<param name="key" regex="task_closure_fields_history" />
+		</url>
+		<url roles="TaskConfig" operation-value="task_templates">
+			<param name="key" regex="task_templates_history" />
+		</url>
+		<url roles="TaskConfig" operation-value="task_custom_triggers">
+			<param name="key" regex="task_custom_triggers_history" />
+		</url>
+		<url roles="WorkLogConfig" operation-value="worklog_types">
+			<param name="key" regex="worklog_types_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="change_types">
+			<param name="key" regex="change_types_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="risks">
+			<param name="key" regex="risks_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="reasons_for_change">
+			<param name="key" regex="reasons_for_change_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="change_stages">
+			<param name="key" regex="change_stages_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="change_roles">
+			<param name="key" regex="change_roles_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="cabs">
+			<param name="key" regex="cabs_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="change_closure_codes">
+			<param name="key" regex="change_closure_codes_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="change_closure_rules">
+			<param name="key" regex="change_closure_rules_history" />
+		</url>
+		<url roles="WorkLogConfig" operation-value="worklog_templates">
+			<param name="key" regex="worklog_templates_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="release_roles">
+			<param name="key" regex="release_roles_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="downtime_types">
+			<param name="key" regex="downtime_types_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="release_stages">
+			<param name="key" regex="release_stages_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="closure_codes">
+			<param name="key" regex="closure_codes_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="release_closure_rules">
+			<param name="key" regex="release_closure_rules_history" />
+		</url>
+		<url roles="PriorityConfig" operation-value="priorities">
+			<param name="key" regex="priorities_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="project_types">
+			<param name="key" regex="project_types_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="project_roles">
+			<param name="key" regex="project_roles_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="project_statuses">
+			<param name="key" regex="project_statuses_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="project_settings">
+			<param name="key" regex="project_settings_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="project_custom_triggers">
+			<param name="key" regex="project_custom_triggers_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="project_templates">
+			<param name="key" regex="project_templates_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="products">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="products_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="products_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="vendors">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="vendor_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="vendors_history" />
+		</url>
+		<url roles="SDAdmin,SDOrgAdmin" operation-value="departments" user_type="all">
+			<throttles name="department_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="departments_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="software_meterings">
+			<param name="key" regex="software_meterings_history" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_meterings" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+
+		<url roles="SDAdmin" operation-value="asset_states">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_states_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="asset_states_history" />
+		</url>
+
+		<url roles="SDOrgAdmin" operation-value="currencies" user_type="all">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="currencies_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="currencies_history" />
+		</url>
+
+		<url roles="SDAdmin" operation-value="purchase_default_values">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="purchase_default_values_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="purchase_default_values_history" />
+		</url>
+
+		<url roles="SDAdmin" operation-value="cost_centers">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="cost_centers_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="cost_centers_history" />
+		</url>
+
+
+		<url roles="SDAdmin" operation-value="gl_codes">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="gl_codes__history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="gl_codes_history" />
+		</url>
+
+		<url roles="SDAdmin" operation-value="vendor_services">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="vendor_services_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="vendor_services_history" />
+		</url>
+
+		<url roles="SDAdmin" operation-value="contract_types">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contract_types_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="contract_types_history" />
+		</url>
+
+		<url roles="SDAdmin,HelpdeskConfig" operation-value="announcement_types">
+			<param name="key" regex="announcement_types_history" />
+		</url>
+
+		<url roles="ConfigureSpace" operation-value="space_amenities">
+			<throttles name="space_amenities_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="space_amenities_history" />
+		</url>
+		<url roles="ConfigureSpace" operation-value="space_criticalities">
+			<throttles name="space_criticalities_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="space_criticalities_history" />
+		</url>
+		<url roles="ConfigureSpace" operation-value="room_layouts">
+			<throttles name="room_layouts_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="room_layouts_history" />
+		</url>
+
+		<url roles="ConfigureSpace" operation-value="space_statuses">
+			<throttles name="space_statuses_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="space_statuses_history" />
+		</url>
+
+		<url roles="ConfigureSpace" operation-value="space_units">
+			<throttles name="space_units_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="space_units_history" />
+		</url>
+
+		<url roles="SDAdmin,SDSiteAdmin" operation-value="group_roles">
+			<param name="key" regex="group_roles_history" />
+		</url>
+
+		<url roles="ServiceRequestConfig" operation-value="service_categories">
+			<throttles name="service_categories_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="service_categories_history" />
+		</url>
+
+		<url roles="ServiceRequestConfig" operation-value="questions">
+			<throttles name="questions_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="questions_history" />
+		</url>
+
+		<url roles="ServiceRequestConfig" operation-value="resource_sections">
+			<throttles name="resource_sections_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="resource_sections_history" />
+		</url>
+
+		<url roles="IncidentBusinessRuleConfig,ServiceRequestConfig" operation-value="request_business_rule_groups">
+			<throttles name="request_business_rule_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="request_business_rule_groups_history" />
+		</url>
+
+		<url roles="CommonRequestConfig" operation-value="request_custom_trigger_groups">
+			<throttles name="request_custom_trigger_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="request_custom_trigger_groups_history" />
+		</url>
+
+		<url roles="HelpdeskConfig" operation-value="note_business_rule_groups">
+			<throttles name="note_business_rule_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="note_business_rule_groups_history" />
+		</url>
+
+		<url roles="HelpdeskConfig" operation-value="note_custom_trigger_groups">
+			<throttles name="note_custom_trigger_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="note_custom_trigger_groups_history" />
+		</url>
+
+		<url roles="HelpdeskConfig" operation-value="notification_custom_trigger_groups">
+			<throttles name="notification_custom_trigger_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="notification_custom_trigger_groups_history" />
+		</url>
+
+		<url roles="HelpdeskConfig" operation-value="notification_business_rule_groups">
+			<throttles name="notification_business_rule_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="notification_business_rule_groups_history" />
+		</url>
+
+		<url roles="HelpdeskConfig" operation-value="approval_level_custom_trigger_groups">
+			<throttles name="approval_level_custom_trigger_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="approval_level_custom_trigger_groups_history" />
+		</url>
+
+		<url roles="HelpdeskConfig" operation-value="approval_custom_trigger_groups">
+			<throttles name="approval_custom_trigger_groups_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="approval_custom_trigger_groups_history" />
+		</url>
+
+		<url roles="CommonRequestConfig" operation-value="request_closure_codes">
+			<throttles name="request_closure_codes_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="request_closure_codes_history" />
+		</url>
+
+		<url roles="SDAdmin" operation-value="user_groups">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="user_groups_history_url" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="user_groups_history" />
+		</url>
+
+		<url roles="SDAdmin,SDSiteAdmin" operation-value="roles">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="roles_history_url" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+			<param name="key" regex="roles_history" />
+		</url>
+
+		<url roles="HelpdeskConfig" operation-value="checklists">
+			<throttles name="checklists_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="checklists_history" />
+		</url>
+
+		<url roles="ConfigureSpace" operation-value="space_templates">
+			<throttles name="space_templates_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="space_templates_history" />
+		</url>
+
+		<url roles="ConfigureSpace" operation-value="facility_service_templates">
+			<throttles name="facility_service_templates_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="facility_service_templates_history" />
+		</url>
+
+		<url roles="SDOrgAdmin,SDAdmin" operation-value="security_settings" user_type="all" remote_server="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="security_settings_history_throttle" >
+				<throttle duration="1m" threshold="45" lock-period="5m"/>
+			</throttles>
+        	<param name="key" regex="security_settings_history"/>
+        </url>
+
+        <url roles="SDOrgAdmin,SDAdmin" operation-value="tfa" user_type="all" remote_server="true">
+        		<param name="key" regex="tfa_history"/>
+        </url>
+
+        <url roles="SDOrgAdmin" operation-value="attachment_settings" user_type="all">
+        	 <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="attachment_settings_history_throttle" >
+				<throttle duration="1m" threshold="45" lock-period="5m"/>
+			</throttles>
+        	<param name="key" regex="attachment_settings_history"/>
+        </url>
+
+        <url roles="SDAdmin" operation-value="integration_keys" remote_server="true">
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="integration_keys_history_throttle" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>
+        	<param name="key" regex="integration_keys_history"/>
+        </url>
+
+		<url roles="SDOrgAdmin,SDAdmin" operation-value="portals" user_type="all">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="portals_history_throttle" >
+				<throttle duration="1m" threshold="45" lock-period="5m"/>
+			</throttles>
+        	<param name="key" regex="portals_history"/>
+        </url>
+
+        <url roles="SDOrgAdmin" operation-value="portalcustomizations" user_type="all">
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="portal_customization_history_throttle" >
+				<throttle duration="1m" threshold="45" lock-period="5m"/>
+			</throttles>
+        	<param name="key" regex="portalcustomizations_history"/>
+        </url>
+        <url roles="SDAdmin,HelpdeskConfig" operation-value="custom_functions">
+			<throttles name="custom_functions_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="custom_functions_history" />
+		</url>
+		<url roles="SDAdmin,SDOrgAdmin,SDCMDBAdmin" operation-value="udf_fields" user_type="all">
+			<throttles name="udf_fields_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="udf_fields_history" />
+		</url>
+		<url operation-value="list_view_filters" user_type="all">
+			<param name="key" regex="list_view_filters_history" />
+		</url>
+		<url operation-value="custom_views" user_type="all" description="FGR_APPLIED:role check will be done in history api invoked from this jsp in server side" >
+			<param name="key" regex="custom_views_history" />
+			<throttles name="custom_view_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+
+		</url>
+		<url roles="SDAdmin" operation-value="release_templates">
+			<param name="key" regex="release_templates_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="problem_templates">
+			<param name="key" regex="problem_templates_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="custom_schedules">
+            <param name="key" regex="custom_schedules_history" />
+        </url>
+		<url roles="CommonRequestConfig" operation-value="custom_menus">
+			<throttles name="custom_menus_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="custom_menus_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="integrations">
+			<param name="key" regex="integrations_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="creator_links">
+			<param name="key" regex="creator_links_history" />
+		</url>
+
+		<url roles="SDAdmin" operation-value="holidays">
+			<param name="key" regex="holidays_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="leave_types">
+			<param name="key" regex="leave_types_history" />
+		</url>
+		<url roles="SDOrgAdmin,SDAdmin" operation-value="sites" user_type="all">
+			<param name="key" regex="sites_history" />
+		</url>
+		<url roles="SDOrgAdmin" operation-value="organization_details" user_type="all">
+			<param name="key" regex="organization_details_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="support_groups">
+			<param name="key" regex="support_groups_history" />
+		</url>
+		<url roles="SDOrgAdmin" operation-value="org_roles" user_type="all">
+			<param name="key" regex="org_roles_history" />
+		</url>
+		<url roles="SDOrgAdmin" operation-value="user_merges" user_type="all">
+			<param name="key" regex="user_merges_history" />
+		</url>
+        <!-- password policy related urls for history -->
+		<url roles="SDAdmin,SDOrgAdmin" operation-value="password_policies" user_type="all">
+			<throttles name="password_policies" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="password_policies_history" />
+		</url>
+		<!-- survey exclusion related urls for history -->
+		<url roles="SDAdmin" operation-value="survey_exclusions">
+			<throttles name="survey_exclusions" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="survey_exclusions_history" />
+			<throttles name="survey_exclusion" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<!-- survey email related urls for history -->
+		<url roles="SDAdmin" operation-value="survey_emails">
+			<throttles name="survey_emails" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="survey_emails_history" />
+			<throttles name="survey_email" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="survey_mains">
+			<param name="key" regex="survey_mains_history" />
+			<throttles name="survey_main" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="survey_translations">
+			<param name="key" regex="survey_translations_history" />
+			<throttles name="survey_translation" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="SDOrgAdmin" operation-value="ssl" user_type="all">
+            <param name="key" regex="ssl_history" />
+        </url>
+		<url roles="SDAdmin" operation-value="problem_notification_rules">
+			<param name="key" regex="problem_notification_rules_history" />
+        </url>
+		<url roles="SDAdmin" operation-value="solution_notification_rules">
+            <param name="key" regex="solution_notification_rules_history" />
+		</url>
+		<!-- Software and Scan module entries-->
+		<url roles="SDAdmin" operation-value="software_types">
+			<param name="key" regex="software_types_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_types_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="software_categories">
+			<param name="key" regex="software_categories_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_categories_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="software_license_types">
+			<param name="key" regex="software_license_types_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_license_types_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="credentials">
+			<param name="key" regex="credentials_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="credentials_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="domains">
+			<param name="key" regex="domains_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="domains_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="networks">
+			<param name="key" regex="networks_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="networks_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="scan_schedules">
+			<param name="key" regex="scan_schedules_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="scan_schedules_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="site_ip_mappings">
+			<param name="key" regex="site_ip_mappings_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="site_ip_mappings_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="scan_settings">
+			<param name="key" regex="scan_settings_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="scan_settings_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="scan_settings_excludeips">
+			<param name="key" regex="scan_settings_excludeips_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="scan_settings_excludeips_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="solarwinds_integrations">
+			<param name="key" regex="solarwinds_integrations_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="solarwinds_integrations_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="endpoint_central_settings">
+			<param name="key" regex="endpoint_central_settings_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="endpoint_central_settings_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" operation-value="remote_controls">
+			<param name="key" regex="remote_controls_history"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="remote_controls_history" dynamic-throttle="true" >
+				<throttle lock-period="5m" threshold="80" duration="1m"/>
+			</throttles>
+		</url>
+		<!--SD-106898 contact collection related urls for history -->
+		<url roles="SDOrgAdmin" operation-value="contact_collections" user_type="all">
+			<param name="key" regex="contact_collections_history" />
+		</url>
+		<url roles="SDOrgAdmin" operation-value="mobile_app_configs" user_type="all">
+			<param name="key" regex="mobile_app_configs_history" />
+		</url>
+		<url roles="SDAdmin" operation-value="o365_accounts">
+			<param name="key" regex="o365_accounts_history" />
+		</url>
+		<url roles="SDOrgAdmin" operation-value="au_notifications" user_type="all">
+			<throttles name="auto_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="au_notifications_history" />
+		</url>
+		<throttles name="history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+	</urls>
+<jsontemplates>
+	<jsontemplate name="file_protection_data" disable-extra-key="true">
+		<key name="FILE_PROTECTION_ENABLED" type="boolean"/>
+		<key name="FILE_PROTECTION_PASSWORD" type="String" min-len="1" max-len="2000" secret="true"/>
+	</jsontemplate>
+	<jsontemplate name="pick-list">
+		<key name="values" type="JSONArray" template="strarray" max-len="3000" secret="true" array-size="0-100"/>
+	</jsontemplate>
+
+	<jsontemplate name="userMerge_filter">
+		<key name="criteria" regex="0|1"/>
+		<key name="domainOptions" type="JSONObject" template="domain1_domain2" max-len="-1"/>
+	</jsontemplate>
+	<jsontemplate name="domain1_domain2">
+		<key name="domain1" type="String" max-len="100" secret="true"/>
+		<key name="domain2" type="String" max-len="100" secret="true"/>
+	</jsontemplate>
+
+	<jsontemplate name="sduserids">
+		<key name="sduserid" type="JSONArray" template="longarray" array-size="0-100" max-len="-1"/>
+	</jsontemplate>
+
+	<jsontemplate name="userMerge_userData">
+		<key name="parentid" regex="long"/>
+		<key name="childids" type="JSONArray" template="longarray" max-len="-1" array-size="0-100"/>
+		<key name="criteria" regex="0|1"/>
+		<key name="selected_users" type="JSONArray" template="parentid_childid" max-len="-1" array-size="0-250"/>
+		<key name="domains" type="JSONObject" template="parent_child" max-len="-1"/>
+		<key name="unknown_user_merge" type="boolean"/>
+	</jsontemplate>
+	<jsontemplate name="parent_child">
+		<key name="parent" type="String" max-len="100" secret="true"/>
+		<key name="child" type="String" max-len="100" secret="true"/>
+	</jsontemplate>
+	<jsontemplate name="parentid_childid">
+		<key name="parentid" regex="long"/>
+		<key name="childid" regex="long"/>
+	</jsontemplate>
+  <jsontemplate name="request_menu_template" disable-extra-key="true">
+                <key name="NAME" type="String" max-len="250" />
+                <key name="DESCRIPTION" type="String" max-len="250"/>
+                <key name="FOR_TEMPLATES" regex="1|2|3|4"/>
+                <key name="IS_ALL_ROLES" type="boolean"/>
+                <key name="EXEC_TYPE" regex="script|class"/>
+				<key name="EXECUTOR" type="String" max-len="1000"/>
+				<key name="HTML_LOAD" type="String" max-len="1000"/>
+				<key name="TEMPLATE_LIST" type="JSONArray" max-len="-1" template="strarray" array-size="0-1000"/>
+				<key name="ROLE_LIST" type="JSONArray" max-len="-1" template="strarray"  array-size="0-1000"/>
+				<key name="MENUID" type="long"/>
+        </jsontemplate>
+
+	<!--group role associations api convenience operation for delete start-->
+	<jsontemplate name="roleAssociations_delete">
+		<key name="delete_association" type="JSONObject" template="delete_association" max-len="-1" />
+	</jsontemplate>
+	<jsontemplate name="delete_association">
+		<key name="roleId" type="long"/>
+		<key name="userId" type="long"/>
+	</jsontemplate>
+	<!--group role associations api convenience operation for delete end-->
+
+</jsontemplates>
+</security>
+<!--$Id$-->

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>Title</title>
+</head>
+
+<body style="font-family:'Times New Roman'">
+  <p>カスタムスケジュールを利用して、ServiceDesk Plusの任意のデータにアクセスし、通知の送信、リクエストの再オープン、資産情報の更新などの、カスタマイズした定期的なスケジュールアクションを実行することができます。
+    また、カスタマイズしたスクリプトファイルに、アクションを記載することもできます。
+    ServiceDesk Plusのデータを、クエリレポートを用いて特定のスクリプトへ送信することができます。</p>
+  <p>カスタムスケジュールを作成するには、以下の情報を参考にしてください：</p>
+
+  <p><strong>スケジュールの詳細情報</strong>：一意の<strong>「スケジュール名」</strong>と、
+    それに関連して、カスタムスケジュールが何を行うかの<strong>「説明」</strong>を入力します。
+    「有効」のチェックボックスを利用して、カスタムスケジュールを有効化/無効化できます。
+  </p>
+  
+  <p><strong>実行対象</strong>：スクリプトを使用して実行するアクションを指定します。
+    サードパーティーアプリケーションや、Zohoの組み込みのスクリプティングアプリケーションである、Delugeを用いたスクリプトを実行できます。</p>
+  <ul>
+  		<li><strong>スクリプトを実行する</strong> - スクリプトを含んだテキストファイル名を指定し、該当のテキストファイルを<strong>＜インストールディレクトリ＞/integration/custom_scripts/executor_files</strong>ディレクトリに保存します。
+        ServiceDesk Plusは、<strong>＜インストールディレクトリ＞/integration/custom_scripts/</strong>フォルダーから、指定されたファイルを読み込み、スクリプトを実行します。</li>
+       テキストフィールドには、スクリプトを読み込むため、<strong>py filename.py</strong>コマンドを用いてスクリプトファイルを指定します。
+    </li>
+    <li><strong>カスタム関数を実行</strong> - 
+      カスタムスケジュール関数で、Delugeを用いてスクリプトファイルを作成し保存します。
+      ドロップダウンリストから、関連するスクリプトを選択します。
+      ドロップダウンリストからは、［新規関数の作成］で、カスタムスケジュール関数を新規作成することもできます。</li>
+    カスタムスケジュール関数について、詳しくは<a href="https://servicedeskplus.helpdocsonline.com/custom-schedule-function" target="_blank" class="text-link">こちら</a>をご覧ください。
+  </ul>
+  <p><strong>変数</strong>：
+    変数としてデータを用いる、クエリレポートを選択します。
+    レポートは［レポート］タブ配下のフォルダーに保存されていることを確認してください。
+    最大3つのクエリレポートを関連付けることができます。</p>
+  <details class="helpdetailstag mb10">
+    <summary class="sb"><span class="detailsarrow top-1"></span>どのようにしてクエリレポートを変数にするのか</summary>
+    <div>
+      <p></p>
+      <p>スケジュールが開始されると、関連付けられたクエリレポートが生成され、その結果がJSONファイルとして<strong>＜インストールディレクトリ＞/integration/custom_schedule_reports/</strong>に保存されます。
+        このJSONファイルパスが、カスタムスケジュールの実行対象へ変数として渡されます。</p>
+      <p>クエリレポートで、<strong>「優先度がHighで、SLA違反したリクエスト」</strong>のレポートが次の用に出力されたと仮定します：</p>
+      <table align="center" border="1" width="425" bordercolor="#000000" cellpadding="4" cellspacing="0">
+        <tbody>
+          <tr>
+            <th>リクエストID</th>
+            <th>件名</th>
+            <th>技術担当者</th>
+          </tr>
+          <tr align="center">
+            <td>47</td>
+            <td>Unable to fetch mails</td>
+            <td>Heather Graham</td>
+          </tr>
+          <tr align="center">
+            <td>128</td>
+            <td>Cannot connect to MSSQL server</td>
+            <td>Shawn Adams</td>
+          </tr>
+        </tbody>
+      </table>
+      <p>すると、JSONファイルの結果は以下のようになります：</p>
+      <pre>[
+    {
+        "リクエストID":"47",
+        "件名":"Unable to fetch mails",
+        "技術担当者":"Heather Graham"
+    },
+    {
+        "リクエストID":"128",
+        "件名":"Cannot connect to MSSQL server",
+        "技術担当者":"Shawn Adams"
+    }
+  ]
+  </pre>
+      <p>アクションが実行されると、JSONファイルは削除されます。</p>
+    </div>
+  </details>
+  <p><strong>開始日 & 時間</strong>：
+    カレンダーアイコンから、カスタムスケジュールの実行を開始する日付と時間を選択します。
+    選択した日付と時間がカスタムスケジュールの作成/編集日よりも前の場合、そのアクションはカスタムスケジュールを保存後すぐに実行されます。</p>
+  <p><strong>繰り返し</strong>：ドロップダウンリストから、カスタムスケジュールを繰り返す頻度を選択します。</p>
+  <p><strong>注意：</strong></p>
+  <p>カスタムスケジュール一覧ページの<strong>「結果」</strong>カラムには、対象のアクションの最新の実行結果が出力されます。</p>
+  <p>実行されたアクションの詳細な結果については、［クイックアクション/コミュニティ］>［システムログビューア］から確認できます。</p>
+</body>
+</html>

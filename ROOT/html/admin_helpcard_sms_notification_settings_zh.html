@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>SMS Notification Settings</title>
+</head>
+
+<body>
+<p><strong>SMS 通知的设置</strong></p>
+<p>SMS 通知旨在通过SMS通知相关的技术员，使技术员可以随时随地了解他所关联的工作的情况及采取的动作。</p>
+<table width="803" border="0">
+<div align="center">
+    <table width="704" cellspacing="1" cellpadding="0" border="0" style="width:704px" class="tableComponent whitebgborder">
+      <tbody>
+        <tr>
+          <th width="120">选项</th>
+          <th width="352">说明</th>
+        </tr>
+        <tr>
+          <td class="evenRow">通过手机服务提供商发送SMS通知</td>
+          <td class="evenRow">信息将被发送至技术员的SMS邮件ID</td>
+        </tr>
+        <tr>
+          <td class="evenRow">通过短信网关供应商发送短信</td>
+          <td class="evenRow">直接通过网关提供商向技术员发送SMS信息</td>
+        </tr>       
+      </tbody>
+      </table>
+</div>
+<br>	  
+<p>高优先级的请求或变更要求技术员必须尽早地进行处理。Servicedesk Plus将通过发送SMS通知，使相关技术员在第一时间得到通知。</p>
+<p>目前，产品可以提供两种通知方式：一种是通过集成的服务提供商，如：Site24*7, Clickatell和Bulk SMS，直接向技术员的手机发送短信通知，选择本选项时，用户需要从服务提供商购买相应的信用点数才能保证发送短信通知。另一种方式是向技术员的SMS邮箱发送邮件，该邮件相当于SMS。</p>
+<p>选择一个您想配置的SMS供应商。Clickatell需要Authtoken的认证信息，而群发短信则需要用户名和密码。 <br>
+  启用 "使用Unicode字符发送SMS，以便支持多语言 "复选框将使用Unicode字符发送通知。Unicode为每个字符提供了一个唯一的数字，无论平台/程序/语言如何。</p><br>
+ <p><strong>自定义供应商设置</strong></p>
+<ul>
+            <li>URL表示您的短信网关提供商的网址。(比如：http://www.smsserver.com/sendsms)</li>
+            <li>URL参数是查询参数，它们将被动态地附加到URL中。</li>
+            <li>请求报头允许客户端和服务器将额外的信息与请求或响应一起传递。</li>
+            <li>基础认证是HTTP用户代理在发出请求时提供用户名和密码的一种方法。</li>
+            <li>请求指令内容应该有一个有效的JSON格式，内容类型可以是
+            
+            <ul>
+            <li>应用程序/json  (比如：{ "foo" : "bar", "name" : "John"} )</li>
+            <li>应用程序/x-www-form-urlencoded (比如：foo=bar&name=John)</li>
+            </ul>
+            <li>对于信息和收件人，请使用 '${{message}}'和'${{recipients}}'</li>   
+            <li>供应商的回应：请配置成功信息，以便应用程序能够确定短信是否已成功发送。</li>
+            
+          </ul>
+
+  <strong>注意：</strong>
+    <ul>
+      <li>需要在技术员的明细中，配置技术员的手机号码，并确保手机号码前面有正确的国家代码。可从管理 >> 用户 >> 技术员 >> 技术员明细进入相应的配置页面。</li>
+      <li>可在通知规则 > SMS 模板中，定制相应的SMS信息。</li>
+      <li>'如何配置'的链接，将为您提供更加详细的说明，您可以参照它的说明进行配置。</li>
+    </ul>
+  </li>
+</ul>
+
+</body>
+</html>

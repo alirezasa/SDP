@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : Adminsecurity.xml
+    Created on : January 27, 2012, 10:20 PM
+    Author     : shanmugam-0107
+    Description:
+        Purpose of the document follows.
+-->
+<!-- /AutoAssign.do contains more form data when show per page is > 200,changed limit to 1600 -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+        
+    <!--team:G2 Request Module related Security xml-->
+    <urls authentication="required">
+        <!--CSI urls Starts-->
+        <!--CSI GET CALLS-->
+
+        <url roles="CSIConfig" path="/setup/CategoryTreeView.jsp" method="get">
+            <throttles key="url.path+url.dynamic_key" name="CSITreeView" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+        </url>
+        <url roles="CSIConfig" path="/setup/QuickCSI.jsp" method="get">
+            <throttles key="url.path+url.dynamic_key" name="QuickCSI" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+        </url>
+        <url roles="CSIConfig" path="/ImportCSI.do" method="get">
+            <throttles key="url.path+url.dynamic_key" name="ImportCSI" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+        </url>
+        <url roles="CSIConfig" path="/setup/CSIGetInputFile.jsp" method="get">
+            <throttles key="url.path+url.dynamic_key" name="CSIGetInputFile" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+        </url>
+        <!--CSI POST CALLS-->
+        <url roles="CSIConfig" path="/ConfirmCSIImport.do" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="ConfirmCSIImport" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+            <param name="importData" type="String"/>
+            <param name="fileName" secret="true" regex="filename" max-len="1000"/>
+            <param name="categoryName" regex="Integers"/>
+            <param name="subCategoryName" regex="Integers"/>
+            <param name="itemName" regex="Integers"/>
+            <param name="divToShow" regex="listView"/>
+        </url>
+        <url roles="CSIConfig" path="/ImportCSI.do" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="ImportCSI" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+            <param name="step" type="String"/>
+            <file name="theFile" max-size="10240" allowed-extensions="csv" content-type-name="csv" allow-empty="false">
+                <filename regex="filename" max-len="1000"/>
+            </file>
+        </url>
+        <url roles="CSIConfig" path="/workorder/FileDownload.jsp" operation-param="module" operation-value="csi" >
+            <param name="FILENAME" regex="filename" max-len="100" secret="true" min-occurrences="1" allow-empty="false" />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="DownloadErrorReportCSI" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+        </url>
+        <url roles="CSIConfig" path="/setup/CSIMapFields.jsp" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="GetCSIMapField" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="10" lock-period="10m"/>
+            </throttles>
+        </url>
+
+        <!--CSI urls Ends-->
+
+        <url roles="CommonRequestConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="closerequestfilter" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SetUpWizard_externalMenuAction" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+
+
+        <!--Post call for Request closing Rules-->
+        <url roles="CommonRequestConfig" path="/closerequestfilter.do" method="post" csrf="true">
+            <throttles name="closerequestfilter_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="CloseComment" regex="on|off"/>
+            <param name="closeParentRequest" regex="on|off"/>
+            <param name="closeDependentRequest" regex="on|off"/>
+            <param name="closeRequestStatus" type="long"/>
+            <param name="autoClose" type="boolean"/>
+            <param name="requestAge" type="long"/>
+            <param name="closeOnDenialDays" type="long"/>
+            <param name="closeOnDenialHours" type="long"/>
+            <param name="closeOnDenialCode" type="long"/>
+            <param name="closeOnDenialComments" type="String" max-len="250"/>
+            <param name="closeOnDenialResolution" type="String" max-len="500"/>
+            <param name="deleteTasksOnClose" type="boolean"/>
+            <param name="closeOnDenialTaskStatus" type="long"/>
+            <param name="enableCloseOnDenial" regex="denial"/>
+            <param name="saveButton" type="String" max-len="50"/>
+            <!--SD-111900: Increased the maximum occurrence of Mandatory field Param-->
+            <!-- Default fields = 17 , Additional Fields = 1000 . So increased the max limit to 1017 -->
+            <param name-regex="true" name="closeFilter\.filters\[[0-9]+\]\.mandatory" type="boolean" max-occurrences="1017"/>
+        </url>
+        <!--Request Resolution Template Ends-->
+
+
+        <!-- Notification Rules STARTS-> Request (SDAdmin as well as HelpdeskConfig) -->
+        <!--Notificaiton Request rules GET-->
+        <url roles="HelpdeskConfig" path="/NotificationContent.do" method="get" operation-param="notifType"
+             operation-value="RequesterAck_E-Mail,RequesterAck_Thread_E-Mail,DCTaskUpdate,Technician_RequesterEdit_E-Mail,NotifyReqOnRequestApproveOrReject,RequesterUpdate_E-Mail,RequestResolved_E-Mail,Request_Notes_Mention,RequesterInfo_E-Mail,EmailCCUsers_NewRequest_E-Mail,EmailCCUsers_ReqResolved_E-Mail,EmailCCUsers_ReqClosed_E-Mail,RequestAssignReqrNotify_E-Mail,Auto_IM_RequestWaiting_Editor,Auto_IM_RequestWaiting_Requester,Auto_IM_RequestUpdated_Requester,Auto_IM_RequestWaiting_Requester_EditorModified,Auto_IM_RequestWaiting_EditorCancelled,Auto_IM_RequestWaiting_EditorModified,Notify_Req_On_Tech_Thread_E-Mail,Share_User_E-Mail,TechIntimation_E-Mail,TechIntimation_SMS,Technician_E-Mail,Technician_SMS,Technician_Thread_E-Mail,RequestReOpened_E-Mail,RequestCloseTechNotify_E-Mail,QueueReqTechNotify_E-Mail,UnpickedQueueReqTechNotify_E-Mail,EditQueueReqTechNotify_E-Mail,ApplyLeaveNotification_E-mail,CancelLeaveNotification_E-mail,Auto_IM_RequestUpdated_Technician,RequestReply_E-Mail,TechSLAEscalation_E-Mail,TechFRSLAEscalation_E-Mail,RequestForward_E-Mail,ReqTechNotify_E-Mail,Approval_Request_Level1,Approval_Request_Level2,Approval_Request_Level3,Approval_Request_Level4,Approval_Request_Level5,ApproveAction_Request,Announcement_Notify,AddedNotes_E-Mail,RequestRejection_E-Mail,Share_Tech_E-Mail,ApprovalReminder,EventReminder_Notify,EmailCCUsers_ReqReply_E-Mail,Review_E-MAIL,NotifyOnOrgRoleUnResolved_Email,ServiceSLAUpdate_Requester_E-Mail,ServiceSLAUpdate_Technician_E-Mail,notifyReqOnRequestMove,ReqOnRequestingCancel_E-Mail,ReqOnRevertCancel_E-Mail,ReqOnCancelled_E-Mail,TechOnRequestingCancel_E-Mail,TechOnRevokeCancel_E-Mail,TechOnCancelled_E-Mail,RequestingForCancelAll_E-Mail,RevertCancelRequestAll_E-Mail,TechsOnRequestCancelled_E-Mail,RecommendTemplate_E-Mail,SalesRepAck_Thread_E-Mail,SalesRepInfo_E-Mail,SalesRepUpdate_E-Mail,SalesRepAck_E-Mail">
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="RequestNotification_Get" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="isSMS" type="boolean" />
+	</url>
+        <url roles="SDAdmin,HelpdeskConfig,ReportConfigAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="notDefconfig" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="SetUpWizard_RequestNotification" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--Notificaiton Request rules POST-->
+        <!-- Notification Rules ::: Request (SDAdmin as well as HelpdeskConfig) -->
+        <url roles="HelpdeskConfig" path="/NotificationContent.do" operation-param="notifType" csrf="true" method="post" operation-value="TechIntimation_SMS,Technician_SMS,ApplyLeaveNotification_E-mail,CancelLeaveNotification_E-mail,Announcement_Notify,ApprovalReminder,EventReminder_Notify,EmailCCUsers_ReqReply_E-Mail,Review_E-MAIL">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Notification_Rules_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="fromAdminPage" type="boolean"/>
+            <param name="subject" type="String" max-len="1000"/>
+            <param name="content" xss="sdpantisamyfilter" max-len="-1"/>
+            <param name="mode" type="String" />
+            <param name="isSMS" type="boolean" />
+        </url>
+            <!-- Notification Rules ::: Request (SDOrgAdmin) -->
+            <!--Updating Notification Rules related starts-->
+
+        <url roles="SDAdmin,SDOrgAdmin,HelpdeskConfig" path="/DefaultConfigDef.do" operation-param="defModule" operation-value="notDefconfig" method="post" csrf="true" user_type="all">
+            <throttles key="url.path+url.dynamic_key" name="DefaultConfigDef" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param name = "emailReqOnLoginInfo" regex = "on|off"/>
+            <param name = "property20" regex = "on|off"/>
+            <param name = "emailReqOnThread" regex = "on|off"/>
+            <param name = "emailReqOnUpdate" regex = "on|off"/>
+            <param name = "emailRequesterOnResolved" regex = "on|off"/>
+            <param name = "property15" regex = "on|off"/>
+            <param name = "emailCCUserRecReceived" regex = "on|off"/>
+            <param name = "emailCCUserRecResolved" regex = "on|off"/>
+            <param name = "emailCCUserRecClosed" regex = "on|off"/>
+            <param name = "emailReqOnAssignTech" regex = "on|off"/>
+            <param name = "waitingEditor" regex = "on|off"/>
+            <param name = "waitingRequester" regex = "on|off"/>
+            <param name = "updatedRequester" regex = "on|off"/>
+            <param name = "modifiedRequester" regex = "on|off"/>
+            <param name = "cancelledEditor" regex = "on|off"/>
+            <param name = "modifiedEditor" regex = "on|off"/>
+            <param name = "notifyReqOnTechMail" regex = "on|off"/>
+            <param name = "emailShareUser" regex = "on|off"/>
+            <param name = "reqServiceSLAUpdate" regex = "on|off"/>
+            <param name = "notifyReqOnRequestApproveOrReject" regex = "on|off"/>
+            <param name = "notifyReqOnRequestingCancel" regex = "on|off"/>
+            <param name = "notifyReqOnRevokeCancel" regex = "on|off"/>
+            <param name = "notifyReqOnRequestCanceled" regex = "on|off"/>
+            <param name = "property16" regex = "on|off"/>
+            <param name = "property19" regex = "on|off"/>
+            <param name = "emailTechOnThread" regex = "on|off"/>
+            <param name = "emailTechOnRequesterEdit" regex = "on|off"/>
+            <param name = "emailTechOnReqReopen" regex = "on|off"/>
+            <param name = "notifyTechOnRequestingCancel" regex = "on|off"/>
+            <param name = "notifyTechOnRevokeCancel" regex = "on|off"/>
+            <param name = "notifyTechOnRequestCanceled" regex = "on|off"/>
+            <param name = "emailTechOnQAdd" regex = "on|off"/>
+            <param name = "emailTechOnUnpickedQReq" regex = "on|off"/>
+            <param name = "emailTechOnQEdit" regex = "on|off"/>
+            <param name = "updateDCTask" regex = "on|off"/>
+            <param name = "leaveApplyGroupNotify" regex = "on|off"/>
+            <param name = "leaveCancelGroupNotify" regex = "on|off"/>
+            <param name = "updatedTechnician" regex = "on|off"/>
+            <param name = "smsTechNewReq" regex = "on|off"/>
+            <param name = "emailShareTech" regex = "on|off"/>
+            <param name = "techServiceSLAUpdate" regex = "on|off"/>
+            <param name = "emailTechOnReqClose" regex = "on|off"/>
+            <param name = "emailTechsOnReqCancel" regex = "on|off"/>
+            <param name = "emailTechsOnRevertReqCancel" regex = "on|off"/>
+            <param name = "emailTechsOnCancelled" regex = "on|off"/>
+            <param name = "emailSystemError" regex = "on|off"/>
+            <param name = "leaveCancelAdminNotify" regex = "on|off"/>
+            <param name = "emailTechNewReq" regex = "on|off"/>
+            <param name = "leaveApplyAdminNotify" regex = "on|off"/>
+            <param name = "notifyOnOrgRoleUnResolved" regex = "on|off"/>
+            <param name = "notifyReqOnRequestMove" regex = "on|off"/>
+            <!--Temparorily marked the regex as ids which supports 100 need to find the limit of technician configurable -->
+            <!--Temparorily marked the max-len as -1 need to find the limit of technician configurable -->
+            <!--team:G6-->
+            <param name = "reqCancelNotifyList"  type="String"  max-len="10000"/>
+            <param name = "reqRevertCancelNotifyList"  type="String" max-len="10000"/>
+            <param name = "reqCancelledNotifyList"  type="String" max-len="10000"/>
+            <param name = "notifyOnApprAction" regex="on"/>
+            <param name = "usersToNotifyOnApprAction" type="String"/>
+            <param name = "selectedReqCancelNotify" regex = "ids_500" max-len="10000"/>
+            <param name = "selectedRevertCancelNotify" regex = "ids_500" max-len="10000"/>
+            <param name = "selectedReqCancelledNotify" regex = "ids_500" max-len="10000"/>
+            <!--Param is passed more than once - related to service catalog -->
+            <param name = "usersToNotifyForApprAction" regex="\$TicketOwner|\$Requester|\$Editor|\$ApprovalSender" max-occurrences="4"/>
+            <!--team:G2-->
+            <param name = "notifyList" type="String" max-len="10000"/>
+            <param name = "requestCloseNotifyList" type="String" max-len="10000"/>
+            <param name = "unResolvedRoleNotifyList" type="String" max-len="10000"/>
+            <param name = "selectedCloseNotify" regex = "(\d)+(?:(\,)(\d)+){0,249}(\,)?" max-len="5000"/>
+            <param name = "selected" regex = "(\d)+(?:(\,)(\d)+){0,249}(\,)?" max-len="5000"/>
+            <param name = "selectedUnResolvedNotify" regex = "ids_500" max-len="10000"/>
+            <!--team:Cart-->
+            <param name = "errorNotifyList" type="String" max-len="10000"/>
+            <param name = "leaveList" type="String" max-len="10000"/>
+            <param name = "selectedError" regex = "ids_500" max-len="10000"/>
+            <param name = "selectedLeave" regex = "ids_500" max-len="10000"/>
+
+            <param name="submit" name-regex="true" type="String"/>
+            <param name="notifyReqOnApprovalClarificationAdd" regex="on"/>
+			<param name="notifyApprOnApprovalClarificationReply" regex="on"/>
+			<param name="notifyReqOnApprovalClarificationReply" regex="on"/>
+			<param name="notifyNewReqOnPendingClarification" regex="on"/>
+
+        </url>
+        <!--Updating Notification Rules related ends-->
+
+        <!-- Notification Rules ENDS-> Request (SDOrgAdmin) -->
+
+        <!--SLA Starts -->
+        <!--SLA Get urls -->
+        <url roles="ServiceLevelAgreementConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="sla" method="get">
+            <throttles name="SLA_list_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="ServiceLevelAgreementConfig" path="/SLADef.do" operation-param="mode" operation-value="OrganizeSLAGet" method="get">
+            <!--For Organizing SLA GET call-->
+            <param name="siteID" regex="id"/>
+            <param name="editOrder" regex="true"/>
+            <throttles name="SLA_Organize" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url roles="ServiceLevelAgreementConfig" path="/SLADef.do" operation-param="mode" operation-value="edit" method="get">
+            <!--For SLA edit page GET call-->
+            <param name="mode" regex="delete|edit"/>
+            <param name="task" regex="sla"/>
+            <param name="id"   type="long" range=">0"/>
+            <throttles name="SLA_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url roles="ServiceLevelAgreementConfig" path="/STATE_ID/[0-9]+/SLADefListView(_HD_[0-9]+)?.cc" method="get">
+            <param name="UNIQUE_ID" regex="SLADefListView(_HD_[0-9]+)?"/>
+            <param name="SITEID" regex="id"/>
+
+            <throttles name="SLA_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="ServiceLevelAgreementConfig" path="/HdSearchItem.do" method="get">
+            <param name="mode" regex="add|edit"/>
+            <param name="from" regex="rule"/>
+            <param name="siteID" regex="id"/>
+            <param name="element1" regex="document.SLADefForm.criteriaValue|document.SLADefForm.rowTextID([0-9]+)"/>
+            <param name="element2" regex="document.SLADefForm.hid1|document.SLADefForm.rowValID([0-9]+)"/>
+            <param name="criteria" regex="Requester Name|Department Name|Priority|Category|Level|SubCategory|CategoryItem|Support Plan|Account|Site|Urgency|Impact|Request Type|IncidentService|Queue|ISVIPUSER"/>
+
+            <throttles name="SLA_Criteria" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!-- SLA API urls -->
+        <url path="/api/v3/slas/(\d+)" roles="SDAdmin,ServiceRequestConfig,ServiceLevelAgreementConfig" method="get" api="true">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+            <throttles name="sla_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/slas" roles="SDAdmin,ServiceRequestConfig,ServiceLevelAgreementConfig" method="get" api="true">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <throttles name="sla_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--SLA POST urls -->
+        <url roles="ServiceLevelAgreementConfig" path="/SLADef.do" method="post" csrf="true"  operation-param="mode" operation-value="postSLA">
+            <param-group name="SLAForm"/>
+            <param name="hid1" type="String" max-len="10"/>
+            <param name="hid2" type="String" max-len="10"/>
+            <param name="updateButton" type="String"/> <!--I18ned value is sent in param-->
+            <param name="addButton" type="String"/> <!--I18ned value is sent in param-->
+            <param name="addAndAddNew"  type="String"/> <!--I18ned value is sent in param-->
+            <param name="updateAndAddNew"  type="String"/> <!--I18ned value is sent in param-->
+            <param name="cancel"  type="String"/> <!--I18ned value is sent in param-->
+            <param name="selectCriteria" regex="[0-9]+|null" allow-empty="true"/>
+            <param name="divToShow" regex="detView|listView"/>
+            <param name="andor" regex="and|or"/>
+            <param name="operator\(([1-9]|1[0-9]|20)\)" name-regex="true" type="String"  max-occurrences="20"/> <!--I18ned value is sent in param-->
+            <param name="rowName(1[0-9]|20|[1-9])" name-regex="true" type="String" max-len="25000" max-occurrences="20"/>
+            <param name="rowVal(1[0-9]|20|[1-9])" name-regex="true" type="String" max-len="1001" max-occurrences="20"/>
+
+            <throttles name="SLA_add_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+
+        </url>
+
+		<url roles="ServiceLevelAgreementConfig" path="/SLADef.do" method="post" csrf="true"  operation-param="mode" operation-value="OrganizeSLAPost">
+			<!--For Organizing SLA POST call-->
+            <!-- SD-104913 : Max of 250 SLAIds considered for calculating max length -->
+            <param name="colList" type="String" max-len="5000" secret="true"/>
+            <param name="saveOrder" type="String"/> <!--I18ned value is sent in param-->
+            <param name="showFields" type="long" range=">0" max-occurrences="100"/>
+            <param name="siteID" regex="id"/>
+
+            <throttles name="SLA_organize_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+
+        </url>
+
+        <!--Enable / Disable SLA Escalations call-->
+        <url path="/SLAEnable.do" method="post" csrf="true" roles="HelpdeskConfig">
+            <param name="slaEsc" type="String"/> <!--I18ned value is sent in param-->
+            <throttles name="SLA_esc" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url roles="ServiceLevelAgreementConfig" path="/SLADef.do" csrf="true" method="post" operation-param="mode" operation-value="delete">
+            <!--For SLA delete call-->
+            <param name="slaID" type="long" range=">0" max-occurrences="100"/>
+            <throttles name="SLA_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!--SLA delete urls -->
+        <url path="/api/v3/slas/(\d+)" roles="SDAdmin,ServiceRequestConfig" method="delete" api="true">
+            <throttles name="sla_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/slas" roles="SDAdmin,ServiceRequestConfig" method="delete" api="true">
+            <param name="ids" regex="ids"/>
+            <throttles name="sla_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!--SLA ENDS -->
+
+         <!-- RequestExternalAction.do starts-->
+         <!--GET Urls-->
+        <url path="/RequestExternalAction.do" method="get" operation-param="module" operation-value="request" roles="CommonRequestConfig">
+            <param name="method" regex="getTriggerActionData|getAutoActionListView|getAutoActionCritVals|organizeActions|editAutoAction"/>
+            <param name="action_id" type="long"  />
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="RequestExternalMenu_getTriggerActionData" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--POST Urls-->
+         <url path="/RequestExternalAction.do" operation-param="module" operation-value="request" csrf="true" method="post" roles="CommonRequestConfig">
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="RequestExternalMenu_Post" dynamic-throttle="true"  >
+                 <throttle duration="1m" threshold="60" lock-period="5m"/>
+             </throttles>
+             <param name="method" regex="saveReOrderActions|saveAutoAction|enableDisableAction|deleteAutoAction" min-occurrences="1"/>
+        </url>
+
+        <!-- RequestExternalAction.do ends-->
+        <!--Request Template Servlet urls STARTS-->
+
+        <url path="/RequestTemplatesList.do" user_type="all" roles="ServiceRequestConfig,IncidentRequestConfig" method="get">
+            <param name="module" regex="mergedRequest|incident|serviceRequest" min-occurrences="1"/>
+            <param name="serviceId" type="long"/>
+            <param name="fromReorder" regex="true"/>
+            <param name="fromIncidentList" regex="true"/>
+            <throttles name="RequestTemplatesList_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url roles="IncidentRequestConfig" path="(/STATE_ID/[0-9]+)?/RequestAdditionalFieldListView(_HD_[0-9]+)?.cc" method="get" url-type="dynamic" operation-param="udfModule" operation-value="Incident">
+            <param name="UNIQUE_ID" regex="RequestAdditionalFieldListView(_HD_[0-9]+)?"/>
+            <param name="entityId" type="long"/>
+            <throttles name="RequestAdditionalField_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>        
+         </url>
+
+         <url path="/WorkOrder.do"  method="get" operation-param="woMode" operation-value="TemplatePreview" roles="IncidentRequestConfig,ServiceRequestConfig">
+            <param name="userType" secret="true" regex="Technician|Requester"/>
+            <param name="reqTemplate" type="long"/>
+            <throttles name="TemplatePreview_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>        
+        </url>
+
+         <url path="/servlet/HdClientUtilServlet" roles="IncidentRequestConfig,ServiceRequestConfig" operation-param="command" operation-value="getConfigsForTemplate" method="get">
+			<throttles name="getConfigsForTemplate_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>		 
+		 </url>
+		 <!--team:G2-->
+        <url path="/servlet/HdClientUtilServlet" roles="IncidentRequestConfig,ServiceRequestConfig" operation-param="command" operation-value="getSiteTechModel" method="get">
+			<throttles name="getSiteTechModel_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>		 
+		 </url>
+		 <!--team:G2-->
+        <url path="/servlet/HdClientUtilServlet" roles="IncidentRequestConfig,ServiceRequestConfig" operation-param="command" operation-value="getSiteGroupModel" method="get">
+			<throttles name="getSiteGroupModel_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>		 
+		 </url>
+		 <!--team:G2-->
+        <url path="/servlet/HdClientUtilServlet" roles="IncidentRequestConfig,ServiceRequestConfig" operation-param="command" operation-value="getGroupTechModel" method="get">
+			<throttles name="getGroupTechModel_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>		 
+		 </url>
+		 <!--team:G2-->
+        <url path="/servlet/HdClientUtilServlet" roles="IncidentRequestConfig,ServiceRequestConfig" operation-param="command" operation-value="getTechID_NameModel" method="get">
+			<throttles name="getTechID_NameModel_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>		 
+		 </url>
+		 <!--team:G2-->
+        <url path="/servlet/HdClientUtilServlet" roles="IncidentRequestConfig,ServiceRequestConfig" operation-param="command" operation-value="getSiteReferModel" method="get">
+			<throttles name="getSiteReferModel_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>		 
+		 </url>
+		 <!--team:G2-->
+		<url path="/servlet/HdClientUtilServlet" roles="CreateRequests" operation-param="command" user_type="all" operation-value="getCSIModel" method="get">
+			<throttles name="getCSIModel_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="60" lock-period="5m"/>
+			</throttles>		 
+		 </url>
+        <url path="/servlet/HdClientUtilServlet" roles="IncidentRequestConfig,ServiceRequestConfig" operation-param="command" operation-value="getCatalogview" method="get">
+            <throttles name="getCatalogview_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url roles="IncidentRequestConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="reqUDF,RequestTemplate" method="get">
+            <throttles name="Incident_fields_SetUpWizard" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>		
+		</url>
+        <url path="/workorder/multiselect.jsp" user_type="all" roles="ViewRequests" method="get">
+            <throttles name="multiselect_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="name" type="String"/>
+            <param name="from" regex="template|viewOnly|solutionOwner"/>
+            <param name="type" regex="checkbox"/>
+            <param name="[0-9]+" name-regex="true" type="String" max-len="0" />
+        </url>
+
+        <!--Request Template Servlet urls ENDS-->
+
+		<!--TAA STARTS-->
+        <!--TAA get urls-->
+		<url path="/servlet/HdClientUtilServlet" roles="TechnicianAutoAssignConfig" operation-param="command" operation-value="getTAASettings" method="get">
+            <throttles name="TechnicianAutoAssignConfig_throttle_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>		
+		</url>
+        <!--TAA post urls-->
+        <url path="/servlet/HdClientUtilServlet" method="post" roles="TechnicianAutoAssignConfig" operation-param="command" csrf="true" operation-value="updateTAASettings" disable-extraparam="true" >
+            <param name="input_data" type="JSONObject" template="tech_auto_assign" max-len="-1" />
+            <throttles name="TechnicianAutoAssignConfig_throttle_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>            
+        </url>
+        <!--TAA ENDS-->
+
+        <!--Data Archive STARTS-->
+        <!--Data Archive get urls-->
+        <url roles="DataArchiveConfig" path="/SDArchiveConfig.do" method="get">
+            <throttles name="archive_config_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url roles="DataArchiveConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="archive" method="get">
+            <throttles name="archive_forwardto_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--Data Archive post urls-->
+        <!--Data Archive-->
+        <url roles="DataArchiveConfig" path="/SDArchiveConfig.do" method="post" csrf="true">
+            <throttles name="archive_admin_post" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="10s" lock-period="5m" threshold="15"/>
+            </throttles>
+            <param name="enableDeletionSchedule" regex="on|off|true|false"/>
+            <param name="allowExceptionForDeletion" regex="on|off|true|false"/>
+            <param name="statusCriteriaDel" regex="ANY|RESOLVED_OR_CLOSED|CLOSED_ONLY|ANY_COMPLETED_STATUS"/>
+            <param name="dateCriteriaDel" regex="CREATED_DATE|CLOSED_DATE"/>
+            <param name="durationCriteriaDel_count" type="long" range="1-12"/> <!--SD-108329 fix-->
+            <param name="durationCriteriaDel_span" regex="(YEAR|MONTH)"/> <!--SD-108329 fix-->
+            <param name="CHECK_BOX_DELETION" type="String" max-occurrences="50"/>
+            <param name="RULE_CRITERIA_DELETION_[0-9]+" name-regex="true" type="String"  max-occurrences="50"/>
+            <param name="MATCH_CRITERIA_DELETION_[0-9]+" name-regex="true" type="String" max-occurrences="50"/>
+            <param name="DISPLAY_DATA_DELETION_[0-9]+" name-regex="true" type="String" max-occurrences="50" max-len="5000" />
+            <param name="SELECT_DATA_DELETION_[0-9]+" name-regex="true" type="String" max-occurrences="50" max-len="5000" />
+
+            <param name="enableArchiveSchedule" regex="on|off|true|false"/>
+            <param name="allowExceptionForArchive" regex="on|off|true|false"/>
+            <param name="statusCriteria" regex="ANY|RESOLVED_OR_CLOSED|CLOSED_ONLY|ANY_COMPLETED_STATUS"/>
+            <param name="dateCriteria" regex="CREATED_DATE|CLOSED_DATE"/>
+            <param name="durationCriteria_count" type="long" range="1-12"/> <!--SD-108329 fix-->
+            <param name="durationCriteria_span" regex="(YEAR|MONTH)"/> <!--SD-108329 fix-->
+            <param name="CHECK_BOX" type="String" max-occurrences="50"/>
+            <param name="RULE_CRITERIA_[0-9]+" name-regex="true" type="String" max-occurrences="50"/>
+            <param name="MATCH_CRITERIA_[0-9]+" name-regex="true" type="String" max-occurrences="50"/>
+            <param name="DISPLAY_DATA_[0-9]+" name-regex="true" type="String" max-occurrences="50" max-len="5000" />
+            <param name="SELECT_DATA_[0-9]+" name-regex="true" type="String" max-occurrences="50" max-len="5000" />
+            <param name="startDate" regex="^([0-2][0-9]|30|31) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (20\d{2})$"/>
+            <param name="hrs" type="long" range="0-23"/>
+            <param name="mins" type="long" range="0-59"/>
+            <param name="interval" type="long"/>
+            <param name="startDateChanged" type="boolean"/>
+            <param name="isWarningSeen" type="boolean"/>
+            <param name="save" type="String"/> <!--Can't provide regex as i18ned value is sent in it -->
+
+        </url>
+        <!--Data Archive ENDS-->
+
+
+        <!--Reply  Template Starts-->
+        <!--Reply template GET-->
+
+        <url path="/ReplyTemplate.do" roles="ViewRequests,HelpdeskConfig" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="ReplyTemplate_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="getInfo|select|rtList" />
+            <param name="woId" type="long"/>
+            <param name="id" type="long"/>
+            <param name="notifyId" regex="id"/>
+            <param name="convID" regex="id"/>
+            <param name="isConversation" type="boolean"/>
+        </url>
+
+        <url roles="HelpdeskConfig" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="ReplyTemplate" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_template_setupwizard" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <!--Reply template POST-->
+        <url roles="ViewRequests,HelpdeskConfig" path="/ReplyTemplate.do" method="post" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Reply_template_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="changeStatus"/>
+            <param name="status" type="long"/>
+            <param name="id" type="long"/>
+        </url>
+
+        <!--Reply Template ENDS-->
+        
+       
+
+        
+
+    </urls>
+
+
+    <param-groups>
+        <param-group name="SLAForm">
+            <param name="name"  type="String"/>
+            <param name="slaID"  regex="id"/>
+            <param name="slaName"  type="String"/>
+            <param name="siteId" regex="id"/>
+            <param name="comments" type="String" max-len="2000" secret="true"/>
+            <param name="isDeleted" type="boolean"/>
+
+            <param name="frDueByDays"  type="long" range=">=0"/>
+            <param name="frDueByHours"  type="long" range="0-23"/>
+            <param name="frDueByMinutes"  type="long" range="0-59"/>
+            <param name="dueByDays"  type="long" range=">=0"/>
+            <param name="dueByHours"  type="long" range="0-23"/>
+            <param name="dueByMinutes"  type="long" range="0-59"/>
+            <param name="overrideOperatingHours" regex="on"/>
+            <param name="overrideHolidays"  regex="on"/>
+            <param name="overrideWeekends"  regex="on"/>
+            <param name="checkbox[0-5]+" name-regex="true"  regex="on" max-occurrences="5"/>
+            <param name="notifyList[0-5]+" name-regex="true" type="String" max-len="1000" max-occurrences="5"/>
+            <param name="escalateBefore[0-5]+" name-regex="true" regex="escbefore|escafter" max-occurrences="5"/>
+            <param name="escalateAfterDays[0-5]+" name-regex="true" type="long" range=">=0" max-occurrences="5"/>
+            <param name="escalateAfterHours[0-5]+" name-regex="true" type="long" range="0-23" max-occurrences="5"/>
+            <param name="escalateAfterMinutes[0-5]+" name-regex="true" type="long" range="0-59" max-occurrences="5"/>
+
+            <param name="actionValues" type="JSONArray" template="SLAActionValuesTemplate" array-size="5" max-len="500"/>
+            <param name="PlaceInGroup" type="long" max-occurrences="5"/>
+            <param name="AssignToTech" type="long" max-occurrences="5"/>
+            <param name="priority" type="long" max-occurrences="5"/>
+            <param name="level" type="long" max-occurrences="5"/>
+            <param name="olaDetails" type="JSONObject" template="OLADetailsTemplate" max-len="-1"/>
+        </param-group>
+    </param-groups>
+
+    <jsontemplates>
+        <jsontemplate name="OLADetailsTemplate">
+            <key name="[1-9]"  name-regex="true" type="JSONObject" template="OLATemplate" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="OLATemplate">
+            <key name="groups" type="JSONArray" template="OLAGroups" max-len="-1" array-size="0-10"/>
+            <key name="days"  type="long" range="0-31"/>
+            <key name="hours"  type="long" range="0-23"/>
+            <key name="minutes"  type="long" range="0-59"/>
+            <key name="description"  type="String" max-len="500"/>
+        </jsontemplate>
+        <jsontemplate name="OLAGroups">
+            <key name="id" type="String" max-len="250"/>
+            <key name="text" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="SLAActionValuesTemplate">
+            <key name="position" type="long" range=">0"/>
+            <key name="queueid" type="long" range=">0"/>
+            <key name="technicianid" type="long" range=">0"/>
+            <key name="priorityid" type="long" range=">0"/>
+            <key name="levelid" type="long" range=">0"/>
+        </jsontemplate>
+    </jsontemplates>
+
+</security>

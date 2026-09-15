@@ -1,0 +1,226 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+  <urls authentication="required" remote_server="true" allowed_portals="it">
+    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="snmp_api" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+    <url path="/SetUpWizard.do" roles="SDAdmin" operation-param="forwardTo" operation-value="snmpConfigurations" method="get" />
+    <url path="/SNMPConfiguration.do" roles="SDAdmin" method="get" operation-param="method" operation-value="getMibList,getResourceTypeAndCategoryID,viewSnmpConfigurationPage" />
+
+    <url path="/setup/AddSnmpModelPopup.jsp" roles="SDAdmin" method="get"  >
+      <param name="mode" regex="edit"/>
+    </url>
+    <url path="/setup/SnmpOIDConfigPopup.jsp" roles="SDAdmin" method="get"  />
+    <url path="/setup/AddNetworkDeviceManufacturer.jsp" roles="SDAdmin" method="get"  >
+      <param name="manuUnOID" type="long" range=">0" />
+    </url>
+    <url path="/setup/MIBBrowser.jsp" roles="SDAdmin" method="get" />
+    <url path="/api/v3/snmp_unknowntype_oids" roles="SDAdmin" method="get">
+      <param name="input_data" template="list_info_snmp" type="JSONObject" max-len="-1" />
+    </url>
+   <url path="/api/v3/snmp_unknowntype_oids/[0-9]+" roles="SDAdmin" method="get"/>
+    <url path="/api/v3/snmp_unknowntype_oids" roles="SDAdmin" method="put" api="true" remote_server="false">
+      <param name="input_data" template="snmp_unknowntype_oids_array_api_key" type="JSONObject" max-len="180000" />
+    </url>
+    <url path="/api/v3/snmp_unknowntype_oids/[0-9]+" roles="SDAdmin" method="put" api="true" remote_server="false">
+      <param name="input_data" template="snmp_unknowntype_oids_api_key" type="JSONObject" max-len="1800" />
+    </url>
+	<url path="/api/v3/snmp_unknowntype_oids" roles="SDAdmin" method="post" api="true" remote_server="false" >
+      <param name="input_data" template="snmp_unknowntype_oids_add" type="JSONObject" max-len="2100"/>
+    </url>
+
+   <url path="/api/v3/snmp_device_identification" roles="SDAdmin" method="get">
+      <param name="input_data" template="list_info_snmp" type="JSONObject" max-len="-1" />
+   </url>
+    <url path="/api/v3/snmp_device_identification/[0-9]+" roles="SDAdmin" method="get"/>
+    <url path="/api/v3/snmp_device_identification/[0-9]+" roles="SDAdmin" method="put" remote_server="false" api="true">
+      <param name="input_data" template="snmp_device_identification_api_key" type="JSONObject" max-len="1500" />
+    </url>
+    <url path="/api/v3/snmp_device_identification" roles="SDAdmin" method="post" remote_server="false" api="true">
+      <param name="input_data" template="snmp_device_identification_api_key" type="JSONObject" max-len="1500" />
+    </url>
+    <url path="/api/v3/snmp_device_identification/[0-9]" roles="SDAdmin" method="delete" remote_server="false" api="true" />
+    <url path="/api/v3/snmp_device_identification" roles="SDAdmin" method="delete" remote_server="false" api="true">
+      <param name="ids" max-len="3000" regex="ids" />
+    </url>
+
+   <url path="/api/v3/snmpinventorytype/[0-9]+" roles="SDAdmin" method="get"/>
+   <url path="/api/v3/snmpinventorytype" roles="SDAdmin" method="get">
+      <param name="input_data" template="snmpinventorytype_api_key_get" type="JSONObject" max-len="3500" />
+   </url>
+    <url path="/api/v3/snmpinventorytype" roles="SDAdmin" method="put" api="true" remote_server="false" >
+      <param name="input_data" template="snmpinventorytype_api_key" type="JSONObject" max-len="3500" />
+   </url>
+
+   <url path="/api/v3/networkdevicemanufacturer/[0-9]+" roles="SDAdmin" method="get"/>
+    <url path="/api/v3/networkdevicemanufacturer/[0-9]+" roles="SDAdmin" method="put" remote_server="false" api="true">
+      <param name="input_data" template="networkdevicemanufacturer_api" type="JSONObject" max-len="300" />
+   </url>
+    <url path="/api/v3/networkdevicemanufacturer/[0-9]+" roles="SDAdmin" method="delete" remote_server="false" api="true" />
+    <url path="/api/v3/networkdevicemanufacturer" roles="SDAdmin" method="get">
+      <param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+    </url>
+    <url path="/api/v3/networkdevicemanufacturer" roles="SDAdmin" method="post" remote_server="false" api="true">
+      <param name="input_data" template="networkdevicemanufacturer_api" type="JSONObject" max-len="300" />
+   </url>
+    <url path="/api/v3/networkdevicemanufacturer" roles="SDAdmin" method="delete" remote_server="false" api="true">
+      <param name="ids" max-len="3000" regex="ids" />
+    </url>
+
+   <url path="/api/v3/mibbrowser" roles="SDAdmin" method="get">
+      <param name="input_data" template="mibbrowser_api" type="JSONObject" max-len="300" />
+   </url>
+   <url path="/api/v3/snmp" roles="SDAdmin" method="get">
+      <param name="input_data" template="snmp_api" type="JSONObject" max-len="4550" />
+   </url>
+   <url path="/SNMPConfiguration.do" roles="SDAdmin" method="post" csrf="true" operation-param="method" operation-value="uploadMIBFile" >
+      <file name="uploadMIB" max-size="2048"  content-type-name="csv" allow-empty="false">
+        <filename regex="filename" />
+      </file>
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SNMPConfiguration_uploadMIBFile" dynamic-throttle="true"  >
+	      <throttle duration="1m" threshold="10" lock-period="5m"/>
+		</throttles>
+    </url>
+    <url roles="SDAdmin" path="/servlet/Select2Servlet" operation-param="module" operation-value="snmpManufacturer" method="get" >
+      <param name="params" type="String" max-len="1000" />
+      <param name="page" type="long" range=">0" />
+      <param name="searchText" type="String" max-len="200" />
+      <param name="callback" regex="jQuery[0-9]+_[0-9]+"/>
+     </url>
+ </urls>
+ <jsontemplates>
+    <jsontemplate name="snmp_unknowntype_oids_api_key">
+      <key name="snmp_unknowntype_oids" template="snmp_unknowntype_oids_json" type="JSONObject" max-len="1800" />
+    </jsontemplate>
+    <jsontemplate name="snmp_unknowntype_oids_add">
+      <key name="snmp_unknowntype_oids" template="snmp_unknowntype_oids_add_json" type="JSONObject" max-len="2000"/>
+      <key name="manufacturer_from_sync_schedule" type="String" max-len="200" />
+    </jsontemplate>
+    <jsontemplate name="snmp_unknowntype_oids_json" >
+      <key name="id" type="long" range=">0" />
+      <key name="model" max-len="500" type="String" />
+      <key name="product_type" template="product_type_template" type="JSONObject" max-len="300" />
+      <key name="manufacturer" template="network_manufacturer_template" type="JSONObject" max-len="300" />
+    </jsontemplate>
+    <jsontemplate name="snmp_unknowntype_oids_add_json" >
+      <key name="oid" max-len="500" type="String"/>
+      <key name="sysdescription" max-len="500" type="String"/>
+      <key name="identified_in" max-len="200" type="String"/>
+      <key name="model" max-len="100" type="String"/>
+      <key name="manufacturer" template="network_manufacturer_template" type="JSONObject" max-len="300" />
+    </jsontemplate>
+    <jsontemplate name="network_manufacturer_template" >
+      <key name="id" type="long" range=">0" />
+      <key name="name" type="String" max-len="200"/>
+    </jsontemplate>
+    <jsontemplate name="snmp_unknowntype_oids_array_api_key" >
+      <key name="snmp_unknowntype_oids" template="snmp_unknowntype_oids_json" type="JSONArray" max-len="180000" />
+    </jsontemplate>
+    <jsontemplate name="snmp_device_identification_api_key" >
+      <key name="snmp_device_identification" template="snmp_device_identification_json" type="JSONObject" max-len="1300" />
+    </jsontemplate>
+    <jsontemplate name="snmp_device_identification_json">
+      <key name="model" type="String" max-len="150" />
+      <key name="product_type" template="product_type_template" type="JSONObject" max-len="300" />
+      <key name="manufacturer" template="network_manufacturer_template" type="JSONObject" max-len="250" />
+      <key name="sysoid" type="String" max-len="200"/>
+      <key name="modeloid" type="String" max-len="200"/>
+    </jsontemplate>
+    <jsontemplate name="snmpinventorytype_api_key">
+      <key name="snmpinventorytype" template="snmpinventorytype_json" type="JSONObject" max-len="3200" />
+      <key name="list_info" template="list_info_json" type="JSONObject" max-len="100" />
+    </jsontemplate>
+    <jsontemplate name="snmpinventorytype_api_key_get">
+      <key name="snmpinventorytype" template="snmpinventorytype_json" type="JSONObject" max-len="3200" />
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="include" type="JSONArray" template="strarray" max-len="-1" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+      <key name="from_sync_schedule" type="boolean"/>
+    </jsontemplate>
+    <jsontemplate name="snmpinventorytype_json">
+      <key name="product_type" template="product_type_template" type="JSONObject" max-len="300" />
+      <key name="manufacturer" template="network_manufacturer_template" type="JSONObject" max-len="250" />
+      <key name="configure_oid" template="configure_oid_template" type="JSONObject" max-len="1400" />
+      <key name="field" type="String" max-len="200" />
+      <key name="field_type" type="String" max-len="100" />
+      <key name="data_type" type="String" max-len="20" />
+      <key name="oid" type="String" max-len="200" />
+      <key name="table_name" type="String" max-len="200" />
+      <key name="oid_configured_for" type="String" max-len="100" />
+      <key name="snmpinventory_oid_data_id" type="long" range=">0" />
+      <key name="column_name" type="String" max-len="200" />
+      <key name="attribute_id" type="long" range=">0" />
+      <key name="additional_field_id" type="long" range=">0" />
+    </jsontemplate>
+    <jsontemplate name="configure_oid_template">
+      <key name="field" type="String" max-len="200" />
+      <key name="field_type" type="String" max-len="100" />
+      <key name="data_type" type="String" max-len="20" />
+      <key name="oid" type="String" max-len="200" />
+      <key name="table_name" type="String" max-len="200" />
+      <key name="oid_configured_for" type="String" max-len="100" />
+      <key name="snmpinventory_oid_data_id" type="long" range=">0" />
+      <key name="column_name" type="String" max-len="200" />
+      <key name="unit" type="String" max-len="200" />
+      <key name="attribute_id" type="long" range=">0" />
+      <key name="additional_field_id" type="long" range=">0" />
+    </jsontemplate>
+    <jsontemplate name="networkdevicemanufacturer_api">
+      <key name="networkdevicemanufacturer" template="networkdevicemanufacturer_json" type="JSONObject" max-len="250" />
+    </jsontemplate>
+    <jsontemplate name="networkdevicemanufacturer_json" >
+      <key name="name" type="String" max-len="200" />
+    </jsontemplate>
+    <jsontemplate name="mibbrowser_api" >
+      <key name="mibbrowser" template="mibbrowser_json" type="JSONObject" max-len="250" />
+    </jsontemplate>
+    <jsontemplate name="mibbrowser_json">
+      <key name="mib_name" type="String" max-len="200" />
+    </jsontemplate>
+    <jsontemplate name="snmp_api" >
+      <key name="snmp" template="snmp_json" type="JSONObject" max-len="4050" />
+    </jsontemplate>
+    <jsontemplate name="snmp_json" >
+      <key name="mib_name" type="String" max-len="200" />
+      <key name="host_name" secret="true" type="String" max-len="100" />
+      <key name="oid" type="String" max-len="200" />
+      <key name="operation_name" type="String" max-len="10" />
+      <key name="id" type="long" range=">0" />
+      <key name="snmp_password_info" template="snmp_password_json" type="JSONObject" max-len="550" />
+      <key name="snmp_port_number" secret="true" type="long" range=">0" />
+      <key name="snmp_time_out" type="long" range=">=0" />
+      <key name="snmp_retries" type="long" range=">=0" />
+      <key name="max_repetitions" type="long" range=">=0" />
+      <key name="non_repeaters" type="long" range=">=0" />
+      <key name="protocol" template="networkdevicemanufacturer_json" type="JSONObject" max-len="250" />
+      <key name="snmpv3_port_number" secret="true" type="long" range=">0" />
+      <key name="snmpv3_time_out" type="long" range=">=0" />
+      <key name="snmpv3_retries" type="long" range=">=0" />
+      <key name="snmpv3_username" secret="true" type="String" max-len="250" />
+      <key name="snmpv3_contextname" secret="true" type="String" max-len="250" />
+      <key name="snmpv3_authentication_protocol" secret="true" type="String" max-len="250" />
+      <key name="snmpv3_auth_password_info" template="snmp_password_json" type="JSONObject" max-len="550" />
+      <key name="snmpv3_encryption_protocol" secret="true" type="String" max-len="10" />
+      <key name="snmpv3_encryption_password_info" template="snmp_password_json" type="JSONObject" max-len="550" />
+    </jsontemplate>
+    <jsontemplate name="snmp_password_json">
+      <key name="password" type="String" secret="true" max-len="500" />
+    </jsontemplate>
+    <jsontemplate name="product_type_template" >
+      <key name="id" type="long" range=">0" />
+      <key name="name" type="String" max-len="250"/>
+    </jsontemplate>
+    <jsontemplate name="list_info_json" >
+      <key name="search_fields" template="search_fields_json" type="JSONObject" max-len="50" />
+    </jsontemplate>
+    <jsontemplate name="search_fields_json" >
+      <key name="product_type.id" type="long" range=">0" />
+      <key name="manufacturer.id" type="long" range=">0" />
+    </jsontemplate>
+    <jsontemplate name="list_info_snmp">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="include" type="JSONArray" template="strarray" max-len="-1" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+      <key name="from_sync_schedule" type="boolean"/>
+		</jsontemplate>
+ </jsontemplates>
+ </security>

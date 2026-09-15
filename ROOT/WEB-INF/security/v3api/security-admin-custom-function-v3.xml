@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" roles="SDAdmin,HelpdeskConfig">
+
+        <throttles name="custom_function" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+
+        <url path="/api/v3/custom_functions"  method="post" ids-url-id="custom_functions_tfa">
+            <param name="input_data" template="custom_function" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(\d+)"  method="put" ids-url-id="custom_functions_tfa">
+            <param name="input_data" template="custom_function" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(\d+)"  method="delete"/>
+
+        <url path="/api/v3/custom_functions/(\d+)"  method="get">
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_functions" roles="SDAdmin,HelpdeskConfig" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(\d+)/(_?)execute"  method="put">
+            <param name="input_data" template="customfunction_execute" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(\d+)/(_?)get_associated_workflows"  method="get">
+            <param name="input_data" template="list_info_template" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/module"  method="get" roles="SDAdmin">
+            <param name="input_data" template="custom_function_get_module" type="JSONObject" max-len="50" min-occurrences="1"/>
+        </url>
+
+
+        <url path="/api/v3/custom_functions/(_?)enable"  method="put">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(_?)disable"  method="put">
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(\d+)/(_?)enable"  method="put"/>
+
+        <url path="/api/v3/custom_functions/(\d+)/(_?)disable"  method="put"/>
+
+        <url path="/api/v3/custom_functions"  method="put">
+            <param name="input_data" template="custom_function" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/custom_functions"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(_?)history" roles="SDAdmin,HelpdeskConfig" method="get">
+            <param name="input_data" template="history_get" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(_?)get_records_for_history" roles="SDAdmin,HelpdeskConfig" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/custom_functions/(_?)get_performed_by_for_history" roles="SDAdmin,HelpdeskConfig" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+
+        <param name-regex="true" max-len="200" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+        <param name="format" regex="json"/>
+
+    </urls>
+</security>

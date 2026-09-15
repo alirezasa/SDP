@@ -1,0 +1,2198 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+
+    <!-- Problem Task,WorkLog URLs Starts -->
+    <urls authentication="required" api="true">
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/attachments/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete">
+            <throttles name="task_attachment_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/attachments" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_attachment_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/attachments/(_?)download" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode"  regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/attachments/(\d+)/(_?)download" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode"  regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/attachments" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete">
+            <throttles name="task_attachment_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/tasks/(_?)upload" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)upload" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)upload" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post">
+            <throttles name="comment_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="comment_update" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete">
+            <throttles name="comment_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="comment_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="comment_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/(_?)reply" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post">
+            <throttles name="comment_reply" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="comment_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete">
+            <throttles name="comment_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="comment_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="comment_links_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url method="post" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true" allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/owner/(\d+)/images/(\d+)" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <!--For comment mentions allowed values profile pic-->
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/mentions/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+
+        <!--For comment mentions user popup window profile pic-->
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+        <url method="get" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/mentions/(\d+)"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="mentions_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <!--For comment created_by user popup window profile pic-->
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/comments/(\d+)/created_by/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="created_by_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/tasks" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post">
+            <throttles name="task_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="problem_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="problem_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete">
+            <throttles name="task_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="task_get_list" key="url.path+url.dynamic_key+param.for" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="for" regex="dep"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(_?)assign" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_assign" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="assign_task_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(_?)mark" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_mark" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="mark_task_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(_?)trigger" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_trigger" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(_?)close" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(_?)organize" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_organize" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" min-occurrences="1" secret="true" regex="ids_500" max-len="10000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)assign" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_assign" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="assign_task_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)mark" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_mark" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="mark_task_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)trigger" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_trigger" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)close" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+
+
+        <url path="/api/v3/problems/(\d+)/tasks" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put">
+            <throttles name="task_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="problem_task" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete">
+            <throttles name="task_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/template/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="task_allowed_val_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(group|marked_group|status|owner|marked_owner|priority|type|template)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_allowed_val_field_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/template/(_?)metainfo" method="get" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="task_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(group|marked_group|status|owner|marked_owner|priority|type|template|tags)" roles="" description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_allowed_val_single_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/template/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="task_allowed_val_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/tasks/template/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_links_backward_comp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/_total_count" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_total_count_backward_comp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(_?)metainfo" roles="" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="task_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)metainfo" method="get" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+            <throttles name="task_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/(_?)history"  method="get" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+            <throttles name="task_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="problem_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)(/udf_fields)?/(pick_[a-z0-9_]+)" method="get" >
+            <throttles name="problem_task_udf_pick" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="30s" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <!-- Task Dependency starts  -->
+        <url path="/api/v3/problems/(\d+)/task_dependencies" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post">
+            <throttles name="task_dependency_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="task_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/problems/(\d+)/task_dependencies/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete">
+            <throttles name="task_dependency_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/task_dependencies" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="task_dependency_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+
+        <!-- Task Dependency ends  -->
+
+        <url method="post" path="/api/v3/problems/(\d+)/tasks/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/problems/(\d+)/tasks/(\d+)/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post" >
+            <throttles name="worklog_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="post" >
+            <throttles name="worklog_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put" >
+            <throttles name="worklog_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put" >
+            <throttles name="worklog_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete" >
+            <throttles name="worklog_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete" >
+            <throttles name="worklog_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(_?)get_time_spent" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_get_time_spent" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(_?)get_time_spent" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_get_time_spent" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)/(_?)get_time_spent" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_get_time_spent" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)get_time_spent" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_get_time_spent" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_time_spent_temp" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put" >
+            <throttles name="worklog_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="put" >
+            <throttles name="worklog_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="worklog_base" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete" >
+            <throttles name="worklog_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="delete" >
+            <throttles name="worklog_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)/template/(\d+)" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/template/(\d+)" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done."/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/owner/(\d+)/images/(\d+)" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done."/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(owner|type|template)" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+        	<throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(owner|type|template)" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)/(owner|type)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/(owner|type)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/template/(\d+)" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/template/(\d+)" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_allowed_val" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/template/(\d+)/images/(\d+)" user_type="all" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/template/(\d+)/images/(\d+)" user_type="all" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)/(\d+)"  description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+             <throttles name="worklog_udf_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)/(\d+)"  description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+             <throttles name="worklog_udf_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_udf_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_udf_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_udf_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/((udf_pick_[a-z0-9_]+)|(udf_multiselect_[a-z0-9_]+))"  description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_udf_field" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_links_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_links_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/_links" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="worklog_links_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(_?)metainfo" roles="" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="worklog_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)/(_?)metainfo" method="get" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="worklog_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(_?)metainfo" method="get" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="worklog_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)metainfo" method="get" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="worklog_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" type="JSONObject" template="worklog_metainfo_template"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(_?)summary" method="get" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="worklog_summary" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(_?)summary" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get">
+            <throttles name="worklog_summary" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <url method="post" path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+
+        <url method="post" path="/api/v3/problems/(\d+)/worklogs/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="post" path="/api/v3/problems/(\d+)/worklogs/(\d+)/images" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="media" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/worklogs/(\d+)/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="500" duration="1m"/>
+            </throttles>
+            <param regex="[a-z0-9]+" max-len="500" name="key" secret="true"  allow-empty="false"/>
+        </url>
+        <url method="get" path="/api/v3/problems/(\d+)/worklogs/images/(\d+)" roles="" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)/(_?)upload/(udf_attach_[a-z0-9_]+)" method="post" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="description" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/(\d+)/worklogs/(\d+)(/udf_fields)?/(udf_attach_[a-z0-9_]+)/(\d+)/_download" method="get" description="No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done.">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem Task,WorkLog URLs End -->
+
+    <!-- Problem FIELDS ATTACHMENT URLS Start -->
+    <urls authentication="required" api="true">
+        <url path="/api/v3/problems/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/impact_details/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/root_cause/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/symptoms/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/attachments/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="impact_att_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/attachments/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="root_cause_att_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/attachments/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="prob_att_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/attachments/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="symptoms_att_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/attachments/(\d+)" roles="ModifyProblems" method="delete">
+            <throttles name="impact_att_id_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/attachments/(\d+)" roles="ModifyProblems" method="delete">
+            <throttles name="root_cause_att_id_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/attachments/(\d+)" roles="ModifyProblems" method="delete">
+            <throttles name="problem_att_id_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/attachments/(\d+)" roles="ModifyProblems" method="delete">
+            <throttles name="symptoms_att_id_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/attachments" roles="ViewProblems" method="get">
+            <throttles name="impact_att_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/attachments" roles="ViewProblems" method="get">
+            <throttles name="root_cause_att_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/attachments" roles="ViewProblems" method="get">
+            <throttles name="problem_att_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/attachments" roles="ViewProblems" method="get">
+            <throttles name="symptoms_att_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/attachments/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/attachments/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/attachments/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/attachments/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/attachments" roles="ModifyProblems" method="delete">
+            <throttles name="impact_att_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/attachments" roles="ModifyProblems" method="delete">
+            <throttles name="root_cause_att_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/attachments" roles="ModifyProblems" method="delete">
+            <throttles name="problem_att_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/attachments" roles="ModifyProblems" method="delete">
+            <throttles name="symptoms_att_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(_?)upload" method="post" roles="ModifyProblems" >
+            <throttles name="imp_att_up" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/(_?)upload" method="post" roles="ModifyProblems" >
+            <throttles name="imp_att_up" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/(_?)upload" method="put" roles="ModifyProblems" >
+            <throttles name="imp_att_up" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(_?)upload" method="post" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/(_?)upload" method="post" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description"  secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/(_?)upload" method="put" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(_?)upload" method="post" roles="CreateProblems,ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(_?)upload" method="post" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(_?)upload" method="put" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(_?)upload" method="post" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/(_?)upload" method="post" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/(_?)upload" method="put" roles="ModifyProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem FIELDS ATTACHMENT URLS Ends-->
+
+    <!-- Problem Impact Detail URLS Starts-->
+    <urls authentication="required" api="true">
+
+        <url path="/api/v3/problems/(\d+)/impact_details" roles="CreateProblems,ModifyProblems" method="post">
+            <throttles name="impact_details_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="impact_details" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)" roles="ModifyProblems" method="put">
+            <throttles name="impact_details_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="impact_details" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="impact_details_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details" roles="ViewProblems" method="get">
+            <throttles name="impact_details_view_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/images/(\d+)" method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+                    <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/images/(\d+)"  method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+                    <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+
+        <url path="/api/v3/problems/(\d+)/impact_details/(\d+)/_links" roles="ViewProblems" method="get">
+            <throttles name="impact_details_id_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/impact_details/_links" roles="ViewProblems" method="get">
+            <throttles name="impact_details_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/impact_details/updated_by" roles="SDAdmin" method="get">
+            <throttles name="impact_details_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!-- Problem Impact Detail URLS Ends-->
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem Impact Detail URLS Ends-->
+
+    <!-- Problem Basic Operation URLS Starts-->
+    <urls authentication="required" api="true">
+
+        <url path="/api/v3/problems/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="problem_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems" roles="ViewProblems" method="get">
+            <throttles name="problem_view_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems" roles="CreateProblems" method="post">
+            <throttles name="problem_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)" roles="ModifyProblems" method="put">
+            <throttles name="problem_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)" roles="DeleteProblems" method="delete">
+            <throttles name="problem_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(_?)close" roles="ModifyProblems" method="put">
+            <throttles name="problem_close" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(_?)pickup" roles="ModifyProblems" method="put">
+            <throttles name="problem_pickup" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problems/(_?)pickup" roles="ModifyProblems" method="put">
+            <throttles name="problem_pickup_bulk" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(_?)assign" roles="ModifyProblems" method="put">
+            <throttles name="problem_assign" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_assign_technician" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(_?)assign" roles="ModifyProblems" method="put">
+            <throttles name="problem_assign_bulk" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_assign_technician" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/images" roles="CreateProblems,ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/images/(\d+)" method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+        <url path="/api/v3/problems/images/(\d+)"  method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+        <url path="/api/v3/problems" roles="ModifyProblems" method="put">
+            <throttles name="problem_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="problem" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="3000" regex="(\d)+(?:(\,)(\d)+){0,249}(\,)?" allow-empty="false" description="SECRET_NOT_REQUIRED: id is not sensitive and needs to be recorded in accesslog"/>
+        </url>
+
+        <url path="/api/v3/problems" roles="DeleteProblems" method="delete">
+            <throttles name="problem_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(reported_by|site|category|subcategory|item|impact|urgency|priority|status|technician|associated_asset|affected_service|group|configuration_items)/(\d+)" roles="ModifyProblems" method="get">
+            <throttles name="problem_id_allowed_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(reported_by|site|category|subcategory|item|impact|urgency|priority|status|associated_asset|affected_service|group|udf_fields|configuration_items|(_?)allowed_values_for_fields|template)" roles="CreateProblems,ModifyProblems" method="get">
+            <throttles name="problem_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- To Support reported_by get count in reported_by popup -->
+        <url path="/api/v3/problems/reported_by/_total_count" roles="CreateProblems,ModifyProblems" method="get">
+            <throttles name="problem_reported_by_count_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/technician" roles="ViewProblems" method="get">
+        <!-- Since Notes mention needed tech allowed values added separately with ViewProblems role -->
+            <throttles name="problem_tech_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/technician/(\d+)/images/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="problem_tech_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(site|category|subcategory|item|impact|urgency|priority|status|technician|associated_asset|affected_service|group|template|configuration_items)" roles="ModifyProblems" method="get">
+            <throttles name="problem_id_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <!-- Notes Mention Listing -->
+        <url path="/api/v3/problems/(\d+)/reported_by" roles="ViewProblems" method="get">
+            <throttles name="problem_id_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(reported_by|site|category|subcategory|item|impact|urgency|priority|status|technician|associated_asset|affected_service|group|configuration_items)/(\d+)" roles="CreateProblems,ModifyProblems" method="get">
+            <throttles name="problem_allowed_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)/(\d+)" roles="ModifyProblems" method="get">
+            <throttles name="problem_id_udf_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems(/udf_fields)?/(udf_pick_[a-z0-9_]+)" roles="CreateProblems,ModifyProblems" method="get">
+            <throttles name="problem_udf_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)(/udf_fields)?/(udf_pick_[a-z0-9_]+)" roles="ModifyProblems" method="get">
+            <throttles name="problem_id_udf_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/_links" roles="ViewProblems" method="get">
+            <throttles name="problem_id_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/_links" roles="ViewProblems" method="get">
+            <throttles name="problem_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/_total_count" roles="ViewProblems" method="get">
+            <throttles name="problem_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="120" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(_?)metainfo" roles="ViewProblems" method="get">
+            <throttles name="problem_metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(_?)metainfo" roles="ViewProblems" method="get">
+            <throttles name="problem_metainfo_id" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/problems/(\d+)/(\d+)/(_?)metainfo" roles="CreateProblems,ModifyProblems" method="get">
+            <throttles name="metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/associated_asset/(_?)metainfo" roles="CreateProblems,ModifyProblems" method="get">
+            <throttles name="metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problems/configuration_items/module" method="get" roles="CreateProblems,ModifyProblems">
+            <throttles name="metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/(_?)history" roles="ViewProblems" method="get">
+            <throttles name="problem_id_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(_?)history" roles="ViewProblems" method="get">
+            <throttles name="problem_history_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/summary" roles="ViewProblems" method="GET">
+            <throttles name="problem_summary_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+        </url>
+        <url path="/api/v3/problems/summary" roles="ViewProblems" method="GET">
+            <throttles name="problem_summary_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"  min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/(_?)solutions" roles="ViewProblems" method="GET">
+            <throttles name="problem_solutions_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem Basic Operation URLS Ends-->
+
+    <!-- Problem Root Cause URLS Starts-->
+    <urls authentication="required" api="true">
+
+        <url path="/api/v3/problems/(\d+)/root_cause" roles="CreateProblems,ModifyProblems" method="post">
+            <throttles name="root_cause_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="root_cause" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)" roles="ModifyProblems" method="put">
+            <throttles name="root_cause_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="root_cause" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="root_cause_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause" roles="ViewProblems" method="get">
+            <throttles name="root_cause_view_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/images/(\d+)" method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/images/(\d+)"  method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+
+        <url path="/api/v3/problems/(\d+)/root_cause/(\d+)/_links" roles="ViewProblems" method="get">metainfo
+            <throttles name="root_cause_id_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/root_cause/_links" roles="ViewProblems" method="get">
+            <throttles name="root_cause_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/root_cause/updated_by" roles="SDAdmin" method="get">
+            <throttles name="root_cause_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!-- Problem Root Cause URLS Ends-->
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem Root Cause URLS Ends-->
+
+    <!-- Problem Symptom URLS Starts-->
+    <urls authentication="required" api="true">
+
+        <url path="/api/v3/problems/(\d+)/symptoms" roles="CreateProblems,ModifyProblems" method="post">
+            <throttles name="symptom_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="symptoms" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)" roles="ModifyProblems" method="put">
+            <throttles name="symptom_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="symptoms" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="symptom_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms" roles="ViewProblems" method="get">
+            <throttles name="symptom_view_all" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="120" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/images/(\d+)" method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/images/(\d+)"  method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" secret="true"  max-len="500" max-occurrences="1" regex="[a-z0-9]+"/>
+        </url>
+
+
+        <url path="/api/v3/problems/(\d+)/symptoms/(\d+)/_links" roles="ViewProblems" method="get">
+            <throttles name="symptom_id_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/symptoms/_links" roles="ViewProblems" method="get">
+            <throttles name="symptom_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+
+        <url path="/api/v3/problems/symptoms/updated_by" roles="SDAdmin" method="get">
+            <throttles name="symptoms_allowed_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!-- Problem Symptom URLS Ends-->
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem Symptom URLS Ends-->
+
+    <!--Problem Notes Operations Starts -->
+    <urls authentication="required" api="true">
+
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/attachments/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="prob_notes_att_id_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/attachments/(\d+)" roles="ViewProblems" method="delete">
+            <throttles name="prob_note_att_id_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/attachments" roles="ViewProblems" method="get">
+            <throttles name="prob_note_att_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/attachments/(\d+)/(_?)download" roles="ViewProblems" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/tasks/attachments/(\d+)/(_?)download"  description="FGR_APPLIED:No role configured for Tasks and Worklogs as they have dynamic-roles. Server-side authorization have been done." method="get" >
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/attachments" roles="ViewProblems" method="delete">
+            <throttles name="prob_note_att_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(_?)upload" method="post" roles="ViewProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/(_?)upload" method="post" roles="ViewProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/(_?)upload" method="put" roles="ViewProblems" >
+            <throttles name="upload" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="description" secret="true" type="String" max-len="250"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes" roles="ViewProblems" method="post">
+            <throttles name="problem_note_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_note" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)" roles="ViewProblems" method="put">
+            <throttles name="problem_note_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_note" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)" roles="ViewProblems" method="delete">
+            <throttles name="problem_note_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="problem_note_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes" roles="ViewProblems" method="get">
+            <throttles name="problem_note_getlist" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes" roles="ViewProblems" method="put">
+            <throttles name="prob_note_bulk_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="problem_note" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes" roles="ViewProblems" method="delete">
+            <throttles name="prob_note_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="60" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/(_?)images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(_?)images" roles="ModifyProblems" method="post">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/(_?)images/(\d+)" method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" max-len="500" max-occurrences="1" regex="[a-z0-9]+" secret="true"/>
+        </url>
+
+        <url path="/api/v3/problems/(\d+)/notes/(_?)images/(\d+)"  method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="key" max-len="500" max-occurrences="1" regex="[a-z0-9]+" secret="true"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/(\d+)/_links" roles="ViewProblems" method="get">
+            <throttles name="prob_note_id_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/_links" roles="ViewProblems" method="get">
+            <throttles name="prob_note_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notes/_total_count" roles="ViewProblems" method="get">
+            <throttles name="prob_note_total_count" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="120" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+    <!--Problem Notes Operations Ends -->
+
+    <!--Problem Association Operations starts -->
+    <urls authentication="required" api="true">
+
+        <url path="/api/v3/problems/(\d+)/associated_arcincidents" roles="ViewProblems" method="get">
+            <throttles name="problem_arcreq_assc_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_change" roles="ModifyProblems" method="post">
+            <throttles name="problem_chg_assc_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_change_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_change" roles="ViewProblems" method="get">
+            <throttles name="problem_chg_assc_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_change" roles="ModifyProblems" method="delete">
+            <throttles name="problem_chg_assc_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="problem_change_association" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_incidents" roles="CreateProblems,ModifyProblems" method="post">
+            <throttles name="problem_req_assc_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_request_association" type="JSONObject|JSONArray" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_incidents" roles="ViewProblems" method="get">
+            <throttles name="problem_req_assc_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_incidents/request/(_?)metainfo" roles="ViewProblems" method="get">
+            <throttles name="problem_req_assc_get_meta" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="request_metainfo_template" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_incidents" roles="ModifyProblems" method="delete">
+            <throttles name="problem_req_assc_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="30" lock-period="5M"/>
+            </throttles>
+            <param name="input_data" template="problem_request_association" type="JSONObject|JSONArray" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_change/change" roles="ViewProblems" method="get">
+            <throttles name="problem_chg_assc_get_filter" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/associated_incidents/request" roles="ViewProblems" method="get">
+            <throttles name="problem_req_assc_get_filter" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <param name="format" regex="json"/>
+
+    </urls>
+    <!--Problem Association Operations ends -->
+
+    <!-- Problem closure_fields/Action operation starts -->
+    <urls authentication="required" api="true">
+
+        <url path="/api/v3/problem_closure_fields" roles="SDAdmin" method="put">
+            <throttles name="problem_closure_rule_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_closure_fields_info" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/problem_closure_fields" roles="SDAdmin" method="get">
+            <throttles name="problem_closure_rule_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_closure_fields/_links" roles="SDAdmin" method="get">
+            <throttles name="problem_closure_rule_links" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="links_input" type="JSONObject" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1000"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/(_?)closure_action" roles="ModifyProblems" method="get">
+            <throttles name="problem_closure_action_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/(_?)closure_action" roles="ModifyProblems" method="put">
+            <throttles name="problem_closure_action_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_closure_action" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem closure_fields/Action operation starts -->
+
+
+    <!-- PRoblem Notification Rules Starts-->
+    <urls authentication="required" api="true">
+        <throttles name="problem_notification_rule" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+
+        <url path="/api/v3/problem_notification_rules/(_?)history" method="get" roles="SDAdmin">
+            <throttles name="history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_notification_rules/(_?)get_records_for_history" method="get" roles="SDAdmin">
+            <throttles name="history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_notification_rules/(_?)get_performed_by_for_history" method="get" roles="SDAdmin">
+            <throttles name="history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_notification_rules/(_?)metainfo" method="get" roles="SDAdmin">
+            <throttles name="history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param allow-invalid="false" name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+
+    <!-- Problem template URLS -->
+    <urls authentication="required" api="true">
+        <url path="/api/v3/problems/template/(\d+)" roles="CreateProblems,ModifyProblems" method="get">
+            <throttles name="temp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/template/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="temp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problems/template/(\d+)/(_?)images/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="temp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem template URLS -->
+
+    <!-- Problem Conversation API starts -->
+    <urls authentication="required" api="true">
+        <url path="/api/v3/problems/(\d+)/(_?)conversations" roles="ViewProblems" method="get">
+            <throttles name="problem_conversation_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="req_conversations" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/(_?)notifications" roles="ViewProblems" method="get">
+            <throttles name="problem_notifications_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="req_conversations" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notifications/(\d+)" roles="ViewProblems" method="get">
+            <throttles name="problem_notification_get_id" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/(_?)notifications" roles="ViewProblems" method="post">
+            <throttles name="problem_notification_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="notification" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/notifications/(\d+)/attachments/(\d+)/download" roles="ViewProblems" method="get">
+            <throttles name="problem_notification_att" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problems/(\d+)/(_?)notifications/(\d+)/(_?)images/(\d+)" method="get" roles="" description="For images Get URL no roles will be configured.">
+            <throttles name="temp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="key" max-len="500" max-occurrences="1" regex="[a-z0-9]+" secret="true"/>
+        </url>
+        <url path="/api/v3/problems/(\d+)/(_?)notifications/(\d+)/(_?)videos/(\d+)" method="get" roles="" description="ROLE_NOT_REQUIRED:For videos Get URL no roles will be configured.">
+            <throttles name="temp_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="key" max-len="500" max-occurrences="1" regex="[a-z0-9]+" secret="true"/>
+        </url>
+
+        <param name="format" regex="json"/>
+    </urls>
+    <!-- Problem Conversation API ends -->
+
+    <!-- Problem Task Template API Starts-->
+    <urls authentication="required" api="true">
+        <throttles name="problem_task_template_operations" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+
+        <url path="/api/v3/problem_task_templates" roles="SDAdmin" method="post">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" min-occurrences="1" template="problem_task_template" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/problem_templates/(\d+)/task_templates/(problem_template|task_template|udf_fields|system_fields|owner|marked_owner|group|marked_group|status|priority|type)" roles="SDAdmin" method="get">
+            <throttles name="prob_task_template_allowed_values" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <!-- Inline Image URLS for Problem Task Template Starts -->
+        <url path="/api/v3/problem_task_templates/(_?)images" roles="SDAdmin" method="post">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/task_templates/images"  >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+            <param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/problem_templates/(\d+)/task_templates/images/(\d+)" >
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images_get" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="30" duration="1m"/>
+            </throttles>
+        </url>
+
+        <url path="/api/v3/problem_task_templates/(\d+)/(_?)images" roles="SDAdmin" method="post">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+
+        <url path="/api/v3/problem_templates/(\d+)/problem_task_templates/(\d+)/(_?)images" roles="SDAdmin" method="post">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <!-- Inline Image URLS for Problem Task Template Ends -->
+
+        <url path="/api/v3/problem_task_templates/(\d+)" roles="SDAdmin" method="get">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_templates/(\d+)/task_templates/(\d+)" roles="SDAdmin" method="get">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_task_templates" roles="SDAdmin" method="get">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_templates/(\d+)/task_templates" roles="SDAdmin" method="get">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_templates/(\d+)/task_templates/(_?)organize" roles="SDAdmin" method="put">
+            <throttles name="task_template_organize" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1000" min-occurrences="1" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/problem_templates/(\d+)/problem_task_templates/(_?)metainfo" roles="SDAdmin" method="get">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_task_templates" roles="SDAdmin" method="put">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" min-occurrences="1" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/problem_task_templates" roles="SDAdmin" method="delete">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1000" min-occurrences="1" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/problem_task_templates/(\d+)" roles="SDAdmin" method="delete" >
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/problem_templates/(\d+)/task_templates/task_template/(_?)metainfo" roles="SDAdmin" method="get"/>
+
+        <url path="/api/v3/problem_templates/(\d+)/task_templates/(\d+)" roles="SDAdmin" method="put">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_task_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/problem_templates/(\d+)/task_templates/(_?)metainfo" roles="SDAdmin" method="get" >
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_templates/(\d+)/(_?)metainfo" roles="SDAdmin" method="get" >
+            <throttles name="metainfo" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/problem_templates/(\d+)/task_templates/task_template" roles="SDAdmin" method="get" >
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/problem_templates/(\d+)/task_template_dependencies" method="post" roles="SDAdmin">
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="problem_task_template_dependency" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false" />
+        </url>
+        <url path="/api/v3/problem_templates/(\d+)/task_template_dependencies/(\d+)" method="delete" roles="SDAdmin"/>
+        <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="60" lock-period="5m"/>
+        </throttles>
+        <url path="/api/v3/problem_templates/(\d+)/task_template_dependencies" roles="CreateProblems,ModifyProblems" method="get" >
+            <throttles name="prob_task_template" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false" />
+        </url>
+
+    </urls>
+    <!-- Problem Task Template API Ends-->
+
+</security>

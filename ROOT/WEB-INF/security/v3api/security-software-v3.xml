@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    
+    <urls api="true" disable-extraparam="true" authentication="required" remote_server="true">
+    <param name-regex="true" max-len="100" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true"/>
+    <param name="format" regex="json"/>
+    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="softwareapi" dynamic-throttle="true" >
+        <throttle lock-period="5m" threshold="80" duration="1m"/>
+    </throttles>
+    <!-- urls starts -->
+
+        
+        <url path="/api/v3/softwares/images/(\d+)" method="get" >
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+			<param name="res" regex="48x48|100x80|450x350" max-occurrences="1"/>
+        </url>
+        <url path="/api/v3/softwares/(\d+)/images/(\d+)" method="get" user_type="all">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true"/>
+			<param name="res" regex="48x48|100x80|450x350" max-occurrences="1"/>
+        </url>
+		<url path="/api/v3/softwares/(\d+)/images" roles="CreateInventoryWS" method="post" >
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+		<url path="/api/v3/softwares/images" roles="CreateInventoryWS" method="post" >
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+		<url path="/api/v3/softwares/(\d+)/images" roles="ModifyInventoryWS" method="put" >
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>        
+
+
+        <!-- SW metering configurations -->
+        <url roles="SDAdmin" path="/api/v3/software_meterings" method="get">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(\d+)" method="get" >
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings" method="post" >
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="software_metering" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings" method="put" >
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="software_metering" name="input_data"/>
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(\d+)" method="put" >
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="software_metering" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/softwares" method="get" >
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="swmeteringapi" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="200" duration="1m"/>
+            </throttles>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(\d+)/softwares" method="get" >
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(\d+)" method="delete" />
+
+        <url roles="SDAdmin" path="/api/v3/software_meterings" method="delete">
+           <param min-occurrences="1" name="ids" regex="ids" max-len="1200" allow-empty="false"/>
+       </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(_?)metainfo" method="get">
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(\d+)/(_?)metainfo" method="get" />
+
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(\d+)/_links" method="get" >
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_meterings/_total_count" method="get" >
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- SW metering configurations end-->
+
+        <!-- SW metering data URLs-->
+        <url roles="ViewInventoryWS" path="/api/v3/software_metering_data" method="get" >
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url roles="ViewInventoryWS" path="/api/v3/software_metering_data/(\d+)" method="get" >
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <!-- SW metering data end-->
+
+
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/upgrade_licenses/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/upgrade_licenses/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/upgrade_licenses">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/upgrade_licenses">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/upgrade_licenses/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/upgrade_licenses/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/upgrade_licenses/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/upgrade_licenses/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/upgrade_licenses/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/upgrade_licenses/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/softwares">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="software" name="input_data"/>
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/softwares/(\d+)" method="put" >
+            <param name="input_data" type="JSONObject" template="software" max-len="-1" min-occurrences="1" />
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/softwares" method="put" >
+            <param name="input_data" type="JSONObject" template="software" max-len="-1" min-occurrences="1" />
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false"/>
+        </url>
+        <url roles="DeleteInventoryWS" path="/api/v3/softwares/(\d+)" method="delete"/>
+        <url roles="DeleteInventoryWS" path="/api/v3/softwares" method="delete">
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/softwares/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/softwares">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware,ConfigureCMDB" path="/api/v3/softwares/_metainfo">
+            <param max-len="-1" type="JSONObject" template="metainfo" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(type|category|manufacturer)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/softwares/_reconcile" method="put" >
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/softwares/_validate_reconcile" method="put" >
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/softwares/(\d+)/_calculate_compliance" method="put" />
+        <url roles="ModifyInventoryWS" path="/api/v3/softwares/_calculate_compliance" method="put" >
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/softwares/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/softwares/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/softwares/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliances_tracking/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliances_tracking">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliances_tracking/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliances_tracking/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliances_tracking/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliance_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliance_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliance_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliance_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_compliance_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>      
+        
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/downgrade_licenses/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/downgrade_licenses/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/downgrade_licenses">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/downgrade_licenses">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/downgrade_licenses/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/downgrade_licenses/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/downgrade_licenses/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/downgrade_licenses/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/downgrade_licenses/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/downgrade_licenses/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_categories/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_categories">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_categories/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_categories/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_categories/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_categories/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/software_categories/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/software_categories/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_installation_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_installation_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_installation_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_installation_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_installation_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDadmin" remote_server="true" path="/api/v3/software_license_options/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_options">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDadmin" remote_server="true" path="/api/v3/software_license_options/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_options/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_options/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDadmin" remote_server="true" path="/api/v3/software_license_statuses/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_statuses">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDadmin" remote_server="true" path="/api/v3/software_license_statuses/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_statuses/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_statuses/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_license_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_license_types/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/software_license_types/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/software_license_types/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_manufacturers/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_manufacturers">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_manufacturers/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_manufacturers/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_manufacturers/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url roles="SDAdmin" path="/api/v3/software_types/(_?)history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/software_types/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url roles="SDAdmin" path="/api/v3/software_types/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url method="get" roles="SDadmin" remote_server="true" path="/api/v3/software_user_access_types/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_user_access_types">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDadmin" remote_server="true" path="/api/v3/software_user_access_types/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_user_access_types/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="SDAdmin" remote_server="true" path="/api/v3/software_user_access_types/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/software_licenses/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/software_licenses">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/software_licenses/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/software_licenses/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" remote_server="true" path="/api/v3/software_licenses/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+
+        <!-- Attachment API changes starts -->
+        <!-- software attachment starts -->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="delete" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments/(\d+)">
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments/(_?)download">
+            <param regex="view" name="mode"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="delete" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="ViewInventoryWS" path="/api/v3/softwares/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="post" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="put" roles="ViewInventoryWS" path="/api/v3/softwares/(\d+)/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/softwares/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <!-- software attachment ends -->
+
+        <!-- software_license attachment starts -->
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url remote_server="false" method="delete" roles="ModifyInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments/(\d+)">
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments/(_?)download">
+            <param regex="view" name="mode"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="delete" roles="ModifyInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url remote_server="false" method="post" roles="ModifyInventoryWS" path="/api/v3/software_licenses/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="post" roles="ModifyInventoryWS" path="/api/v3/software_licenses/(\d+)/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="put" roles="ModifyInventoryWS" path="/api/v3/software_licenses/(\d+)/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/software_licenses/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <!-- software_license attachment ends -->
+        <!-- license_agreement attachment starts-->
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url remote_server="false" method="delete" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments/(\d+)">
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments/(_?)download">
+            <param regex="view" name="mode"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="delete" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments">
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments/(\d+)/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments/_links">
+            <param max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/(\d+)/attachments/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url remote_server="false" method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/license_agreements/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/license_agreements/(\d+)/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="put" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/license_agreements/(\d+)/(_?)upload">
+            <param max-len="250" type="String" name="description"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="upload" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <url remote_server="false" method="get" roles="ViewInventoryWS" path="/api/v3/license_agreements/attachments/(\d+)/(_?)download">
+            <param regex="view" name="mode"/>
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="download" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+        </url>
+        <!-- license_agreement attachment ends -->
+        <!-- Attachment API changes ends -->
+
+
+    </urls>
+
+    <urls api="true" authentication="required" remote_server="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="softwareapi" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+        <!-- Software Suite url starts-->
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites" method="get" >
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites/(\d+)" method="get" >
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites/(type|category|manufacturer)" method="get" >
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url roles="CreateInventoryWS" path="/api/v3/software_suites" method="post" >
+            <param name="input_data" type="JSONObject" template="software_suite" max-len="-1" min-occurrences="1" />
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/software_suites/(\d+)" method="put" >
+            <param name="input_data" type="JSONObject" template="software_suite" max-len="-1" min-occurrences="1" />
+        </url>
+        <url roles="DeleteInventoryWS" path="/api/v3/software_suites/(\d+)" method="delete"/>
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites/(\d+)/_links" method="get" >
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1000" />
+        </url>
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites/_links" method="get" >
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1000" />
+        </url>
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites/_total_count" method="get" >
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites/allowed_values_for_fields" method="get">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url roles="ViewInventoryWS,ViewSoftware" path="/api/v3/software_suites/(\d+)/allowed_values_for_fields" method="get">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" allow-invalid="false"/>
+        </url>
+        <!-- software suite url ends -->
+        <!-- software installation URLs start -->
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_installations">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_installations/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_installations/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_installations/_total_count">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_installations/software">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/software_installations/software/(type|category|manufacturer)">
+            <param max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <!-- software installation URLs end -->
+
+        <!-- service pack starts -->
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/service_packs">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="service_pack" name="input_data"/>
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/service_packs/(\d+)" method="put" >
+            <param name="input_data" type="JSONObject" template="service_pack" max-len="-1" min-occurrences="1" />
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/service_packs" method="put" >
+            <param name="input_data" type="JSONObject" template="service_pack" max-len="-1" min-occurrences="1" />
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false"/>
+        </url>
+        <url roles="DeleteInventoryWS" path="/api/v3/service_packs/(\d+)" method="delete"/>
+        <url roles="DeleteInventoryWS" path="/api/v3/service_packs" method="delete">
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/service_packs/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/service_packs">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- service pack ends -->
+
+        <!-- Mobile Application starts -->
+        <url method="post" roles="CreateInventoryWS" path="/api/v3/mobile_applications">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="mobile_application" name="input_data"/>
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/mobile_applications/(\d+)" method="put" >
+            <param name="input_data" type="JSONObject" template="mobile_application" max-len="-1" min-occurrences="1" />
+        </url>
+        <url roles="ModifyInventoryWS" path="/api/v3/mobile_applications" method="put" >
+            <param name="input_data" type="JSONObject" template="mobile_application" max-len="-1" min-occurrences="1" />
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false"/>
+        </url>
+        <url roles="DeleteInventoryWS" path="/api/v3/mobile_applications/(\d+)" method="delete"/>
+        <url roles="DeleteInventoryWS" path="/api/v3/mobile_applications" method="delete">
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/mobile_applications/(\d+)">
+            <param max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewSoftware" path="/api/v3/mobile_applications">
+            <param max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <!-- Mobile Application ends -->
+        <!-- urls ends -->
+    </urls>
+    <!-- asset sub entity software, service pack, mobile application starts -->
+    <urls authentication="required" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="asset_sub_entities" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <!-- software starts-->
+        <url method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares">
+            <param name="input_data" type="JSONObject" template="software_installation" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="put" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares">
+            <param name="input_data" type="JSONObject" template="software_installation" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(\d+)">
+            <param name="input_data" type="JSONObject" template="software_installation" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares">
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/softwares/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,CreateInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(software|workstation|license)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(\d+)/(software|workstation|license)">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/softwares/(software|workstation|license)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/softwares/software/type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <!-- software ends-->
+
+        <!-- service pack starts -->
+        <url method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs">
+            <param min-occurrences="1" max-len="-1" type="JSONObject" template="service_pack_installation" name="input_data"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs">
+            <param name="input_data" type="JSONObject" template="service_pack_installation" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" allow-empty="false" max-len="1200"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/(\d+)">
+            <param name="input_data" type="JSONObject" template="service_pack_installation" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs">
+            <param name="ids" regex="ids" max-len="1200" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/service_packs/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="CreateInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/_total_count">
+            <param name="input_data" type="JSONObject" template="asset_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/(\d+)/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/service_packs/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1"/>
+        </url>
+        <!-- service pack ends-->
+
+        <!--  mobile application starts -->
+        <url method="post" roles="CreateInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications">
+            <param name="input_data" type="JSONObject" template="installed_mobile_application" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications">
+            <param name="input_data" type="JSONObject" template="installed_mobile_application" max-len="-1" min-occurrences="1"/>
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="put" roles="ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/(\d+)">
+            <param name="input_data" type="JSONObject" template="installed_mobile_application" max-len="-1" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications">
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="DeleteInventoryWS,ModifyInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/(\d+)"/>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3//api/v3/${all_asset_api_plural_name_regex}/applications/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/applications/application">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/application">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/(\d+)/application">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/applications/application/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/application/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/${all_asset_api_plural_name_regex}/(\d+)/applications/(\d+)/application/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <!-- mobile application ends-->
+    </urls>
+    <!-- asset sub entity software, service pack, mobile application starts -->
+
+    <jsontemplates>
+        <jsontemplate name="software_unique">
+            <key name="id" type="long" range=">0" />
+            <key name="name" type="String" max-len="250" description="since it can contain any value we cannot add regex" />
+            <key name="type" template="software_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="manufacturer" template="software_manufacturer_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        
+        <jsontemplate name="software_base">
+            <key name="id" type="long" range=">0" />
+            <key name="name" type="String" max-len="250" description="since it can contain any value we cannot add regex" />
+            <key name="file_version" type="String" max-len="100" secret="true" />
+            <key name="product_name" type="String" max-len="100"/>
+            <key name="product_version" type="String" max-len="50"/>
+            <key name="type" template="software_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="software_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="description" secret="true" type="String" max-len="2000"/>
+            <key name="manufacturer" template="software_manufacturer_unique" type="JSONObject" max-len="-1"/>
+            <key name="cost" type="double" range=">=0" />
+            <key name="images" template="strarray" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="software_image" template="media_array" type="JSONArray" max-len="-1"/>
+            <key array-size="0-100" max-len="-1" type="JSONArray" template="attachment_base" name="attachments"/>
+        </jsontemplate>
+        <jsontemplate name="software">
+            <key name="software" type="JSONObject" template="software_base" max-len="-1"/>
+            <key name="softwares" type="JSONArray" template="software_base" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+
+        <jsontemplate name="software_category_unique">
+            <key name="id" type="long" range=">0" />
+            <key name="name" type="String" max-len="50" description="since it can contain any value we cannot add regex" />
+        </jsontemplate>
+        <!-- software installation starts -->
+        <jsontemplate name="software_license_type_unique">
+            <key name="id" type="long" range=">0" />
+            <key name="license_type" type="String" max-len="100"/>
+            <key name="display_name" type="String" max-len="100"/>
+        </jsontemplate>
+
+        <jsontemplate name="software_installation_base">
+            <key name="id" type="long" range=">0" />
+            <key name="software" template="software_unique" type="JSONObject" max-len="-1"/>
+            <key name="workstation" template="all_asset_template_unique" type="JSONObject" max-len="-1"/>
+            <key name="location" type="String" max-len="250" secret="true" />
+            <key name="file_size" type="String" max-len="20" secret="true" />
+            <key name="version" type="String" max-len="100"/>
+            <key name="installed_on" template="datefield" type="JSONObject" max-len="-1"/>
+            <key name="product_id" secret="true" type="String" max-len="100"/>
+            <key name="product_key" secret="true" type="String" max-len="250"/>
+            <key name="usage" template="software_usage_type" type="JSONObject" max-len="-1"/>
+            <key name="metering_data" template="software_metering_data" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="software_installation">
+            <key name="software_installation" type="JSONObject" template="software_installation_base" max-len="-1"/>
+            <key name="software" template="software_installation_base" type="JSONObject" max-len="-1"/>
+            <key name="softwares" template="software_installation_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <!-- software installation ends -->
+        <!-- software suite starts -->
+        <jsontemplate name="software_suite">
+            <key name="software_suite" type="JSONObject" template="software_suite_base" max-len="-1"/>
+            <key name="software_suites" type="JSONArray" template="software_suite_base" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+        <jsontemplate name="software_suite_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="file_version" type="String" max-len="100"/>
+            <key name="product_name" type="String" max-len="100"/>
+            <key name="product_version" type="String" max-len="50"/>
+            <key name="type" type="JSONObject" template="software_type_unique" max-len="-1"/>
+            <key name="category" type="JSONObject" template="software_category_unique" max-len="-1"/>
+            <key name="description" secret="true" type="String" max-len="3500"/>
+            <key name="manufacturer" type="JSONObject" template="software_manufacturer_unique" max-len="-1"/>
+            <key name="images" template="strarray" type="JSONArray" max-len="-1" array-size="0-100"/>
+            <key name="attachments" type="JSONArray" template="attachment_base" array-size="0-100" max-len="-1" />
+            <key name="cost" type="double" range=">=0" />
+            <key name="rule_value" type="long" range=">=0" />
+            <key name="suite_components" type="JSONArray" template="software_base" array-size="0-100" max-len="-1" />
+        </jsontemplate>
+        <!-- software suite ends -->
+        <jsontemplate name="software_license_unique">
+            <key name="id" type="long" range=">0" />
+            <key name="(?i)(key)" name-regex="true" secret="true" type="String" max-len="250"/>
+            <key name="license_type" template="software_license_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="license_name" type="String" max-len="200" secret="true"/>
+        </jsontemplate>
+        <jsontemplate name="software_manufacturer_unique">
+            <key name="id" type="long" range=">0" />
+            <key name="name" type="String" max-len="150" description="since it can contain any value we cannot add regex"/>
+        </jsontemplate>
+
+        <jsontemplate name="software_type_unique">
+            <key name="id" type="long" range=">0" />
+            <key name="name" type="String" max-len="50" description="since it can contain any value we cannot add regex"/>
+        </jsontemplate>
+
+        <!-- SW Metering starts-->
+        <jsontemplate name="software_metering_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+            <key name="min_run_time" type="long" range="0-9999"/>
+            <key name="max_run_time" type="long" range="0-9999"/>
+            <key name="min_run_count" type="long" range="0-9999"/>
+            <key name="max_run_count" type="long" range="0-9999"/>
+            <key name="operator" regex="AND|OR"/>
+            <key name="softwares" template="software_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <jsontemplate name="software_metering">
+            <key name="software_metering" template="software_metering_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="software_metering_data">
+            <key name="id" type="long" range=">0"/>
+            <key name="start_used_time" type="long" range=">0"/>
+            <key name="last_used" type="long" range=">0"/>
+            <key name="run_count" type="long" range=">0"/>
+            <key name="run_time" type="long" range=">0"/>
+            <key name="user" type="JSONObject" template="computer_user_account_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="software_usage_type">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="50"/>
+        </jsontemplate>
+
+        <!-- SW Metering ends-->
+
+        <!-- Service pack installation starts -->
+        <jsontemplate name="service_pack_base">
+            <key name="id" type="long" range=">0" />
+            <key name="name" type="String" max-len="250" secret="true"/>
+            <key name="description" type="String" max-len="1000" secret="true"/>
+            <key name="is_hotfix" type="boolean" allow-invalid="false" />
+            <key name="auto_modify" type="boolean" allow-invalid="false" />
+            <key name="softwares" template="software_unique" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+
+        <jsontemplate name="service_pack">
+            <key name="service_pack" type="JSONObject" template="service_pack_base" max-len="-1"/>
+            <key name="service_packs" type="JSONArray" template="service_pack_base" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+
+        <jsontemplate name="service_pack_installation_base">
+            <key name="id" type="long" range=">0" />
+            <key name="service_pack" template="service_pack_base" type="JSONObject" max-len="-1"/>
+            <key name="installed_by" type="String" max-len="50" secret="true"/>
+            <key name="installed_on" type="String" max-len="50" description="since it can be long or date format of all formats with any separators we can not add regex" />
+        </jsontemplate>
+
+        <jsontemplate name="service_pack_installation">
+            <key name="service_pack" template="service_pack_installation_base" type="JSONObject" max-len="-1"/>
+            <key name="service_packs" template="service_pack_installation_base" type="JSONArray" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+        <!-- Service pack installation ends -->
+
+        <!-- Mobile Application starts -->
+        <jsontemplate name="mobile_application_base">
+            <key name="id" type="long" range=">0" allow-invalid="false" />
+            <key name="name" type="String" max-len="250" />
+            <key name="app_version" type="String" max-len="50" />
+            <key name="identifier" type="String" max-len="250" secret="true"/>
+            <key name="bundle_size" type="JSONObject" template="memoryfield" max-len="200" />
+            <key name="mobile_os_type" type="JSONObject" template="mobile_os_type_unique" max-len="350" />
+        </jsontemplate>
+        <jsontemplate name="mobile_application">
+            <key name="mobile_application" type="JSONObject" template="mobile_application_base" max-len="-1" />
+            <key name="mobile_applications" type="JSONArray" array-size="0-100" template="mobile_application_base" max-len="-1" />
+        </jsontemplate>
+
+        <jsontemplate name="installed_mobile_application_base">
+            <key name="id" type="long" range=">0" allow-invalid="false" />
+            <key name="application" type="JSONObject" template="mobile_application_base" max-len="-1" />
+            <key name="dynamic_size" type="JSONObject" template="memoryfield" max-len="200"/>
+        </jsontemplate>
+        <jsontemplate name="installed_mobile_application">
+            <key name="application" type="JSONObject" template="installed_mobile_application_base" max-len="-1" />
+            <key name="applications" type="JSONArray" array-size="0-100" template="installed_mobile_application_base" max-len="-1" />
+        </jsontemplate>
+        <!-- Mobile Application ends -->
+
+    </jsontemplates>
+</security>

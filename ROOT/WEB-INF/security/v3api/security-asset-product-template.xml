@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <jsontemplates>
+        <jsontemplate name="product_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="all_product_type" template="asset_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_type" template="asset_type_unique" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="product_base">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="150"/>
+            <key name="manufacturer" type="String" max-len="100" secret="true"/>
+            <key name="type" template="asset_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="all_product_type" template="asset_module_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_type" template="product_type_unique" type="JSONObject" max-len="-1"/>
+            <key name="category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="part_no" type="String" max-len="100" secret="true"/>
+            <key name="description" secret="true" max-len="-1" xss="sdpantisamyfilter"/>
+            <key name="cost" type="double" range=">=0.0" allow-invalid="false"/>
+            <key name="product_icon" template="prod_icon" type="JSONArray" max-len="-1" array-size="0-5" />
+            <key name="software" template="software_unique" type="JSONObject" max-len="-1"/>
+            <key name="depreciation_detail" template="asset_depreciation_detail_unique" type="JSONObject" max-len="-1"/>
+            <key name="computer_group" template="computer_group_unique" type="JSONObject" max-len="-1"/>
+            <key name="images" template="image_template" type="JSONObject" max-len="-1"/>
+            <key name="asset_category" template="asset_category_unique" type="JSONObject" max-len="-1"/>
+            <key name="asset_type" template="asset_type_unique" type="JSONObject" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="product_image_array">
+            <key index="0-5" regex="\/inline\/(product|Product)\/[0-9]+\/[a-zA-Z0-9_]+\.(?i)(png|jpg|jpeg|gif)+(?-i)|\/custom\/[0-9]+\/(product|Product)\/[0-9]+\/[a-zA-Z0-9_]+\.(?i)(png|jpg|jpeg|gif)+(?-i)" />
+        </jsontemplate>
+        <jsontemplate name="product">
+            <key name="product" template="product_base" type="JSONObject" max-len="-1"/>
+            <key name="products" template="product_base" type="JSONArray" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+        <jsontemplate name="product_vendor_association_unique">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="product_vendor_association_base">
+            <key name="id" type="long" allow-invalid="false"/>
+            <key name="product" template="product_unique" type="JSONObject" max-len="-1"/>
+            <key name="vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="product_price" type="double" range=">=0.0" allow-invalid="false"/>
+            <key name="tax_rate" type="double" range="0-100" allow-invalid="false"/>
+            <key name="warranty_period_years" type="int" range="0-10"/>
+            <key name="warranty_period_months" type="int" range="0-11"/>
+            <key name="maintenance_vendor" template="vendor_unique" type="JSONObject" max-len="-1"/>
+            <key name="comments" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="product_vendor_association">
+            <key name="product_vendor_association" template="product_vendor_association_base" type="JSONObject" max-len="-1"/>
+            <key name="product_vendor_associations" template="product_vendor_association_base" type="JSONArray" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+    </jsontemplates>
+</security>

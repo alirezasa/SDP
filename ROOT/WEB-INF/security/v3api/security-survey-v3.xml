@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <urls api="true" authentication="public">
+<url path="/api/v3/survey_response_mains/_get_survey_questions_for_locale" method="get" url-type="dynamic" user_type="all" >
+<throttles name="srm_survey_question" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="survey_response_config" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_response_mains/_get_configured_translations" method="get" url-type="dynamic"  user_type="all">
+<throttles name="srm_get_translation" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="survey_response_translation" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_response_mains/_fill_survey_response" method="put" url-type="dynamic" user_type="all" >
+<throttles name="srm_fill_response" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="survey_response_main" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+</urls>
+    <urls api="true" authentication="required">
+<url path="/api/v3/survey_response_mains" roles="SDAdmin" method="GET">
+    <param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+    <throttles name="sr_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+        <throttle duration="1m" threshold="30" lock-period="5m"/>
+    </throttles>
+</url>
+<url path="/api/v3/survey_response_mains/(\d+)" method="PUT" description="role cannot be defined since it is used in non login page">
+<param name="input_data" template="survey_response_main" type="JSONObject" max-len="-1" min-occurrences="1"/>
+<throttles name="sr_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_response_mains" roles="SDAdmin" method="POST">
+<param name="input_data" template="survey_response_main" type="JSONObject" max-len="-1" min-occurrences="1"/>
+<throttles name="sr_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+ <url path="/api/v3/survey_response_mains" roles="SDAdmin" method="delete" operation-type="DELETE">
+        <param name="ids" max-len="250" min-occurrences="1" regex="ids"/>
+        <throttles name="srbulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </url>
+        <!-- Survey response related urls ends -->
+        <!-- survey API related urls starts-->
+<url path="/api/v3/survey_mains" roles="SDAdmin" method="post"  url-type="dynamic"  >
+<throttles name="sm_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_main" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains/(\d+)" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_main" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sm_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="60" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+</url>
+<url path="/api/v3/survey_mains" roles="SDAdmin" method="delete" url-type="dynamic"  >
+<throttles name="sm_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="ids" max-len="3000" regex="ids" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains/(\d+)" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sm_get1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_mains/(\d+)/_initiate_survey" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_initiate" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_mains/(\d+)/_stop_survey" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_stop" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_mains/(\d+)/_delete_survey" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_disable" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_mains/_reorder_survey" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_reorder" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="survey_reorder" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains/_get_report_chart" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sm_report_chart" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="report_config" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains/_get_response_list" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sm_report_chart" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="report_config" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains/_send_survey_for_request" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_send_survey_for_request" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="send_survey" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains/_update_user_capacity" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_update_user_capacity" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="survey_user_capacity" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_mains/(_?)metainfo" roles="SDAdmin" method="get">
+<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_mail_metainfo" dynamic-throttle="true" >
+    <throttle lock-period="5m" threshold="30" duration="1M"/>
+</throttles>
+<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+</url>
+<url path="/api/v3/survey_mains/(\d+)/(_?)history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_main_get_history" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_mains/(_?)get_records_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_main_get_records" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_mains/(_?)get_performed_by_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_main_get_performed" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+<url path="/api/v3/survey_emails" roles="SDAdmin" method="post"  url-type="dynamic"  >
+<throttles name="se_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_email" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_emails/(\d+)" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="se_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_email" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_emails" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="se_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+</url>
+<url path="/api/v3/survey_emails/(\d+)" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="se_get1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_emails/(\d+)" roles="SDAdmin" method="delete" operation-type="DELETE">
+<throttles name="se_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_emails/(\d+)/_toggle_status" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="st_toggle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_emails/_get_available_language" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="st_available_language" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+  <param name="input_data" template="available_language_email" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_translations" roles="SDAdmin" method="post"  url-type="dynamic"  >
+<throttles name="sm_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_translation" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_translations/(\d+)" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="sm_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_translation" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_translations" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sm_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+</url>
+<url path="/api/v3/survey_translations/(\d+)" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sm_get1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_translations/(\d+)" roles="SDAdmin" method="delete" operation-type="DELETE">
+<throttles name="st_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_translations/(\d+)/_toggle_status" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="st_toggle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_translations/_get_available_language" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="st_available_language" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+  <param name="input_data" template="available_language" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_translations/(_?)metainfo" roles="SDAdmin" method="get">
+<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_translation_metainfo" dynamic-throttle="true" >
+    <throttle lock-period="5m" threshold="30" duration="1M"/>
+</throttles>
+<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+</url>
+<url path="/api/v3/survey_translations/(\d+)/(_?)history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_translation_get_history" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_translations/(_?)get_records_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_translation_get_records" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_translations/(_?)get_performed_by_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_translation_get_performed" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+    <url path="/api/v3/survey_translations" roles="SDAdmin" method="delete" url-type="dynamic"  >
+<throttles name="sm_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="60" lock-period="5m"/>
+</throttles>
+<param name="ids" max-len="3000" regex="ids" min-occurrences="1"/>
+</url>
+
+<url path="/api/v3/survey_templates" roles="SDAdmin" method="post"  url-type="dynamic"  >
+<throttles name="stl_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_template" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_templates" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="stl_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+</url>
+<url path="/api/v3/survey_templates" roles="SDAdmin" method="delete" url-type="dynamic"  >
+<throttles name="stl_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="ids" max-len="3000" regex="ids" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_templates/(\d+)" roles="SDAdmin" method="delete" url-type="dynamic"  >
+<throttles name="stl_delete1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_templates/(\d+)" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="stl_get1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_exclusions/_get_exclusion_details" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="se_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_exclusions/_update_exclusion_details" roles="SDAdmin" method="put" url-type="dynamic"  >
+<throttles name="se_put" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+ <param name="input_data" template="survey_exclusion" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+
+    <!--survey exlusions related urls for admin audit history starts -->
+    <url path="/api/v3/survey_exclusions/(_?)history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_exclusion_get_history" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+        <url path="/api/v3/survey_exclusions/(_?)metainfo" roles="SDAdmin" method="get">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_exclusion_metainfo" dynamic-throttle="true">
+                <throttle lock-period="5m" threshold="30" duration="1M"/>
+            </throttles>
+            <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+
+    <url path="/api/v3/survey_exclusions/(_?)get_records_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_exclusion_get_records" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_exclusions/(_?)get_performed_by_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_exclusion_get_performed" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+    <!--survey exclusion related urls for admin audit history ends -->
+    <!--survey email related urls for admin audit history starts -->
+    <url path="/api/v3/survey_emails/(_?)history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_email_get_history" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_emails/(_?)get_records_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_email_get_records" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_emails/(_?)get_performed_by_for_history" method="get" roles="SDAdmin">
+        <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_email_get_performed" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+    </url>
+
+    <url path="/api/v3/survey_emails/(_?)metainfo" roles="SDAdmin" method="get">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_email_metainfo" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="30" duration="1M"/>
+        </throttles>
+        <param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+    </url>
+
+    <!--survey email related urls for admin audit history ends -->
+
+    <!--survey comments related urls starts-->
+    <url path="/api/v3/survey_comments" roles="SDAdmin" method="post"  url-type="dynamic"  >
+<throttles name="sc_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="survey_comment" type="JSONObject" max-len="-1" min-occurrences="1"/>
+</url>
+<url path="/api/v3/survey_comments" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sc_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+</url>
+<url path="/api/v3/survey_comments/(\d+)" roles="SDAdmin" method="get" url-type="dynamic"  >
+<throttles name="sx_get1" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_comments/(\d+)" roles="SDAdmin" method="delete" operation-type="DELETE">
+<throttles name="sc_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+    <throttle duration="1m" threshold="30" lock-period="5m"/>
+</throttles>
+</url>
+<url path="/api/v3/survey_comments/(_?)metainfo" roles="SDAdmin" method="get">
+<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="survey_comments_metainfo" dynamic-throttle="true" >
+    <throttle lock-period="5m" threshold="30" duration="1M"/>
+</throttles>
+<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+</url>
+
+    <!-- survey comments related urls ends-->
+
+        <param name-regex="true" max-len="100" type="String" name="TECHNICIAN_KEY|AUTHTOKEN" secret="true" max-occurrences="1"/>
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="survey_main">
+            <key name="survey_main" template="survey_main_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_comment">
+            <key name="survey_comment" template="survey_comment_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+         <jsontemplate name="survey_exclusion">
+            <key name="update_exclusion_details" template="survey_exclusion_main" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_question">
+            <key name="survey_question" template="survey_question_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_rating">
+            <key name="survey_rating" template="survey_rating_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_radio">
+            <key name="survey_radio" template="survey_radio_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_email">
+            <key name="survey_email" template="survey_email_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_response_main">
+            <key name="survey_response_main" template="survey_response_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_response_answer">
+            <key name="survey_response_answer" template="survey_answer_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_translation">
+            <key name="survey_translation" template="survey_translation_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+         <jsontemplate name="survey_template">
+            <key name="survey_template" template="survey_template_template" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="report_config">
+            <key name="report_config" template="report_chart" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+         <jsontemplate name="survey_response_config">
+            <key name="survey_response_config" template="survey_response_config_main" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_response_translation">
+            <key name="survey_response_translation" template="survey_response_translation_main" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+         <jsontemplate name="send_survey">
+            <key name="send_survey" template="send_survey_main" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+         <jsontemplate name="survey_user_capacity">
+            <key name="limit" type="long" range="1-2147483647" min-occurrences="1" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="survey_main_template">
+            <key name="survey_name" type="String" max-len="250" min-occurrences="1"/>
+            <key name="description" type="String" max-len="500" secret="true"/>
+            <key name="module" regex="general|request|problem|change|solution" min-occurrences="1"/>
+            <key name="start_time" type="long" />
+            <key name="end_time" type="long" />
+            <key name="loop_interval" type="long" allow-invalid="false"/>
+            <key name="survey_mode" regex="1|2|3|4" /><!-- 1:everyrequest 2:every number of requests, 3:every user number request 4: every technician number request -->
+            <key name="survey_question" type="JSONArray" template="survey_question_template" max-len="-1"/>
+            <key name="is_comments_required" type="boolean"/>
+            <key name="is_comments_mandatory" type="boolean" />
+            <key name="status_id" regex="1|2|3|4" min-occurrences="1"/><!-- 1:runnning , 2:stopped , 3:deleted , 4:saved -->
+            <key name="type_id" regex="1|2|3|4" min-occurrences="1"/><!-- 1:incident 2:service 3:incident/service 4:periodic -->
+           <key name="criteria" type="JSONArray" max-len="-1" template="search_criteria"/>
+           <key name="criteria_general" type="JSONArray" max-len="-1" template="survey_criteria_template"/>
+           <key name="pct_user" type="int" range="1-100" allow-invalid="false"/>
+        </jsontemplate>
+        <jsontemplate name="survey_criteria_template">
+			<key index="0-99" type="JSONObject" template="criteriaItem_template" max-len="-1" />
+        </jsontemplate>
+        <jsontemplate name="criteriaItem_template">
+            <key name="user_group" type="long" />
+        </jsontemplate>
+        <jsontemplate name="survey_question_template">
+            <key name="ques_id" type="long"/>
+            <key name="ques_text" type="String" max-len="500" />
+            <key name="answer" type="boolean"/>
+            <key name="ques_type" regex="starRating|Rating|binaryValue|Radio"/>
+            <key name="is_mandatory" type="boolean" />
+            <key name="question_order" type="String"/>
+            <key name="is_comments_required" type="boolean"/>
+            <key name="is_comments_mandatory" type="boolean"/>
+            <key name="survey_rating" type="JSONObject" template="survey_rating_template" max-len="-1"/>
+            <key name="survey_radio" type="JSONArray" template="survey_radio_template" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_rating_template">
+            <key name="rating_id" type="long"/>
+            <key name="max_val" type="long" min-occurrences="1"/>
+            <key name="least_val" type="long" min-occurrences="1"/>
+            <key name="least_label" type="String" max-len="100"/>
+            <key name="mid_label" type="String" max-len="100" />
+            <key name="max_label" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="survey_radio_template">
+            <key name="option_id" type="long"/>
+            <key name="option_text" type="String" max-len="500" min-occurrences="1"/>
+            <key name="multiplier" type="int" min-occurrences="1"/>
+            <key name="order" type="int"/>
+        </jsontemplate>
+        <jsontemplate name="survey_email_template">
+            <key name="language_id" type="long"/>
+            <key name="type_id" type="long"/>
+            <key name="status_id" type="long"/>
+            <key name="title" type="String" max-len="250" min-occurrences="1"/>
+            <key name="description"  xss="sdpantisamyfilter" max-len="-1" secret="true" min-occurrences="1"/>
+            <key name="success_message" type="String" max-len="250" min-occurrences="1"/>
+            <key name="thanks_message" type="String" max-len="250" min-occurrences="1"/>
+            <key name="failure_message" type="String" max-len="250" min-occurrences="1"/>
+            <key name="sender" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="survey_comment_template">
+            <key name="survey" type="JSONObject" template="survey" max-len="-1" min-occurrences="1"/>
+            <key name="comment_text" type="String" max-len="500" min-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_translation_template">
+            <key name="translation_id" type="long"/>
+            <key name="survey" type="JSONObject" template="survey" max-len="-1"/>
+            <key name="language_id" type="long" />
+            <key name="status_id" type="long" />
+            <key name="survey_question_i18n" type="JSONArray" template="survey_question_i18n_template" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_question_i18n_template">
+            <key name="survey_question" type="JSONObject" template="survey_question_template" max-len="-1"/>
+            <key name="ques_text" type="String" max-len="500" min-occurrences="1"/>
+             <key name="survey_rating_i18n" type="JSONObject" template="survey_rating_i18n_template" max-len="-1"/>
+            <key name="survey_radio_i18n" type="JSONArray" template="survey_radio_i18n_template" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_rating_i18n_template">
+            <key name="rating_id" type="long"/>
+            <key name="survey_question" type="JSONObject" template="survey_question_template" max-len="-1"/>
+            <key name="least_label" type="String" max-len="100" />
+            <key name="mid_label" type="String" max-len="100" />
+            <key name="max_label" type="String" max-len="100"/>
+        </jsontemplate>
+        <jsontemplate name="survey_radio_i18n_template">
+            <key name="option_id" type="long"/>
+            <key name="survey_question" type="JSONObject" template="survey_question_template" max-len="-1"/>
+            <key name="option_text" type="String" max-len="500" min-occurrences="1"/>
+        </jsontemplate>
+        <!-- template for survey response -->
+        <jsontemplate name="survey_response_template">
+            <key name="surveyData" type="String"/>
+            <key name="locale" type="String"/>
+            <key name="user" type="JSONObject" template="user_unique" max-len="-1"/>
+            <key name="survey_response_answer" type="JSONArray" template="survey_answer_template" array-size="0-100" max-len="-1"/>
+            <key name="response_comment" type="String" max-len="500" secret="true"/>
+            <key name="response_type" type="long" range=">0"/>
+            <key name="result" type="int"/>
+            <key name="type_id" type="long"/>
+            <key name="survey" type="JSONObject" template="survey" max-len="-1"/>
+            <key name="workorder" type="JSONObject" template="request_base" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="survey_answer_template">
+            <key name="type" type="String" max-len="100"/>
+            <key name="value" type="long" range=">0"/>
+            <key name="question_id" type="long" range=">0"/>
+            <key name="answer" type="String" max-len="500"/>
+            <key name="max_val" type="int" />
+            <key name="comment" type="String" max-len="500"/>
+        </jsontemplate>
+        <jsontemplate name="survey">
+            <key name="survey_id" type="long"/>
+		</jsontemplate>
+        <jsontemplate name="survey_reorder">
+        <key name="survey_order" type="JSONArray" template="id_array" max-len="-1" array-size="0-100"/>
+        </jsontemplate>
+
+        <jsontemplate name="survey_template_template">
+			<key name="survey_name" type="String" max-len="250" min-occurrences="1"/>
+			<key name="description" type="String" max-len="1000" secret="true"/>
+			<key name="query_id" type="long" />
+			<key name="survey_question" type="JSONArray" template="survey_question_template" max-len="-1" min-occurrences="1"/>
+			<key name="type_id" type="long" />
+            <key name="criteria" type="JSONArray" max-len="-1" template="search_criteria"/>
+		</jsontemplate>
+
+          <jsontemplate name="available_language">
+        <key name="survey" type="JSONObject" template="survey" max-len="-1" min-occurrences="1"/>
+        </jsontemplate>
+
+          <jsontemplate name="available_language_email">
+        <key name="type_id" type="long"/>
+        </jsontemplate>
+
+        <jsontemplate name="report_chart">
+         <key name="max_level" type="int"/>
+         <key name="min_level" type="int"/>
+         <key name="start_date" type="String"/>
+         <key name="end_date" type="String"/>
+         <key name="survey_type" type="long"/>
+         <key  name="max" type="int"/>
+         <key name="min" type="int"/>
+         <key name="offset" type="int"/>
+         <key name="limit" type="int"/>
+         <key name="tech_ids" type="JSONArray" template="id_array" max-len="-1"/>
+         <key name="requester_ids" type="JSONArray" template="id_array" max-len="-1"/>
+         <key name="survey_ids" type="JSONArray" template="id_array" max-len="-1"/>
+         <key name="group_ids" type="JSONArray" template="id_array" max-len="-1"/>
+         <key name="has_response" type="boolean"/>
+         <key name="total_responses" type="int"/>
+        </jsontemplate>
+
+        <jsontemplate name="survey_response_config_main">
+        <key name="surveyData" type="String" min-occurrences="1"/>
+        <key name="locale" type="String" min-occurrences="1"/>
+        </jsontemplate>
+
+        <jsontemplate name="survey_response_translation_main">
+        <key name="surveyData" type="String" min-occurrences="1"/>
+        </jsontemplate>
+
+         <jsontemplate name="send_survey_main">
+        <key name="ticket_id" type="long" min-occurrences="1"/>
+        <key name="requester_id" type="long" min-occurrences="1"/>
+        </jsontemplate>
+
+        <jsontemplate name="survey_exclusion_main">
+        <key name="exclude_technician" type="boolean"/>
+        <key name="allow_exception" type="boolean"/>
+        <key name="rule_criteria" type="JSONArray" max-len="-1" template="search_criteria" array-size="0-60"/>
+        </jsontemplate>
+
+    </jsontemplates>
+</security>

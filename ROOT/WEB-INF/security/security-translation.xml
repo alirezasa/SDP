@@ -1,0 +1,88 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+    <!-- Translations -->
+    <urls disable-extraparam="true" authentication="required" rebrand="zmon">
+        <url method="GET" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="translations" roles="SDOrgAdmin,SDAdmin" user_type="all">
+            <param name="language" type="String" max-len="20"/>
+            <param name="contentOnly" type="boolean"/>
+            <param name="PORTALID" type="long"/>
+        </url>
+
+        <url method="GET" path="/ESM.do" operation-param="type" operation-value="translations" roles="SDOrgAdmin" user_type="all">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="translations_esm" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="15" lock-period="5m"/>
+            </throttles>
+        </url>
+
+        <url method="GET" path="/i18n/I18N.jsp" operation-param="mode" operation-value="view" roles="SDOrgAdmin,SDAdmin" user_type="all">
+            <param name="myChanges" type="boolean"/>
+            <param name="language" type="String" max-len="20"/>
+            <param name="startIndex" type="long"/>
+            <param name="contentOnly" type="boolean"/>
+        </url>
+
+        <url method="GET" path="/i18n/I18N.jsp" operation-param="mode" operation-value="search" roles="SDOrgAdmin,SDAdmin" user_type="all">
+            <param name="searchFor" type="String" max-len="5000"/>
+            <param name="language" type="String" max-len="20"/>
+            <param name="contentOnly" type="boolean"/>
+            <param name="_" type="long"/>
+        </url>
+
+        <url method="GET" path="/i18n/I18N.jsp" operation-param="mode" operation-value="findAndReplace" roles="SDOrgAdmin,SDAdmin" user_type="all">
+            <param name="searchFor" type="String" max-len="5000"/>
+            <param name="replaceWith" type="String" max-len="5000"/>
+            <param name="language" type="String" max-len="20"/>
+            <param name="contentOnly" type="boolean"/>
+            <param name="_" type="long"/>
+        </url>
+
+        <url method="POST" path="/servlet/I18nServlet" operation-param="action" operation-value="modify" roles="SDOrgAdmin,SDAdmin" user_type="all" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="translation_modify" dynamic-throttle="true"  >
+                <throttle duration="10s" threshold="10" lock-period="5M"/>
+            </throttles>
+            <param name="key" type="String" max-len="200"/>
+            <param name="value" type="String" max-len="5000"/>
+            <param name="language" type="String" max-len="20"/>
+        </url>
+
+        <url method="POST" path="/servlet/I18nServlet" operation-param="action" operation-value="reset" roles="SDOrgAdmin,SDAdmin" user_type="all" csrf="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="translation_reset" dynamic-throttle="true"  >
+                <throttle duration="10s" threshold="10" lock-period="5M"/>
+            </throttles>
+            <param name="key" type="String" max-len="200"/>
+            <param name="language" type="String" max-len="20"/>
+        </url>
+
+        <url method="POST" path="/servlet/I18nServlet" operation-param="action" operation-value="replace" roles="SDOrgAdmin,SDAdmin" user_type="all" csrf="true">
+            <param name="key" type="String" max-len="200" max-occurrences="1000"/>
+            <param name="searchFor" type="String" max-len="5000"/>
+            <param name="replaceWith" type="String" max-len="5000"/>
+            <param name="language" type="String" max-len="20"/>
+        </url>
+
+        <url path="/api/v3/translations/(_?)history" roles="SDOrgAdmin,SDAdmin" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/translations/(_?)get_records_for_history" roles="SDOrgAdmin,SDAdmin" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/translations/(_?)get_performed_by_for_history" roles="SDOrgAdmin,SDAdmin" method="get" user_type="all">
+            <param allow-invalid="false" name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/common/ViewHistory.jsp" roles="SDOrgAdmin,SDAdmin" operation-param="module" operation-value="translations" user_type="all">
+            <param name="id" type="long" allow-empty="false"/>
+            <param name="key" regex="translations_history"/>
+            <param name="admin_entity|is_date_filter" regex="true|false" name-regex="true"/>
+            <param name="entity_key" type="String" max-len="100"/>
+            <param name="skip_filter_options|skip_operation_names|module_value" type="String" max-len="20" name-regex="true"/>
+            <param name="search_filter" regex="translation"/>
+        </url>
+
+        <!-- Common Throttle for Translations -->
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="translations_common" dynamic-throttle="true" >
+            <throttle duration="1m" threshold="30" lock-period="5m"/>
+        </throttles>
+    </urls>
+
+</security>

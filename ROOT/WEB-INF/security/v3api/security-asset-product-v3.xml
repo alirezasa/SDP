@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls api="true" authentication="required">
+        <throttles name="asset_product" scope="APPSERVER" key="url.path+url.dynamic_key" window="ROLLING" dynamic-throttle="true">
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="post" roles="AddingNewProduct" remote_server="true" path="/api/v3/products">
+            <param name="input_data" type="JSONObject" template="product" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+            <param name="ids" max-len="1200" regex="ids" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/_allowed_values_for_fields">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/all_product_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/(\d+)/all_product_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/software">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/(\d+)/software">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param regex="ids" max-len="1200" name="ids" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/(\d+)/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/products/depreciation_detail/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+            <param max-len="1200" name="ids" regex="ids" />
+        </url>
+        <url method="get" roles="ViewInventoryWS" path="/api/v3/products/(\d+)/depreciation_detail/depreciation_type">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/_get_records_for_history">
+            <throttles name="product_get_records_for_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1m" lock-period="5m" threshold="60" />
+            </throttles>
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" allow-invalid="false" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/_get_performed_by_for_history">
+            <throttles name="product_get_performed_by_for_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+                <throttle duration="1m" lock-period="5m" threshold="60" />
+            </throttles>
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" allow-invalid="false" />
+        </url>
+        <url method="get" roles="ViewInventoryWS,ViewProduct" remote_server="true" path="/api/v3/products/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/products/(\d+)">
+            <param name="input_data" type="JSONObject" template="product" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/products/(\d+)" />
+        <url method="put" roles="SDAdmin" path="/api/v3/products">
+            <param name="input_data" type="JSONObject" template="product" max-len="-1" min-occurrences="1" />
+            <param name="ids" min-occurrences="1" max-len="1200" regex="ids" allow-empty="false" />
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/products">
+            <param name="ids" regex="ids" max-len="1200" allow-empty="false" min-occurrences="1" />
+        </url>
+        <url method="get" path="/api/v3/products/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true" description="SHORT_LIFE_KEY"/>
+            <param name="res" regex="48x48|100x80|450x350" max-occurrences="1"/>
+        </url>
+        <url method="get" path="/api/v3/products/(\d+)/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="key" regex="[a-z0-9]+" max-occurrences="1" max-len="500" secret="true" description="SHORT_LIFE_KEY"/>
+            <param name="res" regex="48x48|100x80|450x350" max-occurrences="1"/>
+        </url>
+        <url path="/api/v3/products/(\d+)/images" roles="SDAdmin" method="post">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param name="input_stream" type="url" content-type-name="image_inline" template="stream_support" max-import-file-size="3000" import-url="true" max-len="-1"/>
+        </url>
+        <url path="/api/v3/products/images" roles="SDAdmin" method="post">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param name="input_stream" type="url" content-type-name="image_inline" template="stream_support" max-import-file-size="3000" import-url="true" max-len="-1"/>
+        </url>
+        <url path="/api/v3/products/(\d+)/images" roles="SDAdmin" method="put">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image" allowed-extensions="gif,png,jpeg,jpg" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+            <param name="input_stream" type="url" content-type-name="image_inline" template="stream_support" max-import-file-size="3000" import-url="true" max-len="-1"/>
+        </url>
+        <url method="get" path="/api/v3/products/_metainfo" roles="ViewInventoryWS,ViewProduct,ConfigureCMDB">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" path="/api/v3/products/(\d+)/_metainfo" roles="ViewInventoryWS,ViewProduct">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1"/>
+        </url>
+        <url method="get" path="/api/v3/products/depreciation_detail/_metainfo" roles="ViewInventoryWS,ViewProduct"/>
+        <url method="get" path="/api/v3/products/(\d+)/depreciation_detail/_metainfo" roles="ViewInventoryWS,ViewProduct"/>
+    </urls>
+</security>

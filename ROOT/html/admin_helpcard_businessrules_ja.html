@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>業務ルール</title>
+</head>
+
+<body>
+    <p>業務ルールを用いることで、インシデント/サービス要求リクエストの様々なアクションを自動化できます。これらのルールは、特定の基準を指定する、基準を設定しない、条件付きのカスタムトリガー等を元に設定できます。</p>
+    <p>このページでは、様々な業務ルールを作成できます。また、業務ルールの管理/最適化のために、ルールグループを作成できます。</p>
+    <p>業務ルールはすべてのサイトで共通になりました。組織のサイト向けに設定された業務ルールは、全てサイト向けでは無くなります。</p>
+    <ul>
+        <li><strong>［ルールを追加］</strong>をクリックします。</li>
+        <li><strong>ルール名、説明</strong>：業務ルールの「ルール名」、「説明」を入力します。</li>
+        <li><strong>アクションを実行</strong>：
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">インシデント/サービス タブ</span></summary>
+                <div class="p15 pt5">
+                    <p>すべてのインシデント/サービス要求が、<strong>［リクエスト作成時］、［完全に削除］、［リクエスト編集時］、［ごみ箱へ移動しました］</strong>になった際に業務ルールを適用します。</p>
+                </div>
+            </details>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">メモ タブ</span></summary>
+                <div class="p15 pt5">
+                    <p>すべてのメモが<strong>［作成時］、［完全に削除］、［編集時］</strong>になった際に業務ルールを適用します。</p>
+                </div>
+            </details>
+            <details class="mt10 mb10 helpdetailstag">
+                <summary><span class="detailsarrow top-1"></span><span class="sb">通知</span></summary>
+                <div class="p15 pt5">
+                    <p>すべての通知が<strong>［技術担当者によって送信］、［完全に削除］、［転送］、［ユーザーによって送信］、［システム通知］</strong>の際に業務ルールを適用します。</p>
+                </div>
+            </details>
+        </li>
+        <li><strong>～の間に実行</strong>：ルールが実行される時間帯を、<strong>「いつでも」</strong>、<strong>「業務時間内」</strong>、<strong>「業務時間外」</strong>から選択します。</li>
+        <li><strong>カスケード実行</strong>：ルールが実行される規則を、<strong>「次のルールを実行」</strong>、<strong>「このグループの残りのルールをスキップ」</strong>、<strong>「全グループにおいて残りのルールをスキップ」</strong>から選択します。</li>
+        <li><strong>条件</strong>：受信したリクエストに対し、特定の条件や、カスタム条件を適用するか、条件を適用しないかどうかを選択します。
+            <ul>
+                <li><strong>基準に基づいて条件を適用する</strong>：ドロップダウンリストから、条件/基準を選択します。</li>
+                <li><strong>カスタム関数を使用して条件を適用する</strong>：既存のカスタム関数か、新規カスタム関数を作成し条件を処理します。</li>
+                <li><strong>条件を適用しない</strong>：受信したすべてのリクエストに対し、このルールが適用されます。</li>
+            </ul>
+        </li>
+        <li><strong>アクション：</strong>基準/条件を定義後、アクションを設定します。
+            <ul>
+                <li><strong>カスタムアクションを実行</strong>：
+                    <details class="mt10 mb10 helpdetailstag">
+                        <summary><span class="detailsarrow top-1"></span><span class="sb">インシデント</span></summary>
+                        <div class="p15 pt5">
+                            <p>インシデントリクエストの場合、［フィールドを更新］、［カスタム関数］、［スクリプトを実行する］、［If-If］、［If-Else］、［条件付きアクション］からアクションを選択できます。</p>
+                        </div>
+                    </details>
+                    <details class="mt10 mb10 helpdetailstag">
+                        <summary><span class="detailsarrow top-1"></span><span class="sb">サービス</span></summary>
+                        <div class="p15 pt5">
+                            <p>サービス要求の場合、［フィールド更新］、［カスタム関数］、［スクリプトを実行する］、［SLAを選択］、［If-If］、［If-Else］、［条件付きアクション］からアクションを選択できます。</p>
+                        </div>
+                    </details>
+                    <details class="mt10 mb10 helpdetailstag">
+                        <summary><span class="detailsarrow top-1"></span><span class="sb">メモ・通知</span></summary>
+                        <div class="p15 pt5">
+                            <p>メモと通知の場合、［フィールド更新］、［カスタム関数］、［スクリプトを実行する］から選択できます。</p>
+                        </div>
+                    </details>
+                </li>
+                <li><strong>プロセスの実行を中止</strong>：プロセスの実行を中止し、プロセスが中止された理由を表示させることができます。</li>
+            </ul>
+        </li>
+    </ul>
+    
+    <p><strong>注意：</strong></p>
+    <p>「アクションを実行」で［編集時］を選択した場合、基準を満たしたときに、いつもアクションを実行するか、初回のみ実行するかを選択できます。</p>
+    <p>同様に、「アクションを実行」で［完全に削除］を選択し、「アクション」で「プロセスの実行を中止」を選択した場合、リクエストが削除された際は、ゴミ箱に一時保存されます。このオプションでは、フィールドの更新はサポートしていません。しかし、ゴミ箱内のリクエストの削除を中止するカスタム関数やスクリプトを設定することができます。</p>
+    <p>カスタムアクションを選択する際、［カスタム関数］と［スクリプトを実行する］は、どちらか片方のみを選択することができます。1つのルールに両方のオプションは選択できません。</p>
+    <p>インシデント/サービス要求で、「If-If」、「If-Else」アクションを選択した場合、「条件付きアクション」は選択出来ません。</p>
+    <p>通知で、「アクションを実行」の「システム通知」は、ServiceDesk Plusにデフォルトで設定されている通知のみが適用されます。</p>
+    <h3 class="sb">一覧ページのアクション</h3>
+    <p>業務ルールの一覧ページから、業務ルールやルールグループの編成、カスケード実行の設定、グループ間のルールの移動ができます。</p>
+    <p>詳しくは<a target="_blank" href="https://servicedeskplus.helpdocsonline.com/configuring-business-rules" rel="noopener noreferrer">こちら</a>をご覧ください。</p>
+    </body>

@@ -1,0 +1,134 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "CMDB",
+      "path": [
+        "/api/v3/{CI Type API Plural name}/{ciid}/assoc_ci_relationships"
+      ],
+      "desc": "This operation helps you add CI relationships between two or more CIs.",
+      "disp_desc": "Add CI Relationships",
+      "operWorkflow": "",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"assoc_ci_relationships\":[{\"destination\":{\"id\":\"3\"},\"udf_fields\":{},\"relationship_type\":{\"id\":\"15\"},\"is_inverse\":false}]}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"303\",\"status\":\"success\"}],\"assoc_ci_relationships\":{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-3\",\"id\":\"4\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"303\",\"association_type\":{\"name\":\"Contains\",\"id\":15}}}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "CMDB",
+      "path": "/api/v3/{CI Type API Plural name}/{ciid}/assoc_ci_relationships",
+      "desc": "This operation fetches the relationship details of a particular CI.",
+      "disp_desc": "Get all relationship of a CI ",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"filter\":{\"name\":\"get_all_association\"}}}",
+        "showattr": "false"
+      },
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"assoc_ci_relationships\":[{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-1\",\"id\":\"2\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"1\",\"association_type\":{\"name\":\"Consists of\",\"id\":8}},{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-2\",\"id\":\"3\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"302\",\"association_type\":{\"name\":\"Contains\",\"id\":15}},{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-3\",\"id\":\"4\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"303\",\"association_type\":{\"name\":\"Contains\",\"id\":15}}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":3}}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "CMDB",
+      "path": "/api/v3/{CI Type API Plural name}/{ciid}/assoc_ci_relationships",
+      "desc": "This operation allows you to search for a specific CI relationship of a CI.",
+      "disp_desc": "Search relationship of a CI",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{\"list_info\":{\"filter\":{\"name\":\"get_all_association\"},\"search_criteria\":{\"field\":\"relationship_type.name\",\"condition\":\"is\",\"value\":\"Author of\"}}}",
+        "showattr": "false"
+      },
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"assoc_ci_relationships\":[{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-1\",\"id\":\"2\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"1\",\"association_type\":{\"name\":\"Author Of\",\"id\":8}},{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-2\",\"id\":\"3\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"302\",\"association_type\":{\"name\":\"Author of\",\"id\":15}},{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-3\",\"id\":\"4\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"303\",\"association_type\":{\"name\":\"Author of\",\"id\":15}}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":3}}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "CMDB",
+      "path": "/api/v3/{CI Type API Plural name}/{ciid}/assoc_ci_relationships/{relationship_id}",
+      "desc": "This operation allows you to get a specific relationship for a CI.",
+      "disp_desc": "Get Specific Relationship for CI",
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"assoc_ci_relationships\":{\"destination\":{\"site\":null,\"inactive\":false,\"module\":{\"id\":\"117\"},\"name\":\"Copy of CI1-2\",\"id\":\"3\",\"entity\":{\"api_plural_name\":\"cmdb\",\"name\":\"cmdb\",\"icon\":{\"id\":\"102\"},\"id\":\"106\",\"display_name\":\"CMDB\",\"display_plural_name\":\"CMDB\",\"category\":{\"id\":\"18\"}},\"status\":null},\"id\":\"301\",\"association_type\":{\"name\":\"Contains\",\"id\":15}}}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "params": [],
+      "isReleased": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "CMDB",
+      "path": "/api/v3/{CI Type API Plural name}/{ciid}/assoc_ci_relationships/{relationship_id}",
+      "desc": "This operation helps you view the relationship between two CIs.",
+      "disp_desc": "Delete a Relationship for a CI",
+      "operWorkflow": "",
+      "output": {
+        "sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+      },
+      "inOP": "true",
+      "isAsset": "true",
+      "params": [],
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "destination",
+      "column": "",
+      "type": "String",
+      "desc": "Name of the CI to which the relationship be added.",
+      "graphView": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "relationship_type",
+      "column": "",
+      "type": "String",
+      "desc": "Type of the CI in relationship.",
+      "graphView": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "is_inverse",
+      "column": "",
+      "type": "String",
+      "desc": "Indicates if the relationship is inverse.",
+      "graphView": "",
+      "inOP": "true",
+      "isAsset": "true",
+      "isReleased": "true"
+    }
+  ],
+  "isReleased": "true"
+}

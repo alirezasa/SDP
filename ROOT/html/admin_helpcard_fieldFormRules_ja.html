@@ -1,0 +1,36 @@
+﻿<br>
+<div>フィールド&フォームルールにより、リクエストフォームで実行するルールを定義します。フィールド & フォームルールは、リクエストフォームがロードされてから送信される前にクライアントサイドで実行されます。サーバーサイドでは実行されません。ルールは無効／有効にでき、無効にしたルールは適用されません。</div>
+<br>
+<div>フィールド & フォームルールでは、次のイベントに対応しています:</div><br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">フォームロード時</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">リクエストフォームをロードしたときに実行します。このイベントで定義したルールは、少なくとも一つ以上の実行するアクションに設定します。アクションは基準をチェックした後に実行され、基準が定義されていない場合は、定義済みのアクションがそのまま実行されます。</p> 
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">フォーム変更時</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">フィールド値を変更したときにルールを実行します。このイベントで定義したルールは、少なくとも一つ以上の実行するアクションに設定します。アクションは基準をチェックした後に実行され、基準が定義されていない場合は、定義済のアクションがそのまま実行されます。</p>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">フォーム送信時</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">リクエストフォームが送信されたときにルールを実行します。このイベントで設定できるのは、スクリプトの実行のみです。このイベントで定義したルールは、有効なスクリプトを含みます。アクションは基準をチェックした後に実行され、基準が定義されていない場合は、定義済のアクションがそのまま実行されます。</p>
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">ユーザーに適用</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">ルールは、依頼者、技術担当者、またはすべてのユーザーに対して適用できます。依頼者だけに適用したルールを技術担当者へ適用することはできません。その逆も同様です。</p> 
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">ルールの実行</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">新規リクエストの作成時、既存リクエストの編集時、またはその両方の操作時にルールを実行できます。</p>
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">他のテンプレートにルールをコピー</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">コピールールを使用すると、一つ以上のルールをテンプレート間でコピーできます。ルールのコピー中にコピー先のテンプレートに該当するフィールドが存在しない場合は、フィールドはコピーされません。同様に基準やアクションをコピーできないルールはコピーされません。</p> 
+<br>
+<p style="margin-top:5pt;margin-bottom: 5pt;font-weight:bold;">リクエストフォームからフィールドを削除</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;">テンプレートからフィールドを削除すると、テンプレートに定義されたルールからそのフィールドを自動で削除します。これらのフィールドを削除した後に、ルールに基準やアクションが残っていない場合、そのルールは削除されます。</p> 
+<br>
+<div>次のアクションは、フィールド&フォームルールでサポートされています:</div>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Show Fields/フィールドを表示する&nbsp;:&nbsp;</b>適用されるリクエストフォームで定義されたフィールドを表示します。</p>
+<p style="margin-top:5pt;margin-bottom: 5pt;"><b>Hide Fields/フィールドを非表示にする&nbsp;:&nbsp;</b>適用されるリクエストフォームで定義されたフィールドを非表示にします。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Enable Fields/フィールドを有効にする&nbsp;:&nbsp;</b>適用されるリクエストフォームで定義されたフィールドを有効にします。ユーザーは、これらのフィールドを編集できます。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Disable Fields/フィールドを無効にする&nbsp;:&nbsp;</b>適用されるリクエストフォームで定義されたフィールドを無効にします。ユーザーは、これらのフィールドを編集できません。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Mandate Fields/フィールドを必須にする&nbsp;:&nbsp;</b>適用されるリクエストフォームで定義されたフィールドを必須入力にします。ユーザーは、これらのフィールドに値を入力しないとフォームを送信できません。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Non-Mandate Fields/フィールドを任意にする&nbsp;:&nbsp;</b>適用されるリクエストフォームで定義されたフィールドを任意入力にします。ユーザーは、これらのフィールドに値を入力しなくてもフォームを送信できます。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Execute Script/スクリプトを実行する&nbsp;:&nbsp;</b>リクエストフォームのスクリプトを実行します。スクリプトは、有効なJavaScriptコードで記述し、その他の記述では実行できません。スクリプトの実行には、デフォルトメソッドとしていくつかのメソッドをサポートしています。例えば、カテゴリーやレベルフィールドを非表示にするために、フィールド配列を引数として次のメソッドを呼び出すことができます。 <code> 例:$CS.hideField(["CATEGORY","LEVEL"]);</code><p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Add Options/オプションを追加する&nbsp;:&nbsp;</b>リクエストフォームのピックアップ／複数選択／チェックボックスフィールドにオプションを追加します。フィールドにアクセスし、後でオプションを選択できます。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Remove Options／オプションを削除する&nbsp;:&nbsp;</b>リクエストフォームのピックアップ／複数選択／チェックボックスフィールドに追加されたオプションを削除します。
+</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Set Fields／フィールドを設定する&nbsp;:&nbsp;</b>リクエストフォームで必要なフィールドの値を設定します。</p>
+<p  style="margin-top:5pt;margin-bottom: 5pt;"><b>Clear Fields／フィールドをクリアする&nbsp;:&nbsp;</b>適用されているリクエストフォームのフィールドをクリアにします。</p>
+</p></p>

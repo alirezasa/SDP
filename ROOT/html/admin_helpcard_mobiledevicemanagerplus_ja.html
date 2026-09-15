@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>Mobile Device Manager Plus連携</title>
+</head>
+
+<body>
+    <p><span class="helpheading"><strong>Mobile Device Manager Plusとの連携</strong></span></p>
+    <p align="right" style="margin-top: 0.5pt; margin-bottom: 0.5pt;" ><strong>連携手順はこちら：</strong><a href="#" data-id="mdm-helpddoc-ja" style="color:blue;text-decoration:underline;" >ヘルプドキュメント</a></p>
+    
+    <p>ServiceDesk PlusとMobile Device Manager Plusを連携することで、ServiceDesk Plusのコンソール画面から直接、モバイルデバイスの保護、および管理をすることができます。Mobile Device Manager PlusはAppの配布、デバイスの管理や制限、メール管理、資産管理などのモバイルデバイス管理のタスクを自動化をすることができます。また、Appやデバイス、サードパーティーのクラウドサービス間の通信を制限することで、モバイルデバイスの安全性を確保することもできます。さらに、モバイルデバイスをなくしてしまった場合に、管理者が位置を特定したり、必要であればデータを削除することが可能です。両製品をインストールした場合は、Mobile Device Manager Plusがインストールされているコンピューターの詳細とポート番号を入力するだけで連携ができます。</p>
+    <p><strong>注意：</strong>対応しているMobile Device Manager Plueはビルドは93370以降になります。</p>
+    <p><strong>入力する必要のある詳細事項について：</strong></p>
+    <p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>サーバー名：</strong><span style="font-weight: bold;">Mobile Device Manager Plus (MDM)がインストールされているサーバー名</span>を入力します。</p>
+    
+    <p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>サーバーポート番号：</strong>MDMサーバーの<span style="font-weight: bold;">ポート番号</span>を入力します。</p>
+    
+    <p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>プロトコル設定：</strong>http/httpsといった<span style="font-weight: bold;">プロトコル設定</span>を選択します。</p>
+    <p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+    <p style="margin-top: 0.5pt; margin-bottom: 0.5pt;"><strong>注意：</strong><strong>MDM</strong>のドロップダウンメニューを表示するには、MDMメニューを有効化します。このオプションは、MDMのビルドが92263以降のみで可能です。MDMオプションをドロップボックスから除外するには、「MDM（モバイルデバイス管理）メニューを有効にする」のチェックを外して、［保存］をクリックし、設定を保存してください。設定の保存に成功すると、ServiceDesk PlusサーバーはMDMサーバーと接続を確立します。その後、詳細な設定がMDMサーバーから取り込まれます。</p>
+    <p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">&nbsp;</p>
+    <p style="margin-top: 0.5pt; margin-bottom: 0.5pt;">Click <span style="font-weight: bold;">［保存］</span>をクリックして設定を保存します。設定の保存に成功すると、ServiceDesk PlusはMDMサーバーと接続を確立します。a connection with the MDM server.</p>
+    <br>
+    <p><span class="helpheading"><strong>その他のME製品と連携する方法（HTTPSモードで動作している場合）</strong></span></p>
+    <ol>
+      <li>下記のリンクから<strong>zip</strong>ファイルをダウンロードし、＜インストールディレクトリ＞\ManageEngine\ServiceDesk配下に解凍してください。</li>
+      <p style="margin-left: 50px;"><strong>Linux用ダウンロードリンク：</strong><a class="wb-bw" href="https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g423n1gp9135o97nfchub1/lincertgeneration.zip" target="_blank">https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g423n1gp9135o97nfchub1/lincertgeneration.zip</a> </p>
+      <p style="margin-left: 50px;"><strong>Windows用ダウンロードリンク：</strong><a class="wb-bw" href="https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g2tdh126s6hmhpvjja2si1/windowscertgeneration.zip" target="_blank">https://uploads.zohocorp.com/Internal_Useruploads/dnd/ServiceDesk_Plus/o_1cb6g2tdh126s6hmhpvjja2si1/windowscertgeneration.zip</a> </p>
+      <li>管理者権限にてコマンドプロンプトを起動し、＜インストールディレクトリ＞\ManageEngine\ServiceDeskに移動して、以下のバッチファイルを実行してください。</li>
+      <p style="margin-left: 50px;"><strong>Linux用コマンド：</strong><br>
+        C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh [サーバー名]:[ポート番号] </p>
+      <p style="margin-left: 50px;"><strong>Windows用コマンド：</strong><br>
+        C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat [サーバー名]:[ポート番号]</p>
+      <li>
+        <p>コマンドを実行すると、<strong>PKIX</strong>の例外を受け取り、その後値の入力を求められます。値「1」を入力し、＜インストールディレクトリ＞\ManageEngine\ServiceDesk配下に<strong>「jssecacerts」</strong>というファイルを生成します。</p>
+      </li>
+      <li>生成されたファイル<strong>「jssecacerts」</strong>を＜インストールディレクトリ＞\ManageEngine\ServiceDesk\jre\lib\security配下にコピーして、SerbiceDesk Plusを再起動してください。</li>
+    </ol>    
+</body>
+
+</html>
+<script nonce="<%=sdpNonce%>">
+  let integ = jQuery(document).off("click.integrations"); //NO I18N
+  integ.on("click.integrations","[data-id='mdm-helpddoc-ja']", function(){
+ 			return appendDID('https://servicedeskplus.helpdocsonline.com/mobile_device_manager_plus_integration',true); //NO I18N
+ 		});
+</script>

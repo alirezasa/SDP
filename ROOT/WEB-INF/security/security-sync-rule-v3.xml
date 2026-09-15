@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" remote_server="false" authentication="required">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="integration_sync_rule" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_device_types">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_device_types/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/integration_device_types">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="integration_device_type" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/integration_device_types/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="integration_device_type" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/integration_device_types">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/integration_device_types/(\d+)"/>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_unknown_device_types">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="integration_sync_rule_list_info" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_unknown_device_types/_metainfo">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="metainfo" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_failures">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="integration_sync_rule_list_info" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_failures/_metainfo">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="metainfo" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_rules">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="integration_sync_rule_list_info" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_rules/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_rules/(destination_module|source_module)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="integration_sync_rule_allowed_values_list_info" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/integration_sync_rules">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="integration_sync_rule" name="input_data"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/integration_sync_rules/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="integration_sync_rule" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids"/>
+        </url>
+        <url method="delete" roles="SDAdmin" path="/api/v3/integration_sync_rules/(\d+)"/>
+        <url method="delete" roles="SDAdmin" path="/api/v3/integration_sync_rules">
+            <param allow-empty="false" regex="ids" max-len="1200" name="ids" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_rules/_metainfo">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="metinfo" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_rules/(\d+)/(_?)metainfo">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/integration_sync_rules/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+        </url>
+        <url path="/api/v3/IntegrationRuleServlet" method="post" roles="SDAdmin" description="During Bulk integration sync, this url will be triggered multiple times. So threshold is setted as 1000.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="integration_sync_rule_servlet" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="1000" duration="1m"/>
+            </throttles>
+            <param name="datafrom" min-occurrences="1" regex="OpManager|AppManager" secret="true"/>
+            <param allow-invalid="false"  min-occurrences="1" max-len="-1" type="JSONObject" template="device_info" name="input_data"/>
+        </url>
+        <url path="/api/v3/IntegrationRelationshipServlet" method="post" roles="ModifyCI" description="During Bulk integration sync, this url will be triggered multiple times. So threshold is setted as 1000.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="integration_relationship_servlet" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="1000" duration="1m"/>
+            </throttles>
+            <param name="datafrom" min-occurrences="1" regex="OpManager|AppManager" secret="true"/>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="integration_relationship" name="input_data"/>
+        </url>
+        <url path="/api/v3/IntegrationRelationshipServlet" method="delete" roles="ModifyCI" description="During Bulk integration sync, this url will be triggered multiple times. So threshold is setted as 1000.">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="integration_relationship_servlet" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="1000" duration="1m"/>
+            </throttles>
+            <param name="datafrom" min-occurrences="1" regex="OpManager|AppManager" secret="true"/>
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="integration_relationship" name="input_data"/>
+        </url>
+        <url method="post" roles="SDAdmin" path="/api/v3/integration_sync_rules/_reorder">
+            <param max-len="-1" type="JSONObject" template="reorder_sync_rule" name="input_data" min-occurrences="1"/>
+        </url>
+        <url path="/common/ViewHistory.jsp" method="get" operation-param="module" operation-value="integration_sync_rules" roles="SDAdmin">
+            <param name="id" type="long" range=">0" />
+            <param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+            <param name="admin_entity" regex="true"/>
+            <param name="key" regex="integration_sync_rules_history"/>
+            <param name="is_new_history" type="boolean" />
+            <param name="search_filter" regex="integration_sync_rule" />
+            <param name="is_date_filter" type="boolean" />
+            <param name="skip_filter_options" type="String"/>
+            <param name="module_value" type="long" range=">0"/>
+        </url>
+
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/integration_sync_rules/_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="integration_sync_rule_history" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/integration_sync_rules/_get_performed_by_for_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="integration_sync_rule_history" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/integration_sync_rules/_get_records_for_history">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="integration_sync_rule_history" name="input_data" min-occurrences="1"/>
+        </url>
+        <url method="get" roles="ConfigureCMDB" path="/api/v3/integration_sync_rules/_get_previous_conf">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="get_previous_conf" name="input_data" min-occurrences="1"/>
+        </url>
+    </urls>
+    <jsontemplates>
+        <jsontemplate name="sync_rule_base">
+            <key allow-invalid="false" type="long" range=">0" name="id"/>
+            <key max-len="-1" type="JSONObject" template="module_unique" name="destination_module"/>
+            <key max-len="-1" type="JSONObject" template="module_unique" name="source_module"/>
+            <key allow-invalid="false" type="boolean" name="delete_linked_instance"/>
+            <key name="sub_module" type="JSONObject" template="module_unique"/>
+            <key allow-invalid="false" array-size="0-10" max-len="-1" type="JSONArray" template="search_criteria" name="condition"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="field_mapping" name="field_mapping"/>
+            <key allow-invalid="false" array-size="0-25" max-len="-1" type="JSONArray" template="field_relationship_base" name="field_relationship"/>
+            <key allow-invalid="false" type="boolean" name="is_enabled"/>
+            <key allow-invalid="false" type="boolean" name="allow_to_create_new_refer_entity"/>
+            <key max-len="5000" type="String" secret="true" name="description"/>
+        </jsontemplate>
+        <jsontemplate name="sync_rule">
+            <key max-len="-1" type="JSONObject" template="sync_rule_base" name="sync_rule"/>
+        </jsontemplate>
+        <jsontemplate name="field_mapping">
+            <key max-len="-1" type="JSONObject" template="field" name="source_field"/>
+            <key max-len="-1" type="JSONObject" template="field" name="destination_field"/>
+        </jsontemplate>
+        <jsontemplate name="field">
+            <key max-len="300" type="String" name="name"/>
+        </jsontemplate>
+        <jsontemplate name="reorder_sync_rule">
+            <key name="reorder" template="reorder_sync_rule_base" type="JSONObject|JSONArray" max-len="-1" array-size="0-100" />
+        </jsontemplate>
+        <jsontemplate name="reorder_sync_rule_base">
+            <key name="source_module" template="module_unique" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <key name="sub_module" template="module_unique" type="JSONObject" max-len="-1"/>
+            <key name="index" type="JSONArray" template="longarray" array-size="0-20" max-len="10000" min-occurrences="1"/>
+        </jsontemplate>
+        <jsontemplate name="field_relationship_base">
+            <key allow-invalid="false" type="long" name="id"/>
+            <key max-len="-1" type="JSONObject" template="module_unique" name="destination_module"/>
+            <key max-len="-1" type="JSONObject" template="field" name="source_field"/>
+            <key max-len="-1" type="JSONObject" template="module_relationship_unique" name="relationship"/>
+            <key allow-invalid="false" type="boolean" name="is_inverse"/>
+            <key max-len="-1" type="JSONObject" template="association_type_unique" name="association_type"/>
+        </jsontemplate>
+        <jsontemplate name="device_info">
+            <key max-len="-1" type="JSONObject" template="device_info_base" name="device_info"/>
+            <key max-len="-1" type="JSONObject" template="meta_info_base" name="meta_info"/>
+            <key max-len="-1" type="JSONObject|JSONArray" template="source_module" name="to_be_deleted"/>
+        </jsontemplate>
+        <jsontemplate name="parent_unique">
+            <key max-len="255" type="String" secret="true" name="name"/>
+            <key max-len="255" type="String" secret="true" name="device_type"/>
+            <key max-len="255" type="JSONObject" template="parent_unique" name="parent"/>
+        </jsontemplate>
+        <jsontemplate name="device_info_base">
+            <key allow-invalid="false" type="String" min-occurrences="1" name="id"/>
+            <key max-len="255" type="String" secret="true" name="name"/>
+            <key allow-invalid="false" type="long" name="ciid"/>
+            <key name-regex="true" name="sline_[a-z0-9_]+" type="String" max-len="250" max-occurrences="200" description="from integration, we can sync maximum 200 field"/>
+            <key name-regex="true" name="mline_[a-z0-9_]+" type="String" max-len="500" max-occurrences="200" description="from integration, we can sync maximum 200 field"/>
+        </jsontemplate>
+        <jsontemplate name="meta_info_base">
+            <key max-len="255" type="String" secret="true" name="name"/>
+            <key max-len="255" type="String" secret="true" name="device_type"/>
+            <key max-len="255" type="JSONObject" template="parent_unique" name="parent"/>
+            <key max-len="-1" type="JSONObject" template="fields_base" name="fields"/>
+        </jsontemplate>
+        <jsontemplate name="fields_base">
+            <key name="name" max-len="800" type="JSONObject" template="field_info_base" />
+            <key name-regex="true" name="sline_[a-z0-9_]+" max-len="800" max-occurrences="200" type="JSONObject" template="field_info_base" />
+            <key name-regex="true" name="mline_[a-z0-9_]+" max-len="800" max-occurrences="200" type="JSONObject" template="field_info_base" />
+        </jsontemplate>
+        <jsontemplate name="field_info_base">
+            <key max-len="255" type="String" secret="true" name="display_name"/>
+            <key name="display_type" regex="Single Line|Multi Line|Pick List|MultiSelect|Decimal|Numeric|Date/Time|Date|Boolean|Percentage|Phone|Html|Url|Email|Color" max-len="30"/>
+            <key name="type" secret="true" regex="boolean|string|double|lookup|date|decimal|long|datetime"/>
+        </jsontemplate>
+        <jsontemplate name="integration_device_type">
+            <key max-len="-1" type="JSONObject" template="integration_device_type_base" name="integration_device_type"/>
+        </jsontemplate>
+        <jsontemplate name="integration_device_type_base">
+            <key allow-invalid="false" type="long" range=">0" name="id"/>
+            <key max-len="255" type="String" secret="true" name="device_type"/>
+            <key max-len="-1" type="JSONObject" template="integration_service_unique" name="service"/>
+            <key max-len="255" type="String" secret="true" name="name"/>
+            <key max-len="50000" type="String" secret="true" name="meta_info"/>
+        </jsontemplate>
+        <jsontemplate name="integration_service_unique">
+            <key allow-invalid="false" type="long" range=">0" name="id"/>
+        </jsontemplate>
+        <jsontemplate name="integration_sync_rule_base">
+            <key allow-invalid="false" type="long" range=">0" name="id"/>
+            <key max-len="-1" type="JSONObject" template="module_unique" name="destination_module"/>
+            <key max-len="-1" type="JSONObject" template="app_integrations_unique" name="service"/>
+            <key max-len="-1" type="JSONObject" template="source_module" name="source_module"/>
+            <key allow-invalid="false" array-size="0-10" max-len="-1" type="JSONArray" template="integration_condition" name="condition"/>
+            <key allow-invalid="false" array-size="0-5" max-len="-1" type="JSONArray" template="identifier_rule" name="identifier_rule"/>
+            <key allow-invalid="false" array-size="0-100" max-len="-1" type="JSONArray" template="field_mapping" name="field_mapping"/>
+            <key allow-invalid="false" type="boolean" name="is_enabled"/>
+            <key allow-invalid="false" type="boolean" name="can_add_refer_entity"/>
+            <key max-len="5000" type="String" secret="true" name="description"/>
+        </jsontemplate>
+        <jsontemplate name="source_module">
+            <key name="id" type="long" range=">0"/>
+        </jsontemplate>
+        <jsontemplate name="integration_sync_rule">
+            <key max-len="-1" type="JSONObject" template="integration_sync_rule_base" name="integration_sync_rule"/>
+        </jsontemplate>
+        <jsontemplate name="identifier_rule">
+            <key name="source_field" type="String" max-len="500" min-occurrences="1" />
+            <key name="destination_field" type="String" max-len="500" min-occurrences="1" />
+            <key name="condition" type="String" max-len="30" min-occurrences="1" />
+            <key name="children" type="JSONArray" template="identifier_rule" max-len="-1" array-size="0-100" />
+            <key name="logical_operator" regex="and|or|AND|OR" />
+        </jsontemplate>
+        <jsontemplate name="integration_condition">
+            <key name="field" type="String" min-occurrences="1" />
+            <key name="condition" type="String" min-occurrences="1" />
+            <key name="value" type="String" max-len="1000" />
+            <key name="values" type="JSONArray" template="strarray" max-len="-1" array-size="0-200" />
+            <key name="logical_operator" regex="and|or|AND|OR" />
+        </jsontemplate>
+        <jsontemplate name="integration_relationship">
+            <key max-len="-1" array-size="0-200" type="JSONObject|JSONArray" template="integration_relationship_base" name="integration_relationship"/>
+        </jsontemplate>
+        <jsontemplate name="integration_relationship_base">
+            <key name="source_device" type="JSONObject" template="string_source_module" min-occurrences="1" />
+            <key name="destination_device" type="JSONObject" template="string_source_module" min-occurrences="1" />
+            <key name="relationship_type" type="JSONObject" template="integration_relationship_unique" min-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="integration_relationship_unique">
+            <key name="name" type="String" max-len="250" min-occurrences="1" />
+            <key name="inverse_name" type="String" max-len="250"/>
+        </jsontemplate>
+        <jsontemplate name="get_previous_conf">
+            <key name="get_previous_conf" type="JSONObject" template="get_previous_conf_base" min-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="get_previous_conf_base">
+            <key name="service" type="JSONObject" template="integration_service_unique" min-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="integration_sync_rule_history">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base"/>
+            <key name="service" type="JSONObject" template="integration_service_unique" max-len="-1" min-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="integration_sync_rule_list_info">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base"/>
+            <key name="service" type="JSONObject" template="integration_service_unique" min-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="integration_sync_rule_allowed_values_list_info">
+            <key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+            <key name="for" type="String" />
+            <key name="template" type="JSONObject" template="IDNameJson" />
+            <key name="include_inactive_value" type="boolean" max-occurrences="1" />
+            <key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+            <key name="service" type="JSONObject" template="integration_service_unique" max-len="-1" min-occurrences="1" />
+        </jsontemplate>
+        <jsontemplate name="string_source_module">
+            <key name="id" type="String"/>
+            <key name="ciid" type="long" range=">0"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>

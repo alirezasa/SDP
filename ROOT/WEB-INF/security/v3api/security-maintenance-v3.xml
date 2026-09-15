@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <urls api="true" authentication="required">
+        <url path="/api/v3/request_maintenances/(\d+)/attachments/(\d+)" roles="CreateRequestMaintenances,ModifyRequestMaintenances" method="delete">
+			<throttles key="url.path+url.dynamic_key" name="request_maintenance_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/request_maintenances/(\d+)/attachments" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_attachments_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/attachments" roles="CreateRequestMaintenances,ModifyRequestMaintenances" method="delete">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_attachments_delete" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="30"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/attachments/(\d+)/(_?)download" roles="ViewRequestMaintenances" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/attachments/(_?)download" roles="ViewRequestMaintenances" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(_?)upload" roles="CreateRequestMaintenances,ModifyRequestMaintenances" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="request_maintenances_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/(_?)upload" roles="CreateRequestMaintenances,ModifyRequestMaintenances" method="post" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="request_maintenances_id_upload_post" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/(_?)upload" roles="CreateRequestMaintenances,ModifyRequestMaintenances" method="put" >
+        	<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="request_maintenances_id_upload_put" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="15" duration="1m" />
+            </throttles>
+        </url>
+        <url path="/api/v3/request_maintenances/attachments/(\d+)/(_?)download" roles="ViewRequestMaintenances" method="get">
+            <throttles name="download" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="10" lock-period="5m"/>
+            </throttles>
+            <param name="mode" regex="view"/>
+        </url>
+        <url path="/api/v3/request_maintenances" roles="CreateRequestMaintenances" method="post">
+			<throttles name="request_maintenance_add" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="request_maintenance" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)" roles="ModifyRequestMaintenances" method="put">
+			<throttles name="request_maintenance_edit" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="request_maintenance" type="JSONObject" max-len="-1" min-occurrences="1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)" roles="DeleteRequestMaintenances" method="delete">
+			<throttles name="request_maintenance_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)" roles="ViewRequestMaintenances" method="get">
+			<throttles name="request_maintenance_get" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="include" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances" roles="ViewRequestMaintenances" method="get">
+			<throttles name="request_maintenance_get_list" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="request_maintenance_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/(_?)enable" roles="ModifyRequestMaintenances" method="put">
+			<throttles name="request_maintenance_enable" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="maintenance_state_template" type="JSONObject" max-len="400" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/(_?)suspend" roles="ModifyRequestMaintenances" method="put">
+            <throttles name="request_maintenance_suspend" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="input_data" template="maintenance_state_template" type="JSONObject" max-len="400" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/(_?)generate_request" roles="CreateRequests,CreateRequestMaintenances,ModifyRequestMaintenances" method="post">
+			<throttles name="request_maintenance_generate_request" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+		</url>
+        <url path="/api/v3/request_maintenances" roles="DeleteRequestMaintenances" method="delete">
+			<throttles name="request_maintenance_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/images" roles="CreateRequestMaintenances,ModifyRequestMaintenances" method="post">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/images" roles="CreateRequestMaintenances,ModifyRequestMaintenances" method="post">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="images" dynamic-throttle="true" >
+                <throttle lock-period="5m" threshold="10" duration="1m"/>
+            </throttles>
+            <file allowed-extensions="gif,png,jpeg,jpg,bmp" content-type-name="image_inline" allow-empty="false" max-size="3000" name="input_image">
+                <filename max-len="100" regex="filename"/>
+            </file>
+			<param max-import-file-size="3000" import-url="true" max-len="-1" type="url" content-type-name="image_inline" template="stream_support" name="input_stream"/>
+        </url>
+		<!--Role not mentioned here as Entity Authorization will be invoked.
+        User can access the image using key independent of role/user_type-->
+        <url path="/api/v3/request_maintenances/(\d+)/images/(\d+)" roles="" method="get">
+            <param regex="[a-z0-9]+" max-len="500" name="key" allow-empty="false" secret="true"/>
+            <throttles name="request_maintenance_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <!--Role not mentioned here as Entity Authorization will be invoked. This url can be accessed only by the user who uploaded-->
+        <url path="/api/v3/request_maintenances/images/(\d+)" roles="" method="get">
+            <throttles name="request_maintenance_media" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="60" lock-period="5m"/>
+            </throttles>
+        </url>
+        <url path="/api/v3/request_maintenances/(impact|status|requester|mode|site|template|service_category|group|technician|priority|level|category|subcategory|item|urgency|request_type|request_template_task_ids|service_sla|editor|department|space|configuration_items|created_by|(assets/module)|(assets/site)|(site/region))" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/assets" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="asset_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>		
+        <url path="/api/v3/request_maintenances/(\d+)/(impact|status|requester|mode|site|template|service_category|group|technician|priority|level|category|subcategory|item|urgency|request_type|assets|request_template_task_ids|service_sla|editor|department|space|configuration_items|created_by)" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances(/udf_fields)?/((udf_multiselect|udf_pick)_[a-z0-9_]+)" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)(/udf_fields)?/((udf_multiselect|udf_pick)_[a-z0-9_]+)" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_udf_allowed_values" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/_links" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/_links" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_links" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="links_input" type="JSONObject" max-len="-1" allow-invalid="false"/>
+            <param name="ids" max-len="1200" regex="(\d)+(?:(\,)(\d)+){0,99}(\,)?" allow-empty="false"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(\d+)/(_?)history" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_history_get" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="list_info" type="JSONObject" max-len="-1"/>
+        </url>
+        <url path="/api/v3/request_maintenances/(_?)metainfo" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+		<url path="/api/v3/request_maintenances/(\d+)/(_?)metainfo" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="metainfo" type="JSONObject" max-len="-1" />
+        </url>
+		<url path="/api/v3/request_maintenances/(impact|status|requester|mode|site|template|service_category|group|technician|priority|level|category|subcategory|item|urgency|request_type|assets|request_template_task_ids|service_sla|editor|department|space|configuration_items|created_by)/(_?)metainfo" roles="ViewRequestMaintenances" method="get">
+            <throttles key="url.path+url.dynamic_key" name="request_maintenance_refer_fields_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+			<param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+		<url path="/api/v3/request_maintenances/(\d+)/template/(\d+)" roles="ViewRequestMaintenances" method="get">
+			<throttles key="url.path+url.dynamic_key" name="request_maintenance_template_metainfo" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+            <param name="input_data" template="allowed_values_list_info" type="JSONObject" max-len="-1" allow-invalid="false"/>
+        </url>
+    </urls>
+	<jsontemplates>
+		<jsontemplate name="maintenance_state_template">
+			<key name="comments" type="String" max-len="250" min-occurrences="0" max-occurrences="1"/>
+        </jsontemplate>
+		<!-- Adding separate list info template for maintenance as per arun suggestion to allow extra params month,year,start_time,end_time,day_show in filter_by jsonobject -->
+		<jsontemplate name="request_maintenance_list_info">
+			<key name="list_info" type="JSONObject" max-len="-1" template="request_maintenance_list_info_base" />
+			<key name="include" type="JSONArray" template="strarray" max-len="-1" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+		</jsontemplate>
+		<jsontemplate name="request_maintenance_list_info_base">
+			<key name="row_count" type="int" range=">0"/>
+			<key name="start_index" type="int" range=">0"/>
+			<key name="sort_field" type="String" />
+			<key name="sort_fields" type="JSONArray" template="sort_fields_json" max-len="-1" array-size="0-3" />
+			<key name="sort_order" regex="asc|desc|A|D" />
+			<key name="filter" type="String" />
+			<key name="filter_by" type="JSONObject" template="request_maintenance_filter" />
+			<key name="search_fields" type="JSONObject" max-len="-1" template="search_field_json" />
+			<key name="search_criteria" type="JSONObject|JSONArray" max-len="-1" template="search_criteria" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+			<key name="group_by" type="JSONArray" array-size="0-100" template="strarray" />
+			<key name="get_total_count" regex="true|false" />
+			<key name="search_fields_condition" regex="or|and" />
+			<key name="gsearch" type="String" max-len="5000" secret="true"/>
+			<key name="end_index" type="int" range=">0"/>
+		</jsontemplate>
+        <jsontemplate name="request_maintenance_filter">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="300"/>
+            <key name="month" regex="month"/>
+            <key name="year" type="int" range="1980-2999"/>
+            <key name="start_time" type="long" range=">0"/>
+            <key name="end_time" type="long" range=">0"/>
+            <key name="day_show" regex="true"/>
+        </jsontemplate>
+		<jsontemplate name="allowed_values_list_info_asset">
+			<key name="list_info" type="JSONObject" max-len="-1" template="list_info_base" />
+			<key name="for" type="String" />
+			<key name="template" type="JSONObject" template="IDNameJson" />
+			<key name="include_inactive_value" type="boolean" max-occurrences="1" />
+			<key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+			<key name="ci_attributes" template="ci_attribute_name_template" type="JSONObject" max-len="-1"/>
+			<key name="include" type="JSONArray" template="strarray" max-len="-1" />
+		</jsontemplate>
+		<jsontemplate name="ci_name_unique">
+            <key name="id" type="long" range=">0"/>
+            <key name="name" type="String" max-len="250"/>
+        </jsontemplate>
+	</jsontemplates>
+</security>

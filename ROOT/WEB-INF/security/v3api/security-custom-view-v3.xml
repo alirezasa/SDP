@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true" description="FGR_APPLIED:Roles are not defined as role check will be done at server side" user_type="all">
+
+        <throttles name="custom_view" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+
+        <url path="/api/v3/custom_views/(_?)metainfo" method="get">
+            <param name="input_data" type="JSONObject" template="custom_view_metainfo"/>
+        </url>
+
+
+        <url path="/api/v3/custom_views"  method="post" >
+            <param name="input_data" template="custom_view" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/custom_views/(\d+)"  method="put" >
+                <param name="input_data" template="custom_view" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/custom_views/(\d+)"  method="delete" />
+
+        <url path="/api/v3/custom_views/(\d+)"  method="get" >
+            <param name="input_data" template="include" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_views"  method="get" >
+            <param name="input_data" template="custom_view_get" type="JSONObject" max-len="-1"/>
+        </url>
+
+        <url path="/api/v3/custom_views/(_?)show_all"  method="get" >
+            <param name="input_data" template="custom_view_get" type="JSONObject" max-len="-1" min-occurrences="1"/>
+        </url>
+
+        <url path="/api/v3/custom_views"  method="put" >
+            <param name="input_data" template="custom_view" type="JSONObject" max-len="-1" min-occurrences="1"/>
+            <param name="ids" max-len="1000" regex="ids"/>
+        </url>
+
+        <url path="/api/v3/custom_views"  method="delete" >
+            <param name="ids" max-len="1000" regex="ids" min-occurrences="1"/>
+        </url>
+        
+        <url path="/api/v3/custom_views/(_?)history" method="get" >
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        
+        <url path="/api/v3/custom_views/(_?)get_records_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+        
+        <url path="/api/v3/custom_views/(_?)get_performed_by_for_history" method="get">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="history_get" name="input_data"/>
+        </url>
+
+        <url path="/api/v3/custom_views/(\d+)/(_?)enable"  method="put" />
+
+        <url path="/api/v3/custom_views/(\d+)/(_?)disable"  method="put" />
+
+    </urls>
+
+    <jsontemplates>
+        <jsontemplate name="custom_view_base">
+            <key name="display_name" type="String" max-len="50" />
+            <key name="name" type="String" max-len="50"/>
+            <key name="module" regex="custom_view_modules"/>
+            <key name="(?i)(description)" name-regex="true" type="String" max-len="250" max-occurrences="1" secret="true"/>
+            <key name="criteria" template="search_criteria" type="JSONObject|JSONArray" max-len="50000" array-size="0-25"  />
+            <key name="range_criteria" template="search_criteria" type="JSONObject|JSONArray" max-len="10000" array-size="0-5"/>
+            <key name="fields_required" type="JSONArray" max-len="-1" array-size="0-100" template="strarray" />
+            <key name="sort_info" type="JSONObject" template="custom_view_sort_info" max-len="200" />
+            <key name="scope" type="int" range="1-3"/>
+            <key name="shared_to" template="shared_to" type="JSONArray" max-len="50000" array-size="0-25"/>
+            <key name="is_custom_view" type="boolean"/>
+            <key name="inactive" type="boolean"/>
+        </jsontemplate>
+
+
+        <jsontemplate name="custom_view_sort_info">
+            <key name="sort_field" regex="api_name"/>
+            <key name="sort_order" regex="asc|desc"/>
+        </jsontemplate>
+        <jsontemplate name="custom_view">
+            <key name="custom_view" template="custom_view_base" type="JSONObject" max-len="-1"/>
+        </jsontemplate>
+        <jsontemplate name="custom_views_show_all_base">
+            <key name="module" regex="custom_view_modules" />
+        </jsontemplate>
+        <jsontemplate name="custom_views_show_all">
+            <key name="show_all" template="custom_views_show_all_base" type="JSONObject" max-len="-1" />
+            <key name="list_info" type="JSONObject" template="list_info_base" />
+        </jsontemplate>
+
+        <jsontemplate name="custom_view_metainfo" disable-extra-key="true">
+            <key name="module" regex="custom_view_modules"/>
+        </jsontemplate>
+        <jsontemplate name="custom_view_get">
+            <key name="show_all" template="custom_views_show_all_base" type="JSONObject" max-len="-1" />
+            <key name="module" regex="custom_view_modules" />
+            <key name="list_info" type="JSONObject" template="list_info_base" max-len="-1" />
+        </jsontemplate>
+
+
+    </jsontemplates>
+
+</security>

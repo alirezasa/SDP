@@ -1,0 +1,116 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls method="get,post" authentication="required">
+		
+		<!-- Disabled for SDP as of now ServiceDeskUtil.IS_TIMESHEET_ENABLED-->
+		<url path="/setup/TimesheetNotifications.jsp" method="get" roles="HelpdeskConfig">
+		    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_Notification_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+        </url>    
+		<url path="/setup/TimesheetNotifications.jsp" method="post" csrf="true" roles="HelpdeskConfig">
+		    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_Notification_POST" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+			<param  max-occurrences="1" name="notifyTimesheetSubmitToApprover" regex="on"/>
+      		<param  max-occurrences="1" name="notifyTimesheetRejectionToTechnician" regex="on"/>
+      		<param  max-occurrences="1" name="notifyTimesheetApprovalToTechnician" regex="on"/>
+      		<param  max-occurrences="1" name="notifyTimesheetRecallToApprover" regex="on"/>
+      		<param  max-occurrences="1" name="SaveNot" regex="Save"/>
+		</url>
+		<url path="/Timesheet.do" method="get" description="ROLE_NOT_REQUIRED : Role check not needed since all the techs can access this URL">
+		    <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Timesheet_GET" dynamic-throttle="true"  >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>
+		</url>
+		<url path="/jsp/OpenInMobileApp.jsp" method="get" description="ROLE_NOT_REQUIRED: Role check not needed since all users can access this URL">
+		   <throttles key="url.path+url.dynamic_key" name="Open_In_MobileApp" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" lock-period="5m" threshold="60"/>
+            </throttles>
+		</url>
+		<url operation-param="forwardTo" operation-value="maps" path="/SetUpWizard.do" roles="SDAdmin" user_type="all" method="get">
+             <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Maps_GET" dynamic-throttle="true"  >
+                 <throttle duration="1m" threshold="30" lock-period="5m"/>
+             </throttles>
+         </url>
+		<url operation-param="forwardTo" operation-value="maps" path="/SetUpWizard.do" roles="SDAdmin" user_type="all" method="post" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="Maps_POST" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<url path="/ESM.do" operation-param="type" operation-value="windowsdomainscan" user_type="all" roles="SDOrgAdmin" method="GET" disable-extraparam="true"><!--Adding SDOrgAdmin role for common feature - bringing windows domain scan to global settings -->
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="ESM_Domaincan_GET" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="mode" regex="edit"/>
+			<param name="id" type="long" regex="[0-9]+"/>
+		</url>
+		
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" method="POST" operation-param="action" operation-value="saveMapsConfiguration" csrf="true">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="SaveMap_GET" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="isEnabled" type="boolean"/>
+			<param name="isGmapsEnabled" type="boolean"/>
+			<param max-len="200" secret="true" name="apikey" type="String"/>
+		</url>
+	</urls>
+	
+	<urls api="true" disable-extraparam="true" authentication="required">
+        <url method="get" roles="SDAdmin" path="/api/v3/timecards/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/timecards">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="put" roles="ApproveTimesheet" path="/api/v3/timecards/(\d+)">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="timecard" name="input_data"/>
+        </url>
+        <url method="put" roles="ApproveTimesheet" path="/api/v3/timecards">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="timecard" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="" path="/api/v3/timesheets/(\d+)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="include" name="input_data"/>
+        </url>
+        <url method="get" roles="" path="/api/v3/timesheets">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+        <url method="post" roles="" path="/api/v3/timesheets">
+            <param allow-invalid="false" min-occurrences="1" max-len="-1" type="JSONObject" template="timesheet" name="input_data"/>
+        </url>
+        <url method="put" roles="" path="/api/v3/timesheets/(\d+)/(_?)reject">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="timesheet_reject_info" name="input_data"/>
+        </url>
+        <url method="put" roles="" path="/api/v3/timesheets/(\d+)/(_?)approve"/>
+        <url method="put" roles="" path="/api/v3/timesheets/(\d+)/(_?)recall"/>
+        <url method="put" roles="" path="/api/v3/timesheets/(\d+)/(_?)submit"/>
+        <url method="put" roles="" path="/api/v3/timesheets/(\d+)/(_?)refresh"/>
+        <url method="get" roles="" path="/api/v3/timesheets/(_?)allowed_values_for_fields">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="" path="/api/v3/timesheets/(status|technician|approver|timecards)">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="allowed_values_list_info" name="input_data"/>
+        </url>
+        <url method="get" roles="" path="/api/v3/timesheets/(\d+)/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="" path="/api/v3/timesheets/_links">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="links_input" name="input_data"/>
+            <param allow-empty="false" regex="ids" max-len="-1" name="ids"/>
+        </url>
+        <url method="get" roles="" path="/api/v3/timesheets/_total_count">
+            <param allow-invalid="false" max-len="-1" type="JSONObject" template="list_info" name="input_data"/>
+        </url>
+	</urls>
+	<jsontemplates>
+		<jsontemplate  name="timesheet_reject_info"  disable-extra-key="true">
+            <key max-len="-1" max-occurrences="1" name="timesheet" template="timesheet_reject_data" type="JSONObject"/>
+        </jsontemplate>
+        <jsontemplate name="timesheet_reject_data"  disable-extra-key="true">
+            <key name="timesheet_reject_comments" max-len="250" xss="sdpantisamyfilter"/>
+        </jsontemplate>
+    </jsontemplates>
+</security>
+<!-- $Id$ -->

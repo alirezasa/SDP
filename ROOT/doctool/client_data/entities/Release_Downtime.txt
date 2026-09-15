@@ -1,0 +1,267 @@
+{
+    "operations": [
+        {
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"downtimes\":[{\"downtime_scheduled_end\":null,\"downtime_type\":null,\"description\":\"downtime1\",\"is_downtime\":false,\"deployment_scheduled_start\":{\"display_value\":\"Jul21,201901:37AM\",\"value\":\"1563653240000\"},\"deployment_scheduled_end\":{\"display_value\":\"Aug1,201903:24PM\",\"value\":\"1564653240000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":null,\"deployment_actual_end\":null,\"id\":\"1\",\"patch_version\":null,\"downtime_actual_end\":null},{\"downtime_scheduled_end\":{\"display_value\":\"Dec 12, 2023 11:00 PM\",\"value\":\"1702428000000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_scheduled_end\":{\"display_value\":\"Dec 11, 2023 11:59 PM\",\"value\":\"1702339140000\"},\"downtime_actual_start\":{\"display_value\":\"Dec 10, 2023 02:15 AM\",\"value\":\"1702176900000\"},\"deployment_actual_start\":{\"display_value\":\"Dec 10, 2023 02:30 AM\",\"value\":\"1702177800000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_actual_end\":{\"display_value\":\"Dec 11, 2023 11:45 PM\",\"value\":\"1702338300000\"},\"id\":\"101\",\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":{\"display_value\":\"Dec 12, 2023 12:30 AM\",\"value\":\"1702341000000\"}}],\"list_info\":{\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"total_count\":2,\"get_total_count\":\"true\",\"row_count\":2}}"
+		},            "path": ["/api/v3/releases/{release_id}/downtimes"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true},\"stage\":\"planning\"}"
+            },
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "View All deployment schedules of a Release",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "To see planning stage deployment schedules, pass stage as planning.\nTo see deployment stage deployment schedules, pass stage as deployment."
+        },
+        {
+              "output": {
+                "sample": "{\"downtime\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":null,\"configuration_items\":[],\"id\":\"1\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+        	  },
+            "path": "/api/v3/releases/{release_id}/downtimes",
+            "input": {
+                "name": "INPUT_DATA",
+        "sample": "{\"downtime\":{\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 08:00 PM\",\"value\":\"1702216800000\"},\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_scheduled_end\":{\"display_value\":\"Dec 11, 2023 11:59 PM\",\"value\":\"1702339140000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 04:00 PM\",\"value\":\"1702202400000\"},\"patch_version\":\"v1.2.3\"}}"
+            },
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add a Deployment schedule to a Release",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to add a deployment schedule to a release."
+        },
+        {
+      "output": {
+        "sample": "{\"downtime\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":null,\"configuration_items\":[],\"id\":\"1164003\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+	  },            "path": ["/api/v3/releases/{release_id}/downtimes/{downtime_id}"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "View A Deployment schedule of a Release",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to view a release deployment schedule."
+        },
+        {
+              "output": {
+                "sample": "{\"downtime\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":null,\"deployment_actual_start\":null,\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":null,\"configuration_items\":[],\"id\":\"1\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":null},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+        	  },
+            "path": ["/api/v3/releases/{release_id}/downtimes/{downtime_id}"],
+            "input": {
+                "name": "INPUT_DATA",
+        "sample": "{\"downtime\":{\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 08:00 PM\",\"value\":\"1702216800000\"},\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 02:00 AM\",\"value\":\"1702176000000\"},\"deployment_scheduled_end\":{\"display_value\":\"Dec 11, 2023 11:59 PM\",\"value\":\"1702339140000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 04:00 PM\",\"value\":\"1702202400000\"},\"patch_version\":\"v1.2.3\"}}"
+            },
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Edit a Deployment Schedule",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to edit a deployment schedule in a release."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/releases/{release_id}/downtimes/{downtime_id}"],
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete a Deployment Schedule",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete a deployment schedule in a release."
+        },
+        {
+      "output": {
+        "sample": "{\"response_status\":[{\"status_code\":2000,\"id\":\"385322\",\"status\":\"success\"}],\"downtimes\":{\"service_to_be_down\":[],\"downtime_scheduled_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"},\"downtime_type\":null,\"description\":\"Routine server maintenance\",\"is_downtime\":true,\"deployment_scheduled_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_actual_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_start\":{\"display_value\":\"Dec 10, 2023 08:10 AM\",\"value\":\"1702176000000\"},\"downtime_scheduled_start\":{\"display_value\":\"Dec 10, 2023 03:30 PM\",\"value\":\"1702202400000\"},\"deployment_actual_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"configuration_items\":[],\"id\":\"385322\",\"deployment_scheduled_end\":{\"display_value\":\"Dec 12, 2023 05:29 AM\",\"value\":\"1702339140000\"},\"patch_version\":\"v1.2.3\",\"downtime_actual_end\":{\"display_value\":\"Dec 10, 2023 07:30 PM\",\"value\":\"1702216800000\"}}}"
+      },            "path": ["/api/v3/releases/{release_id}/downtimes/_copy_scheduled_to_actual?ids={ids}"],
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Copy scheduled times to actual",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "Copies scheduled start and end times of given deployment and downtime schedules to actual start and end times."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "RELEASEDOWNTIMEDETAILS:DTID",
+            "type": "long",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": "The id of downtime."
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "RELEASEDOWNTIMEDETAILS:DESCRIPTION",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "The description of down time.",
+            "graphView": ""
+        },
+        {
+              "name": "deployment_scheduled_start",
+              "type": "Date Object",
+              "desc": "The scheduled start time of deployment schedule.",
+              "graphView": "",
+              "column": "RELEASEDOWNTIMEDETAILS:DEPLOYMENTSCHEDULEDSTARTTIME",
+              "html_type": "",
+              "isReleased": "true",
+              "inOP": "true"
+            },
+            {
+              "name": "deployment_scheduled_end",
+              "type": "Date Object",
+              "desc": "The scheduled end time of deployment schedule",
+              "graphView": "",
+              "column": "RELEASEDOWNTIMEDETAILS:DEPLOYMENTSCHEDULEDENDTIME",
+              "html_type": "",
+              "isReleased": "true",
+              "inOP": "true"
+            },
+        	{
+              "name": "deployment_actual_start",
+              "type": "Date Object",
+              "desc": "The actual start time of deployment schedule.",
+              "graphView": "",
+              "column": "RELEASEDOWNTIMEDETAILS:DEPLOYMENTACTUALSTARTTIME",
+              "html_type": "",
+              "isReleased": "true",
+              "inOP": "true"
+            },
+            {
+              "name": "deployment_actual_end",
+              "type": "Date Object",
+              "desc": "The actual end time of deployment schedule",
+              "graphView": "",
+              "column": "RELEASEDOWNTIMEDETAILS:DEPLOYMENTACTUALENDTIME",
+              "html_type": "",
+              "isReleased": "true",
+              "inOP": "true"
+            },    {
+              "name": "patch_version",
+              "type": "String",
+              "desc": "This field is to define the patch version",
+              "graphView": "",
+              "column": "RELEASEDOWNTIMEDETAILS:PATCH_VERSION",
+              "html_type": "",
+              "isReleased": "true",
+              "inOP": "true"
+            },
+            {
+              "name": "is_downtime",
+              "type": "Boolean",
+              "desc": "Determines if the Deployment schedule involves a downtime.",
+              "graphView": "",
+              "column": "RELEASEDOWNTIMEDETAILS:ISDOWNTIME",
+              "html_type": "",
+              "isReleased": "true",
+              "inOP": "true"
+            },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "downtime_scheduled_start",
+            "column": "RELEASEDOWNTIMEDETAILS:STARTTIME",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "The start of downtime.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "downtime_scheduled_end",
+            "column": "RELEASEDOWNTIMEDETAILS:ENDTIME",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "The end of down time.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "downtime_actual_start",
+            "column": "RELEASEDOWNTIMEDETAILS:ACTUALSTARTTIME",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "Actual Start of downtime",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "downtime_actual_end",
+            "column": "RELEASEDOWNTIMEDETAILS:ACTUALENDTIME",
+            "type": "Date Object",
+            "isReleased": "true",
+            "desc": "Actual end of downtime",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "downtime_type",
+            "column": "RELEASEDOWNTIMEDETAILS:TYPEID",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Downtime type",
+            "graphView": "",
+            "relEntity": {
+                "name": "downtime_types",
+                "type": "referential",
+                "relation": "1to1"
+            }
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "service_to_be_down",
+            "column": "RELEASEDOWNTIMETOSERVICES:SERVICEID",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "Services affected",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "configuration_items",
+            "column": "RELEASEDOWNTIMETOCIS:CIID",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "desc": "CIs affected",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1606479190000
+}

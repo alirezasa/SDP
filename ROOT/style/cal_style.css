@@ -1,0 +1,783 @@
+/*$Id$*/
+
+.calwkp a.active {
+	color: #ff2400;
+	background:none;
+}
+span.listview {
+	width: 74px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	border-right: 1px #E7E4E0 solid;
+	line-height: 16px;
+	margin: 3px 0px 3px 0px;
+	float: left;
+	display: block;
+}
+span.calendarview {
+	width: 94px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	border-left: 1px #BCB7AB solid;
+	line-height: 16px;
+	margin: 3px 0px 3px 0px;
+	float: right;
+	display: block;
+}
+span.currentdate {
+	font-weight: normal;
+	padding-left: 6px;
+}
+#Calendar_smallth {
+	color: #055bab;
+	line-height: 22px;
+}
+#Calendar_small tr td {
+	text-align: center;
+}
+#Calendar_small tr td.oddRow,
+#Calendar_small tr td.evenRow {
+	height:35px;
+}
+#Calendar_small tr td.oddRow {
+	background: #fff;
+	border-bottom: 1px #E8E8E8 solid;
+}
+#Calendar_small tr td.evenRow {
+	background: #F0F0F0;
+	border-bottom: 1px #E8E8E8 solid;
+}
+#Calendar_small tr td.lastrow {
+	border-bottom: none;
+}
+#Calendar_small tr td.offdate {
+	color: #c3c3c3;
+	line-height: 21px;
+}
+#Calendar_small tr td.currdate {
+	border: 2px #008ddd solid;
+	border: 2px var(--link_tab_line_color, #008ddd) solid;
+	height:29px;
+}
+#Calendar_small tr td.holiday {
+	color: #ae2856;
+}
+#Calendar_small tr td.inactive {
+	color:#9A9A9A;
+}
+#Calendar_small tr td.occupied {
+	text-decoration: underline;
+	background: url('/images/cal/cal_small_hbg2.gif') repeat-x;
+}
+ul.calendarlist1 {
+	margin: 0px;
+	padding: 0px;
+}
+ul.calendarlist1 li {
+	list-style: none;
+	border-bottom:1px solid #f3f3f3;
+	padding: 5px;
+}
+ul.calendarlist1 li.last {
+	border-bottom: 1px #ADC2AE solid;
+}
+ul.calendarlist1 li a {
+	line-height: 20px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	vertical-align: middle;
+	padding-left: 4px;
+}
+ul.calendarlist1 li:hover{
+	 color: #008ddd;
+	 color: var(--link_tab_line_color, #008ddd);
+	 background-color: #f3f3f3;
+}
+div#detailstask {
+	border: 1px #ddd solid;
+	background: #f5f5f5;
+}
+div#detailstask span.h1 {
+	color:#5c5c5c;
+	font-weight: bold;
+	line-height: 21px;
+	display: block;
+	font-size: var(--fs-13);
+}
+table.changedetails {
+	margin: 0px;
+	padding: 0px;
+	border-left: 1px #ddd solid;
+	border-right: 1px #ddd solid;
+}
+table.changedetails td {
+	background: url('/images/cal/calendar_gradbg2.gif') repeat-x;
+	line-height: 30px;
+	font-size: var(--fs-12);
+}
+table.changedetails td.first {
+	text-align: center;
+	background: #fffbce;
+	border-bottom: 2px #ffffff solid;
+	border-top: 2px #ffffff solid;
+	line-height: 23px;
+}
+table.changedetails td span {
+	color: #055bab;
+	font-weight: bold;
+	padding-left: 11px;
+}
+table.changedetails td.last table td {
+	background: #ffffff;
+	border-top: 2px #055bab solid;
+	border-bottom: 1px #055bab solid;
+	font-weight: bold;
+	line-height: 40px;
+	height: 37px;
+	padding-top: 8px;
+}
+table.changedetails>td.last table td {
+	background: #ffffff;
+	border-top: 2px #055bab solid;
+	border-bottom: 1px #055bab solid;
+	font-weight: bold;
+	line-height: 40px;
+	vertical-align: middle;
+	padding-top: 0px;
+}
+table.changedetails td.last span {
+	font-weight: bold;
+	color: #000000;
+}
+div#detailstaskspan.h2 {
+	font-weight: bold;
+	line-height: 19px;
+	background: #e2e5e7;
+	border-bottom: 2px #ffffff solid;
+	text-align: center;
+	display: block;
+	border-left: 3px #8DADD6 solid;
+	border-right: 3px #8DADD6 solid;
+}
+ul.tasklist {
+	margin: 0px;
+	padding: 0px;
+	background: #ffffff;
+	margin-bottom: 3px;
+}
+ul.tasklist li {
+	font-size: var(--fs-12);
+	list-style: none;
+	padding:6px 28px;
+	background: url('/images/cal/bullet_greencircle.gif') 5px 12px no-repeat;
+}
+ul.tasklist li.redlist {
+	background: url('/images/cal/bullet_redcircle.gif') 5px 12px no-repeat;
+}
+ul.tasklist li .greenlist {
+	background: url('/images/cal/bullet_greencircle.gif') 5px 5px no-repeat;
+}
+ul.tasklist li.redlistSel {
+	background: url('/images/cal/bullet_redcircle.gif') 5px 12px no-repeat;
+}
+.lastcell {
+	width: 14.2%;
+	border-right: none;
+}
+.datehighlightyellow {
+	width: 100%;
+	height: 86px;
+	border: 3px #2E3092 solid;
+	z-index: 8;
+	position: relative;
+	display: block;
+	float: right;
+}
+div>.datehighlightyellow {
+	width: 92%;
+	height: 77px;
+	background: 3px #2E3092 solid;
+	z-index: 8;
+	position: relative;
+	display: block;
+	float: right;
+}
+.datelist {
+	color: #3466A9;
+	padding-right: 2px;
+	font-weight: normal !important;
+}
+.calendarStrip {
+	display: block;
+	background: transparent;
+	border-color: #c9e2fe;
+	vertical-align: middle;
+	line-height: 12px;
+	position: absolute;
+	overflow: hidden;
+	height: 14px;
+	font-weight: bold;
+	color: #fff;
+}
+/* Issue fix SD-93249 Starts*/
+body.changelistview #ElementMark.calendarStrip{
+    display: none;
+}
+/* Issue fix SD-93249 Ends*/
+.moredata {
+	line-height: 6px;
+	height: 14px;
+	padding-bottom: 3px;
+	position: absolute;
+	font-size: var(--fs-9);
+	border: 0 solid #c9e2fe;
+	border-width: 0px;
+	padding-left: 18px;
+	margin-top: -1px;
+	z-index: 1;
+	overflow: hidden;
+}
+.cal_taskstatus {
+	font-weight: bold;
+	background: #ffffff;
+	width:100%;
+}
+.cal_taskstatus_td2_div {
+	height: 15px;
+	border: 1px #d9d9d9 solid;
+}
+.cal_taskstatus_td2 strong {
+	height: 15px;
+	float: left;
+	background: #B3CD83;
+	display: inline;
+	position: relative;
+	top: -1px;
+}
+div>table.cal_taskstatus {
+	width: 100%;
+}
+table tr>td.cal_taskstatus_td1 {
+	width: 42%;
+}
+#calendarcontainerweek {
+	background: #ffffff url('/images/cal/cal_large_dates_topbgshadow.gif') 0px 26px repeat-x;
+	z-index: 1;
+}
+.headerweek1 {
+	background: #f5f5f5;
+	border-right: 1px #e0e0e0 solid;
+	line-height: 26px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	width: 16.4%;
+	color: #515151;
+}
+td>.headerweek1 {
+	background: #f5f5f5;
+	border-right: 1px #e0e0e0 solid;
+	line-height: 26px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	width: 16.2%;
+	color: #515151;
+}
+.headerweek {
+	background: #f5f5f5;
+	border-right: 1px #e0e0e0 solid;
+	line-height: 26px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	width: 11.9%;
+	color: #515151;
+}
+td>.headerweek {
+	background: #f5f5f5;
+	border-right: 1px #e0e0e0 solid;
+	line-height: 26px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	width: 11.8%;
+	color: #515151;
+}
+.calendarcellweek {
+	border-bottom: 1px #e3ebf2 solid;
+	border-right: 1px #e3ebf2 solid;
+	height: 40px;
+	line-height: 40px;
+	font-size: var(--fs-12);
+	width: 11.9%;
+}
+td>.calendarcellweek {
+	border-bottom: 1px #e3ebf2 solid;
+	border-right: 1px #e3ebf2 solid;
+	height: 40px;
+	line-height: 40px;
+	font-size: var(--fs-12);
+	width: 11.8%;
+}
+.calendarcellweek1 {
+	border-bottom: 1px #e3ebf2 solid;
+	border-right: 1px #e3ebf2 solid;
+	height: 40px;
+	line-height: 40px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	width: 16.4%;
+	overflow: hidden;
+}
+td>.calendarcellweek1 {
+	border-bottom: 1px #e3ebf2 solid;
+	border-right: 1px #e3ebf2 solid;
+	height: 40px;
+	line-height: 40px;
+	font-size: var(--fs-12);
+	font-weight: bold;
+	text-align: center;
+	width: 16.2%;
+}
+.changeLink {
+	display: block;
+	color: #000000;
+	text-decoration: none;
+}
+.changeLink:hover {
+	display: block;
+	color: #000000;
+	text-decoration: none;
+}
+.showColor {
+	border: 1px solid black;
+}
+.TCb1, .TCb2, .TCb3, .TCb4 {
+	display: block;
+	overflow: hidden;
+}
+.TCb1, .TCb2, .TCb3 {
+	height: 1px;
+}
+.TCb2, .TCb3, .TCb4 {
+	border-left: 1px solid #8EADD5;
+	border-right: 1px solid #8EADD5;
+}
+.TCb1 {
+	margin: 0 5px;
+	background: #8EADD5;
+}
+.TCb2 {
+	margin: 0 3px;
+	border-width: 0 2px;
+}
+.TCb3 {
+	margin: 0 2px;
+}
+.TCb4 {
+	height: 2px;
+	margin: 0 1px;
+}
+select.formStyleTechnician {
+	border: 1px #cfcfcf solid;
+	width: 173px;
+	color: #555555;
+	font-size: var(--fs-12);
+	font-weight: normal;
+}
+.monthHeader {
+	font-weight: bold;
+	white-space: nowrap;
+}
+.yellowgradientbg {
+	font-size: var(--fs-12);
+	font-weight: normal;
+
+}
+table tr>td.yellowgradientbg {
+	background: url('/images/cal/yellowgradientbg.png') no-repeat top left;
+}
+.bluegradientbg {
+	font-size: var(--fs-12);
+	font-weight: normal;
+
+}
+table tr>td.bluegradientbg {
+	background: url('/images/cal/bluegradientbg.png') no-repeat top left;
+}
+table tr td.yellowgradientbg a, table tr td.bluegradientbg a {
+	display: block;
+	z-index: 9;
+	position: relative;
+	background: url('/images/spacer.gif');
+}
+table#calendarcontainer tr td.currentDate {
+	border: 2px #ADDAEA solid;
+}
+table.TechnicianReqDetails tr td {
+	font-size: var(--fs-12);
+	font-weight: normal;
+}
+td.blueHeaderFont {
+	color: #008ddd;
+	color: var(--link_tab_line_color, #008ddd);
+	font-size: var(--fs-18) !important;
+	font-weight: normal !important;
+}
+table.TEchnicianReqDetails span.blueHeaderFont {
+	color: #008ddd;
+	color: var(--link_tab_line_color, #008ddd);
+	font-weight: bold;
+}
+table.TechnicianReqDetails tr td table tr td.grayRightBorder {
+	border-right: 1px #CAC6C6 solid;
+}
+.reassignbtn {
+	text-decoration: none;
+	height: 22px;
+	display: block;
+	padding: 5px 3px 0px 0px;
+	font-weight: normal;
+}
+.bluethinborder {
+	border-left: 1px solid #5670A9;
+	border-bottom: 1px solid #5670A9;
+	border-right: 1px solid #5670A9;
+}
+.monthHeader {
+	font-weight: bold;
+}
+.bottombordergray {
+	border-bottom: 1px #EAEAEA solid;
+}
+.bottombordergray a {
+	text-decoration: none;
+}
+.weekendBox , .weekendBox1 {
+	border: 1px #DFDFDF solid;
+	background: #F3F3F3;
+	margin-right: 4px;
+	width: 13px;
+	height: 13px;
+	display: block;
+	float: left;
+}
+.weekendBox1 {
+	background: #F3F3F3;
+}
+.unavailBox {
+	border: 1px #FFB7B7 solid;
+	background: #FFC6C6;
+	margin-right: 4px;
+	width: 13px;
+	height: 13px;
+	display: block;
+	float: left;
+}
+table#MyViewTabSelect table#ActiveTab, table#MyViewTabSelect table#NormalTab {
+	margin-right: 5px;
+}
+table#MyViewTabSelect table#ActiveTab tr td.TabHeader {
+	background: #015DB3;
+	color: #fff;
+	font-weight: bold;
+	padding: 0px 10px;
+}
+table#MyViewTabSelect table#ActiveTab tr td.TabHeader a {
+	color: #fff;
+}
+table#MyViewTabSelect table#NormalTab tr td.TabHeader {
+	background: #E6E8EB;
+	color: #000;
+	padding: 0px 10px;
+	border-top: 1px #D8DFE6 solid;
+	height: 23px;
+}
+table#MyViewTabSelect table#NormalTab tr td.TabHeader a, table#MyViewTabSelect table#ActiveTab tr td.TabHeader a {
+	line-height: 23px;
+	font-weight: bold;
+	text-decoration: none;
+}
+.myview_curve_cnt {
+	padding: 0px;
+}
+.myview_curve {
+	background: transparent;
+	width: 100%;
+}
+.myview_curve .myview_content h1 {
+	margin: 0;
+	font-size: var(--fs-12);
+	padding: 0px 3px 3px 4px;
+}
+.myview_curve .myview_content {
+	display: block;
+	border: 0 solid #fcc799;
+	border-width: 0px 1px;
+	padding: 0px 0px 0px 0px;
+}
+.myview_curve .myview_content table.myviewMargin {
+	margin: -2px 3px -1px 3px;
+	width: 99%;
+	position: relative;
+}
+.myview_curve .myview_content>table.myviewMargin {
+	margin: -2px 3px -1px 3px;
+	width: 100%;
+}
+.myview_curve .mvBox {
+	display: block;
+	background: transparent;
+	font-size: var(--fs-1);
+}
+.myview_curve .color {
+	background: #ffffff;
+	border-color: #ACC7F3;
+}
+.mvb1, .mvb2, .mvb3, .mvb4 {
+	display: block;
+	overflow: hidden;
+}
+.mvb1, .mvb2, .mvb3 {
+	height: 1px;
+}
+.mvb2, .mvb3, .mvb4 {
+	border-left: 1px solid #ACC7F3;
+	border-right: 1px solid #ACC7F3;
+}
+.mvb1 {
+	margin: 0 5px;
+	background: #ACC7F3;
+}
+.mvb2 {
+	margin: 0 3px;
+	border-width: 0 2px;
+}
+.mvb3 {
+	margin: 0 2px;
+}
+.mvb4 {
+	height: 2px;
+	margin: 0 1px;
+}
+.tmvb1, .tmvb2, .tmvb3, .tmvb4 {
+	display: block;
+	overflow: hidden;
+}
+.tmvb1, .tmvb2, .tmvb3 {
+	height: 1px;
+}
+.tmvb2, .tmvb3, .tmvb4 {
+	border-left: 1px solid #ACC7F3;
+	border-right: 1px solid #ACC7F3;
+}
+.tmvb1 {
+	margin: 0 5px 0px 0px;
+	background: #ACC7F3;
+}
+.tmvb2 {
+	margin: 0 3px 0px 0px;
+	border-width: 0 2px;
+}
+.tmvb3 {
+	margin: 0 2px 0px 0px;
+}
+.tmvb4 {
+	height: 2px;
+	margin: 0 1px 0px 0px;
+}
+.myview-gradbg {
+	background: url('/images/myview-gradbg.gif') repeat-x;
+	position: relative;
+	top: -1px;
+}
+.RowPad {
+	padding: 0px 4px 0px 3px;
+	height: 28px;
+}
+.pad-4-2 {
+	padding: 4px 2px;
+}
+.bgabc {
+	background: #ABC5FA;
+}
+.ctypedef {
+	background: #D5E1D5;
+	border: 1px solid #8DADD4;
+	margin: 5px;
+	display: none;
+}
+.calcolcode {
+	width: 12px;
+	height: 12px;
+	border: 1px solid #000000;
+}
+.weekcalicnpos {
+	font-size: var(--fs-12);
+	padding-right: 5px;
+	padding-left: 5px;
+}
+.calprtvwbtop {
+	border-top: 1px #CAC6C6 solid;
+}
+.calprtvwbtop3 {
+	border-top: 3px #CAC6C6 solid;
+}
+.calptnfstbdr {
+	border: 1px #CAC6C6 solid;
+}
+.calprtlbdr {
+	background-color: #E4E4E4;
+	padding: 4px;
+	border: 1px #CAC6C6 solid;
+}
+.calbdrrit {
+	border-right: 3px #CAC6C6 solid;
+}
+.calbdrlft {
+	border-left: 3px #CAC6C6 solid;
+}
+.calvbdrbtm {
+	border-bottom: 3px #CAC6C6 solid;
+}
+.calprtpadlh {
+	padding: 10px;
+	line-height: 18px;
+}
+img.calendar-reassignbtnleft {
+	background: url('/images/sdp-icons-pack1.png') -502px -43px no-repeat;
+	width: 7px;
+	height: 27px;
+}
+img.calendar-reassignbtnright {
+	background: url('/images/sdp-icons-pack1.png') -510px -43px no-repeat;
+	width: 7px;
+	height: 27px;
+}
+.calendar-reassignbtnmiddle {
+	background: url('/images/cal/calendar-reassignbtnmiddle.gif') top repeat-x;
+}
+.calendar-req-tlcurve {
+	background:url('/images/calendar-req-tlcurve.gif') no-repeat;
+	width:10px;
+	height:10px;
+}
+.calendar-req-trcurve {
+	background:url('/images/calendar-req-trcurve.gif') no-repeat;
+	width:10px;
+	height:10px;
+}
+.calendar-req-blcurve {
+	background:url('/images/calendar-req-blcurve.gif') no-repeat;
+	width:10px;
+	height:10px;
+}
+.calendar-req-brcurve {
+	background:url('/images/calendar-req-brcurve.gif') no-repeat;
+	width:10px;
+	height:10px;
+}
+.miniCaloddRow {
+	background-color:#FFF;
+	border-bottom: 1px solid #f0f0f0;
+	white-space: nowrap;
+	color: #000;
+	height:22px !important;
+}
+.miniCalevenRow {
+	background-color:#fff;
+	border-bottom: 1px solid #f0f0f0;
+	white-space: nowrap;
+	color: #000;
+	height:22px !important;
+}
+/*Revamp calendar css */
+.caldialog-content .bottom-btn {
+    border: 1px solid #d1d1d1;
+    background-color: rgb(255, 255, 255);
+    font-size: var(--fs-12);
+    border-radius: 6px;
+}
+.caldialog-content:before {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #e5eaec;
+    position: absolute;
+    top: 32px;
+    left: 15px;
+    right: 15px;
+}
+.caldialog-content .left-nav-boxbrd3 td.oddRow, .left-nav-boxbrd3 td.evenRow {
+    border: 0px;
+    padding: 5px 5px 5px 3px;
+}
+.caldialog-content #Calendar_small tr td.oddRow, #Calendar_small tr td.evenRow {
+    height: 23px;
+}
+.caldialog-content #Calendar_small tr td.oddRow {
+    border: 0px;
+    background: #fff;
+}
+.caldialog-content #Calendar_small tr td.currdate {
+    background-color:  #008ddd;
+    background-color:  var(--primary_button_color, #008ddd);
+    border-radius: 3px;
+    color: #fff;
+    height: 23px;
+    border: 0px !important;
+}
+.caldialog-content #Calendar_small tr td.currdate:hover {
+    background-color:  #008ddd;
+    background-color:  var(--primary_button_color, #008ddd);
+    color: #fff;
+}
+.caldialog-content #Calendar_small tr td.hovered {
+    background: #edf2f5;
+    color: #727272;
+    border-radius: 3px;
+}
+.caldialog-content .minicalendar-brline {
+    text-align: center;
+    border: 0px;
+}
+.calnspn1 .btn-default, .calnspn2 .btn-default{
+	border-radius: 50%;
+	height: 14px;
+ 	width: 4px;
+}
+.cal-view{
+ 	width: auto;
+	border:1px solid #ccc;
+ 	height: 24px;
+	line-height: 24px;
+}
+.techassing .btn-sm, .techassing .btn-default{
+	line-height: 20px;
+ 	border-left:none;
+}
+.tasklist li{
+	color: #000;
+}
+.tasklist .redlist:hover, .tasklist .greenlist:hover, .tasklist .redlistSel:hover{
+	 background-color: #f5f5f5;
+}
+#combined-task-view.solutionleftnav, .solutionleftnav .task-list-sb {
+	 width: 250px;
+}
+#combined-task-view.solutionleftnav.hide-sidebar {
+	min-width: 10px;
+	width: 0;
+	padding: 0px;
+	transition: width 0.5s ease 0s;
+}
+#MiniCalendar .fontblacklink[minical=true]{
+	background-color: #ebf4f8;
+}
+.leftheight{
+	min-height: 570px;
+}

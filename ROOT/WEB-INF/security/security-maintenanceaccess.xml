@@ -1,0 +1,50 @@
+<!-- $Id$ -->
+<!-- Security for Maintenance module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+	<urls authentication="required" >
+		<!-- Maintenance Module Client URLS start-->
+		<url path="/workorder/Maintenance.jsp" roles="ViewRequestMaintenances" method="get">
+            <throttles name="maintenance_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>		
+		</url>
+		
+		<url path="/ui/maintenances" roles="ViewRequestMaintenances" method="get" operation-param="mode" operation-value="list">
+            <throttles name="ui_maintenance_list_view_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>	
+			<param name="gsearch" type="String" max-len="5000" secret="true"/>
+		</url>	
+		<url path="/ui/maintenances" roles="CreateRequestMaintenances" method="get" operation-param="mode" operation-value="add">
+            <throttles name="ui_maintenance_add_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>	
+			<param name="reqTemplate" type="long" range=">0" />
+		</url>		
+		<url path="/ui/maintenances" roles="ModifyRequestMaintenances" method="get" operation-param="mode" operation-value="edit">
+            <throttles name="ui_maintenance_edit_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>	
+			<param name="id" type="long" range=">0" />
+			<param name="reqTemplate" type="long" range=">0" />
+			<param name="fromPage" regex="maintenanceDetails"/>
+		</url>			
+		<url path="/ui/maintenances" roles="ViewRequestMaintenances" method="get" operation-param="mode" operation-value="details">
+            <throttles name="ui_maintenance_details_jsp" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1m" threshold="30" lock-period="5m"/>
+            </throttles>	
+			<param name="id" type="long" range=">0" />
+		</url>	
+		<url path="/common/ViewHistory.jsp" roles="ViewRequestMaintenances" method="get" operation-param="module" operation-value="request_maintenances">
+			<throttles key="url.path+url.dynamic_key" name="request_maintenancesViewhistory_jsp" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" lock-period="5m" threshold="60"/>
+			</throttles>
+			<param name="id" type="long" range=">0" />
+			<param name="key" regex="request_maintenance_history_sort_order"/>
+			<param name="is_new_history" type="boolean" />
+			<param name="is_date_filter" type="boolean" />
+		</url>		
+		<!-- Maintenance Module Client URLS end-->
+	</urls>
+</security>

@@ -1,0 +1,125 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+    <urls authentication="required" disable-extraparam="true" method="POST">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ad_post_urls" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="10" lock-period="5M"/>
+        </throttles>
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="laPassSettings" user_type="all" csrf="true" remote_server="true">
+            <param name="randomPass" regex="true|false" min-occurrences="1"/>
+            <param name="preDefinedPassValue" type="String" max-len="2000" secret="true"/>
+        </url>
+        <url path="/ImportADUsers.do" roles="SDOrgAdmin" operation-param="operation" operation-value="ImportNow,DomainName" csrf="true" user_type="all" remote_server="true">
+            <param name="changePwd" type="boolean"/>
+            <param name="domainName" type="String" secret="true"/>
+            <param name="serverName" type="String" secret="true"/>
+            <param name="userName" type="String" secret="true"/>
+            <param name="userPassword" type="String" max-len="2000" secret="true"/>
+            <param name="phone" type="boolean"/>
+            <param name="phoneField" type="String" max-len="250"/>
+            <param name="mobile" type="boolean"/>
+            <param name="mobileField" type="String" max-len="250"/>
+            <param name="department" type="boolean"/>
+            <param name="departmentField" type="String" max-len="250"/>
+            <param name="office" type="boolean"/>
+            <param name="officeField" type="String" max-len="250"/>
+            <param name="job" type="boolean"/>
+            <param name="jobField" type="String" max-len="250"/>
+            <param name="email" type="boolean"/>
+            <param name="emailField" type="String" max-len="250"/>
+            <param name="reportingTo" type="boolean"/>
+            <param name="reportingToFieldValue" type="String" max-len="250"/>
+            <param name="employeeid" type="boolean"/>
+            <param name="employeeidField" type="String" max-len="250"/>
+            <param name="moveAssetsAlso" regex="on|off"/>
+            <param name="allowNullUpdation" type="boolean"/>
+            <param name="selectOUs" type="String"/> <!--empty string and hence regex not added-->
+            <param name="isLdaps" type="boolean"/>
+            <param name="udf_sline_[0-9]+" name-regex="true" regex="on"  max-occurrences="200"/>
+            <param name="udf_mline_[0-9]+" name-regex="true" regex="on" max-occurrences="200"/>
+            <param name="udf_pick_[0-9]+" name-regex="true"  regex="on" max-occurrences="200"/>
+            <param name="udf_long_[0-9]+" name-regex="true" regex="on" max-occurrences="200"/>
+            <param name="udf_date_[0-9]+" name-regex="true" regex="on" max-occurrences="200"/>
+            <param name="UVAL_udf_sline_[0-9]+" name-regex="true" type="String"  max-occurrences="200" max-len="250"/>
+            <param name="UVAL_udf_mline_[0-9]+" name-regex="true" type="String" max-occurrences="200" max-len="250"/>
+            <param name="UVAL_udf_pick_[0-9]+" name-regex="true"  type="String" max-occurrences="200" max-len="250"/>
+            <param name="UVAL_udf_long_[0-9]+" name-regex="true" type="String" max-occurrences="200" max-len="250"/>
+            <param name="UVAL_udf_date_[0-9]+" name-regex="true" type="String" max-occurrences="200" max-len="250"/>
+        </url>
+        <url path="/ImportADUsers.do" roles="SDOrgAdmin" operation-param="operation" operation-value="StartImporting,RefreshOU" csrf="true" user_type="all" remote_server="true">
+            <param name="userLogin" type="String" max-len="10000" secret="true" description="Don't have restiction in UI. But added 10000 with the assumption of 200 username with each 50 characters max"/>
+            <param name="selectedOUs" type="long" max-occurrences="200000" range=">0"/>
+            <param name="moveAssetsAlso" regex="on|off|null"/>
+            <param name="allowNullUpdation" type="boolean"/>
+            <param name="importUser" type="String" max-len="200"/> <!--Value will be translated -->
+            <param name="selectOUs" type="String"/> <!--empty string and hence regex not added-->
+            <param name="serverName" type="String" secret="true"/>
+            <param name="domainName" type="String" secret="true"/>
+            <param name="userName" type="String" secret="true"/>
+            <param name="userPassword" type="String" max-len="2000" secret="true"/>
+            <param name="isRefresh" type="boolean"/>
+            <param name="inputMethod" regex="manual|schedule"/>
+            <param name="OUorGroup" regex="yes|no"/>
+            <param name="ouenable" regex="on"/>
+            <param name="groupenable" regex="on"/>
+            <param name="jsonGroupObject" type="JSONObject" template="groups" max-len="-1"  secret="true"/> 
+        </url>
+        <url path="/servlet/AJaxServlet" roles="SDOrgAdmin" operation-param="action" operation-value="loadOUsTree" user_type="all" csrf="true" remote_server="true">
+            <param name="domainName" type="String" secret="true"/>
+            <param name="objectType" regex="user|computer"/>
+            <param name="isRefresh" type="boolean"/>
+            <param name="isFullSync" type="boolean"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="saveAD" user_type="all" csrf="true" remote_server="true">
+            <param name="schedule" type="boolean"/>
+            <param name="scheduleDays" type="long" range="7-365"/>
+            <param name="scheduleDate" type="long"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="userDeleteSettings" user_type="all" csrf="true" remote_server="true">
+            <param name="deleteSync" type="boolean"/>
+            <param name="deleteOption" regex="manual|auto"/>
+            <param name="delSchedule" type="boolean"/>
+            <param name="delScheduleDays" type="long" range="1-365"/>
+            <param name="delScheduleDate" type="long"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="disable_ADScheduleUpdateBanner" user_type="all" csrf="true" remote_server="true">
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+        </url>
+    </urls>
+    <urls authentication="required" disable-extraparam="true" method="GET">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ad_get_urls" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+         </throttles>
+        <url roles="SDOrgAdmin" path="/ActiveDirectory.do" user_type="all" remote_server="true"/>
+        <url path="/ImportADUsers.do" roles="SDOrgAdmin" user_type="all" operation-param="operation" operation-value="view" remote_server="true"/>
+        <url path="/servlet/AJaxServlet" roles="SDOrgAdmin" operation-param="action" operation-value="checkLoginNotification_Outgoing" user_type="all" remote_server="true"/>
+        <url path="/ESM.do" operation-param="type" operation-value="activedirectory" user_type="all" roles="SDOrgAdmin" />
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="verifyDC" user_type="all" remote_server="true">
+            <param name="SUBREQUEST" regex="XMLHTTP"/>
+            <param name="input_data" type="JSONObject" template="DCDetails" max-len="-1" min-occurrences="1" secret="true"/>
+        </url>
+        <url roles="SDOrgAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="showADImportProgress" user_type="all" remote_server="true">
+            <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ad_showprogress" dynamic-throttle="true"  >
+                <throttle duration="1M" threshold="15" lock-period="5M"/>
+            </throttles>
+        </url>
+    </urls>
+
+    <jsontemplates>
+        <jsontemplate name="groups">
+            <key name="groupObject" template="groupStrings" type="JSONArray" max-len="-1" array-size="1-5000"/>
+        </jsontemplate>
+        <jsontemplate name="groupStrings">
+			<key index="0-4999" type="String" max-len="255" />
+		</jsontemplate>
+        <jsontemplate name="DCDetails">
+            <key name="domainName" xss="sdpantisamyfilter" min-occurrences="1" secret="true"/>
+            <key name="domainController" xss="sdpantisamyfilter" min-occurrences="1" secret="true"/>
+            <key name="userName" xss="sdpantisamyfilter" min-occurrences="1" secret="true"/>
+            <key name="password" regex="password" max-len="2000" min-occurrences="1" secret="true"/>
+            <key name="isSSL" type="boolean" min-occurrences="1" secret="true"/>
+        </jsontemplate>
+    </jsontemplates>
+
+</security>
+<!--$Id$-->

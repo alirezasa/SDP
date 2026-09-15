@@ -1,0 +1,358 @@
+{
+  "operations": [
+    {
+      "name": "",
+      "method": "POST",
+      "moduleName" : "Project",
+      "path": "/api/v3/projects",
+      "desc": "This operation helps you to add a new project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Add a project",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample":"{ \"project\": { \"title\": \"Project-Doctool\", \"description\": \"Sync doctool contents\", \"status\": { \"id\": 1, \"name\": \"Open\" }, \"type\": { \"id\": 2, \"name\": \"Infrastructure\" }, \"priority\": { \"id\": 4, \"name\": \"High\" }, \"requester\": { \"id\": \"4\" }, \"estimated_hours\": 168, \"actual_hours\": 175, \"estimated_cost\": 3000, \"actual_cost\": 3600 }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"project\": { \"template\": null, \"description\": \"Sync doctool contents\", \"projected_end_time\": null, \"title\": \"Project-Doctool\", \"actual_hours\": \"175\", \"actual_end_time\": null, \"id\": \"15\", \"actual_start_time\": null, \"department\": null, \"owner\": null, \"created_time\": { \"display_value\": \"Apr 27, 2020 11:13 AM\", \"value\": \"1587966201347\" }, \"type\": { \"color\": \"#ffff00\", \"name\": \"Infrastructure\", \"id\": \"2\" }, \"code\": null, \"priority\": { \"color\": \"#ff0000\", \"name\": \"High\", \"id\": \"4\" }, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"scheduled_end_time\": null, \"site\": null, \"requester\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"actual_cost\": \"3600.00\", \"estimated_cost\": \"3000.00\", \"estimated_hours\": \"168\", \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" }, \"scheduled_start_time\": null }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "PUT",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/projects/{project_id}"
+      ],
+      "desc": "This operation helps you to update an existing project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Update a project",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"project\": { \"title\": \"Project Doctool edited\", \"status\": { \"id\": \"2\" }, \"actual_cost\": \"5020\", \"udf_fields\": { \"udf_sline_29\": \"single line sample\", \"udf_mline_30\": \"sample \\r\\n multiline\", \"udf_long_32\": 66, \"udf_date_33\": { \"value\": 1597775442500 }, \"udf_decimal_34\": 44.56 } }}",
+        "showattr": "true"
+      },
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"project\": { \"template\": null, \"code\": null, \"description\": null, \"title\": \"Project Doctool edited\", \"type\": null, \"actual_hours\": null, \"actual_end_time\": { \"display_value\": \"Aug 3, 2020\", \"value\": \"1596479399000\" }, \"id\": \"1\", \"actual_start_time\": { \"display_value\": \"Jul 27, 2020\", \"value\": \"1595788200000\" }, \"department\": null, \"requester\": null, \"owner\": null, \"created_time\": { \"display_value\": \"Aug 3, 2020 07:33 PM\", \"value\": \"1596463405135\" }, \"priority\": null, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"scheduled_end_time\": null, \"site\": null, \"actual_cost\": \"5020.00\", \"estimated_cost\": \"0.00\", \"estimated_hours\": null, \"udf_fields\": { \"udf_sline_29\": \"single line sample\", \"udf_mline_30\": \"sample \\r\\n multiline\", \"udf_date_33\": { \"display_value\": \"Aug 19, 2020 12:00 AM\", \"value\": \"1597775442500\" }, \"udf_decimal_34\": \"44.56\", \"udf_long_32\": \"66\" }, \"projected_end_time\": null, \"status\": { \"color\": \"#00ff00\", \"name\": \"Closed\", \"id\": \"2\" }, \"scheduled_start_time\": null }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "DELETE",
+      "moduleName" : "Project",
+      "path": [
+        "/api/v3/projects/{project_id}"
+      ],
+      "desc": "This operation helps you delete an existing project. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "Delete a project",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+     {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/api/v3/projects/{project_id}",
+      "desc": "This operation helps you to view an existing project by id. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "View a project",
+      "workflow": "",
+      "isReleased": "true",
+      "output": {
+        "sample": "{ \"response_status\": { \"status_code\": 2000, \"status\": \"success\" }, \"project\": { \"template\": null, \"description\": \"<div>doctool description sample<br /></div>\", \"projected_end_time\": { \"display_value\": \"Apr 24, 2020\", \"value\": \"1587752940000\" }, \"title\": \"Project Doctool view\", \"actual_hours\": \"90\", \"actual_end_time\": { \"display_value\": \"Apr 24, 2020\", \"value\": \"1587752940000\" }, \"id\": \"17\", \"actual_start_time\": { \"display_value\": \"Mar 31, 2020\", \"value\": \"1585593000000\" }, \"department\": { \"site\": { \"id\": \"901\" }, \"name\": \"custom department\", \"id\": \"301\" }, \"owner\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"created_time\": { \"display_value\": \"Apr 27, 2020 11:46 AM\", \"value\": \"1587968216771\" }, \"type\": { \"color\": \"#00ff00\", \"name\": \"Maintenance\", \"id\": \"3\" }, \"code\": null, \"priority\": { \"color\": \"#ff6600\", \"name\": \"Medium\", \"id\": \"3\" }, \"created_by\": { \"email_id\": null, \"name\": \"administrator\", \"is_vipuser\": false, \"id\": \"4\", \"department\": null }, \"scheduled_end_time\": { \"display_value\": \"Apr 10, 2020\", \"value\": \"1586543340000\" }, \"site\": { \"name\": \"custom site\", \"id\": \"901\" }, \"requester\": { \"email_id\": null, \"name\": \"Heather Graham\", \"is_vipuser\": false, \"id\": \"6\", \"department\": null }, \"actual_cost\": \"9000.00\", \"estimated_cost\": \"5679.00\", \"estimated_hours\": \"45\", \"status\": { \"internal_name\": \"Closed\", \"color\": \"#00ff00\", \"name\": \"Closed\", \"id\": \"2\" }, \"scheduled_start_time\": { \"display_value\": \"Apr 6, 2020\", \"value\": \"1586111400000\" } }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "",
+      "method": "GET",
+      "moduleName" : "Project",
+      "path": "/api/v3/projects",
+      "desc": "This operation helps you to view all existing projects. Include accept header <b>application/vnd.manageengine.sdp.v3+json</b> in V3 API supported URLs.",
+      "disp_desc": "View all projects",
+      "workflow": "",
+      "isReleased": "true",
+      "input": {
+        "name": "INPUT_DATA",
+        "sample": "{ \"list_info\": { \"row_count\": \"12\", \"start_index\": \"2\", \"get_total_count\": \"true\", \"sort_field\": \"created_time\", \"sort_order\": \"desc\", \"filter_by\": { \"name\": \"open_projects\" }, \"search_criteria\": { \"field\": \"owner.email_id\", \"condition\": \"starts with\", \"value\": \"zzz\", \"children\": [ { \"field\": \"priority.name\", \"condition\": \"is\", \"value\": \"High\", \"logical_operator\": \"OR\" } ] }, \"fields_required\": [ \"id\", \"owner\", \"status\", \"priority\", \"created_time\" ] }}"
+      },
+      "output": {
+        "sample": "{ \"projects\": [ { \"owner\": null, \"created_time\": { \"display_value\": \"Apr 27, 2020 11:13 AM\", \"value\": \"1587966201347\" }, \"id\": \"15\", \"priority\": { \"color\": \"#ff0000\", \"name\": \"High\", \"id\": \"4\" }, \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, { \"owner\": null, \"created_time\": { \"display_value\": \"Apr 27, 2020 11:13 AM\", \"value\": \"1587966192910\" }, \"id\": \"14\", \"priority\": { \"color\": \"#ff0000\", \"name\": \"High\", \"id\": \"4\" }, \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, { \"owner\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Jeniffer Doe\", \"is_vipuser\": false, \"id\": \"9\", \"department\": null }, \"created_time\": { \"display_value\": \"Apr 26, 2020 09:20 PM\", \"value\": \"1587916226493\" }, \"id\": \"12\", \"priority\": { \"color\": \"#ff6600\", \"name\": \"Medium\", \"id\": \"3\" }, \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, { \"owner\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Jeniffer Doe\", \"is_vipuser\": false, \"id\": \"9\", \"department\": null }, \"created_time\": { \"display_value\": \"Apr 26, 2020 08:57 PM\", \"value\": \"1587914834840\" }, \"id\": \"11\", \"priority\": { \"color\": \"#ff6600\", \"name\": \"Medium\", \"id\": \"3\" }, \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, { \"owner\": null, \"created_time\": { \"display_value\": \"Apr 26, 2020 08:42 PM\", \"value\": \"1587913959013\" }, \"id\": \"10\", \"priority\": { \"color\": \"#ff0000\", \"name\": \"High\", \"id\": \"4\" }, \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, { \"owner\": null, \"created_time\": { \"display_value\": \"Apr 26, 2020 08:40 PM\", \"value\": \"1587913825865\" }, \"id\": \"9\", \"priority\": { \"color\": \"#ff0000\", \"name\": \"High\", \"id\": \"4\" }, \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } }, { \"owner\": { \"email_id\": \"user1@zylker.com\", \"name\": \"Jeniffer Doe\", \"is_vipuser\": false, \"id\": \"9\", \"department\": null }, \"created_time\": { \"display_value\": \"Apr 26, 2020 08:35 PM\", \"value\": \"1587913540560\" }, \"id\": \"8\", \"priority\": { \"color\": \"#ff0000\", \"name\": \"High\", \"id\": \"4\" }, \"status\": { \"internal_name\": \"Open\", \"color\": \"#0066ff\", \"name\": \"Open\", \"id\": \"1\" } } ], \"response_status\": [ { \"status_code\": 2000, \"status\": \"success\" } ], \"list_info\": { \"has_more_rows\": false, \"start_index\": 2, \"sort_field\": \"created_time\", \"fields_required\": [ \"id\", \"owner\", \"status\", \"priority\", \"created_time\" ], \"total_count\": 8, \"filter_by\": { \"name\": \"open_projects\" }, \"sort_order\": \"desc\", \"search_criteria\": { \"condition\": \"starts with\", \"field\": \"owner.email_id\", \"children\": [ { \"condition\": \"is\", \"field\": \"priority.name\", \"logical_operator\": \"OR\", \"value\": \"High\" } ], \"value\": \"zzz\" }, \"get_total_count\": \"true\", \"row_count\": 7 }}"
+      },
+      "defaultAttributes": [],
+      "excludedAttributes": [],
+      "inOP": "true",
+      "inOD": "true"
+    }
+  ],
+  "attributes": [
+  {
+      "name": "id",
+      "type": "Number",
+      "desc": "Unique identifier of the project",
+      "isReadOnly": "true",
+      "graphView": "",
+      "column": "PROJECTDETAILS :PROJECTID",
+      "html_type": "",
+      "isDefault": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "title",
+      "type": "String",
+      "desc": "Title of the project",
+      "graphView": "",
+      "column": "PROJECTDETAILS :TITLE",
+      "html_type": "",
+      "isMandatory": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "template",
+      "type": "Object",
+      "desc": "Project template from which Project is to be created. eg : \"template\":{\"id\":\"301\"}",
+      "graphView": "",
+      "column": "PROJECTDETAILS :PROJECTTEMPLATEID",
+      "html_type": "",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "description",
+      "type": "HTML Desc",
+      "desc": "Description of the project",
+      "graphView": "",
+      "column": "PROJECTDESCRIPTION : DESCRIPTION",
+      "html_type": "",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "code",
+      "type": "String",
+      "desc": "Unique code of the project",
+      "graphView": "",
+      "column": "PROJECTDETAILS :PROJECTCODE",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "status",
+      "type": "Object",
+      "desc": "Status of the project. eg : \"status\": { \"id\": \"2\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :STATUSID",
+      "html_type": "",
+      "isDefault": "true",
+      "isReleased": "true",
+      "inOP": "true"
+    },
+    {
+      "name": "site",
+      "type": "Object",
+      "desc": "Site to which the project belongs. eg : \"site\":{ \"id\":\"601\"}",
+      "graphView": "",
+      "column": "PROJECTDETAILS :SITEID",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "department",
+      "type": "Object",
+      "desc": "Department to which the project belongs. eg : \"department\":{ \"id\":\"1\"}",
+      "graphView": "",
+      "column": "PROJECTDETAILS :DEPARTMENTID",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "owner",
+      "type": "Object",
+      "desc": "User who owns the project. eg : \"owner\": { \"id\": \"4\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :OWNERID",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "type",
+      "type": "Object",
+      "desc": "Type of the project that needs to be completed. eg : \"type\": { \"color\": \"#ff0000\", \"id\": \"2\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :PROJECTTYPEID",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "priority",
+      "type": "Object",
+      "desc": "Priority/importance of the project. eg : \"priority\": { \"id\": \"3\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :PRIORITYID",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "scheduled_start_time",
+      "type": "Object",
+      "desc": "Denotes the planned starting time of the project\neg: {  \"value\":\"1427119462376\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :SCHEDULEDSTARTTIME",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "scheduled_end_time",
+      "type": "Object",
+      "desc": "Denotes the planned ending time of the project\neg: {  \"value\":\"1427119462376\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :SCHEDULEDENDTIME",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "actual_start_time",
+      "type": "Object",
+      "desc": "Denotes the actual starting time of the project\neg: {  \"value\":\"1427119462376\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :ACTUALSTARTTIME",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "actual_end_time",
+      "type": "Object",
+      "desc": "Denotes the actual ending time of the project\neg: {  \"value\":\"1427119462376\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :ACTUALENDTIME",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "projected_end_time",
+      "type": "Object",
+      "desc": "Denotes the planned due by time of the project\neg: { \"value\":\"1427119462376\" }",
+      "graphView": "",
+      "column": "PROJECTDETAILS :PROJECTEDEND",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_time",
+      "type": "Object",
+      "desc": "Denotes the created time of the project\nThis attribute is applicable only for output and will be ignored in input fields\neg:_ \n{\n  \"value\":\"1427119462376\",\n  \"display_value\":\"Nov 24, 2014 11:58 AM\"\n}",
+      "graphView": "",
+      "column": "PROJECTDETAILS :CREATEDTIME",
+      "isReadOnly": "true",
+      "inOP": "true",
+      "inOD": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "created_by",
+      "type": "Object",
+      "desc": "This attribute holds the user who created the project\nThis attribute is applicable only for output and will be ignored in input fields",
+      "graphView": "",
+      "column": "PROJECTDETAILS :CREATEDBY",
+      "html_type": "",
+      "isReadOnly": "true",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+     {
+      "name": "requester",
+      "type": "Object",
+      "desc": "This attribute holds the user who requested the project\n eg: \"requester\":{ \"id\":\"4\"}",
+      "graphView": "",
+      "column": "PROJECTDETAILS :REQUESTEDBY",
+      "html_type": "",
+      "isReleased": "true",
+      "inOP": "true",
+      "inOD": "true"
+    },
+    {
+      "name": "estimated_hours",
+      "type": "Number",
+      "desc": "Denotes the hours estimated to complete the project",
+      "graphView": "",
+      "column": "PROJECTESTIMATIONS : ESTIMATEDHOURS",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "actual_hours",
+      "type": "Number",
+      "desc": "Denotes the actual hours required to complete the project",
+      "graphView": "",
+      "column": "PROJECTESTIMATIONS : ACTUALTASKHOURS",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "estimated_cost",
+      "type": "Number",
+      "desc": "Denotes the cost estimated  to complete the project",
+      "graphView": "",
+      "column": "PROJECTESTIMATIONS : ESTIMATEDCOST",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "actual_cost",
+      "type": "Number",
+      "desc": "Denotes the actual cost spent to complete the project",
+      "graphView": "",
+      "column": "PROJECTESTIMATIONS : TOT_TASKHOURS_COST",
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+      "name": "udf_fields",
+      "type": "Object",
+      "desc": "Holds user defined field values associated with the project.",
+      "graphView": "",
+      "column": "",
+      "isReleased": "true",
+      "inOP": "true"
+    }
+  ],
+  "Additional Elements": [],
+  "isReleased": "true",
+  "lastModified": 1474268514000
+}

@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+
+<body>
+<p>ServiceDesk Plus允许您使用轻型目录访问协议（LDAP）从用户目录导入用户。启用LDAP时，请求人可以使用其LDAP凭据登录ServiceDesk Plus。LDAP身份验证支持Linux和Windows用户。对于Windows用户，启用LDAP时将自动禁用AD身份验证。<br />
+<br />
+<strong>注意：</strong>默认情况下，LDAP认证是禁用的。<br />
+<br />
+要从新域导入用户，请转至<strong>管理&gt;&gt;用户&gt;&gt; LDAP</strong>为用户选择<strong>随机</strong>或<strong>预定义</strong>密码，<strong>启用LDAP身份验证</strong>，并在添加一个或多个域控制器后<strong>导入用户</strong>。点击<strong>添加新域</strong>并使用以下说明提供所需信息：<br />
+<br />
+<strong>域控制器：</strong>提供<strong>域控制器</strong>的位置及其端口。LDAP的默认端口为389，LDAPS的默认端口为636。<br />
+<strong>用户名：</strong>指定用户的专有名称，例如CN = Patricia，CN = Users，DC = Zylker，DC = com。<br />
+<strong>密码：</strong>输入用户密码。<br />
+<strong>基本DN：</strong>提供组织单位的专有名称，例如CN = User，DC = Zylker，DC = com。<br />
+<strong>搜索过滤器：</strong>提供必须位于域控制器中的条件，例如objectClass = users。对于搜索条件&ldquo;用户&rdquo;，将导入所有用户。<br />
+<strong>LDAP服务器类型：</strong>选择正确的服务器类型。<br />
+对于Microsoft Active Directory，Novell eDirectory和OpenLDAP服务器类型，将自动填充相应的属性标签。<br />
+<strong>登录属性标签：</strong>指定所选目录的登录属性。<br />
+<strong>邮件属性标签：</strong>提供所选目录的邮件属性。专有属性标签：提供所选目录的专有属性。<br />
+您可以保存并添加更多域控制器，也可以立即<strong>保存</strong>并<strong>导入用户</strong>。<br />
+当您从同一域导入用户时，现有数据将被覆盖。保存这些设置并导入用户后，他们将能够使用其LDAP凭据登录到应用程序。<br />
+<br />
+<strong>导入用户定义的字段（请求人）</strong><br />
+<br />
+您可以导入默认的用户属性，例如登录名，专有名称和域名字段。其他用户属性（例如电话，移动电话，部门，办公室，jobTitle和电子邮件）被映射到<strong>sdldapfieldmap</strong>表中的LDAP属性。<br />
+要导入更多其他字段，例如用户定义的字段，SDAdmin或具有数据库访问权限的用户可以将它们映射到<strong>sdldapfieldmap</strong>表中的相应LDAP属性。<br />
+<br />
+<strong>样例场景</strong><br />
+<br />
+要将用户定义的字段Emp ID映射到目录（例如AD或openLDAP）的employeeID属性，您需要执行以下操作：<br />
+在<strong>sdldapfieldmap中</strong>插入一行通过在数据库服务器中执行以下插入查询来创建表：<br />
+<strong>插入sdldapfieldmap值（7，null，&ldquo; Emp ID&rdquo;，&ldquo; employeeID&rdquo;，true）；</strong><br />
+<br />
+<strong>注意：</strong>&nbsp;&ldquo; ID&rdquo;列为7，因为默认情况下有6个条目。<br />
+执行查询后，重新启动服务器。然后，将您的用户导入LDAP服务器。</p>
+</body>
+</html>

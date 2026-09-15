@@ -1,0 +1,170 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"vendor_services\":[{\"part_no\":\"\",\"gl_code\":null,\"type\":{\"name\":\"Labour\",\"id\":\"2\"},\"name\":\"Delivery_Service\",\"description\":\"delivery\",\"id\":\"302\"},{\"part_no\":\"123\",\"gl_code\":{\"name\":\"GAbc\",\"id\":\"301\"},\"type\":{\"name\":\"test_type\",\"id\":\"301\"},\"name\":\"paint_Service\",\"description\":\"paint desc\",\"id\":\"301\"},{\"part_no\":\"\",\"gl_code\":null,\"type\":{\"name\":\"Annual Maintenance Services\",\"id\":\"1\"},\"name\":\"SS1\",\"description\":null,\"id\":\"1\"}],\"list_info\":{\"has_more_rows\":false,\"sort_field\":\"name\",\"start_index\":1,\"sort_order\":\"asc\",\"row_count\":3}}"},
+            "path": ["/api/v3/vendor_services"],
+            "method": "GET",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "View all vendor services",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"vendor_service\":{\"part_no\":\"\",\"gl_code\":{\"name\":\"gl2\",\"id\":\"301\"},\"name\":\"s1\",\"description\":\"\",\"id\":\"1\",\"type\":{\"name\":\"Annual Maintenance Services\",\"id\":\"1\"}},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/vendor_services/{id}"],
+            "method": "GET",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "View a vendor service",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Add a vendor service",
+            "defaultAttributes": [],
+            "inOD": "true",
+			"isAsset": "true",
+            "output": {"sample": "{\"vendor_service\":{\"part_no\":\"-\",\"gl_code\":{\"name\":\"Gg\",\"id\":\"1\"},\"type\":{\"name\":\"abc\",\"id\":\"302\"},\"name\":\"S12\",\"description\":null,\"id\":\"303\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/vendor_services"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"vendor_service\":{\"name\":\"S12\",\"gl_code\":{\"name\":\"Gg\"},\"type\":{\"id\":\"302\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Update a vendor service",
+            "defaultAttributes": [],
+            "inOD": "true",
+			"isAsset": "true",
+            "output": {"sample": "{\"vendor_service\":{\"part_no\":null,\"gl_code\":{\"name\":\"Gg\",\"id\":\"1\"},\"type\":{\"name\":\"Labour\",\"id\":\"2\"},\"name\":\"S13\",\"description\":\"delivery\",\"id\":\"302\"},\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/vendor_services/{id}"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{ \n \"vendor_service\":{ \n  \"name\":\"S13\",\n  \"gl_code\":{ \n   \"name\":\"Gg\"\n  },\n }\n}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/vendor_services/{id}"],
+            "method": "DELETE",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Delete a vendor service",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "Number",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Unique identifier used to identify the vendor service.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Name of the vendor service which will uniquely identify the individual vendor service.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Short description about the vendor service.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "part_no",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "A alphanumeric key which uniquely identifies the vendor service.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "gl_code",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "Glcode associated to the particular vendor service",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "type",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Service type under which the service can be classified.",
+            "graphView": ""
+        }
+    ]
+}

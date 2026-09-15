@@ -1,0 +1,946 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Security authentication for Scan module related url entries -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+
+	<urls authentication="required" method="get" allowed_portals="it" remote_server="true" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="scan_get" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getIsRemoteServer" />
+        
+		<url roles="Scan Now" path="/AssetScan.do" >
+	 		<param name="is_preview" type="boolean" />
+	 		<param name="audit_token_id" type="long" range=">0" />
+	 		<param name="id" type="long" range=">0" />	
+	 		<param name="type" regex="networks" /> 		
+	 	</url>
+
+		<!--Windows Agent Configuration urls starts-->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="agentsettings" />
+
+	 	<url roles="SDAdmin" path="/workorder/FileDownload.jsp" operation-param="module" operation-value="agent" >
+	 		<param name="FILENAME" regex="ReplaceAgent.vbs" min-occurrences="1" />
+	 		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="FileDownload_agent" dynamic-throttle="true" >
+            	<throttle lock-period="5m" threshold="10" duration="1m"/>
+        	</throttles>
+	 	</url>
+		<!--Windows Agent Configuration urls ends-->
+
+		<!-- Credential Library urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="credentials" />
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/CredentialsLibrary.do" operation-param="action" operation-value="addNew" >
+			<param name="elementId" type="String" max-len="50" min-occurrences="1" />
+			<param name="popUp" type="boolean" min-occurrences="1" />
+			<param name="deviceTypeId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/CredentialsLibraryListView.cc" >
+			<param name="UNIQUE_ID" regex="CredentialsLibraryListView" min-occurrences="1" />
+		</url>
+		<!-- Credential Library urls ends -->
+
+		<!-- Domain Scan urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="domain" />
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/DomainView.cc" >
+			<param name="UNIQUE_ID" regex="DomainView" min-occurrences="1" /> 
+		</url>
+		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/NodeDiscovery.do" operation-param="action" operation-value="scanForm" >
+ 			<param name="redirectToNew" type="boolean" />
+ 		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/DomainDiscovery.do" operation-param="action" operation-value="scannownetwork" >
+	 		<param name="network" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">0,-1" />
+			<param name="name" secret="true" type="String" max-len="100"/>
+			<param name="scanType" regex="network"/>
+	 	</url>
+		
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/EditDomain.do" operation-param="mode" operation-value="edit" >
+			<param name="id" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<!-- Domain Scan urls ends -->
+ 
+		<!-- Network Scan urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="network" />
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/NetworkListView.cc" >
+			<param name="UNIQUE_ID" regex="NetworkListView" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/EditNetwork.do" operation-param="action" operation-value="addNew" >
+	 		<param name="popup" type="boolean" />
+			<param name="element" type="String" max-len="100" />
+		</url>
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/EditNetwork.do" operation-param="action" operation-value="edit" >
+	 		<param name="networkId" type="long" range=">0" min-occurrences="1" />
+	 	</url>
+	 	
+		<!-- Network Scan urls ends -->
+		
+		<!-- Schedule Scan urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="netDefconfig" />
+		<!-- Schedule Scan urls ends -->
+
+		<!-- Distributed Asset Scan urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="ExportImport" rebrand="zmon"/>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/ExportImportCentralView.cc" remote_server="false">
+			<param name="UNIQUE_ID" regex="ExportImportCentralView" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/RemoteDataView.cc" >
+			<param name="UNIQUE_ID" regex="RemoteDataView" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="/CentralServerSettings.do" operation-param="action" operation-value="opensettings" />
+		<url roles="SDAdmin" path="/workorder/FileDownload.jsp" operation-param="module" operation-value="exportimport" >
+	 		<param name="FILENAME" regex="filename" max-len="100" secret="true" min-occurrences="1" allow-empty="false" />
+	 		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="FileDownload_agent" dynamic-throttle="true" >
+            	<throttle lock-period="5m" threshold="10" duration="1m"/>
+        	</throttles>
+	 	</url>
+	 	<url roles="SDAdmin" path="/servlet/ClientUtilServlet" operation-param="mode" operation-value="exportWSData" >
+			<param name="exportWS" type="boolean" min-occurrences="1" />
+			<param name="temp" regex="dummy" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ClientUtilServlet_exportws" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="5m"/>
+			</throttles>
+		</url>
+		<!-- Distributed Asset Scan urls ends -->
+
+		<!-- Remote Control urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="rcSettings" />
+		<url roles="AERemoteControl" path="(/STATE_ID/[0-9]+)?/ConnectRemoteHost.do" operation-param="action" operation-value="changeCred" >
+	 		<param name="wsId" type="long" range=">0" min-occurrences="1" />
+	 		<param name="actionFor" regex="webremote" />
+	 	</url>
+	 	
+		<url roles="SDAdmin" path="/RCSettings.do" operation-param="action" operation-value="edit" >
+			<param name="rdsId" type="long" range=">0" min-occurrences="1" />
+			<param name="isEdit" regex="true" min-occurrences="1" />
+			<param name="trigger" type="String" max-len="250" />
+		</url>
+		<url roles="AERemoteControl" path="(/STATE_ID/[0-9]+)?/WebRemote.do" operation-param="action" operation-value="usercomment" >
+ 			<param name="wsId" type="long" range=">0" min-occurrences="1" />
+ 			<param name="actionFor" regex="webremote" min-occurrences="1" />
+ 			<param name="woId" type="long" range=">0" />
+ 			<param name="protocol" regex="rdp" min-occurrences="1" />
+ 		</url>
+		<url roles="AERemoteControl" path="(/STATE_ID/[0-9]+)?/WebRemote.do" operation-param="action" operation-value="player" >
+			<param name="auditId" type="long" range=">0" min-occurrences="1" />
+			<param name="protocol" regex="rdp" min-occurrences="1" />
+		</url>
+		<url path="/webremote" api="true" remote_server="false" description="non-login url invoked from mobile app for remote control, so api=true is added, role check handled in servlet level"><!-- Non-Login url-->
+			<param name="action" regex="webremote" />
+			<param name="wsname" secret="true" type="String" max-len="200" />
+			<param name="protocol" regex="rdp" />
+			<param name="AUTHTOKEN" secret="true" type="String" max-len="100" />
+			<param name="usercomment" type="String" max-len="500" secret="true" />
+		    <param name="requestFrom" regex="sdpmobilenative" />
+		</url>
+		<!-- Remote Control urls ends -->
+
+		<!-- Scan Settings urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="aesettings"/>
+		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/ImportWindowsWS.do" operation-param="action" operation-value="open" />
+		<url roles="SDAdmin" path="/setup/DuplicateServiceTag.jsp" />
+		<url roles="SDAdmin" path="/setup/MismatchProductType.jsp" />
+
+		<!--<url roles="ViewInventoryWS" path="/asset/ScanSetupDetails.jsp" />-->
+ 		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/WsScanSettings.do" operation-param="operation" operation-value="changeforsingle" >
+ 			<param name="wsId" type="long" range=">0" min-occurrences="1" />
+ 			<param name="action" regex="scan" min-occurrences="1" />
+ 			<param name="isWorkstation" type="boolean" />
+ 			<param name="ACCOUNTID" type="long" range=">0" />
+ 			<param name="changecred" regex="true" />
+ 			<param name="type" type="String" max-len="250" description="Component type is passed as param for non-workstation assets"/>
+ 			<param name="chooseCredential" regex="on" />
+ 		</url>	
+ 		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/WsScanSettings.do" operation-param="operation" operation-value="changeforbulk" >
+ 			<param name="isFromCMDB" regex="true" />
+ 			<param name="isBulk" regex="true" min-occurrences="1" />
+ 			<param name="isWorkstation" type="boolean" />
+ 			<param name="type" type="String" max-len="200" description="Component type is passed as param for non-workstation assets"/>
+ 			<param name="chooseCredential" regex="on" />
+ 		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/AESettings.do" operation-param="action" operation-value="excludepopup" >
+			<param name="excludeFromScanConfirmPopup" type="boolean" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/AESettings.do" operation-param="action" operation-value="excludeform" >
+			<param name="exclude" regex="exclude" min-occurrences="1" />
+			<param name="isFromNwDomainPopup" type="boolean" />
+		</url>
+		<url roles="ViewInventoryWS" path="/asset/Inventory_TroubleShooting.jsp" />
+		<url roles="Scan Now" path="/asset/wsActions.jsp" /><!--added new-->
+		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/WSInvokeScan.do" >
+			<param name="wsId" type="long" range=">0" min-occurrences="1" />
+			<param name="action" regex="scan" min-occurrences="1" />
+			<param name="wsName" secret="true" type="String" allow-empty="false" max-len="200" min-occurrences="1" />
+			<param name="type" type="String" max-len="200"  description="Component type is passed as param for non-workstation assets"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="WSInvokeScan" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="100" lock-period="5m"/>
+			</throttles>
+		</url>
+		<!-- solarwinds url -->
+    	<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="solarwindssettings" rebrand="zmon"/>
+		<url path="/servlet/AJaxServlet" roles="SDAdmin" operation-param="action" operation-value="getSolarwindsServerDetails" />
+		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/WSAction.do" >
+			<param name="wsId" type="long" range=">0" min-occurrences="1" />
+			<param name="action" regex="scan" min-occurrences="1" />
+			<param name="isWS" type="boolean" min-occurrences="1" />
+		</url>
+		
+
+		<!-- Non-Login urls -->
+			<!-- Site IPaddress mapping urls starts -->
+			<url roles="SDAdmin" path="/asset/AutoSiteAllocation.jsp" remote_server="false" />
+			<url roles="SDAdmin" path="/SiteIPImport.do" operation-param="method" operation-value="getErrorLog" remote_server="false" >
+				<param name="fileName" regex="filename" max-len="1000" secret="true" max-occurrences="1" min-occurrences="1" />
+				<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SiteIPImport_getErrorLog" dynamic-throttle="true"  >
+					<throttle duration="1m" threshold="10" lock-period="5m"/>
+				</throttles>
+			</url>
+			<url roles="SDAdmin" path="/SiteIPImport.do" operation-param="method" operation-value="getSampleXLS" remote_server="false" >
+				<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SiteIPImport_getSampleXLS" dynamic-throttle="true"  >
+					<throttle duration="1m" threshold="10" lock-period="5m"/>
+				</throttles>
+			</url>
+			<!-- Site IPaddress mapping url ends -->
+		<!-- Scan Settings urls ends -->
+
+		<!-- SCCM Configuration urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="sccmsettings" rebrand="zmon"/>
+		<url roles="SDAdmin" path="/SCCMScanSettings.do" operation-param="action" operation-value="get" >
+	 		<param name="sccmid" type="long" range=">0" min-occurrences="1" />
+ 		</url>
+ 		<url roles="SDAdmin" path="/SCCMScanSettings.do" operation-param="action" operation-value="getAll" rebrand="zmon"/>
+ 		<url roles="SDAdmin" path="/SCCMScanSettings.do" operation-param="action" operation-value="test" >
+	 		<param name="sccmid" type="long" range=">0" min-occurrences="1" />
+ 		</url>
+ 		<url roles="SDAdmin" path="/SCCMScanSettings.do" operation-param="action" operation-value="showSCCMpopUp" rebrand="zmon">
+	 		<param name="editSCCM" type="long" range=">0" />
+ 		</url>
+		<!-- SCCM Configuration urls ends -->
+
+		<!-- DC urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="dcinteg" />
+		<url roles="DCAdmin,DCGuest" path="/DCHomePage.do" operation-param="operation" operation-value="loadDCdropdown" >
+		</url>	
+		<url roles="DCAdmin,DCGuest" path="/DCHomePage.do" operation-param="operation" operation-value="dcchat" >
+			<param name="requesterName" secret="true" type='String' max-len="250" />
+			<param name="requestID" type="long" range=">=0,-1" /> 
+			<param name="requesterID" type="long" range=">=0,-1" />
+		</url>	
+		<url roles="DCAdmin,DCGuest" path="/DCHomePage.do" operation-param="operation" operation-value="feature" >
+			<param name="feature" type="String" allow-empty="false" max-len="200" min-occurrences="1" />
+		</url>	
+		<url roles="DCAdmin,DCGuest,ViewInventoryWS,AERemoteControl" path="/DCServerSettings.do" operation-param="operation" operation-value="CheckConnection,CheckDCBuildCompatability" remote_server="false"> <!-- Non-Login urls -->
+			<param name="dcaction" type="String" max-len="200" />
+			<param name="wsName" secret="true" type="String" max-len="200" />
+			<param name="requestId" type="long" range=">0" />
+		</url>
+		<url roles="DCAdmin,DCGuest,ViewInventoryWS" path="/DCServerSettings.do" operation-param="operation" operation-value="FetchSoftware" remote_server="false" >
+			<param name="dcaction" type="String" max-len="200" />
+			<param name="wsName" secret="true" type="String" max-len="200" />
+			<param name="requestId" type="long" range=">0" />
+		</url>
+		<url roles="AERemoteControl,ViewInventoryWS" path="/DCServerSettings.do" operation-param="operation" operation-value="AssetAction" remote_server="false" >
+			<param name="dcaction" regex="remotecontrol|chatUser|lock|Lock|ShutDown|Shutdown|Restart|Hibernate|Chat|chat|System Manager|StandBy|Standby|wakeonlan|Wakeonlan" />
+			<param name="wsName" secret="true" type="String" max-len="200" />
+			<param name="requestId" type="long" range=">0" />
+			
+		</url>
+		<url roles="DCAdmin,DCGuest,RunScript,InstallAndUnInstall" path="/DCServerSettings.do" operation-param="operation" operation-value="getDomain" remote_server="false">
+			<param name="server" secret="true" type="String" allow-empty="false" max-len="200" min-occurrences="1" />
+			<param name="port" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="protocol" regex="http|https" min-occurrences="1" />
+			<param name="isCustomTrustStore" type="boolean"/>
+		</url>		
+	 	<url roles="RunScript,InstallAndUnInstall" path="/DCServerSettings.do" operation-param="operation" operation-value="fillWorkStationList,filluserList" remote_server="false">
+			<param name="searchString" type="String" allow-empty="false" max-len="500" min-occurrences="1" />
+	 	</url>
+	 	<url roles="SDAdmin" path="/mdmServerSettings.do" operation-param="operation" operation-value="getMDMCompatibleBuild,checkifDCMDMPSame,checkMDMBuildCompatability,syncMDMCustomers" remote_server="false" />
+	 	<url roles="ViewInventoryWS" path="/DCActions.do" operation-param="action" operation-value="status" />
+	 	<url roles="Scan Now" path="/DCActions.do" operation-param="action" operation-value="get_agent_download_links" />
+		<url roles="SDAdmin" path="/DCActions.do" operation-param="action" operation-value="get_agent_settings,get_dc_download_link,show_dc_bundle_page,show_dc_license_agreement,get_dc_agreement_link" >
+		</url>
+		<url roles="SDAdmin" path="/DCActions.do" operation-param="action" operation-value="getTimeZones"/>
+		<url path="/servlet/AJaxServlet" roles="ViewInventoryWS" operation-param="action" operation-value="getUEMProdName"/>
+		<url path="/servlet/AJaxServlet" roles="ViewInventoryWS" operation-param="action" operation-value="isDCConfigured"/>
+
+		<url roles="ViewInventoryWS" path="/DCToolsActions.do" operation-param="operation" operation-value="AssetAction" >
+			<param name="dcaction" regex="Lock|Shutdown|Restart|Hibernate|Chat|System Manager|Standby|Wakeonlan|remotecontrol|chat|lock|ShutDown|StandBy|wakeonlan" />
+			<param name="wsName" secret="true" type="String" allow-empty="false" max-len="200" min-occurrences="1" />
+			<param name="requestId" type="long" range=">0" />
+		</url>
+		
+		<url roles="ViewInventoryWS" path="(/STATE_ID/[0-9]+)?/ViewResourceContracts.do">
+			<param name="wsId" type="long" allow-empty="false"/>
+		</url>
+		<!-- DC urls ends -->
+
+		<url roles="SDAdmin" path="/ScheduleScanning.do" operation-param="action" operation-value="getDetails" />
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getScheduleDetailsForSNMPDataSync"/>
+		<!-- Used to sync SNMP configuration data from remote server to central server-->
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="syncSNMPData"/>
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getShowSoftware">
+			<param name="wsId" type="long" allow-empty="false" range=">0"/>
+		</url>
+	</urls>
+
+	<urls authentication="required" method="GET">
+		<url path="/servlet/AJaxServlet" roles="SDAdmin" operation-param="action" operation-value="scanInputdata" remote_server="true">
+			<param name="enableLog" regex="true|false" allow-empty="false" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ajax_scanInputdata" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+	</urls>
+
+	<urls authentication="required" method="get" user_type="all" remote_server="true" >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="dchttpsstatus_get" dynamic-throttle="true" >
+			<throttle lock-period="5m" threshold="80" duration="1m"/>
+		</throttles>
+        <url roles="SDOrgAdmin" path="/DCActions.do" operation-param="action" operation-value="getDcHttpsStatus" />
+    </urls>
+
+	<urls authentication="required" method="post" csrf="true" allowed_portals="it" remote_server="true"  >
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="software_get" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+		<param name="pageLength" type="long" range=">0" max-occurrences="2"/>
+		<param name="loadingMsg" type="String" allow-empty="false" max-len="100" max-occurrences="2"/>
+		<param name="rowcount" type="String" allow-empty="false" max-len="100" max-occurrences="2"/>
+
+		<url roles="CreateInventoryWS,ModifyInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="getDCWarranty" >
+			<param name="entityId" type="long" allow-empty="false" min-occurrences="1" range=">0"/>
+		</url>
+
+		<url roles="SDAdmin" path="/DCActions.do" operation-param="action" operation-value="download"/>
+		<url roles="Scan Now" path="/DCActions.do" operation-param="action" operation-value="download_windows_agent,download_linux_agent,download_mac_agent"/>
+		<!-- Credential Library urls starts -->
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/CredentialsLibrary.do" operation-param="action" operation-value="getProtocols" >
+			<param name="deviceTypeId" type="long" range=">0" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/CredentialsLibrary.do" operation-param="action" operation-value="saveCredential" >
+			<param name="popUp" type="boolean" />
+			<param name="parentElementId" secret="true" type="String" allow-empty="false" max-len="100" />
+			<param name="protocolId" type="long" range=">0" min-occurrences="1" />
+			<param name="name" type="String" allow-empty="false" max-len="250" min-occurrences="1" />
+			<param name="description" type="String" max-len="250" secret="true" />
+			<param name="snmpRead" type="String" secret="true" max-len="500" />
+			<param name="snmpPort" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="snmpTimeOut" type="long" range=">=0" min-occurrences="1" />
+			<param name="snmpRetries" type="long" range=">=0" min-occurrences="1" />
+			<param name="snmpV3UserName" secret="true" type="String" max-len="250" />
+			<param name="snmpV3ContextName" secret="true" type="String" max-len="250" />
+			<param name="snmpV3AuthProtocol" secret="true" regex="MD5|SHA|Select|SHA-256|SHA-512" min-occurrences="1" />
+			<param name="snmpV3AuthPwd" type="String" secret="true" max-len="500" />
+			<param name="snmpV3EncryptProtocol" secret="true" regex="DES|AES-128|AES-192|AES-256|Select" min-occurrences="1" />
+			<param name="snmpV3EncryptPwd" type="String" secret="true" max-len="500" />
+			<param name="snmpV3Port" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="snmpV3Timeout" type="long" range=">=0" min-occurrences="1" />
+			<param name="snmpV3Retries" type="long" range=">=0" min-occurrences="1" />
+			<param name="userName" secret="true" type="String" max-len="250" />
+			<param name="password" type="String" max-len="500" secret="true" />
+			<param name="sshTelnetProtocol" type="boolean" min-occurrences="1" />
+			<param name="sshTelnetPort" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="sshTelnetTimeout" type="long" range=">=0" min-occurrences="1" />
+			<param name="sshTelnetUsername" secret="true" type="String" max-len="250" />
+			<param name="usePublicKeyAuth" regex="on|off" min-occurrences="1" />
+			<param name="sshTelnetPassword" type="String" secret="true" max-len="500" />
+			<param name="sshPrivateKey" type="String" secret="true" max-len="10000" />
+			<param name="encryptedKey" type="String" secret="true" max-len="5000" />
+			<param name="encryptedIV" type="String" secret="true" max-len="5000" />
+			<param name="httpUsername" secret="true" type="String" max-len="250" />
+			<param name="httpPassword" type="String" secret="true" max-len="500" />
+			<param name="httpPort" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="httpTimeout" type="long" range=">=0" min-occurrences="1" />
+			<param name="ciscoTimeout" type="long" range=">=0" min-occurrences="1" />
+			<param name="rdsDomainName" secret="true" type="String" max-len="250"/>
+			<param name="rdsUserName" secret="true" type="String" max-len="250" />
+			<param name="rdsPassword" type="String" secret="true" max-len="500" />
+			<param name="sccmAuthMode" secret="true" type="String" allow-empty="false" max-len="10" min-occurrences="1" />
+			<param name="sccmDomain" secret="true" type="String" max-len="250" />
+			<param name="sccmUserName" secret="true" type="String" max-len="250" />
+			<param name="sccmPassword" type="String" secret="true" max-len="500" />
+			<param name="saveCredential" regex="Save Credential" min-occurrences="1" />
+			<param name="credentialId" type="long" range=">0" />
+			<param name="isSudoDisabled" type="boolean" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/CredentialsLibrary.do" operation-param="action" operation-value="deleteCredential" >
+			<param name="credentialId" type="long" range=">0" min-occurrences="1" max-occurrences="500"/>
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/CredentialsLibrary.do" operation-param="action" operation-value="editCredential" >
+			<param name="credentialId" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<!-- Credential Library urls ends -->
+
+		<!-- Domain Scan urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="domain"/>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/EditDomain.do" operation-param="mode" operation-value="save" >
+	 		<param name="id" type="long" range=">0" />
+	 		<param name="element" type="String" max-len="100" />
+	 		<param name="addNew" regex="true" />
+	 		<param name="changePwd" type="boolean" />
+	 		<param name="divToShow" regex="listView|detView" min-occurrences="1" />
+	 		<param name="name" regex="^[A-Za-z0-9\u0080-\uFFFF](?:[A-Za-z0-9\u0080-\uFFFF.-]*[A-Za-z0-9\u0080-\uFFFF])?$" secret="true" allow-empty="false" max-len="100" min-occurrences="1" />
+	 		<param name="isPublicDomain" regex="on" />
+	 		<param name="isAgentMode" regex="on" />
+	 		<param name="domainController" secret="true" type="String" max-len="200" />
+	 		<param name="loginName" secret="true" type="String" max-len="250" />
+	 		<param name="password" secret="true" type="String" max-len="500" /> <!--changethis-->
+	 		<param name="description" type="String" max-len="250" secret="true" />
+	 		<param name="updateButton" regex="Save" />
+	 		<param name="updateAndAddNew" regex="Save and Scan now" />
+	 		<param name="addButton" regex="Save" />
+	 		<param name="addAndAddNew" regex="Save and Scan now" />
+	 	</url>	
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/EditDomain.do" operation-param="mode" operation-value="delete" >
+			<param name="id" type="long" range=">0" min-occurrences="1"/>
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/DomainDiscovery.do" operation-param="action" operation-value="startdomainscan" >
+			<param name="selectedOUs" type="long" range=">0" min-occurrences="1" max-occurrences="500"/>
+			<param name="sites" type="long" range=">0,-1" />
+			<param name="scanType" regex="domainstrng" min-occurrences="1" />
+			<param name="domain" type="long" range=">0" min-occurrences="1" />
+			<param name="subScanType" regex="ou|domain" min-occurrences="1" />
+			<param name="name" secret="true" type="String" allow-empty="false" max-len="100" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DomainDiscovery_startdomainscan" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+	 	</url>
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/DomainDiscovery.do" operation-param="action" operation-value="scannowdomain" >
+			<param name="domain" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="scanType" regex="domainstrng" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DomainDiscovery_scannowdomain" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>		
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/DomainDiscovery.do" operation-param="action" operation-value="fetchous" >
+ 			<param name="domain" type="long" range=">0" min-occurrences="1" />
+ 			<param name="isRefresh" regex="true" min-occurrences="1" />
+ 			<param name="scanType" regex="domainstrng" min-occurrences="1" />
+			<param name="name" secret="true" type="String" allow-empty="false" max-len="100" min-occurrences="1" />
+			<param name="siteId" type="long" range=">0" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DomainDiscovery_fetchous" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+	 	</url>
+		<!-- Domain Scan urls ends -->
+
+		<!-- Network Scan urls starts -->
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="network" />
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/EditNetwork.do" operation-param="action" operation-value="delete" >
+	 		<param name="networkId" type="long" range=">0" min-occurrences="1" max-occurrences="500"/>
+	 	</url>
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/EditNetwork.do" operation-param="action" operation-value="save" >
+	 		<param name="networkId" type="long" range=">0" />
+	 		<param name="isEditMode" type="boolean" min-occurrences="1" />
+	 		<param name="specifyRange" type="boolean" min-occurrences="1" />
+	 		<param name="addNew" type="boolean" min-occurrences="1" />
+		 	<param name="name" type="String" allow-empty="false" max-len="50" min-occurrences="1" />
+		 	<param name="fromAddress" type="String" secret="true" max-len="25" /> 
+		 	<param name="toAddress" type="String" secret="true" max-len="25" />
+		 	<param name="parentElement1" type="String" allow-empty="false" max-len="100" min-occurrences="1" />
+		 	<param name="nameA" type="long" range="0-255"/>
+	    	<param name="nameB" type="long" range="0-255"/>
+	    	<param name="nameC" type="long" range="0-255"/>
+	    	<param name="fromAddressA" type="long" range="0-255"/>
+	    	<param name="fromAddressB" type="long" range="0-255"/>
+	    	<param name="fromAddressC" type="long" range="0-255"/>
+	    	<param name="fromAddressD" type="long" range="0-255"/>
+	    	<param name="toAddressA" type="long" range="0-255"/>
+	    	<param name="toAddressB" type="long" range="0-255"/>
+	    	<param name="toAddressC" type="long" range="0-255"/>
+	    	<param name="toAddressD" type="long" range="0-255"/>
+		 	<param name="description" type="String" max-len="300" secret="true" />
+		 	<param name="isAgentMode" type="boolean" />
+		 	<param name="credential_[0-9]+" type="long" range=">0,-1" name-regex="true" min-occurrences="1" max-occurrences="500"/>
+		 	<param name="saveButton" regex="Save" />
+		 	<param name="saveAndScanButton" regex="Save and Scan now" />
+		 	<param name="popup" type="boolean" />
+	 	</url>
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/DomainDiscovery.do" operation-param="action" operation-value="startnetworkscan" >
+ 			<param name="network" type="long" range=">0" min-occurrences="1" />
+			<param name="siteId" regex="-1" min-occurrences="1" />
+			<param name="name" secret="true" type="String" allow-empty="false" max-len="100" min-occurrences="1" />
+			<param name="scanType" regex="network" min-occurrences="1" />
+			<param name="subScanType" regex="network" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DomainDiscovery_startnetworkscan" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+	 	</url>
+		<!-- Network Scan urls ends -->
+
+		<!-- Schedule Scan urls starts -->
+		<url roles="SDAdmin" path="/ScheduleScanning.do" operation-param="action" operation-value="setDetails" >
+			<param name="input_data" min-occurrences="1" type="JSONObject" template="schedule_settings_input" max-len="10000"/>
+		</url>
+		<!-- Schedule Scan urls ends -->
+
+		<!-- Distributed Asset Scan urls starts -->
+		<url roles="SDAdmin" path="/CentralServerSettings.do" operation-param="action" operation-value="save" >
+			<param name="serverName" secret="true" type="String" allow-empty="false" max-len="100" min-occurrences="1" />
+			<param name="serverPort" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="apiKey" secret="true" type="String"  max-len="500"  />
+			<param name="serverProtocol" regex="http|https" min-occurrences="1" />
+			<param name="isProxyEnabled" regex="on" />
+			<param name="siteName" type="String" allow-empty="false" max-len="250" min-occurrences="1" />
+			<param name="site" regex="null|([0-9]+)" max-len="250" min-occurrences="1" />
+			<param name="secureConnection" regex="on" />
+			<param name="fetch" type="boolean" min-occurrences="1" />
+			<param name="submit1" regex="Save" min-occurrences="1" /> 
+		</url>	
+ 		<url roles="SDAdmin" path="/ExportImport.do" operation-param="action" operation-value="import" remote_server="false" rebrand="zmon">
+		 	<file name="zipFile" max-size="512000" allowed-extensions="zip" content-type-name="zip" allow-empty="false" description="Remote server data can have a maximum of 500 MB">
+			 	<filename regex="[0-9a-zA-Z()\[\]{}+_\-\;\#\^\.\$@\?\,\:\'\!\P{InBasicLatin}\s]+" max-len="1000" min-occurrences="1" description="Hostname may end with dot(.), so a filename can have dotdot(..)"/>
+		 	</file>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ExportImport_import" dynamic-throttle="true"  >
+			 	<throttle duration="1m" threshold="3" lock-period="5m"/>
+			</throttles>
+		 	<param name="site" type="long" range=">0,-1" min-occurrences="1" />
+		 	<param name="submit" regex="Import" min-occurrences="1" />
+	 	</url>
+	 	<url roles="SDAdmin" path="/ExportImport.do" operation-param="action" operation-value="schedule" rebrand="zmon">
+		 	<param name="remoteScheduleStatus" regex="enabled|disabled" min-occurrences="1" />
+		 	<param name="days" type="long" range=">0" />
+		 	<param name="hours" type="long" range=">0" />
+		 	<param name="minutes" type="long" range=">=0" />
+		 	<param name="remoteScheduleStartDate" regex="[0-9]{2,4}-[0-9]{2,4}-[0-9]{2,4}" min-occurrences="1" />
+		 	<param name="mailto" secret="true" type="String" max-len="100" />
+		 	<param name="submit" regex="Save" min-occurrences="1" />
+	 	</url>
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getRemoteSites" />
+
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="getHandshakeStatus" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="getHandshakeStatus_remote" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="5" lock-period="5m"/>
+			</throttles>
+			<param name="serverName" secret="true" type="String" allow-empty="false" max-len="100" min-occurrences="1" />
+			<param name="serverPort" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="serverProtocol" regex="http|https" min-occurrences="1" />
+			<param name="secureConnection" type="boolean" />
+			<param name="isProxy" type="boolean" />
+			<param name="isHandshake" type="boolean" />
+			<param name="apiKey" type="String" secret="true" max-len="500" />
+		</url>
+		<url roles="SDAdmin" path="/STATE_ID/[0-9]+/ExportImport.do" remote_server="true" rebrand="zmon">
+		 	<param name="delete" regex="Delete" min-occurrences="1" />
+		 	<param name="File Name" type="String" max-len="0" secret="true" description="Since File Name is a columnName for listview, on delete operation it is send as param without any values to it"/>
+		 	<param name="Site Name" type="String" max-len="0" description="Since Site Name is a columnName for listview, on delete operation it is send as param without any values to it"/>
+		 	<param name="Status" type="String" max-len="0" description="Since Status is a columnName for listview, on delete operation it is send as param without any values to it"/>
+		 	<param name="Comments" type="String" max-len="0" description="Since Comments is a columnName for listview, on delete operation it is send as param without any values to it"/>
+		 	<param name="checkbox" type="long" range=">0" max-occurrences="500" min-occurrences="1" />
+		 	<param name="checkbox23" regex="on" />
+ 	 	</url>
+ 	 	<url roles="SDAdmin" path="/servlet/ClientUtilServlet" operation-param="mode" operation-value="exportAndPushData" >
+			<param name="exportAndPushData" type="boolean" min-occurrences="1" />
+			<param name="temp" regex="dummy" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ClientUtilServlet_exportAndPushData" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" path="/servlet/ClientUtilServlet" operation-param="mode" operation-value="confirmRemoteDelete" >
+			<param name="deleteRemoteData" type="boolean" min-occurrences="1" />
+	 		<param name="param" type="String" allow-empty="false" max-len="2500" secret="true" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ClientUtilServlet_confirmRemoteDelete" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" path="/servlet/ClientUtilServlet" operation-param="mode" operation-value="changeServerType" >
+			<param name="changeServerType" type="boolean" min-occurrences="1" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ClientUtilServlet_changeServerType" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="5m"/>
+			</throttles>
+		</url>
+		<!-- Distributed Asset Scan urls ends -->
+
+		<!-- Remote Control urls starts -->
+		<url path="/webremote" csrf="false" api="true" remote_server="false" description="non-login url invoked from mobile app for remote control, so api=true is added, role check handled in servlet level" ><!-- Non-Login url -->
+			<param name="action" regex="webremote" />
+			<param name="wsname" secret="true" type="String" max-len="350" />
+			<param name="protocol" regex="rdp" />
+			<param name="AUTHTOKEN" secret="true" type="String" max-len="300" />
+			<param name="usercomment" type="String" max-len="500" secret="true" />
+			<param name="requestFrom" regex="sdpmobilenative" />
+		</url>
+		<url roles="SDAdmin" path="/RCSettings.do" operation-param="action" operation-value="changeStatus" >
+			<param name="rdsId" type="long" range=">0" min-occurrences="1" />
+			<param name="changeStatus" type="boolean" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="/WebRemoteSettings.do" operation-param="action" operation-value="Submit" >
+			<param name="serverPort" secret="true" type="long" range=">0"  min-occurrences="1" />
+			<param name="rdpDefaultPort" secret="true" type="long" range=">0" min-occurrences="1" />
+			<param name="cleanUpDays" type="long" range=">=0" min-occurrences="1" />
+			<param name="sessionRecording" regex="on" />
+			<param name="webRDP" regex="on" />
+		</url>
+		<url roles="SDAdmin" path="/WebRemoteSettings.do" operation-param="action" operation-value="portcheck" >
+			<param name="serverPortCheck" type="long" range=">0" min-occurrences="1" />
+		</url>
+		<url roles="AERemoteControl" path="(/STATE_ID/[0-9]+)?/WebRemote.do" operation-param="action" operation-value="isCredAvailable" >
+			<param name="wsId" type="long" range=">0" />
+		</url>
+		<url roles="AERemoteControl" path="(/STATE_ID/[0-9]+)?/WebRemote.do" operation-param="action" operation-value="webremote" >
+			<param name="wsId" type="long" range=">0" min-occurrences="1" />
+			<param name="protocol" regex="rdp" min-occurrences="1" />
+			<param name="woId" type="long" range=">0" />
+			<param name="userComment" type="String" allow-empty="false" max-len="3500" secret="true" min-occurrences="1" />
+			<param name="save" regex="Connect" min-occurrences="1" />
+		</url>
+		<url roles="AERemoteControl" path="(/STATE_ID/[0-9]+)?/ConnectRemoteHost.do" operation-param="action" operation-value="getCredentialsList" />
+		<url roles="AERemoteControl" path="(/STATE_ID/[0-9]+)?/ConnectRemoteHost.do" operation-param="action" operation-value="save" >
+			<param name="wsId" type="long" range=">0" min-occurrences="1" />
+			<param name="credentialId" type="long" range=">0,-1"  min-occurrences="1" />
+			<param name="wsName" secret="true" type="String" allow-empty="false" max-len="200" min-occurrences="1" />
+			<param name="rdsId" type="long" range=">0" />
+			<param name="name" type="String" max-len="200" />
+			<param name="description" type="String" max-len="3500" secret="true" />
+			<param name="rdsDomainName" secret="true" type="String" max-len="250" />
+			<param name="rdsUserName" secret="true" type="String" max-len="250" />
+			<param name="rdsPassword" secret="true" type="String" max-len="500" />
+		</url>
+		<!-- Remote Control urls ends -->
+
+		<!-- Scan Settings urls starts -->
+		<url path="/api/v3/ScanDataServlet" remote_server="true" api="true" csrf="false" roles="SDAdmin" operation-param="action" operation-value="postSuccessData">
+			<param name="product_name" regex="DESKTOPCENTRAL|MDM"/>
+			<param name="machineId" type="long" range=">0"/>
+			<inputstream type="String" max-len="-1" secret="true" description="since it is an input stream, max-len is configured as -1. xml data will be sent as stream from script scan."/>
+	 		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ScanDataServlet" dynamic-throttle="true"  >
+		 		<throttle duration="1m" threshold="1000" lock-period="5m"/>
+	 		</throttles>
+		</url>
+		<url path="/api/v3/ScanDataServlet" remote_server="true" api="true" csrf="false" roles="SDAdmin" operation-param="action" operation-value="postFailureData">	
+	                <param name="product_name" regex="DESKTOPCENTRAL|MDM"/>
+			<param name="failed_asset_info" type="JSONArray" template="scan_failure_data" array-size="0-100" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ScanDataServlet_errorServlet" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="1000" lock-period="5m"/>
+			</throttles>
+	        </url>
+	 	<url roles="Scan Now" path="/servlet/AJaxServlet" operation-param="action" operation-value="getWorkstationScanProgress" >
+			<param name="key" type="String" allow-empty="false" max-len="100" secret="true" min-occurrences="1" />
+		</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/AESettings.do" operation-param="action" operation-value="invalidservicetag" >
+		 	<param name="submit" type="String" max-len="100" description="ae.aesettings.duplicate.serTags.invalid value is passed, so we cannot add regex"/>
+		 	<param name="CheckAllItems" regex="-1" /> 
+		 	<param name="checkbox1" type="String" secret="true" allow-empty="false" max-len="100" max-occurrences="500"  min-occurrences="1" />
+		 	<param name="delete" regex="Delete" />
+		 	<param name="disableMacCheck" regex="true" />
+	 	</url>
+		<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/AESettings.do" operation-param="action" operation-value="mismatchproducttype" >
+			<param name="submit" type="String" max-len="100"/>
+			<param name="CheckAllItems" regex="-1" />
+			<param name="checkbox1" type="String" secret="true" allow-empty="false" max-len="100" max-occurrences="500"  min-occurrences="1" />
+			<param name="delete" regex="Delete" />
+		</url>
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/AESettings.do" operation-param="action" operation-value="exclude" >
+		 	<param name="scanFromExclude" regex="scanFromExclude" />
+		 	<param name="scanExcludeWSIds" type="String" max-len="1000" />
+		 	<param name="excludePopUp" regex="excludePopUp" />
+		 	<param name="excludeDeviceSave" regex="excludeDeviceSave|Save" />
+		 	<param name="excludeListString" type="String" max-len="1000" />
+		 	<param name="excludeName" type="String" max-len="5000" secret="true" />
+		 	<param name="delete" regex="Delete" />
+	 	</url>	
+	 	<url roles="SDAdmin" path="(/STATE_ID/[0-9]+)?/AESettings.do" operation-param="action" operation-value="save" >
+		 	<param name="t1" type="String" max-len="100" />
+		 	<param name="autoAssignPeriod" type="long" range=">0"  min-occurrences="1" />
+		 	<param name="auto_assige_to_store_option" regex="autoAssignIsDeleteEnabled|autoAssignIsDeleteDisabled" min-occurrences="1" />
+		 	<param name="timePeriod" type="long" range=">0"  min-occurrences="1" />
+		 	<param name="unitOfTime" type="String" allow-empty="false" max-len="100" min-occurrences="1" />
+		 	<param name="save" regex="Save"  min-occurrences="1" />
+		 	<param name="serviceTagString" type="String" secret="true" max-len="1000" />
+		 	<param name="selectedServiceTag" type="String" secret="true" max-len="5000" />
+		 	<param name="macAddressCheckEnabled" type="boolean" />
+		 	<param name="swScanEnabled" type="boolean"  min-occurrences="1" />
+		 	<param name="pingDisabled" type="boolean"  min-occurrences="1" />
+		 	<param name="addUnknownWorkstation" type="boolean"  min-occurrences="1" />
+		 	<param name="autoAssignToState" type="boolean"  min-occurrences="1" />
+		 	<param name="autoAssignIsDeleteEnabled" type="boolean" />
+		 	<param name="sysnameOverDnsname" regex="0|1|2"  min-occurrences="1" />
+			<param name="scheduleComplianceCalculation" type="boolean"  min-occurrences="1" />
+		 	<param name="dontAllowXMLImportWithoutLogin" type="boolean"  min-occurrences="1" />
+			<param name="sys_or_ip_over_dns_option" regex="prioritize_sysname|prioritize_ipaddress" min-occurrences="1" />
+			<param name="delete" regex="Delete" />
+	 	</url>
+	 	<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/DomainDiscovery.do" operation-param="action" operation-value="getwsidtoscan" >
+	 		<param name="isgroupScan" regex="true" min-occurrences="1" />
+			<param name="isFromCMDB" type="boolean" />
+			<param name="type" type="String" allow-empty="false" max-len="100" min-occurrences="1" description="Component type is passed as param for non-workstation assets"/>
+			<param name="ciId" regex="[0-9]+(;)?([0-9]+(;)?){0,199}" max-len="3500" min-occurrences="1" />
+			<param name="wsId" type="long" range=">0" />		
+			<param name="isCI" type="boolean" />
+			<param name="moduleName" regex="change"/>	
+ 			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DomainDiscovery_startgroupscan" dynamic-throttle="true"  >
+	 			<throttle duration="1m" threshold="10" lock-period="5m"/>
+ 			</throttles>
+	 	</url> 
+	 	<!-- solarwinds url -->
+    	<url path="/servlet/AJaxServlet" roles="SDAdmin" operation-param="action" operation-value="testAndSaveSolarwindsServerDetails" rebrand="zmon">
+			<param name="serverName" type="String" max-len="100" secret="true" allow-empty="false" min-occurrences="1"/>
+			<param name="userName" type="String" max-len="100" secret="true" allow-empty="false" min-occurrences="1"/>
+			<param name="password" type="String" max-len="500" secret="true"/>
+			<param name="startDate" type="long" range=">0" min-occurrences="1" />
+			<param name="repeatFreq" type="long" range="1-100" allow-empty="false" min-occurrences="1"/>
+			<param name="isCheckBoxEnable" type="boolean"  min-occurrences="1"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="AJaxServlet_testAndSaveSolarwindsServerDetails" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url path="/servlet/AJaxServlet" roles="SDAdmin" operation-param="action" operation-value="removeSolarwindsSettings" rebrand="zmon">
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="AJaxServlet_removeSolarwindsSettings" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>
+		<url roles="SDAdmin" path="/api/v3/ConnectorServlet" api="true" csrf="false">
+			<param name="probe" regex="SolarwindsConnector"/>
+			<param name="audittoken" type="String" max-len="100" allow-empty="false" min-occurrences="1"/>
+			<param name="comment" secret="true" type="String" max-len="300"/>
+			<param name="scan_status" regex="true|false" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key"  name="ConnectorServlet_SolarWinds" dynamic-throttle="true"  >
+		    	<throttle duration="1m" threshold="10" lock-period="5m"/>
+	    	</throttles>
+		</url>
+		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/WsScanSettings.do" operation-param="operation" operation-value="savesetting" >
+			<param name="deviceTypeId" type="long" range=">0"  min-occurrences="1" />
+			<param name="domainId" type="long" range=">0" />
+			<param name="networkId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="credId1" type="long" range=">0,-1"  min-occurrences="1" />
+			<param name="save" regex="Save" />
+			<param name="isBulk" type="boolean" />
+			<param name="wsId" regex="[0-9]+(;)?([0-9]+(;)?){0,199}" max-len="1200" />
+			<param name="isChange" regex="true" />
+			<param name="ciId" regex="[0-9]+(;)?([0-9]+(;)?){0,199}" max-len="1200" />
+			<param name="isCI" regex="true" min-occurrences="1" />
+			<param name="closeBulk" type="boolean" min-occurrences="1" />	
+			<param name="isAgentScan" regex="true" />
+			<param name="saveandScan" regex="Save and Scan now" />
+			<param name="type" type="String" max-len="100" description="Component type is passed as param for non-workstation assets"/>
+			<param name="isgroupScan" regex="true" />
+			<param name="chooseCredential" regex="on" min-occurrences="1" />
+		</url>		
+		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/ImportWindowsWS.do" operation-param="action" operation-value="import" >
+			<file name="theFile" max-size="10240" allowed-extensions="xml" content-type-name="xml" allow-empty="false" description="xml data can have a maximum of 10MB">
+				<filename regex="filename" max-len="1000"/>
+		 	</file>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ImportWindowsWS_import" dynamic-throttle="true"  >
+			 	<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+			<param name="checkSubmit" type="String" allow-empty="false" max-len="100" min-occurrences="1" description="sdp.common.submit key value is passed"/>
+ 		</url>
+ 		<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/NodeDiscovery.do" operation-param="action" operation-value="getCredentialsList" >
+ 			<param name="deviceTypeId" type="long" range=">0,-1"  min-occurrences="1" />
+	 	</url>
+	 	<url roles="Scan Now" path="(/STATE_ID/[0-9]+)?/NodeDiscovery.do" operation-param="action" operation-value="scansubmit" >
+			<param name="name" secret="true" type="String" allow-empty="false" max-len="250"  min-occurrences="1" />
+			<param name="devicetype" type="long" range=">0"  min-occurrences="1" />
+			<param name="domainId" type="long" range=">0" />
+			<param name="networkId" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="credId1" type="long" range=">0,-1" min-occurrences="1" />
+			<param name="startScanButton" regex="Scan" />
+			<param name="typeId" type="long" range=">0" />
+			<param name="isAgentScan" regex="true" />
+			<param name="cancelButton" regex="Cancel" />
+			<param name="isWorkstation" type="boolean" />
+			<param name="chooseCredential" regex="on" min-occurrences="1" />
+	 	</url>
+	 	<!-- Site IPaddress mapping urls starts-->
+		 	<url roles="SDAdmin" path="/SiteIPImport.do" operation-param="method" operation-value="getHeaders" remote_server="false" >
+				<file name="uploadFile" max-size="5120" allowed-extensions="xls" content-type-name="xls" allow-empty="false">
+					<filename regex="filename" max-len="1000" max-occurrences="1"/>
+				</file>
+	 			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SiteIPImport_getHeaders" dynamic-throttle="true"  >
+					<throttle duration="1m" threshold="10" lock-period="5m"/>
+				</throttles>
+	 		</url>	
+			<url roles="SDAdmin" path="/SiteIPImport.do" operation-param="method" operation-value="importFile" remote_server="false" >
+				<param name="value" type="JSONObject" template="site_ip_mapping_template" max-len="1100" min-occurrences="1" />
+				<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="SiteIPImport_importFile" dynamic-throttle="true"  >
+					<throttle duration="1m" threshold="10" lock-period="5m"/>
+				</throttles>
+			</url>
+	 	<!-- Site IPaddress mapping urls starts-->
+		<!-- Scan Settings urls ends -->
+
+		<!-- SCCM Configuration urls starts -->
+		<url roles="SDAdmin" path="/SCCMScanSettings.do" operation-param="action" operation-value="save" >
+		 	<param name="sccmid" type="long" range=">0" />
+		 	<param name="sccmConf" type="JSONObject" template="sccm_configurations" max-len="25000" min-occurrences="1" />
+		 	<param name="testNow" type="boolean" />
+	 	</url>
+	 	<url roles="SDAdmin" path="/SCCMScanSettings.do" operation-param="action" operation-value="delete" >
+	 		<param name="sccmid" type="long" range=">0"  min-occurrences="1" />
+ 		</url>
+		<!-- SCCM Configuration urls ends -->
+
+		<!-- DC urls starts -->
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="hideDCContentMsg" />
+		<url roles="ViewInventoryWS" path="/servlet/AJaxServlet" operation-param="action" operation-value="closeDCHeaderMsg" >
+			<param name="operation" min-occurrences="1" regex="dc_service_down|dc_convert_to_free|dc_service_down_admin|dc_service_running_http|dc_service_running_https|dc_download_and_deploy_message|show_dc_default_agent_message|dc_incompatible|dc_deploy_timeout|dc_show_https_msg|dc_rebranding_message|uem_prods_supported_message|dc_service_fips_message" />
+		</url>
+		<url roles="SDAdmin" path="/servlet/AJaxServlet" operation-param="action" operation-value="hidePortUsedMsg" />
+		<url roles="SDAdmin" path="/DCServerSettings.do" operation-param="operation" operation-value="otpValidator" remote_server="false">
+			<param name="server" secret="true" type="String" max-len="200" />
+			<param name="port" secret="true" type="long" range=">=0,-1" />
+			<param name="protocol" regex="http|https" />
+			<param name="userOtp" secret="true" type="long" range=">=0,-1" />
+			<param name="uid" secret="true" type="String" max-len="200" />
+			<param name="isCustomTrustStore" type="boolean"/>
+		</url>
+		<url roles="SDAdmin" path="/DCServerSettings.do" operation-param="operation" operation-value="generateApiKey" remote_server="false">
+			<param name="server" secret="true" type="String" allow-empty="false" max-len="200" min-occurrences="1" />
+			<param name="port" secret="true" type="long" range=">0"  min-occurrences="1" />
+			<param name="protocol" regex="http|https" min-occurrences="1" />
+			<param name="userName" type="String" allow-empty="false" max-len="200" secret="true" min-occurrences="1" />
+			<param name="password" type="String" allow-empty="false" max-len="500" secret="true" min-occurrences="1" />
+			<param name="domainname" type="String" allow-empty="false" max-len="200" secret="true" min-occurrences="1" />
+			<param name="isCustomTrustStore" type="boolean"/>
+		</url>
+		<url roles="SDAdmin" path="/DCActions.do" operation-param="action" operation-value="update_agent_settings" >
+			<param name="serverIPAddress" secret="true" type="String" max-len="200" />
+			<param name="autoSaveIPChange" type="boolean" />
+			<param name="hideAgentUninstall" type="boolean" />	
+			<param name="hideAgentServiceStop" type="boolean" />
+			<param name="natAddress" secret="true" type="String" max-len="200" />
+			<param name="remotecontrolprompt" type="boolean" />
+			<param name="isAlwaysPrompt" type="boolean" />
+			<param name="notifyUser" type="boolean" />
+			<param name="endUserDisconnect" type="boolean" />
+			<param name="isIdleSessionTimeout" type="boolean" />
+			<param name="idleTimeout" type="int" />
+			<param name="timeoutAction" regex="0|1" />
+			<param name="isClientCertAuthEnabled" type="boolean" />
+			<param name="isStrictHttpsCommEnabled" type="boolean" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="update_agent_settings" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="10" lock-period="5m"/>
+			</throttles>
+		</url>	
+		<url roles="SDAdmin" path="/DCActions.do" operation-param="action" operation-value="get_server_settings,remove_server_settings" >
+			<param name="NAME" type="String" max-len="200" />
+			<param name="VALUE" type="long" range=">0" />
+		</url>	
+		<url roles="SDAdmin" path="/DCActions.do" operation-param="action" operation-value="modify_server_settings" >
+			<param name="server_name" secret="true" type="String" max-len="200" />
+			<param name="server_port" secret="true" type="long" range=">0" />
+			<param name="api_key" secret="true" type="String" max-len="40" />	
+			<param name="is_https" type="boolean" />
+		</url>
+		<url roles="ViewInventoryWS" path="/DCToolsActions.do" operation-param="operation" operation-value="AssetAction_Post" >
+			<param name="dcaction" type="String" max-len="200" />
+			<param name="wsName" secret="true" type="String" max-len="200" />
+			<param name="data" type="String" allow-empty="false" max-len="2000" secret="true" min-occurrences="1" />
+		</url>
+		<url path="/api/v3/DCIntegrationServlet" method="post" roles="SDAdmin" api="true" remote_server="true" csrf="false" operation-param="operation" operation-value="addConfig" description="since api='true', csrf='false' is given for this url">
+                        <param name="serverName" type="String" max-len="500"/>
+                        <param name="serverPort" type="long" range=">0"/>
+                        <param name="serverProtocol" type="String" max-len="500"/>
+						<param name="KEY" type="String" max-len="100" secret="true" />
+                        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DCIntegrationServlet_addConfig" dynamic-throttle="true"  >
+                                <throttle duration="1m" threshold="20" lock-period="15m"/>
+                    </throttles>
+                </url>
+                <url path="/api/v3/DCIntegrationServlet" method="post" roles="SDAdmin" api="true" csrf="false" remote_server="true" operation-param="operation" operation-value="validateticket">
+                        <param name="ticket" type="String" secret="true" max-len="500"/>
+                        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DCIntegrationServlet_validateticket" dynamic-throttle="true"  >
+                                <throttle duration="1m" threshold="100" lock-period="15m"/>
+                    </throttles>
+                </url>
+                <url path="/api/v3/DCIntegrationServlet" method="post" roles="SDAdmin" api="true" csrf="false" remote_server="true" operation-param="operation" operation-value="post_service_status">
+                        <param name="message" type="String" max-len="500"/>
+                        <param name="status_code" type="long" range=">0"/>
+                        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DCIntegrationServlet_post_service_status" dynamic-throttle="true"  >
+                                <throttle duration="1m" threshold="20" lock-period="15m"/>
+                    </throttles>
+		</url>
+		<!-- DC urls ends -->
+		
+	</urls>
+	<urls authentication="required" method="post" allowed_portals="it" remote_server="true" >
+		<url path="/api/v3/DcServlet" method="post" roles="SDAdmin" api="true">
+			<param name="taskId" type="long" range=">0"/>
+			<param name="KEY" type="String" max-len="100" secret="true" />
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="DcServlet" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="20" lock-period="15m"/>
+			</throttles>
+		</url>
+	</urls>
+
+
+	
+	<!-- Below URLs are external facing URLs that have content type as application/json. Added here separately -->
+	<jsontemplates>
+		<!-- SCCM Configurations json templates-->
+	 	<jsontemplate name="sccm_configurations">
+	 		<key name="sccmConf" type="JSONArray" template="sccm_attribute" array-size="0-10" max-len="25000" min-occurrences="1" />
+	 	</jsontemplate>
+	 	<jsontemplate name="sccm_attribute">
+	 		<key name="name" secret="true" type="String" max-len="1000" min-occurrences="1" />
+	 		<key name="value" secret="true" type="String" max-len="1000" min-occurrences="1" />
+	 	</jsontemplate>
+	 	<!-- SCCM Configurations json templates end-->
+
+		<!-- Template used for processing of the uploaded file -->
+		<jsontemplate name="site_ip_mapping_template" disable-extra-key="true">
+			<key name="file" regex="filename" max-len="1000" secret="true" min-occurrences="1" />
+			<key name="site" type="long" range=">=0" min-occurrences="1" />
+			<key name="ipaddress" type="long" range=">=0" min-occurrences="1" />
+		</jsontemplate>
+	    <jsontemplate name="scan_failure_data">
+	    	<key name="product_name" regex="DESKTOPCENTRAL|MDM"/>
+	    	<key name="jobId" type="long" range=">0"/>
+	    	<key name="error_kb" type="String" max-len="1000"/>
+	    	<key name="error_message" type="String" max-len="1000"/>
+	    	<key name="error_code" type="String" max-len="500"/>
+	    	<key name="workstation_name" type="String" max-len="500"/>
+	    	<key name="workstation_id" type="long" range=">0"/>
+	    </jsontemplate>
+
+		<jsontemplate name="schedule_settings_input">
+			<key name="scheduleSettings" type="JSONObject" max-len="5000" template="scheduleSettingsNonUEM"/>
+			<key name="uemScheduleSettings" type="JSONObject" max-len="5000" template="uemScheduleSettingsData"/>
+			<key name="auditCleanupSettings" type="JSONObject" min-occurrences="1" max-len="5000" template="auditCleanupSettingsTempl"/>
+			<key name="rediscoverySettings" type="JSONObject" min-occurrences="1" max-len="5000" template="rediscoverySettingsTempl"/>
+		</jsontemplate>
+		<jsontemplate name="scheduleSettingsNonUEM">
+			<key name="isEnabled" type="boolean" min-occurrences="1"/>
+			<key name="scheduleType" regex="Once|Daily|Weekly|Monthly|Periodic" />
+			<key name="onceDate" regex="[0-9]{2,4}-[0-9]{1,2}-[0-9]{1,2}" description="like: YYYY-MM-DD" />
+			<key name="onceTime" regex="[0-9]{2}:[0-9]{2}" description="Format - HH:MM"/>
+			<key name="dailyTime" type="long" range=">=0"/>
+			<key name="dayOfWeek" type="int" range="0-7" />
+			<key name="dayOfMonth" type="int" range="0-31" />
+			<key name="monthlyTime" regex="[0-9]{2}:[0-9]{2}" description="Format - HH:MM" />
+			<key name="weeklyTime" regex="[0-9]{2}:[0-9]{2}" description="Format - HH:MM"/>
+			<key name="scheduleInterval" type="int" range="1-1000" />
+			<key name="selectedDays" type="JSONArray" template="id_array" array-size="0-7" max-len="100"/>
+			<key name="selectedMonths" type="JSONArray" template="id_array" array-size="0-12" max-len="500"/>
+			<key name="weekOrDay" regex="WeekDay|Day" />
+		</jsontemplate>
+		<jsontemplate name="uemScheduleSettingsData">
+			<key name="schedulerDisabled" type="boolean" min-occurrences="1"/>
+			<key name="taskTimeZone" type="String" max-len="500" description="Time zone id selected from the list of UEM time zones like Asia/Calcutta"/>
+			<key name="scheduleType" regex="Daily|Weekly|Monthly"/>
+			<key name="dailyTimeUEM" type="long" range=">=0"/>
+			<key name="dailyIntervalType" regex="everyDay|alternativeDays|weekDays"/>
+			<key name="weeklyTimeUEM" regex="[0-9]{2}:[0-9]{2}" description="Format - HH:MM"/>
+			<key name="daysOfWeek" regex="(\b([0-9])\b)(,?(\b[0-9]|1[0-1])\b){0,6}" description="Value would be like 0,1,2,3,4,5,6 comma seperated values under 7"/>
+			<key name="monthlyTimeUEM" regex="[0-9]{2}:[0-9]{2}" description="Format - HH:MM"/>
+			<key name="monthlyPerform" regex="WeekDay|Day"/>
+			<key name="monthlyWeekNum" regex="(\b([1-5])\b)(,?(\b[1-5])\b){0,4}"/>
+			<key name="monthlyWeekDay" type="int" range="1-7"/>
+			<key name="monthlyDay" type="int" range="1-31"/>
+			<key name="monthsList" regex="(\b([0-9]|1[0-1])\b)(,?(\b[0-9]|1[0-1])\b){0,11}" description="Value would be like 0,1,2,3,4,5,6,7,8,9,10,11 comma seperated values under 12"/>
+		</jsontemplate>
+		<jsontemplate name="auditCleanupSettingsTempl">
+			<key name="enableAuditCleanup" type="boolean" min-occurrences="1" />
+			<key name="auditCleanupInterval" type="long" range="1-1000"  />
+		</jsontemplate>
+		<jsontemplate name="rediscoverySettingsTempl">
+			<key name="enableRediscovery" type="boolean" min-occurrences="1" />
+			<key name="rediscoveryInterval" type="long" range="1-1000"  />
+		</jsontemplate>
+		<jsontemplate name="show_software">
+        	<key name="wsId" type="long" range=">0"/>
+    	</jsontemplate>
+	</jsontemplates>
+	<regexes>
+ 		<regex name="domainstrng" value="domain"/>
+ 	</regexes>
+</security>

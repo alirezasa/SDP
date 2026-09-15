@@ -1,0 +1,83 @@
+{
+  "operations": [
+    {
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_templates/{id}/roles/{id}",
+      "desc": "You can view the details of a specific Change template role assignment here.",
+      "disp_desc": "View a Change Template Role assignment",
+      "workflow": "",
+      "output": {
+        "sample": "{\"change_template_role\": {\"id\": \"329\",\"label_id\": null,\"role\": {\"id\": \"1\",\"name\": \"ChangeManager\"},\"user\": {\"id\": \"4\",\"name\": \"administrator\",\"email_id\": \"acme@zylker.com\",\"is_vipuser\": false}},\"response_status\": {\"status_code\": 2000,\"status\": \"success\"}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    },
+    {
+
+      "method": "GET",
+      "moduleName" : "Change",
+      "path": "/api/v3/change_templates/{id}/roles",
+      "desc": "You can get the details of all available Change template role assignments for a change template here.",
+      "disp_desc": "View all Change Template Role assignments",
+       "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"id\",\"order\":\"asc\"}]}}"
+            },      
+      "workflow": "",
+      "output": {
+        "sample": "{\"roles\": [{\"id\": \"329\",\"label_id\": null,\"role\": {\"id\": \"1\",\"name\": \"ChangeManager\"},\"user\": {\"id\": \"4\",\"name\": \"administrator\",\"email_id\": \"acme@zylker.com\",\"is_vipuser\": false}},{\"id\": \"328\",\"label_id\": null,\"role\": {\"id\": \"2\",\"name\": \"ChangeOwner\"},\"user\": {\"id\": \"6\",\"name\": \"Heather Graham\",\"email_id\": null,\"is_vipuser\": false}}],\"response_status\": [{\"status_code\": 2000,\"status\": \"success\"}],\"list_info\": {\"has_more_rows\": false,\"row_count\": 2}}"
+      },
+      "inOP": "true",
+      "isReleased": "true"
+    }
+  ],
+  "attributes": [
+  {
+    "name": "id",
+    "type": "Number",
+    "desc": "The unique identifier assigned upon creation",
+    "graphView": "",
+    "column": "ChangeTplt_Roles_DefVal:ID",
+    "isReadOnly": "true",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "label_id",
+    "type": "Number",
+    "desc": "The label id for the role.",
+    "graphView": "",
+    "column": "ChangeTplt_Roles_DefVal:LABELID",
+
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "role",
+    "type": "Object",
+    "desc": "The change role.",
+    "graphView": "",
+    "column": "ChangeTplt_Roles_DefVal:ROLEID",
+
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  },
+  {
+    "name": "user",
+    "type": "Object",
+    "desc": "The user assigned to the role",
+    "graphView": "",
+    "column": "ChangeTplt_Roles_DefVal:USERID",
+    "isReadOnly": "false",
+    "isDefault": "true",
+    "inOP": "true",
+    "isReleased": "true"
+  }
+  
+],
+  "isReleased": "false"
+}

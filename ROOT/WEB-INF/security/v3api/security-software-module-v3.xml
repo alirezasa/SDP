@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required" api="true">
+        <throttles name="software_module_apis" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1M" threshold="80" lock-period="5M"/>
+        </throttles>
+        <url method="put" roles="SDAdmin" path="/api/v3/software_modules/(\d+)">
+            <param name="input_data" type="JSONObject" template="software_module" max-len="-1" min-occurrences="1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/software_modules">
+            <param name="input_data" type="JSONObject" template="software_module" max-len="-1" min-occurrences="1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/(\d+)">
+            <param name="input_data" type="JSONObject" template="include" max-len="-1" />
+        </url>
+        <!-- refer entity start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/(\d+)/icon">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/icon/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/(\d+)/icon/(\d+)" />
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/icon">
+            <param name="input_data" type="JSONObject" template="allowed_values_list_info" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <!-- refer entity end -->
+        <!-- convenience operations start -->
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/(\d+)/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/_links">
+            <param name="input_data" type="JSONObject" template="links_input" max-len="-1" />
+            <param name="ids" regex="ids" max-len="1200"/>
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/_total_count">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/(\d+)/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/_history">
+            <param name="input_data" type="JSONObject" template="list_info" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/(\d+)/_metainfo">
+            <param name="input_data" type="JSONObject" template="metainfo" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/_new_form">
+            <param name="input_data" type="JSONObject" template="software_module_new_form" max-len="-1" />
+        </url>
+        <url method="get" roles="SDAdmin" path="/api/v3/software_modules/(\d+)/_new_form" />
+        <!-- image starts -->
+        <url method="get" path="/api/v3/software_modules/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="res" regex="50x50|120x120"/>
+            <param name="key" regex="[a-z0-9]+" max-len="500" max-occurrences="1" secret="true" description="SHORT_LIFE_KEY" />
+        </url>
+        <url method="get" path="/api/v3/software_modules/(\d+)/images/(\d+)" user_type="all" description="FGR_APPLIED">
+            <param name="res" regex="50x50|120x120"/>
+            <param name="key" regex="[a-z0-9]+" max-len="500" max-occurrences="1" secret="true" description="SHORT_LIFE_KEY" />
+        </url>
+    </urls>
+    <urls authentication="required" api="true">
+        <throttles name="software_modules_images" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true">
+            <throttle duration="1M" threshold="10" lock-period="5M"/>
+        </throttles>
+        <url method="post" roles="SDAdmin" path="/api/v3/software_modules/images">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <url method="put" roles="SDAdmin" path="/api/v3/software_modules/(\d+)/images">
+            <file name="input_image" max-size="3000" allow-empty="false" content-type-name="image_inline" allowed-extensions="gif,png,jpeg,jpg,bmp" remove-exif="true" mandatory="true">
+                <filename regex="filename" max-len="100"/>
+            </file>
+        </url>
+        <!-- image ends -->
+    </urls>
+</security>

@@ -1,0 +1,217 @@
+{
+	"operations": [
+		{
+			"method": "GET",
+			"moduleName" : "Purchase",
+			"workflow": "",
+			"disp_desc": "View All currencies",
+			"defaultAttributes": [],
+			"inOD": "true",
+			"output": {
+				"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":true,\"start_index\":1,\"filter_by\":{\"name\":\"All\"},\"row_count\":10},\"currencies\":[{\"symbol\":\"EUR\",\"code\":\"EUR\",\"exchange_rate\":\"0.00\",\"name\":\"Euro\",\"id\":\"1\"},{\"is_base_currency\":true,\"symbol\":\"$\",\"code\":\"USD\",\"exchange_rate\":\"1.00\",\"name\":\"US Dollar\",\"id\":\"2\",\"prominent\":true},{\"symbol\":\"Rs\",\"code\":\"INR\",\"exchange_rate\":\"0.00\",\"name\":\"Indian Rupee\",\"id\":\"4\"},{\"symbol\":\"$\",\"code\":\"AUD\",\"exchange_rate\":\"0.00\",\"name\":\"Australian Dollar\",\"id\":\"5\"},{\"symbol\":\"$\",\"code\":\"CAD\",\"exchange_rate\":\"0.00\",\"name\":\"Canadian Dollar\",\"id\":\"6\"},{\"symbol\":\"AED\",\"code\":\"AED\",\"exchange_rate\":\"0.00\",\"name\":\"Emirati Dirham\",\"id\":\"7\"},{\"symbol\":\"Fr\",\"code\":\"CHF\",\"exchange_rate\":\"0.00\",\"name\":\"Swiss Franc\",\"id\":\"8\"},{\"symbol\":\"�\",\"code\":\"CNY\",\"exchange_rate\":\"0.00\",\"name\":\"Chinese Yuan Renminbi\",\"id\":\"9\"},{\"symbol\":\"RM\",\"code\":\"MYR\",\"exchange_rate\":\"0.00\",\"name\":\"Malaysian Ringgit\",\"id\":\"10\"},{\"symbol\":\"THB\",\"code\":\"THB\",\"exchange_rate\":\"0.00\",\"name\":\"Thai Baht\",\"id\":\"12\"}]}"
+			},
+			"path": [
+				"/api/v3/currencies"
+			],
+			"input": {
+				"name": "INPUT_DATA",
+				"sample": "{\"list_info\":{\"filter_by\":{\"name\":\"All\"},\"row_count\":10}}"
+			},
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "",
+			"isReleased": "true",
+			"excludedAttributes": [],
+			"desc": "Displays all the currencies available in the product."
+		},
+		{
+			"output": {
+				"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":3},\"currencies\":[{\"is_base_currency\":true,\"symbol\":\"$\",\"code\":\"USD\",\"exchange_rate\":\"1.00\",\"name\":\"US Dollar\",\"id\":\"2\",\"prominent\":true},{\"symbol\":\"�\",\"code\":\"GBP\",\"exchange_rate\":\"2.00\",\"name\":\"British Pound\",\"id\":\"3\"},{\"symbol\":\"�\",\"code\":\"JPY\",\"exchange_rate\":\"23.00\",\"name\":\"Japanese Yen\",\"id\":\"11\"}]}"
+			},
+			"path": [
+				"/api/v3/currencies"
+			],
+			"method": "GET",
+			"moduleName" : "Purchase",
+			"workflow": "",
+			"disp_desc": "View created currencies",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "",
+			"defaultAttributes": [],
+			"inOD": "true",
+			"isReleased": "true",
+			"excludedAttributes": [],
+			"desc": "Displays currencies which are created by customer."
+		},
+		{
+			"output": {
+				"sample": "{\"get_base_currency\":{\"is_base_currency\":true,\"symbol\":\"$\",\"code\":\"USD\",\"exchange_rate\":\"1.00\",\"name\":\"US Dollar\",\"id\":\"2\",\"frequent_currency\":true,\"prominent\":true}}"
+			},
+			"path": [
+				"/api/v3/currencies/_get_base_currency"
+			],
+			"method": "GET",
+			"moduleName" : "Purchase",
+			"workflow": "",
+			"disp_desc": "View basecurrency",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "",
+			"defaultAttributes": [],
+			"inOD": "true",
+			"isReleased": "true",
+			"excludedAttributes": [],
+			"desc": "Its a convenience operation and it displays base currency."
+		},
+		{
+			"output": {
+				"sample": "{\"get_base_currency\":{\"symbol\":\"$\",\"code\":\"USD\",\"prominent\":true,\"exchange_rate\":\"1.00\",\"name\":\"US Dollar\",\"id\":\"2\"}}"
+			},
+			"path": [
+				"/api/v3/currencies/{id}"
+			],
+			"input": {
+				"name": "INPUT_DATA",
+				"sample": "{\"currency\":{\"symbol\":\"@@\",\"exchange_rate\":2}}"
+			},
+			"method": "PUT",
+			"moduleName" : "Purchase",
+			"workflow": "",
+			"disp_desc": "Update a currency",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "",
+			"isReleased": "true",
+			"defaultAttributes": [],
+			"inOD": "true",
+			"excludedAttributes": [],
+			"desc": "Add new or update existing currency for your organization."
+		},
+		{
+			"method": "PUT",
+			"moduleName" : "Purchase",
+			"workflow": "",
+			"disp_desc": "Change base currency",
+			"defaultAttributes": [],
+			"inOD": "true",
+			"isAsset": "true",
+			"output": {
+				"sample": "{\"response_status\":{\"status_code\":2000,\"messages\":[{\"status_code\":2000,\"type\":\"success\",\"message\":\"Base Currency updated\"}],\"status\":\"success\"}}"
+			},
+			"path": [
+				"/api/v3/currencies/{id}/_change_base_currency"
+			],
+			"input": {
+				"name": "INPUT_DATA",
+				"sample": "{\"currency\":{\"symbol\":\"##b\"}}"
+			},
+			"inOP": "true",
+			"name": "",
+			"isReleased": "true",
+			"excludedAttributes": [],
+			"desc": ""
+		},
+		{
+			"output": {
+				"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"
+			},
+			"path": [
+				"/api/v3/currencies/{id}"
+			],
+			"method": "DELETE",
+			"moduleName" : "Purchase",
+			"workflow": "",
+			"disp_desc": "Delete a currency",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "",
+			"defaultAttributes": [],
+			"inOD": "true",
+			"isReleased": "true",
+			"excludedAttributes": [],
+			"desc": ""
+		}
+	],
+	"Additional Elements": [],
+	"attributes": [
+		{
+			"html_type": "",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "id",
+			"column": "",
+			"inOD": "true",
+			"type": "Number",
+			"isReleased": "true",
+			"isMandatory": "true",
+			"desc": "Unique identifier",
+			"graphView": ""
+		},
+		{
+			"isReadOnly": "true",
+			"html_type": "",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "name",
+			"column": "",
+			"inOD": "true",
+			"type": "String",
+			"isReleased": "true",
+			"isMandatory": "true",
+			"desc": "Name of the currency which will uniquely identify the individual currency.",
+			"graphView": ""
+		},
+		{
+			"isReadOnly": "true",
+			"html_type": "",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "code",
+			"column": "",
+			"inOD": "true",
+			"type": "Number",
+			"isReleased": "true",
+			"isMandatory": "true",
+			"desc": "A short form of the currency name to identify the currency.",
+			"graphView": ""
+		},
+		{
+			"html_type": "",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "symbol",
+			"column": "",
+			"inOD": "true",
+			"type": "String",
+			"isReleased": "true",
+			"desc": "Unique symbol to identify the currency.",
+			"graphView": ""
+		},
+		{
+			"html_type": "",
+			"inOP": "true",
+			"name": "exchange_rate",
+			"column": "",
+			"inOD": "true",
+			"isAsset": "true",
+			"type": "double",
+			"isReleased": "true",
+			"desc": "Rate at which one currency will be exchanged for base currency.",
+			"graphView": ""
+		},
+		{
+			"isReadOnly": "true",
+			"html_type": "",
+			"inOP": "true",
+			"isAsset": "true",
+			"name": "is_base_currency",
+			"column": "",
+			"inOD": "true",
+			"type": "Boolean",
+			"isReleased": "true",
+			"desc": "Determines if the currency is a base currency.",
+			"graphView": ""
+		}
+	]
+}

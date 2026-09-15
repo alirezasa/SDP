@@ -1,0 +1,83 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"changes\":[{\"change\":{\"template\":{\"name\":\"General Template\",\"id\":\"1\"},\"short_description\":\"\",\"attachments\":[],\"roll_out_plan\":{\"updated_on\":null,\"attachments\":[],\"stage\":{\"internal_name\":\"Planning\",\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"roll_out_plan\",\"updated_by\":null,\"description\":null,\"id\":\"1\"},\"closure_code\":null,\"sla_violation\":null,\"roles\":[],\"description\":\"\",\"emergency\":false,\"change_type\":null,\"title\":\"Change Test\",\"review_details\":{\"updated_on\":null,\"attachments\":[],\"stage\":{\"internal_name\":\"Review\",\"name\":\"Review\",\"id\":\"5\"},\"name\":\"review_details\",\"updated_by\":null,\"description\":null,\"id\":\"5\"},\"change_owner\":null,\"next_review_on\":null,\"assets\":[],\"urgency\":null,\"close_details\":{\"updated_on\":null,\"attachments\":[],\"stage\":{\"internal_name\":\"Close\",\"name\":\"Close\",\"id\":\"6\"},\"name\":\"close_details\",\"updated_by\":null,\"description\":null,\"id\":\"6\"},\"id\":\"1\",\"change_requester\":null,\"group\":null,\"created_time\":{\"display_value\":\"Nov 2, 2020 04:45 PM\",\"value\":\"1604315701304\"},\"item\":null,\"workflow\":{\"name\":\"SDGeneral\",\"id\":\"1\",\"is_emergency\":false},\"approval_status\":{\"name\":\"Pending Approval\",\"id\":\"1\"},\"change_manager\":null,\"impact\":null,\"retrospective\":false,\"checklist\":{\"updated_on\":null,\"attachments\":[],\"stage\":{\"internal_name\":\"Planning\",\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"checklist\",\"updated_by\":null,\"description\":null,\"id\":\"3\"},\"services\":[],\"priority\":null,\"scheduled_end_time\":null,\"back_out_plan\":{\"updated_on\":null,\"attachments\":[],\"stage\":{\"internal_name\":\"Planning\",\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"back_out_plan\",\"updated_by\":null,\"description\":null,\"id\":\"4\"},\"stage\":{\"internal_name\":\"Submission\",\"name\":\"Submission\",\"id\":\"1\"},\"reason_for_change\":null,\"completed_time\":null,\"risk\":null,\"impact_details\":{\"updated_on\":null,\"attachments\":[],\"stage\":{\"internal_name\":\"Planning\",\"name\":\"Planning\",\"id\":\"2\"},\"name\":\"impact_details\",\"updated_by\":null,\"description\":null,\"id\":\"2\"},\"category\":null,\"subcategory\":null,\"notes_present\":false,\"status\":{\"prominent\":false,\"stage\":{\"id\":\"1\"},\"action_name\":null,\"name\":\"Requested\",\"id\":\"3\"},\"scheduled_start_time\":null}}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"},
+            "path": ["/api/v3/releases/{release_id}/changes"],
+            "method": "GET",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Get change associations",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all change details associated with a release."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Associate Change",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"},{\"status_code\":2000,\"status\":\"success\"}],\"changes\":[{\"release\":{\"id\":\"1\"},\"change\":{\"id\":\"1\"}},{\"release\":{\"id\":\"1\"},\"change\":{\"id\":\"2\"}}]}"},
+            "path": "/api/v3/releases/{release_id}/changes",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"changes\":[{\"change\":{\"id\":\"1\"}},{\"change\":{\"id\":\"2\"}}]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to associate a change with a release."
+        },
+        {
+            "method": "DELETE",
+            "moduleName" : "Change",
+            "workflow": "",
+            "disp_desc": "Dissociate Change",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"},{\"status_code\":2000,\"status\":\"success\"}]}"},
+            "path": ["/api/v3/releases/{release_id}/changes"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"changes\":[{\"change\":{\"id\":\"2\"}},{\"change\":{\"id\":\"3\"}}]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to dissociate a change with a release."
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "change",
+            "column": "RELEASETOCHANGES:CHANGEID",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "release",
+            "column": "RELEASETOCHANGES:RELEASEID",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1611252092000
+}

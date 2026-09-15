@@ -1,0 +1,103 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"execute\":{\"data\":[{\"citypeid\":4,\"description\":\"Services related to application login like creating CRM account, SAP account, MSSQL account, Active Directory account, etc., are listed under this service category.\",\"ciname\":\"Application Login\",\"helpdeskid\":1,\"ciid\":1}]}}"},
+            "path": ["/api/v3/reports/{report_id}/_execute"],
+            "method": "GET",
+            "workflow": "",
+            "moduleName" : "Reports",
+            "disp_desc": "Execute Report",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "isAsset": "true",
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"execute_query\":{\"data\":[{\"resourceid\":1,\"componentid\":302,\"isdepreciationcalculated\":false,\"isloanable\":false,\"assettag\":\"\",\"helpdeskid\":1,\"ispersonal\":false,\"serialno\":\"\",\"ciid\":306,\"resourcestateid\":1,\"ipaddresses\":\"\",\"isdepreciationconfigured\":false,\"resourcename\":\"Wireless Access Point with PoE injector\"}]}}"},
+            "path": ["/api/v3/reports/_execute_query"],
+            "moduleName" : "Reports",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"query\":\"select * from Resources\"}"
+            },
+            "method": "POST",
+            "workflow": "",
+            "disp_desc": "Execute Query",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "isAsset": "true",
+            "desc": ""
+        },
+        {
+            "input": { "name": "INPUT_DATA", "sample": "{\"list_info\":{\"row_count\":100,\"start_index\":1,\"get_total_count\":true,\"filter_by\":{\"name\":\"Query_reports\"}}}" },
+            "output": {"sample": "{\"reports\":[{\"id\":\"2\",\"folder_name\":\"Depreciation\",\"report_name\":\"Assets depreciated by 50 percent or below\",\"folder_id\":\"2\"},{\"id\":\"32\",\"folder_name\":\"Servers\",\"report_name\":\"Servers with less than 10% Free Disk space\",\"folder_id\":\"8\"},{\"id\":\"34\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Assets ownerships\",\"folder_id\":\"10\"},{\"id\":\"35\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Loaned Assets\",\"folder_id\":\"10\"},{\"id\":\"36\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Workstations/servers hardware details\",\"folder_id\":\"10\"},{\"id\":\"37\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Software by workstation\",\"folder_id\":\"10\"},{\"id\":\"39\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Workstation by Managed Software\",\"folder_id\":\"10\"},{\"id\":\"40\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Prohibited software installations\",\"folder_id\":\"10\"},{\"id\":\"41\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Rarely used software installations\",\"folder_id\":\"10\"},{\"id\":\"42\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Purchased Software License Details\",\"folder_id\":\"10\"},{\"id\":\"43\",\"folder_name\":\"Frequently Asked Reports\",\"report_name\":\"Software agreement details\",\"folder_id\":\"10\"},{\"id\":\"47\",\"folder_name\":\"Software\",\"report_name\":\"CAL Purchased Vs Installed\",\"folder_id\":\"11\"},{\"id\":\"48\",\"folder_name\":\"Login Reports\",\"report_name\":\"Technicians who haven't logged in for the last 30 days\",\"folder_id\":\"12\"},{\"id\":\"49\",\"folder_name\":\"Login Reports\",\"report_name\":\"Last login and logout time of technicians\",\"folder_id\":\"12\"},{\"id\":\"50\",\"folder_name\":\"Login Reports\",\"report_name\":\"Number of logins of technicians in the current month\",\"folder_id\":\"12\"},{\"id\":\"51\",\"folder_name\":\"Login Reports\",\"report_name\":\"Login hours of technicians in the current month\",\"folder_id\":\"12\"}],\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"total_count\":16,\"filter_by\":{\"name\":\"Query_reports\"},\"get_total_count\":\"true\",\"row_count\":16}}"},
+            "path": ["/api/v3/reports"],
+            "moduleName" : "Reports",
+            "method": "GET",
+            "workflow": "",
+            "disp_desc": "View all Query Reports",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "isAsset": "true",
+            "desc": ""
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "name": "reportid",
+            "type": "long",
+            "column": "CUSTOMREPORTQUERY:REPORTID",
+            "desc": "Denotes the ID of a Query report.",
+            "inOP": "true",
+            "isReleased": "true",
+            "isAsset": "true"
+        },
+        {
+            "name": "chart_query",
+            "type": "String",
+            "column": "CUSTOMREPORTQUERY:CHART_QUERY",
+            "desc": "Query of the Chart.",
+            "inOP": "true",
+            "isReleased": "true",
+            "isAsset": "true"
+        },
+        {
+            "name": "report_query",
+            "type": "String",
+            "column": "CUSTOMREPORTQUERY:REPORT_QUERY",
+            "desc": "Query for the report.",
+            "inOP": "true",
+            "isReleased": "true",
+            "isAsset": "true"
+        },
+        {
+            "name": "report_query_mssql",
+            "type": "String",
+            "column": "CUSTOMREPORTQUERY:REPORT_QUERY_MSSQL",
+            "desc": "Respective MSSQL query for the query report.",
+            "inOP": "true",
+            "isReleased": "true",
+            "isAsset": "true"
+        },
+        {
+            "name": "report_query_postgresql",
+            "type": "String",
+            "column": "CUSTOMREPORTQUERY:REPORT_QUERY_POSTGRESQL",
+            "desc": "Respective PostgresSQL query for the query report.",
+            "inOP": "true",
+            "isReleased": "true",
+            "isAsset": "true"
+        }
+    ],
+    "lastModified": 1582902833000
+}

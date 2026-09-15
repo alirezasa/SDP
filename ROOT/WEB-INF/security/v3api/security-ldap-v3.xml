@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+
+    <urls authentication="required" method="GET" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ldap_get_urls" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <url roles="SDOrgAdmin" user_type="all" path="/api/v3/ldap_domains">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"></param>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/api/v3/ldap_domains/(\d+)">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"></param>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/api/v3/ldap_domains/_metainfo">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"></param>
+        </url>
+        <url roles="SDOrgAdmin" user_type="all" path="/api/v3/ldap_domains/_total_count">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1"></param>
+        </url>
+    </urls>
+
+    <urls authentication="required" method="DELETE" api="true">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ldap_delete_urls" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <url roles="SDOrgAdmin" user_type="all" path="/api/v3/ldap_domains">
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+    </urls>
+
+</security>

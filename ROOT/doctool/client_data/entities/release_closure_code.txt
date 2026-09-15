@@ -1,0 +1,154 @@
+{
+    "Additional Elements": [],
+    "operations": [
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get all Release closure code",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"closure_codes\":[{\"inactive\":false,\"module\":{\"id\":\"5\",\"display_name\":\"Release\",\"category\":{\"id\":\"5\"}},\"name\":\"Closed - Canceled\",\"description\":\"Release management dimissed, mostly in the initial stage.\",\"id\":\"4\"},{\"inactive\":false,\"module\":{\"id\":\"5\",\"display_name\":\"Release\",\"category\":{\"id\":\"5\"}},\"name\":\"Closed - Completed\",\"description\":\"Deployed service works as expected.\",\"id\":\"1\"},{\"inactive\":false,\"module\":{\"id\":\"5\",\"display_name\":\"Release\",\"category\":{\"id\":\"5\"}},\"name\":\"Closed - Deferred\",\"description\":\"Service deployed but has deviated from the specified requirements.\",\"id\":\"3\"},{\"inactive\":false,\"module\":{\"id\":\"5\",\"display_name\":\"Release\",\"category\":{\"id\":\"5\"}},\"name\":\"Closed - Rejected\",\"description\":\"Service rejected by stakeholders.\",\"id\":\"2\"}],\"list_info\":{\"sort_fields\":[{\"field\":\"name\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"total_count\":4,\"search_criteria\":{\"condition\":\"eq\",\"field\":\"module.name\",\"value\":\"release\"},\"get_total_count\":\"true\",\"row_count\":4}}"},
+            "path": "/api/v3/closure_codes",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"search_criteria\":{\"field\":\"module.name\",\"condition\":\"eq\",\"value\":\"release\"},\"sort_fields\":[{\"field\":\"name\",\"order\":\"asc\"}]}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all release closure code details."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"closure_code\":{\"inactive\":false,\"module\":{\"created_time\":{\"display_value\":\"Jan 24, 2007 03:00 PM\",\"value\":\"1169631000000\"},\"updated_time\":null,\"parent\":null,\"api_plural_name\":\"releases\",\"is_attachment_supported\":false,\"can_be_referred\":false,\"is_comment_supported\":false,\"display_name\":\"Release\",\"display_plural_name\":\"Releases\",\"created_by\":{\"email_id\":null,\"name\":\"System\",\"is_vipuser\":false,\"id\":\"1\",\"department\":null},\"layouts\":[],\"is_task_supported\":false,\"name\":\"release\",\"updated_by\":null,\"id\":\"5\",\"category\":{\"name\":\"release\",\"id\":\"5\"},\"fields\":[{\"name\":\"category\",\"id\":\"58\",\"display_name\":\"release.category\",\"field_type\":\"Refer Entity\"},{\"name\":\"changes\",\"id\":\"52\",\"display_name\":\"release.changes\",\"field_type\":\"Refer Entity\"},{\"name\":\"description\",\"id\":\"49\",\"display_name\":\"release.description\",\"field_type\":\"Multi Line\"},{\"name\":\"group\",\"id\":\"63\",\"display_name\":\"release.group\",\"field_type\":\"Refer Entity\"},{\"name\":\"impact\",\"id\":\"56\",\"display_name\":\"release.impact\",\"field_type\":\"Refer Entity\"},{\"name\":\"item\",\"id\":\"60\",\"display_name\":\"release.item\",\"field_type\":\"Refer Entity\"},{\"name\":\"priority\",\"id\":\"57\",\"display_name\":\"release.priority\",\"field_type\":\"Refer Entity\"},{\"name\":\"release_type\",\"id\":\"62\",\"display_name\":\"release.release_type\",\"field_type\":\"Refer Entity\"},{\"name\":\"risk\",\"id\":\"64\",\"display_name\":\"release.risk\",\"field_type\":\"Refer Entity\"},{\"name\":\"scheduled_end_time\",\"id\":\"51\",\"display_name\":\"release.scheduled_end_time\",\"field_type\":\"Date/Time\"},{\"name\":\"scheduled_start_time\",\"id\":\"50\",\"display_name\":\"release.scheduled_start_time\",\"field_type\":\"Date/Time\"},{\"name\":\"site\",\"id\":\"61\",\"display_name\":\"release.site\",\"field_type\":\"Refer Entity\"},{\"name\":\"stage\",\"id\":\"54\",\"display_name\":\"release.stage\",\"field_type\":\"Refer Entity\"},{\"name\":\"status\",\"id\":\"55\",\"display_name\":\"release.status\",\"field_type\":\"Refer Entity\"},{\"name\":\"subcategory\",\"id\":\"59\",\"display_name\":\"release.subcategory\",\"field_type\":\"Refer Entity\"},{\"name\":\"title\",\"id\":\"48\",\"display_name\":\"release.title\",\"field_type\":\"Single Line\"},{\"name\":\"urgency\",\"id\":\"65\",\"display_name\":\"release.urgency\",\"field_type\":\"Refer Entity\"}]},\"name\":\"Closed - Completed\",\"description\":\"Deployed service works as expected.\",\"id\":\"1\"}}"},
+            "path": "/api/v3/closure_codes/{closure_code_id}",
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Release Closure Code Details",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch a particular release closure code detail."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add Release Closure Code ",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"closure_code\":{\"inactive\":false,\"module\":{\"id\":\"5\",\"display_name\":\"Release\",\"category\":{\"id\":\"5\"}},\"name\":\"Closed - Approved_test\",\"description\":\"Represents release that is closed after approval.\",\"id\":\"301\"}}"},
+            "path": "/api/v3/closure_codes",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"closure_code\":{\"module\":{\"name\":\"release\"},\"description\":\"Represents release that is closed after approval.\",\"name\":\"Closed - Approved_test\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to add a release closure code."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Update Release Closure Code",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"closure_code\":{\"inactive\":false,\"module\":{\"id\":\"5\",\"display_name\":\"Release\",\"category\":{\"id\":\"5\"}},\"name\":\"Closed - Approved_Updated\",\"description\":\"Represents release that is closed after approval - Updated\",\"id\":\"301\"}}"},
+            "path": "/api/v3/closure_codes/{closure_code_id}",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"closure_code\":{\"module\":{\"name\":\"release\"},\"description\":\"Represents release that is closed after approval - Updated\",\"name\":\"Closed - Approved_Updated\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to update a release closure code."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/closure_codes/{closure_code_id}"],
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete Closure Code",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete a release closure code."
+        }
+    ],
+    "attributes": [
+        {
+            "isDefault": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "CLOSURECODE:CLOSURECODEID",
+            "inOD": "true",
+            "type": "Number",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Unique identifier\nused to identify the release closure\ncode.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "CLOSURECODE:CLOSURECODENAME",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Unique\nname used to identify the release closure code.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "CLOSURECODE:DESCRIPTION",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "A brief description about the release closure code.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "inactive",
+            "column": "CLOSURECODE:ISDELETED",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Indicates whether the release closure code is still in use in the application.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "module",
+            "column": "CLOSURECODE:MODULEID",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Used to identify the entity of the closure code. The possible values for this attribute can be release as of now",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1576458502000
+}

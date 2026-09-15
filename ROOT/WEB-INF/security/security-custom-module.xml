@@ -1,0 +1,60 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" disable-extraparam="true" user_type="all" description="FGR_APPLIED:Roles are not defined as role check will be done at server side">
+		<url path="/ui/custom_module" method="get" description="No_Throttle_Needed:throttle can be excluded since it is used on all custom module pages and we have implemented API throttling">
+			<param name="module" regex="cm_api_name"/>
+			<param name="mode" regex="list|edit|add|details" />
+			<param name="entity_id" regex="id" />
+			<param name="from" type="String" max-len="50"/>
+			<param name="printPreview" type="boolean"/>
+		</url>
+		<!-- History entry for the web tab modules -->
+		<url path="/common/ViewHistory.jsp" method="get" operation-param="module" operation-value="custom">
+			<throttles name="custom_modules_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="id" type="long" range=">=1" allow-invalid="false" />
+			<param name="key" regex="(cm_(([a-z]|[0-9])+(_([a-z]|[0-9])+)*))_history_sort_order|custom_modules_history"/>
+			<param name="custom_module" regex="cm_api_name"/>
+			<param name="entity_key" type="String"/>
+		</url>
+		<!-- History entry for the custom module in admin page -->
+		<url path="/common/ViewHistory.jsp" method="get" operation-param="module" operation-value="custom_modules">
+			<throttles name="custom_modules_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="custom_modules_history"/>
+			<param name="id" type="long" range=">=1" allow-invalid="false" />
+			<param name="entity_key" type="String" max-len="50" description="not possible to add regex as this param accepts i18N values "/>
+			<param name="search_filter" type="String"/>
+			<param name="admin_entity" type="boolean"/>
+			<param name="is_date_filter" type="boolean"/>
+			<param name="skip_filter_options" type="String"/>
+			<param name="skip_operation_names" type="String"/>
+		</url>
+
+		<url path="/common/ViewHistory.jsp" roles="SDAdmin" method="get" operation-param="module" operation-value="module_relationships">
+			<throttles name="module_relationships_history" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+			<param name="key" regex="module_relationships_history"/>
+			<param name="id" type="long" range=">=1" allow-invalid="false" />
+			<param name="entity_key" type="String" description="not possible to add regex as this param accepts i18N values "/>
+			<param name="search_filter" regex="module_relationship"/>
+			<param name="admin_entity" type="boolean"/>
+			<param name="is_date_filter" type="boolean"/>
+		</url>
+       <!-- Print preview url(moved from security-allmodules file)-->
+        <url path="/ui/print/${api_name}/(\d+)?" method="get" user_type="all" description="FGR_APPLIED:Roles are not defined as role check will be done at server side" >
+        	<throttles name="module_print" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+				<throttle duration="1m" threshold="30" lock-period="5m"/>
+			</throttles>
+		</url>
+
+		<url path="/custom-module/CustomModule.jsp" method="get" user_type="all" description="FGR_APPLIED:Roles are not defined as role check will be done at server side,No_Throttle_Needed:throttle can be excluded since it is used on all custom module pages">
+	        <param name="module" regex="cm_api_name"/>
+	        <param name="mode" regex="list|edit|add|details" />
+	        <param name="entity_id" regex="id" />
+	        <param name="printPreview" type="boolean" />
+	    </url>
+	</urls>
+</security>

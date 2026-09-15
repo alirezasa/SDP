@@ -1,0 +1,18 @@
+if(typeof(i18n) == "undefined") {var i18n = new Array();}i18n["zc.page.builder.formembed.property.resetbutton"] = 'Schaltflächentext „Zurücksetzen“ (nur Web)';
+i18n["zcpage.dialog.embed.redirectto"] = 'Weiterleiten zu';
+i18n["zcpage.dialog.embed.redirectto.tooltip"] = 'Weiterleitung nach erfolgreicher Formulareinsendung';
+i18n["zcpage.dialog.embed.submittxt"] = 'Schaltflächentext „Übermitteln“';
+i18n["zcpage.dialog.embed.successmsg.tooltip"] = 'Nachricht, die nach erfolgreicher Formulareinsendung angezeigt werden soll';
+i18n["zcpage.dialog.form.configure.values"] = 'Werte konfigurieren';
+i18n["zc.builder.page.embed.report.config"] = 'Keine Konfigurationsoptionen verfügbar für den ausgewählten Bericht';
+i18n["zcpage.dialog.embed.actions"] = 'Aktionen';
+i18n["zcpage.dialog.embed.duplicate"] = 'Duplizieren';
+i18n["zcpage.dialog.embed.edit"] = 'Bearbeiten';
+i18n["zcpage.dialog.embed.export"] = 'Export';
+i18n["zcpage.dialog.embed.filter"] = 'Filter';
+i18n["zcpage.dialog.embed.miscellaneous"] = 'Diverses';
+i18n["zcpage.dialog.embed.printexport"] = 'Drucken & exportieren ';
+i18n["zcpage.dialog.embed.recordscount"] = 'Aufzeichnungsanzahl';
+i18n["zcpage.dialog.embed.report.addfilter"] = 'Filter hinzufügen';
+i18n["zcpage.dialog.embed.report.addfilter.desc"] = 'Fügen Sie einen Filter hinzu und schränken Sie die im Bericht anzuzeigenden Berichte ein. ';
+i18n["zcpage.dialog.embed.search.and.filters"] = 'Suche und Filter';

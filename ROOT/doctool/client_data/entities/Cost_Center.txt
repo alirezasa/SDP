@@ -1,0 +1,159 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1},\"cost_centers\":[{\"owner\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"code\":\"code-123\",\"name\":\"CostName\",\"description\":\"asas\",\"id\":\"1\"}]}"},
+            "path": ["/api/v3/cost_centers"],
+            "method": "GET",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "View all costcenters",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"cost_center\":{\"owner\":{\"email_id\":null,\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"code\":\"code-123\",\"name\":\"CostName\",\"description\":\"asas\",\"id\":\"1\",\"department\":[{\"site\":null,\"name\":\"Administration\",\"id\":\"1\"},{\"site\":null,\"name\":\"Finance\",\"id\":\"4\"}]}}"},
+            "path": ["/api/v3/cost_centers/{id}"],
+            "method": "GET",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "View a costcenter",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Add a costcenter",
+            "defaultAttributes": [],
+            "inOD": "true",
+			"isAsset": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"cost_center\":{\"owner\":{\"email_id\":\"null\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"2\",\"department\":null},\"code\":\"CC1\",\"name\":\"CRED\",\"description\":\"cost_center\",\"id\":\"304\",\"department\":[{\"site\":{\"id\":\"2\"},\"name\":\"Administration\",\"id\":\"1\"}]}}"},
+            "path": "/api/v3/cost_centers",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"cost_center\":{\"name\":\"CRED\",\"code\":\"CC1\",\"department\":[{\"id\":1}],\"owner\":{\"id\":2},\"description\":\"cost_center\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Update a costcenter",
+            "defaultAttributes": [],
+            "inOD": "true",
+			"isAsset": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"cost_center\":{\"owner\":{\"email_id\":\"null\",\"name\":\"administrator\",\"is_vipuser\":false,\"id\":\"4\",\"department\":null},\"code\":\"CC2_up\",\"name\":\"CRED2\",\"description\":\"cost_center_upd\",\"id\":\"1\",\"department\":{\"site\":{\"id\":\"2\"},\"name\":\"Administration\",\"id\":\"1\"}}}"},
+            "path": "/api/v3/cost_centers/{id}",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"cost_center\":{\"name\":\"CRED2\",\"code\":\"CC2_up\",\"department\":[{\"id\":1}],\"owner\":{\"id\":4},\"description\":\"cost_center_upd\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/cost_centers/{id}"],
+            "method": "DELETE",
+            "moduleName" : "Purchase",
+            "workflow": "",
+            "disp_desc": "Delete a costcenter",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "id",
+            "column": "",
+            "inOD": "true",
+            "type": "Number",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Unique identifier used to identify the costcenter.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "code",
+			"isAsset": "true",
+            "column": "",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Name of the costcenter which will uniquely identify the individual costcenter.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+			"isAsset": "true",
+            "name": "department",
+            "column": "",
+            "inOD": "true",
+            "type": "Array of Objects",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Departments associated to the costcenter.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "owner",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Technician assigned to the particular costcenter.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "",
+            "inOD": "true",
+			"isAsset": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "short description about the costcenter.",
+            "graphView": ""
+        }
+    ]
+}

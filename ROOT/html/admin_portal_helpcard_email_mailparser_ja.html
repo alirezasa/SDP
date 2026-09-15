@@ -1,0 +1,188 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//JA">
+
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html" charset="UTF-8">
+<title>E-mailコマンド</title>
+</head>
+
+<body>
+    <p>
+        <strong>E-mailコマンド</strong><br><br>
+        E-mailコマンドでリクエストのデリミターを定義し、全ての受信メールを解析したり、必要に応じてリクエストフィールドを更新したり、様々な操作を自動的に実行したりできます。<br>
+        <strong>注意：</strong>認証されたユーザー（ログイン権限を持つユーザー）からのメールのみ、解析することができます。<br>
+        以下の点を利用して、E-mailコマンドを設定することが出来ます。
+    
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th><strong>フィールド</strong></th>
+                    <th><strong>説明</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        E-mailコマンドを有効にする
+                    </td>
+                    <td>
+                    メールの解析を有効にするにはこのオプションを選択します。
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        メールの件名に含む
+                    </td>
+                    <td>
+                        メールを解析する識別子を入力します。このフィールドで指定した文字列を件名に含まないメールは解析されません。
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        コマンドデリミター
+                    </td>
+                    <td>
+                        「$」のような、実行したい解析アクション/フィールド/操作を囲む特殊記号を入力します。<br>
+                        例えば、リクエストの優先度を「High」にしたい場合は、メール内で以下のようにします。<br>
+                        <strong>$Priority=High$</strong><br>
+                        また、新規リクエストを追加したい場合は、メール内で以下のようにします。<br>
+                        <strong>$Operation=AddRequest$</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <strong>フィールドの解析ルール</strong><br><br>
+        メール内で入力されたフィールドが、ServiceDesk Plus上にない場合は解析されません。また、任意のフィールドに1つ以上の値が指定された場合、最後の値のみが考慮され、他の値は上書きされます。<br>
+        依頼者の名前がメール内で入力されてない場合、メール送信者を依頼者とみなします。<br>
+    
+        <strong>使用可能な文字列</strong><br>
+        <br>
+    
+        <table border="1" cellpadding="10">
+            <thead>
+                <tr>
+                    <th><strong>アクション</strong></th>
+                    <th><strong>使用可能な文字列</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        新規リクエストの作成
+                    </td>
+                    <td>
+                        Operation=AddRequest
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        リクエストの編集/更新*
+                    </td>
+                    <td>
+                        Operation=EditRequest
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        リクエストのクローズ*
+                    </td>
+                    <td>
+                        Operation=CloseRequest
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        リクエストをピックアップ/割り当て*
+                    </td>
+                    <td>
+                        Operation=PickupRequest
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        *オペレーションの実行のためには、メール内にリクエストIDが必要です。
+        メールの件名にリクエストIDが含まれていても、メール本文に使用可能な文字列が含まれていない場合、新規リクエストは作成されません。
+        また、メールの説明のリクエストIDは件名のリクエストIDよりも優先されます。<br><br>
+    
+        <strong>リクエスト操作：役割と権限</strong><br><br>
+        画像や添付ファイルを含むすべての更新情報は、履歴タブのみに追加され、会話には追加されません。
+        依頼者/技術担当者権限のみのユーザーからのメールは、リクエストを作成している間にユーザーが利用可能だったフィールドのみを解析します。
+        リクエストのピックアップ、更新、クローズといったアクションは、依頼者の利用可能な権限をもとに行われます。
+        次のフィールドはユーザーの権限次第で解析することが可能です。<br>
+        
+        <table border="1" cellpadding="10">
+            <tbody>
+                <tr>
+                    <td>レベル</td>
+                    <td>モード</td>
+                </tr>
+                <tr>
+                    <td>優先度</td>
+                    <td>緊急度</td>
+                </tr>
+                <tr>
+                    <td>インパクト</td>
+                    <td>インパクトの詳細</td>
+                </tr>
+                <tr>
+                    <td>カテゴリー</td>
+                    <td>サブカテゴリー</td>
+                </tr>
+                <tr>
+                    <td>項目</td>
+                    <td>グループ</td>
+                </tr>
+                <tr>
+                    <td>技術担当者</td>
+                    <td>技術担当者のメールアドレス</td>
+                </tr>
+                <tr>
+                    <td>依頼者</td>
+                    <td>依頼者のメールアドレス</td>
+                </tr>
+                <tr>
+                    <td>リクエストID</td>
+                    <td>リクエストテンプレート</td>
+                </tr>
+                <tr>
+                    <td>リクエストタイプ</td>
+                    <td>ステータス</td>
+                </tr>
+                <tr>
+                    <td>サイト</td>
+                    <td>資産</td>
+                </tr>
+                <tr>
+                    <td>回答</td>
+                    <td>件名</td>
+                </tr>
+                <tr>
+                    <td>説明</td>
+                    <td>期日</td>
+                </tr>
+                <tr>
+                    <td>一次回答期日</td>
+                    <td>コールバックURL</td>
+                </tr>
+                <tr>
+                    <td>編集者</td>
+                    <td>編集者のメールアドレス</td>
+                </tr>
+                <tr>
+                    <td>リソース</td>
+                    <td>追加フィールドのラベル</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    
+        管理者権限を持つユーザーは［管理］ページの［リクエストテンプレート］内のデフォルトテンプレートで、技術担当者や依頼者がアクセスできるフィールドを変更することができます。<br>
+        なお、メールサーバーをセキュアなプロトコルで利用している場合、ServiceDesk Plusとメールサーバー間の接続を確立するため、自己署名証明書を生成・インストールする必要があります。詳しくは<a target="_blank" class="text-link" href="https://servicedeskplus.helpdocsonline.com/introduction/install-ssl.html">こちら</a>をご覧ください。
+    
+    </p>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../conf/security-sdp.xsd">
+    <urls authentication="required"  api="true" remote_server="true"  user_type="all" description="ROLE_NOT_REQUIRED - SYSTEMLOG can also have ESM directory records, have provided SDOrgAdmin for individual urls">
+        <throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="errorlog" dynamic-throttle="true"  >
+            <throttle duration="1M" threshold="30" lock-period="5M"/>
+        </throttles>
+        <url path="/api/v3/systemlogs" roles="SDAdmin,SDOrgAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" max-occurrences="1" min-occurrences="0"/>
+        </url>
+        <url path="/api/v3/systemlogs/_metainfo" roles="SDAdmin,SDOrgAdmin" method="get" />
+        <url path="/api/v3/systemlogs/_links" roles="SDAdmin,SDOrgAdmin" method="get" />
+        <url path="/api/v3/systemlogs/_total_count" roles="SDAdmin,SDOrgAdmin" method="get">
+            <param name="input_data" template="list_info" type="JSONObject" max-len="-1" max-occurrences="1" min-occurrences="0"/>
+        </url>
+        <url path="/api/v3/systemlogs/(\d+)" roles="SDAdmin,SDOrgAdmin" method="delete" />
+        <url path="/api/v3/systemlogs" roles="SDAdmin,SDOrgAdmin" method="delete">
+            <throttles name="systemlog_bulk_delete" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+            <param name="ids" regex="ids" max-len="1000" min-occurrences="1"/>
+        </url>
+        <url path="/api/v3/systemlogs/_purge" roles="SDAdmin,SDOrgAdmin" method="delete">
+            <throttles name="systemlog_purge" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+                <throttle duration="1M" threshold="10" lock-period="5M"/>
+            </throttles>
+        </url>
+    </urls>
+</security>

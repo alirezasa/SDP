@@ -1,0 +1,83 @@
+{
+    "operations": [
+        {
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"releases\":[{\"releases\":{\"id\":\"2\",\"name\":\"Test release\"}},{\"releases\":{\"id\":\"3\",\"name\":\"Test release 1\"}}],\"list_info\":{\"has_more_rows\":false,\"start_index\":1,\"row_count\":1}}"},
+            "path": ["/api/v3/changes/{change_id}/releases"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get release associations",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Associate Release",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"},{\"status_code\":2000,\"status\":\"success\"}],\"releases\":[{\"release\":{\"id\":\"1\"},\"change\":{\"id\":\"1\"}},{\"release\":{\"id\":\"1\"},\"change\":{\"id\":\"2\"}}]}"},
+            "path": "/api/v3/changes/{change_id}/releases",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"releases\":[{\"release\":{\"id\":\"1\"}},{\"release\":{\"id\":\"2\"}}]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        },
+        {
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Dissociate Release",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"},{\"status_code\":2000,\"status\":\"success\"}]}"},
+            "path": ["/api/v3/changes/{change_id}/releases"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"releases\":[{\"release\":{\"id\":\"2\"}},{\"release\":{\"id\":\"3\"}}]}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": ""
+        }
+    ],
+    "Additional Elements": [],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "change",
+            "column": "RELEASETOCHANGES:CHANGEID",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "release",
+            "column": "RELEASETOCHANGES:RELEASEID",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "desc": "",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1611252092000
+}

@@ -1,0 +1,86 @@
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<!--
+    All Approval related url entries should be specified here.
+    -->
+    <urls method="get" authentication="required">
+     <throttles name="request_approval_get_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+     	<throttle duration="1M" threshold="10" lock-period="5M"/>
+     </throttles>
+
+      <url path="/servlet/ApprovalAuthServlet" user_type="all" description="ROLE_NOT_REQUIRED:URL is used to enforce login to view approve.jsp"/>
+
+      <url path="/approval/ShowAllApprovals.jsp" user_type="all" method="get" description="ROLE_NOT_REQUIRED"/>
+
+      <url path="/ui/approvals" method="get" operation-param="mode" operation-value="embedWidget" description="ROLE_NOT_REQUIRED: URL is accessible by all technicians"/>
+      
+      <url path="/ui/approvals" method="get" user_type="all" operation-param="mode" operation-value="get" description="ROLE_NOT_REQUIRED">
+        <param name="from_filter" regex="request|change|release|purchase"/>
+      </url>
+
+
+      <!-- Approval Notification URLs -->
+      <url roles="SDAdmin" path="/ApprovalNotficationAction.do" operation-param="isUpdate" operation-value="false"/>
+
+    <url path="/api/v3/request_template_request" user_type="all" roles="ViewRequests">
+    	<param name="APPROVAL_KEY" type="String" max-len="3500" secret="true"/>
+    </url>
+
+	<url path="/home/Backup_Approver.jsp" user_type="all" description="FGR_APPLIED:Role checks is made in server side"/>
+
+	<url path="/WorkOrder.do" user_type="all" operation-param="woMode" operation-value="viewWOApproval" roles="ViewRequests">
+        <throttles key="url.path+url.dynamic_key" name="view_approval_page" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+            <throttle duration="1m" lock-period="5m" threshold="30"/>
+        </throttles>
+		<param name="woID"  type="long" />
+		<param name="from" regex="PrintPreview" />
+	</url>
+
+	<!--url for approval_status .Used in RLC-->
+	<url path="/api/v3/requests/approval_status" roles="ViewRequests,HelpdeskConfig" user_type="all">
+		<throttles name="request_approval_status_allowedval_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+			<throttle duration="1m" threshold="60" lock-period="5m"/>
+		</throttles>
+		<param name="input_data" template="list_info" type="JSONObject" max-len="-1" />
+	</url>
+
+	<!-- Urls related to Pending Clarifications Feature -->
+	<url path="/approval/PendingClarifications.jsp" user_type="all" roles="ViewRequests">
+		<param name="requestId" type="long" />
+    </url>
+	<url path="/approval/RequestClarifications.jsp" user_type="all" roles="ViewRequests"/>
+    <url roles="HelpdeskConfig" path="/NotificationContent.do" method="get" operation-param="notifType" operation-value="NotifyReqOnApprovalClarificationAdd,notifyApprOnApprovalClarificationReply,notifyReqOnApprovalClarificationReply,notifyNewReqOnPendingClarification"/>
+
+        <!-- to get approval comment mandatory config for request and purchase modules -->
+        <url path="/servlet/HdClientUtilServlet" operation-param="command" operation-value="get_approval_comment_config" user_type="all"  method="get" csrf="false" description="ROLE_NOT_REQUIRED">
+        </url>
+
+    </urls>
+
+    <urls method="post" csrf="true" authentication="required">
+    <throttles name="request_approval_post_urls" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+     	<throttle duration="1M" threshold="10" lock-period="5M"/>
+     </throttles>
+
+	  <!-- Approval Notification URLs -->
+      <url roles="SDAdmin" path="/ApprovalNotficationAction.do" operation-param="isUpdate" operation-value="true">
+        <param name="onBackupApproverConfig" regex="on" />
+        <param name="onBackupApproverConfigCancelled" regex="on" />
+        <param name="onSentToBackupApprover" regex="on" />
+        <param name="onBackupApproverAction" regex="on" />
+        <param name="onApproveIfRequesterIsAppr" regex="on" />
+        <param name="onApproveIfAlreadyApproved" regex="on" />
+      </url>
+    </urls>
+
+    <urls authentication="required" disable-extraparam="true">
+      <!-- Servlet call to reset the Pending Approvals Schedule -->
+      <url roles="SDAdmin" path="/servlet/PendingApprovalsServlet" method="GET">
+          <throttles name="pending_Approvals_throttle" key="url.path+url.dynamic_key" scope="APPSERVER" window="ROLLING" dynamic-throttle="true" >
+              <throttle duration="1m" threshold="5" lock-period="5m"/>
+          </throttles>
+      </url>
+    </urls>
+
+</security>
+
+<!--$Id$-->

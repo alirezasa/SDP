@@ -1,0 +1,363 @@
+<!-- $Id$ -->
+<security xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../conf/security-sdp.xsd">
+	<urls authentication="required" method="get" >
+		
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contract_entity" dynamic-throttle="true" >
+            <throttle lock-period="5m" threshold="80" duration="1m"/>
+        </throttles>
+        
+		<url roles="ViewContract" path="/ContractView.do" operation-param="contractMode" operation-value="contractListView">
+			<param name="status" regex="Recent_Expired_Contract|Contract_Expiring_In_7days|Contract_Expiring_In_30days"/>
+		</url>
+
+		<url roles="CreateContract" path="/ContractDef.do" operation-param="contractMode" operation-value="newContract"/>
+
+		<url roles="ViewContract" path="/ContractDef.do" operation-param="contractMode" operation-value="viewContract,printCO">
+			<param name="contractID" type="long" range=">0" min-occurrences="1"/>
+		</url>
+
+		<url roles="ModifyContract" path="/ContractDef.do" operation-param="contractMode" operation-value="editCO">
+			<param name="cID" type="long" range=">0"  min-occurrences="1"/>
+		</url>
+		
+		<url roles="CreateContract" path="/ContractDef.do" operation-param="contractMode" operation-value="renewCO">
+			<param name="cID" type="long" range=">0"  min-occurrences="1"/>
+		</url>
+		
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/ContractListView.cc">
+			<param name="UNIQUE_ID" regex="ContractListView"/>
+			<param name="viewName" regex="ContractListView|Open_Contract|All_Contracts|All_Expired_Contract|Recent_Expired_Contract|Contract_Expiring_In_7days|Contract_Expiring_In_30days"/>
+			<param name="categoryID" type="long" range=">0"/>
+		</url>
+		<url roles="ViewContract" path="(/STATE_ID/[0-9]+)?/ContractListView_HD_[0-9]+.cc" path-regex="true">
+			<param name="UNIQUE_ID" regex="ContractListView_HD_[0-9]+"/>
+			<param name="viewName" regex="ContractListView|Open_Contract|All_Contracts|All_Expired_Contract|Recent_Expired_Contract|Contract_Expiring_In_7days|Contract_Expiring_In_30days"/>
+			<param name="categoryID" type="long" range=">0"/>
+		</url>
+
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/RenewedList.cc"  >
+			<param name="UNIQUE_ID" regex="RenewedList"/>
+			<param name="contractID" type="long"  range=">0"/>
+		</url>
+
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/RenewedList_HD_[0-9]+.cc" path-regex="true">
+			<param name="UNIQUE_ID" regex="RenewedList_HD_[0-9]+"/>
+			<param name="contractID" type="long" range=">0"/>
+		</url>
+
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/ChildList.cc"  >
+			<param name="UNIQUE_ID" regex="ChildList"/>
+			<param name="contractID" type="long" range=">0"/>
+		</url>
+
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/ChildList_HD_[0-9]+.cc" path-regex="true">
+			<param name="UNIQUE_ID" regex="ChildList_HD_[0-9]+"/>
+			<param name="contractID" type="long" range=">0"/>
+		</url>
+		
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/ContractsView.cc"  >
+			<param name="UNIQUE_ID" regex="ContractsView"/>
+		</url>
+
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/ContractsView_HD_[0-9]+.cc" path-regex="true">
+			<param name="UNIQUE_ID" regex="ContractsView_HD_[0-9]+"/>
+		</url>
+
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/ContractAssetsView.cc" >
+			<param name="selectedAssets" regex="^[0-9,]*$" max-len="10000"/>
+			<param name="fromPage" regex="null|[0-9]+"/>
+			<param name="searchString" type="String" max-len="200"/>
+			<param name="productID" regex="null|[0-9]+"/>
+			<param name="productTypeID" regex="null|[0-9]+"/>
+			<param name="UNIQUE_ID" regex="ContractAssetsView"/>
+		</url>
+
+		<url roles="ViewContract" path="/STATE_ID/[0-9]+/ContractAssetsView_HD_[0-9]+.cc" path-regex="true">
+			<param name="selectedAssets" regex="^[0-9,]*$" max-len="10000"/>
+			<param name="fromPage" regex="null|[0-9]+"/>
+			<param name="searchString" type="String" max-len="200"/>
+			<param name="productID" regex="null|[0-9]+"/>
+			<param name="productTypeID" regex="null|[0-9]+"/>
+			<param name="UNIQUE_ID" regex="ContractAssetsView_HD_[0-9]+"/>
+		</url>
+
+		<url roles="SDAdmin" path="/setup/ContractNotifications.jsp" />
+		
+		<url roles="ModifyContract" path="/contract/AddSubContracts.jsp">
+			<param name="contractMode" regex="addSubContract"/>
+			<param name="parentContractID" type="long" range=">0"/>
+			<param name="[0-9]+" name-regex="true" regex="null|[0-9]+"/>
+		</url>
+		
+		<url  roles="CreateContract,ModifyContract" path="/ImportContract.do" operation-param="operation" operation-value="importContractWizard1"/>
+			
+		<url  roles="CreateContract,ModifyContract" path="/ImportContract.do" operation-param="operation" operation-value="failedContractsListWithErrors">
+			<param name="time" type="long" range=">0"/>
+		</url>
+
+		<url  roles="CreateContract,ModifyContract" path="/ImportContract.do" operation-param="operation" operation-value="failedContractsList">
+			<param name="time" type="long" range=">0"/>
+		</url>
+
+		<url roles="CreateContract,ModifyContract" path="/ContractResourcesDef.do" operation-param="mode" operation-value="viewSelectResources">
+			<param name="contractID" type="long" range=">0"/>
+			<param name="productType" type="long" range=">0"/> 
+			<param name="searchString" type="String" max-len="200"/>
+			<param name="addResources" regex="ids" max-len="3600"/>
+			<param name="itemsCount" type="long" range=">0"/>
+			<param name="resourceID" type="long" range=">0"/>
+			<param name="products" type="long" range=">0"/>
+			<param name="search" type="String" max-len="100"/>
+		</url>
+
+		<url roles="CreateContract,ModifyContract" path="/Notify.do"  operation-param="notifyModule" operation-value="Contract">
+			<param name="mode" regex="E-Mail"/>
+			<param name="id" type="long" range=">0"/>
+			<param name="notifyTo" regex="Vendor|Owner"/>
+		</url>
+
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="contractsUDF" />
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="contractTypeView"/>
+
+		<!--Notification Rules for Contract module under Admin-->
+        <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType" operation-value="Contract_Notification">
+			<param name="onlyContentPage" regex="yes"/>
+			<param name="fromPR" type="boolean"/>
+		</url>
+		
+		<url roles="CreateContract,ModifyContract" path="/common/AEFileAttachment.jsp" operation-param="module" operation-value="ContractNotifications_attachment">
+			<param name="type"  regex="new"/>
+			<param name="[0-9]+" name-regex="true" type="boolean" max-occurrences="1"/>
+	    </url>
+
+        <url roles="CreateContract,ModifyContract" path="/ContractDef.do" operation-param="contractMode" operation-value="get_parent_contract">
+            <param name="vendorID" regex="null|[0-9]+"/>
+            <param name="contractID" regex="null|[0-9]+" />
+        </url>
+
+        <url roles="CreateContract,ModifyContract" path="/ContractDef.do" operation-param="contractMode" operation-value="get_parent_vendor">
+            <param name="parentID" type="long" range=">0" min-occurrences="1"/>
+        </url>
+	</urls>
+	
+	<urls authentication="required" method="post"  csrf="true" >
+
+		<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contract_entity_post" dynamic-throttle="true" >
+            		<throttle lock-period="5m" threshold="80" duration="1m"/>
+        	</throttles>
+
+		<url roles="SDAdmin" path="/SetUpWizard.do" operation-param="forwardTo" operation-value="contractsUDF" >
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="contract_udf_post" dynamic-throttle="true" >
+				<throttle lock-period="30m" threshold="3" duration="1m"/>
+			</throttles>
+			<param name="XML" secret="true" type="String" max-len="360000" description="Data tag passed,12 text,4 numeric,4 date fields"/>
+			<param name="TABLENAME" regex="Contract_Fields"/>
+			<param name="serviceCategory" type="String" max-len="100"/>
+	    	</url>
+        
+		<url roles="DeleteContract" path="/ContractView.do" operation-param="contractMode" operation-value="deleteContract">
+			<param name="viewName" regex="All_Contracts|Open_Contract|All_Expired_Contract|Recent_Expired_Contract|Contract_Expiring_In_7days|Contract_Expiring_In_30days"/>
+			<param name="categoryID" type="long"  range=">0"/>
+			<param name="loadingMsg" type="String" max-len="100" max-occurrences="2"/>
+			<param name="rowcount" type="String" max-len="50" max-occurrences="2"/>
+			<param name="CustContractId"  type="String" max-len="100"/>
+			<param name="ContractName" type="String" max-len="100"/>
+			<param name="ContractType" type="String" max-len="100" description="The Value is used in search text of contracts in list view"/>
+            <param name="Status" type="String" max-len="100" description="The Value is used in search text of contracts in list view"/>
+            <param name="MaintenanceVendor" type="String" max-len="250" description="The Value is used in search text of contracts in list view"/>
+			<param name="Cost" type="double" range=">=0"/>
+			<param name="checkbox" type="long" range=">0" max-occurrences="500"/>
+			<param name="checkbox23" regex="on"/>
+			<param name="UDF_CHAR[0-9]+" name-regex="true" type="String" max-len="100" max-occurrences="12" secret="true"/>
+			<param name="UDF_LONG[0-9]+" name-regex="true" regex="null|[0-9]+" max-occurrences="4" secret="true"/>
+			<param name="UDF_DATE[0-9]+" name-regex="true" type="String" max-len="100" max-occurrences="4" secret="true"/>
+		</url>
+		
+		<url roles="CreateContract,ModifyContract" path="/ContractResourcesDef.do" operation-param="mode" operation-value="associateAssets">
+			<param name="resourceIDs" regex="^[0-9,]*$" max-len="6000" description="limit for associated assets from the list view is 500."/>
+			<param name="contractID" type="long"  range=">0" min-occurrences="1"/>
+			<param name="pageLength" type="long" range=">=0" max-occurrences="2"/>
+			<param name="loadingMsg" type="String" max-len="100" max-occurrences="2"/>
+			<param name="rowcount" type="String" max-len="50" max-occurrences="2"/>
+			<param name="RESOURCENAME" type="String" max-len="200" secret="true"/>
+			<param name="Department" type="String" max-len="100"/>
+			<param name="Site" type="String" max-len="100"/>
+			<param name="PO" type="String" max-len="100"/>
+			<param name="addResources" regex="^[0-9,]*$" max-len="6000" description="limit for associated assets from the list view is 500."/>
+			<param name="itemsCount" type="long" range=">0"/>
+			<param name="checkbox" type="long" range=">0" max-occurrences="500"/>
+			<param name="checkbox23" regex="on"/>
+			<param name="User" type="String" max-len="200" secret="true"/>
+			<param name="ServiceTag" type="String" max-len="100" secret="true"/>
+			<param name="AssetTag" type="String" max-len="50" secret="true"/>
+			<param name="SerialNumber" type="String" max-len="50" secret="true"/>
+			<param name="Barcode" type="String" max-len="250" secret="true"/>
+		</url>
+
+		 <url roles="ModifyContract" path="/ContractView.do" operation-param="contractMode" operation-value="configureContract">
+		<param name="data" template="configure_contract_ref" type="JSONArray" max-len="-1" array-size="0-100"/>
+		</url>
+
+		<url roles="CreateContract,ModifyContract" path="/ContractResourcesDef.do" operation-param="mode" operation-value="getResourceName">
+			<param name="resourceID" regex="^[0-9,]*$" max-len="6000" description="limit for associated assets from the list view is 500."/>
+		</url>
+
+		<url roles="CreateContract" path="/ContractDef.do" operation-param="contractMode" operation-value="addContract,renewedCO">
+			<param name="notifyUsers" type="String" max-len="1000" secret="true"/>
+			<param name="contractName" type="String" max-len="100" min-occurrences="1"/>
+			<param name="categoryID" type="long"  range=">0" min-occurrences="1"/>
+			<param name="parentID" regex="null|[0-9]+"/>
+			<param name="vendorID" type="long"  range=">0" min-occurrences="1"/>
+			<param name="custContractID" type="String" max-len="100" min-occurrences="1"/>
+			<param name="renewCheckbox" regex="renewCheckbox"/>
+			<param name="comments" type="String" max-len="-1" secret="true" description="As provided in data-dictionary"/>
+			<param name="supportDetails" type="String" max-len="3500" secret="true"/>
+			<param name="selectedAsset" regex="^[0-9,]*$" max-len="-1" description="limit for associated assets not restricted."/>
+			<param name="currentDate" type="String" max-len="50"/>
+			<param name="fromDate" type="String" max-len="50" min-occurrences="1"/>
+			<param name="toDate" type="String" max-len="50" min-occurrences="1"/>
+			<param name="totalPrice" type="double" range=">=0"/>
+			<param name="checkboxNotify" regex="checkbox"/>
+			<param name="notifyMailIds" type="String" max-len="1000" secret="true"/>
+			<param name="notifyDay" type="long" range=">0" max-occurrences="30"/>
+			<param name="beforeDays" regex="ids" max-len="100"/>
+			<param name="selected" regex="ids" max-len="3600"/>
+			<param name="addContract" type="String" max-len="50" description="Holds i18n value in struts tag."/>
+			<param name="oldContractID" regex="null|[0-9]+"/>
+			<param name="udfName[0-9]+" name-regex="true" type="String" max-len="3500" max-occurrences="20" secret="true"/>
+			<param name="assetList" type="long" range=">0" max-occurrences="500"/>
+			<param name="notifyList" type="long" range=">0" max-occurrences="100"/>
+			<param name="userList" type="long" range=">0" max-occurrences="100"/>
+		</url>
+
+		<url roles="ModifyContract" path="/ContractDef.do" operation-param="contractMode" operation-value="updateContract">
+			<param name="notifyUsers" type="String" max-len="1000" secret="true"/>
+			<param name="contractName" type="String" max-len="100" min-occurrences="1"/>
+			<param name="contractID" type="long" range=">0" min-occurrences="1"/>
+			<param name="categoryID" type="long" range=">0" min-occurrences="1"/>
+			<param name="parentID" regex="null|[0-9]+"/>
+			<param name="vendorID" type="long" range=">0" min-occurrences="1"/>
+			<param name="custContractID" type="String" max-len="100" min-occurrences="1"/>
+			<param name="renewCheckbox" regex="renewCheckbox"/>
+			<param name="comments" type="String" max-len="-1" secret="true" description="As provided in data-dictionary"/>
+			<param name="supportDetails" type="String" max-len="3500" secret="true"/>
+			<param name="selectedAsset" regex="^[0-9,]*$" max-len="-1" description="limit for associated assets not restricted."/>
+			<param name="currentDate" type="String" max-len="50"/>
+			<param name="fromDate" type="String" max-len="50" min-occurrences="1"/>
+			<param name="toDate" type="String" max-len="50" min-occurrences="1"/>
+			<param name="totalPrice" type="double" range=">=0"/>
+			<param name="checkboxNotify" regex="checkbox"/>
+			<param name="notifyMailIds" type="String" max-len="1000" secret="true"/>
+			<param name="notifyDay" type="long" range=">0" max-occurrences="30"/>
+			<param name="beforeDays" regex="ids" max-len="100"/>
+			<param name="selected" regex="ids" max-len="3600"/>
+			<param name="updateContract" type="String" max-len="50" description="Holds i18n value in struts tag."/>
+			<param name="oldContractID" type="long" range=">0"/>
+			<param name="udfName[0-9]+" name-regex="true" type="String" max-len="3500" max-occurrences="20" secret="true"/>
+			<param name="assetList" type="long" range=">0" max-occurrences="500"/>
+			<param name="notifyList" type="long" range=">0" max-occurrences="100"/>
+			<param name="userList" type="long" range=">0" max-occurrences="100"/>
+		</url>
+
+		<url roles="ModifyContract" path="/ContractDef.do" operation-param="contractMode" operation-value="deleteAsset">
+			<param name="contractID" type="long" range=">0" min-occurrences="1"/>
+			<param name="pageLength" type="long" range=">=0" max-occurrences="2"/>
+			<param name="loadingMsg" type="String" max-len="100" max-occurrences="2"/>
+			<param name="rowcount" type="String" max-len="50" max-occurrences="2" description="Contains value as - Row Count"/>
+			<param name="AssetName" type="String" max-len="200"/>
+			<param name="Cn" type="String" max-len="200"/>
+			<param name="Ctn" type="String" max-len="200"/>
+			<param name="Department" type="String" max-len="100"/>
+			<param name="Site" type="String" max-len="100"/>
+			<param name="PO" type="String" max-len="100"/>
+			<param name="checkbox" type="long" range=">0" max-occurrences="500"/>
+			<param name="checkbox23" regex="on"/>
+			<param name="User" type="String" max-len="200" secret="true"/>
+			<param name="ServiceTag" type="String" max-len="100" secret="true"/>
+			<param name="AssetTag" type="String" max-len="50" secret="true"/>
+			<param name="SerialNumber" type="String" max-len="50" secret="true"/>
+			<param name="Barcode" type="String" max-len="250" secret="true"/>
+		</url>
+
+		<url roles="ModifyContract" path="/ContractDef.do" operation-param="contractMode" operation-value="addSubContract">
+			<param name="contractID" type="long" range=">0" min-occurrences="1"/>
+			<param name="CheckAllItems" regex="-1|null|[0-9]+"/>
+			<param name="singleCheckbox" type="long" range=">0" max-occurrences="500"/>
+			<param name="submit" regex="Add"/>
+		</url>
+
+		<url roles="CreateContract,ModifyContract" path="/ImportContract.do" operation-param="operation" operation-value="parseCSVHeader">
+			<file name="theFile" max-size="10240" allowed-extensions="xls" content-type-name="xls" allow-empty="false">
+				<filename regex="filename" max-len="250"/>
+			</file>
+			<param name="chooseCSV" type="String" max-len="50"/>
+			<throttles window="ROLLING" scope="APPSERVER" key="url.path+url.dynamic_key" name="ImportContract_parseCSVHeader" dynamic-throttle="true"  >
+				<throttle duration="1m" threshold="5" lock-period="30m"/>
+			</throttles>
+		</url>
+		
+		<url roles="CreateContract,ModifyContract" path="/ImportContract.do" operation-param="operation" operation-value="importContracts">
+			<param name="csvfile" regex="filename" max-len="100"/>
+			<param name="custContractID" type="String" max-len="100" min-occurrences="1"/>
+			<param name="contractName" type="String" max-len="100" min-occurrences="1"/>
+			<param name="categoryID" type="String" max-len="100" min-occurrences="1" description="It hold the column name not the value"/>
+			<param name="comments" type="String" max-len="-1" secret="true" description="As provided in data-dictionary"/>
+			<param name="vendorID" type="String" max-len="100" min-occurrences="1" description="It hold the column name not the value"/>
+			<param name="supportDetails" type="String" max-len="3500" secret="true"/>
+			<param name="assetName" type="String" max-len="200" secret="true"/>
+			<param name="serviceTag" type="String" max-len="100" secret="true"/>
+			<param name="fromDate" type="String" max-len="100" min-occurrences="1"/>
+			<param name="toDate" type="String" max-len="100" min-occurrences="1"/>
+			<param name="totalPrice" type="String" max-len="100" description="It hold the column name not the value"/>
+			<param name="chooseCSV" type="String" max-len="50"/>
+			<param name="UDF_CHAR[0-9]+" name-regex="true" type="String" max-len="100" max-occurrences="12" secret="true"/>
+			<param name="UDF_LONG[0-9]+" name-regex="true" type="String" max-len="100" max-occurrences="4" secret="true" description="Value is csv column name."/>
+			<param name="UDF_DATE[0-9]+" name-regex="true" type="String" max-len="100" max-occurrences="4" secret="true" description="It hold the column name not the value"/>
+		</url>
+		
+	  	<url roles="CreateContract,ModifyContract" path="/Notify.do"  operation-param="notifyModule" operation-value="notifyContractOwner,notifyContractVendor">
+			<param name="to" type="String" max-len="250" secret="true" min-occurrences="1"/>
+			<param name="ccAddress" type="String" max-len="250" secret="true"/>
+			<param name="id" type="long" range=">0" min-occurrences="1"/>
+			<param name="contentType" regex="text/html"/>
+			<param name="isForward" type="String" max-len="25" description="Contains empty value."/>
+			<param name="orgReqIDStr" type="long" range=">0"/>
+			<param name="notifyTo" regex="Owner|Vendor"/>
+			<param name="module" regex="Contract"/>
+			<param name="enableNotify" type="boolean"/>
+			<param name="subject" type="String" max-len="500" secret="true" min-occurrences="1"/>
+			<param name="desc" max-len="-1" secret="true" xss="sdpantisamyfilter" description="since it is a html content, Max len as provided in the data-dictionary."/>
+			<param name="poPDFName" type="String" max-len="100"/>
+			<param name="submit" type="String" max-len="25"/>
+			<param name="att_file_id" type="long" range=">0" max-occurrences="25"/>
+			<param name="attach" regex="filename" max-len="250" max-occurrences="25"/>
+			<param name="attPath" type="String" max-len="250" max-occurrences="25"/>
+			<param name="attSize" type="long" range=">0" max-occurrences="25"/>
+			<param name="att_desc" type="String" max-len="250" max-occurrences="25" secret="true"/>
+		</url>
+		<!--Notification Rules for Contract module under Admin-->
+	    <url roles="SDAdmin" path="/NotificationContent.do" operation-param="notifType" operation-value="Contract_Notification">
+			<param name="element1" type="String" max-len="100"/>
+			<param name="element2" type="String" max-len="100"/>
+			<param name="subject" type="String" max-len="500" secret="true"/>
+			<param name="content" max-len="-1" secret="true" xss="sdpantisamyfilter" description="since it is a html content, Max len as provided in the data-dictionary."/>
+			<param name="mode" regex="update"/>
+		</url>
+		<url roles="SDAdmin" path="/AssetDefaultConfigDef.do" operation-param="formName" operation-value="contractForm">
+    			<param name="isAjaxSubmit" regex="ajaxSubmit"/>
+			<param name="data" template="contract_expiry_notification_template" type="JSONObject" max-len="100"/>
+    		</url>	
+	</urls>
+	<!-- templates -->
+    	<jsontemplates>
+        	<jsontemplate name="contract_expiry_notification_template">
+			<key name="notifyContractExpiryToTechnician" type="boolean"/>
+		</jsontemplate>
+	<jsontemplate name="configure_contract_ref">
+	<key name="parent" type="long" range=">0" />
+	<key name="vendor" type="long" range=">-1" />
+	<key name="child" type="JSONArray" template="id_array" max-len="-1" array-size="0-100"/>
+	</jsontemplate>
+	</jsontemplates>
+</security>
+

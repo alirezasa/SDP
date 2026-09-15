@@ -1,0 +1,83 @@
+<!DOCTYPE>
+<html>
+<head>
+</head>
+<body>
+<p>Business rules allow you to automate various actions for incident/service requests, notes, and notifications. These rules can be configured without any specific conditions, based on conditions, or can be based on conditional custom functions.</p>
+<p>On this page, you can create various business rules. You can also create rule groups to organize and manage the business rules.</p>
+<p>Business rules are now common for all sites. They are no more site-based, if there are sites configured for your organization.</p>
+<ul>
+	<li>Click <strong>New Rule</strong></li>
+	<li><strong>Name and Description:</strong> Provide a name and description for the business rule.</li>
+	<li><strong>Execute on actions:</strong>
+		<details class="mt10 mb10 helpdetailstag">
+			<summary><span class="detailsarrow top-1"></span><span class="sb">Incident and Service</span></summary>
+			<div class="p15 pt5">
+				<p>You can apply the business rules for all incident/service requests that are <strong>Created, Edited, Deleted Permanently, or Moved to trash.</strong></p>
+			</div>
+		</details>
+		<details class="mt10 mb10 helpdetailstag">
+			<summary><span class="detailsarrow top-1"></span><span class="sb">Note</span></summary>
+			<div class="p15 pt5">
+				<p>You can apply the business rules for all notes that are <strong>Created, Edited, or Deleted Permanently.</strong></p>
+			</div>
+		</details>
+		<details class="mt10 mb10 helpdetailstag">
+			<summary><span class="detailsarrow top-1"></span><span class="sb">Notification</span></summary>
+			<div class="p15 pt5">
+				<p>You can apply the business rules for all notifications that are <strong>Sent by User, Deleted Permanently, Forward, Sent by Technician, or System Notifications</strong></p>
+			</div>
+		</details>
+	</li>
+	<li><strong>Execute during:</strong> Choose the rule execution time window from <strong>Any Time</strong>, <strong>Within Operational Hours, or Outside Operational Hours</strong></li>
+	<li><strong>Cascade Execution:</strong> Choose the order of rule execution from <strong>Execute next rule, Skip remaining rules in this group, or Skip remaining rules across all groups</strong></li>
+	<li><strong>Condition:</strong> Choose whether to apply specific conditions, custom conditions, or no conditions to the incoming request.
+		<ul>
+			<li><strong>Apply conditions based on criteria:</strong> Choose from condition-criteria from the drop-downs</li>
+			<li><strong>Apply conditions using custom function:</strong> Either choose an already created custom function or create a new custom function to process the conditions.</li>
+			<li><strong>Apply no condition:</strong> This will apply the business rule on all incoming requests.</li>
+		</ul>
+	</li>
+	<li> If the rule is set to execute when a request is edited and based on conditions, you can choose to execute the rule:
+		<ul>
+			<li> Every time the record is edited.</li>
+			<li> Only when the fields configured in the conditions are edited.</li>
+		</ul>
+	</li>
+	<li><strong>Action:</strong> After defining the criteria-conditions, you can configure actions.
+		<ul>
+			<li><strong>Execute custom actions:</strong>
+				<details class="mt10 mb10 helpdetailstag">
+					<summary><span class="detailsarrow top-1"></span><span class="sb">Incident</span></summary>
+					<div class="p15 pt5">
+						<p>For incidents requests, you can choose from Field Update, Custom Function, Execute Script, If-If, If-Else, and Conditional Action</p>
+					</div>
+				</details>
+				<details class="mt10 mb10 helpdetailstag">
+					<summary><span class="detailsarrow top-1"></span><span class="sb">Service</span></summary>
+					<div class="p15 pt5">
+						<p>For service requests, you can choose from Field Update, Custom Function, Execute Script, Select SLA, If-If, If-Else, and Conditional Action</p>
+					</div>
+				</details>
+				<details class="mt10 mb10 helpdetailstag">
+					<summary><span class="detailsarrow top-1"></span><span class="sb">Note and Notification</span></summary>
+					<div class="p15 pt5">
+						<p>For Notes and Notifications, you can choose from Field Update, Custom Function, and Execute Script.</p>
+					</div>
+				</details>
+			</li>
+			<li><strong>Abort process execution:</strong> You can stop the execution of the process and provide a reason for the negation of the process.</li>
+		</ul>
+	</li>
+</ul>
+
+<p><strong>NOTES:</strong></p>
+<p>If you choose Deleted Permanently under Execute on actions, and configure Abort process execution as the action, the deleted request will be retained in trash. Field update is not supported for this option. However, you can configure custom scripts/functions to abort the delete operation on trashed requests</p>
+<p>Under Execute custom actions, if you will be able to choose either Custom Functions or Execute Script at any given point. You cannot configure both actions.</p>
+<p>For incident and service requests, if you choose If-If or If-Else actions, configuring Conditional Actions will not be possible. </p>
+<p>For Notifications, the System Notification event will apply only default notifications configured in the application.</p>
+<h3 class="sb">List View Actions</h3>
+<p>From the list view of business rules, you can organize business rules and rule groups, configure cascade execution, and move rules across groups.</p>
+<p><a target="_blank" href="https://help.servicedeskplus.com/configurations/helpdesk/configuring-business-rules.html$br-listview" rel="noopener noreferrer">Click here</a> to learn more.</p>
+</body>
+</html>

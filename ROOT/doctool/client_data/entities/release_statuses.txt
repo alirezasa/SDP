@@ -1,0 +1,193 @@
+{
+    "Additional Elements": [],
+    "operations": [
+        {
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get All Release Statuses under Stages",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":[{\"status_code\":2000,\"status\":\"success\"}],\"statuses\":[{\"internal_name\":\"accepted\",\"inactive\":false,\"prominent\":true,\"stage\":{\"internal_name\":\"submission\",\"name\":\"CAB Approval\",\"id\":\"1\"},\"status_type\":\"Success\",\"name\":\"Accepted\",\"description\":\"Release has been Accepted\",\"id\":\"2\"},{\"internal_name\":\"rejected\",\"inactive\":false,\"prominent\":true,\"stage\":{\"internal_name\":\"submission\",\"name\":\"CAB Approval\",\"id\":\"1\"},\"status_type\":\"Failed\",\"name\":\"Rejected\",\"description\":\"Release has been Rejected\",\"id\":\"3\"},{\"internal_name\":\"requested\",\"inactive\":false,\"prominent\":true,\"stage\":{\"internal_name\":\"submission\",\"name\":\"CAB Approval\",\"id\":\"1\"},\"status_type\":\"In Progress\",\"name\":\"Requested\",\"description\":\"Release has been Requested\",\"id\":\"1\"},{\"internal_name\":\"requested_for_info\",\"inactive\":false,\"prominent\":false,\"stage\":{\"internal_name\":\"submission\",\"name\":\"CAB Approval\",\"id\":\"1\"},\"status_type\":\"Need More Info\",\"name\":\"Requested for Information\",\"description\":\"Release has been resent to Requester for more information\",\"id\":\"4\"},{\"internal_name\":\"submitted_for_authorization\",\"inactive\":false,\"prominent\":false,\"stage\":{\"internal_name\":\"submission\",\"name\":\"CAB Approval\",\"id\":\"1\"},\"status_type\":\"Approval Pending\",\"name\":\"Submitted for Authorization\",\"description\":\"Release has been submitted for authorization\",\"id\":\"5\"}],\"list_info\":{\"sort_fields\":[{\"field\":\"name\",\"order\":\"asc\"}],\"has_more_rows\":false,\"start_index\":1,\"total_count\":5,\"get_total_count\":\"true\",\"row_count\":5}}"},
+            "path": "/api/v3/release_stages/{release_stages_id}/statuses",
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"list_info\":{\"row_count\":10,\"start_index\":1,\"get_total_count\":true,\"sort_fields\":[{\"field\":\"name\",\"order\":\"asc\"}]}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch all release status details present under a release stage."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release_status\":{\"internal_name\":\"approved\",\"inactive\":false,\"prominent\":true,\"stage\":{\"internal_name\":\"planning\",\"stage_index\":\"2\",\"name\":\"Planning\",\"id\":\"2\"},\"status_type\":\"Success\",\"notification_template\":{\"subject\":\"Release with ID: ##${id}## approved in the ${stage.name} stage.\",\"module\":\"Release\",\"name\":null,\"id\":\"266\",\"type\":\"ReleaseStatus_E-Mail_planning_approved\",\"display_name\":null,\"notify_to\":{\"xpaths\":[{\"xpath\":\"release.release_engineer\",\"display_name\":\"Release Engineer\"},{\"xpath\":\"release.release_requester\",\"display_name\":\"Release Requester\"}]},\"content\":\"<div>The plan of the release with ID: ##${id}## is approved.<br><\/div><div><br><\/div><div><b>User Comments:<\/b> ${status_comments} <br><\/div><div><br><\/div><div><i><b>Release Overview<\/b><\/i><br><\/div><div>--------------------------------------<br><\/div><div><br><\/div><div><b>Title:<\/b> ${title} <br><\/div><div><b>Current Phase:<\/b> ${stage.name} Stage with status as ${status.name} <br><\/div><div><b>Category:<\/b> ${category.name} <br><\/div><div><b>Sub-Category:<\/b> ${subcategory.name} <br><\/div><div><b>Item:<\/b> ${item.name} <br><\/div><div><b>Scheduled Start:<\/b> ${scheduled_start_time} <br><\/div><div><b>Scheduled End:<\/b> ${scheduled_end_time} <br><\/div><div><b>Description:<\/b> ${description} <br><\/div><div><br><\/div><div><b>Roles and Ownership:<\/b><br><\/div><div>${release_roles}<br><\/div><div><br><\/div><div>For more details:<br><\/div><div>${release_link}<br><\/div>\",\"isenabled\":true},\"name\":\"Approved\",\"description\":\"Release plan has been Accepted\",\"id\":\"6\"}}"},
+            "path": ["/api/v3/release_stages/{release_stages_id}/statuses/{status_id}"],
+            "method": "GET",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Get Release Status Details under Stages",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to fetch a particular release status detail present under a release stage."
+        },
+        {
+            "method": "POST",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Add Release Statuses under Stages",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release_status\":{\"internal_name\":\"uat_-_phase_1\",\"inactive\":false,\"prominent\":false,\"stage\":{\"internal_name\":\"planning\",\"stage_index\":\"2\",\"name\":\"Planning\",\"id\":\"2\"},\"status_type\":\"Success\",\"notification_template\":{\"subject\":\"New release with ID: ##${id}## accepted.\",\"module\":\"Release\",\"name\":null,\"id\":\"901\",\"type\":\"ReleaseStatus_E-Mail_planning_uat_-_phase_1\",\"display_name\":null,\"notify_to\":{\"xpaths\":[{\"xpath\":\"release.release_manager\",\"display_name\":\"Release Manager\"}]},\"content\":\"<div>Release with ID: ${id} is accepted<\/div>\",\"isenabled\":true},\"name\":\"UAT - Phase 1\",\"description\":\"Release has been Accepted\",\"id\":\"601\"}}"},
+            "path": ["/api/v3/release_stages/{release_stages_id}/statuses"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"release_status\":{\"description\":\"Release has been Accepted\",\"name\":\"UAT - Phase 1\",\"status_type\":\"Success\",\"notification_template\":{\"subject\":\"New release with ID: ##${id}## accepted.\",\"notify_to\":{\"xpaths\":[{\"xpath\":\"release.release_manager\",\"display_name\":\"Release Manager\"}]},\"content\":\"<div>Release with ID: ${id} is accepted\"}}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to add a release status to a release stage."
+        },
+        {
+            "method": "PUT",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Update Release Statuses under Stages",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"},\"release_status\":{\"internal_name\":\"uat_-_phase_1\",\"inactive\":false,\"prominent\":false,\"stage\":{\"internal_name\":\"submission\",\"name\":\"CAB Approval\",\"id\":\"1\"},\"status_type\":\"Success\",\"name\":\"UAT - Phase 1 - Updated\",\"description\":\"Release has been Accepted\",\"id\":\"301\",\"notification_template\":{\"subject\":\"New release with ID: ##${id}## accepted.\",\"module\":\"Release\",\"name\":null,\"id\":\"901\",\"type\":\"ReleaseStatus_E-Mail_planning_uat_-_phase_1\",\"display_name\":null,\"notify_to\":{\"xpaths\":[{\"xpath\":\"release.release_manager\",\"display_name\":\"Release Manager\"}]},\"content\":\"<div>Release with ID: ${id} is accepted<\/div>\",\"isenabled\":true}}}"},
+            "path": ["/api/v3/release_stages/{release_stages_id}/statuses/{status_id}"],
+            "input": {
+                "name": "INPUT_DATA",
+                "sample": "{\"release_status\":{\"description\":\"Release has been Accepted\",\"name\":\"UAT - Phase 1 - Updated\"}}"
+            },
+            "inOP": "true",
+            "name": "",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to update a release status present in a release stage."
+        },
+        {
+            "output": {"sample": "{\"response_status\":{\"status_code\":2000,\"status\":\"success\"}}"},
+            "path": ["/api/v3/release_stages/{release_stages_id}/statuses/{status_id}"],
+            "method": "DELETE",
+            "moduleName" : "Release",
+            "workflow": "",
+            "disp_desc": "Delete Release Statuses under Stages",
+            "inOP": "true",
+            "name": "",
+            "defaultAttributes": [],
+            "inOD": "true",
+            "isReleased": "true",
+            "excludedAttributes": [],
+            "desc": "This operation is used to delete a release status present in a release stage."
+        }
+    ],
+    "attributes": [
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "id",
+            "column": "RELEASESTAGEBASEDSTATUS:STATUSID",
+            "type": "long",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Id of this release status",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "name",
+            "column": "RELEASESTAGEBASEDSTATUS:STATUSNAME",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "name of the release status",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "description",
+            "column": "RELEASESTAGEBASEDSTATUS:DESCRIPTION",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "A brief description about the release status",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "inactive",
+            "column": "RELEASESTAGEBASEDSTATUS:ISDELETED",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Indicates whether the release status is still in use in the application.",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "stage",
+            "column": "RELEASESTAGEBASEDSTATUS:STAGEID",
+            "inOD": "true",
+            "type": "Object",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Parent Entity to which the release status is going to be associated.Value should be in json format.E.g : - {\"id\":1}",
+            "graphView": "",
+            "relEntity": {
+                "name": "release_stage",
+                "type": "referential",
+                "relation": "Nto1"
+            }
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "prominent",
+            "column": "RELEASESTAGEBASEDSTATUS:ISPROMINENTACTION",
+            "inOD": "true",
+            "type": "Boolean",
+            "isReleased": "true",
+            "desc": "Indicates whether the release status is default",
+            "graphView": ""
+        },
+        {
+            "isReadOnly": "true",
+            "html_type": "",
+            "inOP": "true",
+            "name": "internal_name",
+            "column": "RELEASESTAGEBASEDSTATUS:INTERNALNAME",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "desc": "Internal name of the release_status ",
+            "graphView": ""
+        },
+        {
+            "html_type": "",
+            "inOP": "true",
+            "name": "status_type",
+            "column": "RELEASESTAGEBASEDSTATUS:STATUSTYPE",
+            "inOD": "true",
+            "type": "String",
+            "isReleased": "true",
+            "isMandatory": "true",
+            "desc": "Indicates the release status type. Allowed Values - Success, Failed, Cancelled, In Progress, On Hold, Approval Pending, Need More Info",
+            "graphView": ""
+        }
+    ],
+    "lastModified": 1610958258000
+}

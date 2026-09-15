@@ -1,0 +1,37 @@
+<p><span class="helpheading"><strong>Integrate with Mobile Device Manager Plus </strong></span></p>
+<p align="right" style="margin-top: 0.5pt; margin-bottom: 0.5pt;" ><strong>Step-by-Step procedure for Integration</strong> : <a href="#" data-id="mdm-helpddoc" style="color:blue;text-decoration:underline;" >Help Document</a></p><br>
+
+<p>Integrate ServiceDesk Plus with Mobile Device Manager Plus to manage and secure your mobile devices directly from your ServiceDesk Plus console. Mobile Device Manager Plus automates various mobile device management tasks like app distribution, device management and restrictions, email management, and asset management. It also provides additional security to the mobile devices by restricting the transfer of data between apps, devices, and third-party cloud services. It helps admins locate lost devices and wipe the data on it, if necessary. If you have installed both the products, just enter the details of the computer where the Mobile Device Manager Plus server is installed along with the port numbers.</p>
+
+<p><strong>Prerequisite: </strong> You should be running Mobile Device Manager Plus version 92370 and above.</p>
+<p><strong>Set Up the Integration</strong></p>
+<ol>
+  <li>Enter the URL where the application is currently hosted.</li>
+  <li>Enter the API Key of an admin user in Mobile Device Manager Plus.</li>
+  <li>Enter the API Key of an admin user in UEM application.</li>
+  <li>Select <strong>Enable MDM (Mobile Device Management) menu </strong> to display the desktop management menu for technicians. The menu will be displayed only for MDM build number #92263 and above.</li>
+  <li>Select <strong>Enable MDM (Mobile Device Management) Menu</strong> to display MDM functions as a drop-down menu to technicians.</li>
+  <li>Click <strong>Test Connection and Save</strong> to check for an established connection between ServiceDesk Plus and Mobile Device Manager Plus in their respective ports</li>
+</ol>
+<br>
+<p><span class="helpheading"><strong>Integrating with Other ME Products (running in HTTPS mode)</strong></span></p>
+<ol>
+  <li>Download the <strong>.zip</strong> file from the link given below and extract it to "<em>ManageEngine\ServiceDesk"</em>:</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><a class="wb-bw" href="https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip" target="_blank" rel="noopener noreferrer">https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af3b3o2010mg10kbj961mdt18sq1/lincertgeneration.zip</a> </p>
+  <p style="margin-left: 50px;"><strong>For Windows:</strong> <a class="wb-bw" href="https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip" target="_blank" rel="noopener noreferrer">https://downloads.zohocorp.com/dnd/ServiceDesk_Plus/o_1af360niepdjr7j1flk1o323fa1/wincertgeneration.zip</a> </p>
+  <li>Connect to the command prompt. Go to "<em>ManageEngine\ServiceDesk"</em> and run the batch file with following format:</li>
+  <p style="margin-left: 50px;"><strong>For Linux: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.sh servername:portnumber </p>
+  <p style="margin-left: 50px;"><strong>For Windows: </strong><br>
+    C:&gt;ManageEngine\ServiceDesk&gt;gencert.bat servername:portnumber</p>
+  <li>
+    <p>On running the command, you will receive an exception <strong>PKIX</strong> and then it will ask you to enter a value. Provide value 1 which will generate a file named <strong>jssecacerts</strong> under <em>"ManageEngine\ServiceDesk"</em>.</p>
+  </li>
+  <li>Copy the <strong>jssecacerts</strong> file under "<em>ManageEngine\ServiceDesk\jre\lib\security"</em> folder and then restart the ServiceDesk Plus application.</li>
+</ol><br>
+<script nonce="<%=sdpNonce%>">
+  let integ = jQuery(document).off("click.integrations"); //NO I18N
+  integ.on("click.integrations","[data-id='mdm-helpddoc']", function(){
+ 			return appendDID('https://www.manageengine.com/mobile-device-management/help/integrations/mdm_and_servicedeskplus.html#ui_integ',true); //NO I18N
+ 	});
+</script>
